@@ -1,0 +1,94 @@
+package sdwan
+
+import (
+	"fmt"
+
+	"github.com/CiscoDevNet/sdwan-go-client/client"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+//Provider is the main entry point for the SDWAN Terraform Provider
+func Provider() *schema.Provider {
+	return &schema.Provider{
+		Schema: map[string]*schema.Schema{
+			"username": {
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("SDWAN_USERNAME", nil),
+				Description: "Username for the DCNM account",
+			},
+
+			"password": {
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("SDWAN_PASSWORD", nil),
+				Description: "Password for the DCNM account",
+			},
+
+			"url": {
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("SDWAN_URL", nil),
+				Description: "URL for the DCNM server",
+			},
+
+			"insecure": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Default:     true,
+				Description: "Allow insecure HTTPS client",
+			},
+		},
+
+		ResourcesMap: map[string]*schema.Resource{},
+
+		DataSourcesMap: map[string]*schema.Resource{},
+
+		ConfigureFunc: configClient,
+	}
+}
+
+func configClient(d *schema.ResourceData) (interface{}, error) {
+	config := &Config{
+		Username:   d.Get("username").(string),
+		Password:   d.Get("password").(string),
+		URL:        d.Get("url").(string),
+		IsInsecure: d.Get("insecure").(bool),
+	}
+
+	if err := config.Valid(); err != nil {
+		return nil, err
+	}
+
+	return config.getClient(), nil
+}
+
+//Valid is responsible for the validation of the required parameter of terraform block schema
+func (c Config) Valid() error {
+
+	if c.Username == "" {
+		return fmt.Errorf("Username must be provided for the SDWAN provider")
+	}
+
+	if c.Password == "" {
+		return fmt.Errorf("Password must be provided for the SDWAN provider")
+	}
+
+	if c.URL == "" {
+		return fmt.Errorf("The URL must be provided for the SDWAN provider")
+	}
+
+	return nil
+}
+
+func (c Config) getClient() interface{} {
+	return client.GetClient(c.URL, c.Username, c.Password, c.IsInsecure)
+}
+
+//Config the basic structure used for the management of the Terraform block schema attributes
+type Config struct {
+	Username   string
+	Password   string
+	URL        string
+	IsInsecure bool
+}

@@ -1,0 +1,36 @@
+<% wrap_layout :inner do %>
+    <% content_for :sidebar do %>
+      <div class="docs-sidebar hidden-print affix-top" role="complementary">
+        <ul class="nav docs-sidenav">
+          <li<%= sidebar_current("docs-home") %>>
+          <a href="/docs/providers/index.html">All Providers</a>
+          </li>
+  
+          <li<%= sidebar_current("docs-sdwan-index") %>>
+          <a href="/docs/providers/sdwan/index.html">SDWAN Provider</a>
+          </li>
+  
+
+  
+          <li<%= sidebar_current("docs-sdwan-datasource") %>>
+          <a href="#">Data Sources</a>
+                  <ul class="nav nav-visible">
+                    <li<%= sidebar_current("docs-sdwan-data-source-interface") %>>
+                      <a href="/docs/providers/sdwan/d/interface.html">sdwan_interface</a>
+                    </li>
+                  </ul>
+          </li>
+          <li<%= sidebar_current("docs-sdwan-resource") %>>
+          <a href="#">Resources</a>
+                  <ul class="nav nav-visible">
+                    <li<%= sidebar_current("docs-sdwan-resource-interface") %>>
+                      <a href="/docs/providers/sdwan/r/interface.html">sdwan_interface</a>
+                    </li>
+                  </ul>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  
+    <%= yield %>
+    <% end %>
