@@ -1,4 +1,4 @@
-# github.com/CiscoDevNet/sdwan-go-client v0.0.1
+# github.com/CiscoDevNet/sdwan-go-client v0.0.1 => ../sdwan-go-client
 ## explicit
 github.com/CiscoDevNet/sdwan-go-client/client
 github.com/CiscoDevNet/sdwan-go-client/container
@@ -200,3 +200,4 @@ google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/emptypb
 google.golang.org/protobuf/types/known/timestamppb
+# github.com/CiscoDevNet/sdwan-go-client => ../sdwan-go-client
