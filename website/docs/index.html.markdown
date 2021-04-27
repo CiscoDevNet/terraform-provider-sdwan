@@ -1,20 +1,19 @@
 ---
-layout: "dcnm"
-page_title: "Provider: DCNM"
-sidebar_current: "docs-dcnm-index"
+layout: "sdwan"
+page_title: "Provider: SDWAN"
+sidebar_current: "docs-sdwan-index"
 description: |-
-  The Cisco DCNM provider is used to interact with the resources provided by Cisco DCNM.
-  The provider needs to be configured with the proper credentials before it can be used.
+  <Add Description for SDWAN Provider>
 ---
   
 
 Overview
 --------------------------------------------------
-Terraform provider DCNM is a Terraform plugin which will be used to manage the DCNM Constructs on the Cisco DCNM platform with leveraging advantages of Terraform. DCNM Terraform provider lets users represent the infrastructure as a code and provides a way to enforce state on the infrastructure managed by the Terraform provider. Customers can use this provider to integrate the Terraform configuration with the DevOps pipeline to manage the DCNM fabric policies in a more flexible, consistent and reliable way.
+Add Overview for SDWAN Provider>
 
-Cisco DCNM Provider
+Cisco SDWAN Provider
 ------------
-The Cisco DCNM provider is used to interact with the resources provided by Cisco DCNM. The provider needs to be configured with the proper credentials before it can be used.
+The Cisco SDWAN provider is used to interact with the resources provided by Cisco vManage. The provider needs to be configured with the proper credentials before it can be used.
 
 Authentication
 -------------- 
@@ -24,13 +23,13 @@ Authentication with user-id and password.
 
  ```hcl
 
-    provider "dcnm" {
-      # cisco-dcnm user name
+    provider "sdwan" {
+      # cisco-sdwan user name
       username = "admin"
-      # cisco-dcnm password
+      # cisco-sdwan password
       password = "password"
-      # cisco-dcnm url
-      url      = "https://my-cisco-dcnm.com"
+      # cisco-sdwan url
+      url      = "https://my-cisco-sdwan.com"
       insecure = true
     }
  
@@ -40,30 +39,30 @@ Example Usage
 ------------
 ```hcl
 
-#configure provider with your cisco dcnm credentials.
-provider "dcnm" {
-  # cisco-dcnm user name
+#configure provider with your cisco sdwan credentials.
+provider "sdwan" {
+  # cisco-sdwan user name
   username = "admin"
-  # cisco-dcnm password
+  # cisco-sdwan password
   password = "password"
-  # cisco-dcnm url
-  url      = "https://my-cisco-dcnm.com"
+  # cisco-sdwan url
+  url      = "https://my-cisco-sdwan.com"
   insecure = true
 }
 
-resource "dcnm_vrf" "test-vrf" {
-  fabric_name = "fab1"
-  name = "MyVRF"
-  description = "This vrf is created by terraform"
+resource "sdwan_feature_template" "test" {
+#  fabric_name = "fab1"
+#  name = "MyVRF"
+#  description = "This feature template is created by terraform"
 }
 
 ```
 
 Argument Reference
 ------------------
-Following arguments are supported with Cisco DCNM terraform provider.
+Following arguments are supported with Cisco SDWAN terraform provider.
 
- * `username` - (Required) This is the Cisco DCNM username, which is required to authenticate with CISCO DCNM.
+ * `username` - (Required) This is the Cisco SDWAN username, which is required to authenticate with CISCO SDWAN.
  * `password` - (Required) Password of the user mentioned in username argument. It is required when you want to use token-based authentication.
- * `url` - (Required) URL for CISCO DCNM.
+ * `url` - (Required) URL for CISCO SDWAN.
  * `insecure` - (Optional) This determines whether to use insecure HTTP connection or not. Default value is `true`.
