@@ -1,0 +1,57 @@
+<% wrap_layout :inner do %>
+    <% content_for :sidebar do %>
+      <div class="docs-sidebar hidden-print affix-top" role="complementary">
+        <ul class="nav docs-sidenav">
+          <li<%= sidebar_current("docs-home") %>>
+          <a href="/docs/providers/index.html">All Providers</a>
+          </li>
+  
+          <li<%= sidebar_current("docs-dcnm-index") %>>
+          <a href="/docs/providers/dcnm/index.html">DCNM Provider</a>
+          </li>
+  
+
+  
+          <li<%= sidebar_current("docs-dcnm-datasource") %>>
+          <a href="#">Data Sources</a>
+                  <ul class="nav nav-visible">
+                    <li<%= sidebar_current("docs-dcnm-data-source-interface") %>>
+                      <a href="/docs/providers/dcnm/d/interface.html">dcnm_interface</a>
+                    </li>
+                    <li<%= sidebar_current("docs-dcnm-data-source-inventory") %>>
+                        <a href="/docs/providers/dcnm/d/inventory.html">dcnm_inventory</a>
+                    </li>
+                    <li<%= sidebar_current("docs-dcnm-data-source-network") %>>
+                        <a href="/docs/providers/dcnm/d/network.html">dcnm_network</a>
+                    </li>
+                    <li<%= sidebar_current("docs-dcnm-data-source-vrf") %>>
+                        <a href="/docs/providers/dcnm/d/vrf.html">dcnm_vrf</a>
+                    </li>
+                  </ul>
+          </li>
+          <li<%= sidebar_current("docs-dcnm-resource") %>>
+          <a href="#">Resources</a>
+                  <ul class="nav nav-visible">
+                    <li<%= sidebar_current("docs-dcnm-resource-interface") %>>
+                      <a href="/docs/providers/dcnm/r/interface.html">dcnm_interface</a>
+                    </li>
+                    <li<%= sidebar_current("docs-dcnm-resource-inventory") %>>
+                        <a href="/docs/providers/dcnm/r/inventory.html">dcnm_inventory</a>
+                    </li>
+                    <li<%= sidebar_current("docs-dcnm-resource-network") %>>
+                        <a href="/docs/providers/dcnm/r/network.html">dcnm_network</a>
+                    </li>
+                    <li<%= sidebar_current("docs-dcnm-resource-rest") %>>
+                        <a href="/docs/providers/dcnm/r/rest.html">dcnm_rest</a>
+                    </li>
+                    <li<%= sidebar_current("docs-dcnm-resource-vrf") %>>
+                        <a href="/docs/providers/dcnm/r/vrf.html">dcnm_vrf</a>
+                    </li>
+                  </ul>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  
+    <%= yield %>
+    <% end %>
