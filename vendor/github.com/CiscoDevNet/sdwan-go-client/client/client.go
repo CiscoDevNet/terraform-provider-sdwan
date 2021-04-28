@@ -81,7 +81,7 @@ func initClient(clientURL, username, password, proxyURL string, rateLimit int, i
 
 //GetClient constructor for Client implementation
 //
-//e.g. GetClient("https://my-company.com:port", "userName", "password", "https://my-company-proxy.com:port", true)
+//e.g. GetClient("https://my-company.com:port", "userName", "password", "https://my-company-proxy.com:port", 500, true)
 func GetClient(clientURL, username, password, proxy string, rateLimit int, insecure bool) *Client {
 	if clientImpl == nil {
 		clientImpl = initClient(clientURL, username, password, proxy, rateLimit, insecure)
