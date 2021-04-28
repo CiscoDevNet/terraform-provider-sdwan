@@ -5,6 +5,7 @@ import (
 
 	"github.com/CiscoDevNet/sdwan-go-client/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 //Provider is the main entry point for the SDWAN Terraform Provider
@@ -32,11 +33,25 @@ func Provider() *schema.Provider {
 				Description: "URL for the DCNM server",
 			},
 
+			"proxy_url": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("SDWAN_PROXY_URL", nil),
+				Description: "Proxy Server URL with port number",
+			},
+
 			"insecure": {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Default:     true,
 				Description: "Allow insecure HTTPS client",
+			},
+
+			"rate_limit": {
+				Type:         schema.TypeInt,
+				Optional:     true,
+				Description:  "API rate limit per second",
+				ValidateFunc: validation.IntBetween(0, 500),
 			},
 		},
 
@@ -54,6 +69,8 @@ func configClient(d *schema.ResourceData) (interface{}, error) {
 		Password:   d.Get("password").(string),
 		URL:        d.Get("url").(string),
 		IsInsecure: d.Get("insecure").(bool),
+		ProxyURL:   d.Get("proxy_url").(string),
+		RateLimit:  d.Get("rate_limit").(int),
 	}
 
 	if err := config.Valid(); err != nil {
@@ -82,7 +99,7 @@ func (c Config) Valid() error {
 }
 
 func (c Config) getClient() interface{} {
-	return client.GetClient(c.URL, c.Username, c.Password, c.IsInsecure)
+	return client.GetClient(c.URL, c.Username, c.Password, c.ProxyURL, c.RateLimit, c.IsInsecure)
 }
 
 //Config the basic structure used for the management of the Terraform block schema attributes
@@ -91,4 +108,6 @@ type Config struct {
 	Password   string
 	URL        string
 	IsInsecure bool
+	ProxyURL   string
+	RateLimit  int
 }

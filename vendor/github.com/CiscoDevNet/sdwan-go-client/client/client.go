@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"crypto/tls"
 	"fmt"
 	"io/ioutil"
@@ -11,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/sdwan-go-client/container"
+	"golang.org/x/time/rate"
 )
 
 //Client structure is the singleton implementation of the client
@@ -22,9 +24,21 @@ type Client struct {
 	password    string
 	insecure    bool
 	skipLogging bool
+	proxyURL    string
+	rateLimiter *rate.Limiter
 }
 
 var clientImpl *Client
+
+func (client *Client) configProxy(transport *http.Transport) *http.Transport {
+	proxy, err := url.Parse(client.proxyURL)
+	if err != nil {
+		log.Fatal(err)
+	}
+	transport.Proxy = http.ProxyURL(proxy)
+	return transport
+
+}
 
 func (client *Client) useInsecureHTTPClient() *http.Transport {
 	transport := &http.Transport{
@@ -36,21 +50,27 @@ func (client *Client) useInsecureHTTPClient() *http.Transport {
 	return transport
 }
 
-func initClient(clientURL, username, password string, insecure bool) *Client {
+func initClient(clientURL, username, password, proxyURL string, rateLimit int, insecure bool) *Client {
 	baseURL, err := url.Parse(clientURL)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	client := &Client{
-		baseURL:    baseURL,
-		username:   username,
-		password:   password,
-		insecure:   insecure,
-		httpClient: http.DefaultClient,
+		baseURL:     baseURL,
+		username:    username,
+		password:    password,
+		insecure:    insecure,
+		proxyURL:    proxyURL,
+		rateLimiter: rate.NewLimiter(rate.Limit(float64(rateLimit)/float64(1)), 1),
+		httpClient:  http.DefaultClient,
 	}
 
 	transport := client.useInsecureHTTPClient()
+
+	if client.proxyURL != "" {
+		transport = client.configProxy(transport)
+	}
 
 	client.httpClient = &http.Client{
 		Transport: transport,
@@ -61,10 +81,10 @@ func initClient(clientURL, username, password string, insecure bool) *Client {
 
 //GetClient constructor for Client implementation
 //
-//e.g. GetClient("https://my-company.com:port", "userName", "password", true)
-func GetClient(clientURL, username, password string, insecure bool) *Client {
+//e.g. GetClient("https://my-company.com:port", "userName", "password", "https://my-company-proxy.com:port", true)
+func GetClient(clientURL, username, password, proxy string, rateLimit int, insecure bool) *Client {
 	if clientImpl == nil {
-		clientImpl = initClient(clientURL, username, password, insecure)
+		clientImpl = initClient(clientURL, username, password, proxy, rateLimit, insecure)
 	}
 	return clientImpl
 }
@@ -164,6 +184,11 @@ func (client *Client) authenticate() error {
 //processed API response
 func (client *Client) Do(req *http.Request) (*container.Container, *http.Response, error) {
 	log.Println("[DEBUG] Begining Do method ", req.URL.String())
+
+	err := client.rateLimiter.Wait(context.Background())
+	if err != nil {
+		return nil, nil, err
+	}
 
 	resp, err := client.httpClient.Do(req)
 	if err != nil {

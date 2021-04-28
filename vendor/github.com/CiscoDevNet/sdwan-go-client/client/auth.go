@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 )
 
 type auth struct {
@@ -14,6 +15,10 @@ type auth struct {
 
 func (client *Client) injectAuthenticationHeader(req *http.Request, path string) (*http.Request, error) {
 	log.Println("[DEBUG] Begin Injection")
+
+	mutex := &sync.Mutex{}
+
+	mutex.Lock()
 	if !client.authClient.valid {
 		err := client.authenticate()
 		if err != nil {
@@ -25,6 +30,7 @@ func (client *Client) injectAuthenticationHeader(req *http.Request, path string)
 			}
 		}
 	}
+	mutex.Unlock()
 
 	sessionID := fmt.Sprintf("JESSIONID=%s", client.authClient.jsessionID)
 	req.Header.Set("Cookie", sessionID)
