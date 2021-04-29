@@ -64,6 +64,7 @@ func initClient(clientURL, username, password, proxyURL string, rateLimit int, i
 		proxyURL:    proxyURL,
 		rateLimiter: rate.NewLimiter(rate.Limit(float64(rateLimit)/float64(1)), 1),
 		httpClient:  http.DefaultClient,
+		authClient:  &auth{},
 	}
 
 	transport := client.useInsecureHTTPClient()
