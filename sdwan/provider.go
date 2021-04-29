@@ -51,6 +51,7 @@ func Provider() *schema.Provider {
 				Type:         schema.TypeInt,
 				Optional:     true,
 				Description:  "API rate limit per second",
+				Default:      500,
 				ValidateFunc: validation.IntBetween(0, 500),
 			},
 		},

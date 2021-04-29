@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"sync"
 
 	"github.com/CiscoDevNet/sdwan-go-client/container"
 	"golang.org/x/time/rate"
@@ -26,6 +27,7 @@ type Client struct {
 	skipLogging bool
 	proxyURL    string
 	rateLimiter *rate.Limiter
+	mutex       *sync.Mutex
 }
 
 var clientImpl *Client
@@ -64,6 +66,8 @@ func initClient(clientURL, username, password, proxyURL string, rateLimit int, i
 		proxyURL:    proxyURL,
 		rateLimiter: rate.NewLimiter(rate.Limit(float64(rateLimit)/float64(1)), 1),
 		httpClient:  http.DefaultClient,
+		authClient:  &auth{},
+		mutex:       &sync.Mutex{},
 	}
 
 	transport := client.useInsecureHTTPClient()
@@ -126,56 +130,23 @@ func (client *Client) MakeRequest(method, path string, body *container.Container
 }
 
 func (client *Client) authenticate() error {
-	method := "POST"
-	path := "/j_security_check"
-	body := []byte(fmt.Sprintf("j_username=%s&j_password=%s", client.username, client.password))
-
 	client.skipLogging = true
 
-	req, err := client.MakeRequest(method, path, nil, body, false)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-
-	_, resp, err := client.Do(req)
+	jsessionID, err := client.getSessionID()
 	if err != nil {
 		return err
 	}
 
-	cookies := resp.Header.Get("Set-Cookie")
-	if cookies == "" {
-		return fmt.Errorf("No valid JSESSION ID returned")
-	}
-	jsessionID := strings.Split(cookies, ";")[0]
-
-	method = "GET"
-	path = "/dataservice/client/token"
-	req, err = client.MakeRequest(method, path, nil, nil, false)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Cookie", fmt.Sprintf("JESSIONID=%s", jsessionID))
-
-	_, resp, err = client.Do(req)
+	token, err := client.getToken(jsessionID)
 	if err != nil {
 		return err
 	}
 
-	var token string
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		token = ""
-	} else {
-		token = string(bodyBytes)
-	}
 	client.authClient.jsessionID = jsessionID
 	client.authClient.token = token
 	client.authClient.valid = true
 
 	client.skipLogging = false
-
 	return nil
 }
 
@@ -194,10 +165,8 @@ func (client *Client) Do(req *http.Request) (*container.Container, *http.Respons
 	if err != nil {
 		return nil, nil, err
 	}
-	if !client.skipLogging {
-		log.Println("[DEBUG] HTTP Request ", req.Method, req.URL.String())
-		log.Println("[DEBUG] HTTP Response ", resp.StatusCode, resp)
-	}
+	log.Println("[DEBUG] HTTP Request ", req.Method, req.URL.String())
+	log.Println("[DEBUG] HTTP Response ", resp.StatusCode, resp)
 
 	err = checkResponse(resp)
 	if err != nil {
@@ -210,9 +179,7 @@ func (client *Client) Do(req *http.Request) (*container.Container, *http.Respons
 	}
 	bodystrings := string(bodybytes)
 	// resp.Body.Close()
-	if !client.skipLogging {
-		log.Println("[DEBUG] HTTP Response unique string ", req.Method, req.URL.String(), bodystrings)
-	}
+	log.Println("[DEBUG] HTTP Response unique string ", req.Method, req.URL.String(), bodystrings)
 
 	obj, err := container.ParseJSON(bodybytes)
 	if err != nil && resp.StatusCode != 200 {
@@ -229,8 +196,85 @@ func checkResponse(resp *http.Response) error {
 			return fmt.Errorf("Invalid Session")
 		}
 		return nil
-	} else if resp.StatusCode == 405 {
-		return fmt.Errorf("Invalid Session")
 	}
 	return nil
+}
+
+func (client *Client) getSessionID() (string, error) {
+	method := "POST"
+	path := "/j_security_check"
+	body := []byte(fmt.Sprintf("j_username=%s&j_password=%s", client.username, client.password))
+
+	req, err := client.MakeRequest(method, path, nil, body, false)
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Connection", "keep-alive")
+
+	resp, err := client.httpClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	err = checkSessionResponse(resp)
+	if err != nil {
+		return "", err
+	}
+
+	cookies := resp.Header.Get("Set-Cookie")
+	if cookies == "" {
+		return "", fmt.Errorf("No valid JSESSION ID returned")
+	}
+	session := strings.Split(cookies, ";")[0]
+	jsessionID := strings.Split(session, "=")[1]
+
+	return jsessionID, nil
+}
+
+func (client *Client) getToken(jsessionID string) (string, error) {
+	method := "GET"
+	path := "/dataservice/client/token"
+	req, err := client.MakeRequest(method, path, nil, nil, false)
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Cookie", fmt.Sprintf("JSESSIONID=%s;", jsessionID))
+	req.Header.Set("Connection", "keep-alive")
+
+	resp, err := client.httpClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	err = checkTokenResponse(resp, jsessionID)
+	if err != nil {
+		return "", err
+	}
+
+	var token string
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		token = ""
+	} else {
+		token = string(bodyBytes)
+	}
+
+	return token, nil
+}
+
+func checkTokenResponse(resp *http.Response, jsessionID string) error {
+	if resp.StatusCode == 200 {
+		if resp.Header.Get("Content-Type") == "text/html;charset=UTF-8" {
+			return fmt.Errorf("User name or password was invalid or If username and password are valid user account is locked Wait for some time and try again or contact Administrator or If username and password are valid, password has expired")
+		}
+	}
+	return nil
+}
+
+func checkSessionResponse(resp *http.Response) error {
+	if resp.StatusCode == 200 {
+		return nil
+	}
+	return fmt.Errorf("Invalid Session")
 }
