@@ -58,7 +58,9 @@ func Provider() *schema.Provider {
 
 		ResourcesMap: map[string]*schema.Resource{},
 
-		DataSourcesMap: map[string]*schema.Resource{},
+		DataSourcesMap: map[string]*schema.Resource{
+			"sdwan_device_template": datasourceSDWANDeviceTemplate(),
+		},
 
 		ConfigureFunc: configClient,
 	}
