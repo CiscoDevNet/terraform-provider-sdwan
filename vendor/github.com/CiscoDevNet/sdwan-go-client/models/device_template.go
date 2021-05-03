@@ -1,141 +1,94 @@
 package models
 
-/* Sample
-(For device template created from feature template)
-{
-    "templateName": "Sample_ISR4431_Template",
-    "templateDescription": "For testing purpose",
-    "deviceType": "vedge-ISR-4431",
-    "deviceRole": "sdwan-edge",
-    "configType": "template",
-    "factoryDefault": false,
-    "policyId": "",
-    "featureTemplateUidRange": [],
-    "connectionPreferenceRequired": true,
-    "connectionPreference": true,
-    "generalTemplates": [
-        {
-            "templateId": "6d4f554a-f930-4590-aca7-c3244a18f3be",
-            "templateType": "cisco_vpn",
-            "subTemplates": [
-                {
-                    "templateId": "99cfbde3-5fd9-47ed-be97-2bc8fd4c3e33",
-                    "templateType": "cisco_vpn_interface"
-                }
-            ]
-        },
-        {
-            "templateId": "bfcab33b-1c67-4179-9716-5ff753e29d3c",
-            "templateType": "cedge_global"
-        }
-    ]
-}
-
-(For device template created from CLI)
-{
-    "templateName": "Sample_CLI_Device",
-    "templateDescription": "For testing purpose",
-    "deviceType": "vedge-cloud",
-    "templateConfiguration": "string",
-    "factoryDefault": false,
-    "configType": "file"
-}
-*/
-
 type Template struct {
-	TemplateId   string `json:"templateId"`
-	TemplateType string `json:"templateType"`
+	TemplateId   string `json:"templateId,omitempty"`
+	TemplateType string `json:"templateType,omitempty"`
 }
 
 type GeneralTemplate struct {
-	TemplateId   string      `json:"templateId"`
-	TemplateType string      `json:"templateType"`
-	SubTemplates []*Template `json:"subTemplates"`
+	TemplateId   string      `json:"templateId,omitempty"`
+	TemplateType string      `json:"templateType,omitempty"`
+	SubTemplates []*Template `json:"subTemplates,omitempty"`
 }
 
 type DeviceTemplate struct {
-	TemplateName                 string             `json:"templateName"`
-	TemplateDescription          string             `json:"templateDescription"`
-	DeviceType                   string             `json:"deviceType"`
-	DeviceRole                   string             `json:"deviceRole"`
-	ConfigType                   string             `json:"configType"`
-	FactoryDefault               bool               `json:"factoryDefault"`
-	PolicyId                     string             `json:"policyId"`
-	FeatureTemplateUidRange      []string           `json:"featureTemplateUidRange"`
-	ConnectionPreferenceRequired bool               `json:"connectionPreferenceRequired"`
-	ConnectionPreference         bool               `json:"connectionPreference"`
-	GeneralTemplates             []*GeneralTemplate `json:"generalTemplates"`
-	TemplateConfiguration        string             `json:"templateConfiguration"`
+	TemplateName                 string             `json:"templateName,omitempty"`
+	TemplateDescription          string             `json:"templateDescription,omitempty"`
+	DeviceType                   string             `json:"deviceType,omitempty"`
+	DeviceRole                   string             `json:"deviceRole,omitempty"`
+	ConfigType                   string             `json:"configType,omitempty"`
+	FactoryDefault               bool               `json:"factoryDefault,omitempty"`
+	PolicyId                     string             `json:"policyId,omitempty"`
+	FeatureTemplateUidRange      []string           `json:"featureTemplateUidRange,omitempty"`
+	ConnectionPreferenceRequired bool               `json:"connectionPreferenceRequired,omitempty"`
+	ConnectionPreference         bool               `json:"connectionPreference,omitempty"`
+	GeneralTemplates             []*GeneralTemplate `json:"generalTemplates,omitempty"`
+	TemplateConfiguration        string             `json:"templateConfiguration,omitempty"`
+}
+
+func (st *Template) MakeSubTemplate() (map[string]interface{}, error) {
+	stMap := make(map[string]interface{})
+
+	A(stMap, "templateId", st.TemplateId)
+
+	A(stMap, "templateType", st.TemplateType)
+
+	return stMap, nil
+}
+
+func (gt *GeneralTemplate) MakeGeneralTemplate() (map[string]interface{}, error) {
+	gtMap := make(map[string]interface{})
+
+	A(gtMap, "templateId", gt.TemplateId)
+
+	A(gtMap, "templateType", gt.TemplateType)
+
+	if len(gt.SubTemplates) > 0 {
+		stList := make([]interface{}, 0)
+		for _, st := range gt.SubTemplates {
+			stMap, _ := st.MakeSubTemplate()
+			stList = append(stList, stMap)
+		}
+		A(gtMap, "subTemplates", stList)
+	}
+	return gtMap, nil
 }
 
 // ToMap - Returns map for Device Template model
 func (dt *DeviceTemplate) ToMap() (map[string]interface{}, error) {
 	deviceTemplateAttrMap := make(map[string]interface{})
 
-	if dt.TemplateName != "" {
-		deviceTemplateAttrMap["templateName"] = dt.TemplateName
-	}
+	A(deviceTemplateAttrMap, "templateName", dt.TemplateName)
 
-	if dt.TemplateDescription != "" {
-		deviceTemplateAttrMap["templateDescription"] = dt.TemplateDescription
-	}
+	A(deviceTemplateAttrMap, "templateDescription", dt.TemplateDescription)
 
-	if dt.DeviceType != "" {
-		deviceTemplateAttrMap["deviceType"] = dt.DeviceType
-	}
+	A(deviceTemplateAttrMap, "deviceType", dt.DeviceType)
 
-	if dt.DeviceRole != "" {
-		deviceTemplateAttrMap["deviceRole"] = dt.DeviceRole
-	}
+	A(deviceTemplateAttrMap, "deviceRole", dt.DeviceRole)
 
-	if dt.ConfigType != "" {
-		deviceTemplateAttrMap["configType"] = dt.ConfigType
-	}
+	A(deviceTemplateAttrMap, "configType", dt.ConfigType)
 
-	deviceTemplateAttrMap["policyId"] = dt.PolicyId
+	A(deviceTemplateAttrMap, "factoryDefault", dt.FactoryDefault)
 
-	deviceTemplateAttrMap["featureTemplateUidRange"] = dt.FeatureTemplateUidRange
+	A(deviceTemplateAttrMap, "policyId", dt.PolicyId)
 
-	deviceTemplateAttrMap["connectionPreferenceRequired"] = dt.ConnectionPreferenceRequired
+	A(deviceTemplateAttrMap, "connectionRreferenceRequired", dt.ConnectionPreferenceRequired)
 
-	deviceTemplateAttrMap["connectionPreference"] = dt.ConnectionPreference
+	A(deviceTemplateAttrMap, "connectionRreference", dt.ConnectionPreference)
 
-	if dt.TemplateConfiguration != "" {
-		deviceTemplateAttrMap["templateConfiguration"] = dt.TemplateConfiguration
-	}
+	A(deviceTemplateAttrMap, "templateConfiguration", dt.TemplateConfiguration)
 
-	gts := []map[string]interface{}{}
-
-	for _, generalTemplate := range dt.GeneralTemplates {
-		gt := make(map[string]interface{})
-
-		if generalTemplate.TemplateId != "" {
-			gt["templateId"] = generalTemplate.TemplateId
+	if len(dt.GeneralTemplates) > 0 {
+		gtList := make([]interface{}, 0)
+		for _, gt := range dt.GeneralTemplates {
+			gtMap, _ := gt.MakeGeneralTemplate()
+			gtList = append(gtList, gtMap)
 		}
-
-		if generalTemplate.TemplateType != "" {
-			gt["templateType"] = generalTemplate.TemplateType
-		}
-
-		if generalTemplate.SubTemplates != nil {
-			tps := []map[string]interface{}{}
-			for _, subTemplate := range generalTemplate.SubTemplates {
-				tp := make(map[string]interface{})
-				if subTemplate.TemplateId != "" {
-					tp["templateId"] = subTemplate.TemplateId
-				}
-				if subTemplate.TemplateType != "" {
-					tp["templateType"] = subTemplate.TemplateType
-				}
-				tps = append(tps, tp)
-			}
-			gt["subTemplates"] = tps
-		} 
-
-		gts = append(gts, gt)
+		A(deviceTemplateAttrMap, "generalTemplates", gtList)
 	}
 
-	deviceTemplateAttrMap["generalTemplates"] = gts
-
+	if len(dt.FeatureTemplateUidRange) > 0 {
+		A(deviceTemplateAttrMap, "featureTemplateUidRange", dt.FeatureTemplateUidRange)
+	}
 	return deviceTemplateAttrMap, nil
 }

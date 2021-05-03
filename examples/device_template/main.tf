@@ -11,6 +11,18 @@ provider "sdwan" {
   
 }
 
-data "sdwan_device_template" "name"{
-    template_name="vSmart"
+data "sdwan_device_template" "example1"{
+    template_name="Smaple_for_data_Source"
+}
+
+data "sdwan_device_template" "example2"{
+  template_name = "test1"
+}
+
+output "output1" {
+  value = data.sdwan_device_template.example1.device_type
+}
+
+output "output2" {
+  value = data.sdwan_device_template.example2
 }
