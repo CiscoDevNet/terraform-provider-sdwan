@@ -358,6 +358,9 @@ func dataSourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) er
 		// 			d.Set("general_templates", gts)
 		// 		}
 	}
+
+	d.SetId(stripQuotes(selected.S("templateId").String()))
+
 	log.Println("[DEBUG] Ending Read method ")
 	return nil
 }

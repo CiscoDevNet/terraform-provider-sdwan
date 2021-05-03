@@ -144,3 +144,14 @@ func stripQuotes(word string) string {
 	}
 	return word
 }
+
+func interfaceToStrList(data interface{}) []string {
+	values := data.([]interface{})
+
+	strList := make([]string, 0, 1)
+	for _, val := range values {
+		strList = append(strList, val.(string))
+	}
+
+	return strList
+}

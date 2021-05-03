@@ -1,6 +1,7 @@
 package sdwan
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/CiscoDevNet/sdwan-go-client/client"
@@ -44,6 +45,7 @@ func resourceSDWANDeviceTemplate() *schema.Resource {
 			"config_type": {
 				Type:             schema.TypeString,
 				Required:         true,
+				ForceNew:         true,
 				ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(validConfigTypes, false)),
 				Description:      "Configuration type for  Device Template",
 			},
@@ -129,15 +131,15 @@ func resourceSDWANDeviceTemplate() *schema.Resource {
 							Description: "List of Sub Templates associated with feature Template",
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
-									"template_id": {
+									"sub_template_id": {
 										Type:        schema.TypeString,
 										Required:    true,
-										Description: "Template Id of Feature Template",
+										Description: "Sub Template Id of Feature Template",
 									},
-									"template_type": {
+									"sub_template_type": {
 										Type:        schema.TypeString,
 										Required:    true,
-										Description: "Template Type of Feature Template",
+										Description: "Sub Template Type of Feature Template",
 									},
 								},
 							},
@@ -176,7 +178,9 @@ func resourceSDWANDeviceTemplate() *schema.Resource {
 
 func resourceSDWANDeviceTemplateCreate(d *schema.ResourceData, m interface{}) error {
 	log.Println("[DEBUG] Begining Create method ")
+
 	sdwanClient := m.(*client.Client)
+
 	deviceTemplate := &models.DeviceTemplate{
 		TemplateName:        d.Get("template_name").(string),
 		TemplateDescription: d.Get("template_description").(string),
@@ -185,43 +189,56 @@ func resourceSDWANDeviceTemplateCreate(d *schema.ResourceData, m interface{}) er
 		FactoryDefault:      d.Get("factory_default").(bool),
 	}
 
-	if deviceTemplate.ConfigType=="template"{
-		if val,ok:=d.GetOk("connection_preference").(bool)
-		deviceTemplate.ConnectionPreferenceRequired:=d.GetOk("")
-		if val, exists := d.GetOk("general_templates"); exists {
-			gts, errs := expandGeneralTemplates(val.(*schema.Set).List())
+	var tempID string
+
+	if deviceTemplate.ConfigType == "template" {
+		if connPref, ok := d.GetOk(""); ok {
+			deviceTemplate.ConnectionPreference = connPref.(bool)
 		}
-	}else{
 
+		if connPrefReq, ok := d.GetOk(""); ok {
+			deviceTemplate.ConnectionPreferenceRequired = connPrefReq.(bool)
+		}
+
+		if uidRange, ok := d.GetOk(""); ok {
+			deviceTemplate.FeatureTemplateUidRange = interfaceToStrList(uidRange)
+		}
+
+		if polID, ok := d.GetOk(""); ok {
+			deviceTemplate.PolicyId = polID.(string)
+		}
+
+		if val, exists := d.GetOk("general_templates"); exists {
+			deviceTemplate.GeneralTemplates = expandGeneralTemplates(val.(*schema.Set).List())
+		}
+
+		dURL := fmt.Sprintf("dataservice/template/device/feature")
+		cont, err := sdwanClient.Save(dURL, deviceTemplate)
+		if err != nil {
+			return err
+		}
+
+		tempID = cont.S("templateId").String()
 	}
+	// } else {
+	// 	//TODO
+	// 	// dURL := fmt.Sprintf("/dataservice/template/device/cli")
+	// }
 
-	
-	log.Println("[DEBUG] Ending Create method")
-	return nil
-}
+	d.SetId(tempID)
 
-func expandGeneralTemplates(generalTemplates []interface{}) ([]map[string]interface{}, error) {
-	generalTemplate := []map[string]interface{}{}
-	for _, gt := range generalTemplates {
-		t := gt.(map[string]interface{})
-		m := make(map[string]interface{})
+	log.Println("[DEBUG] Ending Create method ", d.Id())
 
-		m["template_id"] = t["template_id"]
-		m["template_type"] = t["template_type"]
-
-		sts, errs := expandSubTemplates(t["sub_templates"].(*schema.Set).List())
-
-	}
-}
-
-func expandSubTemplates(subTemplates []interface{}) ([]map[string]interface{}, error) {
-subTemplate:
+	return resourceSDWANDeviceTemplateRead(d, m)
 }
 
 func resourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) error {
-	log.Println("[DEBUG] Begining Read method ")
+	log.Println("[DEBUG] Begining Read method ", d.Id())
+
 	sdwanClient := m.(*client.Client)
-	dtid := d.Get("template_id").(string)
+
+	dtid := d.Id()
+
 	objurl := "/dataservice/template/device/object/" + dtid
 	data, err := sdwanClient.GetViaURL(objurl)
 	if err != nil {
@@ -330,26 +347,126 @@ func resourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) erro
 	} else {
 		d.Set("general_templates", make([]interface{}, 0))
 	}
-	log.Println("[DEBUG] Ending Create method")
+
+	d.SetId(stripQuotes(data.S("templateId").String()))
+
+	log.Println("[DEBUG] Ending Read method", d.Id())
+
 	return nil
 }
 
 func resourceSDWANDeviceTemplateUpdate(d *schema.ResourceData, m interface{}) error {
-	log.Println("[DEBUG] Begining Update method ")
-	log.Println("[DEBUG] Ending Create method")
+	log.Println("[DEBUG] Begining Update method ", d.Id())
+
+	devTempID := d.Id()
+
+	sdwanClient := m.(*client.Client)
+
+	deviceTemplate := &models.DeviceTemplate{
+		TemplateName:        d.Get("template_name").(string),
+		TemplateDescription: d.Get("template_description").(string),
+		DeviceType:          d.Get("device_type").(string),
+		ConfigType:          d.Get("config_type").(string),
+		FactoryDefault:      d.Get("factory_default").(bool),
+	}
+
+	var tempID string
+
+	if deviceTemplate.ConfigType == "template" {
+		if d.HasChange("") {
+			deviceTemplate.ConnectionPreference = d.Get("").(bool)
+		}
+
+		if connPrefReq, ok := d.GetOk(""); ok {
+			deviceTemplate.ConnectionPreferenceRequired = connPrefReq.(bool)
+		}
+
+		if uidRange, ok := d.GetOk(""); ok {
+			deviceTemplate.FeatureTemplateUidRange = interfaceToStrList(uidRange)
+		}
+
+		if polID, ok := d.GetOk(""); ok {
+			deviceTemplate.PolicyId = polID.(string)
+		}
+
+		if val, exists := d.GetOk("general_templates"); exists {
+			deviceTemplate.GeneralTemplates = expandGeneralTemplates(val.(*schema.Set).List())
+		}
+
+		dURL := fmt.Sprintf("/dataservice/template/device/%s", devTempID)
+		cont, err := sdwanClient.Update(dURL, deviceTemplate)
+		if err != nil {
+			return err
+		}
+
+		tempID = cont.S("templateId").String()
+	}
+	// } else {
+	// 	//TODO
+	// 	// dURL := fmt.Sprintf("/dataservice/template/device/cli")
+	// }
+
+	d.SetId(tempID)
+
+	log.Println("[DEBUG] Ending Update method", d.Id())
 	return nil
 }
 
 func resourceSDWANDeviceTemplateDelete(d *schema.ResourceData, m interface{}) error {
-	log.Println("[DEBUG] Begining Delete method ")
+	log.Println("[DEBUG] Begining Delete method ", d.Id())
+
 	sdwanClient := m.(*client.Client)
-	dtid := d.Get("template_id").(string)
-	objurl := "/dataservice/template/device" + dtid
-	_, err := sdwanClient.GetViaURL(objurl)
+
+	dtid := d.Id()
+
+	dURL := fmt.Sprintf("/dataservice/template/device/%s", dtid)
+	_, err := sdwanClient.GetViaURL(dURL)
 	if err != nil {
 		return err
 	}
+
 	d.SetId("")
+
 	log.Println("[DEBUG] Ending Create method")
 	return nil
+}
+
+func expandGeneralTemplates(generalTemplates []interface{}) []*models.GeneralTemplate {
+	GenTemplates := make([]*models.GeneralTemplate, 0, 1)
+
+	for _, val := range generalTemplates {
+		GenTemp := &models.GeneralTemplate{}
+
+		GetGenTemp := val.(map[string]interface{})
+
+		GenTemp.TemplateId = GetGenTemp[""].(string)
+
+		GenTemp.TemplateType = GetGenTemp[""].(string)
+
+		if GetGenTemp[""] != nil {
+			GenTemp.SubTemplates = expandSubTemplates(GetGenTemp[""].(*schema.Set).List())
+		}
+
+		GenTemplates = append(GenTemplates, GenTemp)
+	}
+
+	return GenTemplates
+}
+
+func expandSubTemplates(subTemplates []interface{}) []*models.Template {
+	genSubTemplates := make([]*models.Template, 0, 1)
+
+	for _, subTemps := range subTemplates {
+		subTemp := &models.Template{}
+
+		getSubTemps := subTemps.(map[string]interface{})
+
+		subTemp.TemplateId = getSubTemps[""].(string)
+
+		subTemp.TemplateType = getSubTemps[""].(string)
+
+		genSubTemplates = append(genSubTemplates, subTemp)
+	}
+
+	return genSubTemplates
 }
