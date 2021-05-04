@@ -8,78 +8,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
-// func containerToMapArray(data *container.Container, keys []string) []map[string]interface{} {
-// 	ms := []map[string]interface{}{}
-
-// 	for _, child := range data.Children() {
-// 		ms = append(ms, containerToMap(child, keys))
-// 	}
-
-// 	return ms
-// }
-
-// func containerToMap(data *container.Container, keys []string) map[string]interface{} {
-// 	m := map[string]interface{}{}
-
-// 	for _, k := range keys {
-// 		camelCase := snakeCaseToCamelCase(k)
-// 		if data.Exists(camelCase) && data.S(camelCase).Data() != nil {
-// 			m[k] = data.S(camelCase).Data()
-// 		} else {
-// 			m[k] = nil
-// 		}
-// 	}
-
-// 	return m
-// }
-
-// func containerToMapArrayDeviceTemplate(data *container.Container, keys []string) []map[string]interface{} {
-// 	ms := []map[string]interface{}{}
-
-// 	for _, child := range data.Children() {
-// 		ms = append(ms, containerToMapDeviceTemplate(child, keys))
-// 	}
-
-// 	return ms
-// }
-
-// func containerToMapDeviceTemplate(data *container.Container, keys []string) map[string]interface{} {
-// 	m := map[string]interface{}{}
-
-// 	for _, k := range keys {
-// 		camelCase := snakeCaseToCamelCase(k)
-// 		if data.Exists(camelCase) && data.S(camelCase).Data() != nil && camelCase != "subTemplates" {
-// 			m[k] = data.S(camelCase).Data()
-// 		} else if camelCase == "subTemplates" {
-// 			m[k] = containerToMapArray(data.S("subTemplates"), []string{"template_id", "template_type"})
-// 		} else {
-// 			m[k] = nil
-// 		}
-// 	}
-
-// 	return m
-// }
-
-// func snakeCaseToCamelCase(inputUnderScoreStr string) (camelCase string) {
-
-// 	isToUpper := false
-
-// 	for _, v := range inputUnderScoreStr {
-// 		if isToUpper {
-// 			camelCase += strings.ToUpper(string(v))
-// 			isToUpper = false
-// 		} else {
-// 			if v == '_' {
-// 				isToUpper = true
-// 			} else {
-// 				camelCase += string(v)
-// 			}
-// 		}
-// 	}
-// 	return
-
-// }
-
 func NameValidation() schema.SchemaValidateFunc {
 	return validation.All(
 		validation.StringLenBetween(1, 128),
@@ -117,25 +45,11 @@ var (
 	validConfigTypes = []string{
 		"template",
 		"file"}
-	validInterfaceTypes = []string{
-		"ge0/",
-		"ge1/",
-		"ge2/",
-		"ge3/",
-		"10ge0/",
-		"10ge1/",
-		"10ge2/",
-		"10ge3/",
-		"GigabitEthernet0",
-		"GigabitEthernet0/",
-		"GigabitEthernet1/",
-		"GigabitEthernet2/",
-		"Cellular0/",
-		"eth",
-		"irb",
-		"loopback",
-		"Loopback",
-		"mgmt0"}
+	validTemplateTypes = []string{
+		"system-vedge",
+		"ntp",
+		"vpn-vedge",
+		"vpn-vedge-interface"}
 )
 
 func stripQuotes(word string) string {

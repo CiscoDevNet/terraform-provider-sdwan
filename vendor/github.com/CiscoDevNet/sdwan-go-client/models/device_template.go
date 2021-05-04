@@ -1,29 +1,29 @@
 package models
 
 type Template struct {
-	TemplateId   string `json:"templateId,omitempty"`
-	TemplateType string `json:"templateType,omitempty"`
+	TemplateId   string `json:"templateId"`
+	TemplateType string `json:"templateType"`
 }
 
 type GeneralTemplate struct {
-	TemplateId   string      `json:"templateId,omitempty"`
-	TemplateType string      `json:"templateType,omitempty"`
-	SubTemplates []*Template `json:"subTemplates,omitempty"`
+	TemplateId   string     `json:"templateId"`
+	TemplateType string     `json:"templateType"`
+	SubTemplates []*Template `json:"subTemplates"`
 }
 
 type DeviceTemplate struct {
-	TemplateName                 string             `json:"templateName,omitempty"`
-	TemplateDescription          string             `json:"templateDescription,omitempty"`
-	DeviceType                   string             `json:"deviceType,omitempty"`
-	DeviceRole                   string             `json:"deviceRole,omitempty"`
-	ConfigType                   string             `json:"configType,omitempty"`
-	FactoryDefault               bool               `json:"factoryDefault,omitempty"`
-	PolicyId                     string             `json:"policyId,omitempty"`
-	FeatureTemplateUidRange      []string           `json:"featureTemplateUidRange,omitempty"`
-	ConnectionPreferenceRequired bool               `json:"connectionPreferenceRequired,omitempty"`
-	ConnectionPreference         bool               `json:"connectionPreference,omitempty"`
-	GeneralTemplates             []*GeneralTemplate `json:"generalTemplates,omitempty"`
-	TemplateConfiguration        string             `json:"templateConfiguration,omitempty"`
+	TemplateName                 string            `json:"templateName"`
+	TemplateDescription          string            `json:"templateDescription"`
+	DeviceType                   string            `json:"deviceType"`
+	DeviceRole                   string            `json:"deviceRole"`
+	ConfigType                   string            `json:"configType"`
+	FactoryDefault               bool              `json:"factoryDefault"`
+	PolicyId                     string            `json:"policyId"`
+	FeatureTemplateUidRange      []string          `json:"featureTemplateUidRange"`
+	ConnectionPreferenceRequired bool              `json:"connectionPreferenceRequired"`
+	ConnectionPreference         bool              `json:"connectionPreference"`
+	GeneralTemplates             []*GeneralTemplate `json:"generalTemplates"`
+	TemplateConfiguration        string            `json:"templateConfiguration"`
 }
 
 func (st *Template) MakeSubTemplate() (map[string]interface{}, error) {
@@ -72,9 +72,9 @@ func (dt *DeviceTemplate) ToMap() (map[string]interface{}, error) {
 
 	A(deviceTemplateAttrMap, "policyId", dt.PolicyId)
 
-	A(deviceTemplateAttrMap, "connectionRreferenceRequired", dt.ConnectionPreferenceRequired)
+	A(deviceTemplateAttrMap, "connectionPreferenceRequired", dt.ConnectionPreferenceRequired)
 
-	A(deviceTemplateAttrMap, "connectionRreference", dt.ConnectionPreference)
+	A(deviceTemplateAttrMap, "connectionPreference", dt.ConnectionPreference)
 
 	A(deviceTemplateAttrMap, "templateConfiguration", dt.TemplateConfiguration)
 
@@ -89,6 +89,10 @@ func (dt *DeviceTemplate) ToMap() (map[string]interface{}, error) {
 
 	if len(dt.FeatureTemplateUidRange) > 0 {
 		A(deviceTemplateAttrMap, "featureTemplateUidRange", dt.FeatureTemplateUidRange)
+		
+	} else {
+		deviceTemplateAttrMap["featureTemplateUidRange"] = make([]string, 0, 1)
+		
 	}
 	return deviceTemplateAttrMap, nil
 }

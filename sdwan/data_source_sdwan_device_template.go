@@ -295,68 +295,6 @@ func dataSourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) er
 		} else {
 			d.Set("general_templates", make([]interface{}, 0))
 		}
-		// 		for _, key := range []string{
-		// 			"template_name",
-		// 			"template_description",
-		// 			"device_type",
-		// 			"device_role",
-		// 			"config_type",
-		// 			"factory_default",
-		// 			"policy_id",
-		// 			"connection_preference_required",
-		// 			"connection_preference",
-		// 			"last_updated_by",
-		// 			"last_updated_on",
-		// 			"template_class",
-		// 			"template_configuration",
-		// 			"template_id",
-		// 			"created_by",
-		// 			"created_on",
-		// 			"feature",
-		// 			"template_attached",
-		// 		} {
-		// 			camelCase := snakeCaseToCamelCase(key)
-		// 			if selected.Exists(camelCase) {
-		// 				d.Set(key, selected.S(camelCase).Data())
-		// 			}
-		// 			if selected.Exists("@rid") {
-		// 				d.Set("rid", selected.S("@rid").Data())
-		// 			}
-		// 		}
-
-		// 		fturcc := snakeCaseToCamelCase("feature_template_uid_range")
-		// 		if len(selected.S(fturcc).Children()) > 0 {
-		// 			fturs := []string{}
-		// 			for _, ftur := range selected.S(fturcc).Children() {
-		// 				switch ftur.Data().(type) {
-		// 				case int64:
-		// 					{
-		// 						val := ftur.Data().(int64)
-		// 						str_val := strconv.FormatInt(val, 10)
-		// 						fturs = append(fturs, string(str_val))
-		// 					}
-		// 				case float64:
-		// 					{
-		// 						val := ftur.Data().(float64)
-		// 						str_val := strconv.FormatFloat(val, 'E', -1, 64)
-		// 						fturs = append(fturs, string(str_val))
-		// 					}
-		// 				case string:
-		// 					{
-		// 						fturs = append(fturs, ftur.Data().(string))
-		// 					}
-
-		// 				}
-
-		// 			}
-		// 			d.Set("feature_template_uid_range", fturs)
-		// 		}
-
-		// 		gtcc := snakeCaseToCamelCase("general_templates")
-		// 		if len(selected.S(gtcc).Children()) > 0 {
-		// 			gts := containerToMapArrayDeviceTemplate(selected.S(gtcc), []string{"template_id", "template_type", "sub_templates"})
-		// 			d.Set("general_templates", gts)
-		// 		}
 	}
 
 	d.SetId(stripQuotes(selected.S("templateId").String()))
