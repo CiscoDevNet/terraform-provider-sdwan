@@ -26,7 +26,7 @@ resource "sdwan_device_template" "example_resource1"{
   device_role="sdwan-edge"
   config_type="file"
   factory_default=false
-  template_configuration="harsh"
+  template_configuration="`"
 }
 
 resource "sdwan_device_template" "example_resource2" {
