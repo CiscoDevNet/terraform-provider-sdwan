@@ -11,13 +11,13 @@ provider "sdwan" {
   
 }
 
-data "sdwan_device_template" "example1"{
-    template_name="Smaple_for_data_Source"
-}
+# data "sdwan_device_template" "example1"{
+#     template_name="Smaple_for_data_Source"
+# }
 
-data "sdwan_device_template" "example2"{
-  template_name = "test1"
-}
+# data "sdwan_device_template" "example2"{
+#   template_name = "test1"
+# }
 
 resource "sdwan_device_template" "example_resource1"{
   template_name = "resource_testing_1"

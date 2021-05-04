@@ -74,7 +74,7 @@ func resourceSDWANDeviceTemplate() *schema.Resource {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Computed:    true,
-				Description: "connectionPreferenceRequired flag for Device Template",
+				Description: "connectionPreferenceRequired flagfor Device Template",
 			},
 			"connection_preference": {
 				Type:        schema.TypeBool,
@@ -145,6 +145,11 @@ func resourceSDWANDeviceTemplate() *schema.Resource {
 										ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(validTemplateTypes, false)),
 										Description:      "Sub Template Type of Feature Template",
 									},
+								},
+							},
+						},
+					},
+				},
 			},
 			"created_on": {
 				Type:        schema.TypeInt,
@@ -191,7 +196,6 @@ func resourceSDWANDeviceTemplateCreate(d *schema.ResourceData, m interface{}) er
 	var tempID string
 
 	if deviceTemplate.ConfigType == "template" {
-<<<<<<< HEAD
 		if connPref, ok := d.GetOk("connection_preference"); ok {
 			deviceTemplate.ConnectionPreference = connPref.(bool)
 		}
@@ -210,22 +214,6 @@ func resourceSDWANDeviceTemplateCreate(d *schema.ResourceData, m interface{}) er
 			deviceTemplate.PolicyId = polID.(string)
 		} else {
 			deviceTemplate.PolicyId = "{}"
-=======
-		if connPref, ok := d.GetOk(""); ok {
-			deviceTemplate.ConnectionPreference = connPref.(bool)
-		}
-
-		if connPrefReq, ok := d.GetOk(""); ok {
-			deviceTemplate.ConnectionPreferenceRequired = connPrefReq.(bool)
-		}
-
-		if uidRange, ok := d.GetOk(""); ok {
-			deviceTemplate.FeatureTemplateUidRange = interfaceToStrList(uidRange)
-		}
-
-		if polID, ok := d.GetOk(""); ok {
-			deviceTemplate.PolicyId = polID.(string)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 		}
 
 		if val, exists := d.GetOk("general_templates"); exists {
@@ -238,7 +226,6 @@ func resourceSDWANDeviceTemplateCreate(d *schema.ResourceData, m interface{}) er
 			return err
 		}
 
-<<<<<<< HEAD
 		tempID = stripQuotes(cont.S("templateId").String())
 	} else {
 
@@ -255,14 +242,6 @@ func resourceSDWANDeviceTemplateCreate(d *schema.ResourceData, m interface{}) er
 
 		tempID = stripQuotes(cont.S("templateId").String())
 	}
-=======
-		tempID = cont.S("templateId").String()
-	}
-	// } else {
-	// 	//TODO
-	// 	// dURL := fmt.Sprintf("/dataservice/template/device/cli")
-	// }
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 
 	d.SetId(tempID)
 
@@ -278,14 +257,9 @@ func resourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) erro
 
 	dtid := d.Id()
 
-<<<<<<< HEAD
 	dURL := fmt.Sprintf(`dataservice/template/device/object/%v`, dtid)
 
 	data, err := sdwanClient.GetViaURL(dURL)
-=======
-	objurl := "/dataservice/template/device/object/" + dtid
-	data, err := sdwanClient.GetViaURL(objurl)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 	if err != nil {
 		return err
 	}
@@ -349,30 +323,18 @@ func resourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) erro
 
 	if len(data.S("featureTemplateUidRange").Children()) > 0 {
 		fturcontList := data.S("featureTemplateUidRange")
-<<<<<<< HEAD
 		fturList := make([]string, 0, 1)
-=======
-		fturList := make([]string, 0)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 		for i := 0; i < len(fturcontList.Data().([]interface{})); i++ {
 			fturList = append(fturList, stripQuotes(fturcontList.Index(i).String()))
 		}
 		d.Set("feature_template_uid_range", fturList)
 	} else {
-<<<<<<< HEAD
 		d.Set("feature_template_uid_range", make([]string, 0, 1))
-=======
-		d.Set("feature_template_uid_range", make([]string, 0))
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 	}
 
 	if len(data.S("generalTemplates").Children()) > 0 {
 		gtcontList := data.S("generalTemplates")
-<<<<<<< HEAD
 		gtList := make([]interface{}, 0, 1)
-=======
-		gtList := make([]interface{}, 0)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 		for i := 0; i < len(gtcontList.Data().([]interface{})); i++ {
 			gtMap := make(map[string]interface{})
 
@@ -382,7 +344,6 @@ func resourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) erro
 
 			if len(gtcontList.Index(i).S("subTemplates").Children()) > 0 {
 				stcontList := gtcontList.Index(i).S("subTemplates")
-<<<<<<< HEAD
 				stList := make([]interface{}, 0, 1)
 				for j := 0; j < len(stcontList.Data().([]interface{})); j++ {
 					stMap := make(map[string]string)
@@ -390,37 +351,20 @@ func resourceSDWANDeviceTemplateRead(d *schema.ResourceData, m interface{}) erro
 					stMap["sub_template_id"] = stripQuotes(stcontList.Index(j).S("templateId").String())
 
 					stMap["sub_template_type"] = stripQuotes(stcontList.Index(j).S("templateType").String())
-=======
-				stList := make([]interface{}, 0)
-				for j := 0; j < len(stcontList.Data().([]interface{})); j++ {
-					stMap := make(map[string]string)
-
-					stMap["template_id"] = stripQuotes(stcontList.Index(j).S("templateId").String())
-
-					stMap["template_type"] = stripQuotes(stcontList.Index(j).S("templateType").String())
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 
 					stList = append(stList, stMap)
 				}
 
 				gtMap["sub_templates"] = stList
 			} else {
-<<<<<<< HEAD
 				gtMap["sub_templates"] = make([]interface{}, 0, 1)
-=======
-				gtMap["sub_templates"] = make([]interface{}, 0)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 			}
 			gtList = append(gtList, gtMap)
 		}
 
 		d.Set("general_templates", gtList)
 	} else {
-<<<<<<< HEAD
 		d.Set("general_templates", make([]interface{}, 0, 1))
-=======
-		d.Set("general_templates", make([]interface{}, 0))
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 	}
 
 	d.SetId(stripQuotes(data.S("templateId").String()))
@@ -445,7 +389,6 @@ func resourceSDWANDeviceTemplateUpdate(d *schema.ResourceData, m interface{}) er
 		FactoryDefault:      d.Get("factory_default").(bool),
 	}
 
-<<<<<<< HEAD
 	if deviceTemplate.ConfigType == "template" {
 		if connPref, ok := d.GetOk("connection_preference"); ok {
 			deviceTemplate.ConnectionPreference = connPref.(bool)
@@ -465,32 +408,12 @@ func resourceSDWANDeviceTemplateUpdate(d *schema.ResourceData, m interface{}) er
 			deviceTemplate.PolicyId = polID.(string)
 		} else {
 			deviceTemplate.PolicyId = "{}"
-=======
-	var tempID string
-
-	if deviceTemplate.ConfigType == "template" {
-		if d.HasChange("") {
-			deviceTemplate.ConnectionPreference = d.Get("").(bool)
-		}
-
-		if connPrefReq, ok := d.GetOk(""); ok {
-			deviceTemplate.ConnectionPreferenceRequired = connPrefReq.(bool)
-		}
-
-		if uidRange, ok := d.GetOk(""); ok {
-			deviceTemplate.FeatureTemplateUidRange = interfaceToStrList(uidRange)
-		}
-
-		if polID, ok := d.GetOk(""); ok {
-			deviceTemplate.PolicyId = polID.(string)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 		}
 
 		if val, exists := d.GetOk("general_templates"); exists {
 			deviceTemplate.GeneralTemplates = expandGeneralTemplates(val.(*schema.Set).List())
 		}
 
-<<<<<<< HEAD
 	} else {
 
 		if tconfig, ok := d.GetOk("template_configuration"); ok {
@@ -505,22 +428,6 @@ func resourceSDWANDeviceTemplateUpdate(d *schema.ResourceData, m interface{}) er
 	}
 
 	d.SetId(devTempID)
-=======
-		dURL := fmt.Sprintf("/dataservice/template/device/%s", devTempID)
-		cont, err := sdwanClient.Update(dURL, deviceTemplate)
-		if err != nil {
-			return err
-		}
-
-		tempID = cont.S("templateId").String()
-	}
-	// } else {
-	// 	//TODO
-	// 	// dURL := fmt.Sprintf("/dataservice/template/device/cli")
-	// }
-
-	d.SetId(tempID)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 
 	log.Println("[DEBUG] Ending Update method", d.Id())
 	return nil
@@ -533,13 +440,8 @@ func resourceSDWANDeviceTemplateDelete(d *schema.ResourceData, m interface{}) er
 
 	dtid := d.Id()
 
-<<<<<<< HEAD
 	dURL := fmt.Sprintf("/dataservice/template/device/%v", dtid)
 	_, err := sdwanClient.Delete(dURL)
-=======
-	dURL := fmt.Sprintf("/dataservice/template/device/%s", dtid)
-	_, err := sdwanClient.GetViaURL(dURL)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 	if err != nil {
 		return err
 	}
@@ -558,21 +460,12 @@ func expandGeneralTemplates(generalTemplates []interface{}) []*models.GeneralTem
 
 		GetGenTemp := val.(map[string]interface{})
 
-<<<<<<< HEAD
 		GenTemp.TemplateId = GetGenTemp["template_id"].(string)
 
 		GenTemp.TemplateType = GetGenTemp["template_type"].(string)
 
 		if GetGenTemp["sub_templates"] != nil {
 			GenTemp.SubTemplates = expandSubTemplates(GetGenTemp["sub_templates"].(*schema.Set).List())
-=======
-		GenTemp.TemplateId = GetGenTemp[""].(string)
-
-		GenTemp.TemplateType = GetGenTemp[""].(string)
-
-		if GetGenTemp[""] != nil {
-			GenTemp.SubTemplates = expandSubTemplates(GetGenTemp[""].(*schema.Set).List())
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 		}
 
 		GenTemplates = append(GenTemplates, GenTemp)
@@ -589,15 +482,9 @@ func expandSubTemplates(subTemplates []interface{}) []*models.Template {
 
 		getSubTemps := subTemps.(map[string]interface{})
 
-<<<<<<< HEAD
 		subTemp.TemplateId = getSubTemps["sub_template_id"].(string)
 
 		subTemp.TemplateType = getSubTemps["sub_template_type"].(string)
-=======
-		subTemp.TemplateId = getSubTemps[""].(string)
-
-		subTemp.TemplateType = getSubTemps[""].(string)
->>>>>>> a6c61064974a513e62c9553542341dc19814ccfe
 
 		genSubTemplates = append(genSubTemplates, subTemp)
 	}
