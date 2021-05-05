@@ -430,7 +430,8 @@ func resourceSDWANDeviceTemplateUpdate(d *schema.ResourceData, m interface{}) er
 	d.SetId(devTempID)
 
 	log.Println("[DEBUG] Ending Update method", d.Id())
-	return nil
+
+	return resourceSDWANDeviceTemplateRead(d, m)
 }
 
 func resourceSDWANDeviceTemplateDelete(d *schema.ResourceData, m interface{}) error {

@@ -11,13 +11,13 @@ provider "sdwan" {
   
 }
 
-# data "sdwan_device_template" "example1"{
-#     template_name="Smaple_for_data_Source"
-# }
+data "sdwan_device_template" "example1"{
+    template_name="Smaple_for_data_Source"
+}
 
-# data "sdwan_device_template" "example2"{
-#   template_name = "test1"
-# }
+data "sdwan_device_template" "example2"{
+  template_name = "test1"
+}
 
 resource "sdwan_device_template" "example_resource1"{
   template_name = "resource_testing_1"
@@ -36,7 +36,7 @@ resource "sdwan_device_template" "example_resource2" {
   device_role="sdwan-edge"
   config_type="template"
   factory_default=false
-  connection_preference = true
+  connection_preference = false
   connection_preference_required = true
 
   general_templates{
@@ -55,7 +55,7 @@ resource "sdwan_device_template" "example_resource2" {
 
   policy_id = ""
   
-  feature_template_uid_range=[]
+  feature_template_uid_range=["string"]
 
 }
 
