@@ -83,11 +83,11 @@ func testAccCheckSDWANDeviceTemplateExists(name string, dt *models.DeviceTemplat
 		rs, ok := s.RootModule().Resources[name]
 
 		if !ok {
-			return fmt.Errorf("Interface %s not found", name)
+			return fmt.Errorf("Device Template %s not found", name)
 		}
 
 		if rs.Primary.ID == "" {
-			return fmt.Errorf("No Interface dn was set")
+			return fmt.Errorf("No Device Template was set")
 		}
 
 		sdwanClient := testAccProvider.Meta().(*client.Client)
