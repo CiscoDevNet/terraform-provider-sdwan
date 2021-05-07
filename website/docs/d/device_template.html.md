@@ -34,12 +34,12 @@ data "sdwan_device_template" "name" {
 * `feature_template_uid_range` - feature_template_uid_range for  Device Template
 * `connection_preference_required` - connectionPreferenceRequired flag for Device Template
 * `connection_preference` - connectionPreference flag for Device Template
-* `general_templates` - List of Feature Templates and thier Sub Templates thourgh which Device Template is created (see [below for nested schema]
+* `general_templates` - List of Feature Templates and thier Sub Templates thourgh which Device Template is created (see [below for nested schema])
 
 ## Nested Schema for general_templates
 * `template_id` - Template Id of Feature Template
 * `template_type` - Template Type of Feature Template
-* `sub_templates` - List of Sub Templates associated with feature Template (see [below for nested schema]
+* `sub_templates` - List of Sub Templates associated with feature Template (see [below for nested schema])
 
 ## Nested Schema for sub_templates
 * `template_id` - Template Id of Feature Template

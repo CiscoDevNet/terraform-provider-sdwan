@@ -56,7 +56,7 @@ resource "sdwan_device_template" "example_cli" {
 
 ```
 ## Common Argument Reference ##
-* `template_name` - (Required) Unique Device Template Name (length (1 - 128), must be alphanumeric and should not include [, ^, <, >, !, &, \, ", ], *, $)
+* `template_name` - (Required) Unique Device Template Name (length (1 - 128), must be alphanumeric and should not include [ , ^ , < , > , ! , & , \ , " , ] , * , $ )
 * `template_description` - (Required) Long Description of Device Template
 * `device_type` - (Required) Type of device for which Device Template should be created, allowed values: "vedge-100", "vedge-100-B", "vedge-100-M", "vedge-100-WM", "vedge-1000", "vedge-2000", "vedge-5000", "vedge-cloud", "vedge-ISR1100-4G", "vedge-ISR1100-4GLTE", "vedge-ISR1100-6G", "vedge-ISR1100X-4G", "vedge-ISR1100X-6G", "vmanage", "vsmart"
 * `device_role` - (Required) Device role of the device, allowed values: "sdwan-edge", "service-node"

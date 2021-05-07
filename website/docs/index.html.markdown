@@ -52,7 +52,7 @@ provider "sdwan" {
 
 resource "sdwan_device_template" "test" {
   template_name = "example1"
-  template_description ="For testing purpose"
+  template_description = "For testing purpose"
   device_type = "vedge-cloud"
   device_role = "sdwan-edge"
   config_type = "file"
