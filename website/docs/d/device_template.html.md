@@ -5,7 +5,6 @@ sidebar_current: "docs-sdwan-data-source-device_template"
 description: |-
   Data source for SD-WAN Device Templates 
 ---
-
 # sdwan_device_template #
 Data source for SD-WAN Device Templates
 
@@ -18,14 +17,9 @@ data "sdwan_device_template" "name" {
 }
 
 ```
-
-
 ## Argument Reference ##
-
 * `template_name` - (Required) Unique Device Template Name
-
 ## Common Attribute Reference ##
-
 * `template_description` - Long Description of Device Template
 * `device_type` - Type of device supported by  Device Template
 * `device_role` - Device role for the Device Template
@@ -45,12 +39,11 @@ data "sdwan_device_template" "name" {
 * `template_id` - Template Id of Feature Template
 * `template_type` - Template Type of Feature Template
 * `sub_templates` - List of Sub Templates associated with feature Template (see [below for nested schema]
-
 ## Nested Schema for sub_templates
 * `template_id` - Template Id of Feature Template
 * `template_type` - Template Type of Feature Template
 
-## Attribute Reference for Deivce Template created from CLI ##
+## Attribute Reference for Device Template created from CLI ##
 * `last_updated_by` - User who updated  Device Template last
 * `template_configuration` - Template Configuration for  Device Template
 * `created_on` - Time when  Device Template was created

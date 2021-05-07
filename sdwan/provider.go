@@ -16,21 +16,21 @@ func Provider() *schema.Provider {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SDWAN_USERNAME", nil),
-				Description: "Username for the DCNM account",
+				Description: "Username for the SDWAN vManage server",
 			},
 
 			"password": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SDWAN_PASSWORD", nil),
-				Description: "Password for the DCNM account",
+				Description: "Password for the SDWAN vManage server",
 			},
 
 			"url": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SDWAN_URL", nil),
-				Description: "URL for the DCNM server",
+				Description: "URL for the SDWAN vManage server",
 			},
 
 			"proxy_url": {

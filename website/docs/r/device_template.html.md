@@ -12,21 +12,21 @@ Manages SD-WAN Device Templates
 ## Example Usage ##
 
 ```hcl
-# example for Device Template created from Feature Templates
+# example for Device Template created from CLI
 resource "sdwan_device_template" "example_feature_template"{
   template_name = "example1"
   template_description ="For testing purpose"
-  device_type ="vedge-cloud"
-  device_role ="sdwan-edge"
+  device_type = "vedge-cloud"
+  device_role = "sdwan-edge"
   config_type = "file"
-  factory_default =false
+  factory_default = false
   template_configuration = "`"
 }
 
-# example for Device Template created from CLI
+# example for Device Template created from Feature Templates
 resource "sdwan_device_template" "example_cli" {
   template_name = "example2"
-  template_description="For testing purpose"
+  template_description= "For testing purpose"
   device_type = "vedge-cloud"
   device_role = "sdwan-edge"
   config_type = "template"
@@ -48,46 +48,40 @@ resource "sdwan_device_template" "example_cli" {
     template_type = "vpn-vedge"
   }
 
-  policy_id = ""
+  policy_id = "8715a21d-9367-47ea-9bc6-e25163ed9513"
   
-  feature_template_uid_range = []
+  feature_template_uid_range = ["string", 123]
 
 }
 
 ```
-
-
 ## Common Argument Reference ##
-* `template_name` - (Required) Unique Device Template Name (length (1 - 128), must be alphanumeric and should not include ^[^<>!&\" ]*$)
+* `template_name` - (Required) Unique Device Template Name (length (1 - 128), must be alphanumeric and should not include [, ^, <, >, !, &, \, ", ], *, $)
 * `template_description` - (Required) Long Description of Device Template
 * `device_type` - (Required) Type of device for which Device Template should be created, allowed values: "vbond", "vedge-100", "vedge-100-B", "vedge-100-M", "vedge-100-WM", "vedge-1000", "vedge-2000", "vedge-5000", "vedge-cloud", "vedge-ISR1100-4G", "vedge-ISR1100-4GLTE", "vedge-ISR1100-6G", "vedge-ISR1100X-4G", "vedge-ISR1100X-6G", "vedge-nfvis-CSP-5444", "vedge-nfvis-CSP-5456", "vedge-nfvis-CSP2100", "vedge-nfvis-CSP2100-X1", "vedge-nfvis-CSP2100-X2", "vedge-nfvis-UCSC-E", "vedge-nfvis-UCSC-M5"
 * `device_role` - (Required) Device role of the device, allowed values: "sdwan-edge", "service-node"
-* `factory_default` - (Required) Flag indicating whether Device Template is factory default or not
+* `factory_default` - (Required) Flag indicating whether Device Template is factory default or not, allowed values: `true` or `false`
+* `config_type` - (Required) Configuration type for  Device Template, allowed values: "template" (for Device Template created from Feature Template), "file" (for Device Template created from CLI) 
 
-## Argument Reference for Device Template created from Feature Templates##
+## Argument Reference for Device Template created from Feature Templates ##
 * `policy_id` - (Required) policyId for  Device Template
 * `feature_template_uid_range` - (Required) featureTemplateUidRange for  Device Template
-* `connection_preference_required`- (Optional) connectionPreferenceRequired flag for Device Template
-* `connection_preference` - (Optional) connectionPreference for Device Template
-* `general_templates`- (Required) List of Feature Templates and thier Sub Templates thourgh which Device Template is created (should not be empty ,see [below for nested schema])
-
-## Nested Schema for general_templates##
+* `general_templates` - (Required) List of Feature Templates and thier Sub Templates thourgh which Device Template is created (should not be empty ,see [below for nested schema])
+* `connection_preference_required` - (Optional) connectionPreferenceRequired flag for Device Template, allowed values: `true` or `false`
+* `connection_preference` - (Optional) connectionPreference flag for Device Template, allowed values: `true` or `false`
+## Nested Schema for general_templates ##
 * `template_id` - (Required) Template Id of Feature Template
 * `template_type` - (Required) Template Type of Feature Template, allowed values: "system-vedge", "ntp", "vpn-vedge", "vpn-vedge-interface"
 * `sub_templates` - (Optional) List of Sub Templates associated with feature Template (see [below for nested schema])
-
-## Nested Schema for sub_templates##
+## Nested Schema for sub_templates ##
 * `template_id` - (Required) Template Id of Feature Template
 * `template_type` - (Required) Template Type of Feature Template, allowed values: "system-vedge", "ntp", "vpn-vedge", "vpn-vedge-interface"
-
-## Argument Reference for Device Template created from CLI##
+## Argument Reference for Device Template created from CLI ##
 * `template_configuration` - (Required) Template Configuration for  Device Template
-
-## Common Attributes##
+## Common Attributes ##
 * `template_id` - Device Template id for  Device Template
 * `template_class` - Template Class type for  Device Template
-
-## Attributes for Device Template created from CLI##
+## Attributes for Device Template created from CLI ##
 * `last_updated_by` - User who updated  Device Template last
 * `last_updated_on` - Time when Device Template was last updated
 * `rid` - Request ID for Device Template
