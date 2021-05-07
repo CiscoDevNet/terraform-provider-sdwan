@@ -58,7 +58,7 @@ resource "sdwan_device_template" "example_cli" {
 ## Common Argument Reference ##
 * `template_name` - (Required) Unique Device Template Name (length (1 - 128), must be alphanumeric and should not include [, ^, <, >, !, &, \, ", ], *, $)
 * `template_description` - (Required) Long Description of Device Template
-* `device_type` - (Required) Type of device for which Device Template should be created, allowed values: "vbond", "vedge-100", "vedge-100-B", "vedge-100-M", "vedge-100-WM", "vedge-1000", "vedge-2000", "vedge-5000", "vedge-cloud", "vedge-ISR1100-4G", "vedge-ISR1100-4GLTE", "vedge-ISR1100-6G", "vedge-ISR1100X-4G", "vedge-ISR1100X-6G", "vedge-nfvis-CSP-5444", "vedge-nfvis-CSP-5456", "vedge-nfvis-CSP2100", "vedge-nfvis-CSP2100-X1", "vedge-nfvis-CSP2100-X2", "vedge-nfvis-UCSC-E", "vedge-nfvis-UCSC-M5"
+* `device_type` - (Required) Type of device for which Device Template should be created, allowed values: "vedge-100", "vedge-100-B", "vedge-100-M", "vedge-100-WM", "vedge-1000", "vedge-2000", "vedge-5000", "vedge-cloud", "vedge-ISR1100-4G", "vedge-ISR1100-4GLTE", "vedge-ISR1100-6G", "vedge-ISR1100X-4G", "vedge-ISR1100X-6G", "vmanage", "vsmart"
 * `device_role` - (Required) Device role of the device, allowed values: "sdwan-edge", "service-node"
 * `factory_default` - (Required) Flag indicating whether Device Template is factory default or not, allowed values: `true` or `false`
 * `config_type` - (Required) Configuration type for  Device Template, allowed values: "template" (for Device Template created from Feature Template), "file" (for Device Template created from CLI) 

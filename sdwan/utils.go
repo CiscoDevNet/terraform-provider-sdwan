@@ -17,8 +17,7 @@ func NameValidation() schema.SchemaValidateFunc {
 }
 
 var (
-	validDeviceTypes = []string{
-		"vbond",
+	validDeviceTypesforDeviceType = []string{
 		"vedge-100",
 		"vedge-100-B",
 		"vedge-100-M",
@@ -32,13 +31,8 @@ var (
 		"vedge-ISR1100-6G",
 		"vedge-ISR1100X-4G",
 		"vedge-ISR1100X-6G",
-		"vedge-nfvis-CSP-5444",
-		"vedge-nfvis-CSP-5456",
-		"vedge-nfvis-CSP2100",
-		"vedge-nfvis-CSP2100-X1",
-		"vedge-nfvis-CSP2100-X2",
-		"vedge-nfvis-UCSC-E",
-		"vedge-nfvis-UCSC-M5"}
+		"vmanage",
+		"vsmart"}
 	validDeviceRole = []string{
 		"sdwan-edge",
 		"service-node"}
