@@ -19,12 +19,13 @@ data "sdwan_device_template" "name" {
 ```
 ## Argument Reference ##
 * `template_name` - (Required) Unique Device Template Name
+
 ## Common Attribute Reference ##
 * `template_description` - Long Description of Device Template
 * `device_type` - Type of device supported by  Device Template
 * `device_role` - Device role for the Device Template
 * `config_type` - Configuration type for  Device Template
-* `factory_default` - Boolean flag indicating whether Device Template is factory default or not
+* `factory_default` - Flag indicating whether Device Template is factory default or not
 * `template_class` - Template Class type for  Device Template
 * `template_id` - Device Template id for  Device Template
 
@@ -39,6 +40,7 @@ data "sdwan_device_template" "name" {
 * `template_id` - Template Id of Feature Template
 * `template_type` - Template Type of Feature Template
 * `sub_templates` - List of Sub Templates associated with feature Template (see [below for nested schema]
+
 ## Nested Schema for sub_templates
 * `template_id` - Template Id of Feature Template
 * `template_type` - Template Type of Feature Template
