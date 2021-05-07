@@ -32,10 +32,10 @@ func resourceSDWANDeviceTemplate() *schema.Resource {
 				Description: "Long Description of Device Template",
 			},
 			"device_type": {
-				Type:             schema.TypeString,
-				Required:         true,
-				ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(validDeviceTypes, false)),
-				Description:      "Type of device for which Device Template should be created",
+				Type:     schema.TypeString,
+				Required: true,
+				ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(validDeviceTypesforDeviceType, false)),
+				Description: "Type of device for which Device Template should be created",
 			},
 			"device_role": {
 				Type:             schema.TypeString,
