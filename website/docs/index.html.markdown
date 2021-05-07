@@ -9,7 +9,7 @@ description: |-
 
 Overview
 --------------------------------------------------
-Add Overview for SDWAN Provider>
+Add Overview for SDWAN Provider
 
 Cisco SDWAN Provider
 ------------
@@ -50,10 +50,14 @@ provider "sdwan" {
   insecure = true
 }
 
-resource "sdwan_feature_template" "test" {
-#  fabric_name = "fab1"
-#  name = "MyVRF"
-#  description = "This feature template is created by terraform"
+resource "sdwan_device_template" "test" {
+  template_name = "example1"
+  template_description ="For testing purpose"
+  device_type = "vedge-cloud"
+  device_role = "sdwan-edge"
+  config_type = "file"
+  factory_default = false
+  template_configuration = "`"
 }
 
 ```
