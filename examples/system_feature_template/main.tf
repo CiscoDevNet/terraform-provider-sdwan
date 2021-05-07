@@ -13,16 +13,16 @@ provider "sdwan" {
   password = var.VMANAGE_PASSWORD
 }
 
-data "sdwan_system_feature_template" "name"{
-    template_name="Example11"
+data "sdwan_system_feature_template" "name1"{
+    template_name="Example"
 }
 
 output "output1" {
-  value = data.sdwan_system_feature_template.name
+  value = data.sdwan_system_feature_template.name1
 }
 
 resource "sdwan_system_feature_template" "name2" {
-  template_name = "Sample4"
+  template_name = "Sample1"
   template_description = "For testing purposes"
   device_type = ["vedge-1000"]
   template_min_version = "15.0.0"
@@ -42,60 +42,60 @@ resource "sdwan_system_feature_template" "name2" {
       tcp_optimization_enabled = true
     }
 
-  system_gps {
-    longitude = 23
-    latitude = 19
-  }
+    system_gps {
+      longitude = 23
+      latitude = 19
+    }
 
-  system_trackers {
-    tracker_name = "abcd"
-    tracker_type = "ip-address"
-    tracker_endpoint_value = "198.23.34.67"
-  }
-  
-  system_trackers {
-    tracker_name = "tracker2"
-    tracker_type = "dns-name"
-    tracker_endpoint_value = "dnsName"
-  }
-  system_trackers {
-    tracker_name = "abc"
-    tracker_type = "api-url"
-    tracker_endpoint_value = "cisco.com/docs"
-  }
-  system_advanced {
-    control_session_pps = 10
-    system_tunnel_mtu = 560
-    port_hop = false
-    port_offset = 5
-    dns_cache_timeout = 6
-    track_transport = false
-    vbond_local = true
-    vbond_remote = "abcd"
-    track_interface_tag = 433
-    multicast_buffer_percent = 56
-    usb_controller = true
-    track_default_gateway = false
-    host_policer_pps = 5689
-    icmp_error_pps = 67
-    allow_same_site_tunnels = true
-    route_consistency_check = true
-    admin_tech_on_failure = false
-    idle_timeout = 67
-    eco_friendly_mode = true
-    on_demand_enable = true
-    on_demand_idle_timeout = 78
-  }
+    system_trackers {
+      tracker_name = "abcd"
+      tracker_type = "ip-address"
+      tracker_endpoint_value = "198.23.34.67"
+    }
+    
+    system_trackers {
+      tracker_name = "tracker2"
+      tracker_type = "dns-name"
+      tracker_endpoint_value = "dnsName"
+    }
+    system_trackers {
+      tracker_name = "abc"
+      tracker_type = "api-url"
+      tracker_endpoint_value = "cisco.com/docs"
+    }
+    system_advanced {
+      control_session_pps = 10
+      system_tunnel_mtu = 560
+      port_hop = false
+      port_offset = 5
+      dns_cache_timeout = 6
+      track_transport = false
+      vbond_local = true
+      vbond_remote = "abcd"
+      track_interface_tag = 433
+      multicast_buffer_percent = 56
+      usb_controller = true
+      track_default_gateway = false
+      host_policer_pps = 5689
+      icmp_error_pps = 67
+      allow_same_site_tunnels = true
+      route_consistency_check = true
+      admin_tech_on_failure = false
+      idle_timeout = 67
+      eco_friendly_mode = true
+      on_demand_enable = true
+      on_demand_idle_timeout = 78
+    }
   }
   factory_default = false
 }
 
 resource "sdwan_system_feature_template" "name3" {
   
-  template_name = "Sample6"
-  template_description = "For testing purposes"
+  template_name = "Sample2"
+  template_description = "Description changed"
   device_type = ["vedge-1000"]
-  template_min_version = "15.0.0"
+  template_min_version = "20.4.1"
   template_definition {
     system_basic {  
       site_id = 5

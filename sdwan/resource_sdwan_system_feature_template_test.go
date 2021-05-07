@@ -164,25 +164,25 @@ func testAccCheckSDWANSystemFeatureTemplateAttributes(desc string, ft *models.Fe
 			return fmt.Errorf("Bad sdwan_system_feature_template Factory Default %v", ft.FactoryDefault)
 		}
 
-		// tempDef := map[string]interface{}{
-		// 	"system_basic": map[string]interface{}{
-		// 		"site_id":   5,
-		// 		"system_ip": "198.12.23.178",
-		// 		"timezone":  "UTC",
-		// 	},
-		// }
+		tempDef := map[string]interface{}{
+			"system_basic": map[string]interface{}{
+				"site_id":   5,
+				"system_ip": "198.12.23.178",
+				"timezone":  "UTC",
+			},
+		}
 
-		// if tempDef["system_basic"].(map[string]interface{})["site_id"] == ft.TemplateDefinition["system_basic"].(map[string]interface{})["site_id"] {
-		// 	return fmt.Errorf("Bad sdwan_system_feature_template site id %v", ft.TemplateDefinition["system_basic"].(map[string]interface{})["site_id"])
-		// }
+		if tempDef["system_basic"].(map[string]interface{})["site_id"].(int) != int(ft.TemplateDefinition["site-id"].(map[string]interface{})["vipValue"].(float64)) {
+			return fmt.Errorf("Bad sdwan_system_feature_template site id %v", ft.TemplateDefinition["site-id"].(map[string]interface{})["vipValue"])
+		}
 
-		// if tempDef["system_basic"].(map[string]interface{})["system_ip"] == ft.TemplateDefinition["system_basic"].(map[string]interface{})["system_ip"] {
-		// 	return fmt.Errorf("Bad sdwan_system_feature_template system ip %v", ft.TemplateDefinition["system_basic"].(map[string]interface{})["system_ip"])
-		// }
+		if tempDef["system_basic"].(map[string]interface{})["system_ip"].(string) != ft.TemplateDefinition["system-ip"].(map[string]interface{})["vipValue"].(string) {
+			return fmt.Errorf("Bad sdwan_system_feature_template system ip %v", ft.TemplateDefinition["system-ip"].(map[string]interface{})["vipValue"])
+		}
 
-		// if tempDef["system_basic"].(map[string]interface{})["timezone"] == ft.TemplateDefinition["system_basic"].(map[string]interface{})["timezone"] {
-		// 	return fmt.Errorf("Bad sdwan_system_feature_template timezone %v", ft.TemplateDefinition["system_basic"].(map[string]interface{})["timezone"])
-		// }
+		if tempDef["system_basic"].(map[string]interface{})["timezone"].(string) != ft.TemplateDefinition["clock"].(map[string]interface{})["timezone"].(map[string]interface{})["vipValue"].(string) {
+			return fmt.Errorf("Bad sdwan_system_feature_template timezone %v", ft.TemplateDefinition["timezone"].(map[string]interface{})["vipValue"])
+		}
 
 		return nil
 	}
