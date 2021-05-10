@@ -3,7 +3,7 @@ layout: "sdwan"
 page_title: "Provider: SDWAN"
 sidebar_current: "docs-sdwan-index"
 description: |-
-  <The Cisco SDWAN provider is used to interact with the resources provided by Cisco vManage. The provider needs to be configured with the proper credentials before it can be used.>
+  The Cisco SDWAN provider is used to interact with the resources provided by Cisco vManage. The provider needs to be configured with the proper credentials before it can be used.
 ---
   
 
