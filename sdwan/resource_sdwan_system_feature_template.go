@@ -84,9 +84,9 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"site_id": {
-										Type:         schema.TypeInt,
+										Type:         schema.TypeFloat,
 										Required:     true,
-										ValidateFunc: validation.IntBetween(1, 4294967295),
+										ValidateFunc: validation.FloatBetween(1, 4294967295),
 									},
 
 									"system_ip": {
@@ -301,9 +301,9 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 									},
 
 									"track_interface_tag": {
-										Type:         schema.TypeInt,
+										Type:         schema.TypeFloat,
 										Optional:     true,
-										ValidateFunc: validation.IntBetween(1, 4294967295),
+										ValidateFunc: validation.FloatBetween(1, 4294967295),
 									},
 
 									"multicast_buffer_percent": {
@@ -606,7 +606,7 @@ func createSystemBasic(defMap map[string]interface{}, input map[string]interface
 		siteId := make(map[string]interface{})
 		siteId["vipObjectType"] = "object"
 		siteId["vipType"] = "constant"
-		siteId["vipValue"] = input["site_id"].(int)
+		siteId["vipValue"] = input["site_id"].(float64)
 		siteId["vipVariableName"] = "system_site_id"
 		defMap["site-id"] = siteId
 	}
@@ -908,7 +908,7 @@ func createSystemAdvanced(defMap map[string]interface{}, input map[string]interf
 		trackInterfaceTag := make(map[string]interface{})
 		trackInterfaceTag["vipObjectType"] = "object"
 		trackInterfaceTag["vipType"] = "constant"
-		trackInterfaceTag["vipValue"] = input["track_interface_tag"].(int)
+		trackInterfaceTag["vipValue"] = input["track_interface_tag"].(float64)
 		trackInterfaceTag["vipVariableName"] = "system_track_interface_tag"
 		defMap["track-interface-tag"] = trackInterfaceTag
 	}
