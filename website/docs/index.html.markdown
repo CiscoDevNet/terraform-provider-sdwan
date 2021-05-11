@@ -107,7 +107,7 @@ Following arguments are supported with Cisco SDWAN terraform provider.
  * `url` - (Required) URL for CISCO SDWAN.
  * `insecure` - (Optional) This determines whether to use insecure HTTP connection or not. Default value is `true`.
  * `proxy_url` - (Optional) URL for the proxy server.
- * `proxy_creds` - (Optional) credentials for the proxy server, required in case of authenticated proxy server.
+ * `proxy_creds` - (Optional) Credentials for the proxy server, required in case of authenticated proxy server.
  * `rate_limit` - (Optional) Rate limit of API requests per second. Allowed range is from `0` to `500`, default value is `500`
 
- <strong>NOTE:</strong> username, password, url, proxy_url and proxy_creds can be set through environment variables as well using environment variables SDWAN_USERNAME, SDWAN_PASSWORD, SDWAN_URL, SDWAN_PROXY_URL and SDWAN_PROXY_CREDS respectively.
+ <strong>NOTE:</strong> `username`, `password`, `url`, `proxy_url` and `proxy_creds` can be set through environment variables as well using environment variables `SDWAN_USERNAME`, `SDWAN_PASSWORD`, `SDWAN_URL`, `SDWAN_PROXY_URL` and `SDWAN_PROXY_CREDS` respectively.
