@@ -134,8 +134,8 @@ resource "sdwan_system_feature_template" "example_system_feature_template" {
 ## Nested Schema for system_basic
 * `site_id` - (Required) Site ID for configuration of System type Feature Template, Range: [1, 4294967295]
 * `system_ip` - (Required) System IP for configuration of  System type Feature Template, allowed values: IPv4 address
-* `overlay_id` - (Optional) Overlay ID for configuration of  System type Feature Template, Deafult: 1
 * `timezone` - (Required) Timezone for configuration of  System type Feature Template
+* `overlay_id` - (Optional) Overlay ID for configuration of  System type Feature Template, Deafult: 1
 * `hostname` - (Optional)  Hostname for configuration of  System type Feature Template, String length: [1, 32] 
 * `location` - (Optional) Location for configuration of  System type Feature Template, String length: [1, 128] 
 * `device_groups` - (Optional) Device Groups for configuration of  System type Feature Template
@@ -150,12 +150,12 @@ resource "sdwan_system_feature_template" "example_system_feature_template" {
 * `longitude` - (Optional) Longitude for configuration of  System type Feature Template
 
 ## Nested Schema for system_trackers
-* `tacker_name` - (Required) Name of Tracker for configuration of System type Feature Template, Must not include <, >, !, &, ", or white space; maximum 128 characters
-* `tacker_type` - (Required) Type of Tracker for configuration of System type Feature Template, Allowed values: "ip-address", "dns-name", "api-url"
-* `tacker_endpoint_value` - (Required) Value of Tracker Endpoint for configuration of System type Feature Template
-* `tacker_threshold` - (Optional) Threshold of Tracker for configuration of System type Feature Template, Range: [100, 1000], Default: 300
-* `tacker_interval` - (Optional) Interval of Tracker for configuration of System type Feature Template, Range: [10, 600], Default: 60
-* `tacker_multiplier` - (Optional) Multiplier of Tracker for configuration of System type Feature Template, Range: [1, 10], Default: 3
+* `tracker_name` - (Required) Name of Tracker for configuration of System type Feature Template, Must not include <, >, !, &, ", or white space; maximum 128 characters
+* `tracker_type` - (Required) Type of Tracker for configuration of System type Feature Template, Allowed values: "ip-address", "dns-name", "api-url"
+* `tracker_endpoint_value` - (Required) Value of Tracker Endpoint for configuration of System type Feature Template
+* `tracker_threshold` - (Optional) Threshold of Tracker for configuration of System type Feature Template, Range: [100, 1000], Default: 300
+* `tracker_interval` - (Optional) Interval of Tracker for configuration of System type Feature Template, Range: [10, 600], Default: 60
+* `tracker_multiplier` - (Optional) Multiplier of Tracker for configuration of System type Feature Template, Range: [1, 10], Default: 3
 
 ## Nested Schema for system_advanced
 * `control_session_pps` - (Optional) Policer Rate(pps) for Control Sessions for configuration of System type Feature Template, Range: [1, 65535], Default: 300
