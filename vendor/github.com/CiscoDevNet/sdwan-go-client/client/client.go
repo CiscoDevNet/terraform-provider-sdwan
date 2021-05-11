@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -26,6 +27,7 @@ type Client struct {
 	insecure    bool
 	skipLogging bool
 	proxyURL    string
+	proxyCreds  string
 	rateLimiter *rate.Limiter
 	mutex       *sync.Mutex
 }
@@ -38,21 +40,32 @@ func (client *Client) configProxy(transport *http.Transport) *http.Transport {
 		log.Fatal(err)
 	}
 	transport.Proxy = http.ProxyURL(proxy)
-	return transport
 
-}
-
-func (client *Client) useInsecureHTTPClient() *http.Transport {
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: client.insecure,
-		},
+	if client.proxyCreds != "" {
+		basicAuth := "Basic " + base64.StdEncoding.EncodeToString([]byte(client.proxyCreds))
+		transport.ProxyConnectHeader = http.Header{}
+		transport.ProxyConnectHeader.Add("Proxy-Authorization", basicAuth)
 	}
 
 	return transport
 }
 
-func initClient(clientURL, username, password, proxyURL string, rateLimit int, insecure bool) *Client {
+func (client *Client) useInsecureHTTPClient() *http.Transport {
+	transport := http.DefaultTransport.(*http.Transport)
+
+	transport.TLSClientConfig = &tls.Config{
+		InsecureSkipVerify: client.insecure,
+	}
+	// transport := &http.Transport{
+	// 	TLSClientConfig: &tls.Config{
+	// 		InsecureSkipVerify: client.insecure,
+	// 	},
+	// }
+
+	return transport
+}
+
+func initClient(clientURL, username, password, proxyURL, proxyCreds string, rateLimit int, insecure bool) *Client {
 	baseURL, err := url.Parse(clientURL)
 	if err != nil {
 		log.Fatal(err)
@@ -64,6 +77,7 @@ func initClient(clientURL, username, password, proxyURL string, rateLimit int, i
 		password:    password,
 		insecure:    insecure,
 		proxyURL:    proxyURL,
+		proxyCreds:  proxyCreds,
 		rateLimiter: rate.NewLimiter(rate.Limit(float64(rateLimit)/float64(1)), 1),
 		httpClient:  http.DefaultClient,
 		authClient:  &auth{},
@@ -85,10 +99,10 @@ func initClient(clientURL, username, password, proxyURL string, rateLimit int, i
 
 //GetClient constructor for Client implementation
 //
-//e.g. GetClient("https://my-company.com:port", "userName", "password", "https://my-company-proxy.com:port", 500, true)
-func GetClient(clientURL, username, password, proxy string, rateLimit int, insecure bool) *Client {
+//e.g. GetClient("https://my-company.com:port", "userName", "password", "https://my-company-proxy.com:port", "username:password", 500, true)
+func GetClient(clientURL, username, password, proxy, proxyCreds string, rateLimit int, insecure bool) *Client {
 	if clientImpl == nil {
-		clientImpl = initClient(clientURL, username, password, proxy, rateLimit, insecure)
+		clientImpl = initClient(clientURL, username, password, proxy, proxyCreds, rateLimit, insecure)
 	}
 	return clientImpl
 }

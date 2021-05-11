@@ -40,6 +40,13 @@ func Provider() *schema.Provider {
 				Description: "Proxy Server URL with port number",
 			},
 
+			"proxy_creds": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("SDWAN_PROXY_CREDS", nil),
+				Description: "Proxy Server Credentials in the form of username:password",
+			},
+
 			"insecure": {
 				Type:        schema.TypeBool,
 				Optional:    true,
@@ -77,6 +84,7 @@ func configClient(d *schema.ResourceData) (interface{}, error) {
 		URL:        d.Get("url").(string),
 		IsInsecure: d.Get("insecure").(bool),
 		ProxyURL:   d.Get("proxy_url").(string),
+		ProxyCreds: d.Get("proxy_creds").(string),
 		RateLimit:  d.Get("rate_limit").(int),
 	}
 
@@ -106,7 +114,7 @@ func (c Config) Valid() error {
 }
 
 func (c Config) getClient() interface{} {
-	return client.GetClient(c.URL, c.Username, c.Password, c.ProxyURL, c.RateLimit, c.IsInsecure)
+	return client.GetClient(c.URL, c.Username, c.Password, c.ProxyURL, c.ProxyCreds, c.RateLimit, c.IsInsecure)
 }
 
 //Config the basic structure used for the management of the Terraform block schema attributes
@@ -116,5 +124,6 @@ type Config struct {
 	URL        string
 	IsInsecure bool
 	ProxyURL   string
+	ProxyCreds string
 	RateLimit  int
 }
