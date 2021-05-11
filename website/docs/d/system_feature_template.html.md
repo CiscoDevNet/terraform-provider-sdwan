@@ -67,12 +67,12 @@ data "sdwan_system_feature_template" "name" {
 * `longitude` - Longitude for configuration of  System type Feature Template
 
 ## Nested Schema for system_trackers
-* `tacker_name` - Name of Tracker for configuration of System type Feature Template
-* `tacker_type` - Type of Tracker for configuration of System type Feature Template
-* `tacker_endpoint_value` - Value of Tracker Endpoint for configuration of System type Feature Template
-* `tacker_threshold` - Threshold of Tracker for configuration of System type Feature Template
-* `tacker_interval` - Interval of Tracker for configuration of System type Feature Template
-* `tacker_multiplier` - Multiplier of Tracker for configuration of System type Feature Template
+* `tracker_name` - Name of Tracker for configuration of System type Feature Template
+* `tracker_type` - Type of Tracker for configuration of System type Feature Template
+* `tracker_endpoint_value` - Value of Tracker Endpoint for configuration of System type Feature Template
+* `tracker_threshold` - Threshold of Tracker for configuration of System type Feature Template
+* `tracker_interval` - Interval of Tracker for configuration of System type Feature Template
+* `tracker_multiplier` - Multiplier of Tracker for configuration of System type Feature Template
 
 ## Nested Schema for system_advanced
 * `control_session_pps` - Policer Rate(pps) for Control Sessions for configuration of System type Feature Template
