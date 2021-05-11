@@ -19,7 +19,7 @@ Authentication
 -------------- 
 
 Authentication with user-id and password.  
- example:  
+Example:  
 
  ```hcl
 
@@ -31,6 +31,42 @@ Authentication with user-id and password.
       # cisco-sdwan url
       url      = "https://my-cisco-sdwan.com"
       insecure = true
+    }
+ 
+ ```
+
+Authentication with through proxy URL.  
+Example 1 (with non-authenticated proxy server):  
+
+ ```hcl
+
+    provider "sdwan" {
+      # cisco-sdwan user name
+      username = "admin"
+      # cisco-sdwan password
+      password = "password"
+      # cisco-sdwan url
+      url      = "https://my-cisco-sdwan.com"
+      insecure = true
+      proxy_url = "my-proxy-url"
+    }
+ 
+ ```
+
+ Example 2 (with authenticated proxy server):  
+
+ ```hcl
+
+    provider "sdwan" {
+      # cisco-sdwan user name
+      username = "admin"
+      # cisco-sdwan password
+      password = "password"
+      # cisco-sdwan url
+      url      = "https://my-cisco-sdwan.com"
+      insecure = true
+      proxy_url = "my-proxy-url"
+      proxy_creds = "proxy credentials in form of username:password"
     }
  
  ```
@@ -66,7 +102,12 @@ Argument Reference
 ------------------
 Following arguments are supported with Cisco SDWAN terraform provider.
 
- * `username` - (Required) This is the Cisco SDWAN username, which is required to authenticate with CISCO SDWAN.
+ * `username` - (Required) This is the Cisco SDWAN username, which is required to authenticate with CISCO SDWAN. 
  * `password` - (Required) Password of the user mentioned in username argument. It is required when you want to use token-based authentication.
  * `url` - (Required) URL for CISCO SDWAN.
  * `insecure` - (Optional) This determines whether to use insecure HTTP connection or not. Default value is `true`.
+ * `proxy_url` - (Optional) URL for the proxy server.
+ * `proxy_creds` - (Optional) credentials for the proxy server, required in case of authenticated proxy server.
+ * `rate_limit` - (Optional) Rate limit of API requests per second. Allowed range is from `0` to `500`, default value is `500`
+
+ <strong>NOTE:</strong> username, password, url, proxy_url and proxy_creds can be set through environment variables as well using environment variables SDWAN_USERNAME, SDWAN_PASSWORD, SDWAN_URL, SDWAN_PROXY_URL and SDWAN_PROXY_CREDS respectively.
