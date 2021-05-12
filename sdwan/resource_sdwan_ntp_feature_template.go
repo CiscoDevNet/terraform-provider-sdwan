@@ -28,7 +28,7 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 			"template_description": {
 				Type:         schema.TypeString,
 				Required:     true,
-				ValidateFunc: validation.StringIsNotEmpty,
+				ValidateFunc: DescValidation(),
 			},
 			"device_type": {
 				Type:     schema.TypeList,
