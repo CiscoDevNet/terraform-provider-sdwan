@@ -11,7 +11,16 @@ import (
 func NameValidation() schema.SchemaValidateFunc {
 	return validation.All(
 		validation.StringLenBetween(1, 128),
-		validation.StringMatch(regexp.MustCompile("^[^<>!&\" ]*$"), "must be alphanumeric!"),
+		validation.StringIsNotWhiteSpace,
+		validation.StringMatch(regexp.MustCompile("^[^<>!&\"@% ]*$"), "must be alphanumeric!"),
+		// <, >, !, &, ", or white space are not allowed
+	)
+}
+
+func DescValidation() schema.SchemaValidateFunc {
+	return validation.All(
+		validation.StringLenBetween(1, 2048),
+		validation.StringIsNotWhiteSpace,
 		// <, >, !, &, ", or white space are not allowed
 	)
 }

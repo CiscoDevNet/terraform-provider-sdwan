@@ -60,7 +60,7 @@ resource "sdwan_ntp_feature_template" "name1" {
 
 resource "sdwan_ntp_feature_template" "name2" {
   template_name = "Sample_NTP_2"
-  template_description = "Sample_NTP_2 Description changed"
+  template_description = "For testing purposes 2"
   device_type = ["vbond"]
   template_min_version = "20.4.1"
   factory_default = false
