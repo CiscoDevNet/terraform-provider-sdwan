@@ -21,7 +21,6 @@ func DescValidation() schema.SchemaValidateFunc {
 	return validation.All(
 		validation.StringLenBetween(1, 2048),
 		validation.StringIsNotWhiteSpace,
-		validation.StringMatch(regexp.MustCompile("^[^<>!&\"@%]*$"), "must be alphanumeric!"),
 		// <, >, !, &, ", or white space are not allowed
 	)
 }
