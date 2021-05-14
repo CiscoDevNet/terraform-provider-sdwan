@@ -95,7 +95,7 @@ resource "sdwan_ntp_feature_template" "example_ntp_feature_template" {
 * `hostname` - (Required) IP address of an NTP server, or a DNS server that knows how to reach the NTP server
 * `key` - (Required) MD5 key associated with the NTP server, to enable MD5 authentication, Range: [1, 65535]
 * `vpn` - (Required) Vpn ID for configuration of NTP type Feature Template, Range: [1, 65530]
-* `version` - (Required) Version number of the NTP protocol software, Range: [1, 4], Default: 100
+* `version` - (Required) Version number of the NTP protocol software, Range: [1, 4], Default: 4
 * `source_interface` - (Optional) Name of a specific interface to use for outgoing NTP packets
 * `prefer` - (Optional) It is a boolean flag, set true if multiple NTP servers are at the same stratum level and you want one to be preferred
 

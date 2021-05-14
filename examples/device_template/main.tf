@@ -7,8 +7,15 @@ terraform {
   }
 }
 
+#configure provider with your cisco sdwan credentials.
 provider "sdwan" {
-  
+  # cisco-sdwan user name
+  username = "user name for vManage"
+  # cisco-sdwan password
+  password = "password for vManage"
+  # cisco-sdwan url
+  url      = "https://my-cisco-vmanage.com"
+  insecure = true
 }
 
 data "sdwan_device_template" "example1"{
