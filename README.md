@@ -9,7 +9,7 @@ Requirements
 
 ## Building The Provider ##
 Clone this repository to: `$GOPATH/src/github.com/CiscoDevNet/terraform-provider-sdwan`.
-Clone sdwan-go-client to `$GOPATH/src/github.com/CiscoDevNet/sdwan-go-client`.
+Clone [sdwan-go-client](https://github.com/CiscoDevNet/sdwan-go-client) to `$GOPATH/src/github.com/CiscoDevNet/sdwan-go-client`.
 
 ```sh
 $ mkdir -p $GOPATH/src/github.com/CiscoDevNet; cd $GOPATH/src/github.com/CiscoDevNet
