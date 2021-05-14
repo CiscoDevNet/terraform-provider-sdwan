@@ -7,10 +7,15 @@ terraform {
   }
 }
 
-provider "sdwan" {  
-  url = var.VMANAGE_URL
-  username = var.VMANAGE_USERNAME
-  password = var.VMANAGE_PASSWORD
+#configure provider with your cisco sdwan credentials.
+provider "sdwan" {
+  # cisco-sdwan user name
+  username = "user name for vManage"
+  # cisco-sdwan password
+  password = "password for vManage"
+  # cisco-sdwan url
+  url      = "https://my-cisco-vmanage.com"
+  insecure = true
 }
 
 data "sdwan_ntp_feature_template" "name"{
