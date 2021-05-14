@@ -9,7 +9,7 @@ Requirements
 
 ## Building The Provider ##
 Clone this repository to: `$GOPATH/src/github.com/CiscoDevNet/terraform-provider-sdwan`.
-Clone dcnm-go-client to `$GOPATH/src/github.com/CiscoDevNet/sdwan-go-client`.
+Clone sdwan-go-client to `$GOPATH/src/github.com/CiscoDevNet/sdwan-go-client`.
 
 ```sh
 $ mkdir -p $GOPATH/src/github.com/CiscoDevNet; cd $GOPATH/src/github.com/CiscoDevNet
@@ -20,7 +20,7 @@ $ git clone https://github.com/CiscoDevNet/sdwan-go-client.git
 Enter the provider directory, After that run make build to build the provider binary. This will build the provider with sanity checks present in scripts directory and put the provider binary in `$GOPATH/bin` directory.
 
 ```sh
-$ cd $GOPATH/src/github.com/CiscoDevNet/terraform-provider-aci
+$ cd $GOPATH/src/github.com/CiscoDevNet/terraform-provider-sdwan
 $ make build
 
 ```
