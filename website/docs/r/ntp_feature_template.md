@@ -69,8 +69,8 @@ resource "sdwan_ntp_feature_template" "example_ntp_feature_template" {
 * `template_name` - (Required) Unique NTP Type Feature Template Name, Must not include <, >, !, &, ", or white space; maximum 128 characters
 * `template_description` - (Required) Long Description of NTP type Feature Template, Should not be empty
 * `device_type` - (Required) Type of device which supports  Feature Template, Allowed values: "vbond","vedge-100","vedge-100-B","vedge-100-M","vedge-100-WM","vedge-1000","vedge-2000","vedge-5000","vedge-cloud","vedge-ISR1100-4G","vedge-ISR1100-4GLTE","vedge-ISR1100-6G","vedge-ISR1100X-4G","vedge-ISR1100X-6G","vedge-nfvis-CSP-5444","vedge-nfvis-CSP-5456","vedge-nfvis-CSP2100","vedge-nfvis-CSP2100-X1","vedge-nfvis-CSP2100-X2","vedge-nfvis-UCSC-E","vedge-nfvis-UCSC-M5"
-* `template_min_version` - (Required) Minimum Version for the  Feature template
-* `factory_default` - (Required) Boolean flag indicating whether NTP type Feature Template is factory default or not
+* `template_min_version` - (Required) Minimum Version for the Feature template
+* `factory_default` - (Required) Boolean flag indicating whether NTP type Feature Template is factory default or not, If we set it true we can not update or delete resource.
 * `template_definition` - (Optional) Configuration for NTP type Feature Template, (see [below for nested schema])
 
 ## Attribute Reference ##
