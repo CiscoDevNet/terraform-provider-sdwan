@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "sdwan" {  
-  # url = var.VMANAGE_URL
-  # username = var.VMANAGE_USERNAME
-  # password = var.VMANAGE_PASSWORD
+  url = var.VMANAGE_URL
+  username = var.VMANAGE_USERNAME
+  password = var.VMANAGE_PASSWORD
 }
 
 data "sdwan_ntp_feature_template" "name"{
@@ -23,7 +23,7 @@ output "output1" {
 
 resource "sdwan_ntp_feature_template" "name1" {
   template_name = "Sample_NTP_1"
-  template_description = "For testing purposes"
+  template_description = "For testing purposes 1"
   device_type = ["vedge-1000"]
   template_min_version = "20.4.1"
   template_definition {      
@@ -58,13 +58,10 @@ resource "sdwan_ntp_feature_template" "name1" {
   factory_default = false
 }
 
-output "output2" {
-  value = sdwan_ntp_feature_template.name1.template_description
-}
 resource "sdwan_ntp_feature_template" "name2" {
   template_name = "Sample_NTP_2"
-  template_description = "Sample_NTP_2 For testing purposes"
+  template_description = " "
   device_type = ["vbond"]
-  template_min_version = "15.0.0"
+  template_min_version = "20.4.1"
   factory_default = false
 }
