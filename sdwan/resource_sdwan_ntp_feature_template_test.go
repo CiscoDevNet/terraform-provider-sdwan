@@ -64,8 +64,10 @@ func testSDWANNtpFeatureTemplateConfig_basic(desc string) string {
 		template_name = "sample"
 		template_description = "%s"
 		device_type = ["vedge-1000"]
+		template_type = "ntp"
 		template_min_version = "15.0.0"
 		factory_default = false
+		template_definition {}
 	}
 	`, desc)
 }
@@ -102,11 +104,15 @@ func testAccCheckSDWANNtpFeatureTemplateExists(name string, ft *models.FeatureTe
 			}
 		}
 
+		contftdefinition := cont.S("templateDefinition").Data().(map[string]interface{})
+
 		ftGet.DeviceType = devList
 		ftGet.FactoryDefault = cont.S("factoryDefault").Data().(bool)
+		ftGet.TemplateDefinition = contftdefinition
 		ftGet.TemplateDescription = stripQuotes(cont.S("templateDescription").String())
 		ftGet.TemplateMinVersion = stripQuotes(cont.S("templateMinVersion").String())
 		ftGet.TemplateName = stripQuotes(cont.S("templateName").String())
+		ftGet.TemplateType = stripQuotes(cont.S("templateType").String())
 
 		*ft = *ftGet
 		fmt.Println("[DEBUG] End of testAccCheckSDWANNtpFeatureTemplateExists")
@@ -148,6 +154,10 @@ func testAccCheckSDWANNtpFeatureTemplateAttributes(desc string, ft *models.Featu
 
 		if "vedge-1000" != ft.DeviceType[0] {
 			return fmt.Errorf("Bad sdwan_Ntp_feature_template Device Type %s", ft.DeviceType[0])
+		}
+
+		if "ntp" != ft.TemplateType {
+			return fmt.Errorf("Bad sdwan_Ntp_feature_template Template Type %s", ft.TemplateType)
 		}
 
 		if false != ft.FactoryDefault {
