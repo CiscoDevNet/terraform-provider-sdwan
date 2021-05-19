@@ -98,7 +98,10 @@ var (
 		"vedge-ISR-4431",
 		"vedge-ISR-4451-X",
 		"vedge-ISR-4461",
-		"vedge-ISRv"}
+		"vedge-ISRv",
+		"vedge-CSR-1000v",
+		"vmanage",
+		"vsmart",}
 	validDeviceRole = []string{
 		"sdwan-edge",
 		"service-node"}
