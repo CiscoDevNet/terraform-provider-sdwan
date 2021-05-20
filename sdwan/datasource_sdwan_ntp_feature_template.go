@@ -32,6 +32,10 @@ func datasourceSDWANNtpFeatureTemplate() *schema.Resource {
 					Type: schema.TypeString,
 				},
 			},
+			"template_type": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"template_min_version": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -208,6 +212,8 @@ func setTemplateAttributes(d *schema.ResourceData, cont *container.Container) *s
 	d.Set("template_description", stripQuotes(cont.S("templateDescription").String()))
 
 	d.Set("device_type", interfaceToStrList(cont.S("deviceType").Data()))
+
+	d.Set("template_type", stripQuotes(cont.S("templateType").String()))
 
 	d.Set("template_min_version", stripQuotes(cont.S("templateMinVersion").String()))
 

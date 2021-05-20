@@ -28,6 +28,7 @@ data "sdwan_ntp_feature_template" "name" {
 
 * `template_description` - Long Description of NTP type Feature Template
 * `device_type` - Type of device which supports NTP Feature Template
+* `template_type` - Type of template which supports NTP Feature Template
 * `template_min_version` - Minimum Version for the NTP Feature template
 * `template_definition` - Configuration for NTP type Feature Template, (see [below for nested schema])
 * `factory_default` - Boolean flag indicating whether NTP type Feature Template is factory default or not

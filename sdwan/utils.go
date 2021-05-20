@@ -84,11 +84,8 @@ func belongsToNTP(lookup string) bool {
 		"vedge-100-B",
 		"vedge-ISR1100-4G",
 		"vedge-100",
-		"vsmart",
 		"vedge-ISR1100-4GLTE",
 		"vedge-100-WM",
-		"vmanage",
-		"vbond",
 		"vedge-100-M",
 		"vedge-ISR1100X-6G",
 		"vedge-ISR1100X-4G":

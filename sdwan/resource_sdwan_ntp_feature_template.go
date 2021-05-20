@@ -37,7 +37,6 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 					ValidateFunc: validation.StringInSlice([]string{
-						"vbond",
 						"vedge-100",
 						"vedge-100-B",
 						"vedge-100-M",
@@ -51,8 +50,6 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 						"vedge-ISR1100-6G",
 						"vedge-ISR1100X-4G",
 						"vedge-ISR1100X-6G",
-						"vmanage",
-						"vsmart",
 						"vedge-C8500-12X4QC",
 						"vedge-C1111-4PLTEEA",
 						"vedge-C1161-8P",
@@ -164,6 +161,7 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 			"template_type": {
 				Type:     schema.TypeString,
 				Required: true,
+				ForceNew: true,
 				ValidateFunc: validation.StringInSlice(
 					[]string{
 						"ntp",
