@@ -37,7 +37,6 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 					ValidateFunc: validation.StringInSlice([]string{
-						"vbond",
 						"vedge-100",
 						"vedge-100-B",
 						"vedge-100-M",
@@ -51,15 +50,123 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 						"vedge-ISR1100-6G",
 						"vedge-ISR1100X-4G",
 						"vedge-ISR1100X-6G",
-						"vedge-nfvis-CSP-5444",
-						"vedge-nfvis-CSP-5456",
-						"vedge-nfvis-CSP2100",
-						"vedge-nfvis-CSP2100-X1",
-						"vedge-nfvis-CSP2100-X2",
-						"vedge-nfvis-UCSC-E",
-						"vedge-nfvis-UCSC-M5",
+						"vedge-C8500-12X4QC",
+						"vedge-C1111-4PLTEEA",
+						"vedge-C1161-8P",
+						"vedge-C1117-4PLTEEAW",
+						"vedge-C1121X-8P",
+						"vedge-C8200-1N-4T",
+						"vedge-ISR-4331",
+						"vedge-C1127X-8PMLTEP",
+						"vedge-C1117-4PMLTEEAWE",
+						"vedge-ISR-4451-X",
+						"vedge-C1113-8PLTEEA",
+						"vedge-IR-1821",
+						"vedge-ASR-1001-X",
+						"vedge-ISR-4321",
+						"vedge-C1116-4PLTEEAWE",
+						"vedge-C1109-4PLTE2P",
+						"vedge-C1121-8P",
+						"vedge-ASR-1002-HX",
+						"vedge-C1111-8PLTEEAW",
+						"vedge-C1112-8PWE",
+						"vedge-C1101-4PLTEP",
+						"vedge-ISR1100-4GLTENA-XE",
+						"vedge-C1111-8PLTELA",
+						"vedge-IR-1835",
+						"vedge-C1121X-8PLTEP",
+						"vedge-IR-1833",
+						"vedge-C8300-1N1S-4T2X",
+						"vedge-C1121-4P",
+						"vedge-ISR-4351",
+						"vedge-C1117-4PLTELA",
+						"vedge-C1116-4PWE",
+						"vedge-nfvis-C8200-UCPE",
+						"vedge-C1113-8PM",
+						"vedge-IR-1831",
+						"vedge-C1127-8PLTEP",
+						"vedge-C1121-8PLTEPW",
+						"vedge-C1113-8PW",
+						"vedge-ASR-1001-HX",
+						"vedge-C1128-8PLTEP",
+						"vedge-C1113-8PLTEEAW",
+						"vedge-C1117-4PW",
+						"vedge-C1116-4P",
+						"vedge-C1113-8PMLTEEA",
+						"vedge-C1112-8P",
+						"vedge-ISR-4461",
+						"vedge-C1116-4PLTEEA",
+						"vedge-ISR-4221",
+						"vedge-C1117-4PM",
+						"vedge-C1113-8PLTELAWZ",
+						"vedge-C1117-4PMWE",
+						"vedge-C1109-2PLTEVZ",
+						"vedge-C1113-8P",
+						"vedge-C1117-4P",
+						"vedge-nfvis-ENCS5400",
+						"vedge-C8300-2N2S-6T",
+						"vedge-C1127-8PMLTEP",
+						"vedge-ESR-6300",
+						"vedge-ISR-4221X",
+						"vedge-ISR1100-4GLTEGB-XE",
+						"vedge-C8500-12X",
+						"vedge-C1109-2PLTEGB",
+						"vedge-CSR-1000v",
+						"vedge-C1113-8PLTEW",
+						"vedge-C1121X-8PLTEPW",
+						"vedge-ISR1100-6G-XE",
+						"vedge-C1121-4PLTEP",
+						"vedge-C1111-8PLTEEA",
+						"vedge-C1117-4PLTEEA",
+						"vedge-C1127X-8PLTEP",
+						"vedge-C1109-2PLTEUS",
+						"vedge-C1112-8PLTEEAWE",
+						"vedge-C1161X-8P",
+						"vedge-C8500L-8S4X",
+						"vedge-C1111-8PW",
+						"vedge-C1161X-8PLTEP",
+						"vedge-C1101-4PLTEPW",
+						"vedge-ISR1100X-4G-XE",
+						"vedge-IR-1101",
+						"vedge-C1111-4P",
+						"vedge-C1111-4PW",
+						"vedge-C1111-8P",
+						"vedge-C1117-4PMLTEEA",
+						"vedge-C1113-8PLTELA",
+						"vedge-C1111-8PLTELAW",
+						"vedge-C1161-8PLTEP",
+						"vedge-ISR1100X-6G-XE",
+						"vedge-ISR-4431",
+						"vedge-C1101-4P",
+						"vedge-C1109-4PLTE2PW",
+						"vedge-C1113-8PMWE",
+						"vedge-C1118-8P",
+						"vedge-C1126-8PLTEP",
+						"vedge-C8300-1N1S-6T",
+						"vedge-C1121-8PLTEP",
+						"vedge-C8300-2N2S-4T2X",
+						"vedge-C1112-8PLTEEA",
+						"vedge-C1111-4PLTELA",
+						"vedge-ASR-1002-X",
+						"vedge-C1111X-8P",
+						"vedge-C1126X-8PLTEP",
+						"vedge-ASR-1006-X",
+						"vedge-C8000V",
+						"vedge-ISR1100-4G-XE",
+						"vedge-C1117-4PLTELAWZ",
+						"vedge-ISRv",
 					}, false),
 				},
+			},
+			"template_type": {
+				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: true,
+				ValidateFunc: validation.StringInSlice(
+					[]string{
+						"ntp",
+						"cisco_ntp",
+					}, false),
 			},
 			"template_min_version": {
 				Type:     schema.TypeString,
@@ -67,8 +174,7 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 			},
 			"template_definition": {
 				Type:     schema.TypeSet,
-				Optional: true,
-				Computed: true,
+				Required: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -111,6 +217,32 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 								},
 							},
 						},
+						"master": {
+							Type:     schema.TypeSet,
+							Optional: true,
+							Computed: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"enable": {
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"stratum": {
+										Type:         schema.TypeInt,
+										Optional:     true,
+										Computed:     true,
+										ValidateFunc: validation.IntBetween(1, 15),
+									},
+									"source": {
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"authentication": {
 							Type:     schema.TypeSet,
 							Optional: true,
@@ -130,7 +262,6 @@ func resourceSDWANNtpFeatureTemplate() *schema.Resource {
 								},
 							},
 						},
-
 						"trusted": {
 							Type:     schema.TypeList,
 							Optional: true,
@@ -201,12 +332,17 @@ func resourceSDWANNtpFeatureTemplateCreate(d *schema.ResourceData, m interface{}
 
 	fTemplate := models.FeatureTemplate{}
 
-	fTemplate.TemplateType = "ntp"
+	fTemplate.TemplateType = d.Get("template_type").(string)
 	fTemplate.TemplateName = d.Get("template_name").(string)
 	fTemplate.TemplateDescription = d.Get("template_description").(string)
 	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
 	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
 	fTemplate.FactoryDefault = d.Get("factory_default").(bool)
+
+	check := validateDeviceType(fTemplate.DeviceType, fTemplate.TemplateType)
+	if !check {
+		return fmt.Errorf("[ERROR] Device Type is not competible with Template type!")
+	}
 
 	ftDefinition := d.Get("template_definition").(*schema.Set).List()
 	if def, err := createNtpFTDefinition(ftDefinition); err == nil {
@@ -238,12 +374,17 @@ func resourceSDWANNtpFeatureTemplateUpdate(d *schema.ResourceData, m interface{}
 
 	fTemplate := models.FeatureTemplate{}
 
-	fTemplate.TemplateType = "ntp"
+	fTemplate.TemplateType = d.Get("template_type").(string)
 	fTemplate.TemplateName = d.Get("template_name").(string)
 	fTemplate.TemplateDescription = d.Get("template_description").(string)
 	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
 	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
 	fTemplate.FactoryDefault = d.Get("factory_default").(bool)
+
+	check := validateDeviceType(fTemplate.DeviceType, fTemplate.TemplateType)
+	if !check {
+		return fmt.Errorf("[ERROR] Device Type is not competible with Template type!")
+	}
 
 	ftDefinition := d.Get("template_definition").(*schema.Set).List()
 	if def, err := createNtpFTDefinition(ftDefinition); err == nil {
@@ -333,6 +474,14 @@ func createNtpFTDefinition(ftDefinitions []interface{}) (map[string]interface{},
 			}
 
 			definition["server"] = ServerMap
+		}
+
+		//master configuration
+		MasterSet := ftDefMap["master"].(*schema.Set).List()
+
+		if len(MasterSet) > 0 {
+			masterMap := MasterSet[0].(map[string]interface{})
+			createNtpMaster(definition, masterMap)
 		}
 
 		//trusted configuration
@@ -454,6 +603,39 @@ func createNtpServer(defMap map[string]interface{}, input map[string]interface{}
 	}
 }
 
+func createNtpMaster(defMap map[string]interface{}, input map[string]interface{}) {
+	master := make(map[string]interface{})
+
+	if input["enable"] != nil {
+		enable := make(map[string]interface{})
+		enable["vipObjectType"] = "object"
+		enable["vipType"] = "constant"
+		enable["vipValue"] = strconv.FormatBool(input["enable"].(bool))
+		enable["vipVariableName"] = "enable"
+		master["enable"] = enable
+	}
+
+	if input["stratum"] != nil {
+		stratum := make(map[string]interface{})
+		stratum["vipObjectType"] = "object"
+		stratum["vipType"] = "constant"
+		stratum["vipValue"] = input["stratum"].(int)
+		stratum["vipVariableName"] = "stratum"
+		master["stratum"] = stratum
+	}
+
+	if input["source"] != nil && input["source"] != "" {
+		source := make(map[string]interface{})
+		source["vipObjectType"] = "object"
+		source["vipType"] = "constant"
+		source["vipValue"] = input["source"].(string)
+		source["vipVariableName"] = "source"
+		master["source"] = source
+	}
+
+	defMap["master"] = master
+}
+
 func createNtpAuth(defMap map[string]interface{}, input map[string]interface{}) {
 
 	if input["id"] != nil {
@@ -478,4 +660,31 @@ func createNtpAuth(defMap map[string]interface{}, input map[string]interface{}) 
 		"number",
 		"md5",
 	}
+}
+
+func validateDeviceType(deviceType []string, templateType string) bool {
+
+	if templateType == "ntp" {
+		var check bool
+		for _, device := range deviceType {
+			check = belongsToNTP(device)
+			if !check {
+				return false
+			}
+		}
+		return true
+	}
+
+	if templateType == "cisco_ntp" {
+		var check bool
+		for _, device := range deviceType {
+			check = belongsToCiscoNTP(device)
+			if !check {
+				return false
+			}
+		}
+		return true
+	}
+
+	return false
 }

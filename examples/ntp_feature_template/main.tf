@@ -18,19 +18,34 @@ provider "sdwan" {
   insecure = true
 }
 
-data "sdwan_ntp_feature_template" "name"{
+data "sdwan_ntp_feature_template" "test1"{
     template_name="Sample_NTP"
 }
 
-output "output1" {
-  value = data.sdwan_ntp_feature_template.name
+data "sdwan_ntp_feature_template" "test2"{   
+    template_name="Sample_Cisco_NTP"
 }
-
+output "output1" {
+  value = data.sdwan_ntp_feature_template.test1
+}
+output "output2" {
+  value = data.sdwan_ntp_feature_template.test2
+}
 resource "sdwan_ntp_feature_template" "name1" {
-  template_name = "Sample_NTP_1"
+  template_name = "Sample_Cisco_NTP"
   template_description = "For testing purposes 1"
-  device_type = ["vedge-1000"]
-  template_min_version = "20.4.1"
+  device_type = ["vedge-C1161-8P","vedge-C1117-4PLTEEAW",
+		"vedge-C1121X-8P",
+		"vedge-C8200-1N-4T",
+		"vedge-ISR-4331",
+		"vedge-C1127X-8PMLTEP",
+		"vedge-C1117-4PMLTEEAWE",
+		"vedge-ISR-4451-X",
+		"vedge-C1113-8PLTEEA",
+		"vedge-IR-1821",
+		"vedge-ASR-1001-X",]
+  template_type = "cisco_ntp"
+  template_min_version = "15.0.0"
   template_definition {      
     server {
       hostname = "time1.google."  
@@ -46,6 +61,12 @@ resource "sdwan_ntp_feature_template" "name1" {
       key = 1
       vpn = 0
       version = 4 
+    }
+
+    master {
+      enable = true
+      stratum = 5
+      source = "abc"
     }
 
     authentication {
@@ -64,9 +85,31 @@ resource "sdwan_ntp_feature_template" "name1" {
 }
 
 resource "sdwan_ntp_feature_template" "name2" {
-  template_name = "Sample_NTP_2"
+  template_name = "Sample_NTP"
   template_description = "For testing purposes 2"
-  device_type = ["vbond"]
+  device_type = [	
+    "vedge-1000",
+		"vedge-2000",
+		"vedge-cloud",
+		"vedge-5000",
+		]    
+  template_type = "ntp"
   template_min_version = "20.4.1"
+   template_definition {   
+   
+    server {
+      hostname = "198.00.200.100"     
+      key = 1
+      vpn = 0
+      version = 4 
+    }
+
+    authentication {
+      id = 1
+      value = "12345"
+    }
+   
+    trusted = [ "1"]
+  }
   factory_default = false
 }

@@ -28,6 +28,7 @@ data "sdwan_ntp_feature_template" "name" {
 
 * `template_description` - Long Description of NTP type Feature Template
 * `device_type` - Type of device which supports NTP Feature Template
+* `template_type` - Type of template which supports NTP Feature Template
 * `template_min_version` - Minimum Version for the NTP Feature template
 * `template_definition` - Configuration for NTP type Feature Template, (see [below for nested schema])
 * `factory_default` - Boolean flag indicating whether NTP type Feature Template is factory default or not
@@ -44,6 +45,7 @@ data "sdwan_ntp_feature_template" "name" {
 
 ## Nested Schema for template_definition
 * `server` - Server configuration for the NTP type Feature Template, (see [below for nested schema])
+* `master` - (Optional) Master configuration for the Cisco NTP type Feature Template, see [below for nested schema])
 * `authentication` - Authentication configuration for the NTP type Feature Template, (see [below for nested schema])
 * `trusted` - Trusted key for the NTP type Feature Template
 
@@ -54,6 +56,11 @@ data "sdwan_ntp_feature_template" "name" {
 * `version` - Version number of the NTP protocol software for configuration of NTP type Feature Template
 * `source_interface` - Name of a specific interface to use for outgoing NTP packets
 * `prefer` - It is a boolean flag, set true if multiple NTP servers are at the same stratum level and you want one to be preferred
+
+## Nested Schema for master
+* `enable` - (Optional) Boolean flag indicating whether master is enabled for configuration of Cisco NTP type Feature Template
+* `stratum` - (Optional) Stratum for configuration of Cisco NTP type Feature Template 
+* `source` - (Optional) Source for configuration of Cisco NTP type Feature Template
 
 ## Nested Schema for authentication
 * `id` - MD5 authentication key ID for configuration of NTP type Feature Template
