@@ -28,6 +28,7 @@ data "sdwan_system_feature_template" "name" {
 
 * `template_description` - Long Description of  System type Feature Template
 * `device_type` - Type of device which supports  Feature Template
+* `template_type`: Type of Template from "Cisco System" and "System"
 * `template_min_version` - Minimum Version for the  Feature template
 * `template_definition` - Configuration for  System type Feature Template, (see [below for nested schema])
 * `factory_default` - Boolean flag indicating whether  System type Feature Template is factory default or not
@@ -68,7 +69,8 @@ data "sdwan_system_feature_template" "name" {
 
 ## Nested Schema for system_trackers
 * `tracker_name` - Name of Tracker for configuration of System type Feature Template
-* `tracker_type` - Type of Tracker for configuration of System type Feature Template
+* `tracker_type` - Type of Tracker for configuration of Cisco System type Feature Template
+* `tracker_endpoint_type` - Type of Tracker Endpoint for configuration of System type Feature Template
 * `tracker_endpoint_value` - Value of Tracker Endpoint for configuration of System type Feature Template
 * `tracker_threshold` - Threshold of Tracker for configuration of System type Feature Template
 * `tracker_interval` - Interval of Tracker for configuration of System type Feature Template

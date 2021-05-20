@@ -29,7 +29,7 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 			"template_description": {
 				Type:         schema.TypeString,
 				Required:     true,
-				ValidateFunc: validation.StringIsNotEmpty,
+				ValidateFunc: DescValidation(),
 			},
 
 			"device_type": {
@@ -60,8 +60,125 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 						"vedge-nfvis-CSP2100-X2",
 						"vedge-nfvis-UCSC-E",
 						"vedge-nfvis-UCSC-M5",
+						"vedge-C8500-12X4QC",
+						"vedge-C1111-4PLTEEA",
+						"vedge-C1161-8P",
+						"vedge-C1117-4PLTEEAW",
+						"vedge-C1121X-8P",
+						"vedge-C8200-1N-4T",
+						"vedge-ISR-4331",
+						"vedge-ISRv",
+						"cellular-gateway-CG522-E",
+						"vedge-C1127X-8PMLTEP",
+						"vedge-C1117-4PMLTEEAWE",
+						"vedge-ISR-4451-X",
+						"vedge-C1113-8PLTEEA",
+						"vedge-IR-1821",
+						"vedge-ASR-1001-X",
+						"vedge-ISR-4321",
+						"vedge-C1116-4PLTEEAWE",
+						"vedge-C1109-4PLTE2P",
+						"vedge-C1121-8P",
+						"vedge-ASR-1002-HX",
+						"cellular-gateway-CG418-E",
+						"vedge-C1111-8PLTEEAW",
+						"vedge-C1112-8PWE",
+						"vedge-C1101-4PLTEP",
+						"vedge-ISR1100-4GLTENA-XE",
+						"vedge-C1111-8PLTELA",
+						"vedge-IR-1835",
+						"vedge-C1121X-8PLTEP",
+						"vedge-IR-1833",
+						"vedge-C8300-1N1S-4T2X",
+						"vedge-C1121-4P",
+						"vedge-ISR-4351",
+						"vedge-C1117-4PLTELA",
+						"vedge-C1116-4PWE",
+						"vedge-nfvis-C8200-UCPE",
+						"vedge-C1113-8PM",
+						"vedge-IR-1831",
+						"vedge-C1127-8PLTEP",
+						"vedge-C1121-8PLTEPW",
+						"vedge-C1113-8PW",
+						"vedge-ASR-1001-HX",
+						"vedge-C1128-8PLTEP",
+						"vedge-C1113-8PLTEEAW",
+						"vedge-C1117-4PW",
+						"vedge-C1116-4P",
+						"vedge-C1113-8PMLTEEA",
+						"vedge-C1112-8P",
+						"vedge-ISR-4461",
+						"vedge-C1116-4PLTEEA",
+						"vedge-ISR-4221",
+						"vedge-C1117-4PM",
+						"vedge-C1113-8PLTELAWZ",
+						"vedge-C1117-4PMWE",
+						"vedge-C1109-2PLTEVZ",
+						"vedge-C1113-8P",
+						"vedge-C1117-4P",
+						"vedge-nfvis-ENCS5400",
+						"vedge-C8300-2N2S-6T",
+						"vedge-C1127-8PMLTEP",
+						"vedge-ESR-6300",
+						"vedge-ISR-4221X",
+						"vedge-ISR1100-4GLTEGB-XE",
+						"vedge-C8500-12X",
+						"vedge-C1109-2PLTEGB",
+						"vedge-CSR-1000v",
+						"vedge-C1113-8PLTEW",
+						"vedge-C1121X-8PLTEPW",
+						"vedge-ISR1100-6G-XE",
+						"vedge-C1121-4PLTEP",
+						"vedge-C1111-8PLTEEA",
+						"vedge-C1117-4PLTEEA",
+						"vedge-C1127X-8PLTEP",
+						"vedge-C1109-2PLTEUS",
+						"vedge-C1112-8PLTEEAWE",
+						"vedge-C1161X-8P",
+						"vedge-C8500L-8S4X",
+						"vedge-C1111-8PW",
+						"vedge-C1161X-8PLTEP",
+						"vedge-C1101-4PLTEPW",
+						"vedge-ISR1100X-4G-XE",
+						"vedge-IR-1101",
+						"vedge-C1111-4P",
+						"vedge-C1111-4PW",
+						"vedge-C1111-8P",
+						"vedge-C1117-4PMLTEEA",
+						"vedge-C1113-8PLTELA",
+						"vedge-C1111-8PLTELAW",
+						"vedge-C1161-8PLTEP",
+						"vedge-ISR1100X-6G-XE",
+						"vedge-ISR-4431",
+						"vedge-C1101-4P",
+						"vedge-C1109-4PLTE2PW",
+						"vedge-C1113-8PMWE",
+						"vedge-C1118-8P",
+						"vedge-C1126-8PLTEP",
+						"vedge-C8300-1N1S-6T",
+						"vedge-C1121-8PLTEP",
+						"vedge-C8300-2N2S-4T2X",
+						"vedge-C1112-8PLTEEA",
+						"vedge-C1111-4PLTELA",
+						"vedge-ASR-1002-X",
+						"vedge-C1111X-8P",
+						"vedge-C1126X-8PLTEP",
+						"vedge-ASR-1006-X",
+						"vedge-C8000V",
+						"vedge-ISR1100-4G-XE",
+						"vedge-C1117-4PLTELAWZ",
 					}, false),
 				},
+			},
+
+			"template_type": {
+				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: true,
+				ValidateFunc: validation.StringInSlice([]string{
+					"System",
+					"Cisco System",
+				}, false),
 			},
 
 			"template_min_version": {
@@ -72,26 +189,26 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 			"template_definition": {
 				Type:     schema.TypeSet,
 				Required: true,
-				MinItems: 1,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						"system_basic": {
 							Type:     schema.TypeSet,
 							Required: true,
-							MinItems: 1,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"site_id": {
 										Type:         schema.TypeFloat,
-										Required:     true,
+										Optional:     true,
 										ValidateFunc: validation.FloatBetween(1, 4294967295),
 									},
 
 									"system_ip": {
 										Type:         schema.TypeString,
-										Required:     true,
+										Optional:     true,
 										ValidateFunc: validation.IsIPv4Address,
 									},
 
@@ -103,7 +220,8 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 
 									"timezone": {
 										Type:     schema.TypeString,
-										Required: true,
+										Optional: true,
+										Default:  "UTC",
 									},
 
 									"hostname": {
@@ -142,7 +260,7 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 									"console_baud_rate": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Default:  "_empty",
+										Default:  "9600",
 										ValidateFunc: validation.StringInSlice(
 											[]string{
 												"1200",
@@ -179,6 +297,7 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"latitude": {
 										Type:     schema.TypeFloat,
 										Optional: true,
@@ -198,6 +317,7 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"tracker_name": {
 										Type:         schema.TypeString,
 										Required:     true,
@@ -227,6 +347,16 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 
 									"tracker_type": {
 										Type:     schema.TypeString,
+										Optional: true,
+										Default:  "interface",
+										ValidateFunc: validation.StringInSlice([]string{
+											"interface",
+											"static-route",
+										}, false),
+									},
+
+									"tracker_endpoint_type": {
+										Type:     schema.TypeString,
 										Required: true,
 										ValidateFunc: validation.StringInSlice([]string{
 											"ip-address",
@@ -250,6 +380,7 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"control_session_pps": {
 										Type:         schema.TypeInt,
 										Optional:     true,
@@ -455,29 +586,43 @@ func resourceSDWANSystemFeatureTemplateCreate(d *schema.ResourceData, m interfac
 
 	sdwanClient := m.(*client.Client)
 
-	fTemplate := models.FeatureTemplate{}
+	templateType := d.Get("template_type").(string)
 
-	fTemplate.TemplateType = "system-vedge"
-	fTemplate.TemplateName = d.Get("template_name").(string)
-	fTemplate.TemplateDescription = d.Get("template_description").(string)
-	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
-	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
-	fTemplate.FactoryDefault = d.Get("factory_default").(bool)
-
-	ftDefinition := d.Get("template_definition").(*schema.Set).List()
-	if def, err := createSystemFTDefinition(ftDefinition); err == nil {
-		fTemplate.TemplateDefinition = def
+	if !verifyDeviceType(templateType, interfaceToStrList(d.Get("device_type"))) {
+		return fmt.Errorf("[ERROR] Please use a valid Device Type for Template: %s", templateType)
 	}
 
-	cont, err := sdwanClient.Save("/dataservice/template/feature", &fTemplate)
+	if templateType == "System" {
+		templateType = "system-vedge"
+	} else {
+		templateType = "cisco_system"
+	}
+
+	ftDefinition := d.Get("template_definition").(*schema.Set).List()
+	def, err := createSystemFTDefinition(ftDefinition)
+	if err != nil {
+		return err
+	}
+
+	fTemplate := &models.FeatureTemplate{
+		TemplateType:        templateType,
+		TemplateName:        d.Get("template_name").(string),
+		TemplateDescription: d.Get("template_description").(string),
+		DeviceType:          interfaceToStrList(d.Get("device_type")),
+		TemplateMinVersion:  d.Get("template_min_version").(string),
+		FactoryDefault:      d.Get("factory_default").(bool),
+		TemplateDefinition:  def,
+	}
+
+	cont, err := sdwanClient.Save("/dataservice/template/feature", fTemplate)
 	if err != nil {
 		return err
 	}
 
 	ftID := stripQuotes(cont.S("templateId").String())
-	d.Set("template_id", ftID)
 	d.SetId(ftID)
 
+	log.Println("[DEBUG] End of Create method!")
 	return resourceSDWANSystemFeatureTemplateRead(d, m)
 }
 
@@ -485,29 +630,36 @@ func resourceSDWANSystemFeatureTemplateUpdate(d *schema.ResourceData, m interfac
 	log.Println("[DEBUG] Beginning Update Method ", d.Id())
 
 	sdwanClient := m.(*client.Client)
-
 	ftID := d.Id()
 
-	fTemplate := models.FeatureTemplate{}
-
-	fTemplate.TemplateType = "system-vedge"
-	fTemplate.TemplateName = d.Get("template_name").(string)
-	fTemplate.TemplateDescription = d.Get("template_description").(string)
-	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
-	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
-	fTemplate.FactoryDefault = d.Get("factory_default").(bool)
-
-	ftDefinition := d.Get("template_definition").(*schema.Set).List()
-	if def, err := createSystemFTDefinition(ftDefinition); err == nil {
-		fTemplate.TemplateDefinition = def
+	var templateType string
+	if d.Get("template_type").(string) == "System" {
+		templateType = "system-vedge"
+	} else {
+		templateType = "cisco_system"
 	}
 
-	ftURL := fmt.Sprintf("/dataservice/template/feature/%s", ftID)
-	_, err := sdwanClient.Update(ftURL, &fTemplate)
-
+	ftDefinition := d.Get("template_definition").(*schema.Set).List()
+	def, err := createSystemFTDefinition(ftDefinition)
 	if err != nil {
 		return err
 	}
+	fTemplate := &models.FeatureTemplate{
+		TemplateType:        templateType,
+		TemplateName:        d.Get("template_name").(string),
+		TemplateDescription: d.Get("template_description").(string),
+		DeviceType:          interfaceToStrList(d.Get("device_type")),
+		TemplateMinVersion:  d.Get("template_min_version").(string),
+		FactoryDefault:      d.Get("factory_default").(bool),
+		TemplateDefinition:  def,
+	}
+
+	ftURL := fmt.Sprintf("/dataservice/template/feature/%s", ftID)
+	_, err = sdwanClient.Update(ftURL, fTemplate)
+	if err != nil {
+		return err
+	}
+
 	d.SetId(ftID)
 
 	log.Println("[DEBUG] End of Update Method ", d.Id())
@@ -523,7 +675,7 @@ func resourceSDWANSystemFeatureTemplateRead(d *schema.ResourceData, m interface{
 	cont, err := getFeatureTemplateByID(sdwanClient, tID)
 	if err != nil {
 		if cont != nil {
-			log.Println("Data load failed in between!")
+			return fmt.Errorf("[ERROR] Data load failed in between")
 		} else {
 			return err
 		}
@@ -547,56 +699,61 @@ func resourceSDWANSystemFeatureTemplateDelete(d *schema.ResourceData, m interfac
 	}
 
 	d.SetId("")
-	log.Println("[DEBUG] End of Delete Method!")
+	log.Println("[DEBUG] End of Delete Method")
 	return nil
 }
 
 func createSystemFTDefinition(ftDefinitions []interface{}) (map[string]interface{}, error) {
 	definition := make(map[string]interface{})
 
-	ftDefinition := ftDefinitions[0]
-	ftDefMap := ftDefinition.(map[string]interface{})
+	if len(ftDefinitions) > 0 {
+		ftDefinition := ftDefinitions[0]
+		ftDefMap := ftDefinition.(map[string]interface{})
 
-	systemBasicMap := (ftDefMap["system_basic"].(*schema.Set).List())[0].(map[string]interface{})
-	createSystemBasic(definition, systemBasicMap)
-
-	GPSSet := ftDefMap["system_gps"].(*schema.Set).List()
-
-	if len(GPSSet) > 0 {
-		systemGPSMap := GPSSet[0].(map[string]interface{})
-		createSystemGPS(definition, systemGPSMap)
-	}
-
-	TrackerSet := ftDefMap["system_trackers"].(*schema.Set).List()
-
-	if len(TrackerSet) > 0 {
-		trackers := make([]interface{}, 0, 8)
-
-		for _, systemTrackerMap := range TrackerSet {
-			tracker := make(map[string]interface{})
-			createSystemTracker(tracker, systemTrackerMap.(map[string]interface{}))
-
-			trackers = append(trackers, tracker)
+		BasicSet := ftDefMap["system_basic"].(*schema.Set).List()
+		if len(BasicSet) > 0 {
+			systemBasicMap := BasicSet[0].(map[string]interface{})
+			createSystemBasic(definition, systemBasicMap)
 		}
 
-		TrackerMap := make(map[string]interface{})
-		TrackerMap["vipType"] = "constant"
-		TrackerMap["vipObjectType"] = "tree"
-		TrackerMap["vipValue"] = trackers
-		TrackerMap["vipPrimaryKey"] = []string{
-			"name",
+		GPSSet := ftDefMap["system_gps"].(*schema.Set).List()
+
+		if len(GPSSet) > 0 {
+			systemGPSMap := GPSSet[0].(map[string]interface{})
+			createSystemGPS(definition, systemGPSMap)
 		}
 
-		definition["tracker"] = TrackerMap
+		TrackerSet := ftDefMap["system_trackers"].(*schema.Set).List()
+
+		if len(TrackerSet) > 0 {
+			trackers := make([]interface{}, 0, 8)
+
+			for _, systemTrackerMap := range TrackerSet {
+				tracker := make(map[string]interface{})
+				createSystemTracker(tracker, systemTrackerMap.(map[string]interface{}))
+
+				trackers = append(trackers, tracker)
+			}
+
+			TrackerMap := make(map[string]interface{})
+			TrackerMap["vipType"] = "constant"
+			TrackerMap["vipObjectType"] = "tree"
+			TrackerMap["vipValue"] = trackers
+			TrackerMap["vipPrimaryKey"] = []string{
+				"name",
+			}
+
+			definition["tracker"] = TrackerMap
+		}
+
+		AdvancedSet := ftDefMap["system_advanced"].(*schema.Set).List()
+
+		if len(AdvancedSet) > 0 {
+			systemAdvancedMap := AdvancedSet[0].(map[string]interface{})
+			createSystemAdvanced(definition, systemAdvancedMap)
+		}
+
 	}
-
-	AdvancedSet := ftDefMap["system_advanced"].(*schema.Set).List()
-
-	if len(AdvancedSet) > 0 {
-		systemAdvancedMap := AdvancedSet[0].(map[string]interface{})
-		createSystemAdvanced(definition, systemAdvancedMap)
-	}
-
 	return definition, nil
 }
 
@@ -715,7 +872,6 @@ func createSystemBasic(defMap map[string]interface{}, input map[string]interface
 		tcpOptimizationEnabled["vipVariableName"] = "system_tcp_optimization_enabled"
 		defMap["tcp-optimization-enabled"] = tcpOptimizationEnabled
 	}
-
 }
 
 func createSystemGPS(defMap map[string]interface{}, input map[string]interface{}) {
@@ -750,11 +906,20 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		trackerName["vipVariableName"] = "tracker_name"
 		defMap["name"] = trackerName
 	}
-	// TODO
-	if input["tracker_type"] != nil && input["tracker_type"] != "" {
+
+	if input["tracker_type"] != nil {
+		trackerType := make(map[string]interface{})
+		trackerType["vipObjectType"] = "object"
+		trackerType["vipType"] = "constant"
+		trackerType["vipValue"] = input["tracker_type"].(string)
+		trackerType["vipVariableName"] = "tracker_tracker_type"
+		defMap["type"] = trackerType
+	}
+
+	if input["tracker_endpoint_type"] != nil && input["tracker_endpoint_type"] != "" {
 		trackerEndpointValue := make(map[string]interface{})
 
-		tType := input["tracker_type"].(string)
+		tType := input["tracker_endpoint_type"].(string)
 		if tType == "ip-address" {
 
 			trackerEndpointValue["vipObjectType"] = "object"
@@ -779,10 +944,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 			trackerEndpointValue["vipVariableName"] = "tracker_endpoint-api-url"
 			defMap["endpoint-api-url"] = trackerEndpointValue
 
-		} else {
-			fmt.Errorf("[ERROR] No such Tracker type found")
 		}
-
 	}
 
 	if input["tracker_threshold"] != nil {
@@ -819,6 +981,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		"threshold",
 		"interval",
 		"multiplier",
+		"type",
 	}
 }
 
@@ -1022,5 +1185,23 @@ func createSystemAdvanced(defMap map[string]interface{}, input map[string]interf
 		onDemand["idle-timeout"] = onDemandIdleTimeout
 	}
 	defMap["on-demand"] = onDemand
+}
 
+func verifyDeviceType(templateType string, deviceType []string) bool {
+	var found = 0
+	if templateType == "System" {
+		for _, dType := range deviceType {
+			if sysDeviceTypes[dType] {
+				found++
+			}
+		}
+	} else {
+		for _, dType := range deviceType {
+			if ciscoSysDeviceTypes[dType] {
+				found++
+			}
+		}
+	}
+
+	return found == len(deviceType)
 }
