@@ -125,9 +125,6 @@ var (
 		"vedge-ISR1100-4GLTE": true,
 		"vedge-ISR1100-6G":    true,
 		"vedge-ISR1100X-4G":   true,
-	}
-
-	ciscoSysDeviceTypes = map[string]bool{
 		"vedge-ISR1100X-6G":        true,
 		"vedge-nfvis-CSP-5444":     true,
 		"vedge-nfvis-CSP-5456":     true,
@@ -136,6 +133,9 @@ var (
 		"vedge-nfvis-CSP2100-X2":   true,
 		"vedge-nfvis-UCSC-E":       true,
 		"vedge-nfvis-UCSC-M5":      true,
+	}
+
+	ciscoSysDeviceTypes = map[string]bool{
 		"vedge-C8500-12X4QC":       true,
 		"vedge-C1111-4PLTEEA":      true,
 		"vedge-C1161-8P":           true,
