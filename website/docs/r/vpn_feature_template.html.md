@@ -1,8 +1,8 @@
 ---
-layout "sdwan"
-page_title "SD-WAN sdwan_vpn_feature_template"
-sidebar_current "docs-sdwan-resource-vpn_feature_template"
-description |-
+layout: "sdwan"
+page_title: "SD-WAN: sdwan_vpn_feature_template"
+sidebar_current: "docs-sdwan-resource-vpn_feature_template"
+description: |-
   Manages SD-WAN VPN Type Feature Templates
 ---
 
