@@ -341,7 +341,7 @@ func resourceSDWANNtpFeatureTemplateCreate(d *schema.ResourceData, m interface{}
 
 	check := validateDeviceType(fTemplate.DeviceType, fTemplate.TemplateType)
 	if !check {
-		return fmt.Errorf("[ERROR] Device Type is not competible with Template type!")
+		return fmt.Errorf("[ERROR] Device Type is not compatible with Template type!")
 	}
 
 	ftDefinition := d.Get("template_definition").(*schema.Set).List()
