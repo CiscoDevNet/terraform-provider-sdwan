@@ -67,12 +67,14 @@ func Provider() *schema.Provider {
 			"sdwan_device_template":         resourceSDWANDeviceTemplate(),
 			"sdwan_system_feature_template": resourceSDWANSystemFeatureTemplate(),
 			"sdwan_ntp_feature_template":    resourceSDWANNtpFeatureTemplate(),
+			"sdwan_vpn_feature_template":    resouceSDWANVPNFeatureTemplate(),
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
 			"sdwan_device_template":         datasourceSDWANDeviceTemplate(),
 			"sdwan_system_feature_template": datasourceSDWANSystemFeatureTemplate(),
 			"sdwan_ntp_feature_template":    datasourceSDWANNtpFeatureTemplate(),
+			"sdwan_vpn_feature_template":    datasourceSDWANVPNFeatureTemplate(),
 		},
 
 		ConfigureFunc: configClient,
