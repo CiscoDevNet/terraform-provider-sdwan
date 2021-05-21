@@ -22,10 +22,12 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+
 			"template_description": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
 			"device_type": {
 				Type:     schema.TypeList,
 				Computed: true,
@@ -33,15 +35,23 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 					Type: schema.TypeString,
 				},
 			},
+
+			"template_type": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+
 			"template_min_version": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
 			"template_definition": {
 				Type:     schema.TypeSet,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						//For Basic Configuration
 						"system_basic": {
 							Type:     schema.TypeSet,
@@ -49,30 +59,37 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"site_id": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"system_ip": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"overlay_id": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"timezone": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"hostname": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"location": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"device_groups": {
 										Type: schema.TypeList,
 										Elem: &schema.Schema{
@@ -80,6 +97,7 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 										},
 										Computed: true,
 									},
+
 									"controller_groups": {
 										Type: schema.TypeList,
 										Elem: &schema.Schema{
@@ -87,18 +105,22 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 										},
 										Computed: true,
 									},
+
 									"description": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"console_baud_rate": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"max_omp_sessions": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"tcp_optimization_enabled": {
 										Type:     schema.TypeBool,
 										Computed: true,
@@ -114,10 +136,12 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"latitude": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
+
 									"longitude": {
 										Type:     schema.TypeFloat,
 										Computed: true,
@@ -133,26 +157,37 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"tracker_name": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"tracker_type": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
+									"tracker_endpoint_type": {
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+
 									"tracker_endpoint_value": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"tracker_threshold": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"tracker_interval": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"tracker_multiplier": {
 										Type:     schema.TypeInt,
 										Computed: true,
@@ -168,86 +203,107 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"control_session_pps": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"system_tunnel_mtu": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"port_hop": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"port_offset": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"dns_cache_timeout": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"track_transport": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"vbond_local": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"vbond_remote": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+
 									"track_interface_tag": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"multicast_buffer_percent": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"usb_controller": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"track_default_gateway": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"host_policer_pps": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"icmp_error_pps": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"allow_same_site_tunnels": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"route_consistency_check": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"admin_tech_on_failure": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"idle_timeout": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+
 									"eco_friendly_mode": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"on_demand_enable": {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
+
 									"on_demand_idle_timeout": {
 										Type:     schema.TypeInt,
 										Computed: true,
@@ -258,50 +314,62 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 					},
 				},
 			},
+
 			"factory_default": {
 				Type:     schema.TypeBool,
 				Computed: true,
 			},
+
 			"attached_masters_count": {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+
 			"devices_attached": {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+
 			"last_updated_by": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
 			"last_updated_on": {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+
 			"g_template_class": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
 			"template_id": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
 			"config_type": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
 			"created_on": {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+
 			"rid": {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+
 			"feature": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+
 			"created_by": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -319,12 +387,13 @@ func datasourceSDWANFeatureTemplateRead(d *schema.ResourceData, m interface{}) e
 	cont, err := getFeatureTemplateByName(sdwanClient, ftName)
 	if err != nil {
 		if cont != nil {
-			return fmt.Errorf("[ERROR] Data load failed in between!")
+			return fmt.Errorf("[ERROR] Data load failed in between")
 		} else {
 			return err
 		}
 	}
-	if strings.Compare(stripQuotes(cont.S("templateType").String()), "system-vedge") != 0 {
+	if strings.Compare(stripQuotes(cont.S("templateType").String()), "system-vedge") != 0 &&
+		strings.Compare(stripQuotes(cont.S("templateType").String()), "cisco_system") != 0 {
 		return fmt.Errorf("[ERROR] Invalid Template Type")
 	}
 	setSystemTemplateAttributes(d, cont)
@@ -339,6 +408,7 @@ func getFeatureTemplateByName(client *client.Client, ftName string) (*container.
 	if err != nil {
 		return nil, err
 	} else {
+
 		if cont != nil {
 			cont = cont.S("data")
 			for _, template := range cont.Children() {
@@ -349,6 +419,7 @@ func getFeatureTemplateByName(client *client.Client, ftName string) (*container.
 				}
 			}
 		}
+
 	}
 
 	return nil, fmt.Errorf("[ERROR] No such Record exists")
@@ -370,6 +441,16 @@ func setSystemTemplateAttributes(d *schema.ResourceData, cont *container.Contain
 	d.Set("template_description", stripQuotes(cont.S("templateDescription").String()))
 
 	d.Set("device_type", interfaceToStrList(cont.S("deviceType").Data()))
+
+	templateType := stripQuotes(cont.S("templateType").String())
+	if templateType == "system-vedge" {
+		templateType = "System"
+	} else if templateType == "cisco_system" {
+		templateType = "Cisco System"
+	} else {
+		log.Println("[ERROR] Only System and Cisco System are supported")
+	}
+	d.Set("template_type", templateType)
 
 	d.Set("template_min_version", stripQuotes(cont.S("templateMinVersion").String()))
 
@@ -565,20 +646,24 @@ func getSystemTrackers(cont *container.Container) []map[string]interface{} {
 				tracker["tracker_name"] = stripQuotes(trackerObject.S("name", "vipValue").String())
 			}
 
+			if trackerObject.Exists("type", "vipValue") {
+				tracker["tracker_type"] = stripQuotes(trackerObject.S("type", "vipValue").String())
+			}
+
 			if trackerObject.Exists("endpoint-ip", "vipValue") {
-				tracker["tracker_type"] = "ip-address"
+				tracker["tracker_endpoint_type"] = "ip-address"
 
 				tracker["tracker_endpoint_value"] = stripQuotes(trackerObject.S("endpoint-ip", "vipValue").String())
 			}
 
 			if trackerObject.Exists("endpoint-dns-name", "vipValue") {
-				tracker["tracker_type"] = "dns-name"
+				tracker["tracker_endpoint_type"] = "dns-name"
 
 				tracker["tracker_endpoint_value"] = stripQuotes(trackerObject.S("endpoint-dns-name", "vipValue").String())
 			}
 
 			if trackerObject.Exists("endpoint-api-url", "vipValue") {
-				tracker["tracker_type"] = "api-url"
+				tracker["tracker_endpoint_type"] = "api-url"
 
 				tracker["tracker_endpoint_value"] = stripQuotes(trackerObject.S("endpoint-api-url", "vipValue").String())
 			}
