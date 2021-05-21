@@ -2,7 +2,11 @@ package sdwan
 
 import (
 	"regexp"
+	"strconv"
 	"strings"
+
+	"github.com/hashicorp/go-cty/cty"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
@@ -112,27 +116,27 @@ var (
 		"vpn-vedge-interface"}
 
 	sysDeviceTypes = map[string]bool{
-		"vbond":               true,
-		"vedge-100":           true,
-		"vedge-100-B":         true,
-		"vedge-100-M":         true,
-		"vedge-100-WM":        true,
-		"vedge-1000":          true,
-		"vedge-2000":          true,
-		"vedge-5000":          true,
-		"vedge-cloud":         true,
-		"vedge-ISR1100-4G":    true,
-		"vedge-ISR1100-4GLTE": true,
-		"vedge-ISR1100-6G":    true,
-		"vedge-ISR1100X-4G":   true,
-		"vedge-ISR1100X-6G":        true,
-		"vedge-nfvis-CSP-5444":     true,
-		"vedge-nfvis-CSP-5456":     true,
-		"vedge-nfvis-CSP2100":      true,
-		"vedge-nfvis-CSP2100-X1":   true,
-		"vedge-nfvis-CSP2100-X2":   true,
-		"vedge-nfvis-UCSC-E":       true,
-		"vedge-nfvis-UCSC-M5":      true,
+		"vbond":                  true,
+		"vedge-100":              true,
+		"vedge-100-B":            true,
+		"vedge-100-M":            true,
+		"vedge-100-WM":           true,
+		"vedge-1000":             true,
+		"vedge-2000":             true,
+		"vedge-5000":             true,
+		"vedge-cloud":            true,
+		"vedge-ISR1100-4G":       true,
+		"vedge-ISR1100-4GLTE":    true,
+		"vedge-ISR1100-6G":       true,
+		"vedge-ISR1100X-4G":      true,
+		"vedge-ISR1100X-6G":      true,
+		"vedge-nfvis-CSP-5444":   true,
+		"vedge-nfvis-CSP-5456":   true,
+		"vedge-nfvis-CSP2100":    true,
+		"vedge-nfvis-CSP2100-X1": true,
+		"vedge-nfvis-CSP2100-X2": true,
+		"vedge-nfvis-UCSC-E":     true,
+		"vedge-nfvis-UCSC-M5":    true,
 	}
 
 	ciscoSysDeviceTypes = map[string]bool{
@@ -397,3 +401,173 @@ func belongsToCiscoNTP(lookup string) bool {
 	}
 	return false
 }
+
+func isStringInRange(min, max int) schema.SchemaValidateDiagFunc {
+	return func(v interface{}, path cty.Path) diag.Diagnostics {
+		var diags diag.Diagnostics
+		k, err := strconv.Atoi(v.(string))
+
+		if err != nil {
+			diags = append(diags, diag.Errorf("expected integer value, got: %v", v)...)
+			return diags
+		}
+
+		if min > k || k > max {
+			diags = append(diags, diag.Errorf("expected to be in range %v-%v, got: %v", min, max, v)...)
+		}
+
+		return diags
+	}
+}
+
+func IPv6SubNetValidate() schema.SchemaValidateFunc {
+	return validation.StringMatch(regexp.MustCompile("^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(\\/((1(1[0-9]|2[0-8]))|([0-9][0-9])|([0-9])))?$"), "Enter valid IPv6 prefix")
+}
+
+func getInt(v interface{}) (int, bool) {
+	switch v := v.(type) {
+	case float64:
+		in := int(v)
+		return in, true
+
+	case string:
+		if v == "" {
+			return 0, false
+		}
+		in, err := strconv.Atoi(v)
+		return in, err == nil
+
+	case int:
+		return v, true
+
+	default:
+		return 0, false
+	}
+
+}
+
+var (
+	vpnDeviceTypes = map[string]bool{
+		"vedge-1000":          true,
+		"vedge-2000":          true,
+		"vedge-cloud":         true,
+		"vedge-5000":          true,
+		"vedge-ISR1100-6G":    true,
+		"vedge-100-B":         true,
+		"vedge-ISR1100-4G":    true,
+		"vedge-100":           true,
+		"vedge-ISR1100-4GLTE": true,
+		"vedge-100-WM":        true,
+		"vbond":               true,
+		"vedge-100-M":         true,
+		"vedge-ISR1100X-6G":   true,
+		"vedge-ISR1100X-4G":   true,
+	}
+	ciscoVPNDeviceTypes = map[string]bool{
+		"vedge-C8500-12X4QC":       true,
+		"vedge-C1111-4PLTEEA":      true,
+		"vedge-C1161-8P":           true,
+		"vedge-C1117-4PLTEEAW":     true,
+		"vedge-C1121X-8P":          true,
+		"vedge-C8200-1N-4T":        true,
+		"vedge-ISR-4331":           true,
+		"vedge-ISRv":               true,
+		"vedge-C1127X-8PMLTEP":     true,
+		"vedge-C1117-4PMLTEEAWE":   true,
+		"vedge-ISR-4451-X":         true,
+		"vedge-C1113-8PLTEEA":      true,
+		"vedge-IR-1821":            true,
+		"vedge-ASR-1001-X":         true,
+		"vedge-ISR-4321":           true,
+		"vedge-C1116-4PLTEEAWE":    true,
+		"vedge-C1109-4PLTE2P":      true,
+		"vedge-C1121-8P":           true,
+		"vedge-ASR-1002-HX":        true,
+		"vedge-C1111-8PLTEEAW":     true,
+		"vedge-C1112-8PWE":         true,
+		"vedge-C1101-4PLTEP":       true,
+		"vedge-ISR1100-4GLTENA-XE": true,
+		"vedge-C1111-8PLTELA":      true,
+		"vedge-IR-1835":            true,
+		"vedge-C1121X-8PLTEP":      true,
+		"vedge-IR-1833":            true,
+		"vedge-C8300-1N1S-4T2X":    true,
+		"vedge-C1121-4P":           true,
+		"vedge-ISR-4351":           true,
+		"vedge-C1117-4PLTELA":      true,
+		"vedge-C1116-4PWE":         true,
+		"vedge-nfvis-C8200-UCPE":   true,
+		"vedge-C1113-8PM":          true,
+		"vedge-IR-1831":            true,
+		"vedge-C1127-8PLTEP":       true,
+		"vedge-C1121-8PLTEPW":      true,
+		"vedge-C1113-8PW":          true,
+		"vedge-ASR-1001-HX":        true,
+		"vedge-C1128-8PLTEP":       true,
+		"vedge-C1113-8PLTEEAW":     true,
+		"vedge-C1117-4PW":          true,
+		"vedge-C1116-4P":           true,
+		"vedge-C1113-8PMLTEEA":     true,
+		"vedge-C1112-8P":           true,
+		"vedge-ISR-4461":           true,
+		"vedge-C1116-4PLTEEA":      true,
+		"vedge-ISR-4221":           true,
+		"vedge-C1117-4PM":          true,
+		"vedge-C1113-8PLTELAWZ":    true,
+		"vedge-C1117-4PMWE":        true,
+		"vedge-C1109-2PLTEVZ":      true,
+		"vedge-C1113-8P":           true,
+		"vedge-C1117-4P":           true,
+		"vedge-nfvis-ENCS5400":     true,
+		"vedge-C8300-2N2S-6T":      true,
+		"vedge-C1127-8PMLTEP":      true,
+		"vedge-ESR-6300":           true,
+		"vedge-ISR-4221X":          true,
+		"vedge-ISR1100-4GLTEGB-XE": true,
+		"vedge-C8500-12X":          true,
+		"vedge-C1109-2PLTEGB":      true,
+		"vedge-CSR-1000v":          true,
+		"vedge-C1113-8PLTEW":       true,
+		"vedge-C1121X-8PLTEPW":     true,
+		"vedge-ISR1100-6G-XE":      true,
+		"vedge-C1121-4PLTEP":       true,
+		"vedge-C1111-8PLTEEA":      true,
+		"vedge-C1117-4PLTEEA":      true,
+		"vedge-C1127X-8PLTEP":      true,
+		"vedge-C1109-2PLTEUS":      true,
+		"vedge-C1112-8PLTEEAWE":    true,
+		"vedge-C1161X-8P":          true,
+		"vedge-C8500L-8S4X":        true,
+		"vedge-C1111-8PW":          true,
+		"vedge-C1161X-8PLTEP":      true,
+		"vedge-C1101-4PLTEPW":      true,
+		"vedge-ISR1100X-4G-XE":     true,
+		"vedge-IR-1101":            true,
+		"vedge-C1111-4P":           true,
+		"vedge-C1111-4PW":          true,
+		"vedge-C1111-8P":           true,
+		"vedge-C1117-4PMLTEEA":     true,
+		"vedge-C1113-8PLTELA":      true,
+		"vedge-C1111-8PLTELAW":     true,
+		"vedge-C1161-8PLTEP":       true,
+		"vedge-ISR1100X-6G-XE":     true,
+		"vedge-ISR-4431":           true,
+		"vedge-C1101-4P":           true,
+		"vedge-C1109-4PLTE2PW":     true,
+		"vedge-C1113-8PMWE":        true,
+		"vedge-C1118-8P":           true,
+		"vedge-C1126-8PLTEP":       true,
+		"vedge-C8300-1N1S-6T":      true,
+		"vedge-C1121-8PLTEP":       true,
+		"vedge-C8300-2N2S-4T2X":    true,
+		"vedge-C1112-8PLTEEA":      true,
+		"vedge-C1111-4PLTELA":      true,
+		"vedge-ASR-1002-X":         true,
+		"vedge-C1111X-8P":          true,
+		"vedge-C1126X-8PLTEP":      true,
+		"vedge-ASR-1006-X":         true,
+		"vedge-C8000V":             true,
+		"vedge-ISR1100-4G-XE":      true,
+		"vedge-C1117-4PLTELAWZ":    true,
+	}
+)
