@@ -108,7 +108,7 @@ func GetClient(clientURL, username, password, proxy, proxyCreds string, rateLimi
 }
 
 //MakeRequest generate the HTTP request with required headers
-func (client *Client) MakeRequest(method, path string, body *container.Container, bodyBytes []byte, authenticated bool) (*http.Request, error) {
+func (client *Client) MakeRequest(method, path string, body *container.Container, bodyBytes []byte, bodyBuffer *bytes.Buffer, authenticated bool) (*http.Request, error) {
 	url, err := url.Parse(path)
 	if err != nil {
 		return nil, err
@@ -120,6 +120,8 @@ func (client *Client) MakeRequest(method, path string, body *container.Container
 		req, err = http.NewRequest(method, reqURL.String(), bytes.NewBuffer(body.Bytes()))
 	} else if bodyBytes != nil {
 		req, err = http.NewRequest(method, reqURL.String(), bytes.NewBuffer(bodyBytes))
+	} else if bodyBuffer != nil {
+		req, err = http.NewRequest(method, reqURL.String(), bodyBuffer)
 	} else {
 		req, err = http.NewRequest(method, reqURL.String(), nil)
 	}
@@ -219,7 +221,7 @@ func (client *Client) getSessionID() (string, error) {
 	path := "/j_security_check"
 	body := []byte(fmt.Sprintf("j_username=%s&j_password=%s", client.username, client.password))
 
-	req, err := client.MakeRequest(method, path, nil, body, false)
+	req, err := client.MakeRequest(method, path, nil, body, nil, false)
 	if err != nil {
 		return "", err
 	}
@@ -249,7 +251,7 @@ func (client *Client) getSessionID() (string, error) {
 func (client *Client) getToken(jsessionID string) (string, error) {
 	method := "GET"
 	path := "/dataservice/client/token"
-	req, err := client.MakeRequest(method, path, nil, nil, false)
+	req, err := client.MakeRequest(method, path, nil, nil, nil, false)
 	if err != nil {
 		return "", err
 	}
