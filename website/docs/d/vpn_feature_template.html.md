@@ -89,7 +89,7 @@ data "sdwan_vpn_feature_template" "example_datasource" {
 * `prefix` - IPv6 prefix or address for IPv6 route
 * `gateway_type` - Gateway Type for next hop to reach the static route
 * `next_hop` - Next hop list (see [below for nested schema](#nestedblock--next_hop)) when gateway_type is `next-hop`
-* `null0_distance` - Null0 distance when gateway_type is `null0
+* `null0_distance` - Null0 distance when gateway_type is `null0`
 
 
 
