@@ -30,6 +30,7 @@ func resouceSDWANVPNFeatureTemplate() *schema.Resource {
 			"template_type": {
 				Type:         schema.TypeString,
 				Required:     true,
+				ForceNew:     true,
 				ValidateFunc: validation.StringInSlice(validVPNFTTypes, false),
 			},
 			"template_description": {
@@ -40,6 +41,7 @@ func resouceSDWANVPNFeatureTemplate() *schema.Resource {
 			"device_type": {
 				Type:     schema.TypeList,
 				Required: true,
+				ForceNew: true,
 				MinItems: 1,
 				Elem: &schema.Schema{
 					Type:         schema.TypeString,
@@ -408,7 +410,7 @@ func resourceSDWANVPNFeatureTemplateUpdate(d *schema.ResourceData, m interface{}
 	fTemplate.TemplateType = d.Get("template_type").(string)
 	fTemplate.TemplateName = d.Get("template_name").(string)
 	fTemplate.TemplateDescription = d.Get("template_description").(string)
-	if !verifyDeviceType(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
+	if !verifyDeviceTypeVPN(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
 		return fmt.Errorf("Please use a valid Device Type for Template: %s", fTemplate.TemplateType)
 	}
 	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))

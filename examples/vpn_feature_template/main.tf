@@ -7,15 +7,15 @@ terraform {
   }
 }
 
-#configure provider with your cisco sdwan credentials.
+# configure provider with your cisco sdwan credentials.
 provider "sdwan" {
-#   # cisco-sdwan user name
-#   username = "user name for vManage"
-#   # cisco-sdwan password
-#   password = "password for vManage"
-#   # cisco-sdwan url
-#   url      = "https://my-cisco-vmanage.com"
-#   insecure = true
+  # cisco-sdwan user name
+  username = "user name for vManage"
+  # cisco-sdwan password
+  password = "password for vManage"
+  # cisco-sdwan url
+  url      = "https://my-cisco-vmanage.com"
+  insecure = true
 }
 
 data "sdwan_vpn_feature_template" "example_datasource" {
@@ -41,8 +41,8 @@ resource "sdwan_vpn_feature_template" "exmple_resource1" {
   }
 }
 
-resource "sdwan_vpn_feature_template" "name1" {
-  template_name = "example_vpn_vedge"
+resource "sdwan_vpn_feature_template" "example_resource2" {
+  template_name = "example_vpn_vedg"
   factory_default = false
   template_type = "vpn-vedge"
   device_type = [ "vedge-cloud" ]
