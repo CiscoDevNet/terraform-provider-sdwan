@@ -50,7 +50,6 @@ data "sdwan_vpn_feature_template" "example_datasource" {
 * `vpn_dns` - DNS configuration for the VPN type Feature Template, (see [below for nested schema](#nestedblock--vpn_dns))
 * `ipv4_route` - IPv4 route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--ipv4_route))
 * `ipv6_route` - IPv6 route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--ipv6_route))
-* `ipv6_route` - IPv6 route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--ipv6_route))
 * `te_service_enabled` - Flag indicating TE service is enabled or not for the VPN type Feature Template
 * `service_route` - Service route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--service_route))
 * `nat64` - NAT64 for the VPN type Feature Template, (see [below for nested schema](#nestedblock--nat64))
@@ -90,7 +89,7 @@ data "sdwan_vpn_feature_template" "example_datasource" {
 * `prefix` - IPv6 prefix or address for IPv6 route
 * `gateway_type` - Gateway Type for next hop to reach the static route
 * `next_hop` - Next hop list (see [below for nested schema](#nestedblock--next_hop)) when gateway_type is `next-hop`
-* `null0_distance` - Null0 distance when gateway_type is `null0
+* `null0_distance` - Null0 distance when gateway_type is `null0`
 
 
 
