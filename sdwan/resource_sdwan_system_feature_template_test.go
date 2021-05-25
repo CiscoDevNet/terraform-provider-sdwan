@@ -27,6 +27,7 @@ func TestSDWANSystemFeatureTemplate_Basic(t *testing.T) {
 			},
 		},
 	})
+
 }
 
 func TestSDWANSystemFeatureTemplate_update(t *testing.T) {
@@ -141,23 +142,23 @@ func testAccCheckSDWANSystemFeatureTemplateAttributes(desc string, ft *models.Fe
 			return fmt.Errorf("Bad sdwan_system_feature_template Template Description %s", ft.TemplateDescription)
 		}
 
-		if ft.TemplateName != "sample" {
+		if "sample" != ft.TemplateName {
 			return fmt.Errorf("Bad sdwan_system_feature_template Template Name %s", ft.TemplateName)
 		}
 
-		if ft.TemplateType != "cisco_system" {
+		if "cisco_system" != ft.TemplateType {
 			return fmt.Errorf("Bad sdwan_system_feature_template Template Type %s", ft.TemplateType)
 		}
 
-		if ft.TemplateMinVersion != "15.0.0" {
+		if "15.0.0" != ft.TemplateMinVersion {
 			return fmt.Errorf("Bad sdwan_system_feature_template Template Min Version %s", ft.TemplateMinVersion)
 		}
 
-		if ft.DeviceType[0] != "vedge-CSR-1000v" {
+		if "vedge-CSR-1000v" != ft.DeviceType[0] {
 			return fmt.Errorf("Bad sdwan_system_feature_template Device Type %s", ft.DeviceType[0])
 		}
 
-		if ft.FactoryDefault != false {
+		if false != ft.FactoryDefault {
 			return fmt.Errorf("Bad sdwan_system_feature_template Factory Default %v", ft.FactoryDefault)
 		}
 

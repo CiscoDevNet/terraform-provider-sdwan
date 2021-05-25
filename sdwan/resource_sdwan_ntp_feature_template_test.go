@@ -60,7 +60,6 @@ func testSDWANNtpFeatureTemplateConfig_basic(desc string) string {
 	fmt.Println("[DEBUG] Beginning of testSDWANNtpFeatureTemplateConfig_basic")
 	return fmt.Sprintf(`
 	resource "sdwan_ntp_feature_template" "test" {
-
 		template_name = "sample"
 		template_description = "%s"
 		device_type = ["vedge-1000"]

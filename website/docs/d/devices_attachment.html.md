@@ -3,10 +3,10 @@ layout: "sdwan"
 page_title: "SD-WAN: sdwan_devices_attachment"
 sidebar_current: "docs-sdwan-data-source-devices_attachment"
 description: |-
-  Data source for SD-WAN Devices Attachment 
+  Data Source for SD-WAN Devices Attachment 
 ---
-# sdwan_device_template #
-Data source for SD-WAN Devices Attachment
+# sdwan_devices_attachment #
+Data Source for SD-WAN Devices Attachment
 
 ## Example Usage ##
 
@@ -18,40 +18,12 @@ data "sdwan_devices_attachment" "name" {
 
 ```
 ## Argument Reference ##
-* `device_template_id` - (Required) Unique Device Template Name
+* `device_template_id` - (Required) Unique Device Template ID
 
 ## Common Attribute Reference ##
-* `template_description` - Long Description of Device Template
-* `device_type` - Type of device supported by  Device Template
-* `device_role` - Device role for the Device Template
-* `config_type` - Configuration type for  Device Template
-* `factory_default` - Flag indicating whether Device Template is factory default or not
-* `template_class` - Template Class type for  Device Template
-* `template_id` - Device Template id for  Device Template
+* `template_type` - Configuration type for  Device Template
+* `devices_list` - List of Devices attached to the Device Template (see [below for nested schema](#nestedblock--devices_list))
 
-## Attribute Reference for Device Template created from Feature Templates ##
-* `policy_id` - policyId for  Device Template
-* `feature_template_uid_range` - feature_template_uid_range for  Device Template
-* `connection_preference_required` - connectionPreferenceRequired flag for Device Template
-* `connection_preference` - connectionPreference flag for Device Template
-* `general_templates` - List of Feature Templates and thier Sub Templates thourgh which Device Template is created (see [below for nested schema])
-
-## Nested Schema for general_templates
-* `template_id` - Template Id of Feature Template
-* `template_type` - Template Type of Feature Template
-* `sub_templates` - List of Sub Templates associated with feature Template (see [below for nested schema])
-
-## Nested Schema for sub_templates
-* `template_id` - Template Id of Feature Template
-* `template_type` - Template Type of Feature Template
-
-## Attribute Reference for Device Template created from CLI ##
-* `last_updated_by` - User who updated  Device Template last
-* `template_configuration` - Template Configuration for  Device Template
-* `created_on` - Time when  Device Template was created
-* `rid` - Request ID for Device Template
-* `feature` - Feature for Device Template
-* `created_by` - User who created Device Template
-* `last_updated_on` - Time when Device Template was last updated
-* `template_attached` - Number of templates attached to Device Template
-
+<a id="nestedblock--devices_list"></a>
+## Nested Schema for devices_list
+* `chassis_number` - Chassis number of the Device attached to the Device Template

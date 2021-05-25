@@ -59,7 +59,7 @@ func resourceSDWANDevicesAttachment() *schema.Resource {
 
 						"chassis_number": {
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 
 						"attach": {
@@ -121,7 +121,7 @@ func resourceSDWANDevicesAttachmentCreate(d *schema.ResourceData, m interface{})
 	if err != nil {
 		dur := time.Since(start)
 		if dur > OperationalTime {
-			return fmt.Errorf("[ERROR] Process timed out, %v", err)
+			log.Println("[ERROR] Process timed out, Check from vManage. \nReason:", err)
 		} else {
 			return err
 		}
@@ -145,13 +145,13 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 	if d.HasChange("devices_list") && !d.IsNewResource() {
 		o, n := d.GetChange("devices_list")
 
-		log.Println("Old List:", o)
-		log.Println("New List: ", n)
-
 		dList := []*models.Device{}
+		devicesToDetach := 0
 
 		for _, old := range o.(*schema.Set).List() {
 			if !(n.(*schema.Set).Contains(old)) {
+
+				devicesToDetach++
 
 				deviceModel := models.Device{}
 
@@ -160,13 +160,15 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 				dList = append(dList, &deviceModel)
 			}
 		}
-		err := detachDevices(d, sdwanClient, dList, OperationalTime)
-		if err != nil {
-			dur := time.Since(start)
-			if dur > OperationalTime {
-				return fmt.Errorf("[ERROR] Process timed out, %v", err)
-			} else {
-				return err
+		if devicesToDetach > 0 {
+			err := detachDevices(d, sdwanClient, dList, OperationalTime)
+			if err != nil {
+				dur := time.Since(start)
+				if dur > OperationalTime {
+					return fmt.Errorf("[ERROR] Process timed out, %v", err)
+				} else {
+					return err
+				}
 			}
 		}
 
@@ -178,7 +180,6 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 		cnt := 0
 		for _, new := range n.(*schema.Set).List() {
 			if !(o.(*schema.Set).Contains(new)) {
-
 				uuid := new.(map[string]interface{})["chassis_number"].(string)
 				if doesDeviceExists(sdwanClient, uuid) {
 					devList = append(devList, uuid)
@@ -189,13 +190,15 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 
 			}
 		}
-		err = attachDevices(d, sdwanClient, devList, cnt, OperationalTime)
-		if err != nil {
-			dur := time.Since(start)
-			if dur > OperationalTime {
-				return fmt.Errorf("[ERROR] Process timed out, %v", err)
-			} else {
-				return err
+		if cnt > 0 {
+			err := attachDevices(d, sdwanClient, devList, cnt, OperationalTime)
+			if err != nil {
+				dur := time.Since(start)
+				if dur > OperationalTime {
+					return fmt.Errorf("[ERROR] Process timed out, %v", err)
+				} else {
+					return err
+				}
 			}
 		}
 	}
@@ -214,26 +217,22 @@ func resourceSDWANDevicesAttachmentRead(d *schema.ResourceData, m interface{}) e
 		return err
 	}
 
-	log.Println("StatusResult is: ", StatusResult)
+	log.Println("Status: ", StatusResult)
+
 	devList := make([]map[string]interface{}, 0, StatusResult.Summary.Total)
 	for id, exists := range StatusResult.IDs {
 
-		log.Println("Device ID: ", id)
-
 		if exists {
-			log.Println("Read Device Data: ")
+			log.Println("Data: ", StatusResult.Data[id])
 			device := make(map[string]interface{})
 
 			device["chassis_number"] = id
 
-			if StatusResult.Data[id].Status == "Failure" {
+			if StatusResult.Data[id].Status == "Failure" || StatusResult.Data[id].Status == "In progress" {
 				device["attach"] = false
 			} else {
 				device["attach"] = true
 			}
-
-			log.Println("Got chassis and Attach")
-			log.Println("Device Data: ", StatusResult.Data[id])
 
 			device["status"] = StatusResult.Data[id].Status
 
@@ -289,49 +288,40 @@ var TaskIDs []string
 func getFinalStatus(client *client.Client, ids string) error {
 	pIDs := strings.Split(ids, ":")
 
+	StatusResult = &models.StatusData{
+		Summary: &models.SummaryObject{
+			Total: 0,
+		},
+	}
+
 	for _, ptID := range pIDs {
-		log.Println("Task ID:", ptID)
+
 		status, err := getStatusByID(client, ptID)
 		if err != nil {
 			return fmt.Errorf("[ERROR] Some error occured :%v", err)
 		}
 
-		log.Println("Status is:", status)
-
 		if status == nil || status.Summary == nil {
 			return fmt.Errorf("[ERROR] Status load failed in between")
 		}
 
-		if StatusResult == nil {
-			StatusResult = &models.StatusData{
-				Summary: &models.SummaryObject{
-					Total: 0,
-				},
-			}
-		}
-		log.Println("StatusResult is: ", StatusResult)
-
-		if strings.HasPrefix(ptID, "push_feature_template_configuration") {
+		if strings.HasPrefix(ptID, "push_feature_template_configuration") || strings.HasPrefix(ptID, "push_file_template_configuration") {
 
 			// Update the StateResult after attaching devices
 			for id, exists := range status.IDs {
 				if exists {
 					StatusResult.Summary.Total++
 
-					log.Println("ID is:", id)
 					if StatusResult.IDs == nil {
 						StatusResult.IDs = make(map[string]bool)
 					}
-					log.Println("IDS: ", StatusResult.IDs)
+
 					StatusResult.IDs[id] = true
 
-					log.Println("Get Data")
-					log.Println("Data is:", status.Data[id])
 					if StatusResult.Data == nil {
 						StatusResult.Data = make(map[string]*models.DataObject)
 					}
 					StatusResult.Data[id] = status.Data[id]
-					log.Println("Data Passed: ", StatusResult.Data[id])
 				}
 			}
 		} else {
@@ -341,11 +331,10 @@ func getFinalStatus(client *client.Client, ids string) error {
 				if exists {
 					StatusResult.Summary.Total--
 
-					log.Println("ID is:", id)
 					if StatusResult.IDs == nil {
 						return fmt.Errorf("[ERROR] Cannot detach a device without attaching it")
 					}
-					log.Println("IDS: ", StatusResult.IDs)
+
 					StatusResult.IDs[id] = false
 				}
 			}
@@ -431,7 +420,7 @@ func attachDevices(d *schema.ResourceData, client *client.Client, dList []string
 
 func detachDevices(d *schema.ResourceData, client *client.Client, dList []*models.Device, timeout time.Duration) error {
 
-	log.Println("[DEBUG] Beginning detaching the Device(s) from Template")
+	log.Println("[DEBUG] Beginning to detach the Device(s) from Template")
 	detachOpts := &models.DeviceDetach{
 		DeviceType: "vedge",
 		Devices:    dList,
@@ -477,8 +466,6 @@ func AttachmentStateRefreshFunc(client *client.Client, statusID string, failStat
 	return func() (interface{}, string, error) {
 		status, err := getStatusByID(client, statusID)
 
-		log.Println("Status is:", status)
-
 		if err != nil {
 			log.Printf("Error on Attachment Status Refresh: %s", err)
 			return nil, "", err
@@ -487,8 +474,6 @@ func AttachmentStateRefreshFunc(client *client.Client, statusID string, failStat
 		if status == nil || status.Summary == nil {
 			return nil, "", nil
 		}
-
-		log.Println("Summary is:", status.Summary)
 
 		state := status.Summary.Status
 
@@ -511,7 +496,6 @@ func getStatusByID(client *client.Client, id string) (*models.StatusData, error)
 		Status: stripQuotes(cont.S("summary", "status").String()),
 		Count:  cont.S("summary", "count").Data().(map[string]interface{}),
 	}
-	log.Println("Summary struct: ", summary)
 
 	ids := make(map[string]bool)
 
@@ -527,7 +511,6 @@ func getStatusByID(client *client.Client, id string) (*models.StatusData, error)
 			Activity:        interfaceToStrList(dataObject.S("activity").Data()),
 			ActionConfig:    stripQuotes(dataObject.S("actionConfig").String()),
 		}
-		log.Println("Results struct: ", results[uuid])
 	}
 
 	status := &models.StatusData{
@@ -577,12 +560,15 @@ func doesDeviceExists(client *client.Client, id string) bool {
 		log.Println("vEdges Devices error:", err)
 	}
 
-	result := cont.S("data", "*", "chasisNumber").Data()
 	found := false
 
-	for _, device := range result.([]interface{}) {
-		if device.(string) == id {
-			found = true
+	if cont.Exists("data", "*", "chasisNumber") {
+		result := cont.S("data", "*", "chasisNumber").Data()
+
+		for _, device := range result.([]interface{}) {
+			if device.(string) == id {
+				found = true
+			}
 		}
 	}
 

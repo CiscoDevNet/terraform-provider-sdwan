@@ -137,7 +137,7 @@ Allowed values for template_type = "Cisco System" are:
  "vedge-C8500-12X4QC", "vedge-C1111-4PLTEEA", "vedge-C1161-8P", "vedge-C1117-4PLTEEAW", "vedge-C1121X-8P", "vedge-C8200-1N-4T", "vedge-ISR-4331", "vedge-ISRv", "cellular-gateway-CG522-E", "vedge-C1127X-8PMLTEP", "vedge-C1117-4PMLTEEAWE", "vedge-ISR-4451-X", "vedge-C1113-8PLTEEA", "vedge-IR-1821", "vedge-ASR-1001-X", "vedge-ISR-4321", "vedge-C1116-4PLTEEAWE", "vedge-C1109-4PLTE2P", "vedge-C1121-8P", "vedge-ASR-1002-HX", "cellular-gateway-CG418-E", "vedge-C1111-8PLTEEAW", "vedge-C1112-8PWE", "vedge-C1101-4PLTEP", "vedge-ISR1100-4GLTENA-XE", "vedge-C1111-8PLTELA", "vedge-IR-1835", "vedge-C1121X-8PLTEP", "vedge-IR-1833", "vedge-C8300-1N1S-4T2X", "vedge-C1121-4P", "vedge-ISR-4351", "vedge-C1117-4PLTELA", "vedge-C1116-4PWE", "vedge-nfvis-C8200-UCPE", "vedge-C1113-8PM", "vedge-IR-1831", "vedge-C1127-8PLTEP", "vedge-C1121-8PLTEPW", "vedge-C1113-8PW", "vedge-ASR-1001-HX", "vedge-C1128-8PLTEP", "vedge-C1113-8PLTEEAW", "vedge-C1117-4PW", "vedge-C1116-4P", "vedge-C1113-8PMLTEEA", "vedge-C1112-8P", "vedge-ISR-4461", "vedge-C1116-4PLTEEA", "vedge-ISR-4221", "vedge-C1117-4PM", "vedge-C1113-8PLTELAWZ", "vedge-C1117-4PMWE", "vedge-C1109-2PLTEVZ", "vedge-C1113-8P", "vedge-C1117-4P", "vedge-nfvis-ENCS5400", "vedge-C8300-2N2S-6T", "vedge-C1127-8PMLTEP", "vedge-ESR-6300", "vedge-ISR-4221X", "vedge-ISR1100-4GLTEGB-XE", "vedge-C8500-12X", "vedge-C1109-2PLTEGB", "vedge-CSR-1000v", "vedge-C1113-8PLTEW", "vedge-C1121X-8PLTEPW", "vedge-ISR1100-6G-XE", "vedge-C1121-4PLTEP", "vedge-C1111-8PLTEEA", "vedge-C1117-4PLTEEA", "vedge-C1127X-8PLTEP", "vedge-C1109-2PLTEUS", "vedge-C1112-8PLTEEAWE", "vedge-C1161X-8P", "vedge-C8500L-8S4X", "vedge-C1111-8PW", "vedge-C1161X-8PLTEP", "vedge-C1101-4PLTEPW", "vedge-ISR1100X-4G-XE", "vedge-IR-1101", "vedge-C1111-4P", "vedge-C1111-4PW", "vedge-C1111-8P", "vedge-C1117-4PMLTEEA", "vedge-C1113-8PLTELA", "vedge-C1111-8PLTELAW", "vedge-C1161-8PLTEP", "vedge-ISR1100X-6G-XE", "vedge-ISR-4431", "vedge-C1101-4P", "vedge-C1109-4PLTE2PW", "vedge-C1113-8PMWE", "vedge-C1118-8P", "vedge-C1126-8PLTEP", "vedge-C8300-1N1S-6T", "vedge-C1121-8PLTEP", "vedge-C8300-2N2S-4T2X", "vedge-C1112-8PLTEEA", "vedge-C1111-4PLTELA", "vedge-ASR-1002-X", "vedge-C1111X-8P", "vedge-C1126X-8PLTEP", "vedge-ASR-1006-X", "vedge-C8000V", "vedge-ISR1100-4G-XE", "vedge-C1117-4PLTELAWZ" 
 * `template_type`: (Required) Type of Template, Allowed Values: "System", "Cisco System"
 * `template_min_version` - (Required) Minimum Version for the  Feature template
-* `template_definition` - (Required) Configuration for  System type Feature Template, (see [below for nested schema])
+* `template_definition` - (Required) Configuration for  System type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
 * `factory_default` - (Required) Boolean flag indicating whether  System type Feature Template is factory default or not
 
 ## Attribute Reference ##
@@ -153,12 +153,14 @@ Allowed values for template_type = "Cisco System" are:
 * `rid` - rid for the  System type Feature Template
 * `feature` - Feature for the  System type Feature Template
 
+<a id="nestedblock--template_definition"></a>
 ## Nested Schema for template_definition
-* `system_basic` - (Required) Basic configuration for the  System type Feature Template, see [below for nested schema])
-* `system_gps` - (Optional) GPS configuration for the  System type Feature Template, see [below for nested schema])
-* `system_trackers` - (Optional) Trackers for the  System type Feature Template, see [below for nested schema])
-* `system_advanced` - (Optional) Advanced configuration for the  System type Feature Template, see [below for nested schema])
+* `system_basic` - (Required) Basic configuration for the  System type Feature Template, see [below for nested schema](#nestedblock--system_basic))
+* `system_gps` - (Optional) GPS configuration for the  System type Feature Template, see [below for nested schema](#nestedblock--system_gps))
+* `system_trackers` - (Optional) Trackers for the  System type Feature Template, see [below for nested schema](#nestedblock--system_trackers))
+* `system_advanced` - (Optional) Advanced configuration for the  System type Feature Template, see [below for nested schema](#nestedblock--system_advanced))
 
+<a id="nestedblock--system_basic"></a>
 ## Nested Schema for system_basic
 * `site_id` - (Optional) Site ID for configuration of System type Feature Template, Range: [1, 4294967295]
 * `system_ip` - (Optional) System IP for configuration of  System type Feature Template, allowed values: IPv4 address
@@ -173,10 +175,12 @@ Allowed values for template_type = "Cisco System" are:
 * `max_omp_sessions` - (Optional) Maximum OMP Sessions for configuration of  System type Feature Template, Range: [0, 100], Default: 2
 * `tcp_optimization_enabled` - (Optional) Boolean flag indicating whether  TCP Optimization is enabled for configuration of  System type Feature Template, Default: false
 
+<a id="nestedblock--system_gps"></a>
 ## Nested Schema for system_gps
 * `latitude` - (Optional) Latitude for configuration of System type Feature Template
 * `longitude` - (Optional) Longitude for configuration of  System type Feature Template
 
+<a id="nestedblock--system_trackers"></a>
 ## Nested Schema for system_trackers
 * `tracker_name` - (Required) Name of Tracker for configuration of System type Feature Template, Must not include <, >, !, &, ", or white space; maximum 128 characters
 * `tracker_endpoint_type` - (Required) Type of Tracker Endpoint for configuration of System type Feature Template, Allowed values: "ip-address", "dns-name", "api-url"
@@ -186,6 +190,7 @@ Allowed values for template_type = "Cisco System" are:
 * `tracker_interval` - (Optional) Interval of Tracker for configuration of System type Feature Template, Range: [10, 600], Default: 60
 * `tracker_multiplier` - (Optional) Multiplier of Tracker for configuration of System type Feature Template, Range: [1, 10], Default: 3
 
+<a id="nestedblock--system_advanced"></a>
 ## Nested Schema for system_advanced
 * `control_session_pps` - (Optional) Policer Rate(pps) for Control Sessions for configuration of System type Feature Template, Range: [1, 65535], Default: 300
 * `system_tunnel_mtu` - (Optional) MTU of System's internal DTLS Tunnel for configuration of System type Feature Template, Range: [500, 2000], Default: 1024
