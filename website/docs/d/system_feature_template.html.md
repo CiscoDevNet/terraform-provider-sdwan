@@ -30,7 +30,7 @@ data "sdwan_system_feature_template" "name" {
 * `device_type` - Type of device which supports  Feature Template
 * `template_type`: Type of Template from "Cisco System" and "System"
 * `template_min_version` - Minimum Version for the  Feature template
-* `template_definition` - Configuration for  System type Feature Template, (see [below for nested schema])
+* `template_definition` - Configuration for  System type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
 * `factory_default` - Boolean flag indicating whether  System type Feature Template is factory default or not
 * `attached_masters_count` - Number of Device Templates attached to  System type Feature Template
 * `devices_attached` - Number of Devices attached to  System type Feature Template
@@ -43,12 +43,14 @@ data "sdwan_system_feature_template" "name" {
 * `rid` - rid for the  System type Feature Template
 * `feature` - Feature for the  System type Feature Template
 
+<a id="nestedblock--template_definition"></a>
 ## Nested Schema for template_definition
-* `system_basic` - Basic configuration for the  System type Feature Template, (see [below for nested schema])
-* `system_gps` - GPS configuration for the  System type Feature Template, (see [below for nested schema])
-* `system_trackers` - Trackers for the  System type Feature Template, (see [below for nested schema])
-* `system_advanced` - Advanced configuration for the  System type Feature Template, (see [below for nested schema])
+* `system_basic` - Basic configuration for the  System type Feature Template, (see [below for nested schema](#nestedblock--system_basic))
+* `system_gps` - GPS configuration for the  System type Feature Template, (see [below for nested schema](#nestedblock--system_gps))
+* `system_trackers` - Trackers for the  System type Feature Template, (see [below for nested schema](#nestedblock--system_trackers))
+* `system_advanced` - Advanced configuration for the  System type Feature Template, (see [below for nested schema](#nestedblock--system_advanced))
 
+<a id="nestedblock--system_basic"></a>
 ## Nested Schema for system_basic
 * `site_id` - Site ID for configuration of System type Feature Template
 * `system_ip` - System IP for configuration of  System type Feature Template
@@ -63,10 +65,12 @@ data "sdwan_system_feature_template" "name" {
 * `max_omp_sessions` - Maximum OMP Sessions for configuration of  System type Feature Template
 * `tcp_optimization_enabled` - Boolean flag indicating whether  TCP Optimization is enabled for configuration of  System type Feature Template
 
+<a id="nestedblock--system_gps"></a>
 ## Nested Schema for system_gps
 * `latitude` - Latitude for configuration of System type Feature Template
 * `longitude` - Longitude for configuration of  System type Feature Template
 
+<a id="nestedblock--system_trackers"></a>
 ## Nested Schema for system_trackers
 * `tracker_name` - Name of Tracker for configuration of System type Feature Template
 * `tracker_type` - Type of Tracker for configuration of Cisco System type Feature Template
@@ -76,6 +80,7 @@ data "sdwan_system_feature_template" "name" {
 * `tracker_interval` - Interval of Tracker for configuration of System type Feature Template
 * `tracker_multiplier` - Multiplier of Tracker for configuration of System type Feature Template
 
+<a id="nestedblock--system_advanced"></a>
 ## Nested Schema for system_advanced
 * `control_session_pps` - Policer Rate(pps) for Control Sessions for configuration of System type Feature Template
 * `system_tunnel_mtu` - MTU of System's internal DTLS Tunnel for configuration of System type Feature Template

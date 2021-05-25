@@ -1,6 +1,7 @@
 package sdwan
 
 import (
+	"hash/crc32"
 	"regexp"
 	"strconv"
 	"strings"
@@ -571,3 +572,15 @@ var (
 		"vedge-C1117-4PLTELAWZ":    true,
 	}
 )
+
+func hashString(s string) int {
+	v := int(crc32.ChecksumIEEE([]byte(s)))
+	if v >= 0 {
+		return v
+	}
+	if -v >= 0 {
+		return -v
+	}
+	// v == MinInt
+	return 0
+}
