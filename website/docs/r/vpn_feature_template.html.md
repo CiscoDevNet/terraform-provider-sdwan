@@ -167,7 +167,7 @@ resource "sdwan_vpn_feature_template" "name1" {
 * `primary_dns_ipv4` - (Optional) Primary IPv4 address of DNS server for the VPN
 * `secondary_dns_ipv4` - (Optional) Secondary IPv4 address of DNS server for the VPN, can be set if `primary_dns_ipv4` is set
 * `primary_dns_ipv6` - (Optional) Primary IPv6 address of DNS server for the VPN
-* `secondary_dns_ipv4` - (Optional) Secondary IPv6 address of DNS server for the VPN, can be set if `primary_dns_ipv6` is set
+* `secondary_dns_ipv6` - (Optional) Secondary IPv6 address of DNS server for the VPN, can be set if `primary_dns_ipv6` is set
 * `vpn_host` - (Optional) VPN host list for DNS server (see [below for nested schema](#nestedblock--vpn_host))
 
 
@@ -177,16 +177,16 @@ resource "sdwan_vpn_feature_template" "name1" {
 * `prefix` - (Required) IPv4 prefix or address for IPv4 route
 * `gateway_type` - (Required) Gateway Type for next hop to reach the static route, allowed values: "next-hop", "dhcp", "null0"
 * `next_hop` - (Optional) Next hop list (see [below for nested schema](#nestedblock--next_hopv4)) when gateway_type is `next-hop`
-* `null0_distance` - Null0 distance when gateway_type is `null0`, range: [1 - 255], default value: 1
+* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, range: [1 - 255], default value: 1
 
 
 <a id="nestedblock--ipv6_route"></a>
 
 ## Nested Schema for ipv6_route
-* `prefix` - (Required) IPv4 prefix or address for IPv6 route
+* `prefix` - (Required) IPv6 prefix or address for IPv6 route
 * `gateway_type` - (Required) Gateway Type for next hop to reach the static route, allowed values: "next-hop", "null0"
 * `next_hop` - (Optional) Next hop list (see [below for nested schema](#nestedblock--next_hopv6)) when gateway_type is `next-hop`
-* `null0_distance` - Null0 distance when gateway_type is `null0`, range: [1 - 255], default value: 1
+* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, range: [1 - 255], default value: 1
 
 
 <a id="nestedblock--service_route"></a>

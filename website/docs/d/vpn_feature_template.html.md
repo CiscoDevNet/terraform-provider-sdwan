@@ -50,7 +50,6 @@ data "sdwan_vpn_feature_template" "example_datasource" {
 * `vpn_dns` - DNS configuration for the VPN type Feature Template, (see [below for nested schema](#nestedblock--vpn_dns))
 * `ipv4_route` - IPv4 route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--ipv4_route))
 * `ipv6_route` - IPv6 route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--ipv6_route))
-* `ipv6_route` - IPv6 route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--ipv6_route))
 * `te_service_enabled` - Flag indicating TE service is enabled or not for the VPN type Feature Template
 * `service_route` - Service route for the VPN type Feature Template, (see [below for nested schema](#nestedblock--service_route))
 * `nat64` - NAT64 for the VPN type Feature Template, (see [below for nested schema](#nestedblock--nat64))
