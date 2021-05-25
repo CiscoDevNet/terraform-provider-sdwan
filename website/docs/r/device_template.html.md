@@ -67,14 +67,20 @@ resource "sdwan_device_template" "example_cli" {
 ## Argument Reference for Device Template created from Feature Templates ##
 * `policy_id` - (Required) policyId for  Device Template
 * `feature_template_uid_range` - (Required) featureTemplateUidRange for  Device Template
-* `general_templates` - (Required) List of Feature Templates and thier Sub Templates thourgh which Device Template is created (should not be empty ,see [below for nested schema])
+* `general_templates` - (Required) List of Feature Templates and thier Sub Templates thourgh which Device Template is created (should not be empty , (see [below for nested schema](#nestedblock--general_templates)))
 * `connection_preference_required` - (Optional) connectionPreferenceRequired flag for Device Template, allowed values: `true` or `false`
 * `connection_preference` - (Optional) connectionPreference flag for Device Template, allowed values: `true` or `false`
+
+
+<a id="nestedblock--general_templates"></a>
 
 ## Nested Schema for general_templates ##
 * `template_id` - (Required) Template Id of Feature Template
 * `template_type` - (Required) Template Type of Feature Template, allowed values: "system-vedge", "ntp", "vpn-vedge", "vpn-vedge-interface"
-* `sub_templates` - (Optional) List of Sub Templates associated with feature Template (see [below for nested schema])
+* `sub_templates` - (Optional) List of Sub Templates associated with feature Template (see [below for nested schema](#nestedblock--sub_templates))
+
+
+<a id="nestedblock--sub_templates"></a>
 
 ## Nested Schema for sub_templates ##
 * `template_id` - (Required) Template Id of Feature Template
