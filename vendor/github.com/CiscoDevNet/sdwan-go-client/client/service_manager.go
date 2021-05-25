@@ -1,11 +1,16 @@
 package client
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
+	"mime/multipart"
 	"net/http"
+	"os"
 
 	"github.com/CiscoDevNet/sdwan-go-client/container"
 	"github.com/CiscoDevNet/sdwan-go-client/models"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 )
 
 //GetViaURL used for GET API call for objects
@@ -42,6 +47,33 @@ func (client *Client) Save(endpoint string, obj models.Model) (*container.Contai
 	if err != nil {
 		return nil, err
 	}
+
+	cont, resp, err := client.Do(req)
+	if err != nil && err == fmt.Errorf("Invalid Session") {
+		client.authClient.valid = false
+		cont, resp, err = client.Do(req)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return cont, checkForErrors(cont, resp)
+}
+
+//SaveWithFile used for POST API call for file upload
+var ContentTypeforFileUpload string
+
+func (client *Client) SaveWithFile(endpoint string, obj models.Model) (*container.Container, error) {
+	bytesPayload, err := client.prepareModelWithFile(obj)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := client.MakeRequest("POST", endpoint, nil, bytesPayload, true)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", ContentTypeforFileUpload)
 
 	cont, resp, err := client.Do(req)
 	if err != nil && err == fmt.Errorf("Invalid Session") {
@@ -107,6 +139,26 @@ func (client *Client) prepareModel(obj models.Model) (*container.Container, erro
 		payload.Set(value, key)
 	}
 	return payload, nil
+
+}
+
+func (client *Client) prepareModelWithFile(obj models.Model) ([]byte, error) {
+	con, err := obj.ToMap()
+	if err != nil {
+		return nil, err
+	}
+
+	jsonData, err := structure.FlattenJsonToString(con["data"].(map[string]interface{}))
+	if err != nil {
+		return nil, err
+	}
+
+	payload, err := newfileUploadRequest(jsonData, "file", con["file"].(string))
+	if err != nil {
+		return nil, err
+	}
+
+	return payload, nil
 }
 
 func checkForErrors(cont *container.Container, resp *http.Response) error {
@@ -118,4 +170,39 @@ func checkForErrors(cont *container.Container, resp *http.Response) error {
 	details := cont.S("error", "details").String()
 
 	return fmt.Errorf("Status: %v, messege: %s, details: %s", resp.StatusCode, msg, details)
+}
+
+func newfileUploadRequest(data string, keyName string, path string) ([]byte, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	fileContents, err := ioutil.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+	fi, err := file.Stat()
+	if err != nil {
+		return nil, err
+	}
+	file.Close()
+
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile(keyName, fi.Name())
+	if err != nil {
+		return nil, err
+	}
+	part.Write(fileContents)
+
+	_ = writer.WriteField("data", data)
+
+	ContentTypeforFileUpload = writer.FormDataContentType()
+
+	err = writer.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	return body.Bytes(), nil
 }
