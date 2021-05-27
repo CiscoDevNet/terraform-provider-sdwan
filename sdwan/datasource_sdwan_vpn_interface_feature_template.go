@@ -55,10 +55,6 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"interface_name": {
-										Type:     schema.TypeString,
-										Computed: true,
-									},
 									"description": {
 										Type:     schema.TypeString,
 										Computed: true,
@@ -1203,10 +1199,6 @@ func getVPNInterfaceBasic(basicCont *container.Container) []map[string]interface
 		if value, err := strconv.ParseBool(stripQuotes(basicCont.S("shutdown", "vipValue").String())); err == nil {
 			result["shutdown"] = value
 		}
-	}
-
-	if basicCont.Exists("if-name", "vipValue") {
-		result["interface_name"] = stripQuotes(basicCont.S("if-name", "vipValue").String())
 	}
 
 	if basicCont.Exists("description", "vipValue") {

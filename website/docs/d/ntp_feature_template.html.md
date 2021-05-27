@@ -30,7 +30,7 @@ data "sdwan_ntp_feature_template" "name" {
 * `device_type` - Type of device which supports NTP Feature Template
 * `template_type` - Type of template which supports NTP Feature Template
 * `template_min_version` - Minimum Version for the NTP Feature template
-* `template_definition` - Configuration for NTP type Feature Template, (see [below for nested schema])
+* `template_definition` - Configuration for NTP type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
 * `factory_default` - Boolean flag indicating whether NTP type Feature Template is factory default or not
 * `attached_masters_count` - Number of Device Templates attached to NTP type Feature Template
 * `devices_attached` - Number of Devices attached to NTP type Feature Template
@@ -43,12 +43,14 @@ data "sdwan_ntp_feature_template" "name" {
 * `rid` - rid for the NTP type Feature Template
 * `feature` - Feature for the NTP type Feature Template
 
+<a id="nestedblock--template_definition"></a>
 ## Nested Schema for template_definition
-* `server` - Server configuration for the NTP type Feature Template, (see [below for nested schema])
-* `master` - (Optional) Master configuration for the Cisco NTP type Feature Template, see [below for nested schema])
-* `authentication` - Authentication configuration for the NTP type Feature Template, (see [below for nested schema])
+* `server` - Server configuration for the NTP type Feature Template, (see [below for nested schema](#nestedblock--server))
+* `master` - (Optional) Master configuration for the Cisco NTP type Feature Template, see [below for nested schema](#nestedblock--master))
+* `authentication` - Authentication configuration for the NTP type Feature Template, (see [below for nested schema](#nestedblock--authentication))
 * `trusted` - Trusted key for the NTP type Feature Template
 
+<a id="nestedblock--server"></a>
 ## Nested Schema for server
 * `hostname` - IP address of an NTP server, or a DNS server that knows how to reach the NTP server
 * `key` - Key Id for configuration of NTP type Feature Template
@@ -57,11 +59,13 @@ data "sdwan_ntp_feature_template" "name" {
 * `source_interface` - Name of a specific interface to use for outgoing NTP packets
 * `prefer` - It is a boolean flag, set true if multiple NTP servers are at the same stratum level and you want one to be preferred
 
+<a id="nestedblock--master"></a>
 ## Nested Schema for master
 * `enable` - (Optional) Boolean flag indicating whether master is enabled for configuration of Cisco NTP type Feature Template
 * `stratum` - (Optional) Stratum for configuration of Cisco NTP type Feature Template 
 * `source` - (Optional) Source for configuration of Cisco NTP type Feature Template
 
+<a id="nestedblock--authentication"></a>
 ## Nested Schema for authentication
 * `id` - MD5 authentication key ID for configuration of NTP type Feature Template
 * `value` - Key value for configuration of NTP type Feature Template
