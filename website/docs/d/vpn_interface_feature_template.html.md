@@ -60,7 +60,6 @@ data "sdwan_vpn_interface_feature_template" "name" {
 
 ## Nested Schema for vpn_interface_basic
 * `shutdown` - Shutdown flag for VPN interface type Feature Template
-* `interface_name` - Name of interface for VPN interface type Feature Template
 * `description` - Interface Description for VPN interface type Feature Template
 * `ipv4` - IPv4 configuration for VPN interface type Feature Template, (see [below for nested schema](#nestedblock--ipv4))
 * `ipv6` - IPv6 configuration for VPN interface type Feature Template, (see [below for nested schema](#nestedblock--ipv6))

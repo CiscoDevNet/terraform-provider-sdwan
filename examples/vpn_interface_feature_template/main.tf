@@ -44,8 +44,7 @@ resource "sdwan_vpn_interface_feature_template" "name3" {
   template_definition {  
      vpn_interface_basic {
         shutdown= true 
-        interface_name = "ge0"
-       description = "for testing purpose"
+        description = "for testing purpose"
      }
   }
 }
@@ -60,7 +59,6 @@ resource "sdwan_vpn_interface_feature_template" "name4" {
   template_definition {     
      vpn_interface_basic {
        shutdown= true 
-       interface_name = "ge0"
        description = "for testing purpose"
        ipv4 {
          primary_address = "192.168.10.2/16"
@@ -208,7 +206,7 @@ resource "sdwan_vpn_interface_feature_template" "name4" {
          nat_pool_range_end = "192.162.15.20"
          nat_pool_prefix_length = "100"
          overload = true
-         nat_inside_source_loopback_interface = "asvcd"
+         nat_inside_source_loopback_interface = "abc"
 
          port_forward {
            port_start_range = 30

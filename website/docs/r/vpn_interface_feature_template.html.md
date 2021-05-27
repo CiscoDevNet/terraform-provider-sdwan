@@ -25,8 +25,7 @@ resource "sdwan_vpn_interface_feature_template" "name1" {
 
   template_definition {  
      vpn_interface_basic {
-        shutdown= true 
-        interface_name = "ge0"
+        shutdown= true
        description = "for testing purpose"
      }
   }
@@ -43,8 +42,7 @@ resource "sdwan_vpn_interface_feature_template" "name2" {
   factory_default = false
   template_definition {     
      vpn_interface_basic {
-       shutdown= true 
-       interface_name = "ge0"
+       shutdown= true
        description = "for testing purpose"
        ipv4 {
          primary_address = "192.168.10.2/16"
@@ -398,9 +396,6 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 
 ## Nested Schema for vpn_interface_basic
 * `shutdown` - (Optional) Shutdown flag for VPN interface type Feature Template, Default: true
-* `interface_name` - (Optional) Name of interface for VPN interface type Feature Template, Allowed values : "ge0", "ge1","ge2", "ge3", "10ge0", "10ge1", "10ge2", "10ge3", "GigabitEthernet0", "GigabitEthernet0/",
-"GigabitEthernet1/", "GigabitEthernet2/", "Cellular0/", "eth", "loopback",
-"Loopback", "mgmt0"
 * `description` - (Optional) Interface Description for VPN interface type Feature Template
 * `ipv4` - (Optional) IPv4 configuration for VPN interface type Feature Template, Max Items: 1 (see [below for nested schema](#nestedblock--ipv4))
 * `ipv6` - (Optional) IPv6 configuration for VPN interface type Feature Template, Max Items: 1 (see [below for nested schema](#nestedblock--ipv6))

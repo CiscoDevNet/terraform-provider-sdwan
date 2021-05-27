@@ -11,10 +11,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
-//IPv6 basic and IPv6 access-list
 var IPv6 = make(map[string]interface{})
 var isNATPresent int
 var isTLOCPresent int
+var template_name string
 
 func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 	return &schema.Resource{
@@ -194,30 +194,6 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Type:     schema.TypeBool,
 										Optional: true,
 										Default:  true,
-									},
-									"interface_name": {
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
-										ValidateFunc: validation.StringInSlice([]string{
-											"ge0",
-											"ge1",
-											"ge2",
-											"ge3",
-											"10ge0",
-											"10ge1",
-											"10ge2",
-											"10ge3",
-											"GigabitEthernet0",
-											"GigabitEthernet0/",
-											"GigabitEthernet1/",
-											"GigabitEthernet2/",
-											"Cellular0/",
-											"eth",
-											"loopback",
-											"Loopback",
-											"mgmt0",
-										}, false),
 									},
 									"description": {
 										Type:     schema.TypeString,
@@ -1536,6 +1512,7 @@ func resourceSDWANVPNInterfaceFeatureTemplateCreate(d *schema.ResourceData, m in
 
 	fTemplate.TemplateType = d.Get("template_type").(string)
 	fTemplate.TemplateName = d.Get("template_name").(string)
+	template_name = d.Get("template_name").(string)
 	fTemplate.TemplateDescription = d.Get("template_description").(string)
 	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
 	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
@@ -1647,7 +1624,6 @@ func resourceSDWANVPNInterfaceFeatureTemplateDelete(d *schema.ResourceData, m in
 	return nil
 }
 
-//createVPNInterfaceFTDefinition
 func createVPNInterfaceFTDefinition(ftDefinitions []interface{}) (map[string]interface{}, error) {
 	definition := make(map[string]interface{})
 
@@ -1729,9 +1705,8 @@ func createVPNInterfaceBasic(defMap map[string]interface{}, input map[string]int
 		defMap["shutdown"] = createVIPObject("object", "constant", input["shutdown"], "vpn_if_shutdown", nil)
 	}
 
-	if input["interface_name"] != nil && input["interface_name"] != "" {
-		defMap["if-name"] = createVIPObject("object", "constant", input["interface_name"], "vpn_if_name", nil)
-	}
+	template_name = "vpn_if_name_" + template_name
+	defMap["if-name"] = createVIPObject("object", "variableName", "", template_name, nil)
 
 	if input["description"] != nil && input["description"] != "" {
 		defMap["description"] = createVIPObject("object", "constant", input["description"], "vpn_if_description", nil)

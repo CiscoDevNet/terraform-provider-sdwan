@@ -113,7 +113,7 @@ Allowed values for Cisco NTP: "vedge-C8500-12X4QC", "vedge-C1111-4PLTEEA", "vedg
 * `template_type` - (Required) Type of NTP Feature Template, Allowed values: "ntp", "cisco_ntp"
 * `template_min_version` - (Required) Minimum Version for the Feature template
 * `factory_default` - (Required) Boolean flag indicating whether NTP type Feature Template is factory default or not, If we set it true we can not update or delete resource.
-* `template_definition` - (Required) Configuration for NTP type Feature Template, (see [below for nested schema])
+* `template_definition` - (Required) Configuration for NTP type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
 
 ## Attribute Reference ##
 
@@ -128,12 +128,14 @@ Allowed values for Cisco NTP: "vedge-C8500-12X4QC", "vedge-C1111-4PLTEEA", "vedg
 * `rid` - rid for the NTP type Feature Template
 * `feature` - Feature for the NTP type Feature Template
 
+<a id="nestedblock--template_definition"></a>
 ## Nested Schema for template_definition
-* `server` - (Optional) Server configuration for the NTP type Feature Template, see [below for nested schema])
-* `master` - (Optional) Master configuration for the Cisco NTP type Feature Template, see [below for nested schema])
-* `authentication` - (Optional) Authentication configuration for the NTP type Feature Template, see [below for nested schema])
+* `server` - (Optional) Server configuration for the NTP type Feature Template, see [below for nested schema](#nestedblock--server))
+* `master` - (Optional) Master configuration for the Cisco NTP type Feature Template, see [below for nested schema](#nestedblock--master))
+* `authentication` - (Optional) Authentication configuration for the NTP type Feature Template, see [below for nested schema](#nestedblock--authentication))
 * `trusted` - (Optional) Enter the MD5 authentication key id to designate the key as trustworthy
 
+<a id="nestedblock--server"></a>
 ## Nested Schema for server
 * `hostname` - (Required) IP address of an NTP server, or a DNS server that knows how to reach the NTP server
 * `key` - (Required) MD5 key associated with the NTP server, to enable MD5 authentication, Range: [1, 65535]
@@ -142,11 +144,13 @@ Allowed values for Cisco NTP: "vedge-C8500-12X4QC", "vedge-C1111-4PLTEEA", "vedg
 * `source_interface` - (Optional) Name of a specific interface to use for outgoing NTP packets
 * `prefer` - (Optional) It is a boolean flag, set true if multiple NTP servers are at the same stratum level and you want one to be preferred
 
+<a id="nestedblock--master"></a>
 ## Nested Schema for master
 * `enable` - (Optional) Boolean flag indicating whether master is enabled for configuration of Cisco NTP type Feature Template
 * `stratum` - (Optional) Stratum for configuration of Cisco NTP type Feature Template, Range: [1, 15] 
 * `source` - (Optional) Source for configuration of Cisco NTP type Feature Template
 
+<a id="nestedblock--authentication"></a>
 ## Nested Schema for authentication
 * `id` - (Required) MD5 authentication key ID for configuration of NTP type Feature Template, Range: [1, 65535]
 * `value` - (Required) It is either a cleartext key or an AES-encrypted key for authentication of NTP server
