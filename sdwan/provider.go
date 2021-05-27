@@ -63,7 +63,7 @@ func Provider() *schema.Provider {
 			},
 		},
 
-    ResourcesMap: map[string]*schema.Resource{
+		ResourcesMap: map[string]*schema.Resource{
 			"sdwan_device_template":                resourceSDWANDeviceTemplate(),
 			"sdwan_devices_attachment":             resourceSDWANDevicesAttachment(),
 			"sdwan_system_feature_template":        resourceSDWANSystemFeatureTemplate(),
