@@ -40,7 +40,7 @@ func TestSDWANDeviceAttachement_Update1(t *testing.T) {
 				),
 			},
 			{
-				Config: testSDWANDeviceAttachmentConfig_basic("devices_list {\nchassis_number = \"f21dbb35-30b3-47f4-93bb-d2b2fe092d35\"\n}"),
+				Config: testSDWANDeviceAttachmentConfig_basic("devices_list {\nchassis_number = \"CSR-2AD10A1D-325E-48CC-9D80-A9B5B7BBF7CB\"\n}"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckSDWANDeviceAttachmentExists("sdwan_devices_attachment.test"),
 					testAccCheckSDWANDeviceAttachmentAttributes(2),
@@ -57,7 +57,7 @@ func TestSDWANDeviceAttachement_Update2(t *testing.T) {
 		CheckDestroy: testAccCheckSDWANDeviceAttachmentDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testSDWANDeviceAttachmentConfig_basic("devices_list {\nchassis_number = \"f21dbb35-30b3-47f4-93bb-d2b2fe092d35\"\n}"),
+				Config: testSDWANDeviceAttachmentConfig_basic("devices_list {\nchassis_number = \"CSR-2AD10A1D-325E-48CC-9D80-A9B5B7BBF7CB\"\n}"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckSDWANDeviceAttachmentExists("sdwan_devices_attachment.test"),
 					testAccCheckSDWANDeviceAttachmentAttributes(2),
@@ -76,15 +76,15 @@ func TestSDWANDeviceAttachement_Update2(t *testing.T) {
 
 func testSDWANDeviceAttachmentConfig_basic(device string) string {
 
-	return fmt.Sprintf(`
+	return fmt.Sprintf(`	
 	resource "sdwan_devices_attachment" "test" {
-		timeout = 700
-		device_template_id = "a3c15599-637f-4ee1-89c6-9c58b011c4bd"
-		template_type = "cli"
-		file = "../examples/devices_attachment/Template.csv"
+		timeout = 600
+		device_template_id = "5477b564-db5e-4195-8d76-00b6d471a8b6"
+		template_type = "feature"  
+		file = "../examples/devices_attachment/Template1.csv"
 		devices_list {
-			chassis_number = "ebdc8bd9-17e5-4eb3-a5e0-f438403a83de"
-		}	
+			chassis_number = "CSR-330E65C0-8D52-41B2-940A-398119726CCE"
+		}
 		%s
 	}
 	`, device)
@@ -107,7 +107,7 @@ func testAccCheckSDWANDeviceAttachmentExists(name string) resource.TestCheckFunc
 
 		sdwanClient := testAccProvider.Meta().(*client.Client)
 
-		err := getFinalStatus(sdwanClient, rs.Primary.ID)
+		StatusResult, err := getFinalStatus(sdwanClient, rs.Primary.ID)
 
 		if err != nil {
 			return err

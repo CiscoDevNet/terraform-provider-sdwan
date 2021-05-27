@@ -2,7 +2,6 @@ package models
 
 import (
 	"fmt"
-	"log"
 )
 
 type DeviceConfig struct {
@@ -67,7 +66,6 @@ func (dtConfig *DeviceConfig) ToMap() (map[string]interface{}, error) {
 
 	A(dtAttrMap, "deviceTemplateList", tempList)
 
-	log.Println("Device Template List: ", dtAttrMap)
 	return dtAttrMap, nil
 }
 
@@ -80,7 +78,6 @@ func (dtConfig *DeviceTemplateList) makeDeviceConfig() (map[string]interface{}, 
 	A(dtAttrMap, "isEdited", false)
 	A(dtAttrMap, "isMasterEdited", false)
 
-	log.Println("Device Configuration: ", dtAttrMap)
 	return dtAttrMap, nil
 }
 

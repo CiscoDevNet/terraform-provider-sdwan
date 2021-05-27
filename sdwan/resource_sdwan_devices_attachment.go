@@ -99,6 +99,7 @@ func resourceSDWANDevicesAttachmentCreate(d *schema.ResourceData, m interface{})
 	start := time.Now()
 	sdwanClient := m.(*client.Client)
 
+	var OperationalTime time.Duration
 	if val, ok := d.GetOk("timeout"); ok {
 		OperationalTime = time.Duration(val.(int)-2) * time.Second
 	}
@@ -135,9 +136,9 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 	log.Println("[DEBUG] Beginning Update method: ", d.Id())
 
 	start := time.Now()
-
 	sdwanClient := m.(*client.Client)
 
+	var OperationalTime time.Duration
 	if val, ok := d.GetOk("timeout"); ok {
 		OperationalTime = time.Duration(val.(int)-2) * time.Second
 	}
@@ -149,15 +150,20 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 		devicesToDetach := 0
 
 		for _, old := range o.(*schema.Set).List() {
+
+			// Detach not found devices
 			if !(n.(*schema.Set).Contains(old)) {
 
-				devicesToDetach++
+				// Only detach if it is attached
+				if old.(map[string]interface{})["attach"].(bool) {
+					devicesToDetach++
 
-				deviceModel := models.Device{}
+					deviceModel := models.Device{}
 
-				deviceModel.DeviceID = old.(map[string]interface{})["chassis_number"].(string)
+					deviceModel.DeviceID = old.(map[string]interface{})["chassis_number"].(string)
 
-				dList = append(dList, &deviceModel)
+					dList = append(dList, &deviceModel)
+				}
 			}
 		}
 		if devicesToDetach > 0 {
@@ -165,7 +171,7 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 			if err != nil {
 				dur := time.Since(start)
 				if dur > OperationalTime {
-					return fmt.Errorf("[ERROR] Process timed out, %v", err)
+					log.Println("[ERROR] Process timed out, Check from vManage. \nReason:", err)
 				} else {
 					return err
 				}
@@ -180,6 +186,7 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 		cnt := 0
 		for _, new := range n.(*schema.Set).List() {
 			if !(o.(*schema.Set).Contains(new)) {
+
 				uuid := new.(map[string]interface{})["chassis_number"].(string)
 				if doesDeviceExists(sdwanClient, uuid) {
 					devList = append(devList, uuid)
@@ -190,12 +197,13 @@ func resourceSDWANDevicesAttachmentUpdate(d *schema.ResourceData, m interface{})
 
 			}
 		}
+
 		if cnt > 0 {
 			err := attachDevices(d, sdwanClient, devList, cnt, OperationalTime)
 			if err != nil {
 				dur := time.Since(start)
 				if dur > OperationalTime {
-					return fmt.Errorf("[ERROR] Process timed out, %v", err)
+					log.Println("[ERROR] Process timed out, Check from vManage. \nReason:", err)
 				} else {
 					return err
 				}
@@ -212,18 +220,16 @@ func resourceSDWANDevicesAttachmentRead(d *schema.ResourceData, m interface{}) e
 
 	sdwanClient := m.(*client.Client)
 	processIds := d.Id()
-	err := getFinalStatus(sdwanClient, processIds)
+
+	StatusResult, err := getFinalStatus(sdwanClient, processIds)
 	if err != nil {
 		return err
 	}
-
-	log.Println("Status: ", StatusResult)
 
 	devList := make([]map[string]interface{}, 0, StatusResult.Summary.Total)
 	for id, exists := range StatusResult.IDs {
 
 		if exists {
-			log.Println("Data: ", StatusResult.Data[id])
 			device := make(map[string]interface{})
 
 			device["chassis_number"] = id
@@ -250,20 +256,23 @@ func resourceSDWANDevicesAttachmentRead(d *schema.ResourceData, m interface{}) e
 
 func resourceSDWANDevicesAttachmentDelete(d *schema.ResourceData, m interface{}) error {
 	log.Println("[DEBUG] Beginning Delete method: ", d.Id())
-	start := time.Now()
 
+	start := time.Now()
 	sdwanClient := m.(*client.Client)
 
+	var OperationalTime time.Duration
 	if val, ok := d.GetOk("timeout"); ok {
 		OperationalTime = time.Duration(val.(int)-2) * time.Second
 	}
 
 	devicesList := []*models.Device{}
 	for _, deviceObject := range d.Get("devices_list").(*schema.Set).List() {
-		deviceModel := &models.Device{
-			DeviceID: deviceObject.(map[string]interface{})["chassis_number"].(string),
+		if deviceObject.(map[string]interface{})["attach"].(bool) {
+			deviceModel := &models.Device{
+				DeviceID: deviceObject.(map[string]interface{})["chassis_number"].(string),
+			}
+			devicesList = append(devicesList, deviceModel)
 		}
-		devicesList = append(devicesList, deviceModel)
 	}
 
 	err := detachDevices(d, sdwanClient, devicesList, OperationalTime)
@@ -281,14 +290,10 @@ func resourceSDWANDevicesAttachmentDelete(d *schema.ResourceData, m interface{})
 	return nil
 }
 
-var OperationalTime time.Duration
-var StatusResult *models.StatusData
-var TaskIDs []string
-
-func getFinalStatus(client *client.Client, ids string) error {
+func getFinalStatus(client *client.Client, ids string) (*models.StatusData, error) {
 	pIDs := strings.Split(ids, ":")
 
-	StatusResult = &models.StatusData{
+	StatusResult := &models.StatusData{
 		Summary: &models.SummaryObject{
 			Total: 0,
 		},
@@ -298,11 +303,11 @@ func getFinalStatus(client *client.Client, ids string) error {
 
 		status, err := getStatusByID(client, ptID)
 		if err != nil {
-			return fmt.Errorf("[ERROR] Some error occured :%v", err)
+			return nil, fmt.Errorf("[ERROR] Some error occured :%v", err)
 		}
 
 		if status == nil || status.Summary == nil {
-			return fmt.Errorf("[ERROR] Status load failed in between")
+			return nil, fmt.Errorf("[ERROR] Status load failed in between")
 		}
 
 		if strings.HasPrefix(ptID, "push_feature_template_configuration") || strings.HasPrefix(ptID, "push_file_template_configuration") {
@@ -332,7 +337,7 @@ func getFinalStatus(client *client.Client, ids string) error {
 					StatusResult.Summary.Total--
 
 					if StatusResult.IDs == nil {
-						return fmt.Errorf("[ERROR] Cannot detach a device without attaching it")
+						return nil, fmt.Errorf("[ERROR] Cannot detach a device without attaching it")
 					}
 
 					StatusResult.IDs[id] = false
@@ -340,7 +345,7 @@ func getFinalStatus(client *client.Client, ids string) error {
 			}
 		}
 	}
-	return nil
+	return StatusResult, nil
 }
 
 func attachDevices(d *schema.ResourceData, client *client.Client, dList []string, cnt int, timeout time.Duration) error {
@@ -360,7 +365,10 @@ func attachDevices(d *schema.ResourceData, client *client.Client, dList []string
 
 	if matchedCnt, err := strconv.Atoi(cont1.S("countSummary", "matchCount").String()); err == nil {
 		if matchedCnt < cnt {
-			return fmt.Errorf("[ERROR] Only %d Device values found. Need %d Device values",
+			if matchedCnt == 0 {
+				return fmt.Errorf("[ERROR] No such Device found in the mentioned file. Please check again")
+			}
+			return fmt.Errorf("[ERROR] Only %d such Device(s) found in the csv file. Need %d Device(s)",
 				matchedCnt, cnt)
 		}
 	}
@@ -454,7 +462,6 @@ func detachDevices(d *schema.ResourceData, client *client.Client, dList []*model
 
 	_, err = stateConf.WaitForState()
 	if err != nil {
-		cancelDetachment(client, ptID)
 		return err
 	}
 
@@ -489,37 +496,40 @@ func getStatusByID(client *client.Client, id string) (*models.StatusData, error)
 		return nil, err
 	}
 
-	total, _ := strconv.Atoi(stripQuotes(cont.S("summary", "total").String()))
+	if cont.Exists("summary", "total") {
+		total, _ := strconv.Atoi(stripQuotes(cont.S("summary", "total").String()))
 
-	summary := &models.SummaryObject{
-		Total:  total,
-		Status: stripQuotes(cont.S("summary", "status").String()),
-		Count:  cont.S("summary", "count").Data().(map[string]interface{}),
-	}
-
-	ids := make(map[string]bool)
-
-	results := make(map[string]*models.DataObject)
-	for _, dataObject := range cont.S("data").Children() {
-
-		uuid := stripQuotes(dataObject.S("uuid").String())
-		ids[uuid] = true
-
-		results[uuid] = &models.DataObject{
-			Status:          stripQuotes(dataObject.S("status").String()),
-			CurrentActivity: stripQuotes(dataObject.S("currentActivity").String()),
-			Activity:        interfaceToStrList(dataObject.S("activity").Data()),
-			ActionConfig:    stripQuotes(dataObject.S("actionConfig").String()),
+		summary := &models.SummaryObject{
+			Total:  total,
+			Status: stripQuotes(cont.S("summary", "status").String()),
+			Count:  cont.S("summary", "count").Data().(map[string]interface{}),
 		}
-	}
 
-	status := &models.StatusData{
-		Summary: summary,
-		IDs:     ids,
-		Data:    results,
-	}
+		ids := make(map[string]bool)
 
-	return status, nil
+		results := make(map[string]*models.DataObject)
+		for _, dataObject := range cont.S("data").Children() {
+
+			uuid := stripQuotes(dataObject.S("uuid").String())
+			ids[uuid] = true
+
+			results[uuid] = &models.DataObject{
+				Status:          stripQuotes(dataObject.S("status").String()),
+				CurrentActivity: stripQuotes(dataObject.S("currentActivity").String()),
+				Activity:        interfaceToStrList(dataObject.S("activity").Data()),
+				ActionConfig:    stripQuotes(dataObject.S("actionConfig").String()),
+			}
+		}
+
+		status := &models.StatusData{
+			Summary: summary,
+			IDs:     ids,
+			Data:    results,
+		}
+
+		return status, nil
+	}
+	return nil, fmt.Errorf("[ERROR] No such process started")
 }
 
 func generateDeviceConfig(d *schema.ResourceData, client *client.Client, dList []string) (*container.Container, error) {
@@ -546,11 +556,6 @@ func generateDeviceConfig(d *schema.ResourceData, client *client.Client, dList [
 
 	log.Println("[DEBUG] End of Config Generation")
 	return cont1, nil
-}
-
-func cancelDetachment(client *client.Client, id string) {
-	dURL := fmt.Sprintf("/dataservice/device/action/status/cancel/%s", id)
-	client.Save(dURL, nil)
 }
 
 func doesDeviceExists(client *client.Client, id string) bool {
