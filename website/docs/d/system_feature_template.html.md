@@ -52,11 +52,8 @@ data "sdwan_system_feature_template" "name" {
 
 <a id="nestedblock--system_basic"></a>
 ## Nested Schema for system_basic
-* `site_id` - Site ID for configuration of System type Feature Template
-* `system_ip` - System IP for configuration of  System type Feature Template
 * `overlay_id` - Overlay ID for configuration of  System type Feature Template
 * `timezone` - Timezone for configuration of  System type Feature Template
-* `hostname` - Hostname for configuration of  System type Feature Template
 * `location` - Location for configuration of  System type Feature Template
 * `device_groups` - Device Groups for configuration of  System type Feature Template
 * `controller_groups` - Controller Group List for configuration of  System type Feature Template

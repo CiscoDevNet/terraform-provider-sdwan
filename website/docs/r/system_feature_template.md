@@ -60,11 +60,8 @@ resource "sdwan_system_feature_template" "example_cisco_system_ft_full" {
   template_min_version = "15.0.0"
   template_definition {
     system_basic {  
-      site_id = 5
-      system_ip = "198.12.23.178"
       overlay_id = 2
       timezone = "Asia/Dubai"
-      hostname = "hostname"
       location = "Place"
       device_groups = [ "abc","def" ]
       controller_groups = [ "12","34"]
@@ -130,7 +127,7 @@ resource "sdwan_system_feature_template" "example_cisco_system_ft_full" {
 ## Argument Reference ##
 
 * `template_name` - (Required) Unique  System Type Feature Template Name, Must not include <, >, !, &, ", or white space; maximum 128 characters
-* `template_description` - (Required) Long Description of  System type Feature Template, Should not be empty
+* `template_description` - (Required) Long Description of  System type Feature Template, String length: [1, 2048]
 * `device_type` - (Required) Type of device which supports  Feature Template, 
 Allowed values for template_type = "System": "vbond","vedge-100","vedge-100-B","vedge-100-M","vedge-100-WM","vedge-1000","vedge-2000","vedge-5000","vedge-cloud","vedge-ISR1100-4G","vedge-ISR1100-4GLTE","vedge-ISR1100-6G","vedge-ISR1100X-4G","vedge-ISR1100X-6G","vedge-nfvis-CSP-5444","vedge-nfvis-CSP-5456","vedge-nfvis-CSP2100","vedge-nfvis-CSP2100-X1","vedge-nfvis-CSP2100-X2","vedge-nfvis-UCSC-E","vedge-nfvis-UCSC-M5".
 Allowed values for template_type = "Cisco System" are:
@@ -162,11 +159,8 @@ Allowed values for template_type = "Cisco System" are:
 
 <a id="nestedblock--system_basic"></a>
 ## Nested Schema for system_basic
-* `site_id` - (Optional) Site ID for configuration of System type Feature Template, Range: [1, 4294967295]
-* `system_ip` - (Optional) System IP for configuration of  System type Feature Template, allowed values: IPv4 address
 * `timezone` - (Optional) Timezone for configuration of  System type Feature Template
 * `overlay_id` - (Optional) Overlay ID for configuration of  System type Feature Template, Default: 1
-* `hostname` - (Optional)  Hostname for configuration of  System type Feature Template, String length: [1, 32] 
 * `location` - (Optional) Location for configuration of  System type Feature Template, String length: [1, 128] 
 * `device_groups` - (Optional) Device Groups for configuration of  System type Feature Template
 * `controller_groups` - (Optional) Controller Group List for configuration of  System type Feature Template

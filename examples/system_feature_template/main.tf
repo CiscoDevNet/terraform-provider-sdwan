@@ -18,12 +18,8 @@ provider "sdwan" {
   insecure = true
 }
 
-data "sdwan_system_feature_template" "name1"{
-    template_name="Example11"
-}
-
 data "sdwan_system_feature_template" "name2"{
-    template_name="CSR-Sample-1"
+    template_name="vEdge-Example1"
 }
 
 output "output1" {
@@ -38,11 +34,8 @@ resource "sdwan_system_feature_template" "name3" {
   template_min_version = "15.0.0"
   template_definition {
     system_basic {  
-      site_id = 5
-      system_ip = "198.12.23.178"
       overlay_id = 2
       timezone = "Asia/Dubai"
-      hostname = "hostname"
       location = "Place"
       device_groups = [ "abc","def" ]
       controller_groups = [ "12","34"]
@@ -127,11 +120,8 @@ resource "sdwan_system_feature_template" "name5" {
   template_min_version = "15.0.0"
   template_definition {
     system_basic {  
-      site_id = 5
-      system_ip = "198.12.23.178"
       overlay_id = 2
       timezone = "Asia/Dubai"
-      hostname = "hostname"
       location = "Place"
       device_groups = [ "abc","def" ]
       controller_groups = [ "12","34"]
