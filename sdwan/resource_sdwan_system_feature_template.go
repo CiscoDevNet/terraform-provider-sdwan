@@ -201,18 +201,6 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"site_id": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										ValidateFunc: validation.FloatBetween(1, 4294967295),
-									},
-
-									"system_ip": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										ValidateFunc: validation.IsIPv4Address,
-									},
-
 									"overlay_id": {
 										Type:     schema.TypeInt,
 										Optional: true,
@@ -223,12 +211,6 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										Default:  "UTC",
-									},
-
-									"hostname": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										ValidateFunc: validation.StringLenBetween(1, 32),
 									},
 
 									"location": {
@@ -729,9 +711,9 @@ func createSystemFTDefinition(ftDefinitions []interface{}) (map[string]interface
 		if len(TrackerSet) > 0 {
 			trackers := make([]interface{}, 0, 8)
 
-			for _, systemTrackerMap := range TrackerSet {
+			for num, systemTrackerMap := range TrackerSet {
 				tracker := make(map[string]interface{})
-				createSystemTracker(tracker, systemTrackerMap.(map[string]interface{}))
+				createSystemTracker(tracker, systemTrackerMap.(map[string]interface{}), num+1)
 
 				trackers = append(trackers, tracker)
 			}
@@ -760,23 +742,19 @@ func createSystemFTDefinition(ftDefinitions []interface{}) (map[string]interface
 
 func createSystemBasic(defMap map[string]interface{}, input map[string]interface{}) {
 
-	if input["site_id"] != nil {
-		siteId := make(map[string]interface{})
-		siteId["vipObjectType"] = "object"
-		siteId["vipType"] = "constant"
-		siteId["vipValue"] = input["site_id"].(float64)
-		siteId["vipVariableName"] = "system_site_id"
-		defMap["site-id"] = siteId
-	}
+	siteId := make(map[string]interface{})
+	siteId["vipObjectType"] = "object"
+	siteId["vipType"] = "variableName"
+	siteId["vipValue"] = ""
+	siteId["vipVariableName"] = "system_site_id"
+	defMap["site-id"] = siteId
 
-	if input["system_ip"] != nil && input["system_ip"] != "" {
-		systemIp := make(map[string]interface{})
-		systemIp["vipObjectType"] = "object"
-		systemIp["vipType"] = "constant"
-		systemIp["vipValue"] = input["system_ip"].(string)
-		systemIp["vipVariableName"] = "system_system_ip"
-		defMap["system-ip"] = systemIp
-	}
+	systemIp := make(map[string]interface{})
+	systemIp["vipObjectType"] = "object"
+	systemIp["vipType"] = "variableName"
+	systemIp["vipValue"] = ""
+	systemIp["vipVariableName"] = "system_system_ip"
+	defMap["system-ip"] = systemIp
 
 	if input["overlay_id"] != nil {
 		overlayId := make(map[string]interface{})
@@ -798,14 +776,12 @@ func createSystemBasic(defMap map[string]interface{}, input map[string]interface
 		}
 	}
 
-	if input["hostname"] != nil && input["hostname"] != "" {
-		hostname := make(map[string]interface{})
-		hostname["vipObjectType"] = "object"
-		hostname["vipType"] = "constant"
-		hostname["vipValue"] = input["hostname"].(string)
-		hostname["vipVariableName"] = "system_hostname"
-		defMap["host-name"] = hostname
-	}
+	hostname := make(map[string]interface{})
+	hostname["vipObjectType"] = "object"
+	hostname["vipType"] = "variableName"
+	hostname["vipValue"] = ""
+	hostname["vipVariableName"] = "system_hostname"
+	defMap["host-name"] = hostname
 
 	if input["location"] != nil && input["location"] != "" {
 		location := make(map[string]interface{})
@@ -897,14 +873,14 @@ func createSystemGPS(defMap map[string]interface{}, input map[string]interface{}
 	defMap["gps-location"] = gps
 }
 
-func createSystemTracker(defMap map[string]interface{}, input map[string]interface{}) {
+func createSystemTracker(defMap map[string]interface{}, input map[string]interface{}, num int) {
 
 	if input["tracker_name"] != nil && input["tracker_name"] != "" {
 		trackerName := make(map[string]interface{})
 		trackerName["vipObjectType"] = "object"
 		trackerName["vipType"] = "constant"
 		trackerName["vipValue"] = input["tracker_name"].(string)
-		trackerName["vipVariableName"] = "tracker_name"
+		trackerName["vipVariableName"] = "tracker_name_" + strconv.Itoa(num)
 		defMap["name"] = trackerName
 	}
 
@@ -913,7 +889,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		trackerType["vipObjectType"] = "object"
 		trackerType["vipType"] = "constant"
 		trackerType["vipValue"] = input["tracker_type"].(string)
-		trackerType["vipVariableName"] = "tracker_tracker_type"
+		trackerType["vipVariableName"] = "tracker_tracker_type_" + strconv.Itoa(num)
 		defMap["type"] = trackerType
 	}
 
@@ -926,7 +902,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 			trackerEndpointValue["vipObjectType"] = "object"
 			trackerEndpointValue["vipType"] = "constant"
 			trackerEndpointValue["vipValue"] = input["tracker_endpoint_value"].(string)
-			trackerEndpointValue["vipVariableName"] = "tracker_endpoint-ip"
+			trackerEndpointValue["vipVariableName"] = "tracker_endpoint-ip_" + strconv.Itoa(num)
 			defMap["endpoint-ip"] = trackerEndpointValue
 
 		} else if tType == "dns-name" {
@@ -934,7 +910,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 			trackerEndpointValue["vipObjectType"] = "object"
 			trackerEndpointValue["vipType"] = "constant"
 			trackerEndpointValue["vipValue"] = input["tracker_endpoint_value"].(string)
-			trackerEndpointValue["vipVariableName"] = "tracker_endpoint-dns-name"
+			trackerEndpointValue["vipVariableName"] = "tracker_endpoint-dns-name_" + strconv.Itoa(num)
 			defMap["endpoint-dns-name"] = trackerEndpointValue
 
 		} else if tType == "api-url" {
@@ -942,7 +918,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 			trackerEndpointValue["vipObjectType"] = "object"
 			trackerEndpointValue["vipType"] = "constant"
 			trackerEndpointValue["vipValue"] = input["tracker_endpoint_value"].(string)
-			trackerEndpointValue["vipVariableName"] = "tracker_endpoint-api-url"
+			trackerEndpointValue["vipVariableName"] = "tracker_endpoint-api-url_" + strconv.Itoa(num)
 			defMap["endpoint-api-url"] = trackerEndpointValue
 
 		}
@@ -953,7 +929,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		trackerThreshold["vipObjectType"] = "object"
 		trackerThreshold["vipType"] = "constant"
 		trackerThreshold["vipValue"] = input["tracker_threshold"].(int)
-		trackerThreshold["vipVariableName"] = "tracker_threshold"
+		trackerThreshold["vipVariableName"] = "tracker_threshold_" + strconv.Itoa(num)
 		defMap["threshold"] = trackerThreshold
 	}
 
@@ -962,7 +938,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		trackerInterval["vipObjectType"] = "object"
 		trackerInterval["vipType"] = "constant"
 		trackerInterval["vipValue"] = input["tracker_interval"].(int)
-		trackerInterval["vipVariableName"] = "tracker_interval"
+		trackerInterval["vipVariableName"] = "tracker_interval_" + strconv.Itoa(num)
 		defMap["interval"] = trackerInterval
 	}
 
@@ -971,7 +947,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		trackerMultiplier["vipObjectType"] = "object"
 		trackerMultiplier["vipType"] = "constant"
 		trackerMultiplier["vipValue"] = input["tracker_multiplier"].(int)
-		trackerMultiplier["vipVariableName"] = "tracker_multiplier"
+		trackerMultiplier["vipVariableName"] = "tracker_multiplier_" + strconv.Itoa(num)
 		defMap["multiplier"] = trackerMultiplier
 	}
 	defMap["priority-order"] = []string{

@@ -60,27 +60,12 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"site_id": {
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-
-									"system_ip": {
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
 									"overlay_id": {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 
 									"timezone": {
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
-									"hostname": {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -542,16 +527,6 @@ func getSystemBasic(cont *container.Container) []map[string]interface{} {
 
 	result := make(map[string]interface{})
 
-	if cont.Exists("site-id", "vipValue") {
-		if value, err := strconv.Atoi(cont.S("site-id", "vipValue").String()); err == nil {
-			result["site_id"] = value
-		}
-	}
-
-	if cont.Exists("system-ip", "vipValue") {
-		result["system_ip"] = stripQuotes(cont.S("system-ip", "vipValue").String())
-	}
-
 	if cont.Exists("overlay-id", "vipValue") {
 		if value, err := strconv.Atoi(cont.S("overlay-id", "vipValue").String()); err == nil {
 			result["overlay_id"] = value
@@ -560,10 +535,6 @@ func getSystemBasic(cont *container.Container) []map[string]interface{} {
 
 	if cont.Exists("clock", "timezone", "vipValue") {
 		result["timezone"] = stripQuotes(cont.S("clock", "timezone", "vipValue").String())
-	}
-
-	if cont.Exists("host-name", "vipValue") {
-		result["hostname"] = stripQuotes(cont.S("host-name", "vipValue").String())
 	}
 
 	if cont.Exists("location", "vipValue") {
