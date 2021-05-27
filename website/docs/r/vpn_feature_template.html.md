@@ -186,7 +186,7 @@ resource "sdwan_vpn_feature_template" "name1" {
 * `prefix` - (Required) IPv6 prefix or address for IPv6 route
 * `gateway_type` - (Required) Gateway Type for next hop to reach the static route, allowed values: "next-hop", "null0"
 * `next_hop` - (Optional) Next hop list (see [below for nested schema](#nestedblock--next_hopv6)) when gateway_type is `next-hop`
-* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, range: [1 - 255], default value: 1
+* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, cannot be set for `template_type` "cisco_vpn", range: [1 - 255], default value: 1
 
 
 <a id="nestedblock--service_route"></a>
@@ -223,7 +223,7 @@ resource "sdwan_vpn_feature_template" "name1" {
 
 ## Nested Schema for next_hop
 * `next_hop_address` - (Required) IPv6 address of the nexthop
-* `next_hop_distance` - (Optional) Distance of the nexthop, cannot be set for `template_type` "cisco_vpn", range: [1 - 255], default value: 1
+* `next_hop_distance` - (Optional) Distance of the nexthop, range: [1 - 255], default value: 1
 
 
 
