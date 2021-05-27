@@ -128,9 +128,13 @@ var (
 		"file"}
 	validTemplateTypes = []string{
 		"system-vedge",
+		"cisco_system",
 		"ntp",
+		"cisco_ntp",
 		"vpn-vedge",
-		"vpn-vedge-interface"}
+		"cisco_vpn",
+		"vpn-vedge-interface",
+		"cisco_vpn_interface"}
 
 	sysDeviceTypes = map[string]bool{
 		"vbond":                  true,

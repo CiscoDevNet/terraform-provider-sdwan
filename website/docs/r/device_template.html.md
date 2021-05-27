@@ -76,7 +76,7 @@ resource "sdwan_device_template" "example_cli" {
 
 ## Nested Schema for general_templates ##
 * `template_id` - (Required) Template Id of Feature Template
-* `template_type` - (Required) Template Type of Feature Template, allowed values: "system-vedge", "ntp", "vpn-vedge", "vpn-vedge-interface"
+* `template_type` - (Required) Template Type of Feature Template, allowed values: "system-vedge", "cisco_system", "ntp", "cisco_ntp", "vpn-vedge", "cisco_vpn", "vpn-vedge-interface", "cisco_vpn_interface"
 * `sub_templates` - (Optional) List of Sub Templates associated with feature Template (see [below for nested schema](#nestedblock--sub_templates))
 
 
