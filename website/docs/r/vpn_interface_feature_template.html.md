@@ -161,13 +161,13 @@ resource "sdwan_vpn_interface_feature_template" "name2" {
 
     vpn_interface_acl_qos {
       adapt_period = 100
-      shapinng_rate_upstream_min = 111
-      shapinng_rate_upstream_max = 222
-      shapinng_rate_upstream_default = 150
-      shapinng_rate_downstream_min = 333
-      shapinng_rate_downstream_max = 444
-      shapinng_rate_downstream_default = 350
-      shapinng_rate = 123
+      shaping_rate_upstream_min = 111
+      shaping_rate_upstream_max = 222
+      shaping_rate_upstream_default = 150
+      shaping_rate_downstream_min = 333
+      shaping_rate_downstream_max = 444
+      shaping_rate_downstream_default = 350
+      shaping_rate = 123
       qos_map = "test"
       rewrite_rule = "124abc"
       ipv4_ingress_access_list = "abc1"
@@ -188,7 +188,7 @@ resource "sdwan_vpn_interface_feature_template" "name2" {
          respond_to_ping = true
          nat_pool_range_start = "192.162.15.10"
          nat_pool_range_end = "192.162.15.20"
-         nat_pool_prefix_length = "100"
+         nat_pool_prefix_length = 100
          overload = true
          nat_inside_source_loopback_interface = "asvcd"
 
@@ -361,7 +361,7 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 "vedge-C1117-4PMLTEEA", "vedge-C1113-8PLTELA", "vedge-C1111-8PLTELAW", "vedge-C1161-8PLTEP", "vedge-ISR1100X-6G-XE", "vedge-ISR-4431", "vedge-C1101-4P", "vedge-C1109-4PLTE2PW", "vedge-C1113-8PMWE", "vedge-C1118-8P", "vedge-C1126-8PLTEP", "vedge-C8300-1N1S-6T", "vedge-C1121-8PLTEP", "vedge-C8300-2N2S-4T2X", "vedge-C1112-8PLTEEA", "vedge-C1111-4PLTELA", "vedge-ASR-1002-X", "vedge-C1111X-8P", "vedge-C1126X-8PLTEP", "vedge-ASR-1006-X", "vedge-C8000V", "vedge-ISR1100-4G-XE",
 "vedge-C1117-4PLTELAWZ"
 * `template_min_version` - (Required) Minimum Version for the Feature template
-* `factory_default` - (Required) Boolean flag indicating whether VPN Interface type Feature Template is factory default or not, If we set it true we can not update or delete resource.
+* `factory_default` - (Required) Boolean flag indicating whether VPN Interface type Feature Template is factory default or not. If we set it true we can not update or delete resource.
 * `template_definition` - (Required) Configuration for VPN Interface type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
 
 
@@ -416,7 +416,7 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 * `restrict` - (Optional) Restrict flag for VPN interface type Feature Template, Default: false
 * `groups` - (Optional) List of Groups in tunnle for VPN interface type Feature Template, Range: [1, 4294967295]
 * `border` - (Optional) Flag indicating whether Border is enabled or not for VPN interface type Feature Template, Default: false
-* `control_connection` - (Optional) Flag indicating TLOC connection is enabled or not for VPN interface type Feature Template 
+* `control_connection` - (Optional) Flag indicating TLOC connection is enabled or not for VPN interface type Feature Template, Allowed value: true, false
 * `maximum_control_connections` - (Optional) Maximum number of vSamart controllers that WAN tunnel interface can connect for VPN interface type Feature Template, Range: [0, 100]
 * `vbond_as_stun_server` - (Optional) Flag indicating whether Session Traversal Utilities for NAT(STUN) is enabled or not for VPN interface type Feature Template, Default: false
 * `exclude_controller_group_list` - (Optional) List of vSmart controllers that the tunnel interface is not allowed to connect for VPN interface type Feature Template, Range: [0, 100]
@@ -446,13 +446,13 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 
 ## Nested Schema for vpn_interface_acl_qos
 * `adapt_period` - (Optional) Value of Adapt Period for Cisco VPN interface type Feature Template, Range: [1, 720]
-* `shapinng_rate_upstream_min` - (Optional) Minimum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
-* `shapinng_rate_upstream_max` - (Optional) Maximum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
-* `shapinng_rate_upstream_default` - (Optional) Default value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
-* `shapinng_rate_downstream_min` - (Optional) Minimum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
-* `shapinng_rate_downstream_max` - (Optional) Maximum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
-* `shapinng_rate_downstream_default` - (Optional) Default value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
-* `shapinng_rate` - (Optional) Value of aggregate traffic transmission rate on the VPN interface for VPN interface type Feature Template, Range: [8, 100000000]
+* `shaping_rate_upstream_min` - (Optional) Minimum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
+* `shaping_rate_upstream_max` - (Optional) Maximum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
+* `shaping_rate_upstream_default` - (Optional) Default value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
+* `shaping_rate_downstream_min` - (Optional) Minimum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
+* `shaping_rate_downstream_max` - (Optional) Maximum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
+* `shaping_rate_downstream_default` - (Optional) Default value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template, Range: [8, 100000000]
+* `shaping_rate` - (Optional) Value of aggregate traffic transmission rate on the VPN interface for VPN interface type Feature Template, Range: [8, 100000000]
 * `qos_map` - (Optional) Name of the QoS map to apply to packets being transmitted out the interface for VPN interface type Feature Template
 * `rewrite_rule` - (Optional) Name of the rewrite rule to apply on the interface for VPN interface type Feature Template
 * `ipv4_ingress_access_list` - (Optional) Name of the access list to apply to IPv4 packets being received on the interface for VPN interface type Feature Template
@@ -478,7 +478,7 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 * `account_interim_interval` - (Optional) Value of how often to send 802.1X interim accounting updates to the RADIUS server for Vedge VPN interface type Feature Template, Range: [1, 1440]
 * `nas_identifier` - (Optional) The NAS identifier of the local router
 * `nas_ip` - (Optional) The NAS IP address of the local router for Vedge VPN interface type Feature Template, Allowed values: IPv4 address
-* `wake_on_lan` - (Optional) The flag that enable client to be powered up when the router receives an Ethernet magic packet frame for Vedge VPN interface type Feature Template
+* `wake_on_lan` - (Optional) The flag that enable client to be powered up when the router receives an Ethernet magic packet frame for Vedge VPN interface type Feature Template, Allowed value: true, false  Default: false
 * `control_direction` - (Optional) Direction type of packets for Vedge VPN interface type Feature Template, Allowed values: "in-and-out",					"in-only", Default: "in-and-out"
 * `reauthentication` - (Optional) Value indicating how often to reauthenticate 802.1X clients for Vedge VPN interface type Feature Template, Range: [0, 1440], Default: 0
 * `inactivity` - (Optional) Value indicating how long to wait before revoking an 802.1X client's network access for Vedge VPN interface type Feature Template, Range: [0, 1440], Default: 60
@@ -490,36 +490,36 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 <a id="nestedblock--vpn_interface_trustsec"></a>
 
 ## Nested Schema for vpn_interface_trustsec
-* `enable_sgt_propagation` - (Optional) Flag indicating whether SGT propagation is enabled or not for Cisco VPN interface type Feature Template
-* `propagate` - (Optional) Flag indicating whether propagate is enabled or not for Cisco VPN interface type Feature Template
+* `enable_sgt_propagation` - (Optional) Flag indicating whether SGT propagation is enabled or not for Cisco VPN interface type Feature Template, Allowed value: true, false  Default: false
+* `propagate` - (Optional) Flag indicating whether propagate is enabled or not for Cisco VPN interface type Feature Template, Allowed value: true, false
 * `security_group_tag` - (Optional) Value of security group tag for Cisco VPN interface type Feature Template
-* `trusted` - (Optional) Flag indicating whether trusted is enable or not for Cisco VPN interface type Feature Template
+* `trusted` - (Optional) Flag indicating whether trusted is enable or not for Cisco VPN interface type Feature Template, Allowed value: true, false  Default: false
 
 
 
 <a id="nestedblock--vpn_interface_advanced"></a>
 
 ## Nested Schema for vpn_interface_advanced
-* `duplex` - (Optional) Value of duplex to run interface in auto, full, or half mode for VPN interface type Feature Template, Allowed values for Cisco VPN Interface type feature template: "auto", "full", "half", Allowed values for Vedge  VPN Interface type feature template: "full", "half", Default: "full"
+* `duplex` - (Optional) Value of duplex to run interface in auto, full, or half mode for VPN interface type Feature Template, Allowed values for Cisco VPN Interface type feature template: "auto", "full", "half", Allowed values for Vedge  VPN Interface type feature template: "full", "half"
 * `mac_address` - (Optional) Value of MAC address to associate with the interface, in colon-separated hexadecimal notation, Allowed values: MAC address
 * `ip_mtu` - (Optional) Value of ip mtu to specify the maximum MTU size of packets on the interface, Range: [576, 2000], Default: 1500
-* `pmtu_discovery` - (Optional) Flag indicating whether path MTU is enable or not for Vedge VPN interface type Feature Template
+* `pmtu_discovery` - (Optional) Flag indicating whether path MTU is enable or not for Vedge VPN interface type Feature Template, Allowed value: true, false  Default: false
 * `flow_control` - (Optional) Value of bidirectional flow control settings for Vedge VPN interface type Feature Template, Allowed values: "autoneg",
 "both", "egress", "ingress", "none", Default:  "autoneg"
 * `tcp_mss` - (Optional) Maximum segment size (MSS) of TPC SYN packets passing through the router, Range for Cisco VPN Interface : [500, 1460], Range for Vedge VPN Interface : [552, 1460]
 * `speed` - (Optional) Value of speed to use when the remote end of the connection does not support autonegotiation, Allowed values for Cisco VPN Interface type feature template: "10",	"100", "1000", "10000", "2500",  Allowed values for Vedge  VPN Interface type feature template: "10",	"100", "1000", "10000" 
-* `clear_dont_fragment` - (Optional) Flag indicating Don't Fragment (DF) bit in the IPv4 packet header for packets being transmitted out the interface is clar or not
+* `clear_dont_fragment` - (Optional) Flag indicating Don't Fragment (DF) bit in the IPv4 packet header for packets being transmitted out the interface is clar or not, Allowed value: true, false  Default: false
 * `static_ingess_qos` - (Optional) Queue number to use for incoming traffic for Vedge VPN interface type Feature Template, Range: [0, 7]
 * `arp_timeout` - (Optional) Value indicating how long it takes for a dynamically learned ARP entry to time out, Range for Cisco VPN Interface : [0, 2147483], Range for Vedge VPN Interface : [0, 2678400] Default: 1500
-* `autonegotiation` - (Optional) Flag indicating autonegotiation mode 
+* `autonegotiation` - (Optional) Flag indicating autonegotiation mode, Allowed value: true, false  Default: true
 * `tloc_extension` - (Optional) Name of a physical interface on the same router that connects to the WAN transport
-* `power_over_ethernet` - (Optional) Flag indicating whether PoE(Power over Ethernet) is enabled or not for Vedge VPN interface type Feature Template
+* `power_over_ethernet` - (Optional) Flag indicating whether PoE(Power over Ethernet) is enabled or not for Vedge VPN interface type Feature Template, Allowed value: true, false  Default: false
 * `load_interval` - (Optional) Value of load interval for Cisco VPN interface type Feature Template, Range: [30, 600], Allowed values: value can only be multiple of 30
 * `tracker` - (Optional) List of a tracker name to track the status of transport interfaces that connect to the internet for VPN interface type Feature Template
-* `icmp_redirect_disable` - (Optional) Flag indicating whether ICMP redirect disable or not on interface for VPN interface type Feature Template
+* `icmp_redirect_disable` - (Optional) Flag indicating whether ICMP redirect disable or not on interface for VPN interface type Feature Template, Allowed value: true, false  Default: false
 * `gre_tunnel_source_ip` - (Optional) IP address of the extended WAN interface, Allowed values: IPv4 address
 * `xconnect` - (Optional) The name of a physical interface on the same router that connects to the WAN transport for VPN interface type Feature Template
-* `ip_directed_broadcast` - (Optional) Flag indicate whether directed IP braodcast is enabled or not for VPN interface type Feature Template
+* `ip_directed_broadcast` - (Optional) Flag indicate whether directed IP braodcast is enabled or not for VPN interface type Feature Template, Allowed value: true, false  Default: false
 
 
 <a id="nestedblock--ipv4"></a>
@@ -608,10 +608,10 @@ Range: [12, 6000], Default: 12
 ## Nested Schema for VRRP ipv4
 * `group_id` - (Required) The virtual router ID, which is a numeric identifier of the virtual router for VPN interface type Feature Template, 
 Range: [1, 255]
+* `track_prefix_list` - (Required) Value of remote prefixes, which is defined in a prefix list configured on the local router for VPN interface type Feature Template
 * `priority` - (Optional) The priority level of the router. The router with the highest priority is elected as primary VRRP router. If two routers have the same priority, the one with the higher IP address is elected as primary VRRP router for VPN interface type Feature Template, Range: [1, 254], Default: 100
 * `timer` - (Optional) Timer value specify how often the primary VRRP router sends VRRP advertisement messages. If subordinate routers miss three consecutive VRRP advertisements, they elect a new primary VRRP routers for VPN interface type Feature Template, Range for Vedge VPN interface: [1, 3600] Seconds, Range for Cisco VPN interface: [1, 40950] Milliseconds, Default: 1 Second
 * `track_omp` - (Optional) Flag indicating whether to enable for VRRP to track the Overlay Management Protocol (OMP) session running on the WAN connection or not for VPN interface type Feature Template, Default: false
-* `track_prefix_list` - (Required) Value of remote prefixes, which is defined in a prefix list configured on the local router for VPN interface type Feature Template
 * `ip_address` - (Optional) Value of IPv4 address of the virtual router for VPN interface type Feature Template, Allowed value: IPv4 Address
 
 <a id="nestedblock--vrrpv6"></a>
@@ -619,11 +619,11 @@ Range: [1, 255]
 ## Nested Schema for VRRP ipv6
 * `group_id` - (Required) The virtual router ID, which is a numeric identifier of the virtual router for VPN interface type Feature Template, 
 Range: [1, 255]
+* `track_prefix_list` - (Required) Value of remote prefixes, which is defined in a prefix list configured on the local router for VPN interface type Feature Template
+* `link_local_ipv6_address` - (Required) Value of IPv6 address of the virtual router for VPN interface type Feature Template, Allowed value: IPv6 Address
 * `priority` - (Optional) The priority level of the router. The router with the highest priority is elected as primary VRRP router. If two routers have the same priority, the one with the higher IP address is elected as primary VRRP router for VPN interface type Feature Template, Range: [1, 254], Default: 100
 * `timer` - (Optional) Timer value specify how often the primary VRRP router sends VRRP advertisement messages. If subordinate routers miss three consecutive VRRP advertisements, they elect a new primary VRRP routers for VPN interface type Feature Template, Range for Vedge VPN interface: [1, 3600] Seconds, Range for Cisco VPN interface: [1, 40950] Milliseconds, Default: 1 Second
 * `track_omp` - (Optional) Flag indicating whether to enable for VRRP to track the Overlay Management Protocol (OMP) session running on the WAN connection or not for VPN interface type Feature Template, Default: false
-* `track_prefix_list` - (Required) Value of remote prefixes, which is defined in a prefix list configured on the local router for VPN interface type Feature Template
-* `link_local_ipv6_address` - (Required) Value of IPv6 address of the virtual router for VPN interface type Feature Template, Allowed value: IPv6 Address
 * `global_ipv6_prefix` - (Optional) Value of global IPv6 prefix of the virtual router for VPN interface type Feature Template
 
 <a id="nestedblock--advanced_options"></a>
@@ -666,7 +666,7 @@ Range: [1, 255]
 ## Nested Schema for NAT ipv4 static_nat
 * `source_ip` - (Required) Value of the inside local address as source IP address for VPN interface type Feature Template, Allowed value: IPv4 Address
 * `translated_source_ip` - (Required) Value of the inside global address as the translated source IP address for VPN interface type Feature Template, Allowed value: IPv4 Address
-* `source_vpn_id` - (Optional) Configures Source VPN ID, which is the Service VPN in which the host resides for VPN interface type Feature Template, Range: [1, 65530]
+* `source_vpn_id` - (Optional) Configures Source VPN ID, which is the Service VPN in which the host resides for VPN interface type Feature Template, Range: [0, 65530], Default: 0
 * `static_nat_direction` - (Optional) Set the direction in which to perform network address translation for VPN interface type Feature Template, Allowed value for Vedge VPN interface type Feature Template : "inside", "outside" Default: "inside" Allowed value for Cisco VPN interface type Feature Template : "inside"
 * `protocol` - (Optional) Protocol for Vedge VPN interface type Feature Template, Allowed value: "tcp", "udp"
 * `source_port` - (Optional) Value of source port for Vedge VPN interface type Feature Template, Range: [0, 65535]

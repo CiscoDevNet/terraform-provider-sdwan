@@ -204,7 +204,7 @@ resource "sdwan_vpn_interface_feature_template" "name4" {
          respond_to_ping = true
          nat_pool_range_start = "192.162.15.10"
          nat_pool_range_end = "192.162.15.20"
-         nat_pool_prefix_length = "100"
+         nat_pool_prefix_length = 100
          overload = true
          nat_inside_source_loopback_interface = "abc"
 

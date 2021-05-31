@@ -289,6 +289,42 @@ func interfaceToStrList(data interface{}) []string {
 	return strList
 }
 
+func interfaceToIntList(data interface{}) []int {
+	values := data.([]interface{})
+
+	strList := make([]string, 0, 1)
+	for _, val := range values {
+		strList = append(strList, val.(string))
+	}
+
+	intList := make([]int, 0, 1)
+	for _, val := range strList {
+		if value, err := strconv.Atoi(val); err == nil {
+			intList = append(intList, value)
+		}
+	}
+
+	return intList
+}
+
+func interfaceToFloatList(data interface{}) []float64 {
+	values := data.([]interface{})
+
+	strList := make([]string, 0, 1)
+	for _, val := range values {
+		strList = append(strList, val.(string))
+	}
+
+	floatList := make([]float64, 0, 1)
+	for _, val := range strList {
+		if value, err := strconv.ParseFloat(val, 64); err == nil {
+			floatList = append(floatList, value)
+		}
+	}
+
+	return floatList
+}
+
 func intInterfaceToStrList(data interface{}) []string {
 	values := data.([]interface{})
 

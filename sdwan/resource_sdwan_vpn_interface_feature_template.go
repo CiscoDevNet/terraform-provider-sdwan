@@ -402,10 +402,10 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Computed: true,
 									},
 									"maximum_control_connections": {
-										Type:         schema.TypeInt,
-										Optional:     true,
-										Computed:     true,
-										ValidateFunc: validation.IntBetween(0, 100),
+										Type:             schema.TypeString,
+										Optional:         true,
+										Computed:         true,
+										ValidateDiagFunc: isStringInRange(0, 100),
 									},
 									"vbond_as_stun_server": {
 										Type:     schema.TypeBool,
@@ -520,10 +520,10 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Default:  false,
 												},
 												"gre_preference": {
-													Type:         schema.TypeFloat,
-													Optional:     true,
-													Computed:     true,
-													ValidateFunc: validation.FloatBetween(0, 4294967295),
+													Type:             schema.TypeString,
+													Optional:         true,
+													Computed:         true,
+													ValidateDiagFunc: isStringInRange(0, 4294967295),
 												},
 												"gre_weight": {
 													Type:         schema.TypeInt,
@@ -537,10 +537,10 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Default:  true,
 												},
 												"ipsec_preference": {
-													Type:         schema.TypeFloat,
-													Optional:     true,
-													Computed:     true,
-													ValidateFunc: validation.FloatBetween(0, 4294967295),
+													Type:             schema.TypeString,
+													Optional:         true,
+													Computed:         true,
+													ValidateDiagFunc: isStringInRange(0, 4294967295),
 												},
 												"ipsec_weight": {
 													Type:         schema.TypeInt,
@@ -625,7 +625,6 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
-
 												"nat_type": {
 													Type:     schema.TypeString,
 													Optional: true,
@@ -757,8 +756,8 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 															"source_vpn_id": {
 																Type:         schema.TypeInt,
 																Optional:     true,
-																Computed:     true,
-																ValidateFunc: validation.IntBetween(1, 65530),
+																Default:      0,
+																ValidateFunc: validation.IntBetween(0, 65530),
 															},
 															"static_nat_direction": {
 																Type:     schema.TypeString,
@@ -779,16 +778,16 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 																}, false),
 															},
 															"source_port": {
-																Type:         schema.TypeInt,
-																Optional:     true,
-																Computed:     true,
-																ValidateFunc: validation.IntBetween(0, 65535),
+																Type:             schema.TypeString,
+																Optional:         true,
+																Computed:         true,
+																ValidateDiagFunc: isStringInRange(0, 65535),
 															},
 															"translate_port": {
-																Type:         schema.TypeInt,
-																Optional:     true,
-																Computed:     true,
-																ValidateFunc: validation.IntBetween(0, 65535),
+																Type:             schema.TypeString,
+																Optional:         true,
+																Computed:         true,
+																ValidateDiagFunc: isStringInRange(0, 65535),
 															},
 														},
 													},
@@ -929,43 +928,43 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Computed:     true,
 										ValidateFunc: validation.IntBetween(1, 720),
 									},
-									"shapinng_rate_upstream_min": {
+									"shaping_rate_upstream_min": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
 										Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
-									"shapinng_rate_upstream_max": {
+									"shaping_rate_upstream_max": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
 										Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
-									"shapinng_rate_upstream_default": {
+									"shaping_rate_upstream_default": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
 										Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
-									"shapinng_rate_downstream_min": {
+									"shaping_rate_downstream_min": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
 										Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
-									"shapinng_rate_downstream_max": {
+									"shaping_rate_downstream_max": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
 										Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
-									"shapinng_rate_downstream_default": {
+									"shaping_rate_downstream_default": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
 										Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
-									"shapinng_rate": {
+									"shaping_rate": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
 										Computed:     true,
@@ -1325,7 +1324,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"duplex": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Default:  "full",
+										Computed: true,
 										ValidateFunc: validation.StringInSlice([]string{
 											"auto",
 											"full",
@@ -1362,10 +1361,10 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										}, false),
 									},
 									"tcp_mss": {
-										Type:         schema.TypeInt,
-										Optional:     true,
-										Computed:     true,
-										ValidateFunc: validation.IntBetween(500, 1460),
+										Type:             schema.TypeString,
+										Optional:         true,
+										Computed:         true,
+										ValidateDiagFunc: isStringInRange(500, 1460),
 									},
 									"speed": {
 										Type:     schema.TypeString,
@@ -1385,10 +1384,10 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Default:  false,
 									},
 									"static_ingess_qos": {
-										Type:         schema.TypeInt,
-										Optional:     true,
-										Computed:     true,
-										ValidateFunc: validation.IntBetween(0, 7),
+										Type:             schema.TypeString,
+										Optional:         true,
+										Computed:         true,
+										ValidateDiagFunc: isStringInRange(0, 7),
 									},
 									"arp_timeout": {
 										Type:         schema.TypeFloat,
@@ -1555,6 +1554,7 @@ func resourceSDWANVPNInterfaceFeatureTemplateUpdate(d *schema.ResourceData, m in
 
 	fTemplate.TemplateType = d.Get("template_type").(string)
 	fTemplate.TemplateName = d.Get("template_name").(string)
+	template_name = d.Get("template_name").(string)
 	fTemplate.TemplateDescription = d.Get("template_description").(string)
 	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
 	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
@@ -1929,7 +1929,7 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 		}
 	}
 
-	if input["tunnels_bandwidth_percent"] != nil {
+	if input["tunnels_bandwidth_percent"] != nil && input["tunnels_bandwidth_percent"] != 0 {
 		if input["per_tunnel_qos"] == true && input["per_tunnel_qos_aggregator"] == true {
 			tunnel["tunnels-bandwidth"] = createVIPObject("object", "constant", input["tunnels_bandwidth_percent"], "vpn_if_tunnel_tunnels-bandwidth", nil)
 			isPresent = isPresent + 1
@@ -1969,8 +1969,9 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 		isPresent = isPresent + 1
 	}
 
-	if input["maximum_control_connections"] != nil {
-		tunnel["max-control-connections"] = createVIPObject("object", "constant", input["maximum_control_connections"], "vpn_if_tunnel_max_control_connections", nil)
+	if input["maximum_control_connections"] != nil && input["maximum_control_connections"] != "" {
+		val, _ := getInt(input["maximum_control_connections"])
+		tunnel["max-control-connections"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_max_control_connections", nil)
 		isPresent = isPresent + 1
 	}
 
@@ -2087,8 +2088,9 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 			isPresent = isPresent + 1
 			isEncapPresent = isEncapPresent + 1
 
-			if encapSet["gre_preference"] != nil {
-				gre["preference"] = createVIPObject("object", "constant", encapSet["gre_preference"], "vpn_if_tunnel_gre_preference", nil)
+			if encapSet["gre_preference"] != nil && encapSet["gre_preference"] != "" {
+				val, _ := getInt(encapSet["gre_preference"])
+				gre["preference"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_gre_preference", nil)
 				isPresent = isPresent + 1
 				isEncapPresent = isEncapPresent + 1
 			}
@@ -2113,8 +2115,9 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 			isPresent = isPresent + 1
 			isEncapPresent = isEncapPresent + 1
 
-			if encapSet["ipsec_preference"] != nil {
-				ipsec["preference"] = createVIPObject("object", "constant", encapSet["ipsec_preference"], "vpn_if_tunnel_ipsec_preference", nil)
+			if encapSet["ipsec_preference"] != nil && encapSet["ipsec_preference"] != "" {
+				val, _ := getInt(encapSet["ipsec_preference"])
+				ipsec["preference"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_ipsec_preference", nil)
 				isPresent = isPresent + 1
 				isEncapPresent = isEncapPresent + 1
 			}
@@ -2404,12 +2407,14 @@ func createStaticNATRule(defMap map[string]interface{}, input map[string]interfa
 		defMap["proto"] = createVIPObject("object", "constant", input["protocol"], "vpn_static_nat_proto", nil)
 	}
 
-	if input["source_port"] != nil {
-		defMap["source-port"] = createVIPObject("object", "constant", input["source_port"], "vpn_static_nat_source_port", nil)
+	if input["source_port"] != nil && input["source_port"] != "" {
+		val, _ := getInt(input["source_port"])
+		defMap["source-port"] = createVIPObject("object", "constant", val, "vpn_static_nat_source_port", nil)
 	}
 
-	if input["translate_port"] != nil {
-		defMap["translate-port"] = createVIPObject("object", "constant", input["translate_port"], "vpn_static_nat_translate_port", nil)
+	if input["translate_port"] != nil && input["translate_port"] != "" {
+		val, _ := getInt(input["translate_port"])
+		defMap["translate-port"] = createVIPObject("object", "constant", val, "vpn_static_nat_translate_port", nil)
 	}
 
 	defMap["priority-order"] = []string{
@@ -2634,21 +2639,21 @@ func createVPNInterfaceACL(defMap map[string]interface{}, input map[string]inter
 	upstream := make(map[string]interface{})
 	isUpstreamPresent := 0
 
-	if input["shapinng_rate_upstream_default"] != nil && input["shapinng_rate_upstream_default"] != 0.0 {
-		upstream["bandwidth-up"] = createVIPObject("object", "constant", input["shapinng_rate_upstream_default"], "qos_adaptive_upstream_bandwidth_up", nil)
+	if input["shaping_rate_upstream_default"] != nil && input["shaping_rate_upstream_default"] != 0.0 {
+		upstream["bandwidth-up"] = createVIPObject("object", "constant", input["shaping_rate_upstream_default"], "qos_adaptive_upstream_bandwidth_up", nil)
 		isUpstreamPresent += 1
 	}
 
 	urange := make(map[string]interface{})
 	isURangePresent := 0
 
-	if input["shapinng_rate_upstream_min"] != nil && input["shapinng_rate_upstream_min"] != 0.0 {
-		urange["umin"] = createVIPObject("object", "constant", input["shapinng_rate_upstream_min"], "qos_adaptive_upstream_range_umin", nil)
+	if input["shaping_rate_upstream_min"] != nil && input["shaping_rate_upstream_min"] != 0.0 {
+		urange["umin"] = createVIPObject("object", "constant", input["shaping_rate_upstream_min"], "qos_adaptive_upstream_range_umin", nil)
 		isURangePresent += 1
 	}
 
-	if input["shapinng_rate_upstream_max"] != nil && input["shapinng_rate_upstream_max"] != 0.0 {
-		urange["umax"] = createVIPObject("object", "constant", input["shapinng_rate_upstream_max"], "qos_adaptive_upstream_range_umax", nil)
+	if input["shaping_rate_upstream_max"] != nil && input["shaping_rate_upstream_max"] != 0.0 {
+		urange["umax"] = createVIPObject("object", "constant", input["shaping_rate_upstream_max"], "qos_adaptive_upstream_range_umax", nil)
 		isURangePresent += 1
 	}
 
@@ -2661,21 +2666,21 @@ func createVPNInterfaceACL(defMap map[string]interface{}, input map[string]inter
 	downstream := make(map[string]interface{})
 	isDownstreamPresent := 0
 
-	if input["shapinng_rate_downstream_default"] != nil && input["shapinng_rate_downstream_default"] != 0.0 {
-		downstream["bandwidth-down"] = createVIPObject("object", "constant", input["shapinng_rate_downstream_default"], "qos_adaptive_downstream_bandwidth_down", nil)
+	if input["shaping_rate_downstream_default"] != nil && input["shaping_rate_downstream_default"] != 0.0 {
+		downstream["bandwidth-down"] = createVIPObject("object", "constant", input["shaping_rate_downstream_default"], "qos_adaptive_downstream_bandwidth_down", nil)
 		isDownstreamPresent += 1
 	}
 
 	drange := make(map[string]interface{})
 	isDRangePresent := 0
 
-	if input["shapinng_rate_downstream_min"] != nil && input["shapinng_rate_downstream_min"] != 0.0 {
-		drange["dmin"] = createVIPObject("object", "constant", input["shapinng_rate_downstream_min"], "qos_adaptive_downstream_range_dmin", nil)
+	if input["shaping_rate_downstream_min"] != nil && input["shaping_rate_downstream_min"] != 0.0 {
+		drange["dmin"] = createVIPObject("object", "constant", input["shaping_rate_downstream_min"], "qos_adaptive_downstream_range_dmin", nil)
 		isDRangePresent += 1
 	}
 
-	if input["shapinng_rate_downstream_max"] != nil && input["shapinng_rate_downstream_max"] != 0.0 {
-		drange["dmax"] = createVIPObject("object", "constant", input["shapinng_rate_downstream_max"], "qos_adaptive_downstream_range_dmax", nil)
+	if input["shaping_rate_downstream_max"] != nil && input["shaping_rate_downstream_max"] != 0.0 {
+		drange["dmax"] = createVIPObject("object", "constant", input["shaping_rate_downstream_max"], "qos_adaptive_downstream_range_dmax", nil)
 		isDRangePresent += 1
 	}
 
@@ -2698,8 +2703,8 @@ func createVPNInterfaceACL(defMap map[string]interface{}, input map[string]inter
 		defMap["qos-adaptive"] = qos_adaptive
 	}
 
-	if input["shapinng_rate"] != nil && input["shapinng_rate"] != "" && input["shapinng_rate"] != 0.0 {
-		defMap["shaping-rate"] = createVIPObject("object", "constant", input["shapinng_rate"], "qos_shaping_rate", nil)
+	if input["shaping_rate"] != nil && input["shaping_rate"] != "" && input["shaping_rate"] != 0.0 {
+		defMap["shaping-rate"] = createVIPObject("object", "constant", input["shaping_rate"], "qos_shaping_rate", nil)
 	}
 
 	if input["qos_map"] != nil && input["qos_map"] != "" {
@@ -2891,8 +2896,9 @@ func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]
 		defMap["flow-control"] = createVIPObject("object", "constant", input["flow_control"], "vpn_if_flow_control", nil)
 	}
 
-	if input["tcp_mss"] != nil {
-		defMap["tcp-mss-adjust"] = createVIPObject("object", "constant", input["tcp_mss"], "vpn_if_tcp_mss_adjust", nil)
+	if input["tcp_mss"] != nil && input["tcp_mss"] != "" {
+		val, _ := getInt(input["tcp_mss"])
+		defMap["tcp-mss-adjust"] = createVIPObject("object", "constant", val, "vpn_if_tcp_mss_adjust", nil)
 	}
 
 	if input["speed"] != nil && input["speed"] != "" {
@@ -2903,8 +2909,9 @@ func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]
 		defMap["clear-dont-fragment"] = createVIPObject("object", "constant", input["clear_dont_fragment"], "vpn_if_clear_dont_fragment", nil)
 	}
 
-	if input["static_ingess_qos"] != nil {
-		defMap["static-ingress-qos"] = createVIPObject("object", "constant", input["static_ingess_qos"], "vpn_if_static_ingress_qos", nil)
+	if input["static_ingess_qos"] != nil && input["static_ingess_qos"] != "" {
+		val, _ := getInt(input["static_ingess_qos"])
+		defMap["static-ingress-qos"] = createVIPObject("object", "constant", val, "vpn_if_static_ingress_qos", nil)
 	}
 
 	if input["arp_timeout"] != nil {
@@ -2981,7 +2988,7 @@ func createVPNInterfaceTrustSec(defMap map[string]interface{}, input map[string]
 
 	sgt := make(map[string]interface{})
 	isSGTPresent := 0
-	if input["security_group_tag"] != nil {
+	if input["security_group_tag"] != nil && input["security_group_tag"] != 0 {
 		sgt["sgt"] = createVIPObject("object", "constant", input["security_group_tag"], "trusted__sgt", nil)
 		isPresent = isPresent + 1
 		isSGTPresent = isSGTPresent + 1
@@ -3012,7 +3019,7 @@ func createVPNInterface8021X(defMap map[string]interface{}, input map[string]int
 		isPresent = isPresent + 1
 	}
 
-	if input["account_interim_interval"] != nil {
+	if input["account_interim_interval"] != nil && input["account_interim_interval"] != 0 {
 		dot1x["accounting-interval"] = createVIPObject("object", "constant", input["account_interim_interval"], "802.1X_accounting_interval", nil)
 		isPresent = isPresent + 1
 	}
@@ -3063,22 +3070,22 @@ func createVPNInterface8021X(defMap map[string]interface{}, input map[string]int
 
 			vlanSet := advancedSet["vlan"].(*schema.Set).List()[0].(map[string]interface{})
 
-			if vlanSet["authentication_fail_vlan"] != nil {
+			if vlanSet["authentication_fail_vlan"] != nil && vlanSet["authentication_fail_vlan"] != 0 {
 				dot1x["auth-fail-vlan"] = createVIPObject("object", "constant", vlanSet["authentication_fail_vlan"], "802.1X_auth_fail_vlan", nil)
 				isPresent = isPresent + 1
 			}
 
-			if vlanSet["guest_vlan"] != nil {
+			if vlanSet["guest_vlan"] != nil && vlanSet["guest_vlan"] != 0 {
 				dot1x["guest-vlan"] = createVIPObject("object", "constant", vlanSet["guest_vlan"], "802.1X_guest_vlan", nil)
 				isPresent = isPresent + 1
 			}
 
-			if vlanSet["authentication_reject_vlan"] != nil {
+			if vlanSet["authentication_reject_vlan"] != nil && vlanSet["authentication_reject_vlan"] != 0 {
 				dot1x["auth-reject-vlan"] = createVIPObject("object", "constant", vlanSet["authentication_reject_vlan"], "802.1X_auth_reject_vlan", nil)
 				isPresent = isPresent + 1
 			}
 
-			if vlanSet["default_vlan"] != nil {
+			if vlanSet["default_vlan"] != nil && vlanSet["default_vlan"] != 0 {
 				dot1x["default-vlan"] = createVIPObject("object", "constant", vlanSet["default_vlan"], "802.1X_default_vlan", nil)
 				isPresent = isPresent + 1
 			}

@@ -108,13 +108,13 @@ data "sdwan_vpn_interface_feature_template" "name" {
 
 ## Nested Schema for vpn_interface_acl_qos
 * `adapt_period` - Value of Adapt Period for Cisco VPN interface type Feature Template
-* `shapinng_rate_upstream_min` - Minimum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_upstream_max` - Maximum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_upstream_default` - Default value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_downstream_min` - Minimum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_downstream_max` - Maximum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_downstream_default` - Default value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate` - Value of aggregate traffic transmission rate on the VPN interface for VPN interface type Feature Template
+* `shaping_rate_upstream_min` - Minimum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_upstream_max` - Maximum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_upstream_default` - Default value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_downstream_min` - Minimum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_downstream_max` - Maximum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_downstream_default` - Default value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
+* `shaping_rate` - Value of aggregate traffic transmission rate on the VPN interface for VPN interface type Feature Template
 * `qos_map` - Name of the QoS map to apply to packets being transmitted out the interface for VPN interface type Feature Template
 * `rewrite_rule` - Name of the rewrite rule to apply on the interface for VPN interface type Feature Template
 * `ipv4_ingress_access_list` - Name of the access list to apply to IPv4 packets being received on the interface for VPN interface type Feature Template
