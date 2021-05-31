@@ -102,7 +102,6 @@ resource "sdwan_system_feature_template" "example_cisco_system_ft_full" {
       dns_cache_timeout = 6
       track_transport = false
       vbond_local = true
-      vbond_remote = "abcd"
       track_interface_tag = 433
       multicast_buffer_percent = 56
       usb_controller = true
@@ -193,7 +192,6 @@ Allowed values for template_type = "Cisco System" are:
 * `dns_cache_timeout` - (Optional) DNS Cache Timeout(minutes) for configuration of System type Feature Template, Range: [1, 30], Default: 2
 * `track_transport` - (Optional) Boolean flag to indicate whether tracking of transport is enabled for configuration of System type Feature Template, Default: true
 * `vbond_local` - (Optional) Boolean flag to indicate whether the local device is set as vBond for configuration of System type Feature Template, Default: false
-* `vbond_remote` - (Optional) vBond IP address for configuration of System type Feature Template
 * `track_interface_tag` - (Optional) Interface tracking for configuration of System type Feature Template, Range: [1, 4294967295]
 * `multicast_buffer_percent` - (Optional) Percentage of buffer multicast packets can consume for configuration of System type Feature Template, Range: [5, 100]
 * `usb_controller` - (Optional) Boolean flag to indicate whether external USB Controller on the device is enabled for configuration of System type Feature Template, Default: false
