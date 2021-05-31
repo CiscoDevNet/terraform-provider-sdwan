@@ -28,6 +28,7 @@ data "sdwan_vpn_interface_feature_template" "name" {
 
 * `template_description` - Long Description of VPN interface type Feature Template
 * `device_type` - Type of device which supports VPN interface Feature Template
+* `template_type` - Template type for the VPN Interface type Feature Template
 * `template_min_version` - Minimum Version for the VPN interface Feature template
 * `template_definition` - Configuration for VPN interface type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
 * `factory_default` - Boolean flag indicating whether VPN interface type Feature Template is factory default or not

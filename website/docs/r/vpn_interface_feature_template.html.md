@@ -274,7 +274,7 @@ resource "sdwan_vpn_interface_feature_template" "name2" {
       autonegotiation = true
       tloc_extension = "test"
       power_over_ethernet = false
-      load_interval = 61
+      load_interval = 60
       tracker = ["abc"]
       icmp_redirect_disable = true
       gre_tunnel_source_ip = "192.168.11.11"
@@ -360,6 +360,7 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 "vedge-C8500-12X", "vedge-C1109-2PLTEGB", "vedge-CSR-1000v", "vedge-C1113-8PLTEW", "vedge-C1121X-8PLTEPW", "vedge-ISR1100-6G-XE", "vedge-C1121-4PLTEP", "vedge-C1111-8PLTEEA", "vedge-C1117-4PLTEEA", "vedge-C1127X-8PLTEP", "vedge-C1109-2PLTEUS",  vedge-C1112-8PLTEEAWE", "vedge-C1161X-8P", "vedge-C8500L-8S4X", "vedge-C1111-8PW", "vedge-C1161X-8PLTEP", "vedge-C1101-4PLTEPW", "vedge-ISR1100X-4G-XE", "vedge-IR-1101", "vedge-C1111-4P", "vedge-C1111-4PW", "vedge-C1111-8P",
 "vedge-C1117-4PMLTEEA", "vedge-C1113-8PLTELA", "vedge-C1111-8PLTELAW", "vedge-C1161-8PLTEP", "vedge-ISR1100X-6G-XE", "vedge-ISR-4431", "vedge-C1101-4P", "vedge-C1109-4PLTE2PW", "vedge-C1113-8PMWE", "vedge-C1118-8P", "vedge-C1126-8PLTEP", "vedge-C8300-1N1S-6T", "vedge-C1121-8PLTEP", "vedge-C8300-2N2S-4T2X", "vedge-C1112-8PLTEEA", "vedge-C1111-4PLTELA", "vedge-ASR-1002-X", "vedge-C1111X-8P", "vedge-C1126X-8PLTEP", "vedge-ASR-1006-X", "vedge-C8000V", "vedge-ISR1100-4G-XE",
 "vedge-C1117-4PLTELAWZ"
+* `template_type` - (Required) Template type for the VPN Interface type Feature Template, Allowed Value: "vpn-vedge-interface","cisco_vpn_interface"
 * `template_min_version` - (Required) Minimum Version for the Feature template
 * `factory_default` - (Required) Boolean flag indicating whether VPN Interface type Feature Template is factory default or not. If we set it true we can not update or delete resource.
 * `template_definition` - (Required) Configuration for VPN Interface type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
