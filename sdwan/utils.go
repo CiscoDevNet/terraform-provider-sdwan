@@ -127,14 +127,25 @@ var (
 		"template",
 		"file"}
 	validTemplateTypes = []string{
+		"aaa",
+		"bfd-vedge",
+		"omp-vedge",
+		"security-vedge",
 		"system-vedge",
-		"cisco_system",
+		"logging",
 		"ntp",
-		"cisco_ntp",
 		"vpn-vedge",
-		"cisco_vpn",
 		"vpn-vedge-interface",
-		"cisco_vpn_interface"}
+		"cedge_aaa",
+		"cisco_bfd",
+		"cisco_omp",
+		"cisco_security",
+		"cisco_system",
+		"cisco_logging",
+		"cisco_ntp",
+		"cisco_vpn",
+		"cisco_vpn_interface",
+		"cedge_global"}
 
 	sysDeviceTypes = map[string]bool{
 		"vbond":                  true,
