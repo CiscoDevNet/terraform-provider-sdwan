@@ -556,10 +556,10 @@ func belongsToCiscoNTP(lookup string) bool {
 	return false
 }
 
-func isStringInRange(min, max int) schema.SchemaValidateDiagFunc {
+func isStringInRange(min, max uint64) schema.SchemaValidateDiagFunc {
 	return func(v interface{}, path cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
-		k, err := strconv.Atoi(v.(string))
+		k, err := strconv.ParseUint(v.(string),10,32)
 
 		if err != nil {
 			diags = append(diags, diag.Errorf("expected integer value, got: %v", v)...)
