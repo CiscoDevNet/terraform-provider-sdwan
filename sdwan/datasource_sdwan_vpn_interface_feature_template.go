@@ -194,7 +194,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Schema{
-											Type: schema.TypeString,
+											Type: schema.TypeFloat,
 										},
 									},
 									"border": {
@@ -206,7 +206,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Computed: true,
 									},
 									"maximum_control_connections": {
-										Type:     schema.TypeInt,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"vbond_as_stun_server": {
@@ -217,7 +217,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Schema{
-											Type: schema.TypeString,
+											Type: schema.TypeInt,
 										},
 									},
 									"vmanage_connection_preference": {
@@ -301,7 +301,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Computed: true,
 												},
 												"gre_preference": {
-													Type:     schema.TypeFloat,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"gre_weight": {
@@ -313,7 +313,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Computed: true,
 												},
 												"ipsec_preference": {
-													Type:     schema.TypeFloat,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"ipsec_weight": {
@@ -596,31 +596,31 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"shapinng_rate_upstream_min": {
+									"shaping_rate_upstream_min": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-									"shapinng_rate_upstream_max": {
+									"shaping_rate_upstream_max": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-									"shapinng_rate_upstream_default": {
+									"shaping_rate_upstream_default": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-									"shapinng_rate_downstream_min": {
+									"shaping_rate_downstream_min": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-									"shapinng_rate_downstream_max": {
+									"shaping_rate_downstream_max": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-									"shapinng_rate_downstream_default": {
+									"shaping_rate_downstream_default": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
-									"shapinng_rate": {
+									"shaping_rate": {
 										Type:     schema.TypeFloat,
 										Computed: true,
 									},
@@ -919,7 +919,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Computed: true,
 									},
 									"tcp_mss": {
-										Type:     schema.TypeInt,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"speed": {
@@ -931,7 +931,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Computed: true,
 									},
 									"static_ingess_qos": {
-										Type:     schema.TypeInt,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"arp_timeout": {
@@ -1400,7 +1400,7 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "group", "vipValue") {
-		result["groups"] = interfaceToStrList(tunnelCont.S("tunnel-interface", "group", "vipValue").Data())
+		result["groups"] = interfaceToFloatList(tunnelCont.S("tunnel-interface", "group", "vipValue").Data())
 		isPresent += 1
 	}
 
@@ -1419,10 +1419,8 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "max-control-connections", "vipValue") {
-		if value, err := strconv.Atoi(tunnelCont.S("tunnel-interface", "max-control-connections", "vipValue").String()); err == nil {
-			result["maximum_control_connections"] = value
-			isPresent += 1
-		}
+		result["maximum_control_connections"] = stripQuotes(tunnelCont.S("tunnel-interface", "max-control-connections", "vipValue").String())
+		isPresent += 1
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "vbond-as-stun-server", "vipValue") {
@@ -1433,7 +1431,7 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "exclude-controller-group-list", "vipValue") {
-		result["exclude_controller_group_list"] = interfaceToStrList(tunnelCont.S("tunnel-interface", "exclude-controller-group-list", "vipValue").Data())
+		result["exclude_controller_group_list"] = interfaceToIntList(tunnelCont.S("tunnel-interface", "exclude-controller-group-list", "vipValue").Data())
 		isPresent += 1
 	}
 
@@ -1568,10 +1566,8 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 				gre := encap.Children()[0]
 				temp["gre"] = true
 				if gre.Exists("preference", "vipValue") {
-					if value, err := strconv.Atoi(gre.S("preference", "vipValue").String()); err == nil {
-						temp["gre_preference"] = value
-						isEncapPresent += 1
-					}
+					temp["gre_preference"] = stripQuotes(gre.S("preference", "vipValue").String())
+					isEncapPresent += 1
 				}
 
 				if gre.Exists("weight", "vipValue") {
@@ -1585,10 +1581,8 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 				ipsec := encap.Children()[0]
 				temp["ipsec"] = true
 				if ipsec.Exists("preference", "vipValue") {
-					if value, err := strconv.Atoi(ipsec.S("preference", "vipValue").String()); err == nil {
-						temp["ipsec_preference"] = value
-						isEncapPresent += 1
-					}
+					temp["ipsec_preference"] = stripQuotes(ipsec.S("preference", "vipValue").String())
+					isEncapPresent += 1
 				}
 
 				if ipsec.Exists("weight", "vipValue") {
@@ -1607,10 +1601,8 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 					gre := encap.Children()[1]
 					temp["gre"] = true
 					if gre.Exists("preference", "vipValue") {
-						if value, err := strconv.Atoi(gre.S("preference", "vipValue").String()); err == nil {
-							temp["gre_preference"] = value
-							isEncapPresent += 1
-						}
+						temp["gre_preference"] = stripQuotes(gre.S("preference", "vipValue").String())
+						isEncapPresent += 1
 					}
 
 					if gre.Exists("weight", "vipValue") {
@@ -1624,10 +1616,8 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 					ipsec := encap.Children()[1]
 					temp["ipsec"] = true
 					if ipsec.Exists("preference", "vipValue") {
-						if value, err := strconv.Atoi(ipsec.S("preference", "vipValue").String()); err == nil {
-							temp["ipsec_preference"] = value
-							isEncapPresent += 1
-						}
+						temp["ipsec_preference"] = stripQuotes(ipsec.S("preference", "vipValue").String())
+						isEncapPresent += 1
 					}
 
 					if ipsec.Exists("weight", "vipValue") {
@@ -2056,20 +2046,20 @@ func getVPNInterfaceACL(aclCont *container.Container) []map[string]interface{} {
 		if qosAdp.Exists("downstream") {
 			if qosAdp.Exists("downstream", "bandwidth-down", "vipValue") {
 				if value, err := strconv.Atoi(stripQuotes(qosAdp.S("downstream", "bandwidth-down", "vipValue").String())); err == nil {
-					result["shapinng_rate_downstream_default"] = value
+					result["shaping_rate_downstream_default"] = value
 					isPresent += 1
 				}
 			}
 
 			if qosAdp.Exists("downstream", "range", "dmin", "vipValue") {
 				if value, err := strconv.Atoi(stripQuotes(qosAdp.S("downstream", "range", "dmin", "vipValue").String())); err == nil {
-					result["shapinng_rate_downstream_min"] = value
+					result["shaping_rate_downstream_min"] = value
 					isPresent += 1
 				}
 			}
 			if qosAdp.Exists("downstream", "range", "dmax", "vipValue") {
 				if value, err := strconv.Atoi(stripQuotes(qosAdp.S("downstream", "range", "dmax", "vipValue").String())); err == nil {
-					result["shapinng_rate_downstream_max"] = value
+					result["shaping_rate_downstream_max"] = value
 					isPresent += 1
 				}
 			}
@@ -2078,20 +2068,20 @@ func getVPNInterfaceACL(aclCont *container.Container) []map[string]interface{} {
 		if qosAdp.Exists("upstream") {
 			if qosAdp.Exists("upstream", "bandwidth-up", "vipValue") {
 				if value, err := strconv.Atoi(stripQuotes(qosAdp.S("upstream", "bandwidth-up", "vipValue").String())); err == nil {
-					result["shapinng_rate_upstream_default"] = value
+					result["shaping_rate_upstream_default"] = value
 					isPresent += 1
 				}
 			}
 
 			if qosAdp.Exists("upstream", "range", "umin", "vipValue") {
 				if value, err := strconv.Atoi(stripQuotes(qosAdp.S("upstream", "range", "umin", "vipValue").String())); err == nil {
-					result["shapinng_rate_upstream_min"] = value
+					result["shaping_rate_upstream_min"] = value
 					isPresent += 1
 				}
 			}
 			if qosAdp.Exists("upstream", "range", "umax", "vipValue") {
 				if value, err := strconv.Atoi(stripQuotes(qosAdp.S("upstream", "range", "umax", "vipValue").String())); err == nil {
-					result["shapinng_rate_upstream_max"] = value
+					result["shaping_rate_upstream_max"] = value
 					isPresent += 1
 				}
 			}
@@ -2101,7 +2091,7 @@ func getVPNInterfaceACL(aclCont *container.Container) []map[string]interface{} {
 
 	if aclCont.Exists("shaping-rate", "vipValue") {
 		if value, err := strconv.Atoi(stripQuotes(aclCont.S("shaping-rate", "vipValue").String())); err == nil {
-			result["shapinng_rate"] = value
+			result["shaping_rate"] = value
 			isPresent += 1
 		}
 	}
@@ -2637,10 +2627,8 @@ func getVPNInterfaceAdvanced(advancedCont *container.Container) []map[string]int
 	}
 
 	if advancedCont.Exists("tcp-mss-adjust", "vipValue") {
-		if value, err := strconv.Atoi(advancedCont.S("tcp-mss-adjust", "vipValue").String()); err == nil {
-			result["tcp_mss"] = value
-			isPresent += 1
-		}
+		result["tcp_mss"] = stripQuotes(advancedCont.S("tcp-mss-adjust", "vipValue").String())
+		isPresent += 1
 	}
 
 	if advancedCont.Exists("speed", "vipValue") {
@@ -2656,10 +2644,8 @@ func getVPNInterfaceAdvanced(advancedCont *container.Container) []map[string]int
 	}
 
 	if advancedCont.Exists("static-ingress-qos", "vipValue") {
-		if value, err := strconv.Atoi(advancedCont.S("static-ingress-qos", "vipValue").String()); err == nil {
-			result["static_ingess_qos"] = value
-			isPresent += 1
-		}
+		result["static_ingess_qos"] = stripQuotes(advancedCont.S("static-ingress-qos", "vipValue").String())
+		isPresent += 1
 	}
 
 	if advancedCont.Exists("arp-timeout", "vipValue") {

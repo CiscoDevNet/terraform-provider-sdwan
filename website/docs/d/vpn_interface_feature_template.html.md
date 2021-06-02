@@ -28,6 +28,7 @@ data "sdwan_vpn_interface_feature_template" "name" {
 
 * `template_description` - Long Description of VPN interface type Feature Template
 * `device_type` - Type of device which supports VPN interface Feature Template
+* `template_type` - Template type for the VPN Interface type Feature Template
 * `template_min_version` - Minimum Version for the VPN interface Feature template
 * `template_definition` - Configuration for VPN interface type Feature Template, (see [below for nested schema](#nestedblock--template_definition))
 * `factory_default` - Boolean flag indicating whether VPN interface type Feature Template is factory default or not
@@ -108,13 +109,13 @@ data "sdwan_vpn_interface_feature_template" "name" {
 
 ## Nested Schema for vpn_interface_acl_qos
 * `adapt_period` - Value of Adapt Period for Cisco VPN interface type Feature Template
-* `shapinng_rate_upstream_min` - Minimum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_upstream_max` - Maximum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_upstream_default` - Default value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_downstream_min` - Minimum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_downstream_max` - Maximum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate_downstream_default` - Default value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
-* `shapinng_rate` - Value of aggregate traffic transmission rate on the VPN interface for VPN interface type Feature Template
+* `shaping_rate_upstream_min` - Minimum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_upstream_max` - Maximum value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_upstream_default` - Default value of shaping rate in case of transmitted traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_downstream_min` - Minimum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_downstream_max` - Maximum value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
+* `shaping_rate_downstream_default` - Default value of shaping rate in case of received traffic for Cisco VPN interface type Feature Template
+* `shaping_rate` - Value of aggregate traffic transmission rate on the VPN interface for VPN interface type Feature Template
 * `qos_map` - Name of the QoS map to apply to packets being transmitted out the interface for VPN interface type Feature Template
 * `rewrite_rule` - Name of the rewrite rule to apply on the interface for VPN interface type Feature Template
 * `ipv4_ingress_access_list` - Name of the access list to apply to IPv4 packets being received on the interface for VPN interface type Feature Template
@@ -138,7 +139,7 @@ data "sdwan_vpn_interface_feature_template" "name" {
 ## Nested Schema for vpn_interface_8021x
 * `radius_server` - The tag of the RADIUS server to use for 802.1X authentication for Vedge VPN interface type Feature Template
 * `account_interim_interval` - Value of how often to send 802.1X interim accounting updates to the RADIUS server for Vedge VPN interface type Feature Template
-* `nas_identifier` - The NAS identifier of the local router
+* `nas_identifier` - The NAS identifier of the local router for Vedge VPN interface type Feature Template
 * `nas_ip` - The NAS IP address of the local router for Vedge VPN interface type Feature Template
 * `wake_on_lan` - The flag that enable client to be powered up when the router receives an Ethernet magic packet frame for Vedge VPN interface type Feature Template
 * `control_direction` - Direction type of packets for Vedge VPN interface type Feature Template
