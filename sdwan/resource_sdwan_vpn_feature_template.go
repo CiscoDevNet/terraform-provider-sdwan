@@ -11,6 +11,134 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
+var (
+	validDeviceTypeforVPN = []string{
+		"vedge-1000",
+		"vedge-2000",
+		"vedge-cloud",
+		"vedge-5000",
+		"vedge-ISR1100-6G",
+		"vedge-100-B",
+		"vedge-ISR1100-4G",
+		"vedge-100",
+		"vedge-ISR1100-4GLTE",
+		"vedge-100-WM",
+		"vbond",
+		"vedge-100-M",
+		"vedge-ISR1100X-6G",
+		"vedge-ISR1100X-4G",
+		"vedge-C8500-12X4QC",
+		"vedge-C1111-4PLTEEA",
+		"vedge-C1161-8P",
+		"vedge-C1117-4PLTEEAW",
+		"vedge-C1121X-8P",
+		"vedge-C8200-1N-4T",
+		"vedge-ISR-4331",
+		"vedge-ISRv",
+		"vedge-C1127X-8PMLTEP",
+		"vedge-C1117-4PMLTEEAWE",
+		"vedge-ISR-4451-X",
+		"vedge-C1113-8PLTEEA",
+		"vedge-IR-1821",
+		"vedge-ASR-1001-X",
+		"vedge-ISR-4321",
+		"vedge-C1116-4PLTEEAWE",
+		"vedge-C1109-4PLTE2P",
+		"vedge-C1121-8P",
+		"vedge-ASR-1002-HX",
+		"vedge-C1111-8PLTEEAW",
+		"vedge-C1112-8PWE",
+		"vedge-C1101-4PLTEP",
+		"vedge-ISR1100-4GLTENA-XE",
+		"vedge-C1111-8PLTELA",
+		"vedge-IR-1835",
+		"vedge-C1121X-8PLTEP",
+		"vedge-IR-1833",
+		"vedge-C8300-1N1S-4T2X",
+		"vedge-C1121-4P",
+		"vedge-ISR-4351",
+		"vedge-C1117-4PLTELA",
+		"vedge-C1116-4PWE",
+		"vedge-nfvis-C8200-UCPE",
+		"vedge-C1113-8PM",
+		"vedge-IR-1831",
+		"vedge-C1127-8PLTEP",
+		"vedge-C1121-8PLTEPW",
+		"vedge-C1113-8PW",
+		"vedge-ASR-1001-HX",
+		"vedge-C1128-8PLTEP",
+		"vedge-C1113-8PLTEEAW",
+		"vedge-C1117-4PW",
+		"vedge-C1116-4P",
+		"vedge-C1113-8PMLTEEA",
+		"vedge-C1112-8P",
+		"vedge-ISR-4461",
+		"vedge-C1116-4PLTEEA",
+		"vedge-ISR-4221",
+		"vedge-C1117-4PM",
+		"vedge-C1113-8PLTELAWZ",
+		"vedge-C1117-4PMWE",
+		"vedge-C1109-2PLTEVZ",
+		"vedge-C1113-8P",
+		"vedge-C1117-4P",
+		"vedge-nfvis-ENCS5400",
+		"vedge-C8300-2N2S-6T",
+		"vedge-C1127-8PMLTEP",
+		"vedge-ESR-6300",
+		"vedge-ISR-4221X",
+		"vedge-ISR1100-4GLTEGB-XE",
+		"vedge-C8500-12X",
+		"vedge-C1109-2PLTEGB",
+		"vedge-CSR-1000v",
+		"vedge-C1113-8PLTEW",
+		"vedge-C1121X-8PLTEPW",
+		"vedge-ISR1100-6G-XE",
+		"vedge-C1121-4PLTEP",
+		"vedge-C1111-8PLTEEA",
+		"vedge-C1117-4PLTEEA",
+		"vedge-C1127X-8PLTEP",
+		"vedge-C1109-2PLTEUS",
+		"vedge-C1112-8PLTEEAWE",
+		"vedge-C1161X-8P",
+		"vedge-C8500L-8S4X",
+		"vedge-C1111-8PW",
+		"vedge-C1161X-8PLTEP",
+		"vedge-C1101-4PLTEPW",
+		"vedge-ISR1100X-4G-XE",
+		"vedge-IR-1101",
+		"vedge-C1111-4P",
+		"vedge-C1111-4PW",
+		"vedge-C1111-8P",
+		"vedge-C1117-4PMLTEEA",
+		"vedge-C1113-8PLTELA",
+		"vedge-C1111-8PLTELAW",
+		"vedge-C1161-8PLTEP",
+		"vedge-ISR1100X-6G-XE",
+		"vedge-ISR-4431",
+		"vedge-C1101-4P",
+		"vedge-C1109-4PLTE2PW",
+		"vedge-C1113-8PMWE",
+		"vedge-C1118-8P",
+		"vedge-C1126-8PLTEP",
+		"vedge-C8300-1N1S-6T",
+		"vedge-C1121-8PLTEP",
+		"vedge-C8300-2N2S-4T2X",
+		"vedge-C1112-8PLTEEA",
+		"vedge-C1111-4PLTELA",
+		"vedge-ASR-1002-X",
+		"vedge-C1111X-8P",
+		"vedge-C1126X-8PLTEP",
+		"vedge-ASR-1006-X",
+		"vedge-C8000V",
+		"vedge-ISR1100-4G-XE",
+		"vedge-C1117-4PLTELAWZ"}
+	validVPNIds          = []int{0, 512}
+	allowedGetewayTypev4 = []string{"next-hop", "dhcp", "null0"}
+	allowedGatewayTypev6 = []string{"next-hop", "null0"}
+	isValidServiceType   = []string{"sig", "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE"}
+	validVPNFTTypes      = []string{"vpn-vedge", "cisco_vpn"}
+)
+
 func resouceSDWANVPNFeatureTemplate() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceSDWANVPNFeatureTemplateCreate,
@@ -535,142 +663,25 @@ func resourceSDWANVPNFeatureTemplateDelete(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-var (
-	validDeviceTypeforVPN = []string{
-		"vedge-1000",
-		"vedge-2000",
-		"vedge-cloud",
-		"vedge-5000",
-		"vedge-ISR1100-6G",
-		"vedge-100-B",
-		"vedge-ISR1100-4G",
-		"vedge-100",
-		"vedge-ISR1100-4GLTE",
-		"vedge-100-WM",
-		"vbond",
-		"vedge-100-M",
-		"vedge-ISR1100X-6G",
-		"vedge-ISR1100X-4G",
-		"vedge-C8500-12X4QC",
-		"vedge-C1111-4PLTEEA",
-		"vedge-C1161-8P",
-		"vedge-C1117-4PLTEEAW",
-		"vedge-C1121X-8P",
-		"vedge-C8200-1N-4T",
-		"vedge-ISR-4331",
-		"vedge-ISRv",
-		"vedge-C1127X-8PMLTEP",
-		"vedge-C1117-4PMLTEEAWE",
-		"vedge-ISR-4451-X",
-		"vedge-C1113-8PLTEEA",
-		"vedge-IR-1821",
-		"vedge-ASR-1001-X",
-		"vedge-ISR-4321",
-		"vedge-C1116-4PLTEEAWE",
-		"vedge-C1109-4PLTE2P",
-		"vedge-C1121-8P",
-		"vedge-ASR-1002-HX",
-		"vedge-C1111-8PLTEEAW",
-		"vedge-C1112-8PWE",
-		"vedge-C1101-4PLTEP",
-		"vedge-ISR1100-4GLTENA-XE",
-		"vedge-C1111-8PLTELA",
-		"vedge-IR-1835",
-		"vedge-C1121X-8PLTEP",
-		"vedge-IR-1833",
-		"vedge-C8300-1N1S-4T2X",
-		"vedge-C1121-4P",
-		"vedge-ISR-4351",
-		"vedge-C1117-4PLTELA",
-		"vedge-C1116-4PWE",
-		"vedge-nfvis-C8200-UCPE",
-		"vedge-C1113-8PM",
-		"vedge-IR-1831",
-		"vedge-C1127-8PLTEP",
-		"vedge-C1121-8PLTEPW",
-		"vedge-C1113-8PW",
-		"vedge-ASR-1001-HX",
-		"vedge-C1128-8PLTEP",
-		"vedge-C1113-8PLTEEAW",
-		"vedge-C1117-4PW",
-		"vedge-C1116-4P",
-		"vedge-C1113-8PMLTEEA",
-		"vedge-C1112-8P",
-		"vedge-ISR-4461",
-		"vedge-C1116-4PLTEEA",
-		"vedge-ISR-4221",
-		"vedge-C1117-4PM",
-		"vedge-C1113-8PLTELAWZ",
-		"vedge-C1117-4PMWE",
-		"vedge-C1109-2PLTEVZ",
-		"vedge-C1113-8P",
-		"vedge-C1117-4P",
-		"vedge-nfvis-ENCS5400",
-		"vedge-C8300-2N2S-6T",
-		"vedge-C1127-8PMLTEP",
-		"vedge-ESR-6300",
-		"vedge-ISR-4221X",
-		"vedge-ISR1100-4GLTEGB-XE",
-		"vedge-C8500-12X",
-		"vedge-C1109-2PLTEGB",
-		"vedge-CSR-1000v",
-		"vedge-C1113-8PLTEW",
-		"vedge-C1121X-8PLTEPW",
-		"vedge-ISR1100-6G-XE",
-		"vedge-C1121-4PLTEP",
-		"vedge-C1111-8PLTEEA",
-		"vedge-C1117-4PLTEEA",
-		"vedge-C1127X-8PLTEP",
-		"vedge-C1109-2PLTEUS",
-		"vedge-C1112-8PLTEEAWE",
-		"vedge-C1161X-8P",
-		"vedge-C8500L-8S4X",
-		"vedge-C1111-8PW",
-		"vedge-C1161X-8PLTEP",
-		"vedge-C1101-4PLTEPW",
-		"vedge-ISR1100X-4G-XE",
-		"vedge-IR-1101",
-		"vedge-C1111-4P",
-		"vedge-C1111-4PW",
-		"vedge-C1111-8P",
-		"vedge-C1117-4PMLTEEA",
-		"vedge-C1113-8PLTELA",
-		"vedge-C1111-8PLTELAW",
-		"vedge-C1161-8PLTEP",
-		"vedge-ISR1100X-6G-XE",
-		"vedge-ISR-4431",
-		"vedge-C1101-4P",
-		"vedge-C1109-4PLTE2PW",
-		"vedge-C1113-8PMWE",
-		"vedge-C1118-8P",
-		"vedge-C1126-8PLTEP",
-		"vedge-C8300-1N1S-6T",
-		"vedge-C1121-8PLTEP",
-		"vedge-C8300-2N2S-4T2X",
-		"vedge-C1112-8PLTEEA",
-		"vedge-C1111-4PLTELA",
-		"vedge-ASR-1002-X",
-		"vedge-C1111X-8P",
-		"vedge-C1126X-8PLTEP",
-		"vedge-ASR-1006-X",
-		"vedge-C8000V",
-		"vedge-ISR1100-4G-XE",
-		"vedge-C1117-4PLTELAWZ"}
-	validVPNIds          = []int{0, 512}
-	isAllowedBoolString  = []string{"true", "false"}
-	allowedGetewayTypev4 = []string{"next-hop", "dhcp", "null0"}
-	allowedGatewayTypev6 = []string{"next-hop", "null0"}
-	isValidServiceType   = []string{"sig", "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE"}
-	validVPNFTTypes      = []string{"vpn-vedge", "cisco_vpn"}
-)
-
 func createVPNFTdefinition(ftDefinitions []interface{}, ftType string) (map[string]interface{}, error) {
 	definition := make(map[string]interface{})
 
 	ftDefinition := ftDefinitions[0]
 	ftDefMap := ftDefinition.(map[string]interface{})
 	VPNBasicMap := (ftDefMap["vpn_basic"].(*schema.Set).List())[0].(map[string]interface{})
-	createVPNBasic(definition, VPNBasicMap)
+	createVPNBasic(definition, VPNBasicMap, ftType)
+
+	createRouteImport(definition)
+
+	createRouteExport(definition)
+
+	createOMP(definition)
+
+	definition["nat64-global"] = map[string]interface{}{
+		"prefix": map[string]interface{}{
+			"stateful": map[string]interface{}{},
+		},
+	}
 
 	DNSset := ftDefMap["vpn_dns"].(*schema.Set).List()
 
@@ -681,6 +692,14 @@ func createVPNFTdefinition(ftDefinitions []interface{}, ftType string) (map[stri
 		if err != nil {
 			return nil, err
 		}
+	} else {
+		hostMap := make(map[string]interface{})
+
+		hostMap["vipType"] = "ignore"
+		hostMap["vipValue"] = make([]map[string]interface{}, 0, 1)
+		hostMap["vipObjectType"] = "tree"
+		hostMap["vipPrimaryKey"] = []string{"hostname"}
+		definition["host"] = hostMap
 	}
 
 	ipMap := make(map[string]interface{})
@@ -736,6 +755,8 @@ func createVPNFTdefinition(ftDefinitions []interface{}, ftType string) (map[stri
 			definition["ipv6"] = map[string]interface{}{
 				"route": routeMap,
 			}
+		} else {
+			definition["ipv6"] = make(map[string]interface{})
 		}
 	}
 
@@ -743,6 +764,8 @@ func createVPNFTdefinition(ftDefinitions []interface{}, ftType string) (map[stri
 		return nil, fmt.Errorf("TE service cannot be enabled in VPN512")
 	} else if ftDefMap["te_service_enabled"] == true {
 		enableTEService(definition)
+	} else {
+		createDefaultService(definition)
 	}
 
 	if ftDefMap["service_route"] != nil {
@@ -767,6 +790,12 @@ func createVPNFTdefinition(ftDefinitions []interface{}, ftType string) (map[stri
 			serviceRouteMap["vipPrimaryKey"] = []string{"prefix"}
 
 			ipMap["service-route"] = serviceRouteMap
+			ipMap["ipsec-route"] = make(map[string]interface{})
+			ipMap["gre-route"] = make(map[string]interface{})
+		} else {
+			ipMap["service-route"] = make(map[string]interface{})
+			ipMap["ipsec-route"] = make(map[string]interface{})
+			ipMap["gre-route"] = make(map[string]interface{})
 		}
 
 	}
@@ -799,13 +828,24 @@ func createVPNFTdefinition(ftDefinitions []interface{}, ftType string) (map[stri
 					"pool": natsMap,
 				},
 			}
+		} else {
+			natsMap := make(map[string]interface{})
+			natsMap["vipType"] = "ignore"
+			natsMap["vipValue"] = make([]map[string]interface{}, 0, 1)
+			natsMap["vipObjectType"] = "tree"
+			natsMap["vipPrimaryKey"] = []string{"name"}
+			definition["nat64"] = map[string]interface{}{
+				"v4": map[string]interface{}{
+					"pool": natsMap,
+				},
+			}
 		}
 	}
 
 	return definition, nil
 }
 
-func createVPNBasic(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNBasic(defMap map[string]interface{}, input map[string]interface{}, ftType string) {
 
 	if input["vpn_id"] != nil {
 		vpnId := make(map[string]interface{})
@@ -822,6 +862,12 @@ func createVPNBasic(defMap map[string]interface{}, input map[string]interface{})
 		vpnName["vipValue"] = input["name"]
 		vpnName["vipVariableName"] = "vpn_name"
 		defMap["name"] = vpnName
+	} else {
+		vpnName := make(map[string]interface{})
+		vpnName["vipObjectType"] = "object"
+		vpnName["vipType"] = "ignore"
+		vpnName["vipVariableName"] = "vpn_name"
+		defMap["name"] = vpnName
 	}
 
 	if input["ecmp_hash_key"] != nil {
@@ -834,6 +880,84 @@ func createVPNBasic(defMap map[string]interface{}, input map[string]interface{})
 		defMap["ecmp-hash-key"] = layer
 		layer["layer4"] = ehk
 	}
+
+	if ftType == "vpn-vedge" {
+		tcp := make(map[string]interface{})
+		tcp["vipObjectType"] = "node-only"
+		tcp["vipType"] = "ignore"
+		tcp["vipValue"] = "false"
+		tcp["vipVariableName"] = "vpn_tcp_optimization"
+		defMap["tcp-optimization"] = tcp
+	} else {
+		nat := map[string]interface{}{
+			"natpool": map[string]interface{}{
+				"vipObjectType": "tree",
+				"vipPrimaryKey": []string{"name"},
+				"vipType":       "ignore",
+				"vipValue":      make([]map[string]interface{}, 0, 1),
+			},
+			"port-forward": map[string]interface{}{
+				"vipObjectType": "tree",
+				"vipPrimaryKey": []string{"source-port", "translate-port"},
+				"vipType":       "ignore",
+				"vipValue":      make([]map[string]interface{}, 0, 1),
+			},
+			"static": map[string]interface{}{
+				"vipObjectType": "tree",
+				"vipPrimaryKey": []string{"source-ip", "translate-ip"},
+				"vipType":       "ignore",
+				"vipValue":      make([]map[string]interface{}, 0, 1),
+			},
+		}
+		defMap["nat"] = nat
+	}
+}
+
+func createRouteExport(defMap map[string]interface{}) {
+	re := make(map[string]interface{})
+	re["vipObjectType"] = "tree"
+	re["vipType"] = "ignore"
+	re["vipValue"] = make([]map[string]interface{}, 0, 1)
+	re["vipPrimaryKey"] = []string{"protocol"}
+	defMap["route-export"] = re
+}
+
+func createOMP(defMap map[string]interface{}) {
+	adv := make(map[string]interface{})
+	adv["vipType"] = "ignore"
+	adv["vipValue"] = make([]map[string]interface{}, 0, 1)
+	adv["vipObjectType"] = "tree"
+	adv["vipPrimaryKey"] = []string{"protocol"}
+
+	v6adv := make(map[string]interface{})
+	v6adv["vipType"] = "ignore"
+	v6adv["vipValue"] = make([]map[string]interface{}, 0, 1)
+	v6adv["vipObjectType"] = "tree"
+	v6adv["vipPrimaryKey"] = []string{"protocol"}
+
+	defMap["omp"] = map[string]interface{}{
+		"advertise":      adv,
+		"ipv6-advertise": v6adv,
+	}
+}
+
+func createRouteImport(defMap map[string]interface{}) {
+	ri := make(map[string]interface{})
+	ri["vipObjectType"] = "tree"
+	ri["vipType"] = "ignore"
+	ri["vipValue"] = make([]map[string]interface{}, 0, 1)
+	ri["vipPrimaryKey"] = []string{"protocol"}
+	defMap["route-import"] = ri
+}
+
+func createDefaultService(defMap map[string]interface{}) {
+	outerMap := make(map[string]interface{})
+
+	outerMap["vipType"] = "ignore"
+	outerMap["vipObjectType"] = "tree"
+	outerMap["vipPrimaryKey"] = []string{"svc-type"}
+	outerMap["vipValue"] = make([]map[string]interface{}, 0, 1)
+	defMap["service"] = outerMap
 }
 
 func createVPNDNS(defMap map[string]interface{}, input map[string]interface{}) error {
@@ -886,10 +1010,8 @@ func createVPNDNS(defMap map[string]interface{}, input map[string]interface{}) e
 			cnt++
 		}
 
-	} else {
-		if input["secondary_dns_ipv4"] != nil && input["secondary_dns_ipv4"] != "" {
-			return fmt.Errorf("secondary_dns_ipv4 should be provided if and only if primary_dns_ipv4 is set")
-		}
+	} else if input["secondary_dns_ipv4"] != nil && input["secondary_dns_ipv4"] != "" {
+		return fmt.Errorf("secondary_dns_ipv4 should be provided if and only if primary_dns_ipv4 is set")
 	}
 
 	if input["primary_dns_ipv6"] != nil && input["primary_dns_ipv6"] != "" {
@@ -936,10 +1058,8 @@ func createVPNDNS(defMap map[string]interface{}, input map[string]interface{}) e
 
 			cnt++
 		}
-	} else {
-		if input["secondary_dns_ipv6"] != nil && input["secondary_dns_ipv6"] != "" {
-			return fmt.Errorf("secondary_dns_ipv6 should be provided if and only if primary_dns_ipv6 is set")
-		}
+	} else if input["secondary_dns_ipv6"] != nil && input["secondary_dns_ipv6"] != "" {
+		return fmt.Errorf("secondary_dns_ipv6 should be provided if and only if primary_dns_ipv6 is set")
 	}
 
 	if cnt > 0 {

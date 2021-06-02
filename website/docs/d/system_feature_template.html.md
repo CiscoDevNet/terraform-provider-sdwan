@@ -86,7 +86,6 @@ data "sdwan_system_feature_template" "name" {
 * `dns_cache_timeout` - DNS Cache Timeout(minutes) for configuration of System type Feature Template
 * `track_transport` - Boolean flag to indicate whether tracking of transport is enabled for configuration of System type Feature Template
 * `vbond_local` - Boolean flag to indicate whether the local device is set as vBond for configuration of System type Feature Template
-* `vbond_remote` - vBond IP address for configuration of System type Feature Template
 * `track_interface_tag` - Interface tracking for configuration of System type Feature Template
 * `multicast_buffer_percent` - Percentage(5-100) of buffer multicast packets can consume for configuration of System type Feature Template
 * `usb_controller` - Boolean flag to indicate whether external USB Controller on the device is enabled for configuration of System type Feature Template

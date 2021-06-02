@@ -74,7 +74,6 @@ resource "sdwan_system_feature_template" "name3" {
       dns_cache_timeout = 6
       track_transport = false
       vbond_local = true
-      vbond_remote = "abcd"
       track_interface_tag = 433
       multicast_buffer_percent = 56
       usb_controller = true
@@ -98,15 +97,13 @@ resource "sdwan_system_feature_template" "name4" {
   template_name = "vEdge-Example2"
   template_description = "Description changed"
   template_type = "System"
-  device_type = ["vedge-1000"]
+  device_type = ["vedge-1000", "vedge-cloud"]
   template_min_version = "20.4.1"
   template_definition {
     system_basic {
-
     }
 
-    system_advanced {
-      
+    system_advanced {      
     }
   }
   factory_default = false
@@ -162,7 +159,6 @@ resource "sdwan_system_feature_template" "name5" {
       dns_cache_timeout = 6
       track_transport = false
       vbond_local = true
-      vbond_remote = "abcd"
       track_interface_tag = 433
       multicast_buffer_percent = 56
       usb_controller = true

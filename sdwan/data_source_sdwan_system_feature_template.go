@@ -224,11 +224,6 @@ func datasourceSDWANSystemFeatureTemplate() *schema.Resource {
 										Computed: true,
 									},
 
-									"vbond_remote": {
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-
 									"track_interface_tag": {
 										Type:     schema.TypeInt,
 										Computed: true,
@@ -716,11 +711,6 @@ func getSystemAdvanced(cont *container.Container) []map[string]interface{} {
 			result["vbond_local"] = value
 			isPresent += 1
 		}
-	}
-
-	if cont.Exists("vbond", "remote", "vipValue") {
-		result["vbond_remote"] = stripQuotes(cont.S("vbond", "remote", "vipValue").String())
-		isPresent += 1
 	}
 
 	if cont.Exists("track-interface-tag", "vipValue") {

@@ -328,70 +328,69 @@ func datasourceSDWANVPNFeatureTemplateRead(d *schema.ResourceData, m interface{}
 
 	if selected == nil {
 		return fmt.Errorf("There is no VPN type of Feature Template named %s", ftName)
-	} else {
-
-		d.Set("template_name", stripQuotes(selected.S("templateName").String()))
-
-		d.Set("template_description", stripQuotes(selected.S("templateDescription").String()))
-
-		d.Set("template_min_version", stripQuotes(selected.S("templateMinVersion").String()))
-
-		d.Set("template_type", stripQuotes(selected.S("templateType").String()))
-
-		d.Set("factory_default", selected.S("factoryDefault").Data().(bool))
-
-		d.Set("device_type", interfaceToStrList(selected.S("deviceType").Data()))
-
-		if selected.Exists("attachedMastersCount") {
-			d.Set("attached_masters_count", int((selected.S("attachedMastersCount").Data()).(float64)))
-		}
-
-		if selected.Exists("devicesAttached") {
-			d.Set("devices_attached", int((selected.S("devicesAttached").Data()).(float64)))
-		}
-
-		if selected.Exists("lastUpdatedBy") {
-			d.Set("last_updated_by", stripQuotes(selected.S("lastUpdatedBy").String()))
-		}
-
-		if selected.Exists("lastUpdatedOn") {
-			d.Set("last_updated_on", int((selected.S("lastUpdatedOn").Data().(float64))))
-		}
-
-		if selected.Exists("gTemplateClass") {
-			d.Set("g_template_class", stripQuotes(selected.S("gTemplateClass").String()))
-		}
-
-		if selected.Exists("configType") {
-			d.Set("config_type", stripQuotes(selected.S("configType").String()))
-		}
-
-		if selected.Exists("createdOn") {
-			d.Set("created_on", int((selected.S("createdOn").Data()).(float64)))
-		}
-
-		if selected.Exists("createdBy") {
-			d.Set("created_by", stripQuotes(selected.S("createdBy").String()))
-		}
-
-		if selected.Exists("feature") {
-			d.Set("feature", stripQuotes(selected.S("feature").String()))
-		}
-
-		d.Set("template_id", stripQuotes(selected.S("templateId").String()))
-
-		if selected.Exists("@rid") {
-			d.Set("rid", int((selected.S("@rid").Data()).(float64)))
-		}
-
-		ftDef := selected.S("templateDefinition")
-		FTdefinition := getVPNdefinition(ftDef)
-
-		d.Set("template_definition", FTdefinition)
-
-		d.SetId(ftName)
-
 	}
+
+	d.Set("template_name", stripQuotes(selected.S("templateName").String()))
+
+	d.Set("template_description", stripQuotes(selected.S("templateDescription").String()))
+
+	d.Set("template_min_version", stripQuotes(selected.S("templateMinVersion").String()))
+
+	d.Set("template_type", stripQuotes(selected.S("templateType").String()))
+
+	d.Set("factory_default", selected.S("factoryDefault").Data().(bool))
+
+	d.Set("device_type", interfaceToStrList(selected.S("deviceType").Data()))
+
+	if selected.Exists("attachedMastersCount") {
+		d.Set("attached_masters_count", int((selected.S("attachedMastersCount").Data()).(float64)))
+	}
+
+	if selected.Exists("devicesAttached") {
+		d.Set("devices_attached", int((selected.S("devicesAttached").Data()).(float64)))
+	}
+
+	if selected.Exists("lastUpdatedBy") {
+		d.Set("last_updated_by", stripQuotes(selected.S("lastUpdatedBy").String()))
+	}
+
+	if selected.Exists("lastUpdatedOn") {
+		d.Set("last_updated_on", int((selected.S("lastUpdatedOn").Data().(float64))))
+	}
+
+	if selected.Exists("gTemplateClass") {
+		d.Set("g_template_class", stripQuotes(selected.S("gTemplateClass").String()))
+	}
+
+	if selected.Exists("configType") {
+		d.Set("config_type", stripQuotes(selected.S("configType").String()))
+	}
+
+	if selected.Exists("createdOn") {
+		d.Set("created_on", int((selected.S("createdOn").Data()).(float64)))
+	}
+
+	if selected.Exists("createdBy") {
+		d.Set("created_by", stripQuotes(selected.S("createdBy").String()))
+	}
+
+	if selected.Exists("feature") {
+		d.Set("feature", stripQuotes(selected.S("feature").String()))
+	}
+
+	d.Set("template_id", stripQuotes(selected.S("templateId").String()))
+
+	if selected.Exists("@rid") {
+		d.Set("rid", int((selected.S("@rid").Data()).(float64)))
+	}
+
+	ftDef := selected.S("templateDefinition")
+	FTdefinition := getVPNdefinition(ftDef)
+
+	d.Set("template_definition", FTdefinition)
+
+	d.SetId(ftName)
+
 	log.Printf("[DEBUG] Ending of Read Method %s", d.Id())
 	return nil
 }

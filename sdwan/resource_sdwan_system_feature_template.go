@@ -409,11 +409,6 @@ func resourceSDWANSystemFeatureTemplate() *schema.Resource {
 										Optional: true,
 									},
 
-									"vbond_remote": {
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-
 									"track_interface_tag": {
 										Type:         schema.TypeFloat,
 										Optional:     true,
@@ -1020,27 +1015,21 @@ func createSystemAdvanced(defMap map[string]interface{}, input map[string]interf
 		defMap["track-transport"] = trackTransport
 	}
 
-	if input["vbond_local"] != nil {
+	if input["vbond_local"].(bool) {
 		vbondLocal := make(map[string]interface{})
 		vbond := make(map[string]interface{})
-		vbondLocal["vipObjectType"] = "object"
+		vbondLocal["vipObjectType"] = "node-only"
 		vbondLocal["vipType"] = "constant"
-		vbondLocal["vipValue"] = strconv.FormatBool(input["vbond_local"].(bool))
-		vbondLocal["vipVariableName"] = "system_vbond_local"
-		vbond["local"] = vbondLocal
+		vbondLocal["vipValue"] = "true"
 
-		if input["vbond_remote"] != nil && input["vbond_remote"] != "" {
-			if input["vbond_local"].(bool) {
-				vbondRemote := make(map[string]interface{})
-				vbondRemote["vipObjectType"] = "object"
-				vbondRemote["vipType"] = "constant"
-				vbondRemote["vipValue"] = input["vbond_remote"].(string)
-				vbondRemote["vipVariableName"] = "system_vbond_remote"
-				vbond["remote"] = vbondRemote
-			} else {
-				log.Panic("[ERROR] vbond_local should be true to set vbond_remote")
-			}
-		}
+		vbondRemote := make(map[string]interface{})
+		vbondRemote["vipObjectType"] = "object"
+		vbondRemote["vipType"] = "variableName"
+		vbondRemote["vipValue"] = ""
+		vbondRemote["vipVariableName"] = "system_remote"
+		vbond["remote"] = vbondRemote
+
+		vbond["local"] = vbondLocal
 		defMap["vbond"] = vbond
 	}
 
