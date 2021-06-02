@@ -38,6 +38,11 @@ func NATLoopBackInterfaceValidation() schema.SchemaValidateFunc {
 	)
 }
 
+func HexaValidation(value string) bool {
+	match, _ := regexp.MatchString("^[0-9a-fA-F]+$", value)
+	return match
+}
+
 func DHCPHelperValidation() schema.SchemaValidateFunc {
 	return validation.Any(
 		validation.IsIPv4Address,

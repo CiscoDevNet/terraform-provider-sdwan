@@ -3495,17 +3495,17 @@ func createVPNInterface8021XAuth(defMap map[string]interface{}, input map[string
 			}
 		case "octet":
 			if input["value"] != nil && input["value"] != "" {
-				// val := input["value"].(string)
-				// check := HexaValidation(val)
-				// if check {
-				defMap["octet"] = createVIPObject("object", "constant", input["value"], "vpn_interface_auth_octet", nil)
-				defMap["priority-order"] = []string{
-					"id",
-					"octet",
+				val := input["value"].(string)
+				check := HexaValidation(val)
+				if check {
+					defMap["octet"] = createVIPObject("object", "constant", input["value"], "vpn_interface_auth_octet", nil)
+					defMap["priority-order"] = []string{
+						"id",
+						"octet",
+					}
+				} else {
+					return fmt.Errorf("[ERROR] Invalid Hexa Decimal Number for 802.1X Authentication value")
 				}
-				// } else {
-				// 	return fmt.Errorf("[ERROR] Invalid Hexa Decimal Number for 802.1X Authentication value")
-				// }
 			}
 		default:
 			return fmt.Errorf("[ERROR] Invalid Syntax Choice for 802.1X Authentication syntax_choice")
@@ -3545,17 +3545,17 @@ func createVPNInterface8021XAccount(defMap map[string]interface{}, input map[str
 			}
 		case "octet":
 			if input["value"] != nil && input["value"] != "" {
-				// val := input["value"].(string)
-				// check := HexaValidation(val)
-				// if check {
-				defMap["octet"] = createVIPObject("object", "constant", input["value"], "vpn_interface_acct_octet{{isUpdateFlow", nil)
-				defMap["priority-order"] = []string{
-					"id",
-					"octet",
+				val := input["value"].(string)
+				check := HexaValidation(val)
+				if check {
+					defMap["octet"] = createVIPObject("object", "constant", input["value"], "vpn_interface_acct_octet{{isUpdateFlow", nil)
+					defMap["priority-order"] = []string{
+						"id",
+						"octet",
+					}
+				} else {
+					return fmt.Errorf("[ERROR] Invalid Hexa Decimal Number for 802.1X Accounting value")
 				}
-				// } else {
-				// 	return fmt.Errorf("[ERROR] Invalid Hexa Decimal Number for 802.1X Accounting value")
-				// }
 			}
 		default:
 			fmt.Errorf("[ERROR] No such Syntax Choice found")
