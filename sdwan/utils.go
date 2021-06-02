@@ -31,6 +31,13 @@ func DescValidation() schema.SchemaValidateFunc {
 	)
 }
 
+func NATLoopBackInterfaceValidation() schema.SchemaValidateFunc {
+	return validation.All(
+		validation.StringLenBetween(1, 32),
+		validation.StringIsNotWhiteSpace,
+	)
+}
+
 func DHCPHelperValidation() schema.SchemaValidateFunc {
 	return validation.Any(
 		validation.IsIPv4Address,

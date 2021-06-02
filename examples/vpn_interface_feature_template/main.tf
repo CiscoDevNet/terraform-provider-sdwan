@@ -177,13 +177,13 @@ resource "sdwan_vpn_interface_feature_template" "name4" {
 
     vpn_interface_acl_qos {
       adapt_period = 100
-      shapinng_rate_upstream_min = 111
-      shapinng_rate_upstream_max = 222
-      shapinng_rate_upstream_default = 150
-      shapinng_rate_downstream_min = 333
-      shapinng_rate_downstream_max = 444
-      shapinng_rate_downstream_default = 350
-      shapinng_rate = 123
+      shaping_rate_upstream_min = 111
+      shaping_rate_upstream_max = 222
+      shaping_rate_upstream_default = 150
+      shaping_rate_downstream_min = 333
+      shaping_rate_downstream_max = 444
+      shaping_rate_downstream_default = 350
+      shaping_rate = 123
       qos_map = "test"
       rewrite_rule = "124abc"
       ipv4_ingress_access_list = "abc1"

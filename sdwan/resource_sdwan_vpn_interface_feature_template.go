@@ -11,10 +11,22 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
-var IPv6 = make(map[string]interface{})
-var isNATPresent int
-var isTLOCPresent int
-var template_name string
+var (
+	IPv6                   = make(map[string]interface{})
+	isNATPresent           int
+	isTLOCPresent          int
+	template_name          string
+	vedgeMaxControlConnect = []int{0, 8}
+	ciscoMaxControlConnect = []int{0, 100}
+	vedgeTimer             = []int{1, 3600}
+	ciscoTimer             = []int{100, 40950}
+	vedgeTimerDefault      = 1
+	ciscoTimerDefault      = 100
+	vedgeTCPMSS            = []int{552, 1460}
+	ciscoTCPMSS            = []int{500, 1460}
+	vedgeARPTimeOut        = []int{0, 2678400}
+	ciscoARPTimeOut        = []int{0, 2147483}
+)
 
 func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 	return &schema.Resource{
@@ -502,7 +514,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"snmp": {
 													Type:     schema.TypeBool,
 													Optional: true,
-													Default:  true,
+													Default:  false,
 												},
 											},
 										},
@@ -698,7 +710,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Type:         schema.TypeString,
 													Optional:     true,
 													Computed:     true,
-													ValidateFunc: validation.StringLenBetween(1, 32),
+													ValidateFunc: NATLoopBackInterfaceValidation(),
 												},
 												"port_forward": {
 													Type:     schema.TypeSet,
@@ -842,7 +854,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"timer": {
 													Type:         schema.TypeInt,
 													Optional:     true,
-													Default:      1,
+													Computed:     true,
 													ValidateFunc: validation.IntBetween(1, 40950),
 												},
 												"track_omp": {
@@ -885,7 +897,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"timer": {
 													Type:         schema.TypeInt,
 													Optional:     true,
-													Default:      1,
+													Computed:     true,
 													ValidateFunc: validation.IntBetween(1, 40950),
 												},
 												"track_omp": {
@@ -1390,10 +1402,10 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										ValidateDiagFunc: isStringInRange(0, 7),
 									},
 									"arp_timeout": {
-										Type:         schema.TypeFloat,
+										Type:         schema.TypeInt,
 										Optional:     true,
 										Default:      1200,
-										ValidateFunc: validation.FloatBetween(0, 2678400),
+										ValidateFunc: validation.IntBetween(0, 2678400),
 									},
 									"autonegotiation": {
 										Type:     schema.TypeBool,
@@ -1523,8 +1535,10 @@ func resourceSDWANVPNInterfaceFeatureTemplateCreate(d *schema.ResourceData, m in
 	}
 
 	ftDefinition := d.Get("template_definition").(*schema.Set).List()
-	if def, err := createVPNInterfaceFTDefinition(ftDefinition); err == nil {
+	if def, err := createVPNInterfaceFTDefinition(ftDefinition, fTemplate.TemplateType); err == nil {
 		fTemplate.TemplateDefinition = def
+	} else {
+		return err
 	}
 
 	log.Println("ftDefinition ", fTemplate)
@@ -1566,8 +1580,10 @@ func resourceSDWANVPNInterfaceFeatureTemplateUpdate(d *schema.ResourceData, m in
 	}
 
 	ftDefinition := d.Get("template_definition").(*schema.Set).List()
-	if def, err := createVPNInterfaceFTDefinition(ftDefinition); err == nil {
+	if def, err := createVPNInterfaceFTDefinition(ftDefinition, fTemplate.TemplateType); err == nil {
 		fTemplate.TemplateDefinition = def
+	} else {
+		return err
 	}
 
 	ftURL := fmt.Sprintf("/dataservice/template/feature/%s", ftID)
@@ -1624,7 +1640,7 @@ func resourceSDWANVPNInterfaceFeatureTemplateDelete(d *schema.ResourceData, m in
 	return nil
 }
 
-func createVPNInterfaceFTDefinition(ftDefinitions []interface{}) (map[string]interface{}, error) {
+func createVPNInterfaceFTDefinition(ftDefinitions []interface{}, ftType string) (map[string]interface{}, error) {
 	definition := make(map[string]interface{})
 
 	ftDefinition := ftDefinitions[0]
@@ -1635,23 +1651,43 @@ func createVPNInterfaceFTDefinition(ftDefinitions []interface{}) (map[string]int
 
 	if len(ftDefMap["vpn_interface_tunnel"].(*schema.Set).List()) > 0 {
 		vpnInterfaceTunnelMap := (ftDefMap["vpn_interface_tunnel"].(*schema.Set).List())[0].(map[string]interface{})
-		createVPNInterfaceTunnel(definition, vpnInterfaceTunnelMap)
+		err := createVPNInterfaceTunnel(definition, vpnInterfaceTunnelMap, ftType)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	natSet := ftDefMap["vpn_interface_nat"].(*schema.Set).List()
 	if len(natSet) > 0 {
 		vpnInterfaceNATMap := (ftDefMap["vpn_interface_nat"].(*schema.Set).List())[0].(map[string]interface{})
-		createVPNInterfaceNAT(definition, vpnInterfaceNATMap)
+		err := createVPNInterfaceNAT(definition, vpnInterfaceNATMap, ftType)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if len(ftDefMap["vpn_interface_vrrp"].(*schema.Set).List()) > 0 {
 		vpnInterfaceVRRPMap := (ftDefMap["vpn_interface_vrrp"].(*schema.Set).List())[0].(map[string]interface{})
-		createVPNInterfaceVRRP(definition, vpnInterfaceVRRPMap)
+		err := createVPNInterfaceVRRP(definition, vpnInterfaceVRRPMap, ftType)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if len(ftDefMap["vpn_interface_acl_qos"].(*schema.Set).List()) > 0 {
 		vpnInterfaceACLMap := (ftDefMap["vpn_interface_acl_qos"].(*schema.Set).List())[0].(map[string]interface{})
 		createVPNInterfaceACL(definition, vpnInterfaceACLMap)
+	} else {
+		temp := make([]interface{}, 0, 1)
+		ipv4AccessListMap := make(map[string]interface{})
+		ipv4AccessListMap["vipType"] = "ignore"
+		ipv4AccessListMap["vipObjectType"] = "tree"
+		ipv4AccessListMap["vipValue"] = temp
+		ipv4AccessListMap["vipPrimaryKey"] = []string{
+			"direction",
+		}
+
+		definition["access-list"] = ipv4AccessListMap
 	}
 
 	arpLen := len(ftDefMap["vpn_interface_arp"].(*schema.Set).List())
@@ -1679,6 +1715,20 @@ func createVPNInterfaceFTDefinition(ftDefinitions []interface{}) (map[string]int
 		ARPMap["ip"] = IPMap
 
 		definition["arp"] = ARPMap
+	} else {
+		arps := make([]interface{}, 0, 1)
+		IPMap := make(map[string]interface{})
+		IPMap["vipType"] = "ignore"
+		IPMap["vipObjectType"] = "tree"
+		IPMap["vipValue"] = arps
+		IPMap["vipPrimaryKey"] = []string{
+			"addr",
+		}
+
+		ARPMap := make(map[string]interface{})
+		ARPMap["ip"] = IPMap
+
+		definition["arp"] = ARPMap
 	}
 
 	if len(ftDefMap["vpn_interface_trustsec"].(*schema.Set).List()) > 0 {
@@ -1688,12 +1738,23 @@ func createVPNInterfaceFTDefinition(ftDefinitions []interface{}) (map[string]int
 
 	if len(ftDefMap["vpn_interface_advanced"].(*schema.Set).List()) > 0 {
 		vpnInterfaceAdvancedMap := (ftDefMap["vpn_interface_advanced"].(*schema.Set).List())[0].(map[string]interface{})
-		createVPNInterfaceAdvanced(definition, vpnInterfaceAdvancedMap)
+		err := createVPNInterfaceAdvanced(definition, vpnInterfaceAdvancedMap, ftType)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if len(ftDefMap["vpn_interface_8021x"].(*schema.Set).List()) > 0 && isTLOCPresent == 0 && isNATPresent == 0 {
 		vpnInterface8021XMap := (ftDefMap["vpn_interface_8021x"].(*schema.Set).List())[0].(map[string]interface{})
-		createVPNInterface8021X(definition, vpnInterface8021XMap)
+		err := createVPNInterface8021X(definition, vpnInterface8021XMap)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		dot1xMap := make(map[string]interface{})
+		dot1xMap["vipType"] = "ignore"
+		dot1xMap["vipObjectType"] = "node-only"
+		definition["dot1x"] = dot1xMap
 	}
 
 	return definition, nil
@@ -1710,6 +1771,8 @@ func createVPNInterfaceBasic(defMap map[string]interface{}, input map[string]int
 
 	if input["description"] != nil && input["description"] != "" {
 		defMap["description"] = createVIPObject("object", "constant", input["description"], "vpn_if_description", nil)
+	} else {
+		defMap["description"] = createVIPObject("object", "ignore", nil, "vpn_if_description", nil)
 	}
 
 	//	ipv4 configuration
@@ -1732,10 +1795,14 @@ func createVPNInterfaceBasic(defMap map[string]interface{}, input map[string]int
 
 	if input["bandwidth_upstream"] != nil && input["bandwidth_upstream"] != 0.0 {
 		defMap["bandwidth-upstream"] = createVIPObject("object", "constant", input["bandwidth_upstream"], "vpn_if_bandwidth_upstream", nil)
+	} else {
+		defMap["bandwidth-upstream"] = createVIPObject("object", "ignore", nil, "vpn_if_bandwidth_upstream", nil)
 	}
 
 	if input["bandwidth_downstream"] != nil && input["bandwidth_downstream"] != 0.0 {
 		defMap["bandwidth-downstream"] = createVIPObject("object", "constant", input["bandwidth_downstream"], "vpn_if_bandwidth_downstream", nil)
+	} else {
+		defMap["bandwidth-downstream"] = createVIPObject("object", "ignore", nil, "vpn_if_bandwidth_downstream", nil)
 	}
 }
 
@@ -1790,6 +1857,13 @@ func createVPNInterfaceBasicIPv4(defMap map[string]interface{}, input map[string
 		dhcpHelper["vipObjectType"] = "list"
 		dhcpHelper["vipType"] = "constant"
 		dhcpHelper["vipValue"] = interfaceToStrList(input["dhcp_helper"])
+		dhcpHelper["vipVariableName"] = "vpn_if_dhcp_helper"
+		defMap["dhcp-helper"] = dhcpHelper
+	} else {
+		dhcpHelper := make(map[string]interface{})
+		dhcpHelper["vipObjectType"] = "list"
+		dhcpHelper["vipType"] = "ignore"
+		dhcpHelper["vipValue"] = nil
 		dhcpHelper["vipVariableName"] = "vpn_if_dhcp_helper"
 		defMap["dhcp-helper"] = dhcpHelper
 	}
@@ -1911,7 +1985,7 @@ func createVPNInterfaceBasicIPv6Helper(defMap map[string]interface{}, input map[
 	}
 }
 
-func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]interface{}, ftType string) error {
 
 	tunnel := make(map[string]interface{})
 	isPresent := 0
@@ -1943,7 +2017,7 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 	}
 
 	if input["restrict"] != nil {
-		color["restrict"] = createVIPObject("object", "constant", input["restrict"], "vpn_if_tunnel_color_restrict", nil)
+		color["restrict"] = createVIPObject("node-only", "constant", input["restrict"], "vpn_if_tunnel_color_restrict", nil)
 		isPresent = isPresent + 1
 	}
 
@@ -1971,8 +2045,21 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 
 	if input["maximum_control_connections"] != nil && input["maximum_control_connections"] != "" {
 		val, _ := getInt(input["maximum_control_connections"])
-		tunnel["max-control-connections"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_max_control_connections", nil)
-		isPresent = isPresent + 1
+		if ftType == "vpn-vedge-interface" {
+			if val >= vedgeMaxControlConnect[0] && val <= vedgeMaxControlConnect[1] {
+				tunnel["max-control-connections"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_max_control_connections", nil)
+				isPresent = isPresent + 1
+			} else {
+				return fmt.Errorf("value of maximum_control_connections is out of range for vpn-vedge-interface type feature template")
+			}
+		} else if ftType == "cisco_vpn_interface" {
+			if val >= ciscoMaxControlConnect[0] && val <= ciscoMaxControlConnect[1] {
+				tunnel["max-control-connections"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_max_control_connections", nil)
+				isPresent = isPresent + 1
+			} else {
+				return fmt.Errorf("value of maximum_control_connections is out of range for cisco_vpn_interface type feature template")
+			}
+		}
 	}
 
 	if input["vbond_as_stun_server"] != nil {
@@ -2093,6 +2180,10 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 				gre["preference"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_gre_preference", nil)
 				isPresent = isPresent + 1
 				isEncapPresent = isEncapPresent + 1
+			} else {
+				gre["preference"] = createVIPObject("object", "ignore", nil, "vpn_if_tunnel_gre_preference", nil)
+				isPresent = isPresent + 1
+				isEncapPresent = isEncapPresent + 1
 			}
 
 			if encapSet["gre_weight"] != nil {
@@ -2118,6 +2209,10 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 			if encapSet["ipsec_preference"] != nil && encapSet["ipsec_preference"] != "" {
 				val, _ := getInt(encapSet["ipsec_preference"])
 				ipsec["preference"] = createVIPObject("object", "constant", val, "vpn_if_tunnel_ipsec_preference", nil)
+				isPresent = isPresent + 1
+				isEncapPresent = isEncapPresent + 1
+			} else {
+				ipsec["preference"] = createVIPObject("object", "ignore", nil, "vpn_if_tunnel_ipsec_preference", nil)
 				isPresent = isPresent + 1
 				isEncapPresent = isEncapPresent + 1
 			}
@@ -2200,9 +2295,10 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 	if isPresent > 0 {
 		defMap["tunnel-interface"] = tunnel
 	}
+	return nil
 }
 
-func createVPNInterfaceNAT(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNInterfaceNAT(defMap map[string]interface{}, input map[string]interface{}, ftType string) error {
 
 	nat := make(map[string]interface{})
 	isPresent := 0
@@ -2312,7 +2408,7 @@ func createVPNInterfaceNAT(defMap map[string]interface{}, input map[string]inter
 			nat["port-forward"] = RuleMap
 		}
 
-		// port forwarding
+		// static net rule
 		StaticNATSet := ipv4Set["static_nat"].(*schema.Set).List()
 
 		if len(StaticNATSet) > 0 {
@@ -2321,7 +2417,10 @@ func createVPNInterfaceNAT(defMap map[string]interface{}, input map[string]inter
 
 			for _, ruleMap := range StaticNATSet {
 				rule := make(map[string]interface{})
-				createStaticNATRule(rule, ruleMap.(map[string]interface{}))
+				err := createStaticNATRule(rule, ruleMap.(map[string]interface{}), ftType)
+				if err != nil {
+					return err
+				}
 
 				rules = append(rules, rule)
 			}
@@ -2352,6 +2451,8 @@ func createVPNInterfaceNAT(defMap map[string]interface{}, input map[string]inter
 		defMap["nat"] = nat
 		isNATPresent = isNATPresent + 1
 	}
+
+	return nil
 }
 
 func createPortForwardingRule(defMap map[string]interface{}, input map[string]interface{}) {
@@ -2385,7 +2486,7 @@ func createPortForwardingRule(defMap map[string]interface{}, input map[string]in
 	}
 }
 
-func createStaticNATRule(defMap map[string]interface{}, input map[string]interface{}) {
+func createStaticNATRule(defMap map[string]interface{}, input map[string]interface{}, ftType string) error {
 
 	if input["source_ip"] != nil && input["source_ip"] != "" {
 		defMap["source-ip"] = createVIPObject("object", "constant", input["source_ip"], "vpn_static_nat_source_ip", nil)
@@ -2400,7 +2501,16 @@ func createStaticNATRule(defMap map[string]interface{}, input map[string]interfa
 	}
 
 	if input["static_nat_direction"] != nil && input["static_nat_direction"] != "" {
-		defMap["static-nat-direction"] = createVIPObject("object", "constant", input["static_nat_direction"], "vpn_static_nat_static_nat_direction", nil)
+		val := input["static_nat_direction"].(string)
+		if ftType == "cisco_vpn_interface" {
+			if val == "inside" {
+				defMap["static-nat-direction"] = createVIPObject("object", "constant", val, "vpn_static_nat_static_nat_direction", nil)
+			} else {
+				return fmt.Errorf("value of static_nat_direction is inside and it can't be change for cisco_vpn_interface type feature template")
+			}
+		} else {
+			defMap["static-nat-direction"] = createVIPObject("object", "constant", val, "vpn_static_nat_static_nat_direction", nil)
+		}
 	}
 
 	if input["protocol"] != nil && input["protocol"] != "" {
@@ -2426,9 +2536,11 @@ func createStaticNATRule(defMap map[string]interface{}, input map[string]interfa
 		"source-port",
 		"translate-port",
 	}
+
+	return nil
 }
 
-func createVPNInterfaceVRRP(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNInterfaceVRRP(defMap map[string]interface{}, input map[string]interface{}, ftType string) error {
 
 	//ipv4
 	VRRPSet := input["ipv4"].(*schema.Set).List()
@@ -2438,7 +2550,10 @@ func createVPNInterfaceVRRP(defMap map[string]interface{}, input map[string]inte
 
 		for _, vrrpMap := range VRRPSet {
 			vrrp := make(map[string]interface{})
-			createIPv4VRRP(vrrp, vrrpMap.(map[string]interface{}))
+			err := createIPv4VRRP(vrrp, vrrpMap.(map[string]interface{}), ftType)
+			if err != nil {
+				return err
+			}
 
 			vrrps = append(vrrps, vrrp)
 		}
@@ -2462,8 +2577,10 @@ func createVPNInterfaceVRRP(defMap map[string]interface{}, input map[string]inte
 
 		for _, ipv6vrrpMap := range VRRPIPv6Set {
 			ipv6vrrp := make(map[string]interface{})
-			createIPv6VRRP(ipv6vrrp, ipv6vrrpMap.(map[string]interface{}))
-
+			err := createIPv6VRRP(ipv6vrrp, ipv6vrrpMap.(map[string]interface{}), ftType)
+			if err != nil {
+				return err
+			}
 			ipv6vrrps = append(ipv6vrrps, ipv6vrrp)
 		}
 
@@ -2477,9 +2594,10 @@ func createVPNInterfaceVRRP(defMap map[string]interface{}, input map[string]inte
 
 		defMap["ipv6-vrrp"] = IPv6VRRPMap
 	}
+	return nil
 }
 
-func createIPv4VRRP(defMap map[string]interface{}, input map[string]interface{}) {
+func createIPv4VRRP(defMap map[string]interface{}, input map[string]interface{}, ftType string) error {
 
 	if input["group_id"] != nil {
 		defMap["grp-id"] = createVIPObject("object", "constant", input["group_id"], "vpn_if_vrrp_grpid", nil)
@@ -2489,8 +2607,27 @@ func createIPv4VRRP(defMap map[string]interface{}, input map[string]interface{})
 		defMap["priority"] = createVIPObject("object", "constant", input["priority"], "vpn_if_vrrp_priority", nil)
 	}
 
-	if input["timer"] != nil {
-		defMap["timer"] = createVIPObject("object", "constant", input["timer"], "vpn_if_vrrp_timer", nil)
+	if input["timer"] != nil && input["timer"] != 0 {
+		val := input["timer"].(int)
+		if ftType == "vpn-vedge-interface" {
+			if val >= vedgeTimer[0] && val <= vedgeTimer[1] {
+				defMap["timer"] = createVIPObject("object", "constant", val, "vpn_if_vrrp_timer", nil)
+			} else {
+				return fmt.Errorf("value of VRRP IPv4 timer is out of range for vpn-vedge-interface type feature template")
+			}
+		} else if ftType == "cisco_vpn_interface" {
+			if val >= ciscoTimer[0] && val <= ciscoTimer[1] {
+				defMap["timer"] = createVIPObject("object", "constant", val, "vpn_if_vrrp_timer", nil)
+			} else {
+				return fmt.Errorf("value of VRRP IPv4 timer is out of range for cisco_vpn_interface type feature template")
+			}
+		}
+	} else {
+		if ftType == "vpn-vedge-interface" {
+			defMap["timer"] = createVIPObject("object", "constant", vedgeTimerDefault, "vpn_if_vrrp_timer", nil)
+		} else if ftType == "cisco_vpn_interface" {
+			defMap["timer"] = createVIPObject("object", "constant", ciscoTimerDefault, "vpn_if_vrrp_timer", nil)
+		}
 	}
 
 	if input["track_omp"] != nil {
@@ -2515,9 +2652,11 @@ func createIPv4VRRP(defMap map[string]interface{}, input map[string]interface{})
 		"track-prefix-list",
 		"ipv4",
 	}
+
+	return nil
 }
 
-func createIPv6VRRP(defMap map[string]interface{}, input map[string]interface{}) {
+func createIPv6VRRP(defMap map[string]interface{}, input map[string]interface{}, ftType string) error {
 
 	if input["group_id"] != nil {
 		groupID := make(map[string]interface{})
@@ -2539,14 +2678,74 @@ func createIPv6VRRP(defMap map[string]interface{}, input map[string]interface{})
 		defMap["priority"] = priority
 	}
 
-	if input["timer"] != nil {
-		timer := make(map[string]interface{})
-		timer["vipObjectType"] = "object"
-		timer["vipType"] = "constant"
-		timer["vipValue"] = input["timer"].(int)
-		timer["vipVariableName"] = "vpn_if_vrrp_ipv6_timer_ipv6"
-		timer["ipType"] = "ipv6"
-		defMap["timer"] = timer
+	if input["timer"] != nil && input["timer"] != 0 {
+		val := input["timer"].(int)
+		if ftType == "vpn-vedge-interface" {
+			if val >= vedgeTimer[0] && val <= vedgeTimer[1] {
+				timer := make(map[string]interface{})
+				timer["vipObjectType"] = "object"
+				timer["vipType"] = "constant"
+				timer["vipValue"] = val
+				timer["vipVariableName"] = "vpn_if_vrrp_ipv6_timer_ipv6"
+				timer["ipType"] = "ipv6"
+				defMap["timer"] = timer
+			} else {
+				return fmt.Errorf("value of VRRP IPv6 timer is out of range for vpn-vedge-interface type feature template")
+			}
+		} else if ftType == "cisco_vpn_interface" {
+			if val >= ciscoTimer[0] && val <= ciscoTimer[1] {
+				timer := make(map[string]interface{})
+				timer["vipObjectType"] = "object"
+				timer["vipType"] = "constant"
+				timer["vipValue"] = val
+				timer["vipVariableName"] = "vpn_if_vrrp_ipv6_timer_ipv6"
+				timer["ipType"] = "ipv6"
+				defMap["timer"] = timer
+			} else {
+				return fmt.Errorf("value of VRRP IPv6 timer is out of range for cisco_vpn_interface type feature template")
+			}
+		}
+	} else {
+		if ftType == "vpn-vedge-interface" {
+			timer := make(map[string]interface{})
+			timer["vipObjectType"] = "object"
+			timer["vipType"] = "constant"
+			timer["vipValue"] = vedgeTimerDefault
+			timer["vipVariableName"] = "vpn_if_vrrp_ipv6_timer_ipv6"
+			timer["ipType"] = "ipv6"
+			defMap["timer"] = timer
+		} else if ftType == "cisco_vpn_interface" {
+			timer := make(map[string]interface{})
+			timer["vipObjectType"] = "object"
+			timer["vipType"] = "constant"
+			timer["vipValue"] = ciscoTimerDefault
+			timer["vipVariableName"] = "vpn_if_vrrp_ipv6_timer_ipv6"
+			timer["ipType"] = "ipv6"
+			defMap["timer"] = timer
+		}
+	}
+
+	if input["timer"] != nil && input["timer"] != 0 {
+		val := input["timer"].(int)
+		if ftType == "vpn-vedge-interface" {
+			if val >= vedgeTimer[0] && val <= vedgeTimer[1] {
+				defMap["timer"] = createVIPObject("object", "constant", val, "vpn_if_vrrp_ipv6_timer_ipv6", nil)
+			} else {
+				return fmt.Errorf("value of VRRP IPv4 timer is out of range for vpn-vedge-interface type feature template")
+			}
+		} else if ftType == "cisco_vpn_interface" {
+			if val >= ciscoTimer[0] && val <= ciscoTimer[1] {
+				defMap["timer"] = createVIPObject("object", "constant", val, "vpn_if_vrrp_ipv6_timer_ipv6", nil)
+			} else {
+				return fmt.Errorf("value of VRRP IPv4 timer is out of range for cisco_vpn_interface type feature template")
+			}
+		}
+	} else {
+		if ftType == "vpn-vedge-interface" {
+			defMap["timer"] = createVIPObject("object", "constant", vedgeTimerDefault, "vpn_if_vrrp_ipv6_timer_ipv6", nil)
+		} else if ftType == "cisco_vpn_interface" {
+			defMap["timer"] = createVIPObject("object", "constant", ciscoTimerDefault, "vpn_if_vrrp_ipv6_timer_ipv6", nil)
+		}
 	}
 
 	if input["track_omp"] != nil {
@@ -2622,6 +2821,7 @@ func createIPv6VRRP(defMap map[string]interface{}, input map[string]interface{})
 		"track-prefix-list",
 		"ipv6",
 	}
+	return nil
 }
 
 func createVPNInterfaceACL(defMap map[string]interface{}, input map[string]interface{}) {
@@ -2761,6 +2961,7 @@ func createVPNInterfaceACL(defMap map[string]interface{}, input map[string]inter
 		}
 
 		defMap["access-list"] = ipv4AccessListMap
+
 	}
 
 	//ipv6 access-list
@@ -2874,10 +3075,20 @@ func createVPNInterfaceARP(defMap map[string]interface{}, input map[string]inter
 	}
 }
 
-func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]interface{}, ftType string) error {
 
 	if input["duplex"] != nil && input["duplex"] != "" {
-		defMap["duplex"] = createVIPObject("object", "constant", input["duplex"], "vpn_if_duplex", nil)
+		val := input["duplex"].(string)
+		if ftType == "vpn-vedge-interface" {
+			if val == "auto" {
+				return fmt.Errorf("duplex value auto is not allowed for vpn-vedge-interface type feature template")
+			}
+			defMap["duplex"] = createVIPObject("object", "constant", val, "vpn_if_duplex", nil)
+		} else if ftType == "cisco_vpn_interface" {
+			defMap["duplex"] = createVIPObject("object", "constant", val, "vpn_if_duplex", nil)
+		}
+	} else {
+		defMap["duplex"] = createVIPObject("object", "ignore", "_empty", "vpn_if_duplex", nil)
 	}
 
 	if input["mac_address"] != nil && input["mac_address"] != "" {
@@ -2898,11 +3109,31 @@ func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]
 
 	if input["tcp_mss"] != nil && input["tcp_mss"] != "" {
 		val, _ := getInt(input["tcp_mss"])
-		defMap["tcp-mss-adjust"] = createVIPObject("object", "constant", val, "vpn_if_tcp_mss_adjust", nil)
+		if ftType == "vpn-vedge-interface" {
+			if val >= vedgeTCPMSS[0] && val <= vedgeTCPMSS[1] {
+				defMap["tcp-mss-adjust"] = createVIPObject("object", "constant", val, "vpn_if_tcp_mss_adjust", nil)
+			} else {
+				return fmt.Errorf("value of tcp_mss is out of range for vpn-vedge-interface type feature template")
+			}
+		} else if ftType == "cisco_vpn_interface" {
+			if val >= ciscoTCPMSS[0] && val <= ciscoTCPMSS[1] {
+				defMap["tcp-mss-adjust"] = createVIPObject("object", "constant", val, "vpn_if_tcp_mss_adjust", nil)
+			} else {
+				return fmt.Errorf("value of tcp_mss is out of range for cisco_vpn_interface type feature template")
+			}
+		}
 	}
 
 	if input["speed"] != nil && input["speed"] != "" {
-		defMap["speed"] = createVIPObject("object", "constant", input["speed"], "vpn_if_speed", nil)
+		val := input["speed"].(string)
+		if ftType == "vpn-vedge-interface" {
+			if val == "2500" {
+				return fmt.Errorf("speed value 2500 is not allowed for vpn-vedge-interface type feature template")
+			}
+			defMap["speed"] = createVIPObject("object", "constant", input["speed"], "vpn_if_speed", nil)
+		} else if ftType == "cisco_vpn_interface" {
+			defMap["speed"] = createVIPObject("object", "constant", input["speed"], "vpn_if_speed", nil)
+		}
 	}
 
 	if input["clear_dont_fragment"] != nil {
@@ -2915,7 +3146,20 @@ func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]
 	}
 
 	if input["arp_timeout"] != nil {
-		defMap["arp-timeout"] = createVIPObject("object", "constant", input["arp_timeout"], "vpn_if_arp_timeout", nil)
+		val := input["arp_timeout"].(int)
+		if ftType == "vpn-vedge-interface" {
+			if val >= vedgeARPTimeOut[0] && val <= vedgeARPTimeOut[1] {
+				defMap["arp-timeout"] = createVIPObject("object", "constant", val, "vpn_if_arp_timeout", nil)
+			} else {
+				return fmt.Errorf("value of arp_timeout is out of range for vpn-vedge-interface type feature template")
+			}
+		} else if ftType == "cisco_vpn_interface" {
+			if val >= ciscoARPTimeOut[0] && val <= ciscoARPTimeOut[1] {
+				defMap["arp-timeout"] = createVIPObject("object", "constant", val, "vpn_if_arp_timeout", nil)
+			} else {
+				return fmt.Errorf("value of arp_timeout is out of range for cisco_vpn_interface type feature template")
+			}
+		}
 	}
 
 	if input["autonegotiation"] != nil {
@@ -2931,7 +3175,7 @@ func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]
 		defMap["poe"] = createVIPObject("object", "constant", input["power_over_ethernet"], "vpn_if_poe", nil)
 	}
 
-	if input["load_interval"] != nil {
+	if input["load_interval"] != nil && input["load_interval"] != 0 {
 		defMap["load-interval"] = createVIPObject("object", "constant", input["load_interval"], "vpn_if_load_interval", nil)
 	}
 
@@ -2967,6 +3211,7 @@ func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]
 	if input["ip_directed_broadcast"] != nil {
 		defMap["ip-directed-broadcast"] = createVIPObject("object", "constant", input["ip_directed_broadcast"], "vpn_if_ip-directed-broadcast", nil)
 	}
+	return nil
 }
 
 func createVPNInterfaceTrustSec(defMap map[string]interface{}, input map[string]interface{}) {
@@ -3009,7 +3254,7 @@ func createVPNInterfaceTrustSec(defMap map[string]interface{}, input map[string]
 	}
 }
 
-func createVPNInterface8021X(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNInterface8021X(defMap map[string]interface{}, input map[string]interface{}) error {
 
 	dot1x := make(map[string]interface{})
 	isPresent := 0
@@ -3162,7 +3407,10 @@ func createVPNInterface8021X(defMap map[string]interface{}, input map[string]int
 				AuthMap := make(map[string]interface{})
 				for _, authMap := range authSet {
 					auth := make(map[string]interface{})
-					createVPNInterface8021XAuth(auth, authMap.(map[string]interface{}))
+					err := createVPNInterface8021XAuth(auth, authMap.(map[string]interface{}))
+					if err != nil {
+						return err
+					}
 
 					auths = append(auths, auth)
 				}
@@ -3185,7 +3433,10 @@ func createVPNInterface8021X(defMap map[string]interface{}, input map[string]int
 
 				for _, accountMap := range accountSet {
 					account := make(map[string]interface{})
-					createVPNInterface8021XAccount(account, accountMap.(map[string]interface{}))
+					err := createVPNInterface8021XAccount(account, accountMap.(map[string]interface{}))
+					if err != nil {
+						return err
+					}
 					accounts = append(accounts, account)
 				}
 
@@ -3204,10 +3455,16 @@ func createVPNInterface8021X(defMap map[string]interface{}, input map[string]int
 
 	if isPresent > 0 {
 		defMap["dot1x"] = dot1x
+	} else {
+		dot1xMap := make(map[string]interface{})
+		dot1xMap["vipType"] = "ignore"
+		dot1xMap["vipObjectType"] = "node-only"
+		defMap["dot1x"] = dot1xMap
 	}
+	return nil
 }
 
-func createVPNInterface8021XAuth(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNInterface8021XAuth(defMap map[string]interface{}, input map[string]interface{}) error {
 
 	if input["id"] != nil {
 		defMap["id"] = createVIPObject("object", "constant", input["id"], "vpn_interface_auth_id", nil)
@@ -3232,23 +3489,32 @@ func createVPNInterface8021XAuth(defMap map[string]interface{}, input map[string
 						"id",
 						"integer",
 					}
+				} else {
+					return fmt.Errorf("[ERROR] Invalid interger value for 802.1X Authentication value")
 				}
 			}
 		case "octet":
 			if input["value"] != nil && input["value"] != "" {
+				// val := input["value"].(string)
+				// check := HexaValidation(val)
+				// if check {
 				defMap["octet"] = createVIPObject("object", "constant", input["value"], "vpn_interface_auth_octet", nil)
 				defMap["priority-order"] = []string{
 					"id",
 					"octet",
 				}
+				// } else {
+				// 	return fmt.Errorf("[ERROR] Invalid Hexa Decimal Number for 802.1X Authentication value")
+				// }
 			}
 		default:
-			fmt.Errorf("[ERROR] No such Syntax Choice found")
+			return fmt.Errorf("[ERROR] Invalid Syntax Choice for 802.1X Authentication syntax_choice")
 		}
 	}
+	return nil
 }
 
-func createVPNInterface8021XAccount(defMap map[string]interface{}, input map[string]interface{}) {
+func createVPNInterface8021XAccount(defMap map[string]interface{}, input map[string]interface{}) error {
 
 	if input["id"] != nil {
 		defMap["id"] = createVIPObject("object", "constant", input["id"], "vpn_interface_acct_id", nil)
@@ -3273,20 +3539,29 @@ func createVPNInterface8021XAccount(defMap map[string]interface{}, input map[str
 						"id",
 						"integer",
 					}
+				} else {
+					return fmt.Errorf("[ERROR] Invalid interger value for 802.1X Accounting value")
 				}
 			}
 		case "octet":
 			if input["value"] != nil && input["value"] != "" {
+				// val := input["value"].(string)
+				// check := HexaValidation(val)
+				// if check {
 				defMap["octet"] = createVIPObject("object", "constant", input["value"], "vpn_interface_acct_octet{{isUpdateFlow", nil)
 				defMap["priority-order"] = []string{
 					"id",
 					"octet",
 				}
+				// } else {
+				// 	return fmt.Errorf("[ERROR] Invalid Hexa Decimal Number for 802.1X Accounting value")
+				// }
 			}
 		default:
 			fmt.Errorf("[ERROR] No such Syntax Choice found")
 		}
 	}
+	return nil
 }
 
 func validateVPNInterfaceDeviceType(deviceType []string, templateType string) bool {

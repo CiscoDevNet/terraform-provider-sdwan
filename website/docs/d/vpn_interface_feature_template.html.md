@@ -139,7 +139,7 @@ data "sdwan_vpn_interface_feature_template" "name" {
 ## Nested Schema for vpn_interface_8021x
 * `radius_server` - The tag of the RADIUS server to use for 802.1X authentication for Vedge VPN interface type Feature Template
 * `account_interim_interval` - Value of how often to send 802.1X interim accounting updates to the RADIUS server for Vedge VPN interface type Feature Template
-* `nas_identifier` - The NAS identifier of the local router
+* `nas_identifier` - The NAS identifier of the local router for Vedge VPN interface type Feature Template
 * `nas_ip` - The NAS IP address of the local router for Vedge VPN interface type Feature Template
 * `wake_on_lan` - The flag that enable client to be powered up when the router receives an Ethernet magic packet frame for Vedge VPN interface type Feature Template
 * `control_direction` - Direction type of packets for Vedge VPN interface type Feature Template
