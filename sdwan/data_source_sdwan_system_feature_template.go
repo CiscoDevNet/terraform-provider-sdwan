@@ -614,6 +614,8 @@ func getSystemTrackers(cont *container.Container) []map[string]interface{} {
 
 			if trackerObject.Exists("type", "vipValue") {
 				tracker["tracker_type"] = stripQuotes(trackerObject.S("type", "vipValue").String())
+			} else {
+				tracker["tracker_type"] = "interface"
 			}
 
 			if trackerObject.Exists("endpoint-ip", "vipValue") {

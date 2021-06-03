@@ -42,7 +42,6 @@ resource "sdwan_system_feature_template" "name3" {
       description = "some description"
       console_baud_rate = "19200"
       max_omp_sessions = 3
-      tcp_optimization_enabled = true
     }
 
     system_gps {
@@ -125,7 +124,6 @@ resource "sdwan_system_feature_template" "name5" {
       description = "some description"
       console_baud_rate = "19200"
       max_omp_sessions = 3
-      tcp_optimization_enabled = true
     }
 
     system_gps {
@@ -153,23 +151,13 @@ resource "sdwan_system_feature_template" "name5" {
     }
     system_advanced {
       control_session_pps = 10
-      system_tunnel_mtu = 560
       port_hop = false
       port_offset = 5
-      dns_cache_timeout = 6
       track_transport = false
-      vbond_local = true
       track_interface_tag = 433
-      multicast_buffer_percent = 56
-      usb_controller = true
       track_default_gateway = false
-      host_policer_pps = 5689
-      icmp_error_pps = 67
-      allow_same_site_tunnels = true
-      route_consistency_check = true
       admin_tech_on_failure = false
       idle_timeout = 67
-      eco_friendly_mode = true
       on_demand_enable = true
       on_demand_idle_timeout = 78
     }
