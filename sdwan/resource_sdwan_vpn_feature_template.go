@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/CiscoDevNet/sdwan-go-client/client"
-	"github.com/CiscoDevNet/sdwan-go-client/models"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
@@ -492,29 +491,53 @@ func resourceSDWANVPNFeatureTemplateCreate(d *schema.ResourceData, m interface{}
 
 	sdwanClient := m.(*client.Client)
 
-	fTemplate := models.FeatureTemplate{}
+	ftMap := make(map[string]interface{})
 
-	fTemplate.TemplateType = d.Get("template_type").(string)
-	fTemplate.TemplateName = d.Get("template_name").(string)
-	fTemplate.TemplateDescription = d.Get("template_description").(string)
-	if !verifyDeviceTypeVPN(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
-		return fmt.Errorf("Please use a valid Device Type for Template: %s", fTemplate.TemplateType)
+	// fTemplate := models.VPNFeatureTemplate{}
+
+	// fTemplate.TemplateType = d.Get("template_type").(string)
+	// fTemplate.TemplateName = d.Get("template_name").(string)
+	// fTemplate.TemplateDescription = d.Get("template_description").(string)
+	// if !verifyDeviceTypeVPN(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
+	// 	return fmt.Errorf("Please use a valid Device Type for Template: %s", fTemplate.TemplateType)
+	// }
+	// fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
+	// fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
+	// fTemplate.FactoryDefault = d.Get("factory_default").(bool)
+
+	// ftdefinition := d.Get("template_definition").(*schema.Set).List()
+
+	// if def, err := createVPNFTdefinition(ftdefinition, fTemplate.TemplateType); err == nil {
+	// 	fTemplate.TemplateDefinition = string(ftBytes)
+	// } else {
+	// 	return err
+	// }
+
+	ftMap["templateType"] = d.Get("template_type").(string)
+	ftMap["templateName"] = d.Get("template_name").(string)
+	ftMap["templateDescription"] = d.Get("template_description").(string)
+	if !verifyDeviceTypeVPN(ftMap["templateType"].(string), interfaceToStrList(d.Get("device_type"))) {
+		return fmt.Errorf("Please use a valid Device Type for Template: %s", ftMap["templateType"].(string))
 	}
-	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
-	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
-	fTemplate.FactoryDefault = d.Get("factory_default").(bool)
+	ftMap["deviceType"] = interfaceToStrList(d.Get("device_type"))
+	ftMap["templateMinVersion"] = d.Get("template_min_version").(string)
+	ftMap["factoryDefault"] = d.Get("factory_default").(bool)
 
 	ftdefinition := d.Get("template_definition").(*schema.Set).List()
 
-	if def, err := createVPNFTdefinition(ftdefinition, fTemplate.TemplateType); err == nil {
-		fTemplate.TemplateDefinition = def
+	if def, err := createVPNFTdefinition(ftdefinition, ftMap["templateType"].(string)); err == nil {
+		ftMap["templateDefinition"] = def
 	} else {
 		return err
 	}
 
 	dURL := fmt.Sprintf("dataservice/template/feature")
-	cont, err := sdwanClient.Save(dURL, &fTemplate)
-
+	bodyBytes, err := marshalJSON(ftMap)
+	if err != nil {
+		return err
+	}
+	log.Println("check ... bodybytes ", string(bodyBytes))
+	cont, err := sdwanClient.SaveviaBytes(dURL, bodyBytes)
 	if err != nil {
 		return err
 	}
@@ -533,32 +556,64 @@ func resourceSDWANVPNFeatureTemplateUpdate(d *schema.ResourceData, m interface{}
 
 	ftID := d.Id()
 
-	fTemplate := models.FeatureTemplate{}
+	ftMap := make(map[string]interface{})
 
-	fTemplate.TemplateType = d.Get("template_type").(string)
-	fTemplate.TemplateName = d.Get("template_name").(string)
-	fTemplate.TemplateDescription = d.Get("template_description").(string)
-	if !verifyDeviceTypeVPN(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
-		return fmt.Errorf("Please use a valid Device Type for Template: %s", fTemplate.TemplateType)
+	// fTemplate := models.FeatureTemplate{}
+
+	// fTemplate.TemplateType = d.Get("template_type").(string)
+	// fTemplate.TemplateName = d.Get("template_name").(string)
+	// fTemplate.TemplateDescription = d.Get("template_description").(string)
+	// if !verifyDeviceTypeVPN(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
+	// 	return fmt.Errorf("Please use a valid Device Type for Template: %s", fTemplate.TemplateType)
+	// }
+	// fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
+	// fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
+	// fTemplate.FactoryDefault = d.Get("factory_default").(bool)
+
+	// ftdefinition := d.Get("template_definition").(*schema.Set).List()
+
+	// if def, err := createVPNFTdefinition(ftdefinition, fTemplate.TemplateType); err == nil {
+	// 	fTemplate.TemplateDefinition = def
+	// } else {
+	// 	return err
+	// }
+
+	// dURL := fmt.Sprintf("dataservice/template/feature/%s", ftID)
+	// _, err := sdwanClient.Update(dURL, &fTemplate)
+
+	// if err != nil {
+	// 	return err
+	// }
+
+	ftMap["templateType"] = d.Get("template_type").(string)
+	ftMap["templateName"] = d.Get("template_name").(string)
+	ftMap["templateDescription"] = d.Get("template_description").(string)
+	if !verifyDeviceTypeVPN(ftMap["templateType"].(string), interfaceToStrList(d.Get("device_type"))) {
+		return fmt.Errorf("Please use a valid Device Type for Template: %s", ftMap["templateType"].(string))
 	}
-	fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
-	fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
-	fTemplate.FactoryDefault = d.Get("factory_default").(bool)
+	ftMap["deviceType"] = interfaceToStrList(d.Get("device_type"))
+	ftMap["templateMinVersion"] = d.Get("template_min_version").(string)
+	ftMap["factoryDefault"] = d.Get("factory_default").(bool)
 
 	ftdefinition := d.Get("template_definition").(*schema.Set).List()
 
-	if def, err := createVPNFTdefinition(ftdefinition, fTemplate.TemplateType); err == nil {
-		fTemplate.TemplateDefinition = def
+	if def, err := createVPNFTdefinition(ftdefinition, ftMap["templateType"].(string)); err == nil {
+		ftMap["templateDefinition"] = def
 	} else {
 		return err
 	}
 
-	dURL := fmt.Sprintf("dataservice/template/feature/%s", ftID)
-	_, err := sdwanClient.Update(dURL, &fTemplate)
-
+	bodyBytes, err := marshalJSON(ftMap)
 	if err != nil {
 		return err
 	}
+	log.Println("check ... bodybytes ", string(bodyBytes))
+	dURL := fmt.Sprintf("dataservice/template/feature/%s", ftID)
+	_, err = sdwanClient.UpdateviaBytes(dURL, bodyBytes)
+	if err != nil {
+		return err
+	}
+
 	d.SetId(ftID)
 
 	log.Println("[DEBUG] End of Update Method ", d.Id())
