@@ -85,9 +85,6 @@ resource "sdwan_vpn_feature_template" "name1" {
       prefix = "1.1.1.1/4"
       service_type= "FW"
     }
-    service_route {
-      prefix = "1::/1"
-    }
     nat64 {
       pool_name = "smaple_name"
       start_address = "1.1.1.1"
@@ -177,7 +174,7 @@ resource "sdwan_vpn_feature_template" "name1" {
 * `prefix` - (Required) IPv4 prefix or address for IPv4 route
 * `gateway_type` - (Required) Gateway Type for next hop to reach the static route, allowed values: "next-hop", "dhcp", "null0"
 * `next_hop` - (Optional) Next hop list (see [below for nested schema](#nestedblock--next_hopv4)) when gateway_type is `next-hop`
-* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, range: [1 - 255], default value: 1
+* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, range: [1 - 255]
 
 
 <a id="nestedblock--ipv6_route"></a>
@@ -186,14 +183,14 @@ resource "sdwan_vpn_feature_template" "name1" {
 * `prefix` - (Required) IPv6 prefix or address for IPv6 route
 * `gateway_type` - (Required) Gateway Type for next hop to reach the static route, allowed values: "next-hop", "null0"
 * `next_hop` - (Optional) Next hop list (see [below for nested schema](#nestedblock--next_hopv6)) when gateway_type is `next-hop`
-* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, cannot be set for `template_type` "cisco_vpn", range: [1 - 255], default value: 1
+* `null0_distance` - (Optional) Null0 distance when gateway_type is `null0`, cannot be set for `template_type` "cisco_vpn", range: [1 - 255]
 
 
 <a id="nestedblock--service_route"></a>
 
 ## Nested Schema for service_route
-* `prefix` - (Required) IPv6 or IPv4 prefix or address for service route
-* `service_type` - (Optional) Type of the service, allowed values for `template_type` "vpn-vedge": "sig", "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE", allowed values for `template_type` "cisco_vpn": "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE", defalult value  for `template_type` "vpn-vedge": "sig", default value for `template_type` "cisco_vpn": "FW"
+* `prefix` - (Required) IPv4 prefix or address for service route
+* `service_type` - (Optional) Type of the service, allowed values for `template_type` "vpn-vedge": "sig", "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE", allowed values for `template_type` "cisco_vpn": "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE"
 
 
 <a id="nestedblock--nat64"></a>
@@ -216,14 +213,14 @@ resource "sdwan_vpn_feature_template" "name1" {
 
 ## Nested Schema for next_hop
 * `next_hop_address` - (Required) IPv4 address of the nexthop
-* `next_hop_distance` - (Optional) Distance of the nexthop, range: [1 - 255], default value: 1
+* `next_hop_distance` - (Optional) Distance of the nexthop, range: [1 - 255]
 
 
 <a id="nestedblock--next_hopv6"></a>
 
 ## Nested Schema for next_hop
 * `next_hop_address` - (Required) IPv6 address of the nexthop
-* `next_hop_distance` - (Optional) Distance of the nexthop, range: [1 - 255], default value: 1
+* `next_hop_distance` - (Optional) Distance of the nexthop, range: [1 - 255]
 
 
 
