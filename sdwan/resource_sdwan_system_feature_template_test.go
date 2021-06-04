@@ -27,7 +27,6 @@ func TestSDWANSystemFeatureTemplate_Basic(t *testing.T) {
 			},
 		},
 	})
-
 }
 
 func TestSDWANSystemFeatureTemplate_update(t *testing.T) {
@@ -57,18 +56,16 @@ func TestSDWANSystemFeatureTemplate_update(t *testing.T) {
 }
 
 func testSDWANSystemFeatureTemplateConfig_basic(desc string) string {
-	fmt.Println("[DEBUG] Beginning of testSDWANSystemFeatureTemplateConfig_basic")
 	return fmt.Sprintf(`
 	resource "sdwan_system_feature_template" "test" {
   
 		template_name = "sample"
 		template_description = "%s"
-		device_type = ["vedge-1000"]
+		device_type = ["vedge-CSR-1000v"]
+		template_type = "Cisco System"
 		template_min_version = "15.0.0"
 		template_definition {
 			system_basic {  
-				site_id = 5
-				system_ip = "198.12.23.178"
 				timezone = "UTC"
 			}
 		}
@@ -78,7 +75,6 @@ func testSDWANSystemFeatureTemplateConfig_basic(desc string) string {
 }
 
 func testAccCheckSDWANSystemFeatureTemplateExists(name string, ft *models.FeatureTemplate) resource.TestCheckFunc {
-	fmt.Println("[DEBUG] Beginning of testAccCheckSDWANSystemFeatureTemplateExists")
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 
@@ -114,18 +110,17 @@ func testAccCheckSDWANSystemFeatureTemplateExists(name string, ft *models.Featur
 		ftGet.DeviceType = devList
 		ftGet.FactoryDefault = cont.S("factoryDefault").Data().(bool)
 		ftGet.TemplateDefinition = contftdefinition
+		ftGet.TemplateType = stripQuotes(cont.S("templateType").String())
 		ftGet.TemplateDescription = stripQuotes(cont.S("templateDescription").String())
 		ftGet.TemplateMinVersion = stripQuotes(cont.S("templateMinVersion").String())
 		ftGet.TemplateName = stripQuotes(cont.S("templateName").String())
 
 		*ft = *ftGet
-		fmt.Println("[DEBUG] End of testAccCheckSDWANSystemFeatureTemplateExists")
 		return nil
 	}
 }
 
 func testAccCheckSDWANSystemFeatureTemplateDestroy(s *terraform.State) error {
-	fmt.Println("[DEBUG] Beginning of testAccCheckSDWANSystemFeatureTemplateDestroy")
 	sdwanclient := testAccProvider.Meta().(*client.Client)
 
 	for _, rs := range s.RootModule().Resources {
@@ -137,26 +132,28 @@ func testAccCheckSDWANSystemFeatureTemplateDestroy(s *terraform.State) error {
 			}
 		}
 	}
-	fmt.Println("[DEBUG] End of testAccCheckSDWANSystemFeatureTemplateDestroy")
 	return nil
 }
 
 func testAccCheckSDWANSystemFeatureTemplateAttributes(desc string, ft *models.FeatureTemplate) resource.TestCheckFunc {
-	fmt.Println("[DEBUG] Beginning of testAccCheckSDWANSystemFeatureTemplateAttributes")
 	return func(s *terraform.State) error {
 		if desc != ft.TemplateDescription {
 			return fmt.Errorf("Bad sdwan_system_feature_template Template Description %s", ft.TemplateDescription)
 		}
 
-		if "sample" != ft.TemplateName {
+		if ft.TemplateName != "sample" {
 			return fmt.Errorf("Bad sdwan_system_feature_template Template Name %s", ft.TemplateName)
 		}
 
-		if "15.0.0" != ft.TemplateMinVersion {
+		if ft.TemplateType != "cisco_system" {
+			return fmt.Errorf("Bad sdwan_system_feature_template Template Type %s", ft.TemplateType)
+		}
+
+		if ft.TemplateMinVersion != "15.0.0" {
 			return fmt.Errorf("Bad sdwan_system_feature_template Template Min Version %s", ft.TemplateMinVersion)
 		}
 
-		if "vedge-1000" != ft.DeviceType[0] {
+		if ft.DeviceType[0] != "vedge-CSR-1000v" {
 			return fmt.Errorf("Bad sdwan_system_feature_template Device Type %s", ft.DeviceType[0])
 		}
 
@@ -166,18 +163,8 @@ func testAccCheckSDWANSystemFeatureTemplateAttributes(desc string, ft *models.Fe
 
 		tempDef := map[string]interface{}{
 			"system_basic": map[string]interface{}{
-				"site_id":   5,
-				"system_ip": "198.12.23.178",
-				"timezone":  "UTC",
+				"timezone": "UTC",
 			},
-		}
-
-		if tempDef["system_basic"].(map[string]interface{})["site_id"].(int) != int(ft.TemplateDefinition["site-id"].(map[string]interface{})["vipValue"].(float64)) {
-			return fmt.Errorf("Bad sdwan_system_feature_template site id %v", ft.TemplateDefinition["site-id"].(map[string]interface{})["vipValue"])
-		}
-
-		if tempDef["system_basic"].(map[string]interface{})["system_ip"].(string) != ft.TemplateDefinition["system-ip"].(map[string]interface{})["vipValue"].(string) {
-			return fmt.Errorf("Bad sdwan_system_feature_template system ip %v", ft.TemplateDefinition["system-ip"].(map[string]interface{})["vipValue"])
 		}
 
 		if tempDef["system_basic"].(map[string]interface{})["timezone"].(string) != ft.TemplateDefinition["clock"].(map[string]interface{})["timezone"].(map[string]interface{})["vipValue"].(string) {

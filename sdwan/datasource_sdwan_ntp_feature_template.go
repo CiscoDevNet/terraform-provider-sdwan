@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-	"strings"
 
 	"github.com/CiscoDevNet/sdwan-go-client/client"
 	"github.com/CiscoDevNet/sdwan-go-client/container"
@@ -32,6 +31,10 @@ func datasourceSDWANNtpFeatureTemplate() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
+			},
+			"template_type": {
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"template_min_version": {
 				Type:     schema.TypeString,
@@ -70,6 +73,27 @@ func datasourceSDWANNtpFeatureTemplate() *schema.Resource {
 									},
 									"prefer": {
 										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"master": {
+							Type:     schema.TypeSet,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"enable": {
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"stratum": {
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"source": {
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 								},
@@ -168,7 +192,9 @@ func datasourceSDWANNtpFeatureTemplateRead(d *schema.ResourceData, m interface{}
 			return err
 		}
 	}
-	if strings.Compare(stripQuotes(cont.S("templateType").String()), "ntp") != 0 {
+
+	templateType := stripQuotes(cont.S("templateType").String())
+	if templateType != "ntp" && templateType != "cisco_ntp" {
 		return fmt.Errorf("[ERROR] Invalid Template Type")
 	}
 
@@ -186,6 +212,8 @@ func setTemplateAttributes(d *schema.ResourceData, cont *container.Container) *s
 	d.Set("template_description", stripQuotes(cont.S("templateDescription").String()))
 
 	d.Set("device_type", interfaceToStrList(cont.S("deviceType").Data()))
+
+	d.Set("template_type", stripQuotes(cont.S("templateType").String()))
 
 	d.Set("template_min_version", stripQuotes(cont.S("templateMinVersion").String()))
 
@@ -258,6 +286,8 @@ func getNTPFTDefinition(cont *container.Container) []map[string]interface{} {
 
 	ntpDef["server"] = getNtpServer(cont)
 
+	ntpDef["master"] = getNtpMaster(cont)
+
 	ntpDef["authentication"] = getNtpAuth(cont)
 
 	if cont.Exists("keys", "trusted", "vipValue") {
@@ -308,6 +338,40 @@ func getNtpServer(serverCont *container.Container) []map[string]interface{} {
 	}
 
 	return server
+}
+
+func getNtpMaster(masterCont *container.Container) []map[string]interface{} {
+	master := []map[string]interface{}{}
+
+	result := make(map[string]interface{})
+	isPresent := 0
+
+	if masterCont.Exists("master") {
+		if masterCont.Exists("master", "enable", "vipValue") {
+			if value, err := strconv.ParseBool(stripQuotes(masterCont.S("master", "enable", "vipValue").String())); err == nil {
+				result["enable"] = value
+				isPresent += 1
+			}
+		}
+
+		if masterCont.Exists("master", "stratum", "vipValue") {
+			if value, err := strconv.Atoi(masterCont.S("master", "stratum", "vipValue").String()); err == nil {
+				result["stratum"] = value
+				isPresent += 1
+			}
+		}
+
+		if masterCont.Exists("master", "source", "vipValue") {
+			result["source"] = stripQuotes(masterCont.S("master", "source", "vipValue").String())
+			isPresent += 1
+		}
+	}
+
+	if isPresent > 0 {
+		master = append(master, result)
+		return master
+	}
+	return nil
 }
 
 func getNtpAuth(authCont *container.Container) []map[string]interface{} {

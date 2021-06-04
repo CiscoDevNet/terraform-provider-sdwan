@@ -9,6 +9,9 @@ default: build
 build: fmtcheck
 	go install
 
+build-all:
+	@sh -c "'$(CURDIR)/scripts/build-plan.sh'"
+
 test: fmtcheck
 	go test -i $(TEST) || exit 1
 	echo $(TEST) | \
@@ -60,4 +63,4 @@ ifeq (,$(wildcard $(GOPATH)/src/$(WEBSITE_REPO)))
 endif
 	@$(MAKE) -C $(GOPATH)/src/$(WEBSITE_REPO) website-provider-test PROVIDER_PATH=$(shell pwd) PROVIDER_NAME=$(PKG_NAME)
 
-.PHONY: build test testacc vet fmt fmtcheck errcheck vendor-status test-compile website website-test
+.PHONY: build build-all test testacc vet fmt fmtcheck errcheck vendor-status test-compile website website-test
