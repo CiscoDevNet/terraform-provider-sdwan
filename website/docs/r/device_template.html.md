@@ -114,8 +114,8 @@ resource "sdwan_device_template" "example_cli" {
 <a id="nestedblock--sub_templates"></a>
 
 ## Nested Schema for sub_templates ##
-* `template_id` - (Required) Template Id of Feature Template
-* `template_type` - (Required) Template Type of Feature Template, allowed values: "logging" (this can be allowed only with `system-vedge` type `general_templates`), "ntp" (this can be allowed only with `system-vedge` type `general_templates`), "vpn-vedge-interface" (this can be allowed only with`vpn-vedge` type `general_templates`), "cisco_logging" (this can be allowed only with `cisco_system` type `general_templates`), "cisco_ntp"(this can be allowed only with `"cisco_system"` type `general_templates`), "cisco_vpn_interface" (this can be allowed only with `cisco_vpn` type `general_templates`)
+* `sub_template_id` - (Required) Template Id of Feature Template
+* `sub_template_type` - (Required) Template Type of Feature Template, allowed values: "logging" (this can be allowed only with `system-vedge` type `general_templates`), "ntp" (this can be allowed only with `system-vedge` type `general_templates`), "vpn-vedge-interface" (this can be allowed only with`vpn-vedge` type `general_templates`), "cisco_logging" (this can be allowed only with `cisco_system` type `general_templates`), "cisco_ntp"(this can be allowed only with `"cisco_system"` type `general_templates`), "cisco_vpn_interface" (this can be allowed only with `cisco_vpn` type `general_templates`)
 
 ## Argument Reference for Device Template created from CLI ##
 * `template_configuration` - (Required) Template Configuration for  Device Template
@@ -132,7 +132,3 @@ resource "sdwan_device_template" "example_cli" {
 * `created_by` - User who created Device Template
 * `feature` - Feature for Device Template
 * `template_attached` - Number of templates attached to Device Template
-
-
-
-

@@ -70,12 +70,12 @@ resource "sdwan_device_template" "example_resource2" {
     template_id = "45ea940a-45d2-4fd9-8da2-570a1a6d6874"
     template_type = "system-vedge"
     sub_templates{
-      template_id = "171e9bd4-7a7b-460d-b692-83f0d5ce0124"
-      template_type = "logging"
+      sub_template_id = "171e9bd4-7a7b-460d-b692-83f0d5ce0124"
+      sub_template_type = "logging"
     }
     sub_templates{
-      template_id = "edf3d309-91d4-45be-98d9-cfd57a05a479"
-      template_type = "ntp"
+      sub_template_id = "edf3d309-91d4-45be-98d9-cfd57a05a479"
+      sub_template_type = "ntp"
     }
   }
 
@@ -83,8 +83,8 @@ resource "sdwan_device_template" "example_resource2" {
     template_id = "79437c57-9b0f-4364-b060-55e827ac7e45"
     template_type = "vpn-vedge"
     sub_templates{
-      template_id = " e1b5b6e9-3b54-4279-a532-a2aaaef3e6a1"
-      template_type = "vpn-vedge-interface"
+      sub_template_id = " e1b5b6e9-3b54-4279-a532-a2aaaef3e6a1"
+      sub_template_type = "vpn-vedge-interface"
     }
   }
 
