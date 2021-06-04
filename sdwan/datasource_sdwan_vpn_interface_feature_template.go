@@ -83,7 +83,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													},
 												},
 												"dhcp_distance": {
-													Type:     schema.TypeInt,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"dhcp_helper": {
@@ -120,7 +120,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													},
 												},
 												"dhcp_distance": {
-													Type:     schema.TypeInt,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"dhcp_rapid_commit": {
@@ -1238,15 +1238,17 @@ func getVPNInterfaceBasic(basicCont *container.Container) []map[string]interface
 		}
 
 		if basicCont.Exists("ip", "dhcp-distance") {
-			if value, err := strconv.Atoi(stripQuotes(basicCont.S("ip", "dhcp-distance", "vipValue").String())); err == nil {
-				temp["dhcp_distance"] = value
-				isIPv4Present += 1
-			}
+			temp["dhcp_distance"] = stripQuotes(basicCont.S("ip", "dhcp-distance", "vipValue").String())
+			isIPv4Present += 1
 		}
 
 		if basicCont.Exists("dhcp-helper", "vipValue") {
-			temp["dhcp_helper"] = interfaceToStrList(basicCont.S("dhcp-helper", "vipValue").Data())
-			isIPv4Present += 1
+			val := basicCont.S("dhcp-helper", "vipValue").Data().([]interface{})
+			log.Println("dhcp_helper :", val)
+			if len(val) > 0 {
+				temp["dhcp_helper"] = interfaceToStrList(basicCont.S("dhcp-helper", "vipValue").Data())
+				isIPv4Present += 1
+			}
 		}
 
 		if isIPv4Present > 0 {
@@ -1288,10 +1290,8 @@ func getVPNInterfaceBasic(basicCont *container.Container) []map[string]interface
 		}
 
 		if basicCont.Exists("ipv6", "dhcp-distance", "vipValue") {
-			if value, err := strconv.Atoi(stripQuotes(basicCont.S("ipv6", "dhcp-distance", "vipValue").String())); err == nil {
-				temp["dhcp_distance"] = value
-				isIPv6Present += 1
-			}
+			temp["dhcp_distance"] = stripQuotes(basicCont.S("ipv6", "dhcp-distance", "vipValue").String())
+			isIPv6Present += 1
 		}
 
 		if basicCont.Exists("ipv6", "dhcp-rapid-commit", "vipValue") {
@@ -1400,8 +1400,11 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "group", "vipValue") {
-		result["groups"] = interfaceToFloatList(tunnelCont.S("tunnel-interface", "group", "vipValue").Data())
-		isPresent += 1
+		val := tunnelCont.S("tunnel-interface", "group", "vipValue").Data().([]interface{})
+		if len(val) > 0 {
+			result["groups"] = interfaceToFloatList(tunnelCont.S("tunnel-interface", "group", "vipValue").Data())
+			isPresent += 1
+		}
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "border", "vipValue") {
@@ -1431,8 +1434,11 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "exclude-controller-group-list", "vipValue") {
-		result["exclude_controller_group_list"] = interfaceToIntList(tunnelCont.S("tunnel-interface", "exclude-controller-group-list", "vipValue").Data())
-		isPresent += 1
+		val := tunnelCont.S("tunnel-interface", "exclude-controller-group-list", "vipValue").Data().([]interface{})
+		if len(val) > 0 {
+			result["exclude_controller_group_list"] = interfaceToFloatList(tunnelCont.S("tunnel-interface", "exclude-controller-group-list", "vipValue").Data())
+			isPresent += 1
+		}
 	}
 
 	if tunnelCont.Exists("tunnel-interface", "vmanage-connection-preference", "vipValue") {
@@ -1544,6 +1550,8 @@ func getVPNInterfaceTunnel(tunnelCont *container.Container) []map[string]interfa
 				temp["snmp"] = value
 				isAllowPresent += 1
 			}
+		} else {
+			temp["snmp"] = "false"
 		}
 
 		if isAllowPresent > 0 {
@@ -2043,7 +2051,7 @@ func getVPNInterfaceACL(aclCont *container.Container) []map[string]interface{} {
 	if aclCont.Exists("qos-adaptive") {
 		qosAdp := aclCont.S("qos-adaptive")
 		if qosAdp.Exists("period", "vipValue") {
-			if value, err := strconv.Atoi(stripQuotes(qosAdp.S("qos-adaptive", "period", "vipValue").String())); err == nil {
+			if value, err := strconv.Atoi(stripQuotes(qosAdp.S("period", "vipValue").String())); err == nil {
 				result["adapt_period"] = value
 				isPresent += 1
 			}
@@ -2283,7 +2291,10 @@ func getVPNInterface8021X(dot1Cont *container.Container) []map[string]interface{
 	result := map[string]interface{}{}
 
 	if dot1xCont.Exists("radius-servers", "vipValue") {
-		result["radius_server"] = interfaceToStrList(dot1xCont.S("radius-servers", "vipValue").Data())
+		val := dot1xCont.S("radius-servers", "vipValue").Data().([]interface{})
+		if len(val) > 0 {
+			result["radius_server"] = interfaceToStrList(dot1xCont.S("radius-servers", "vipValue").Data())
+		}
 	}
 
 	if dot1xCont.Exists("accounting-interval", "vipValue") {
@@ -2427,7 +2438,10 @@ func getVPNInterface8021X(dot1Cont *container.Container) []map[string]interface{
 		}
 
 		if mabCont.Exists("allow", "vipValue") {
-			mab["mac_authentication_bypass_entries"] = interfaceToStrList(mabCont.S("allow", "vipValue").Data())
+			val := mabCont.S("allow", "vipValue").Data().([]interface{})
+			if len(val) > 0 {
+				mab["mac_authentication_bypass_entries"] = interfaceToStrList(mabCont.S("allow", "vipValue").Data())
+			}
 		}
 
 		mabTemp = append(mabTemp, mab)
@@ -2480,8 +2494,11 @@ func getVPNInterface8021XReqAttrAuth(authCont *container.Container) []map[string
 			}
 
 			if val.Exists("priority-order") {
-				temp["syntax_choice"] = interfaceToStrList(val.S("priority-order").Data())[1]
-				syntax_choice = interfaceToStrList(val.S("priority-order").Data())[1]
+				value := val.S("priority-order").Data().([]interface{})
+				if len(value) > 0 {
+					temp["syntax_choice"] = interfaceToStrList(val.S("priority-order").Data())[1]
+					syntax_choice = interfaceToStrList(val.S("priority-order").Data())[1]
+				}
 			}
 
 			switch {
@@ -2525,8 +2542,11 @@ func getVPNInterface8021XReqAttrAcc(accCont *container.Container) []map[string]i
 			}
 
 			if val.Exists("priority-order") {
-				temp["syntax_choice"] = interfaceToStrList(val.S("priority-order").Data())[1]
-				syntax_choice = interfaceToStrList(val.S("priority-order").Data())[1]
+				value := val.S("priority-order").Data().([]interface{})
+				if len(value) > 0 {
+					temp["syntax_choice"] = interfaceToStrList(val.S("priority-order").Data())[1]
+					syntax_choice = interfaceToStrList(val.S("priority-order").Data())[1]
+				}
 			}
 
 			switch {
@@ -2688,8 +2708,11 @@ func getVPNInterfaceAdvanced(advancedCont *container.Container) []map[string]int
 	}
 
 	if advancedCont.Exists("tracker", "vipValue") {
-		result["tracker"] = interfaceToStrList(advancedCont.S("tracker", "vipValue").Data())
-		isPresent += 1
+		value := advancedCont.S("tracker", "vipValue").Data().([]interface{})
+		if len(value) > 0 {
+			result["tracker"] = interfaceToStrList(advancedCont.S("tracker", "vipValue").Data())
+			isPresent += 1
+		}
 	}
 
 	if advancedCont.Exists("icmp-redirect-disable", "vipValue") {
