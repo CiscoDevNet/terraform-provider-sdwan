@@ -238,10 +238,10 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													},
 												},
 												"dhcp_distance": {
-													Type:         schema.TypeInt,
-													Optional:     true,
-													Computed:     true,
-													ValidateFunc: validation.IntBetween(1, 65536),
+													Type:             schema.TypeString,
+													Optional:         true,
+													Computed:         true,
+													ValidateDiagFunc: isStringInRange(1, 65536),
 												},
 												"dhcp_helper": {
 													Type:     schema.TypeList,
@@ -282,15 +282,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													},
 												},
 												"dhcp_distance": {
-													Type:         schema.TypeInt,
-													Optional:     true,
-													Computed:     true,
-													ValidateFunc: validation.IntBetween(1, 65536),
+													Type:             schema.TypeString,
+													Optional:         true,
+													Computed:         true,
+													ValidateDiagFunc: isStringInRange(1, 65536),
 												},
 												"dhcp_rapid_commit": {
 													Type:     schema.TypeBool,
 													Optional: true,
-													Computed: true,
+													Default:  false,
 												},
 												"dhcp_helper": {
 													Type:     schema.TypeSet,
@@ -633,6 +633,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Type:     schema.TypeSet,
 										Optional: true,
 										Computed: true,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"nat_type": {
@@ -935,7 +936,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"adapt_period": {
 										Type:         schema.TypeInt,
 										Optional:     true,
-										Computed:     true,
+										Default:      15,
 										ValidateFunc: validation.IntBetween(1, 720),
 									},
 									"shaping_rate_upstream_min": {
@@ -1540,14 +1541,11 @@ func resourceSDWANVPNInterfaceFeatureTemplateCreate(d *schema.ResourceData, m in
 		return err
 	}
 
-	log.Println("ftDefinition ", ftMap["templateDefinition"])
-
 	dURL := fmt.Sprintf("dataservice/template/feature")
 	bodyBytes, err := marshalJSON(ftMap)
 	if err != nil {
 		return err
 	}
-	log.Println("check ... bodybytes ", string(bodyBytes))
 	cont, err := sdwanClient.SaveviaBytes(dURL, bodyBytes)
 	if err != nil {
 		return err
@@ -1592,13 +1590,10 @@ func resourceSDWANVPNInterfaceFeatureTemplateUpdate(d *schema.ResourceData, m in
 		return err
 	}
 
-	log.Println("ftDefinition ", ftMap["templateDefinition"])
-
 	bodyBytes, err := marshalJSON(ftMap)
 	if err != nil {
 		return err
 	}
-	log.Println("check ... bodybytes ", string(bodyBytes))
 
 	dURL := fmt.Sprintf("dataservice/template/feature/%s", ftID)
 	_, err = sdwanClient.UpdateviaBytes(dURL, bodyBytes)
@@ -1765,6 +1760,9 @@ func createVPNInterfaceFTDefinition(ftDefinitions []interface{}, ftType string) 
 		if err != nil {
 			return nil, err
 		}
+	} else if len(ftDefMap["vpn_interface_8021x"].(*schema.Set).List()) != 0 && (isTLOCPresent != 0 || isNATPresent != 0) {
+		return nil, fmt.Errorf("Either 'NAT' or 'TLOC Extension' is configured")
+
 	} else {
 		dot1xMap := make(map[string]interface{})
 		dot1xMap["vipType"] = "ignore"
@@ -1855,30 +1853,21 @@ func createVPNInterfaceBasicIPv4(defMap map[string]interface{}, input map[string
 		isPresent = isPresent + 1
 	}
 
-	if input["primary_address"] == nil || input["primary_address"] == "" {
-		if input["dhcp_distance"] != nil {
-			ipv4["dhcp-distance"] = createVIPObject("object", "constant", input["dhcp_distance"], "vpn_if_ipv4_dhcp_distance", nil)
-			ipv4["dhcp-client"] = createVIPObject("object", "constant", "true", nil, nil)
-			isPresent = isPresent + 1
-		}
+	if input["dhcp_distance"] != nil && input["dhcp_distance"] != "" {
+		val, _ := getInt(input["dhcp_distance"])
+		ipv4["dhcp-distance"] = createVIPObject("object", "constant", val, "vpn_if_ipv4_dhcp_distance", nil)
+		ipv4["dhcp-client"] = createVIPObject("object", "constant", "true", nil, nil)
+		isPresent = isPresent + 1
 	}
-
 	if isPresent > 0 {
 		defMap["ip"] = ipv4
 	}
 
-	if input["dhcp_helper"] != nil && len(interfaceToStrList(input["dhcp_helper"])) > 0 {
+	if input["dhcp_helper"] != nil && len(input["dhcp_helper"].([]interface{})) > 0 {
 		dhcpHelper := make(map[string]interface{})
 		dhcpHelper["vipObjectType"] = "list"
 		dhcpHelper["vipType"] = "constant"
-		dhcpHelper["vipValue"] = interfaceToStrList(input["dhcp_helper"])
-		dhcpHelper["vipVariableName"] = "vpn_if_dhcp_helper"
-		defMap["dhcp-helper"] = dhcpHelper
-	} else {
-		dhcpHelper := make(map[string]interface{})
-		dhcpHelper["vipObjectType"] = "list"
-		dhcpHelper["vipType"] = "ignore"
-		dhcpHelper["vipValue"] = nil
+		dhcpHelper["vipValue"] = input["dhcp_helper"].([]interface{})
 		dhcpHelper["vipVariableName"] = "vpn_if_dhcp_helper"
 		defMap["dhcp-helper"] = dhcpHelper
 	}
@@ -1925,20 +1914,18 @@ func createVPNInterfaceBasicIPv6(defMap map[string]interface{}, input map[string
 
 		IPv6["secondary-address"] = SecAddrMap
 		isPresent = isPresent + 1
-		log.Println("secondary ip defMap ", SecAddrMap)
 	}
 
-	if input["primary_address"] == nil || input["primary_address"] == "" {
-		if input["dhcp_distance"] != nil {
-			IPv6["dhcp-distance"] = createVIPObject("object", "constant", input["dhcp_distance"], "vpn_if_ipv6_ipv6_dhcp_distance", nil)
-			IPv6["dhcp-client"] = createVIPObject("object", "constant", "true", nil, nil)
-			isPresent = isPresent + 1
-		}
+	if input["dhcp_distance"] != nil && input["dhcp_distance"] != "" {
+		val, _ := getInt(input["dhcp_distance"])
+		IPv6["dhcp-distance"] = createVIPObject("object", "constant", val, "vpn_if_ipv6_ipv6_dhcp_distance", nil)
+		IPv6["dhcp-client"] = createVIPObject("object", "constant", "true", nil, nil)
+		isPresent = isPresent + 1
+	}
 
-		if input["dhcp_rapid_commit"] != nil {
-			IPv6["dhcp-rapid-commit"] = createVIPObject("object", "constant", input["dhcp_rapid_commit"], "vpn_if_ipv6_ipv6_dhcp_rapid_commit", nil)
-			isPresent = isPresent + 1
-		}
+	if input["dhcp_rapid_commit"] != nil {
+		IPv6["dhcp-rapid-commit"] = createVIPObject("object", "constant", input["dhcp_rapid_commit"], "vpn_if_ipv6_ipv6_dhcp_rapid_commit", nil)
+		isPresent = isPresent + 1
 	}
 
 	//ipv6 dhcp_helper configuration
@@ -1964,7 +1951,6 @@ func createVPNInterfaceBasicIPv6(defMap map[string]interface{}, input map[string
 
 		IPv6["dhcp-helper-v6"] = HelperMap
 		isPresent = isPresent + 1
-		log.Println("dhcp_helper defMap ", HelperMap)
 	}
 
 	if isPresent > 0 {
@@ -2038,11 +2024,11 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 
 	tunnel["color"] = color
 
-	if input["groups"] != nil && len(floatInterfaceToStrList(input["groups"])) > 0 {
+	if input["groups"] != nil && len(input["groups"].([]interface{})) > 0 {
 		groups := make(map[string]interface{})
 		groups["vipObjectType"] = "list"
 		groups["vipType"] = "constant"
-		groups["vipValue"] = floatInterfaceToStrList(input["groups"])
+		groups["vipValue"] = input["groups"].([]interface{})
 		groups["vipVariableName"] = "vpn_if_tunnel_group"
 		tunnel["group"] = groups
 		isPresent = isPresent + 1
@@ -2082,11 +2068,11 @@ func createVPNInterfaceTunnel(defMap map[string]interface{}, input map[string]in
 		isPresent = isPresent + 1
 	}
 
-	if input["exclude_controller_group_list"] != nil && len(intInterfaceToStrList(input["exclude_controller_group_list"])) > 0 {
+	if input["exclude_controller_group_list"] != nil && len(input["exclude_controller_group_list"].([]interface{})) > 0 {
 		excludeGroup := make(map[string]interface{})
 		excludeGroup["vipObjectType"] = "list"
 		excludeGroup["vipType"] = "constant"
-		excludeGroup["vipValue"] = intInterfaceToStrList(input["exclude_controller_group_list"])
+		excludeGroup["vipValue"] = input["exclude_controller_group_list"].([]interface{})
 		excludeGroup["vipVariableName"] = "vpn_if_tunnel_exclude_controller_group_list"
 		tunnel["exclude-controller-group-list"] = excludeGroup
 		isPresent = isPresent + 1
@@ -2837,6 +2823,8 @@ func createVPNInterfaceACL(defMap map[string]interface{}, input map[string]inter
 	if input["adapt_period"] != nil && input["adapt_period"] != 0 {
 		qos_adaptive["period"] = createVIPObject("object", "constant", input["adapt_period"], "qos_adaptive_period", nil)
 		isQOSAdPresent += 1
+	} else {
+		qos_adaptive["period"] = createVIPObject("object", "ignore", nil, "qos_adaptive_period", nil)
 	}
 
 	//upstream
@@ -3185,11 +3173,12 @@ func createVPNInterfaceAdvanced(defMap map[string]interface{}, input map[string]
 		}
 	}
 
-	if input["tracker"] != nil && len(interfaceToStrList(input["tracker"])) > 0 {
+	if input["tracker"] != nil && len(input["tracker"].([]interface{})) > 0 {
 		tracker := make(map[string]interface{})
 		tracker["vipObjectType"] = "list"
 		tracker["vipType"] = "constant"
-		tracker["vipValue"] = interfaceToStrList(input["tracker"])
+		// tracker["vipValue"] = interfaceToStrList(input["tracker"])
+		tracker["vipValue"] = input["tracker"].([]interface{})
 		tracker["vipVariableName"] = "vpn_if_tracker"
 		defMap["tracker"] = tracker
 	}
@@ -3265,8 +3254,14 @@ func createVPNInterface8021X(defMap map[string]interface{}, input map[string]int
 	dot1x := make(map[string]interface{})
 	isPresent := 0
 
-	if input["radius_server"] != nil && len(interfaceToStrList(input["radius_server"])) > 0 {
-		dot1x["radius-servers"] = createVIPObject("list", "constant", input["radius_server"], "802.1X_radius_server", nil)
+	if input["radius_server"] != nil && len(input["radius_server"].([]interface{})) > 0 {
+		// dot1x["radius-servers"] = createVIPObject("list", "constant", input["radius_server"], "802.1X_radius_server", nil)
+		radiusServer := make(map[string]interface{})
+		radiusServer["vipObjectType"] = "list"
+		radiusServer["vipType"] = "constant"
+		radiusServer["vipValue"] = input["radius_server"].([]interface{})
+		radiusServer["vipVariableName"] = "802.1X_radius_server"
+		dot1x["radius-servers"] = radiusServer
 		isPresent = isPresent + 1
 	}
 
@@ -3394,8 +3389,13 @@ func createVPNInterface8021X(defMap map[string]interface{}, input map[string]int
 				isMACPresent = isMACPresent + 1
 			}
 
-			if macSet["mac_authentication_bypass_entries"] != nil && len(interfaceToStrList(macSet["mac_authentication_bypass_entries"])) > 0 {
-				mac["allow"] = createVIPObject("list", "constant", macSet["mac_authentication_bypass_entries"], "802.1X_allow_list", nil)
+			if macSet["mac_authentication_bypass_entries"] != nil && len(macSet["mac_authentication_bypass_entries"].([]interface{})) > 0 {
+				bypassEntries := make(map[string]interface{})
+				bypassEntries["vipObjectType"] = "list"
+				bypassEntries["vipType"] = "constant"
+				bypassEntries["vipValue"] = macSet["mac_authentication_bypass_entries"].([]interface{})
+				bypassEntries["vipVariableName"] = "802.1X_allow_list"
+				mac["allow"] = bypassEntries
 				isMACPresent = isMACPresent + 1
 			}
 
