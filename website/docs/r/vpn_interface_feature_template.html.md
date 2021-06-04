@@ -528,7 +528,7 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 ## Nested Schema for Basic ipv4
 * `primary_address` - (Optional) Value of IPv4 prefix for VPN interface type Feature Template
 * `secondary_address` - (Optional) Value of IPv4 prefix for VPN interface type Feature Template, Max Items: 4(see [below for nested schema](#nestedblock--secondary_addressv4))
-* `dhcp_distance` - (Optional) Value of IPv4 DHCP distance for VPN interface type Feature Template, Range: [1 - 65536], either primary_address or dhcp_distance is configured not both
+* `dhcp_distance` - (Optional) Value of IPv4 DHCP distance for VPN interface type Feature Template, Range: [1 - 65536]
 * `dhcp_helper` - (Optional) List of IPv4 or IPv6 DHCP Helper for VPN interface type Feature Template, Allowed values: IPv4 or IPv6 address
 
 
@@ -537,7 +537,7 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 ## Nested Schema for Basic ipv6
 * `primary_address` - (Optional) Value of IPv6 prefix for VPN interface type Feature Template
 * `secondary_address` - (Optional) Value of IPv6 prefix for VPN interface type Feature Template, Max Items: 2(see [below for nested schema](#nestedblock--secondary_addressv6))
-* `dhcp_distance` - (Optional) Value of IPv6 DHCP distance for Vedge VPN interface type Feature Template, Range: [1 - 65536], either primary_address or dhcp_distance is configured not both
+* `dhcp_distance` - (Optional) Value of IPv6 DHCP distance for Vedge VPN interface type Feature Template, Range: [1 - 65536]
 * `dhcp_rapid_commit` - (Optional) Value of IPv6 DHCP rapid commit enabled or not for Vedge VPN interface type Feature Template
 * `dhcp_helper` - (Optional) DHCP Helper value to designate the interface as a DHCP helper on a router for VPN interface type Feature Template, Max Items: 8(see [below for nested schema](#nestedblock--dhcp_helperV6))
 

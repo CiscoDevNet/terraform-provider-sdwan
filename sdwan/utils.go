@@ -561,7 +561,7 @@ func belongsToCiscoNTP(lookup string) bool {
 func isStringInRange(min, max uint64) schema.SchemaValidateDiagFunc {
 	return func(v interface{}, path cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
-		k, err := strconv.ParseUint(v.(string),10,32)
+		k, err := strconv.ParseUint(v.(string), 10, 32)
 
 		if err != nil {
 			diags = append(diags, diag.Errorf("expected integer value, got: %v", v)...)
@@ -895,6 +895,23 @@ func marshJSONforDef(ftDefMap map[string]interface{}) ([]byte, error) {
 			}
 			bufDef.Write(val)
 		}
+
+		if k == "if-name" {
+			// marshal key
+			key, err := json.Marshal(k)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(key)
+			bufDef.WriteString(":")
+			// marshal value
+			val, err := json.Marshal(v)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(val)
+		}
+
 	}
 
 	for k, v := range ftDefMap {
@@ -914,6 +931,24 @@ func marshJSONforDef(ftDefMap map[string]interface{}) ([]byte, error) {
 			}
 			bufDef.Write(val)
 		}
+
+		if k != "if-name" {
+			bufDef.WriteString(",")
+			// marshal key
+			key, err := json.Marshal(k)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(key)
+			bufDef.WriteString(":")
+			// marshal value
+			val, err := json.Marshal(v)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(val)
+		}
+
 	}
 	bufDef.WriteString("}")
 
