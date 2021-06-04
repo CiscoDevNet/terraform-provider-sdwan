@@ -22,11 +22,6 @@ func datasourceSDWANDevicesAttachment() *schema.Resource {
 				Required: true,
 			},
 
-			"template_type": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-
 			"devices_list": {
 				Type:     schema.TypeSet,
 				Computed: true,
@@ -58,7 +53,6 @@ func datasourceSDWANDevicesAttachmentRead(d *schema.ResourceData, m interface{})
 		}
 	}
 
-	log.Println("Container: ", cont)
 	setDevicesList(d, cont.S("data"))
 
 	dURL := fmt.Sprintf("dataservice/template/device/object/%s", dtID)
@@ -66,15 +60,6 @@ func datasourceSDWANDevicesAttachmentRead(d *schema.ResourceData, m interface{})
 	if err != nil {
 		return err
 	}
-
-	templateType := stripQuotes(cont.S("configType").String())
-	if templateType == "template" {
-		templateType = "feature"
-	} else {
-		templateType = "cli"
-	}
-
-	d.Set("template_type", templateType)
 
 	d.Set("device_template_id", dtID)
 

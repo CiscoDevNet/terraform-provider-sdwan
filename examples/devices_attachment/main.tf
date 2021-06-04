@@ -24,7 +24,6 @@ output "output1" {
 resource "sdwan_devices_attachment" "device_attachment1" {
   timeout = 100
   device_template_id = "5477b564-db5e-4195-8d76-00b6d471a8b6"
-  template_type = "feature"  
   file = "Template1.csv"
   devices_list {
     chassis_number = "CSR-330E65C0-8D52-41B2-940A-398119726CCE"
@@ -38,7 +37,6 @@ resource "sdwan_devices_attachment" "device_attachment1" {
 resource "sdwan_devices_attachment" "device_attachment2" {
   timeout = 100
   device_template_id = "b884a99a-e399-4e8b-8676-fb1a3ca21f7c"
-  template_type = "feature"  
   file = "Template2.csv"
   devices_list {
     chassis_number = "1590f587-31aa-431c-80ac-8dc15f23c7b7"
@@ -52,7 +50,6 @@ resource "sdwan_devices_attachment" "device_attachment2" {
 resource "sdwan_devices_attachment" "device_attachment3" {
   timeout = 50
   device_template_id = "186f0ff1-2ea5-4a2c-b97f-d2576217b953"
-  template_type = "cli"  
   file = "Template3.csv"
   devices_list {
     chassis_number = "CSR-DF5C9569-CA62-421A-97AB-F0765C1854D6"

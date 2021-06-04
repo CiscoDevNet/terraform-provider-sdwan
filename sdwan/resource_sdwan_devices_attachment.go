@@ -13,7 +13,6 @@ import (
 	"github.com/CiscoDevNet/sdwan-go-client/models"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func resourceSDWANDevicesAttachment() *schema.Resource {
@@ -34,16 +33,6 @@ func resourceSDWANDevicesAttachment() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
-			},
-
-			"template_type": {
-				Type:     schema.TypeString,
-				Required: true,
-				ValidateFunc: validation.StringInSlice(
-					[]string{
-						"feature",
-						"cli",
-					}, false),
 			},
 
 			"file": {
@@ -358,8 +347,15 @@ func attachDevices(d *schema.ResourceData, client *client.Client, dList []string
 	}
 
 	dtID := d.Get("device_template_id").(string)
+	dURL := fmt.Sprintf("dataservice/template/device/object/%s", dtID)
 
-	templateType := d.Get("template_type").(string)
+	cont, err := client.GetViaURL(dURL)
+	if err != nil {
+		return err
+	}
+
+	templateType := stripQuotes(cont.S("configType").String())
+	// TODO
 
 	devObjects := cont1.S("data").Data().([]interface{})
 
@@ -381,7 +377,7 @@ func attachDevices(d *schema.ResourceData, client *client.Client, dList []string
 		},
 	}
 
-	if templateType == "feature" {
+	if templateType == "template" {
 
 		cont1, err = client.Save("/dataservice/template/device/config/attachfeature", configOpts)
 		if err != nil {
