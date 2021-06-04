@@ -377,7 +377,7 @@ func resouceSDWANVPNFeatureTemplate() *schema.Resource {
 									"prefix": {
 										Type:         schema.TypeString,
 										Required:     true,
-										ValidateFunc: validation.Any(validation.IsCIDR, IPv6SubNetValidate()),
+										ValidateFunc: validation.IsCIDR,
 									},
 									"service_type": {
 										Type:         schema.TypeString,
@@ -493,26 +493,6 @@ func resourceSDWANVPNFeatureTemplateCreate(d *schema.ResourceData, m interface{}
 
 	ftMap := make(map[string]interface{})
 
-	// fTemplate := models.VPNFeatureTemplate{}
-
-	// fTemplate.TemplateType = d.Get("template_type").(string)
-	// fTemplate.TemplateName = d.Get("template_name").(string)
-	// fTemplate.TemplateDescription = d.Get("template_description").(string)
-	// if !verifyDeviceTypeVPN(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
-	// 	return fmt.Errorf("Please use a valid Device Type for Template: %s", fTemplate.TemplateType)
-	// }
-	// fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
-	// fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
-	// fTemplate.FactoryDefault = d.Get("factory_default").(bool)
-
-	// ftdefinition := d.Get("template_definition").(*schema.Set).List()
-
-	// if def, err := createVPNFTdefinition(ftdefinition, fTemplate.TemplateType); err == nil {
-	// 	fTemplate.TemplateDefinition = string(ftBytes)
-	// } else {
-	// 	return err
-	// }
-
 	ftMap["templateType"] = d.Get("template_type").(string)
 	ftMap["templateName"] = d.Get("template_name").(string)
 	ftMap["templateDescription"] = d.Get("template_description").(string)
@@ -536,7 +516,7 @@ func resourceSDWANVPNFeatureTemplateCreate(d *schema.ResourceData, m interface{}
 	if err != nil {
 		return err
 	}
-	log.Println("check ... bodybytes ", string(bodyBytes))
+
 	cont, err := sdwanClient.SaveviaBytes(dURL, bodyBytes)
 	if err != nil {
 		return err
@@ -557,33 +537,6 @@ func resourceSDWANVPNFeatureTemplateUpdate(d *schema.ResourceData, m interface{}
 	ftID := d.Id()
 
 	ftMap := make(map[string]interface{})
-
-	// fTemplate := models.FeatureTemplate{}
-
-	// fTemplate.TemplateType = d.Get("template_type").(string)
-	// fTemplate.TemplateName = d.Get("template_name").(string)
-	// fTemplate.TemplateDescription = d.Get("template_description").(string)
-	// if !verifyDeviceTypeVPN(fTemplate.TemplateType, interfaceToStrList(d.Get("device_type"))) {
-	// 	return fmt.Errorf("Please use a valid Device Type for Template: %s", fTemplate.TemplateType)
-	// }
-	// fTemplate.DeviceType = interfaceToStrList(d.Get("device_type"))
-	// fTemplate.TemplateMinVersion = d.Get("template_min_version").(string)
-	// fTemplate.FactoryDefault = d.Get("factory_default").(bool)
-
-	// ftdefinition := d.Get("template_definition").(*schema.Set).List()
-
-	// if def, err := createVPNFTdefinition(ftdefinition, fTemplate.TemplateType); err == nil {
-	// 	fTemplate.TemplateDefinition = def
-	// } else {
-	// 	return err
-	// }
-
-	// dURL := fmt.Sprintf("dataservice/template/feature/%s", ftID)
-	// _, err := sdwanClient.Update(dURL, &fTemplate)
-
-	// if err != nil {
-	// 	return err
-	// }
 
 	ftMap["templateType"] = d.Get("template_type").(string)
 	ftMap["templateName"] = d.Get("template_name").(string)
@@ -607,7 +560,7 @@ func resourceSDWANVPNFeatureTemplateUpdate(d *schema.ResourceData, m interface{}
 	if err != nil {
 		return err
 	}
-	log.Println("check ... bodybytes ", string(bodyBytes))
+
 	dURL := fmt.Sprintf("dataservice/template/feature/%s", ftID)
 	_, err = sdwanClient.UpdateviaBytes(dURL, bodyBytes)
 	if err != nil {
@@ -1175,7 +1128,7 @@ func createVPNIPv4Routes(defMap map[string]interface{}, input map[string]interfa
 	nexthopList := input["next_hop"].(*schema.Set).List()
 
 	if input["gateway_type"] == "dhcp" {
-		if input["null0_distance"] != "" {
+		if input["null0_distance"].(string) != "" {
 			return fmt.Errorf("null0_distance should be set for gateway_type null0")
 		} else if len(nexthopList) > 0 {
 			return fmt.Errorf("next_hop should be set for gateway_type next-hop")
@@ -1201,19 +1154,17 @@ func createVPNIPv4Routes(defMap map[string]interface{}, input map[string]interfa
 
 		defMap["null0"] = null0Map
 
-		nullDis := make(map[string]interface{})
-		nullDis["vipType"] = "constant"
-		nullDis["vipObjectType"] = "object"
-		if input["null0_distance"] != "" {
+
+		if input["null0_distance"].(string) != "" {
+			nullDis := make(map[string]interface{})
+			nullDis["vipType"] = "constant"
+			nullDis["vipObjectType"] = "object"
 			nullDis["vipValue"], _ = getInt(input["null0_distance"])
-		} else {
-			nullDis["vipValue"] = 1
+			defMap["distance"] = nullDis
 		}
 
-		defMap["distance"] = nullDis
-
 	} else if input["gateway_type"] == "next-hop" {
-		if input["null0_distance"] != "" {
+		if input["null0_distance"].(string) != "" {
 			return fmt.Errorf("null0_distance should be set for gateway_type null0")
 		}
 		if len(nexthopList) > 0 {
@@ -1265,12 +1216,6 @@ func createNextHop(defMap map[string]interface{}, input map[string]interface{}) 
 		distance["vipType"] = "constant"
 		distance["vipValue"], _ = getInt(input["next_hop_distance"])
 		defMap["distance"] = distance
-	} else {
-		distance := make(map[string]interface{})
-		distance["vipObjectType"] = "object"
-		distance["vipType"] = "constant"
-		distance["vipValue"] = 1
-		defMap["distance"] = distance
 	}
 
 	defMap["priority-order"] = []string{"address", "distance"}
@@ -1295,15 +1240,13 @@ func createVPNIPv6Routes(defMap map[string]interface{}, input map[string]interfa
 
 		defMap["null0"] = null0Map
 
-		nullDis := make(map[string]interface{})
-		nullDis["vipObjectType"] = "object"
-		nullDis["vipType"] = "constant"
-		if input["null0_distance"] != "" {
+		if input["null0_distance"] != nil && input["null0_distance"] != "" {
+			nullDis := make(map[string]interface{})
+			nullDis["vipObjectType"] = "object"
+			nullDis["vipType"] = "constant"
 			nullDis["vipValue"], _ = getInt(input["null0_distance"])
-		} else {
-			nullDis["vipValue"] = 1
+			defMap["distance"] = nullDis
 		}
-		defMap["distance"] = nullDis
 
 	} else if input["gateway_type"] == "next-hop" {
 		if input["null0_distance"] != "" {
@@ -1382,25 +1325,11 @@ func createServiceRoutes(defMap map[string]interface{}, input map[string]interfa
 		service := make(map[string]interface{})
 		service["vipObjectType"] = "object"
 		service["vipType"] = "constant"
-		if input["service_type"] == "sig" {
+		if input["service_type"] == "sig" && ftType == "cisco_vpn" {
 			return fmt.Errorf("sig is not allowed service type for cisco_vpn")
 		}
 		service["vipValue"] = input["service_type"]
 		defMap["service"] = service
-	} else {
-		if ftType == "vpn-vedge" {
-			service := make(map[string]interface{})
-			service["vipObjectType"] = "object"
-			service["vipType"] = "constant"
-			service["vipValue"] = "sig"
-			defMap["service"] = service
-		} else {
-			service := make(map[string]interface{})
-			service["vipObjectType"] = "object"
-			service["vipType"] = "constant"
-			service["vipValue"] = "FW"
-			defMap["service"] = service
-		}
 	}
 
 	defMap["priority-order"] = []string{"prefix", "service"}

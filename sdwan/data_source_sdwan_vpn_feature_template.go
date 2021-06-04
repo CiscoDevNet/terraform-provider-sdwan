@@ -522,7 +522,9 @@ func getVPNIPv4Route(cont *container.Container) []map[string]interface{} {
 				route["gateway_type"] = "dhcp"
 			} else if routeobj.Exists("null0") {
 				route["gateway_type"] = "null0"
-				route["null0_distance"] = stripQuotes(routeobj.S("distance", "vipValue").String())
+				if routeobj.Exists("distance", "vipValue") {
+					route["null0_distance"] = stripQuotes(routeobj.S("distance", "vipValue").String())
+				}
 			} else if routeobj.Exists("next-hop") {
 				route["gateway_type"] = "next-hop"
 				nexthops := make([]map[string]interface{}, 0, 1)
@@ -562,7 +564,9 @@ func getVPNIPv6Route(cont *container.Container) []map[string]interface{} {
 
 			if routeobj.Exists("null0") {
 				route["gateway_type"] = "null0"
-				route["null0_distance"] = stripQuotes(routeobj.S("distance", "vipValue").String())
+				if routeobj.Exists("distance", "vipValue") {
+					route["null0_distance"] = stripQuotes(routeobj.S("distance", "vipValue").String())
+				}
 			} else if routeobj.Exists("next-hop") {
 				route["gateway_type"] = "next-hop"
 				nexthops := make([]map[string]interface{}, 0, 1)
