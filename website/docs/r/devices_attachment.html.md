@@ -17,7 +17,6 @@ Manages SD-WAN Device Attachment
 resource "sdwan_devices_attachment" "name" {
   timeout = 600
   device_template_id = "a137ff27-6370-4214-b060-17d29452a297"
-  template_type = "feature"
   file = "featureInput.csv"
   devices_list {
     chassis_number = "CSR-F3EF66F0-A1E8-4C11-9C12-3C95ED91A2CC"
@@ -33,7 +32,6 @@ resource "sdwan_devices_attachment" "name" {
 ```
 ## Common Argument Reference ##
 * `device_template_id` - (Required) Unique Device Template ID
-* `template_type` - (Required) Type of Device Template, Allowed values: "feature", "cli"
 * `file` - (Required) Path of the file with Device variables to be passed
 * `devices_list` - (Required) List of Devices to be attached to the Device Template (see [below for nested schema](#nestedblock--devices_list))
 * `timeout` - (Optional) Maximum Time period (in seconds) for which the operation should take place, Default: 600

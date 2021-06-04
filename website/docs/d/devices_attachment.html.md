@@ -21,7 +21,6 @@ data "sdwan_devices_attachment" "name" {
 * `device_template_id` - (Required) Unique Device Template ID
 
 ## Common Attribute Reference ##
-* `template_type` - Configuration type for  Device Template
 * `devices_list` - List of Devices attached to the Device Template (see [below for nested schema](#nestedblock--devices_list))
 
 <a id="nestedblock--devices_list"></a>
