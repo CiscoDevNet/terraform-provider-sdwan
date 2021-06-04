@@ -59,9 +59,27 @@ func (client *Client) Save(endpoint string, obj models.Model) (*container.Contai
 	return cont, checkForErrors(cont, resp)
 }
 
-//SaveWithFile used for POST API call for file upload
-var ContentTypeforFileUpload string
+//SaveviaBytes used for POST API call for bodyBytes
+func (client *Client) SaveviaBytes(endpoint string, body []byte) (*container.Container, error) {
+	req, err := client.MakeRequest("POST", endpoint, nil, body, true)
+	if err != nil {
+		return nil, err
+	}
 
+	cont, resp, err := client.Do(req)
+	if err != nil && err == fmt.Errorf("Invalid Session") {
+		client.authClient.valid = false
+		cont, resp, err = client.Do(req)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return cont, checkForErrors(cont, resp)
+}
+
+var contentTypeforFileUpload string
+
+//SaveWithFile used for POST API call for file upload
 func (client *Client) SaveWithFile(endpoint string, obj models.Model) (*container.Container, error) {
 	bytesPayload, err := client.prepareModelWithFile(obj)
 	if err != nil {
@@ -73,7 +91,7 @@ func (client *Client) SaveWithFile(endpoint string, obj models.Model) (*containe
 		return nil, err
 	}
 
-	req.Header.Set("Content-Type", ContentTypeforFileUpload)
+	req.Header.Set("Content-Type", contentTypeforFileUpload)
 
 	cont, resp, err := client.Do(req)
 	if err != nil && err == fmt.Errorf("Invalid Session") {
@@ -94,6 +112,24 @@ func (client *Client) Update(endpoint string, obj models.Model) (*container.Cont
 	}
 
 	req, err := client.MakeRequest("PUT", endpoint, jsonPayload, nil, true)
+	if err != nil {
+		return nil, err
+	}
+
+	cont, resp, err := client.Do(req)
+	if err != nil && err == fmt.Errorf("Invalid Session") {
+		client.authClient.valid = false
+		cont, resp, err = client.Do(req)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return cont, checkForErrors(cont, resp)
+}
+
+//UpdateviaBytes used for PUT API call for bodyBytes
+func (client *Client) UpdateviaBytes(endpoint string, body []byte) (*container.Container, error) {
+	req, err := client.MakeRequest("PUT", endpoint, nil, body, true)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +233,7 @@ func newfileUploadRequest(data string, keyName string, path string) ([]byte, err
 
 	_ = writer.WriteField("data", data)
 
-	ContentTypeforFileUpload = writer.FormDataContentType()
+	contentTypeforFileUpload = writer.FormDataContentType()
 
 	err = writer.Close()
 	if err != nil {

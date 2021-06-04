@@ -1,6 +1,8 @@
 package sdwan
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"hash/crc32"
 	"log"
@@ -870,4 +872,94 @@ func belongsToCiscoVPNInterface(lookup string) bool {
 		return true
 	}
 	return false
+}
+
+func marshJSONforDef(ftDefMap map[string]interface{}) ([]byte, error) {
+	var bufDef bytes.Buffer
+
+	bufDef.WriteString("{")
+
+	for k, v := range ftDefMap {
+		if k == "vpn-id" {
+			// marshal key
+			key, err := json.Marshal(k)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(key)
+			bufDef.WriteString(":")
+			// marshal value
+			val, err := json.Marshal(v)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(val)
+		}
+	}
+
+	for k, v := range ftDefMap {
+		if k != "vpn-id" {
+			bufDef.WriteString(",")
+			// marshal key
+			key, err := json.Marshal(k)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(key)
+			bufDef.WriteString(":")
+			// marshal value
+			val, err := json.Marshal(v)
+			if err != nil {
+				return nil, err
+			}
+			bufDef.Write(val)
+		}
+	}
+	bufDef.WriteString("}")
+
+	return bufDef.Bytes(), nil
+}
+
+func marshalJSON(ftMap map[string]interface{}) ([]byte, error) {
+	var buf bytes.Buffer
+
+	buf.WriteString("{")
+
+	flag := false
+	for key, value := range ftMap {
+		if flag {
+			buf.WriteString(",")
+		}
+
+		if key == "templateDefinition" {
+			key, err := json.Marshal(key)
+			if err != nil {
+				return nil, err
+			}
+			buf.Write(key)
+			buf.WriteString(":")
+			val, err := marshJSONforDef(value.(map[string]interface{}))
+			if err != nil {
+				return nil, err
+			}
+			buf.Write(val)
+		} else {
+			key, err := json.Marshal(key)
+			if err != nil {
+				return nil, err
+			}
+			buf.Write(key)
+			buf.WriteString(":")
+			// marshal value
+			val, err := json.Marshal(value)
+			if err != nil {
+				return nil, err
+			}
+			buf.Write(val)
+		}
+		flag = true
+	}
+
+	buf.WriteString("}")
+	return buf.Bytes(), nil
 }
