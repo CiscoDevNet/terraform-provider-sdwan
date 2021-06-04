@@ -1711,6 +1711,8 @@ func getVPNInterfaceNAT(natCont *container.Container) []map[string]interface{} {
 			isNATPresent += 1
 		}
 
+	} else {
+		NATDef["ipv4"] = nil
 	}
 
 	if natCont.Exists("nat64") {
@@ -1832,6 +1834,8 @@ func getVPNInterfaceNATIPv4(natCont *container.Container) []map[string]interface
 		}
 
 		result["port_forward"] = rule
+	} else {
+		result["port_forward"] = nil
 	}
 
 	//static nat rule
@@ -1881,6 +1885,8 @@ func getVPNInterfaceNATIPv4(natCont *container.Container) []map[string]interface
 		}
 
 		result["static_nat"] = rule
+	} else {
+		result["static_nat"] = nil
 	}
 
 	ipv4 = append(ipv4, result)
