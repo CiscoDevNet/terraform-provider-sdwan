@@ -577,7 +577,7 @@ func resourceSDWANSystemFeatureTemplateCreate(d *schema.ResourceData, m interfac
 	}
 
 	ftDefinition := d.Get("template_definition").(*schema.Set).List()
-	def, err := createSystemFTDefinition(ftDefinition)
+	def, err := createSystemFTDefinition(ftDefinition, templateType)
 	if err != nil {
 		return err
 	}
@@ -618,7 +618,7 @@ func resourceSDWANSystemFeatureTemplateUpdate(d *schema.ResourceData, m interfac
 	}
 
 	ftDefinition := d.Get("template_definition").(*schema.Set).List()
-	def, err := createSystemFTDefinition(ftDefinition)
+	def, err := createSystemFTDefinition(ftDefinition, templateType)
 	if err != nil {
 		return err
 	}
@@ -681,7 +681,7 @@ func resourceSDWANSystemFeatureTemplateDelete(d *schema.ResourceData, m interfac
 	return nil
 }
 
-func createSystemFTDefinition(ftDefinitions []interface{}) (map[string]interface{}, error) {
+func createSystemFTDefinition(ftDefinitions []interface{}, tType string) (map[string]interface{}, error) {
 	definition := make(map[string]interface{})
 
 	if len(ftDefinitions) > 0 {
@@ -708,7 +708,7 @@ func createSystemFTDefinition(ftDefinitions []interface{}) (map[string]interface
 
 			for num, systemTrackerMap := range TrackerSet {
 				tracker := make(map[string]interface{})
-				createSystemTracker(tracker, systemTrackerMap.(map[string]interface{}), num+1)
+				createSystemTracker(tracker, systemTrackerMap.(map[string]interface{}), num+1, tType)
 
 				trackers = append(trackers, tracker)
 			}
@@ -868,7 +868,7 @@ func createSystemGPS(defMap map[string]interface{}, input map[string]interface{}
 	defMap["gps-location"] = gps
 }
 
-func createSystemTracker(defMap map[string]interface{}, input map[string]interface{}, num int) {
+func createSystemTracker(defMap map[string]interface{}, input map[string]interface{}, num int, templateType string) {
 
 	if input["tracker_name"] != nil && input["tracker_name"] != "" {
 		trackerName := make(map[string]interface{})
@@ -879,7 +879,7 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		defMap["name"] = trackerName
 	}
 
-	if input["tracker_type"] != nil {
+	if templateType == "cisco_system" && input["tracker_type"] != nil {
 		trackerType := make(map[string]interface{})
 		trackerType["vipObjectType"] = "object"
 		trackerType["vipType"] = "constant"
@@ -945,7 +945,8 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		trackerMultiplier["vipVariableName"] = "tracker_multiplier_" + strconv.Itoa(num)
 		defMap["multiplier"] = trackerMultiplier
 	}
-	defMap["priority-order"] = []string{
+
+	priotityOrder := []string{
 		"name",
 		"endpoint-ip",
 		"endpoint-dns-name",
@@ -953,8 +954,13 @@ func createSystemTracker(defMap map[string]interface{}, input map[string]interfa
 		"threshold",
 		"interval",
 		"multiplier",
-		"type",
 	}
+
+	if templateType == "cisco_system" {
+		priotityOrder = append(priotityOrder, "type")
+	}
+
+	defMap["priority-order"] = priotityOrder
 }
 
 func createSystemAdvanced(defMap map[string]interface{}, input map[string]interface{}) {

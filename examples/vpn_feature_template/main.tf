@@ -96,9 +96,6 @@ resource "sdwan_vpn_feature_template" "example_resource2" {
       prefix = "1.1.1.1/4"
       service_type= "FW"
     }
-    service_route {
-      prefix = "1::/1"
-    }
     nat64 {
       pool_name = "smaple_name"
       start_address = "1.1.1.1"
@@ -109,6 +106,10 @@ resource "sdwan_vpn_feature_template" "example_resource2" {
       prefix = "1::/1"
       gateway_type = "null0"
       null0_distance = "10"
+    }
+     ipv6_route {
+      prefix = "1::/2"
+      gateway_type = "null0"
     }
     ipv6_route {
       prefix = "2::/1"

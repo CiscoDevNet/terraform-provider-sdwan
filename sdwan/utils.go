@@ -895,6 +895,7 @@ func marshJSONforDef(ftDefMap map[string]interface{}) ([]byte, error) {
 			}
 			bufDef.Write(val)
 		}
+
 		if k == "if-name" {
 			// marshal key
 			key, err := json.Marshal(k)
@@ -910,6 +911,7 @@ func marshJSONforDef(ftDefMap map[string]interface{}) ([]byte, error) {
 			}
 			bufDef.Write(val)
 		}
+
 	}
 
 	for k, v := range ftDefMap {
@@ -929,6 +931,7 @@ func marshJSONforDef(ftDefMap map[string]interface{}) ([]byte, error) {
 			}
 			bufDef.Write(val)
 		}
+
 		if k != "if-name" {
 			bufDef.WriteString(",")
 			// marshal key
@@ -945,6 +948,7 @@ func marshJSONforDef(ftDefMap map[string]interface{}) ([]byte, error) {
 			}
 			bufDef.Write(val)
 		}
+
 	}
 	bufDef.WriteString("}")
 
