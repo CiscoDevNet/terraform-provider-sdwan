@@ -36,16 +36,44 @@ resource "sdwan_device_template" "example_cli" {
 
   general_templates{
     template_id = "c8746871-cb8e-4ab7-a5f8-948c624f19ac"
-    template_type = "system-vedge"
+    template_type = "aaa"
   }
+
   general_templates{
     template_id = "5083367c-0db3-4dd7-bc05-ad1afbbceaf4"
-    template_type = "vpn-vedge"
+    template_type = "bfd-vedge"
+  }
+
+  general_templates{
+    template_id = "79437c57-9b0f-4364-b060-55e827ac7e45"
+    template_type = "omp-vedge"
+  }
+
+  general_templates{
+    template_id = "486d419f-4e6c-44a5-a6fb-7b5ccf94ff90"
+    template_type = "security-vedge"
+  }
+  
+  general_templates{
+    template_id = "45ea940a-45d2-4fd9-8da2-570a1a6d6874"
+    template_type = "system-vedge"
+    sub_templates{
+      template_id = "171e9bd4-7a7b-460d-b692-83f0d5ce0124"
+      template_type = "logging"
+    }
+    sub_templates{
+      template_id = "edf3d309-91d4-45be-98d9-cfd57a05a479"
+      template_type = "ntp"
+    }
   }
 
   general_templates{
     template_id = "79437c57-9b0f-4364-b060-55e827ac7e45"
     template_type = "vpn-vedge"
+    sub_templates{
+      template_id = " e1b5b6e9-3b54-4279-a532-a2aaaef3e6a1"
+      template_type = "vpn-vedge-interface"
+    }
   }
 
   policy_id = "8715a21d-9367-47ea-9bc6-e25163ed9513"
@@ -77,9 +105,9 @@ resource "sdwan_device_template" "example_cli" {
 ## Nested Schema for general_templates ##
 * `template_id` - (Required) Template Id of Feature Template
 * `template_type` - (Required) Template Type of Feature Template, allowed values: "aaa", "bfd-vedge", "omp-vedge", "security-vedge", "system-vedge",  "vpn-vedge", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_system",  "cisco_vpn", "cedge_global" <br>
-<strong>NOTE</strong>
-`aaa`, `bfd-vedge`, `omp-vedge`, `security-vedge`, `system-vedge`, `vpn-vedge` are required for vEdge Devices.
-"cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_system",  "cisco_vpn", "cedge_global" are required for cEdge Devices
+<strong>NOTE</strong><br>
+`aaa`, `bfd-vedge`, `omp-vedge`, `security-vedge`, `system-vedge`, `vpn-vedge` are required for vEdge Devices.<br>
+`cedge_aaa`, `cisco_bfd`, `cisco_omp`, `cisco_security`, `cisco_system`, `cisco_vpn`, `cedge_global` are required for cEdge Devices
 * `sub_templates` - (Optional) List of Sub Templates associated with feature Template (see [below for nested schema](#nestedblock--sub_templates))
 
 
