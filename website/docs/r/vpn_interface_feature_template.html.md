@@ -388,7 +388,7 @@ Allowed values for Cisco VPN Interface type Feature Template : "vedge-C8500-12X4
 * `vpn_interface_vrrp` - (Optional) VRRP(Virtual Router Redundancy Protocol) configuration for the  VPN Interface type Feature Template, Max Items: 1 (see [below for nested schema](#nestedblock--vpn_interface_vrrp))
 * `vpn_interface_acl_qos` - (Optional) ACL(Apply Access Lists) and QoS  configuration for the  VPN Interface type Feature Template, Max Items: 1 (see [below for nested schema](#nestedblock--vpn_interface_acl_qos))
 * `vpn_interface_arp` - (Optional) ARP(Address Resolution Protocol) configuration for the  VPN Interface type Feature Template, (see [below for nested schema](#nestedblock--vpn_interface_arp))
-* `vpn_interface_8021x` - (Optional) IEEE 802.1X Authentication configuration for the Vedge VPN Interface type Feature Template, Max Items: 1, If 'NAT' or 'TLOC Extension' is configured, we can not configure vpn_interface_8021x (see [below for nested schema](#nestedblock--vpn_interface_8021x))
+* `vpn_interface_8021x` - (Optional) IEEE 802.1X Authentication configuration for the Vedge VPN Interface type Feature Template, Max Items: 1, If 'NAT' or 'TLOC Extension' is configured, we should not configure vpn_interface_8021x (see [below for nested schema](#nestedblock--vpn_interface_8021x))
 * `vpn_interface_trustsec` - (Optional) TrustSec configuration for the Cisco VPN Interface type Feature Template, Max Items: 1 (see [below for nested schema](#nestedblock--vpn_interface_trustsec)) 
 * `vpn_interface_advanced` - (Optional) Advanced configuration for the VPN Interface type Feature Template, Max Items: 1 (see [below for nested schema](#nestedblock--vpn_interface_advanced))
 
@@ -610,7 +610,7 @@ Range: [12 - 6000], Default: 12
 * `group_id` - (Required) The virtual router ID, which is a numeric identifier of the virtual router for VPN interface type Feature Template, 
 Range: [1 - 255]
 * `priority` - (Optional) The priority level of the router. The router with the highest priority is elected as primary VRRP router. If two routers have the same priority, the one with the higher IP address is elected as primary VRRP router for VPN interface type Feature Template, Range: [1 - 254], Default: 100
-* `timer` - (Optional) Timer value specify how often the primary VRRP router sends VRRP advertisement messages. If subordinate routers miss three consecutive VRRP advertisements, they elect a new primary VRRP routers for VPN interface type Feature Template, Range for Vedge VPN interface: [1 - 3600] Seconds Default: 1 Second, Range for Cisco VPN interface: [1 - 40950] Milliseconds, Default: 100 Second
+* `timer` - (Optional) Timer value specify how often the primary VRRP router sends VRRP advertisement messages. If subordinate routers miss three consecutive VRRP advertisements, they elect a new primary VRRP routers for VPN interface type Feature Template, Range for Vedge VPN interface: [1 - 3600] Seconds, Default: 1 Second, Range for Cisco VPN interface: [100 - 40950] Milliseconds, Default: 100 Milliseconds
 * `track_omp` - (Optional) Flag indicating whether to enable for VRRP to track the Overlay Management Protocol (OMP) session running on the WAN connection or not for VPN interface type Feature Template, Default: false
 * `track_prefix_list` - (Optional) Value of remote prefixes, which is defined in a prefix list configured on the local router for VPN interface type Feature Template
 * `ip_address` - (Optional) Value of IPv4 address of the virtual router for VPN interface type Feature Template, Allowed value: IPv4 Address

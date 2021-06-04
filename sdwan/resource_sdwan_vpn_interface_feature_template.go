@@ -1754,15 +1754,12 @@ func createVPNInterfaceFTDefinition(ftDefinitions []interface{}, ftType string) 
 		}
 	}
 
-	if len(ftDefMap["vpn_interface_8021x"].(*schema.Set).List()) > 0 && isTLOCPresent == 0 && isNATPresent == 0 {
+	if len(ftDefMap["vpn_interface_8021x"].(*schema.Set).List()) > 0 {
 		vpnInterface8021XMap := (ftDefMap["vpn_interface_8021x"].(*schema.Set).List())[0].(map[string]interface{})
 		err := createVPNInterface8021X(definition, vpnInterface8021XMap)
 		if err != nil {
 			return nil, err
 		}
-	} else if len(ftDefMap["vpn_interface_8021x"].(*schema.Set).List()) != 0 && (isTLOCPresent != 0 || isNATPresent != 0) {
-		return nil, fmt.Errorf("Either 'NAT' or 'TLOC Extension' is configured")
-
 	} else {
 		dot1xMap := make(map[string]interface{})
 		dot1xMap["vipType"] = "ignore"
