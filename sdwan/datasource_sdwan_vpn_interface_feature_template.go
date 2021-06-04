@@ -1080,8 +1080,6 @@ func setVPNInterfaceTemplateAttributes(d *schema.ResourceData, cont *container.C
 
 	d.Set("template_definition", FTDefinition)
 
-	log.Println("End of template definition: ", FTDefinition)
-
 	if value, err := strconv.ParseBool(stripQuotes(cont.S("factoryDefault").String())); err == nil {
 		d.Set("factory_default", value)
 	}
@@ -1186,7 +1184,6 @@ func getVPNInterfaceFTDefinition(cont *container.Container) []map[string]interfa
 	definition = append(definition, VPNInterfaceDef)
 
 	log.Println("[DEBUG] End of get vpn interface definition Method")
-	log.Println("FTDefnition : ", definition)
 	return definition
 }
 
@@ -1206,7 +1203,6 @@ func getVPNInterfaceBasic(basicCont *container.Container) []map[string]interface
 	}
 
 	if basicCont.Exists("ip") {
-		log.Println("Inside ip")
 		temp := make(map[string]interface{})
 		temp1 := make([]map[string]interface{}, 0, 1)
 		isIPv4Present := 0
@@ -1244,7 +1240,6 @@ func getVPNInterfaceBasic(basicCont *container.Container) []map[string]interface
 
 		if basicCont.Exists("dhcp-helper", "vipValue") {
 			val := basicCont.S("dhcp-helper", "vipValue").Data().([]interface{})
-			log.Println("dhcp_helper :", val)
 			if len(val) > 0 {
 				temp["dhcp_helper"] = interfaceToStrList(basicCont.S("dhcp-helper", "vipValue").Data())
 				isIPv4Present += 1

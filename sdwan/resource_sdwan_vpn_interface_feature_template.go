@@ -1541,14 +1541,11 @@ func resourceSDWANVPNInterfaceFeatureTemplateCreate(d *schema.ResourceData, m in
 		return err
 	}
 
-	log.Println("ftDefinition ", ftMap["templateDefinition"])
-
 	dURL := fmt.Sprintf("dataservice/template/feature")
 	bodyBytes, err := marshalJSON(ftMap)
 	if err != nil {
 		return err
 	}
-	log.Println("check ... bodybytes ", string(bodyBytes))
 	cont, err := sdwanClient.SaveviaBytes(dURL, bodyBytes)
 	if err != nil {
 		return err
@@ -1593,13 +1590,10 @@ func resourceSDWANVPNInterfaceFeatureTemplateUpdate(d *schema.ResourceData, m in
 		return err
 	}
 
-	log.Println("ftDefinition ", ftMap["templateDefinition"])
-
 	bodyBytes, err := marshalJSON(ftMap)
 	if err != nil {
 		return err
 	}
-	log.Println("check ... bodybytes ", string(bodyBytes))
 
 	dURL := fmt.Sprintf("dataservice/template/feature/%s", ftID)
 	_, err = sdwanClient.UpdateviaBytes(dURL, bodyBytes)
@@ -1920,7 +1914,6 @@ func createVPNInterfaceBasicIPv6(defMap map[string]interface{}, input map[string
 
 		IPv6["secondary-address"] = SecAddrMap
 		isPresent = isPresent + 1
-		log.Println("secondary ip defMap ", SecAddrMap)
 	}
 
 	if input["dhcp_distance"] != nil && input["dhcp_distance"] != "" {
@@ -1958,7 +1951,6 @@ func createVPNInterfaceBasicIPv6(defMap map[string]interface{}, input map[string
 
 		IPv6["dhcp-helper-v6"] = HelperMap
 		isPresent = isPresent + 1
-		log.Println("dhcp_helper defMap ", HelperMap)
 	}
 
 	if isPresent > 0 {
