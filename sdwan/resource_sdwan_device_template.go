@@ -142,7 +142,7 @@ func resourceSDWANDeviceTemplate() *schema.Resource {
 									"sub_template_type": {
 										Type:             schema.TypeString,
 										Required:         true,
-										ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(validTemplateTypes, false)),
+										ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(validSubTemplateTypes, false)),
 										Description:      "Sub Template Type of Feature Template",
 									},
 								},

@@ -76,7 +76,10 @@ resource "sdwan_device_template" "example_cli" {
 
 ## Nested Schema for general_templates ##
 * `template_id` - (Required) Template Id of Feature Template
-* `template_type` - (Required) Template Type of Feature Template, allowed values: "aaa", "bfd-vedge", "omp-vedge", "security-vedge", "system-vedge", "logging", "ntp", "vpn-vedge", "vpn-vedge-interface", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_system", "cisco_logging", "cisco_ntp", "cisco_vpn", "cisco_vpn_interface", "cedge_global"
+* `template_type` - (Required) Template Type of Feature Template, allowed values: "aaa", "bfd-vedge", "omp-vedge", "security-vedge", "system-vedge",  "vpn-vedge", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_system",  "cisco_vpn", "cedge_global" <br>
+<strong>NOTE</strong>
+`aaa`, `bfd-vedge`, `omp-vedge`, `security-vedge`, `system-vedge`, `vpn-vedge` are required for vEdge Devices.
+"cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_system",  "cisco_vpn", "cedge_global" are required for cEdge Devices
 * `sub_templates` - (Optional) List of Sub Templates associated with feature Template (see [below for nested schema](#nestedblock--sub_templates))
 
 
@@ -84,7 +87,7 @@ resource "sdwan_device_template" "example_cli" {
 
 ## Nested Schema for sub_templates ##
 * `template_id` - (Required) Template Id of Feature Template
-* `template_type` - (Required) Template Type of Feature Template, allowed values: "system-vedge", "ntp", "vpn-vedge", "vpn-vedge-interface"
+* `template_type` - (Required) Template Type of Feature Template, allowed values: "logging" (this can be allowed only with `system-vedge` type `general_templates`), "ntp" (this can be allowed only with `system-vedge` type `general_templates`), "vpn-vedge-interface" (this can be allowed only with`vpn-vedge` type `general_templates`), "cisco_logging" (this can be allowed only with `cisco_system` type `general_templates`), "cisco_ntp"(this can be allowed only with `"cisco_system"` type `general_templates`), "cisco_vpn_interface" (this can be allowed only with `cisco_vpn` type `general_templates`)
 
 ## Argument Reference for Device Template created from CLI ##
 * `template_configuration` - (Required) Template Configuration for  Device Template
