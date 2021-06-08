@@ -75,6 +75,7 @@ func resourceSDWANDevicesAttachment() *schema.Resource {
 					var buf bytes.Buffer
 					m := v.(map[string]interface{})
 					buf.WriteString(fmt.Sprintf("%s-", m["chassis_number"].(string)))
+					buf.WriteString(fmt.Sprintf("%v-", m["attach"].(bool)))
 					return hashString(buf.String())
 				},
 			},
