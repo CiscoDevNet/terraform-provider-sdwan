@@ -125,3 +125,31 @@ resource "sdwan_vpn_feature_template" "example_resource2" {
     te_service_enabled = true
   }
 }
+
+resource "sdwan_vpn_feature_template" "example_cedge_vpn0" {
+  template_name = "Cisco-VPN0-demo"
+  template_description = "Minimal VPN0 Type cEdge Feature Template"
+  template_type = "cisco_vpn"
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
+  factory_default = false
+  template_definition {
+    vpn_basic {
+      vpn_id = 0
+    }
+  }
+}
+
+resource "sdwan_vpn_feature_template" "example_cedge_vpn512" {
+  template_name = "Cisco-VPN512-demo"
+  template_description = "Minimal VPN512 Type cEdge Feature Template"
+  template_type = "cisco_vpn"
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
+  factory_default = false
+  template_definition {
+    vpn_basic {
+      vpn_id = 512
+    }
+  }
+}

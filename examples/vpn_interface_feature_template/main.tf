@@ -357,3 +357,19 @@ resource "sdwan_vpn_interface_feature_template" "name4" {
     }    
   }
 }
+
+
+resource "sdwan_vpn_interface_feature_template" "example_cedge_vpn_interface" {
+  template_name = "Cisco-VPN-Interface-demo"
+  template_description = "Minimal VPN Interface Type cEdge Feature Template"
+  template_type = "cisco_vpn_interface"
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
+  factory_default = false
+  template_definition {
+    vpn_interface_basic {
+        shutdown= true 
+        description = "for demo"
+     }
+  }
+}

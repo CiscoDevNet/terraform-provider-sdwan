@@ -15,18 +15,17 @@ Resource for SD-WAN VPN Interface Feature Templates
 
 # example for Cisco VPN Interface Feature Template
 
-resource "sdwan_vpn_interface_feature_template" "name1" {
-  template_name = "Sample_VPN_Interface_1"
-  template_description = "For testing purposes"
-  device_type = ["vedge-C1161-8P"]
+resource "sdwan_vpn_interface_feature_template" "example_cedge_vpn_interface" {
+  template_name = "Cisco-VPN-Interface-demo"
+  template_description = "Minimal VPN Interface Type cEdge Feature Template"
   template_type = "cisco_vpn_interface"
-  template_min_version = "15.0.0"
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
   factory_default = false
-
-  template_definition {  
-     vpn_interface_basic {
-        shutdown= true
-       description = "for testing purpose"
+  template_definition {
+    vpn_interface_basic {
+        shutdown= true 
+        description = "for demo"
      }
   }
 }
