@@ -21,43 +21,20 @@ output "output1" {
   value = data.sdwan_devices_attachment.name
 }
 
-resource "sdwan_devices_attachment" "device_attachment1" {
-  timeout = 100
-  device_template_id = "5477b564-db5e-4195-8d76-00b6d471a8b6"
-  file = "Template1.csv"
-  devices_list {
-    chassis_number = "CSR-330E65C0-8D52-41B2-940A-398119726CCE"
-  }
-   devices_list {
-    chassis_number = "CSR-2AD10A1D-325E-48CC-9D80-A9B5B7BBF7CB"
-  }  
+resource "sdwan_devices_attachment" "example_devices_attachment" {
+  device_template_id = sdwan_device_template.cisco_device_template.template_id
+  file = "Template.csv"
+
+  devices_list{
+    chassis_number = "CSR-53D3BC42-6F6C-4529-8D03-4B2903D1E688"
+    }
+  devices_list{
+    chassis_number = "CSR-DC54554A-5BE7-49BD-936B-702ECD2FBE4B"
+    }  
 }
 
 
-resource "sdwan_devices_attachment" "device_attachment2" {
-  timeout = 100
-  device_template_id = "b884a99a-e399-4e8b-8676-fb1a3ca21f7c"
-  file = "Template2.csv"
-  devices_list {
-    chassis_number = "1590f587-31aa-431c-80ac-8dc15f23c7b7"
-  }
-   devices_list {
-    chassis_number = "f05c0fb9-56c5-4d17-bd91-067253dedeff"
-  }  
-}
 
 
-resource "sdwan_devices_attachment" "device_attachment3" {
-  timeout = 50
-  device_template_id = "186f0ff1-2ea5-4a2c-b97f-d2576217b953"
-  file = "Template3.csv"
-  devices_list {
-    chassis_number = "CSR-DF5C9569-CA62-421A-97AB-F0765C1854D6"
-  }
-   devices_list {
-    chassis_number = "CSR-F3EF66F0-A1E8-4C11-9C12-3C95ED91A2CC"
-  }  
-   devices_list {
-    chassis_number = "CSR-AE05722E-FD8F-41A1-A799-A9398646DE6F"
-  }  
-}
+
+

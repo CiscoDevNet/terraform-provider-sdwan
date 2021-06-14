@@ -6,7 +6,7 @@ description: |-
   Manages SD-WAN VPN Type Feature Templates
 ---
 
-# sdwan_system_feature_template #
+# sdwan_system_feature_template Resource #
 Manages SD-WAN VPN Type Feature Templates
 
 ## Example Usage ##
@@ -14,16 +14,30 @@ Manages SD-WAN VPN Type Feature Templates
 ```hcl
 # example for VPN type of feature template
 
-resource "sdwan_vpn_feature_template" "exmple_resource1" {
-  template_name = "example_cisco_vpn"
+resource "sdwan_vpn_feature_template" "example_cedge_vpn0" {
+  template_name = "Cisco-VPN0-demo"
+  template_description = "Minimal VPN0 Type cEdge Feature Template"
   template_type = "cisco_vpn"
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
   factory_default = false
-  device_type = [ "vedge-C1111-8P" ]
-  template_description = "For testing purpose"
-  template_min_version = "15.0.0"
   template_definition {
     vpn_basic {
-        vpn_id = 0
+      vpn_id = 0
+    }
+  }
+}
+
+resource "sdwan_vpn_feature_template" "example_cedge_vpn512" {
+  template_name = "Cisco-VPN512-demo"
+  template_description = "Minimal VPN512 Type cEdge Feature Template"
+  template_type = "cisco_vpn"
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
+  factory_default = false
+  template_definition {
+    vpn_basic {
+      vpn_id = 512
     }
   }
 }

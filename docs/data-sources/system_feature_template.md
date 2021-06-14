@@ -6,7 +6,7 @@ description: |-
   Data source for SD-WAN System Feature Template
 ---
 
-# sdwan_system_feature_template #
+# sdwan_system_feature_template Data Source #
 Data source for SD-WAN System Feature Templates
 
 ## Example Usage ##

@@ -6,28 +6,25 @@ description: |-
   Manages SD-WAN Devices Attachment
 ---
 
-# sdwan_devices_attachment #
+# sdwan_devices_attachment Resource #
 Manages SD-WAN Device Attachment
 
 ## Example Usage ##
 
 ```hcl
 # example for Devices to Device Template attachment
+resource "sdwan_devices_attachment" "example_devices_attachment" {
+  device_template_id = sdwan_device_template.cisco_device_template.template_id
+  file = "Template.csv"
 
-resource "sdwan_devices_attachment" "name" {
-  timeout = 600
-  device_template_id = "a137ff27-6370-4214-b060-17d29452a297"
-  file = "featureInput.csv"
-  devices_list {
-    chassis_number = "CSR-F3EF66F0-A1E8-4C11-9C12-3C95ED91A2CC"
-  }
-  devices_list {
-    chassis_number = "CSR-AE05722E-FD8F-41A1-A799-A9398646DE6F"
-  }
-  devices_list {
+  devices_list{
+    chassis_number = "CSR-53D3BC42-6F6C-4529-8D03-4B2903D1E688"
+    }
+  devices_list{
     chassis_number = "CSR-DC54554A-5BE7-49BD-936B-702ECD2FBE4B"
-  }
+    }  
 }
+
 
 ```
 ## Common Argument Reference ##

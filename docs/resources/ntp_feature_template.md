@@ -6,7 +6,7 @@ description: |-
   Manages SD-WAN NTP Type Feature Templates
 ---
 
-# sdwan_ntp_feature_template #
+# sdwan_ntp_feature_template Resource #
 Manages SD-WAN NTP Type Feature Templates
 
 ## Example Usage ##
@@ -46,60 +46,24 @@ resource "sdwan_ntp_feature_template" "example_ntp_feature_template" {
 
 
 # example for Cisco NTP Feature Template
-
-resource "sdwan_ntp_feature_template" "example_cisco_ntp_feature_template" {
-  template_name = "example2"
-  template_description = "For testing purposes"
-  device_type = [
-    "vedge-C1161-8P",
-		"vedge-C1121X-8P",
-		"vedge-C8200-1N-4T",
-		"vedge-ISR-4331",
-		"vedge-C1127X-8PMLTEP",
-		"vedge-C1117-4PMLTEEAWE",
-		"vedge-ISR-4451-X",
-		"vedge-C1113-8PLTEEA",
-		"vedge-IR-1821",
-		"vedge-ASR-1001-X"]
+resource "sdwan_ntp_feature_template" "example_cedge_ntp" {
+  template_name = "Cisco-NTP-demo"
+  template_description = "Minimal NTP Type cEdge Feature Template"
   template_type = "cisco_ntp"
-  template_min_version = "15.0.0"
-  template_definition {      
-    server {
-      hostname = "time1.google."  
-      key = 2    
-      vpn = 5
-      version = 3
-      source_interface = "axyz"
-      prefer = false
-    }
-
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
+  factory_default = false
+  template_definition {
     server {
       hostname = "198.00.200.100"     
       key = 1
       vpn = 0
       version = 4 
     }
-
-    master {
-      enable = true
-      stratum = 5
-      source = "abc"
-    }
-
-    authentication {
-      id = 1
-      value = "12345"
-    }
-
-    authentication {
-      id = 2
-      value = "xyzdf"
-    }
-
-    trusted = [ "2"]
+    
   }
-  factory_default = false
 }
+
 ```
 
 
