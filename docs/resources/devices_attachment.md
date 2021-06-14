@@ -6,7 +6,7 @@ description: |-
   Manages SD-WAN Devices Attachment
 ---
 
-# sdwan_devices_attachment #
+# sdwan_devices_attachment Resource #
 Manages SD-WAN Device Attachment
 
 ## Example Usage ##

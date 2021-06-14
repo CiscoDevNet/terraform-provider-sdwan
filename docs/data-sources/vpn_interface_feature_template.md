@@ -6,7 +6,7 @@ description: |-
   Data source for SD-WAN VPN interface Feature Template
 ---
 
-# sdwan_vpn_interface_feature_template #
+# sdwan_vpn_interface_feature_template Data Source #
 Data source for SD-WAN VPN interface Feature Templates
 
 ## Example Usage ##

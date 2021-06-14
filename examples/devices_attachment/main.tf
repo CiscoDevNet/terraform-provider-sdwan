@@ -34,17 +34,6 @@ resource "sdwan_devices_attachment" "example_devices_attachment" {
 }
 
 
-resource "sdwan_devices_attachment" "device_attachment2" {
-  timeout = 100
-  device_template_id = "b884a99a-e399-4e8b-8676-fb1a3ca21f7c"
-  file = "Template1.csv"
-  devices_list {
-    chassis_number = "1590f587-31aa-431c-80ac-8dc15f23c7b7"
-  }
-   devices_list {
-    chassis_number = "f05c0fb9-56c5-4d17-bd91-067253dedeff"
-  }  
-}
 
 
 
