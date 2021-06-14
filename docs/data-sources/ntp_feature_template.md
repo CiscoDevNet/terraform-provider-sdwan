@@ -6,7 +6,7 @@ description: |-
   Data source for SD-WAN NTP Feature Template
 ---
 
-# sdwan_ntp_feature_template #
+# sdwan_ntp_feature_template Data Source #
 Data source for SD-WAN NTP Feature Templates
 
 ## Example Usage ##

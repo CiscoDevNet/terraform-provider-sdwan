@@ -5,7 +5,7 @@ sidebar_current: "docs-sdwan-data-source-device_template"
 description: |-
   Data source for SD-WAN Device Templates 
 ---
-# sdwan_device_template #
+# sdwan_device_template Data Source #
 Data source for SD-WAN Device Templates
 
 ## Example Usage ##

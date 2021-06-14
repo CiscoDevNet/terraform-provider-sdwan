@@ -6,7 +6,7 @@ description: |-
   Manages SD-WAN System Type Feature Templates
 ---
 
-# sdwan_system_feature_template #
+# sdwan_system_feature_template Resource #
 Manages SD-WAN System Type Feature Templates
 
 ## Example Usage ##

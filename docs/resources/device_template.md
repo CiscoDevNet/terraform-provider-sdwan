@@ -6,7 +6,7 @@ description: |-
   Manages SD-WAN Device Templates
 ---
 
-# sdwan_device_template #
+# sdwan_device_template Resource #
 Manages SD-WAN Device Templates
 
 ## Example Usage ##

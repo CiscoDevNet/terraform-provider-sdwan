@@ -6,7 +6,7 @@ description: |-
   Manages SD-WAN VPN Type Feature Templates
 ---
 
-# sdwan_system_feature_template #
+# sdwan_system_feature_template Resource #
 Manages SD-WAN VPN Type Feature Templates
 
 ## Example Usage ##

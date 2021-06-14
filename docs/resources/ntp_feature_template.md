@@ -6,7 +6,7 @@ description: |-
   Manages SD-WAN NTP Type Feature Templates
 ---
 
-# sdwan_ntp_feature_template #
+# sdwan_ntp_feature_template Resource #
 Manages SD-WAN NTP Type Feature Templates
 
 ## Example Usage ##
