@@ -165,7 +165,7 @@ resource "sdwan_system_feature_template" "name5" {
   factory_default = false
 }
 
-resource "sdwan_system_feature_template" "name6" {
+resource "sdwan_system_feature_template" "example_cedge_system" {
   
   template_name = "CSR-Example2"
   template_description = "Description changed"

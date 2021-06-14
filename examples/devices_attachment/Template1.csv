@@ -1,3 +1,3 @@
-"csv-deviceId","csv-deviceIP","csv-host-name","/0/vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface/interface/if-name","//system/host-name","//system/system-ip","//system/site-id"
-"CSR-330E65C0-8D52-41B2-940A-398119726CCE","-","-","GigabitEthernet1","cEdge1","1.1.2.102","100"
-"CSR-2AD10A1D-325E-48CC-9D80-A9B5B7BBF7CB","-","-","GigabitEthernet1","cEdge2","1.1.2.103","200"
+"csv-deviceId","csv-deviceIP","csv-host-name","//system/host-name","//system/system-ip","//system/site-id"
+"1590f587-31aa-431c-80ac-8dc15f23c7b7","-","-","vEdgeCloud-1","1.1.1.102","200"
+"f05c0fb9-56c5-4d17-bd91-067253dedeff","-","-","vEdgeCloud-2","1.1.1.103","300"

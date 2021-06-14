@@ -14,17 +14,18 @@ Manages SD-WAN System Type Feature Templates
 ```hcl
 # example for Cisco System Feature Template
 
-resource "sdwan_system_feature_template" "example_cisco_system_feature_template" {  
-  template_name = "cEdge-Example1"
-  template_description = "Minimal Type Cisco System FT"
+resource "sdwan_system_feature_template" "example_cedge_system" {
+  
+  template_name = "CSR-Example2"
+  template_description = "Description changed"
   device_type = ["vedge-CSR-1000v"]
   template_type = "Cisco System"
   template_min_version = "20.4.1"
   factory_default = false
   template_definition {    
-
     system_basic {  
     }
+
     system_advanced {
     }
   }

@@ -113,3 +113,21 @@ resource "sdwan_ntp_feature_template" "name2" {
   }
   factory_default = false
 }
+
+resource "sdwan_ntp_feature_template" "example_cedge_ntp" {
+  template_name = "Cisco-NTP-demo"
+  template_description = "Minimal NTP Type cEdge Feature Template"
+  template_type = "cisco_ntp"
+  device_type = ["vedge-CSR-1000v"]
+  template_min_version = "20.4.1"
+  factory_default = false
+  template_definition {
+    server {
+      hostname = "198.00.200.100"     
+      key = 1
+      vpn = 0
+      version = 4 
+    }
+    
+  }
+}
