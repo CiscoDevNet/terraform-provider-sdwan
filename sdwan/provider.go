@@ -73,7 +73,7 @@ func Provider() *schema.Provider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"sdwan_fetaure_template_ids":           datasourceSDWANFeatureTemplateIds(),
+			"sdwan_feature_template_ids":           datasourceSDWANFeatureTemplateIds(),
 			"sdwan_device_uuids":                   datasourceSDWANDeviceUUIDS(),
 			"sdwan_device_template":                datasourceSDWANDeviceTemplate(),
 			"sdwan_devices_attachment":             datasourceSDWANDevicesAttachment(),
