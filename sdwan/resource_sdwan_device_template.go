@@ -229,6 +229,8 @@ func resourceSDWANDeviceTemplateCreate(d *schema.ResourceData, m interface{}) er
 		tempID = stripQuotes(cont.S("templateId").String())
 	} else {
 
+		deviceTemplate.CliType = "device"
+
 		if tconfig, ok := d.GetOk("template_configuration"); ok {
 			deviceTemplate.TemplateConfiguration = tconfig.(string)
 		}
@@ -415,6 +417,8 @@ func resourceSDWANDeviceTemplateUpdate(d *schema.ResourceData, m interface{}) er
 		}
 
 	} else {
+
+		deviceTemplate.CliType = "device"
 
 		if tconfig, ok := d.GetOk("template_configuration"); ok {
 			deviceTemplate.TemplateConfiguration = tconfig.(string)
