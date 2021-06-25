@@ -6,24 +6,25 @@ type Template struct {
 }
 
 type GeneralTemplate struct {
-	TemplateId   string     `json:"templateId"`
-	TemplateType string     `json:"templateType"`
+	TemplateId   string      `json:"templateId"`
+	TemplateType string      `json:"templateType"`
 	SubTemplates []*Template `json:"subTemplates"`
 }
 
 type DeviceTemplate struct {
-	TemplateName                 string            `json:"templateName"`
-	TemplateDescription          string            `json:"templateDescription"`
-	DeviceType                   string            `json:"deviceType"`
-	DeviceRole                   string            `json:"deviceRole"`
-	ConfigType                   string            `json:"configType"`
-	FactoryDefault               bool              `json:"factoryDefault"`
-	PolicyId                     string            `json:"policyId"`
-	FeatureTemplateUidRange      []string          `json:"featureTemplateUidRange"`
-	ConnectionPreferenceRequired bool              `json:"connectionPreferenceRequired"`
-	ConnectionPreference         bool              `json:"connectionPreference"`
+	TemplateName                 string             `json:"templateName"`
+	TemplateDescription          string             `json:"templateDescription"`
+	DeviceType                   string             `json:"deviceType"`
+	DeviceRole                   string             `json:"deviceRole"`
+	ConfigType                   string             `json:"configType"`
+	FactoryDefault               bool               `json:"factoryDefault"`
+	PolicyId                     string             `json:"policyId"`
+	FeatureTemplateUidRange      []string           `json:"featureTemplateUidRange"`
+	ConnectionPreferenceRequired bool               `json:"connectionPreferenceRequired"`
+	ConnectionPreference         bool               `json:"connectionPreference"`
 	GeneralTemplates             []*GeneralTemplate `json:"generalTemplates"`
-	TemplateConfiguration        string            `json:"templateConfiguration"`
+	TemplateConfiguration        string             `json:"templateConfiguration"`
+	CliType                      string             `json:"cliType"`
 }
 
 func (st *Template) MakeSubTemplate() (map[string]interface{}, error) {
@@ -56,6 +57,7 @@ func (gt *GeneralTemplate) MakeGeneralTemplate() (map[string]interface{}, error)
 
 // ToMap - Returns map for Device Template model
 func (dt *DeviceTemplate) ToMap() (map[string]interface{}, error) {
+
 	deviceTemplateAttrMap := make(map[string]interface{})
 
 	A(deviceTemplateAttrMap, "templateName", dt.TemplateName)
@@ -78,6 +80,8 @@ func (dt *DeviceTemplate) ToMap() (map[string]interface{}, error) {
 
 	A(deviceTemplateAttrMap, "templateConfiguration", dt.TemplateConfiguration)
 
+	A(deviceTemplateAttrMap, "cliType", dt.CliType)
+
 	if len(dt.GeneralTemplates) > 0 {
 		gtList := make([]interface{}, 0)
 		for _, gt := range dt.GeneralTemplates {
@@ -89,10 +93,10 @@ func (dt *DeviceTemplate) ToMap() (map[string]interface{}, error) {
 
 	if len(dt.FeatureTemplateUidRange) > 0 {
 		A(deviceTemplateAttrMap, "featureTemplateUidRange", dt.FeatureTemplateUidRange)
-		
+
 	} else {
 		deviceTemplateAttrMap["featureTemplateUidRange"] = make([]string, 0, 1)
-		
+
 	}
 	return deviceTemplateAttrMap, nil
 }
