@@ -1154,7 +1154,6 @@ func createVPNIPv4Routes(defMap map[string]interface{}, input map[string]interfa
 
 		defMap["null0"] = null0Map
 
-
 		if input["null0_distance"].(string) != "" {
 			nullDis := make(map[string]interface{})
 			nullDis["vipType"] = "constant"
