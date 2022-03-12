@@ -131,7 +131,8 @@ var (
 		"vedge-C8000V",
 		"vedge-ISR1100-4G-XE",
 		"vedge-C1117-4PLTELAWZ"}
-	validVPNIds          = []int{0, 512}
+	vpnMinValidId        = 0
+	vpnMaxValidId        = 512
 	allowedGetewayTypev4 = []string{"next-hop", "dhcp", "null0"}
 	allowedGatewayTypev6 = []string{"next-hop", "null0"}
 	isValidServiceType   = []string{"sig", "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE"}
@@ -195,9 +196,12 @@ func resouceSDWANVPNFeatureTemplate() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"vpn_id": {
-										Type:         schema.TypeInt,
-										Required:     true,
-										ValidateFunc: validation.IntInSlice(validVPNIds),
+										Type:     schema.TypeInt,
+										Required: true,
+										ValidateFunc: validation.All(
+											validation.IntAtLeast(vpnMinValidId),
+											validation.IntAtMost(vpnMaxValidId),
+										),
 									},
 									"name": {
 										Type:     schema.TypeString,
