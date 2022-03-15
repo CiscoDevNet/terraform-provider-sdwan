@@ -1696,6 +1696,14 @@ func createVPNInterfaceFTDefinition(ftDefinitions []interface{}, ftType string) 
 		}
 
 		definition["access-list"] = ipv4AccessListMap
+
+		// vManage v20.6.2.2 (possibly others) breaks badly if any interface templates exist without qos-map
+		definition["qos-map"] = createVIPObject("object", "ignore", nil, "qos_map", nil)
+
+		// vManage v20.6.2.2 (possibly others) breaks badly if any interface templates exist without rewrite-rule
+		rewriteRule := make(map[string]interface{})
+		rewriteRule["rule-name"] = createVIPObject("object", "ignore", nil, "rewrite_rule_name", nil)
+		definition["rewrite-rule"] = rewriteRule
 	}
 
 	arpLen := len(ftDefMap["vpn_interface_arp"].(*schema.Set).List())
@@ -2896,15 +2904,21 @@ func createVPNInterfaceACL(defMap map[string]interface{}, input map[string]inter
 		defMap["shaping-rate"] = createVIPObject("object", "constant", input["shaping_rate"], "qos_shaping_rate", nil)
 	}
 
+	// vManage v20.6.2.2 (possibly others) breaks badly if any interface templates exist without qos-map
 	if input["qos_map"] != nil && input["qos_map"] != "" {
 		defMap["qos-map"] = createVIPObject("object", "constant", input["qos_map"], "qos_map", nil)
+	} else {
+		defMap["qos-map"] = createVIPObject("object", "ignore", nil, "qos_map", nil)
 	}
 
+	// vManage v20.6.2.2 (possibly others) breaks badly if any interface templates exist without rewrite-rule
+	rewriteRule := make(map[string]interface{})
 	if input["rewrite_rule"] != nil && input["rewrite_rule"] != "" {
-		rewriteRule := make(map[string]interface{})
 		rewriteRule["rule-name"] = createVIPObject("object", "constant", input["rewrite_rule"], "rewrite_rule_name", nil)
-		defMap["rewrite-rule"] = rewriteRule
+	} else {
+		rewriteRule["rule-name"] = createVIPObject("object", "ignore", nil, "rewrite_rule_name", nil)
 	}
+	defMap["rewrite-rule"] = rewriteRule
 
 	//ipv4 access-list
 	ipv4AccessList := make([]map[string]interface{}, 0, 2)
