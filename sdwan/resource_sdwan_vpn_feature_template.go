@@ -132,7 +132,7 @@ var (
 		"vedge-ISR1100-4G-XE",
 		"vedge-C1117-4PLTELAWZ"}
 	vpnMinValidId        = 0
-	vpnMaxValidId        = 512
+	vpnMaxValidId        = 65530
 	allowedGetewayTypev4 = []string{"next-hop", "dhcp", "null0"}
 	allowedGatewayTypev6 = []string{"next-hop", "null0"}
 	isValidServiceType   = []string{"sig", "FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE"}
