@@ -76,3 +76,6 @@ To compile the provider, run `make build`. This will build the provider with san
 - Set environment variable `TF_LOG_PATH` to write logs in a file. e.g. `TF_LOG_PATH=tf.log`
 
 For more details visit - [Terraform Debugging](https://www.terraform.io/docs/internals/debugging.html)
+
+## Support
+This project was built and tested with vManage 20.4 release. This project is not under active development and maintanence. Please use it at your own risk.
