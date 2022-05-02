@@ -1044,7 +1044,7 @@ func datasourceSDWANVPNInterfaceFeatureTemplateRead(d *schema.ResourceData, m in
 	cont, err := getFeatureTemplateByName(sdwanClient, ftName)
 	if err != nil {
 		if cont != nil {
-			return fmt.Errorf("[ERROR] Data load failed in between!")
+			return fmt.Errorf("[ERROR] Data load failed in between")
 		} else {
 			return err
 		}
@@ -1187,6 +1187,29 @@ func getVPNInterfaceFTDefinition(cont *container.Container) []map[string]interfa
 	return definition
 }
 
+func getStringValueOrVarName(parentNode *container.Container, hierarchy ...string) interface{} {
+	node := parentNode.S(hierarchy...)
+	vipType := stripQuotes(node.S("vipType").String())
+	// return vipType
+
+	switch vipType {
+	case "ignore":
+		return nil
+	case "variableName":
+		// return "ASDF"
+		vipVariableName := node.S("vipVariableName").String()
+		return fmt.Sprintf("{{%s}}", stripQuotes(vipVariableName))
+	default:
+		return stripQuotes(node.S("vipValue").String())
+	}
+}
+
+func hasValueOrVariable(parentNode *container.Container, hierarchy ...string) bool {
+	node := parentNode.S(hierarchy...)
+	return node.Exists("vipValue") ||
+		(node.S("vipType").String() == "variableName" && node.Exists("vipVariableName"))
+}
+
 func getVPNInterfaceBasic(basicCont *container.Container) []map[string]interface{} {
 	basic := make([]map[string]interface{}, 0, 1)
 
@@ -1198,37 +1221,44 @@ func getVPNInterfaceBasic(basicCont *container.Container) []map[string]interface
 		}
 	}
 
-	if basicCont.Exists("description", "vipValue") {
-		result["description"] = stripQuotes(basicCont.S("description", "vipValue").String())
+	if hasValueOrVariable(basicCont, "description") {
+		// result["description"] = "QWER"
+		result["description"] = getStringValueOrVarName(basicCont, "description")
 	}
 
 	if basicCont.Exists("ip") {
 		temp := make(map[string]interface{})
 		temp1 := make([]map[string]interface{}, 0, 1)
 		isIPv4Present := 0
-		if basicCont.Exists("ip", "address", "vipValue") {
-			temp["primary_address"] = stripQuotes(basicCont.S("ip", "address", "vipValue").String())
+		if hasValueOrVariable(basicCont, "ip", "address") {
+			// temp["primary_address"] = "QWER"
+			temp["primary_address"] = getStringValueOrVarName(basicCont, "ip", "address")
 			isIPv4Present += 1
 		}
 
 		if basicCont.Exists("ip", "secondary-address", "vipValue") {
-			address := []map[string]interface{}{}
-			addresses := basicCont.S("ip", "secondary-address", "vipValue")
+			addressMaps := []map[string]interface{}{}
+			addressNodes := basicCont.S("ip", "secondary-address", "vipValue")
 
 			isSecAddPresent := 0
-			for _, val := range addresses.Children() {
-				temp2 := make(map[string]interface{})
+			for _, addressNode := range addressNodes.Children() {
+				addressMap := make(map[string]interface{})
 
-				if val.Exists("address", "vipValue") {
-					temp2["address"] = stripQuotes(val.S("address", "vipValue").String())
+				if addressNode.Exists("address", "vipValue") {
+					addressMap["address"] = stripQuotes(addressNode.S("address", "vipValue").String())
 					isSecAddPresent += 1
 				}
 
-				address = append(address, temp2)
+				// if hasValueOrVariable(addressNode, "address") {
+				// 	addressMap["address"] = getStringValueOrVarName(addressNode, "address")
+				// 	isSecAddPresent += 1
+				// }
+
+				addressMaps = append(addressMaps, addressMap)
 			}
 
 			if isSecAddPresent > 0 {
-				temp["secondary_address"] = address
+				temp["secondary_address"] = addressMaps
 				isIPv4Present += 1
 			}
 		}
