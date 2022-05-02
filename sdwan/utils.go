@@ -141,9 +141,9 @@ var (
 		"template",
 		"file"}
 	validTemplateTypes = []string{
-		"aaa", "bfd-vedge", "omp-vedge", "security-vedge", "system-vedge", "vpn-vedge", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_system", "cisco_vpn", "cedge_global"}
+		"aaa", "bfd-vedge", "omp-vedge", "security-vedge", "system-vedge", "vpn-vedge", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_system", "cisco_vpn", "cedge_global", "cli-template"}
 	validSubTemplateTypes = []string{
-		"logging", "ntp", "vpn-vedge-interface", "cisco_logging", "cisco_ntp", "cisco_vpn_interface",
+		"logging", "ntp", "vpn-vedge-interface", "cisco_logging", "cisco_ntp", "cisco_vpn_interface", "cisco_bgp",
 	}
 	sysDeviceTypes = map[string]bool{
 		"vbond":                  true,
@@ -354,42 +354,64 @@ func floatInterfaceToStrList(data interface{}) []string {
 	return strList
 }
 
-func createVIPObject(vot interface{}, vt interface{}, vv interface{}, vvn interface{}, vpk interface{}) map[string]interface{} {
+func valueAsTemplateVar(vipValue string) (bool, map[string]interface{}) {
+	if strings.HasPrefix(vipValue, "{{") && strings.HasSuffix(vipValue, "}}") {
+		vipValue = strings.Trim(vipValue, "{}")
+		return true, createVIPVariable(vipValue)
+	}
+	return false, nil
+}
+
+func createVIPVariable(vipVariableName string) map[string]interface{} {
+	return createVIPObject(
+		"object",
+		"variableName",
+		"",
+		vipVariableName,
+		nil,
+	)
+}
+
+func createVIPObject(vipObjType interface{}, vipType interface{}, vipValue interface{}, vipVarName interface{}, vipPriKey interface{}) map[string]interface{} {
 	object := make(map[string]interface{})
 
-	if vot != nil {
-		object["vipObjectType"] = vot.(string)
+	if vipObjType != nil {
+		object["vipObjectType"] = vipObjType.(string)
 	}
-	if vt != nil {
-		object["vipType"] = vt.(string)
+	if vipType != nil {
+		object["vipType"] = vipType.(string)
 	}
-	if vv != nil {
-		switch vv.(type) {
+	if vipValue != nil {
+		switch vipValue.(type) {
 		case string:
-			object["vipValue"] = vv.(string)
+			isTmplVar, tmplVar := valueAsTemplateVar(vipValue.(string)) // I'm sure this can be done better, but basic concept should remain IMO
+			if isTmplVar {
+				return tmplVar
+			}
+			object["vipValue"] = vipValue.(string)
 		case bool:
-			object["vipValue"] = strconv.FormatBool(vv.(bool))
+			object["vipValue"] = strconv.FormatBool(vipValue.(bool))
 		case int:
-			object["vipValue"] = vv.(int)
+			object["vipValue"] = vipValue.(int)
 		case float32:
-			object["vipValue"] = vv.(float32)
+			object["vipValue"] = vipValue.(float32)
 		case float64:
-			object["vipValue"] = vv.(float64)
+			object["vipValue"] = vipValue.(float64)
 		case []interface{}:
 			log.Println("Case Interface!")
-			object["vipValue"] = vv
-			log.Println("Value: ", vv)
+			object["vipValue"] = vipValue
+			log.Println("Value: ", vipValue)
 		default:
 			log.Println("Case default!")
-			object["vipValue"] = vv
+			object["vipValue"] = vipValue
 			return nil
 		}
 	}
-	if vvn != nil {
-		object["vipVariableName"] = vvn.(string)
+	if vipVarName != nil {
+		object["vipVariableName"] = vipVarName.(string)
 	}
-	if vpk != nil {
-		object["vipPrimaryKey"] = interfaceToStrList(vpk)
+	if vipPriKey != nil {
+		object["vipPrimaryKey"] = interfaceToStrList(vipPriKey)
 	}
 	return object
 }

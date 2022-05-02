@@ -737,12 +737,14 @@ func createSystemFTDefinition(ftDefinitions []interface{}, tType string) (map[st
 
 func createSystemBasic(defMap map[string]interface{}, input map[string]interface{}) {
 
-	siteId := make(map[string]interface{})
-	siteId["vipObjectType"] = "object"
-	siteId["vipType"] = "variableName"
-	siteId["vipValue"] = ""
-	siteId["vipVariableName"] = "system_site_id"
-	defMap["site-id"] = siteId
+	// siteId := make(map[string]interface{})
+	// siteId["vipObjectType"] = "object"
+	// siteId["vipType"] = "variableName"
+	// siteId["vipValue"] = ""
+	// siteId["vipVariableName"] = "system_site_id"
+	// defMap["site-id"] = siteId
+	// defMap["site-id"] = createVIPObject("object", "variableName", "", "system_site_id", nil)
+	defMap["site-id"] = createVIPVariable("system_site_id")
 
 	systemIp := make(map[string]interface{})
 	systemIp["vipObjectType"] = "object"
