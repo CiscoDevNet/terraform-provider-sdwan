@@ -209,24 +209,24 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"description": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"ipv4": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"primary_address": {
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 												},
 												"secondary_address": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													MaxItems: 4,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -238,15 +238,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													},
 												},
 												"dhcp_distance": {
-													Type:             schema.TypeString,
-													Optional:         true,
-													Computed:         true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:         true,
 													ValidateDiagFunc: isStringInRange(1, 65536),
 												},
 												"dhcp_helper": {
 													Type:     schema.TypeList,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													Elem: &schema.Schema{
 														Type:         schema.TypeString,
 														ValidateFunc: DHCPHelperValidation(),
@@ -258,19 +258,19 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"ipv6": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"primary_address": {
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 												},
 												"secondary_address": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													MaxItems: 2,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -282,9 +282,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													},
 												},
 												"dhcp_distance": {
-													Type:             schema.TypeString,
-													Optional:         true,
-													Computed:         true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:         true,
 													ValidateDiagFunc: isStringInRange(1, 65536),
 												},
 												"dhcp_rapid_commit": {
@@ -295,7 +295,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"dhcp_helper": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													MaxItems: 8,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -305,9 +305,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 																ValidateFunc: validation.IsIPv6Address,
 															},
 															"vpn": {
-																Type:         schema.TypeInt,
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeInt,
+																Optional: true,
+																// Computed:     true,
 																ValidateFunc: validation.IntBetween(1, 65536),
 															},
 														},
@@ -322,15 +322,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Default:  false,
 									},
 									"bandwidth_upstream": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(1, 2147483647),
 									},
 									"bandwidth_downstream": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(1, 2147483647),
 									},
 								},
@@ -340,7 +340,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_tunnel": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -362,7 +362,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"color": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										ValidateFunc: validation.StringInSlice([]string{
 											"3g",
 											"biz-internet",
@@ -410,12 +410,12 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"control_connection": {
 										Type:     schema.TypeBool,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"maximum_control_connections": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										Computed:         true,
+										Type:     schema.TypeString,
+										Optional: true,
+										// Computed:         true,
 										ValidateDiagFunc: isStringInRange(0, 100),
 									},
 									"vbond_as_stun_server": {
@@ -426,7 +426,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"exclude_controller_group_list": {
 										Type:     schema.TypeList,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										Elem: &schema.Schema{
 											Type:         schema.TypeInt,
 											ValidateFunc: validation.IntBetween(0, 100),
@@ -451,7 +451,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"allow_service": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -521,7 +521,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"encapsulation": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -531,9 +531,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Default:  false,
 												},
 												"gre_preference": {
-													Type:             schema.TypeString,
-													Optional:         true,
-													Computed:         true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:         true,
 													ValidateDiagFunc: isStringInRange(0, 4294967295),
 												},
 												"gre_weight": {
@@ -548,9 +548,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Default:  true,
 												},
 												"ipsec_preference": {
-													Type:             schema.TypeString,
-													Optional:         true,
-													Computed:         true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:         true,
 													ValidateDiagFunc: isStringInRange(0, 4294967295),
 												},
 												"ipsec_weight": {
@@ -578,7 +578,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"bind_loopback_tunnel": {
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 												},
 												"last_resort_circuit": {
 													Type:     schema.TypeBool,
@@ -610,9 +610,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													ValidateFunc: validation.IntBetween(12, 6000),
 												},
 												"gre_tunnel_destination_ip": {
-													Type:         schema.TypeString,
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:     true,
 													ValidateFunc: validation.IsIPv4Address,
 												},
 											},
@@ -625,14 +625,14 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_nat": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"ipv4": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -683,15 +683,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Default:  false,
 												},
 												"nat_pool_range_start": {
-													Type:         schema.TypeString,
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:     true,
 													ValidateFunc: validation.IsIPv4Address,
 												},
 												"nat_pool_range_end": {
-													Type:         schema.TypeString,
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:     true,
 													ValidateFunc: validation.IsIPv4Address,
 												},
 												"nat_pool_prefix_length": {
@@ -706,15 +706,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													Default:  true,
 												},
 												"nat_inside_source_loopback_interface": {
-													Type:         schema.TypeString,
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:     true,
 													ValidateFunc: NATLoopBackInterfaceValidation(),
 												},
 												"port_forward": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 															"port_start_range": {
@@ -751,7 +751,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"static_nat": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 															"source_ip": {
@@ -782,22 +782,22 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 															"protocol": {
 																Type:     schema.TypeString,
 																Optional: true,
-																Computed: true,
+																// Computed: true,
 																ValidateFunc: validation.StringInSlice([]string{
 																	"tcp",
 																	"udp",
 																}, false),
 															},
 															"source_port": {
-																Type:             schema.TypeString,
-																Optional:         true,
-																Computed:         true,
+																Type:     schema.TypeString,
+																Optional: true,
+																// Computed:         true,
 																ValidateDiagFunc: isStringInRange(0, 65535),
 															},
 															"translate_port": {
-																Type:             schema.TypeString,
-																Optional:         true,
-																Computed:         true,
+																Type:     schema.TypeString,
+																Optional: true,
+																// Computed:         true,
 																ValidateDiagFunc: isStringInRange(0, 65535),
 															},
 														},
@@ -809,7 +809,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"ipv6": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -828,14 +828,14 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_vrrp": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"ipv4": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 5,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -851,9 +851,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													ValidateFunc: validation.IntBetween(1, 254),
 												},
 												"timer": {
-													Type:         schema.TypeInt,
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeInt,
+													Optional: true,
+													// Computed:     true,
 													ValidateFunc: validation.IntBetween(1, 40950),
 												},
 												"track_omp": {
@@ -864,12 +864,12 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"track_prefix_list": {
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 												},
 												"ip_address": {
-													Type:         schema.TypeString,
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Optional: true,
+													// Computed:     true,
 													ValidateFunc: validation.IsIPv4Address,
 												},
 											},
@@ -878,7 +878,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"ipv6": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -894,9 +894,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 													ValidateFunc: validation.IntBetween(1, 254),
 												},
 												"timer": {
-													Type:         schema.TypeInt,
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeInt,
+													Optional: true,
+													// Computed:     true,
 													ValidateFunc: validation.IntBetween(1, 40950),
 												},
 												"track_omp": {
@@ -907,7 +907,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"track_prefix_list": {
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 												},
 												"link_local_ipv6_address": {
 													Type:         schema.TypeString,
@@ -917,7 +917,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"global_ipv6_prefix": {
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 												},
 											},
 										},
@@ -929,7 +929,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_acl_qos": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -940,86 +940,86 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										ValidateFunc: validation.IntBetween(1, 720),
 									},
 									"shaping_rate_upstream_min": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
 									"shaping_rate_upstream_max": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
 									"shaping_rate_upstream_default": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
 									"shaping_rate_downstream_min": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
 									"shaping_rate_downstream_max": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
 									"shaping_rate_downstream_default": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
 									"shaping_rate": {
-										Type:         schema.TypeFloat,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeFloat,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.FloatBetween(8, 100000000),
 									},
 									"qos_map": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"rewrite_rule": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"ipv4_ingress_access_list": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"ipv4_egress_access_list": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"ipv6_ingress_access_list": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"ipv6_egress_access_list": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"ingress_policer_name": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"egress_policer_name": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 								},
 							},
@@ -1028,7 +1028,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_arp": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"ip_address": {
@@ -1048,33 +1048,33 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_8021x": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"radius_server": {
 										Type:     schema.TypeList,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"account_interim_interval": {
-										Type:         schema.TypeInt,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.IntBetween(1, 1440),
 									},
 									"nas_identifier": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"nas_ip": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.IsIPv4Address,
 									},
 									"wake_on_lan": {
@@ -1116,39 +1116,39 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"advanced_options": {
 										Type:     schema.TypeSet,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"vlan": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													MaxItems: 1,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 															"authentication_fail_vlan": {
-																Type:         schema.TypeInt,
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeInt,
+																Optional: true,
+																// Computed:     true,
 																ValidateFunc: validation.IntBetween(1, 65536),
 															},
 															"guest_vlan": {
-																Type:         schema.TypeInt,
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeInt,
+																Optional: true,
+																// Computed:     true,
 																ValidateFunc: validation.IntBetween(1, 65536),
 															},
 															"authentication_reject_vlan": {
-																Type:         schema.TypeInt,
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeInt,
+																Optional: true,
+																// Computed:     true,
 																ValidateFunc: validation.IntBetween(1, 65536),
 															},
 															"default_vlan": {
-																Type:         schema.TypeInt,
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeInt,
+																Optional: true,
+																// Computed:     true,
 																ValidateFunc: validation.IntBetween(1, 65536),
 															},
 														},
@@ -1157,7 +1157,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"dynamic_authentication_server": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													MaxItems: 1,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -1168,15 +1168,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 																ValidateFunc: validation.IntBetween(1, 65535),
 															},
 															"client": {
-																Type:         schema.TypeString,
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Optional: true,
+																// Computed:     true,
 																ValidateFunc: validation.IsIPv4Address,
 															},
 															"secret_key": {
-																Type:      schema.TypeString,
-																Optional:  true,
-																Computed:  true,
+																Type:     schema.TypeString,
+																Optional: true,
+																// Computed:  true,
 																Sensitive: true,
 															},
 															"time_window": {
@@ -1202,7 +1202,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"mac_authentication_bypass": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													MaxItems: 1,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -1225,14 +1225,14 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 												"request_attributes": {
 													Type:     schema.TypeSet,
 													Optional: true,
-													Computed: true,
+													// Computed: true,
 													MaxItems: 1,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 															"authentication": {
 																Type:     schema.TypeSet,
 																Optional: true,
-																Computed: true,
+																// Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 																		"id": {
@@ -1259,7 +1259,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 															"accounting": {
 																Type:     schema.TypeSet,
 																Optional: true,
-																Computed: true,
+																// Computed: true,
 																Elem: &schema.Resource{
 																	Schema: map[string]*schema.Schema{
 																		"id": {
@@ -1296,7 +1296,7 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_trustsec": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1308,12 +1308,12 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 									"propagate": {
 										Type:     schema.TypeBool,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"security_group_tag": {
-										Type:         schema.TypeInt,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.IntBetween(2, 65519),
 									},
 									"trusted": {
@@ -1328,14 +1328,14 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 						"vpn_interface_advanced": {
 							Type:     schema.TypeSet,
 							Optional: true,
-							Computed: true,
+							// Computed: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"duplex": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										ValidateFunc: validation.StringInSlice([]string{
 											"auto",
 											"full",
@@ -1343,9 +1343,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										}, false),
 									},
 									"mac_address": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.IsMACAddress,
 									},
 									"ip_mtu": {
@@ -1372,15 +1372,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										}, false),
 									},
 									"tcp_mss": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										Computed:         true,
+										Type:     schema.TypeString,
+										Optional: true,
+										// Computed:         true,
 										ValidateDiagFunc: isStringInRange(500, 1460),
 									},
 									"speed": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										ValidateFunc: validation.StringInSlice([]string{
 											"10",
 											"100",
@@ -1395,9 +1395,9 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Default:  false,
 									},
 									"static_ingess_qos": {
-										Type:             schema.TypeString,
-										Optional:         true,
-										Computed:         true,
+										Type:     schema.TypeString,
+										Optional: true,
+										// Computed:         true,
 										ValidateDiagFunc: isStringInRange(0, 7),
 									},
 									"arp_timeout": {
@@ -1421,15 +1421,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Default:  false,
 									},
 									"load_interval": {
-										Type:         schema.TypeInt,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: LoadIntervalValidation(),
 									},
 									"tracker": {
 										Type:     schema.TypeList,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -1440,15 +1440,15 @@ func resourceSDWANVPNInterfaceFeatureTemplate() *schema.Resource {
 										Default:  false,
 									},
 									"gre_tunnel_source_ip": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Optional: true,
+										// Computed:     true,
 										ValidateFunc: validation.IsIPv4Address,
 									},
 									"xconnect": {
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
+										// Computed: true,
 									},
 									"ip_directed_broadcast": {
 										Type:     schema.TypeBool,
@@ -1829,6 +1829,12 @@ func createVPNInterfaceBasicIPv4(defMap map[string]interface{}, input map[string
 	ipv4 := make(map[string]interface{})
 	isPresent := 0
 	if input["primary_address"] != nil && input["primary_address"] != "" {
+		// isTemplateVar, templateVarName := valueIsVariableName(input["primary_address"].(string))
+		// if isTemplateVar {
+		// 	ipv4["address"] = createVIPVariable(templateVarName)
+		// } else {
+		// 	ipv4["address"] = createVIPObject("object", "constant", input["primary_address"], "vpn_if_ipv4_address", nil)
+		// }
 		ipv4["address"] = createVIPObject("object", "constant", input["primary_address"], "vpn_if_ipv4_address", nil)
 		isPresent = isPresent + 1
 	}
@@ -3575,7 +3581,7 @@ func createVPNInterface8021XAccount(defMap map[string]interface{}, input map[str
 				}
 			}
 		default:
-			fmt.Errorf("[ERROR] No such Syntax Choice found")
+			return fmt.Errorf("[ERROR] No such Syntax Choice found")
 		}
 	}
 	return nil

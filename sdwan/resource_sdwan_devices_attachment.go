@@ -485,6 +485,40 @@ func AttachmentStateRefreshFunc(client *client.Client, statusID string, failStat
 	}
 }
 
+func processStatus(cont *container.Container) (*models.StatusData, error) {
+	total, _ := strconv.Atoi(stripQuotes(cont.S("summary", "total").String()))
+
+	summary := &models.SummaryObject{
+		Total:  total,
+		Status: stripQuotes(cont.S("summary", "status").String()),
+		Count:  cont.S("summary", "count").Data().(map[string]interface{}),
+	}
+
+	ids := make(map[string]bool)
+
+	results := make(map[string]*models.DataObject)
+	for _, dataObject := range cont.S("data").Children() {
+
+		uuid := stripQuotes(dataObject.S("uuid").String())
+		ids[uuid] = true
+
+		results[uuid] = &models.DataObject{
+			Status:          stripQuotes(dataObject.S("status").String()),
+			CurrentActivity: stripQuotes(dataObject.S("currentActivity").String()),
+			Activity:        interfaceToStrList(dataObject.S("activity").Data()),
+			ActionConfig:    stripQuotes(dataObject.S("actionConfig").String()),
+		}
+	}
+
+	status := &models.StatusData{
+		Summary: summary,
+		IDs:     ids,
+		Data:    results,
+	}
+
+	return status, nil
+}
+
 func getStatusByID(client *client.Client, id string) (*models.StatusData, error) {
 
 	statusURL := fmt.Sprintf("/dataservice/device/action/status/%s", id)
@@ -493,40 +527,200 @@ func getStatusByID(client *client.Client, id string) (*models.StatusData, error)
 		return nil, err
 	}
 
+	var status *models.StatusData
 	if cont.Exists("summary", "total") {
-		total, _ := strconv.Atoi(stripQuotes(cont.S("summary", "total").String()))
-
-		summary := &models.SummaryObject{
-			Total:  total,
-			Status: stripQuotes(cont.S("summary", "status").String()),
-			Count:  cont.S("summary", "count").Data().(map[string]interface{}),
-		}
-
-		ids := make(map[string]bool)
-
-		results := make(map[string]*models.DataObject)
-		for _, dataObject := range cont.S("data").Children() {
-
-			uuid := stripQuotes(dataObject.S("uuid").String())
-			ids[uuid] = true
-
-			results[uuid] = &models.DataObject{
-				Status:          stripQuotes(dataObject.S("status").String()),
-				CurrentActivity: stripQuotes(dataObject.S("currentActivity").String()),
-				Activity:        interfaceToStrList(dataObject.S("activity").Data()),
-				ActionConfig:    stripQuotes(dataObject.S("actionConfig").String()),
-			}
-		}
-
-		status := &models.StatusData{
-			Summary: summary,
-			IDs:     ids,
-			Data:    results,
-		}
-
-		return status, nil
+		status, err = processStatus(cont)
+		return status, err
 	}
-	return nil, fmt.Errorf("[ERROR] No such process started")
+	// else { // Status was probably pruned by vManage automatically so we just have to assume it was a success
+	// 	fake_data := `
+	// 	{
+	// 		"header": {
+	// 		  "generatedOn": 1649425998320,
+	// 		  "viewKeys": {
+	// 			"uniqueKey": [],
+	// 			"preferenceKey": "grid-DeviceActionDefault"
+	// 		  },
+	// 		  "columns": [
+	// 			{
+	// 			  "title": "Status",
+	// 			  "property": "status",
+	// 			  "display": "iconAndText",
+	// 			  "iconProperty": "statusId",
+	// 			  "icon": [
+	// 				{
+	// 				  "key": "success",
+	// 				  "value": "images/action_success.png"
+	// 				},
+	// 				{
+	// 				  "key": "success_warning",
+	// 				  "value": "images/action_success_warning.png"
+	// 				},
+	// 				{
+	// 				  "key": "failure",
+	// 				  "value": "images/action_failure.png"
+	// 				},
+	// 				{
+	// 				  "key": "in_progress",
+	// 				  "value": "images/action_in_progress.png"
+	// 				},
+	// 				{
+	// 				  "key": "scheduled",
+	// 				  "value": "images/action_scheduled.png"
+	// 				},
+	// 				{
+	// 				  "key": "time_out",
+	// 				  "value": "images/action_timedout.png"
+	// 				},
+	// 				{
+	// 				  "key": "skipped",
+	// 				  "value": "images/action_skipped.png"
+	// 				}
+	// 			  ],
+	// 			  "dataType": "string"
+	// 			},
+	// 			{
+	// 			  "title": "Device IP",
+	// 			  "property": "deviceID",
+	// 			  "dataType": "ipv4"
+	// 			},
+	// 			{
+	// 			  "title": "Message",
+	// 			  "property": "currentActivity",
+	// 			  "minWidth": 300,
+	// 			  "dataType": "string"
+	// 			},
+	// 			{
+	// 			  "title": "Start Time",
+	// 			  "property": "startTime",
+	// 			  "displayFormat": "DD MMM YYYY h:mm:ss A z",
+	// 			  "inputFormat": "unix-time",
+	// 			  "width": 220,
+	// 			  "dataType": "date"
+	// 			}
+	// 		  ],
+	// 		  "fields": [
+	// 			{
+	// 			  "property": "status",
+	// 			  "dataType": "string",
+	// 			  "display": "iconAndText"
+	// 			},
+	// 			{
+	// 			  "property": "deviceID",
+	// 			  "dataType": "ipv4"
+	// 			},
+	// 			{
+	// 			  "property": "currentActivity",
+	// 			  "dataType": "string"
+	// 			},
+	// 			{
+	// 			  "property": "startTime",
+	// 			  "dataType": "date"
+	// 			},
+	// 			{
+	// 			  "property": "system-ip",
+	// 			  "dataType": "string"
+	// 			}
+	// 		  ]
+	// 		},
+	// 		"data": [
+	// 		  {
+	// 			"local-system-ip": "3.3.4.1",
+	// 			"statusType": "push_template_configuration",
+	// 			"activity": [
+	// 			  "[7-Apr-2022 20:31:39 UTC] Configuring device with feature template: EQUINIX_DHCP_DNS_ICGW_CSR1000V_Template_V02",
+	// 			  "[7-Apr-2022 20:31:40 UTC] Checking and creating device in vManage",
+	// 			  "[7-Apr-2022 20:31:41 UTC] Generating configuration from template",
+	// 			  "[7-Apr-2022 20:31:46 UTC] Device is online",
+	// 			  "[7-Apr-2022 20:31:46 UTC] Updating device configuration in vManage",
+	// 			  "[7-Apr-2022 20:31:47 UTC] Sending configuration to device",
+	// 			  "[7-Apr-2022 20:32:03 UTC] Completed template push to device.",
+	// 			  "[7-Apr-2022 20:32:04 UTC] Template successfully attached to device"
+	// 			],
+	// 			"system-ip": "3.3.4.1",
+	// 			"site-id": "3340",
+	// 			"uuid": "CSR-7429AC11-5CA2-4C2C-9A09-86F8E4E4D706",
+	// 			"tenant-id": "default",
+	// 			"@rid": 4254,
+	// 			"processId": "push_template_configuration-482dba5d-c442-4e51-92f4-ae504d8d888d",
+	// 			"actionConfig": "{\"csv-deviceId\":\"CSR-7429AC11-5CA2-4C2C-9A09-86F8E4E4D706\",\"csv-deviceIP\":\"3.3.4.1\",\"csv-status\":\"complete\",\"csv-host-name\":\"us-east-1\",\"//system/host-name\":\"us-east-1\",\"//system/site-id\":\"3340\",\"//system/system-ip\":\"3.3.4.1\",\"/0/GigabitEthernet2//interface/tunnel-interface/color/value\":\"biz-internet\",\"/0/vpn-instance/dns/vpn_dns_primary/dns-addr\":\"156.154.70.1\",\"/0/vpn-instance/dns/vpn_dns_secondary/dns-addr\":\"156.154.71.1\",\"csv-templateId\":\"b8b378c8-3951-4bef-8495-a83193f037d7\"}",
+	// 			"device-type": "vedge",
+	// 			"action": "push_template_configuration",
+	// 			"startTime": 1649363499559,
+	// 			"order": 0,
+	// 			"vmanageIP": "1.1.1.2",
+	// 			"host-name": "us-east-1",
+	// 			"deviceID": "CSR-7429AC11-5CA2-4C2C-9A09-86F8E4E4D706",
+	// 			"statusId": "success",
+	// 			"currentActivity": "Done - Push Template Configuration",
+	// 			"deviceModel": "vedge-CSR-1000v",
+	// 			"validity": "valid",
+	// 			"requestStatus": "received",
+	// 			"status": "Success"
+	// 		  }
+	// 		],
+	// 		"validation": {
+	// 		  "statusType": "push_template_configuration",
+	// 		  "activity": [
+	// 			"[7-Apr-2022 20:31:39 UTC] Starting Checks.",
+	// 			"[7-Apr-2022 20:31:39 UTC] Validating if device scheduled for template push are active",
+	// 			"[7-Apr-2022 20:31:39 UTC] Sending message to vmanage:1.1.1.2",
+	// 			"[7-Apr-2022 20:31:39 UTC] Published messages to vmanage(s)",
+	// 			"[7-Apr-2022 20:31:39 UTC] Checks completed."
+	// 		  ],
+	// 		  "vmanageIP": "1.1.1.2",
+	// 		  "system-ip": "Validation",
+	// 		  "deviceID": "Validation",
+	// 		  "uuid": "Validation",
+	// 		  "tenant-id": "default",
+	// 		  "@rid": 4252,
+	// 		  "statusId": "validation_success",
+	// 		  "currentActivity": "Done - Validation",
+	// 		  "actionConfig": "{}",
+	// 		  "processId": "push_template_configuration-482dba5d-c442-4e51-92f4-ae504d8d888d",
+	// 		  "action": "push_template_configuration",
+	// 		  "startTime": 1649363499110,
+	// 		  "requestStatus": "received",
+	// 		  "status": "Validation success",
+	// 		  "order": 0
+	// 		},
+	// 		"summary": {
+	// 		  "action": "push_template_configuration",
+	// 		  "name": "Push Template Configuration",
+	// 		  "detailsURL": "/dataservice/device/action/status",
+	// 		  "startTime": "1649363499366",
+	// 		  "endTime": "1649363524548",
+	// 		  "userSessionUserName": "william",
+	// 		  "userSessionIP": "38.122.228.75",
+	// 		  "tenantName": "DefaultTenant",
+	// 		  "total": 1,
+	// 		  "status": "done",
+	// 		  "count": {
+	// 			"Success": 1
+	// 		  }
+	// 		},
+	// 		"isCancelEnabled": false,
+	// 		"isParallelExecutionEnabled": false
+	// 	  }`
+	// 	cont, err = container.ParseJSON([]byte(fake_data))
+	// 	status, err = processStatus(cont)
+	// }
+	// summary := &models.SummaryObject{
+	// 	Total:  0,
+	// 	Status: "",
+	// 	Count:  make(map[string]interface{}),
+	// }
+	// ids := make(map[string]bool)
+	// results := make(map[string]*models.DataObject)
+	// status := &models.StatusData{
+	// 	Summary: summary,
+	// 	IDs:     ids,
+	// 	Data:    results,
+	// }
+	// return status, nil
+	// return nil, fmt.Errorf("[ERROR] No such process started\n%s", cont.BytesIndent("", "  "))
+
+	return nil, fmt.Errorf("[ERROR] No device attachment job found")
 }
 
 func generateDeviceConfig(d *schema.ResourceData, client *client.Client, dList []string) (*container.Container, error) {
