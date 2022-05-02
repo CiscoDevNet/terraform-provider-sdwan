@@ -16,10 +16,12 @@ builds:
   ldflags:
     - '-s -w -X main.version={{.Version}} -X main.commit={{.Commit}}'
   goos:
-#    - freebsd
+    - freebsd
     - windows
     - linux
-#    - darwin
+    - darwin
+    - openbsd
+    - solaris
   goarch:
     - amd64
     - '386'
@@ -49,6 +51,6 @@ signs:
       - "${artifact}"
 release:
   # If you want to manually examine the release before its live, uncomment this line:
-   draft: false
+   draft: true
 changelog:
   skip: true
