@@ -3581,7 +3581,7 @@ func createVPNInterface8021XAccount(defMap map[string]interface{}, input map[str
 				}
 			}
 		default:
-			fmt.Errorf("[ERROR] No such Syntax Choice found")
+			return fmt.Errorf("[ERROR] No such Syntax Choice found")
 		}
 	}
 	return nil
