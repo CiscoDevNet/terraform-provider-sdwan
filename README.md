@@ -1,30 +1,29 @@
 # Terraform Provider SDWAN
+## NOTE: ## ### this is a fork of the CiscoDevNet provider by Apcela intended to be published independently. ###
+### There are still many references to `CiscoDevNet` in the code and docs, many of these are historical at this point. ###
+
 
 Requirements
 ------------
+This provider is being developed and tested against:
 
-- [Terraform](https://www.terraform.io/downloads.html) v0.13 and v0.14.
+- [Terraform](https://www.terraform.io/downloads.html) v1.0.11+
 
-- [Go](https://golang.org/doc/install) Latest Version
+- [Go](https://golang.org/doc/install) 1.18+
 
 ## Building The Provider ##
-Clone this repository to: `$GOPATH/src/github.com/CiscoDevNet/terraform-provider-sdwan`.
-Clone [sdwan-go-client](https://github.com/CiscoDevNet/sdwan-go-client) to `$GOPATH/src/github.com/CiscoDevNet/sdwan-go-client`.
 
+Clone this repository and enter the provider directory.
 ```sh
-$ mkdir -p $GOPATH/src/github.com/CiscoDevNet; cd $GOPATH/src/github.com/CiscoDevNet
-$ git clone https://github.com/CiscoDevNet/terraform-provider-sdwan.git
-$ git clone https://github.com/CiscoDevNet/sdwan-go-client.git
+$ git clone https://github.com/Apcela/terraform-provider-sdwan.git
 ```
 
-Enter the provider directory, After that run make build to build the provider binary. This will build the provider with sanity checks present in scripts directory and put the provider binary in `$GOPATH/bin` directory.
+Enter the provider directory.  Use the `make` command to build, test and validate the provider.  
 
 ```sh
-$ cd $GOPATH/src/github.com/CiscoDevNet/terraform-provider-sdwan
-$ make build
-
+$ cd terraform-provider-sdwan 
+$ make
 ```
-
 
 Using The Provider
 ------------------
@@ -36,7 +35,7 @@ example:
 terraform {
   required_providers {
     sdwan = {
-      source = "CiscoDevNet/sdwan"
+      source = "Apcela/sdwan"
     }
   }
 }

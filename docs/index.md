@@ -3,7 +3,7 @@ layout: "sdwan"
 page_title: "Provider: SDWAN"
 sidebar_current: "docs-sdwan-index"
 description: |-
-  The Cisco SDWAN provider is used to interact with the resources provided by Cisco vManage. The provider needs to be configured with the proper credentials before it can be used.
+  The Apcela SDWAN provider is used to interact with the resources provided by Cisco vManage. The provider needs to be configured with the proper credentials before it can be used.
 ---
   
 
@@ -13,7 +13,7 @@ Cisco SD-WAN is a cloud-delivered overlay WAN architecture connecting branches t
 
 Cisco SDWAN Provider
 ------------
-The Cisco SDWAN provider is used to interact with the resources provided by Cisco vManage. The provider needs to be configured with the proper credentials before it can be used.
+The Apcela SDWAN provider is used to interact with the resources provided by Cisco vManage. The provider needs to be configured with the proper credentials before it can be used.
 
 Authentication
 -------------- 
