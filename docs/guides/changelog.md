@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.2.0 (unreleased)
+## 0.2.0
 
 - BREAKING CHANGE: Completely revamped the provider based on `github.com/netascode/terraform-provider-sdwan` codebase, replacing all existing resources and data sources
 
