@@ -1,0 +1,155 @@
+---
+name: Cisco System
+minimum_version: 15.0.0
+attributes:
+  - model_name: timezone
+    example: UTC
+  - model_name: host-name
+    tf_name: hostname
+    example: Router1
+  - model_name: description
+    tf_name: system_description
+    example: My Description
+  - model_name: location
+    example: Building 1
+  - model_name: latitude
+    example: 40
+  - model_name: longitude
+    example: 50
+  - model_name: enable
+    data_path: [gps-location, geo-fencing]
+    tf_name: geo_fencing
+    example: true
+  - model_name: range
+    tf_name: geo_fencing_range
+    example: 1000
+  - model_name: enable
+    data_path: [gps-location, geo-fencing, sms]
+    tf_name: geo_fencing_sms
+    example: true
+  - model_name: mobile-number
+    tf_name: geo_fencing_sms_phone_numbers
+    attributes:
+      - model_name: number
+        example: "+1234567"
+  - model_name: device-groups
+    example: '["group1"]'
+  - model_name: controller-group-list
+    example: '["1"]'
+  - model_name: system-ip
+    example: 5.5.5.5
+  - model_name: overlay-id
+    example: 1
+  - model_name: site-id
+    example: 1
+  - model_name: port-offset
+    example: 1
+  - model_name: port-hop
+    tf_name: port_hopping
+    example: true
+  - model_name: control-session-pps
+    example: 300
+  - model_name: track-transport
+    example: true
+  - model_name: track-interface-tag
+    example: 1
+  - model_name: console-baud-rate
+    example: 115200
+  - model_name: max-omp-sessions
+    example: 5
+  - model_name: multi-tenant
+    example: true
+  - model_name: track-default-gateway
+    example: true
+  - model_name: admin-tech-on-failure
+    example: true
+  - model_name: idle-timeout
+    data_path: []
+    example: 100
+  - model_name: tracker
+    tf_name: trackers
+    attributes:
+      - model_name: name
+        example: tracker1
+      - model_name: endpoint-ip
+        data_path: []
+        example: 5.6.7.8
+      - model_name: endpoint-ip
+        data_path: ["endpoint-ip-transport-port"]
+        tf_name: transport_endpoint_ip
+        example: 5.6.7.8
+      - model_name: protocol
+        tf_name: transport_endpoint_protocol
+        example: tcp
+      - model_name: port
+        tf_name: transport_endpoint_port
+        example: 500
+      - model_name: endpoint-dns-name
+        example: abc.com
+      - model_name: endpoint-api-url
+        example: https://1.1.1.1
+      - model_name: elements
+        example: '["abc", "def"]'
+      - model_name: boolean
+        example: or
+      - model_name: threshold
+        example: 300
+      - model_name: interval
+        example: 60
+      - model_name: multiplier
+        example: 3
+      - model_name: type
+        example: interface
+  - model_name: object-track
+    tf_name: object_trackers
+    attributes:
+      - model_name: object-number
+        example: 1
+      - model_name: interface
+        example: e1
+      - model_name: sig
+        example: sig1
+      - model_name: ip
+        example: 6.6.6.6
+      - model_name: mask
+        example: 0.0.0.0
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 1
+      - model_name: object
+        tf_name: group_tracks_ids
+        attributes:
+          - model_name: number
+            tf_name: track_id
+            example: 1
+      - model_name: boolean
+        example: and
+  - model_name: enable
+    data_path: ["on-demand"]
+    tf_name: on_demand_tunnel
+    example: true
+  - model_name: idle-timeout
+    data_path: [on-demand]
+    tf_name: on_demand_tunnel_idle_timeout
+    example: 10
+  - model_name: region-id
+    example: 5
+    exclude_test: true
+  - model_name: secondary-region
+    tf_name: secondary_region_id
+    example: 6
+    exclude_test: true
+  - model_name: role
+    example: edge-router
+    exclude_test: true
+  - model_name: affinity-group-number
+    example: 5
+  - model_name: preference
+    tf_name: affinity_group_preference
+    example: "[1]"
+  - model_name: transport-gateway
+    example: true
+  - model_name: enable-mrf-migration
+    example: enabled
+  - model_name: migration-bgp-community
+    example: 100

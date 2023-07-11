@@ -1,0 +1,251 @@
+---
+name: Cisco BGP
+minimum_version: 15.0.0
+attributes:
+  - model_name: as-num
+    tf_name: as_number
+    example: 65000
+  - model_name: shutdown
+    example: true
+  - model_name: router-id
+    example: 1.2.3.4
+  - model_name: propagate-aspath
+    example: true
+  - model_name: propagate-community
+    example: true
+  - model_name: route-target-ipv4
+    tf_name: ipv4_route_targets
+    attributes:
+      - model_name: vpn-id
+        example: 1
+      - model_name: export
+        attributes:
+          - model_name: asn-ip
+            example: 10:100
+      - model_name: import
+        attributes:
+          - model_name: asn-ip
+            example: 10:100
+  - model_name: route-target-ipv6
+    tf_name: ipv6_route_targets
+    attributes:
+      - model_name: vpn-id
+        example: 1
+      - model_name: export
+        attributes:
+          - model_name: asn-ip
+            example: 10:100
+      - model_name: import
+        attributes:
+          - model_name: asn-ip
+            example: 10:100
+  - model_name: mpls-interface
+    tf_name: mpls_interfaces
+    attributes:
+      - model_name: if-name
+        tf_name: interface_name
+        example: GigabitEthernet0
+  - model_name: external
+    tf_name: distance_external
+    example: 30
+  - model_name: internal
+    tf_name: distance_internal
+    example: 210
+  - model_name: local
+    tf_name: distance_local
+    example: 30
+  - model_name: keepalive
+    example: 90
+  - model_name: holdtime
+    example: 220
+  - model_name: always-compare
+    tf_name: always_compare_med
+    example: true
+  - model_name: deterministic
+    tf_name: deterministic_med
+    example: true
+  - model_name: missing-as-worst
+    tf_name: missing_med_worst
+    example: true
+  - model_name: compare-router-id
+    example: true
+  - model_name: multipath-relax
+    example: true
+  - model_name: address-family
+    tf_name: address_families
+    attributes:
+      - model_name: family-type
+        example: ipv4-unicast
+      - model_name: aggregate-address
+        tf_name: ipv4_aggregate_addresses
+        attributes:
+          - model_name: prefix
+            example: 10.0.0.0/8
+          - model_name: as-set
+            tf_name: as_set_path
+            example: true
+          - model_name: summary-only
+            example: true
+      - model_name: ipv6-aggregate-address
+        tf_name: ipv6_aggregate_addresses
+        attributes:
+          - model_name: prefix
+            example: 10.0.0.0/8
+          - model_name: as-set
+            tf_name: as_set_path
+            example: true
+          - model_name: summary-only
+            example: true
+      - model_name: network
+        tf_name: ipv4_networks
+        attributes:
+          - model_name: prefix
+            example: 10.2.2.0/24
+      - model_name: ipv6-network
+        tf_name: ipv6_networks
+        attributes:
+          - model_name: prefix
+            example: 10.2.2.0/24
+      - model_name: paths
+        tf_name: maximum_paths
+        example: 8
+      - model_name: originate
+        tf_name: default_information_originate
+        example: true
+      - model_name: name
+        tf_name: table_map_policy
+        example: MAP1
+      - model_name: filter
+        tf_name: table_map_filter
+        example: true
+      - model_name: redistribute
+        tf_name: redistribute_routes
+        attributes:
+          - model_name: protocol
+            example: ospf
+          - model_name: route-policy
+            example: POLICY1
+  - model_name: neighbor
+    tf_name: ipv4_neighbors
+    attributes:
+      - model_name: address
+        example: 10.2.2.2
+      - model_name: description
+        example: My neighbor
+      - model_name: shutdown
+        example: true
+      - model_name: remote-as
+        example: 65001
+      - model_name: keepalive
+        example: 30
+      - model_name: holdtime
+        example: 90
+      - model_name: if-name
+        tf_name: source_interface
+        example: GigabitEthernet1
+      - model_name: next-hop-self
+        example: true
+      - model_name: send-community
+        example: false
+      - model_name: send-ext-community
+        example: false
+      - model_name: ebgp-multihop
+        example: 10
+      - model_name: password
+        example: cisco123
+      - model_name: send-label
+        example: true
+      - model_name: send-label-explicit
+        example: true
+      - model_name: as-override
+        example: true
+      - model_name: as-number
+        tf_name: allow_as_in
+        example: 5
+      - model_name: address-family
+        tf_name: address_families
+        attributes:
+          - model_name: family-type
+            example: ipv4-unicast
+          - model_name: prefix-num
+            tf_name: maximum_prefixes
+            example: 10000
+          - model_name: threshold
+            tf_name: maximum_prefixes_threshold
+            example: 80
+          - model_name: restart
+            tf_name: maximum_prefixes_restart
+            example: 180
+          - model_name: warning-only
+            tf_name: maximum_prefixes_warning_only
+            example: true
+          - model_name: route-policy
+            tf_name: route_policies
+            attributes:
+              - model_name: direction
+                example: in
+              - model_name: pol-name
+                tf_name: policy_name
+                example: POLICY1
+  - model_name: ipv6-neighbor
+    tf_name: ipv6_neighbors
+    attributes:
+      - model_name: address
+        example: 2001:1::1
+      - model_name: description
+        example: My neighbor
+      - model_name: shutdown
+        example: true
+      - model_name: remote-as
+        example: 65001
+      - model_name: keepalive
+        example: 30
+      - model_name: holdtime
+        example: 90
+      - model_name: if-name
+        tf_name: source_interface
+        example: GigabitEthernet1
+      - model_name: next-hop-self
+        example: true
+      - model_name: send-community
+        example: false
+      - model_name: send-ext-community
+        example: false
+      - model_name: ebgp-multihop
+        example: 10
+      - model_name: password
+        example: cisco123
+      - model_name: send-label
+        example: true
+      - model_name: send-label-explicit
+        example: true
+      - model_name: as-override
+        example: true
+      - model_name: as-number
+        tf_name: allow_as_in
+        example: 5
+      - model_name: address-family
+        tf_name: address_families
+        attributes:
+          - model_name: family-type
+            example: ipv6-unicast
+          - model_name: prefix-num
+            tf_name: maximum_prefixes
+            example: 10000
+          - model_name: threshold
+            tf_name: maximum_prefixes_threshold
+            example: 80
+          - model_name: restart
+            tf_name: maximum_prefixes_restart
+            example: 180
+          - model_name: warning-only
+            tf_name: maximum_prefixes_warning_only
+            example: true
+          - model_name: route-policy
+            tf_name: route_policies
+            attributes:
+              - model_name: direction
+                example: in
+              - model_name: pol-name
+                tf_name: policy_name
+                example: POLICY1

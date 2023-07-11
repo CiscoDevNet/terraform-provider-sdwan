@@ -1,0 +1,338 @@
+---
+name: Route
+type: vedgeRoute
+skip_templates: [model.go, resource.go, data_source.go]
+attributes:
+  - model_name: type
+    tf_name: default_action
+    data_path: [defaultAction]
+    type: String
+    enum_values: [accept, reject]
+    description: Default action, either `accept` or `reject`
+    example: reject
+  - model_name: sequences
+    type: List
+    description: List of ACL sequences
+    attributes:
+      - model_name: sequenceId
+        tf_name: id
+        type: Int64
+        mandatory: true
+        description: Sequence ID
+        min_int: 1
+        max_int: 65534
+        example: 10
+      - model_name: sequenceIpType
+        tf_name: ip_type
+        type: String
+        enum_values: [ipv4, ipv6]
+        description: IP version, either `ipv4` or `ipv6`
+        example: ipv4
+      - model_name: sequenceName
+        tf_name: name
+        type: String
+        description: Sequence name
+        example: Sequence 10
+      - model_name: sequenceType
+        value: vedgeRoute
+      - model_name: baseAction
+        tf_name: base_action
+        type: String
+        enum_values: [accept, reject]
+        description: Base action, either `accept` or `reject`
+        example: accept
+      - model_name: entries
+        data_path: [match]
+        tf_name: match_entries
+        type: List
+        description: List of match entries
+        attributes:
+          - model_name: field
+            tf_name: type
+            type: String
+            mandatory: true
+            enum_values:
+              [
+                address,
+                asPath,
+                advancedCommunity,
+                expandedCommunity,
+                extCommunity,
+                localPreference,
+                metric,
+                nextHop,
+                origin,
+                peer,
+                ompTag,
+                ospfTag,
+              ]
+            description: Type of match entry
+            example: metric
+          - model_name: ref
+            tf_name: prefix_list_id
+            type: String
+            description: Prefix list ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: prefix_list_version
+            tf_only: true
+            type: Int64
+            description: Prefix list version
+            exclude_test: true
+          - model_name: ref
+            tf_name: as_path_list_id
+            type: String
+            description: AS path list ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: as_path_list_version
+            tf_only: true
+            type: Int64
+            description: AS path list version
+            exclude_test: true
+          - model_name: refs
+            tf_name: community_list_ids
+            type: ListString
+            description: Community list IDs
+            example: '["2081c2f4-3f9f-4fee-8078-dcc8904e368d"]'
+            exclude_test: true
+          - tf_name: community_list_versions
+            tf_only: true
+            type: ListString
+            description: Community list versions
+            exclude_test: true
+          - model_name: matchFlag
+            tf_name: community_list_match_flag
+            type: String
+            enum_values: [and, or, exact]
+            description: Community list match flag
+            example: and
+            exclude_test: true
+          - model_name: ref
+            tf_name: expanded_community_list_id
+            type: String
+            description: Expanded community list ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: expanded_community_list_version
+            tf_only: true
+            type: Int64
+            description: Expanded community list version
+            exclude_test: true
+          - model_name: ref
+            tf_name: extended_community_list_id
+            type: String
+            description: Extended community list ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: extended_community_list_version
+            tf_only: true
+            type: Int64
+            description: Extended community list version
+            exclude_test: true
+          - model_name: value
+            tf_name: local_preference
+            type: Int64
+            model_type_string: true
+            description: Local preference
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: metric
+            type: Int64
+            model_type_string: true
+            description: Metric
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+          - model_name: value
+            tf_name: next_hop
+            type: String
+            description: Next hop IP
+            example: 10.1.1.5
+            exclude_test: true
+          - model_name: value
+            tf_name: origin
+            type: String
+            enum_values: [igp, egp, incomplete]
+            description: Origin
+            example: igp
+            exclude_test: true
+          - model_name: value
+            tf_name: peer
+            type: String
+            description: Peer IP
+            example: 10.1.1.12
+            exclude_test: true
+          - model_name: value
+            tf_name: omp_tag
+            type: Int64
+            model_type_string: true
+            description: OMP tag
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: ospf_tag
+            type: Int64
+            model_type_string: true
+            description: OSPF tag
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+      - model_name: type
+        data_path: [actions.0]
+        value: set
+      - model_name: parameter
+        data_path: [actions.0]
+        tf_name: action_entries
+        type: List
+        description: List of action entries
+        attributes:
+          - model_name: field
+            tf_name: type
+            type: String
+            mandatory: true
+            enum_values:
+              [
+                aggregator,
+                asPath,
+                atomicAggregate,
+                community,
+                communityAdditive,
+                localPreference,
+                metric,
+                weight,
+                metrictype,
+                nextHop,
+                ompTag,
+                ospfTag,
+                origin,
+                originator,
+              ]
+            description: Type of action entry
+            example: aggregator
+          - model_name: aggregator
+            data_path: [value]
+            tf_name: aggregator
+            type: Int64
+            model_type_string: true
+            description: Aggregator
+            min_int: 0
+            max_int: 4294967295
+            example: 10
+          - model_name: ipAddress
+            data_path: [value]
+            tf_name: aggregator_ip_address
+            type: String
+            description: IP address
+            example: 10.1.2.3
+          - model_name: prepend
+            data_path: [value]
+            tf_name: as_path_prepend
+            type: String
+            description: Space separated list of ASN to prepend
+            example: 65521 65521
+            exclude_test: true
+          - model_name: exclude
+            data_path: [value]
+            tf_name: as_path_exclude
+            type: String
+            description: Space separated list of ASN to exclude
+            example: 110 120
+            exclude_test: true
+          - model_name: value
+            tf_name: atomic_aggregate
+            type: Bool
+            model_type_string: true
+            description: Atomic aggregate
+            example: true
+            exclude_test: true
+          - model_name: value
+            tf_name: community
+            type: String
+            description: Community value, e.g. `1000:10000` or `internet` or `local-AS`
+            example: 1000:10000
+            exclude_test: true
+          - model_name: value
+            tf_name: community_additive
+            type: Bool
+            model_type_string: true
+            description: Community additive
+            example: true
+            exclude_test: true
+          - model_name: value
+            tf_name: local_preference
+            type: Int64
+            model_type_string: true
+            description: Local preference
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: metric
+            type: Int64
+            model_type_string: true
+            description: Metric
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: weight
+            type: Int64
+            model_type_string: true
+            description: Weight
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: metric_type
+            type: String
+            enum_values: [type1, type2]
+            description: Metric type
+            example: type2
+            exclude_test: true
+          - model_name: value
+            tf_name: next_hop
+            type: String
+            description: Next hop IP
+            example: 10.1.1.5
+            exclude_test: true
+          - model_name: value
+            tf_name: omp_tag
+            type: Int64
+            model_type_string: true
+            description: OMP tag
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: ospf_tag
+            type: Int64
+            model_type_string: true
+            description: OSPF tag
+            min_int: 0
+            max_int: 4294967295
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: origin
+            type: String
+            enum_values: [igp, egp, incomplete]
+            description: Origin
+            example: igp
+            exclude_test: true
+          - model_name: value
+            tf_name: originator
+            type: String
+            description: Originator IP
+            example: 192.168.1.10
+            exclude_test: true

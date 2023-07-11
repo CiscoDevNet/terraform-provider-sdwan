@@ -1,0 +1,8 @@
+---
+name: CLI Template
+model: cli-template
+minimum_version: 15.0.0
+attributes:
+  - model_name: config
+    tf_name: cli_config
+    example: '! Enable new BGP community format\nip bgp-community new-format\n'

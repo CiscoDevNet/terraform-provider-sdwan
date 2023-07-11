@@ -1,0 +1,16 @@
+---
+name: VPN List
+type: vpn
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: vpn
+        tf_name: vpn_id
+        type: String
+        mandatory: true
+        description: VPN ID or range of VPN IDs e.g., `100` or `200-300`
+        example: 100-200

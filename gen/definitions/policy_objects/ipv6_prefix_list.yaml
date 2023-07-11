@@ -1,0 +1,26 @@
+---
+name: IPv6 Prefix List
+type: ipv6prefix
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: ipv6Prefix
+        tf_name: prefix
+        type: String
+        mandatory: true
+        description: IP prefix list entry, e.g. `2001:1:1:2::/64`
+        example: 2001:1:1:2::/64
+      - model_name: le
+        type: Int64
+        model_type_string: true
+        description: Lesser equal
+        example: 80
+      - model_name: ge
+        type: Int64
+        model_type_string: true
+        description: Greater equal
+        example: 128

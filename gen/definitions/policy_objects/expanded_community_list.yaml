@@ -1,0 +1,15 @@
+---
+name: Expanded Community List
+type: expandedcommunity
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: community
+        type: String
+        mandatory: true
+        description: Expanded community value, e.g. `100:1000`
+        example: 100:1000

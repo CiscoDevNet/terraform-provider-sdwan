@@ -1,0 +1,51 @@
+---
+name: Preferred Color Group
+type: preferredColorGroup
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    max_list: 1
+    description: List of entries, only 1 entry supported
+    attributes:
+      - model_name: colorPreference
+        data_path: [primaryPreference]
+        tf_name: primary_color_preference
+        type: String
+        mandatory: true
+        description: Color or space separated list of colors
+        example: blue bronze
+      - model_name: pathPreference
+        data_path: [primaryPreference]
+        tf_name: primary_path_preference
+        type: String
+        enum_values: [direct-path, multi-hop-path, all-paths]
+        description: Path preference
+        example: direct-path
+      - model_name: colorPreference
+        data_path: [secondaryPreference]
+        tf_name: secondary_color_preference
+        type: String
+        description: Color or space separated list of colors
+        example: 3g
+      - model_name: pathPreference
+        data_path: [secondaryPreference]
+        tf_name: secondary_path_preference
+        type: String
+        enum_values: [direct-path, multi-hop-path, all-paths]
+        description: Path preference
+        example: multi-hop-path
+      - model_name: colorPreference
+        data_path: [tertiaryPreference]
+        tf_name: tertiary_color_preference
+        type: String
+        description: Color or space separated list of colors
+        example: custom1
+      - model_name: pathPreference
+        data_path: [tertiaryPreference]
+        tf_name: tertiary_path_preference
+        type: String
+        enum_values: [direct-path, multi-hop-path, all-paths]
+        description: Path preference
+        example: all-paths

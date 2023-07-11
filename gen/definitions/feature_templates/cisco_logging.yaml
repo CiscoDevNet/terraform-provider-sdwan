@@ -1,0 +1,66 @@
+---
+name: Cisco Logging
+minimum_version: 15.0.0
+attributes:
+  - model_name: enable
+    tf_name: disk_logging
+    example: true
+  - model_name: size
+    tf_name: max_size
+    example: 10
+  - model_name: rotate
+    tf_name: log_rotations
+    example: 10
+  - model_name: tls-profile
+    tf_name: tls_profiles
+    attributes:
+      - model_name: profile
+        tf_name: name
+        example: PROF1
+      - model_name: version
+        example: TLSv1.2
+      - model_name: auth-type
+        tf_name: authentication_type
+        example: Server
+      - model_name: ciphersuite-list
+        example: aes-128-cbc-sha
+  - model_name: server
+    tf_name: ipv4_servers
+    attributes:
+      - model_name: name
+        tf_name: hostname_ip
+        example: 2.2.2.2
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 1
+      - model_name: source-interface
+        example: e1
+      - model_name: priority
+        tf_name: logging_level
+        example: information
+      - model_name: enable-tls
+        example: true
+      - model_name: custom-profile
+        example: true
+      - model_name: profile
+        example: PROF1
+  - model_name: ipv6-server
+    tf_name: ipv6_servers
+    attributes:
+      - model_name: name
+        tf_name: hostname_ip
+        example: 2001::1
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 1
+      - model_name: source-interface
+        example: e1
+      - model_name: priority
+        tf_name: logging_level
+        example: information
+      - model_name: enable-tls
+        example: true
+      - model_name: custom-profile
+        example: true
+      - model_name: profile
+        example: PROF1

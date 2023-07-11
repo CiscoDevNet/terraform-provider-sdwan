@@ -1,0 +1,43 @@
+---
+name: Cisco OMP
+minimum_version: 15.0.0
+attributes:
+  - model_name: graceful-restart
+    example: true
+  - model_name: overlay-as
+    example: 1
+  - model_name: send-path-limit
+    example: 4
+  - model_name: ecmp-limit
+    example: 4
+  - model_name: shutdown
+    example: false
+  - model_name: omp-admin-distance-ipv4
+    example: 10
+  - model_name: omp-admin-distance-ipv6
+    example: 10
+  - model_name: advertisement-interval
+    example: 1
+  - model_name: graceful-restart-timer
+    example: 43200
+  - model_name: eor-timer
+    example: 300
+  - model_name: holdtime
+    example: 60
+  - model_name: ignore-region-path-length
+    example: false
+  - model_name: transport-gateway
+    example: prefer
+  - model_name: advertise
+    tf_name: advertise_ipv4_routes
+    attributes:
+      - model_name: protocol
+        example: ospf
+      - model_name: route
+        tf_name: advertise_external_ospf
+        example: external
+  - model_name: ipv6-advertise
+    tf_name: advertise_ipv6_routes
+    attributes:
+      - model_name: protocol
+        example: ospf

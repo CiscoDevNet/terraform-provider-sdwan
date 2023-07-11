@@ -1,0 +1,23 @@
+---
+name: Mirror
+type: mirror
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    max_list: 1
+    description: List of entries, only 1 entry supported
+    attributes:
+      - model_name: remoteDest
+        tf_name: remote_destination_ip
+        type: String
+        mandatory: true
+        description: Remote destination IP
+        example: 10.1.1.1
+      - model_name: source
+        tf_name: source_ip
+        type: String
+        mandatory: true
+        description: Source IP
+        example: 10.2.1.1

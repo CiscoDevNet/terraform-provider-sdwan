@@ -1,0 +1,482 @@
+---
+name: Cisco VPN Interface
+minimum_version: 15.0.0
+attributes:
+  - model_name: if-name
+    tf_name: interface_name
+    example: ge0/0
+  - model_name: description
+    tf_name: interface_description
+    example: My Interface Description
+  - model_name: poe
+    example: false
+  - model_name: address
+    data_path: [ip]
+    exclude_ignore: true
+    example: 1.1.1.1/24
+  - model_name: secondary-address
+    data_path: [ip]
+    tf_name: ipv4_secondary_addresses
+    attributes:
+      - model_name: address
+        example: 2.2.2.2/24
+  - model_name: dhcp-client
+    data_path: [ip]
+    tf_name: dhcp
+    example: false
+  - model_name: dhcp-distance
+    example: 10
+  - model_name: address
+    data_path: [ipv6]
+    tf_name: ipv6_address
+    example: 2001:1::1/48
+  - model_name: dhcp-client
+    data_path: [ipv6]
+    tf_name: dhcpv6
+    example: false
+  - model_name: secondary-address
+    data_path: [ipv6]
+    tf_name: ipv6_secondary_addresses
+    attributes:
+      - model_name: address
+        example: 2.2.2.2/24
+  - model_name: access-list
+    data_path: [ipv6]
+    tf_name: ipv6_access_lists
+    attributes:
+      - model_name: direction
+        example: in
+      - model_name: acl-name
+        example: ACL1
+  - model_name: dhcp-helper
+    tf_name: ipv4_dhcp_helper
+    example: '["6.6.6.6"]'
+  - model_name: dhcp-helper-v6
+    tf_name: ipv6_dhcp_helpers
+    attributes:
+      - model_name: address
+        example: 2001:7::7/48
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 5
+  - model_name: tracker
+    example: '["tracker1"]'
+  - model_name: auto-bandwidth-detect
+    example: false
+  - model_name: iperf-server
+    example: 8.8.8.8
+  - model_name: nat
+    example: true
+  - model_name: nat-choice
+    tf_name: nat_type
+    example: interface
+  - model_name: udp-timeout
+    example: 1
+  - model_name: tcp-timeout
+    example: 60
+  - model_name: range-start
+    tf_name: nat_pool_range_start
+    example: 10.1.1.1
+  - model_name: range-end
+    tf_name: nat_pool_range_end
+    example: 10.1.1.255
+  - model_name: overload
+    tf_name: nat_overload
+    example: false
+  - model_name: loopback-interface
+    tf_name: nat_inside_source_loopback_interface
+    example: lo1
+  - model_name: prefix-length
+    tf_name: nat_pool_prefix_length
+    example: 24
+  - model_name: enable
+    data_path: [nat64]
+    tf_name: ipv6_nat
+    example: false
+  - model_name: nat64
+    tf_name: nat64_interface
+    example: false
+  - model_name: nat66
+    tf_name: nat66_interface
+    example: false
+  - model_name: static-nat66
+    tf_name: static_nat66_entries
+    attributes:
+      - model_name: source-prefix
+        example: 2001:7::/48
+      - model_name: translated-source-prefix
+        example: 2001:8::/48
+      - model_name: source-vpn-id
+        example: 1
+  - model_name: static
+    tf_name: static_nat_entries
+    attributes:
+      - model_name: source-ip
+        example: 10.1.1.1
+      - model_name: translate-ip
+        example: 100.1.1.1
+      - model_name: static-nat-direction
+        example: inside
+      - model_name: source-vpn
+        tf_name: source_vpn_id
+        example: 1
+  - model_name: static-port-forward
+    tf_name: static_port_forward_entries
+    attributes:
+      - model_name: source-ip
+        example: 10.1.1.1
+      - model_name: translate-ip
+        example: 100.1.1.1
+      - model_name: static-nat-direction
+        example: inside
+      - model_name: source-port
+        example: 8000
+      - model_name: translate-port
+        example: 9000
+      - model_name: proto
+        tf_name: protocol
+        example: tcp
+      - model_name: source-vpn
+        tf_name: source_vpn_id
+        example: 1
+  - model_name: enable-core-region
+    exclude_ignore: true
+    example: false
+  - model_name: core-region
+    exclude_ignore: true
+    example: core
+  - model_name: secondary-region
+    exclude_ignore: true
+    example: off
+  - model_name: encapsulation
+    exclude_ignore: true
+    tf_name: tunnel_interface_encapsulations
+    attributes:
+      - model_name: encap
+        tf_name: encapsulation
+        example: gre
+      - model_name: preference
+        example: 10
+      - model_name: weight
+        example: 100
+  - model_name: border
+    tf_name: tunnel_interface_border
+    exclude_ignore: true
+    example: false
+  - model_name: per-tunnel-qos
+    example: false
+  - model_name: per-tunnel-qos-aggregator
+    example: false
+  - model_name: mode
+    tf_name: tunnel_qos_mode
+    example: spoke
+  - model_name: tunnels-bandwidth
+    tf_name: tunnel_bandwidth
+    exclude_ignore: true
+    example: 50
+  - model_name: group
+    tf_name: tunnel_interface_groups
+    exclude_ignore: true
+    example: "[5]"
+  - model_name: value
+    tf_name: tunnel_interface_color
+    exclude_ignore: true
+    example: gold
+  - model_name: max-control-connections
+    tf_name: tunnel_interface_max_control_connections
+    exclude_ignore: true
+    example: 10
+  - model_name: control-connections
+    tf_name: tunnel_interface_control_connections
+    exclude_ignore: true
+    example: false
+  - model_name: vbond-as-stun-server
+    tf_name: tunnel_interface_vbond_as_stun_server
+    exclude_ignore: true
+    example: false
+  - model_name: exclude-controller-group-list
+    tf_name: tunnel_interface_exclude_controller_group_list
+    exclude_ignore: true
+    example: "[10]"
+  - model_name: vmanage-connection-preference
+    tf_name: tunnel_interface_vmanage_connection_preference
+    exclude_ignore: true
+    example: 5
+  - model_name: port-hop
+    tf_name: tunnel_interface_port_hop
+    exclude_ignore: true
+    example: false
+  - model_name: restrict
+    tf_name: tunnel_interface_color_restrict
+    exclude_ignore: true
+    example: false
+  - model_name: dst-ip
+    tf_name: tunnel_interface_gre_tunnel_destination_ip
+    exclude_ignore: true
+    example: 5.5.5.5
+  - model_name: carrier
+    tf_name: tunnel_interface_carrier
+    exclude_ignore: true
+    example: carrier1
+  - model_name: nat-refresh-interval
+    tf_name: tunnel_interface_nat_refresh_interval
+    exclude_ignore: true
+    example: 5
+  - model_name: hello-interval
+    tf_name: tunnel_interface_hello_interval
+    exclude_ignore: true
+    example: 1000
+  - model_name: hello-tolerance
+    tf_name: tunnel_interface_hello_tolerance
+    exclude_ignore: true
+    example: 12
+  - model_name: bind
+    tf_name: tunnel_interface_bind_loopback_tunnel
+    exclude_ignore: true
+    example: 1
+  - model_name: last-resort-circuit
+    tf_name: tunnel_interface_last_resort_circuit
+    exclude_ignore: true
+    example: false
+  - model_name: low-bandwidth-link
+    tf_name: tunnel_interface_low_bandwidth_link
+    exclude_ignore: true
+    example: false
+  - model_name: tunnel-tcp-mss-adjust
+    tf_name: tunnel_interface_tunnel_tcp_mss
+    exclude_ignore: true
+    example: 1460
+  - model_name: clear-dont-fragment
+    tf_name: tunnel_interface_clear_dont_fragment
+    exclude_ignore: true
+    example: false
+  - model_name: propagate-sgt
+    tf_name: tunnel_interface_propagate_sgt
+    exclude_ignore: true
+    example: false
+  - model_name: network-broadcast
+    tf_name: tunnel_interface_network_broadcast
+    exclude_ignore: true
+    example: false
+  - model_name: all
+    tf_name: tunnel_interface_allow_all
+    exclude_ignore: true
+    example: false
+  - model_name: bgp
+    tf_name: tunnel_interface_allow_bgp
+    exclude_ignore: true
+    example: false
+  - model_name: dhcp
+    tf_name: tunnel_interface_allow_dhcp
+    exclude_ignore: true
+    example: false
+  - model_name: dns
+    tf_name: tunnel_interface_allow_dns
+    exclude_ignore: true
+    example: false
+  - model_name: icmp
+    tf_name: tunnel_interface_allow_icmp
+    exclude_ignore: true
+    example: false
+  - model_name: sshd
+    tf_name: tunnel_interface_allow_ssh
+    exclude_ignore: true
+    example: false
+  - model_name: netconf
+    tf_name: tunnel_interface_allow_netconf
+    exclude_ignore: true
+    example: false
+  - model_name: ntp
+    tf_name: tunnel_interface_allow_ntp
+    exclude_ignore: true
+    example: false
+  - model_name: ospf
+    tf_name: tunnel_interface_allow_ospf
+    exclude_ignore: true
+    example: false
+  - model_name: stun
+    tf_name: tunnel_interface_allow_stun
+    exclude_ignore: true
+    example: false
+  - model_name: snmp
+    tf_name: tunnel_interface_allow_snmp
+    exclude_ignore: true
+    example: false
+  - model_name: https
+    tf_name: tunnel_interface_allow_https
+    exclude_ignore: true
+    example: false
+  - model_name: media-type
+    example: auto-select
+  - model_name: intrf-mtu
+    tf_name: interface_mtu
+    example: 9216
+  - model_name: mtu
+    tf_name: ip_mtu
+    example: 1500
+  - model_name: tcp-mss-adjust
+    example: 1460
+  - model_name: tloc-extension
+    example: 123
+  - model_name: load-interval
+    example: 30
+  - model_name: src-ip
+    tf_name: gre_tunnel_source_ip
+    example: 3.3.3.3
+  - model_name: xconnect
+    tf_name: gre_tunnel_xconnect
+    example: a123
+  - model_name: mac-address
+    example: 00-B0-D0-63-C2-26
+  - model_name: speed
+    example: 1000
+  - model_name: duplex
+    example: full
+  - model_name: shutdown
+    example: false
+  - model_name: arp-timeout
+    example: 1200
+  - model_name: autonegotiate
+    example: true
+  - model_name: ip-directed-broadcast
+    example: false
+  - model_name: icmp-redirect-disable
+    example: false
+  - model_name: qos-adaptive
+    example: false
+  - model_name: period
+    tf_name: qos_adaptive_period
+    example: 15
+  - model_name: bandwidth-down
+    tf_name: qos_adaptive_bandwidth_downstream
+    example: 10000
+  - model_name: dmin
+    tf_name: qos_adaptive_min_downstream
+    example: 100
+  - model_name: dmax
+    tf_name: qos_adaptive_max_downstream
+    example: 100000
+  - model_name: bandwidth-up
+    tf_name: qos_adaptive_bandwidth_upstream
+    example: 10000
+  - model_name: umin
+    tf_name: qos_adaptive_min_upstream
+    example: 100
+  - model_name: umax
+    tf_name: qos_adaptive_max_upstream
+    example: 100000
+  - model_name: shaping-rate
+    example: 1000
+  - model_name: qos-map
+    example: QOSMAP1
+  - model_name: qos-map-vpn
+    example: QOSMAP2
+  - model_name: bandwidth-upstream
+    example: 10000
+  - model_name: bandwidth-downstream
+    example: 10000
+  - model_name: block-non-source-ip
+    example: false
+  - model_name: rule-name
+    tf_name: rewrite_rule_name
+    example: RULE1
+  - model_name: access-list
+    data_path: []
+    tf_name: access_lists
+    attributes:
+      - model_name: direction
+        example: in
+      - model_name: acl-name
+        example: ACL1
+  - model_name: ip
+    tf_name: static_arps
+    attributes:
+      - model_name: addr
+        tf_name: ip_address
+        example: 8.8.8.8
+      - model_name: mac
+        example: 00-B0-D0-63-C2-26
+  - model_name: vrrp
+    tf_name: ipv4_vrrps
+    attributes:
+      - model_name: grp-id
+        tf_name: group_id
+        example: 100
+      - model_name: priority
+        example: 100
+      - model_name: timer
+        example: 100
+      - model_name: track-omp
+        example: false
+      - model_name: track-prefix-list
+        example: PL1
+      - model_name: address
+        tf_name: ip_address
+        example: 2.2.2.2
+      - model_name: ipv4-secondary
+        tf_name: ipv4_secondary_addresses
+        attributes:
+          - model_name: address
+            tf_name: ip_address
+            example: 2.2.2.3
+      - model_name: tloc-change-pref
+        tf_name: tloc_preference_change
+        example: false
+      - model_name: value
+        tf_name: tloc_preference_change_value
+        example: 10
+      - model_name: tracking-object
+        tf_name: tracking_objects
+        attributes:
+          - model_name: name
+            tf_name: tracker_id
+            example: 10
+          - model_name: track-action
+            example: decrement
+          - model_name: decrement
+            tf_name: decrement_value
+            example: 100
+  - model_name: ipv6-vrrp
+    tf_name: ipv6_vrrps
+    attributes:
+      - model_name: grp-id
+        tf_name: group_id
+        example: 100
+      - model_name: priority
+        example: 100
+      - model_name: timer
+        example: 100
+      - model_name: track-omp
+        example: false
+      - model_name: track-prefix-list
+        example: PL1
+      - model_name: ipv6
+        tf_name: ipv6_adresses
+        attributes:
+          - model_name: ipv6-link-local
+            example: fe80::260:8ff:fe52:f9d8
+          - model_name: prefix
+            example: 2001:9::/48
+  - model_name: sgt
+    data_path: [trustsec, propagate]
+    tf_name: propagate_sgt
+    example: false
+  - model_name: sgt
+    data_path: [trustsec, static]
+    tf_name: static_sgt
+    example: 1003
+  - model_name: trusted
+    tf_name: static_sgt_trusted
+    example: false
+  - model_name: enable
+    data_path: [trustsec]
+    tf_name: enable_sgt
+    example: true
+  - model_name: enable
+    data_path: [trustsec, enforcement]
+    tf_name: sgt_enforcement
+    example: true
+  - model_name: sgt
+    data_path: [trustsec, enforcement]
+    tf_name: sgt_enforcement_sgt
+    example: 1004

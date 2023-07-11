@@ -1,0 +1,69 @@
+---
+name: QoS Map
+type: qosMap
+root_element: definition
+skip_templates: [data_source_test.go, resource_test.go, model.go, resource.go]
+attributes:
+  - model_name: qosSchedulers
+    tf_name: qos_schedulers
+    type: List
+    mandatory: true
+    description: List of QoS schedulers
+    attributes:
+      - model_name: queue
+        type: Int64
+        mandatory: true
+        model_type_string: true
+        description: Queue number
+        min_int: 0
+        max_int: 7
+        example: 6
+      - model_name: classMapRef
+        tf_name: class_map_id
+        type: String
+        mandatory: true
+        description: Class map ID
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+      - tf_name: class_map_version
+        tf_only: true
+        type: Int64
+        description: Class map version
+      - model_name: bandwidthPercent
+        tf_name: bandwidth_percent
+        type: Int64
+        mandatory: true
+        model_type_string: true
+        description: Bandwidth percent
+        min_int: 0
+        max_int: 100
+        example: 10
+      - model_name: bufferPercent
+        tf_name: buffer_percent
+        type: Int64
+        mandatory: true
+        model_type_string: true
+        description: Buffer percent
+        min_int: 0
+        max_int: 100
+        example: 10
+      - model_name: burst
+        type: Int64
+        model_type_string: true
+        description: Burst size
+        min_int: 5000
+        max_int: 10000000
+        example: 100000
+      - model_name: drops
+        tf_name: drop_type
+        type: String
+        mandatory: true
+        enum_values: [tail-drop, red-drop]
+        description: Drop type
+        example: red-drop
+      - model_name: scheduling
+        tf_name: scheduling_type
+        type: String
+        mandatory: true
+        enum_values: [llq, wrr]
+        description: Scheduling type
+        example: wrr

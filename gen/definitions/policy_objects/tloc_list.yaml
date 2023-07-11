@@ -1,0 +1,60 @@
+---
+name: TLOC List
+type: tloc
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: tloc
+        tf_name: tloc_ip
+        type: String
+        mandatory: true
+        description: TLOC IP
+        example: 1.1.1.2
+      - model_name: color
+        type: String
+        mandatory: true
+        enum_values:
+          [
+            default,
+            3g,
+            biz-internet,
+            blue,
+            bronze,
+            custom1,
+            custom2,
+            custom3,
+            gold,
+            green,
+            lte,
+            metro-ethernet,
+            mpls,
+            private1,
+            private2,
+            private3,
+            private4,
+            private5,
+            private6,
+            public-internet,
+            red,
+            silver,
+          ]
+        description: Color
+        example: blue
+      - model_name: encap
+        tf_name: encapsulation
+        type: String
+        mandatory: true
+        enum_values: [ipsec, gre]
+        description: Encapsulation
+        example: gre
+      - model_name: preference
+        type: Int64
+        model_type_string: true
+        min_int: 0
+        max_int: 4294967295
+        description: Preference
+        example: 10

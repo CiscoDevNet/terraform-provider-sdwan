@@ -1,0 +1,21 @@
+---
+name: Application List
+type: app
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: app
+        tf_name: application
+        type: String
+        description: Application name
+        example: netflix
+      - model_name: appFamily
+        tf_name: application_family
+        type: String
+        description: Application family name
+        exclude_test: true
+        example: web

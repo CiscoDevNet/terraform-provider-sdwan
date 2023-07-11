@@ -1,0 +1,242 @@
+---
+name: ACL
+type: acl
+skip_templates: [model.go, resource.go]
+attributes:
+  - model_name: type
+    tf_name: default_action
+    data_path: [defaultAction]
+    type: String
+    enum_values: [accept, drop]
+    description: Default action, either `accept` or `drop`
+    example: drop
+  - model_name: sequences
+    type: List
+    mandatory: true
+    description: List of ACL sequences
+    attributes:
+      - model_name: sequenceId
+        tf_name: id
+        type: Int64
+        mandatory: true
+        description: Sequence ID
+        min_int: 1
+        max_int: 65534
+        example: 10
+      - model_name: sequenceIpType
+        tf_name: ip_type
+        type: String
+        enum_values: [ipv4, ipv6]
+        description: IP version, either `ipv4` or `ipv6`
+        example: ipv4
+      - model_name: sequenceName
+        tf_name: name
+        type: String
+        description: Sequence name
+        example: Sequence 10
+      - model_name: sequenceType
+        value: acl
+      - model_name: baseAction
+        tf_name: base_action
+        type: String
+        enum_values: [accept, drop]
+        description: Base action, either `accept` or `drop`
+        example: accept
+      - model_name: entries
+        data_path: [match]
+        tf_name: match_entries
+        type: List
+        description: List of match entries
+        attributes:
+          - model_name: field
+            tf_name: type
+            type: String
+            mandatory: true
+            enum_values:
+              [
+                dscp,
+                sourceIp,
+                destinationIp,
+                class,
+                packetLength,
+                plp,
+                sourcePort,
+                destinationPort,
+                sourceDataPrefixList,
+                destinationDataPrefixList,
+                protocol,
+                tcp,
+              ]
+            description: Type of match entry
+            example: dscp
+          - model_name: value
+            tf_name: dscp
+            type: Int64
+            model_type_string: true
+            description: DSCP value
+            min_int: 0
+            max_int: 63
+            example: 16
+          - model_name: value
+            tf_name: source_ip
+            type: String
+            description: Source IP prefix
+            exclude_test: true
+            example: 10.0.0.0/8
+          - model_name: value
+            tf_name: destination_ip
+            type: String
+            description: Destination IP prefix
+            exclude_test: true
+            example: 192.168.0.0/16
+          - model_name: ref
+            tf_name: class_map_id
+            type: String
+            description: Class map ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: class_map_version
+            tf_only: true
+            type: Int64
+            description: Class map version
+            exclude_test: true
+          - model_name: value
+            tf_name: packet_length
+            type: Int64
+            model_type_string: true
+            description: Packet length
+            exclude_test: true
+            min_int: 0
+            max_int: 65535
+            example: 1500
+          - model_name: value
+            tf_name: priority
+            type: String
+            enum_values: [high, low]
+            description: PLP - priority
+            exclude_test: true
+            example: high
+          - model_name: value
+            tf_name: source_port
+            type: Int64
+            model_type_string: true
+            description: Source port
+            exclude_test: true
+            min_int: 0
+            max_int: 65535
+            example: 8000
+          - model_name: value
+            tf_name: destination_port
+            type: Int64
+            model_type_string: true
+            description: Destination port
+            exclude_test: true
+            min_int: 0
+            max_int: 65535
+            example: 9000
+          - model_name: ref
+            tf_name: source_data_prefix_list_id
+            type: String
+            description: Source data prefix list ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: source_data_prefix_list_version
+            tf_only: true
+            type: Int64
+            description: Source data prefix list version
+            exclude_test: true
+          - model_name: ref
+            tf_name: destination_data_prefix_list_id
+            type: String
+            description: Destination data prefix list ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: destination_data_prefix_list_version
+            tf_only: true
+            type: Int64
+            description: Destination data prefix list version
+            exclude_test: true
+          - model_name: value
+            tf_name: protocol
+            type: String
+            model_type_string: true
+            description: Single value (0-255) or multiple values separated by spaces
+            exclude_test: true
+            example: "1"
+          - model_name: value
+            tf_name: tcp
+            type: String
+            enum_values: [syn]
+            description: TCP parameters
+            exclude_test: true
+            example: syn
+      - model_name: actions
+        tf_name: action_entries
+        type: List
+        description: List of action entries
+        attributes:
+          - model_name: type
+            tf_name: type
+            type: String
+            mandatory: true
+            enum_values: [class, count, set, log, mirror, policer]
+            description: Type of action entry
+            example: set
+          - model_name: ref
+            data_path: [parameter]
+            tf_name: class_map_id
+            type: String
+            description: Class map ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: class_map_version
+            tf_only: true
+            type: Int64
+            description: Class map version
+            exclude_test: true
+          - model_name: parameter
+            tf_name: counter_name
+            type: String
+            description: Counter name
+            exclude_test: true
+            example: count1
+          - model_name: value
+            data_path: [parameter.0]
+            tf_name: dscp
+            type: Int64
+            model_type_string: true
+            description: DSCP value
+            exclude_test: true
+            min_int: 0
+            max_int: 63
+            example: 16
+          - model_name: ref
+            data_path: [parameter]
+            tf_name: mirror_id
+            type: String
+            description: Mirror ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: mirror_version
+            tf_only: true
+            type: Int64
+            description: Mirror version
+            exclude_test: true
+          - model_name: value
+            data_path: [parameter.0]
+            tf_name: next_hop
+            type: String
+            description: Next hop IP
+            example: 10.1.1.2
+          - model_name: ref
+            data_path: [parameter]
+            tf_name: policer_id
+            type: String
+            description: Policer ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: policer_version
+            tf_only: true
+            type: Int64
+            description: Policer version
+            exclude_test: true

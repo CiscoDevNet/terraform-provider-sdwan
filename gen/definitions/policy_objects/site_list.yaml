@@ -1,0 +1,16 @@
+---
+name: Site List
+type: site
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: siteId
+        tf_name: site_id
+        type: String
+        mandatory: true
+        description: Site ID or range of Site IDs e.g., `100` or `200-300`
+        example: 100-200

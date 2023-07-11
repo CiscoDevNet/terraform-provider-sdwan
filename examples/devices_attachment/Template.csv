@@ -1,5 +1,0 @@
-"csv-deviceId","csv-deviceIP","csv-host-name","/0/vpn_if_name_Cisco-VPN-Interface-demo/interface/if-name","/512/vpn_if_name_Cisco-VPN-Interface-demo/interface/if-name","//system/host-name","//system/system-ip","//system/site-id"
-"CSR-53D3BC42-6F6C-4529-8D03-4B2903D1E688","-","-","GigabitEthernet1","GigabitEthernet3","cEdge-11","1.2.1.171","100"
-"CSR-DC54554A-5BE7-49BD-936B-702ECD2FBE4B","-","-","GigabitEthernet1","GigabitEthernet3","cEdge-12","1.2.1.172","300"
-"CSR-DF5C9569-CA62-421A-97AB-F0765C1854D6","-","-","GigabitEthernet1","GigabitEthernet3","cEdge-13","1.2.1.173","400"
-"CSR-F3EF66F0-A1E8-4C11-9C12-3C95ED91A2CC","-","-","GigabitEthernet1","GigabitEthernet3","cEdge-14","1.2.1.174","500"

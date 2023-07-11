@@ -1,0 +1,34 @@
+---
+name: Policer
+type: policer
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    max_list: 1
+    description: List of entries, only 1 entry supported
+    attributes:
+      - model_name: burst
+        type: Int64
+        mandatory: true
+        model_type_string: true
+        description: Burst in bytes
+        min_int: 15000
+        max_int: 10000000
+        example: 100000
+      - model_name: exceed
+        tf_name: exceed_action
+        type: String
+        mandatory: true
+        description: Exceed action
+        enum_values: [drop, remark]
+        example: remark
+      - model_name: rate
+        type: Int64
+        mandatory: true
+        model_type_string: true
+        description: Rate in bps
+        min_int: 8
+        max_int: 100000000000
+        example: 100

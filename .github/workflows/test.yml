@@ -1,0 +1,78 @@
+# Terraform Provider testing workflow.
+name: Tests
+
+# This GitHub action runs your tests for each pull request and push.
+# Optionally, you can turn it on using a schedule for regular testing.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths-ignore:
+      - "README.md"
+  push:
+    paths-ignore:
+      - "README.md"
+
+# Testing only needs permissions to read the repository contents.
+permissions:
+  contents: read
+
+jobs:
+  # consecutiveness:
+  #   name: Consecutiveness
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: mktcode/consecutive-workflow-action@325c790e765731dcd19a003e8e484e5e0afb84e7
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+
+  # Ensure project builds before running testing matrix
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: "go.mod"
+          cache: true
+      - run: pip install yamale
+      - run: yamale -s gen/schema/schema.yaml gen/definitions/feature_templates
+      - run: go mod download
+      - run: go build -v .
+
+  # Run acceptance tests in a matrix with Terraform CLI versions
+  test:
+    name: Terraform Provider Acceptance Tests
+    needs: [build] # [consecutiveness, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: true
+      max-parallel: 1
+      matrix:
+        # list whatever Terraform versions here you would like to support
+        terraform:
+          - "1.0.*"
+          - "1.3.*"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: "go.mod"
+          cache: true
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+      - run: go mod download
+      # - env:
+      #     TF_ACC: '1'
+      #     SDWAN_USERNAME: ${{ secrets.SDWAN_USERNAME }}
+      #     SDWAN_PASSWORD: ${{ secrets.SDWAN_PASSWORD }}
+      #     SDWAN_URL: ${{ secrets.SDWAN_URL }}
+      #   run: go test -v -cover -timeout 45m ./internal/provider/
+      #   timeout-minutes: 45

@@ -1,0 +1,26 @@
+---
+name: IPv4 Prefix List
+type: prefix
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: ipPrefix
+        tf_name: prefix
+        type: String
+        mandatory: true
+        description: IP prefix list entry e.g., `10.0.0.0/12`
+        example: 10.0.0.0/12
+      - model_name: le
+        type: Int64
+        model_type_string: true
+        description: Lesser equal
+        example: 32
+      - model_name: ge
+        type: Int64
+        model_type_string: true
+        description: Greater equal
+        example: 24

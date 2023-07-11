@@ -1,0 +1,16 @@
+---
+name: AS Path List
+type: aspath
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: asPath
+        tf_name: as_path
+        type: String
+        mandatory: true
+        description: Regular expression to match the BGP AS paths e.g., `^1239_[0-9]*$`
+        example: ^1239_[0-9]*$

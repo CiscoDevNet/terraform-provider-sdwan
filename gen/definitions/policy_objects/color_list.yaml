@@ -1,0 +1,40 @@
+---
+name: Color List
+type: color
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: color
+        type: String
+        mandatory: true
+        enum_values:
+          [
+            default,
+            3g,
+            biz-internet,
+            blue,
+            bronze,
+            custom1,
+            custom2,
+            custom3,
+            gold,
+            green,
+            lte,
+            metro-ethernet,
+            mpls,
+            private1,
+            private2,
+            private3,
+            private4,
+            private5,
+            private6,
+            public-internet,
+            red,
+            silver,
+          ]
+        description: Color
+        example: blue

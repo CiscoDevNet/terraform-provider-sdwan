@@ -1,0 +1,23 @@
+---
+name: Cisco BFD
+minimum_version: 15.0.0
+attributes:
+  - model_name: multiplier
+    example: 3
+  - model_name: poll-interval
+    example: 800000
+  - model_name: default-dscp
+    example: 48
+  - model_name: color
+    tf_name: colors
+    attributes:
+      - model_name: color
+        example: private5
+      - model_name: hello-interval
+        example: 1000
+      - model_name: multiplier
+        example: 7
+      - model_name: pmtu-discovery
+        example: true
+      - model_name: dscp
+        example: 46

@@ -1,0 +1,158 @@
+---
+name: cEdge AAA
+minimum_version: 15.0.0
+attributes:
+  - model_name: authentication_group
+    tf_name: dot1x_authentication
+    example: true
+  - model_name: accounting_group
+    tf_name: dot1x_accounting
+    example: true
+  - model_name: server-auth-order
+    tf_name: server_groups_priority_order
+    example: 100
+  - model_name: user
+    tf_name: users
+    attributes:
+      - model_name: name
+        example: user1
+      - model_name: password
+        example: password123
+      - model_name: secret
+        example: secret123
+      - model_name: privilege
+        tf_name: privilege_level
+        example: 15
+      - model_name: pubkey-chain
+        tf_name: ssh_pubkeys
+        attributes:
+          - model_name: key-string
+            example: abc123
+          - model_name: key-type
+            example: rsa
+  - model_name: radius
+    tf_name: radius_server_groups
+    attributes:
+      - model_name: group-name
+        example: GROUP1
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 1
+      - model_name: source-interface
+        example: e1
+      - model_name: server
+        tf_name: servers
+        attributes:
+          - model_name: address
+            example: 1.1.1.1
+          - model_name: auth-port
+            tf_name: authentication_port
+            example: 1812
+          - model_name: acct-port
+            tf_name: accounting_port
+            example: 1813
+          - model_name: timeout
+            example: 5
+          - model_name: retransmit
+            example: 3
+          - model_name: key
+            example: key123
+          - model_name: secret-key
+            example: 1234567
+          - model_name: key-enum
+            tf_name: encryption_type
+            example: 7
+          - model_name: key-type
+            example: pac
+  - model_name: radius-client
+    tf_name: radius_clients
+    attributes:
+      - model_name: ip
+        tf_name: client_ip
+        example: 2.2.2.2
+      - model_name: vpn
+        tf_name: von_configurations
+        attributes:
+          - model_name: name
+            tf_name: vpn_id
+            example: 1
+          - model_name: server-key
+            example: key123
+  - model_name: rda-server-key
+    tf_name: radius_dynamic_author_server_key
+    example: key123
+  - model_name: domain-stripping
+    tf_name: radius_dynamic_author_domain_stripping
+    example: yes
+  - model_name: auth-type
+    tf_name: radius_dynamic_author_authentication_type
+    example: all
+  - model_name: port
+    tf_name: radius_dynamic_author_port
+    example: 1700
+  - model_name: cts-auth-list
+    tf_name: radius_dynamic_author_cts_authorization_list
+    example: ALIST1
+  - model_name: radius-trustsec-group
+    example: GROUP1
+  - model_name: tacacs
+    tf_name: tacacs_server_groups
+    attributes:
+      - model_name: group-name
+        example: GROUP1
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 1
+      - model_name: source-interface
+        example: e1
+      - model_name: server
+        tf_name: servers
+        attributes:
+          - model_name: address
+            example: 1.1.1.1
+          - model_name: port
+            example: 49
+          - model_name: timeout
+            example: 5
+          - model_name: key
+            example: key123
+          - model_name: secret-key
+            example: 1234567
+          - model_name: key-enum
+            tf_name: encryption_type
+            example: 7
+  - model_name: accounting-rule
+    tf_name: accounting_rules
+    attributes:
+      - model_name: rule-id
+        tf_name: name
+        example: RULE1
+      - model_name: method
+        example: exec
+      - model_name: level
+        tf_name: privilege_level
+        example: 15
+      - model_name: start-stop
+        example: true
+      - model_name: group
+        example: '["GROUP1"]'
+  - model_name: authorization-console
+    example: true
+  - model_name: authorization-config-commands
+    example: true
+  - model_name: authorization-rule
+    tf_name: authorization_rules
+    attributes:
+      - model_name: rule-id
+        tf_name: name
+        example: RULE1
+      - model_name: method
+        example: commands
+      - model_name: level
+        tf_name: privilege_level
+        example: 15
+      - model_name: group
+        example: '["GROUP1"]'
+      - model_name: if-authenticated
+        tf_name: authenticated
+        example: true

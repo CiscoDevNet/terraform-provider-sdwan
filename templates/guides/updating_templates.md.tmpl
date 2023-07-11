@@ -1,0 +1,28 @@
+---
+subcategory: "Guides"
+page_title: "Updating Templates and Policies"
+description: |-
+    Updating Templates and Policies
+---
+
+# Updating Templates and Policies
+
+Similary to the UI workflow, once device templates are attached to a device, updates to templates or policies require the device template to be re-attached to the device.
+
+Each template and policy resource in Terraform exposes a version attribute which can be used to link resources and trigger a re-attachment of the device template if required. Due to brevity the following configuration is not complete and only shows a single feature template being used:
+
+{{tffile "examples/provider/updating_templates.tf"}}
+
+This provider supports updates to a single feature template, device template and policy per device within a single `terraform apply` operation. This is due to vManage locking the templates and policies once a change has been made. If for example two feature templates used in the same device template are being updated, a `terraform apply` operation will show the following warning:
+
+```
+│ Warning: Client Warning
+│ 
+│   with sdwan_cisco_system_feature_template.system,
+│   on main.tf line q, in resource "sdwan_cisco_system_feature_template" "system":
+│  1: resource "sdwan_cisco_system_feature_template" "system" {
+│ 
+│ Failed to modify template due to template being locked by another change. Template changes will not be applied. Re-run 'terraform apply' to try again.
+```
+
+A subsequent `terraform plan` will show that the feature template has not been updated. Another `terraform apply` will eventually also apply the second updated feature template.

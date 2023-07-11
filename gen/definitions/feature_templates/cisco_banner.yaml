@@ -1,0 +1,8 @@
+---
+name: Cisco Banner
+minimum_version: 15.0.0
+attributes:
+  - model_name: login
+    example: My Login Banner
+  - model_name: motd
+    example: My MOTD Banner

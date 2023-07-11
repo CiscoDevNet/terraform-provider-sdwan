@@ -1,0 +1,50 @@
+---
+name: Cisco DHCP Server
+minimum_version: 15.0.0
+attributes:
+  - model_name: address-pool
+    example: 10.1.1.0/24
+  - model_name: exclude
+    tf_name: exclude_addresses
+    example: '["10.1.1.1-10.1.1.5", "10.1.1.254"]'
+  - model_name: lease-time
+    example: 600
+  - model_name: interface-mtu
+    example: 1500
+  - model_name: domain-name
+    example: cisco.com
+  - model_name: default-gateway
+    example: 10.1.1.254
+  - model_name: dns-servers
+    example: '["1.2.3.4"]'
+  - model_name: tftp-servers
+    example: '["1.2.3.4"]'
+  - model_name: static-lease
+    tf_name: static_leases
+    attributes:
+      - model_name: mac-address
+        example: 11:11:11:11:11:11
+      - model_name: ip
+        tf_name: ip_address
+        example: 10.1.1.10
+      - model_name: host-name
+        tf_name: hostname
+        example: HOST1
+  - model_name: option-code
+    tf_name: options
+    attributes:
+      - model_name: code
+        tf_name: option_code
+        example: 10
+      - model_name: ascii
+        exclude_ignore: true
+        example: abc
+      - model_name: hex
+        exclude_ignore: true
+        exclude_test: true
+        example: 1E
+      - model_name: ip
+        tf_name: ip_address
+        exclude_ignore: true
+        exclude_test: true
+        example: 1.1.1.2

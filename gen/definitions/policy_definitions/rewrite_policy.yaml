@@ -1,0 +1,43 @@
+---
+name: Rewrite Rule
+type: rewriteRule
+root_element: definition
+skip_templates: [data_source_test.go, resource_test.go, model.go, resource.go]
+attributes:
+  - model_name: rules
+    type: List
+    mandatory: true
+    description: List of rules
+    attributes:
+      - model_name: class
+        tf_name: class_map_id
+        type: String
+        mandatory: true
+        description: Class map ID
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+      - tf_name: class_map_version
+        tf_only: true
+        type: Int64
+        description: Class map version
+      - model_name: plp
+        tf_name: priority
+        type: String
+        mandatory: true
+        description: Priority
+        enum_values: [high, low]
+        example: low
+      - model_name: dscp
+        type: Int64
+        mandatory: true
+        model_type_string: true
+        description: DSCP
+        min_int: 0
+        max_int: 63
+        example: 16
+      - model_name: layer2Cos
+        type: Int64
+        model_type_string: true
+        description: Layer2 CoS
+        min_int: 0
+        max_int: 7
+        example: 1

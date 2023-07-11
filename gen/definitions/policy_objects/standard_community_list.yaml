@@ -1,0 +1,15 @@
+---
+name: Standard Community List
+type: community
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: community
+        type: String
+        mandatory: true
+        description: Standard community value, e.g. `100:1000`, `internet`, `local-AS`, `no-advertise` or `no-export`
+        example: 100:1000

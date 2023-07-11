@@ -1,0 +1,94 @@
+---
+name: Cisco Security
+minimum_version: 15.0.0
+attributes:
+  - model_name: rekey
+    tf_name: rekey_interval
+    example: 86400
+  - model_name: replay-window
+    example: 64
+  - model_name: extended-ar-window
+    example: 256
+  - model_name: authentication-type
+    example: '["none"]'
+  - model_name: integrity-type
+    example: '["none"]'
+  - model_name: pairwise-keying
+    example: true
+  - model_name: keychain
+    tf_name: keychains
+    attributes:
+      - model_name: name
+        example: CHAIN1
+      - model_name: keyid
+        tf_name: key_id
+        example: 1
+  - model_name: key
+    tf_name: keys
+    attributes:
+      - model_name: id
+        example: 1
+      - model_name: chain-name
+        example: CHAIN1
+      - model_name: send-id
+        example: 0
+      - model_name: recv-id
+        tf_name: receive_id
+        example: 0
+      - model_name: tcp
+        tf_name: crypto_algorithm
+        example: hmac-sha-256
+      - model_name: key-string
+        example: abc123
+      - model_name: local
+        data_path: [send-lifetime, lifetime-group-v1]
+        tf_name: send_lifetime
+        example: true
+      - model_name: start-epoch
+        data_path: [send-lifetime, lifetime-group-v1]
+        tf_name: send_lifetime_start_time
+        example: 2022-12-31T23:59
+      - model_name: end-choice
+        data_path: [send-lifetime, lifetime-group-v1]
+        tf_name: send_lifetime_end_time_format
+        example: infinite
+      - model_name: duration
+        data_path: [send-lifetime, lifetime-group-v1]
+        tf_name: send_lifetime_duration
+        example: 1000
+      - model_name: end-epoch
+        data_path: [send-lifetime, lifetime-group-v1]
+        tf_name: send_lifetime_end_time
+        example: 2032-12-31T23:59
+      - model_name: infinite
+        data_path: [send-lifetime, lifetime-group-v1]
+        tf_name: send_lifetime_infinite
+        example: true
+      - model_name: local
+        data_path: [accept-lifetime, lifetime-group-v1]
+        tf_name: accept_lifetime
+        example: true
+      - model_name: start-epoch
+        data_path: [accept-lifetime, lifetime-group-v1]
+        tf_name: accept_lifetime_start_time
+        example: 2022-12-31T23:59
+      - model_name: end-choice
+        data_path: [accept-lifetime, lifetime-group-v1]
+        tf_name: accept_lifetime_end_time_format
+        example: infinite
+      - model_name: duration
+        data_path: [accept-lifetime, lifetime-group-v1]
+        tf_name: accept_lifetime_duration
+        example: 1000
+      - model_name: end-epoch
+        data_path: [accept-lifetime, lifetime-group-v1]
+        tf_name: accept_lifetime_end_time
+        example: 2032-12-31T23:59
+      - model_name: infinite
+        data_path: [accept-lifetime, lifetime-group-v1]
+        tf_name: accept_lifetime_infinite
+        example: true
+      - model_name: include-tcp-options
+        example: false
+      - model_name: accept-ao-mismatch
+        example: true

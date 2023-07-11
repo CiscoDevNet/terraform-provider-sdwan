@@ -1,0 +1,17 @@
+---
+name: Region List
+type: region
+exclude_test: true
+attributes:
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: regionId
+        tf_name: region_id
+        type: String
+        mandatory: true
+        description: Region ID or range of Region IDs e.g., `2` or `3-6`
+        example: 1-2

@@ -1,0 +1,56 @@
+---
+name: cEdge Global
+minimum_version: 15.0.0
+attributes:
+  - model_name: udp-timeout
+    tf_name: nat64_udp_timeout
+    example: 300
+  - model_name: tcp-timeout
+    tf_name: nat64_tcp_timeout
+    example: 3600
+  - model_name: http-authentication
+    example: local
+  - model_name: version
+    tf_name: ssh_version
+    example: 2
+  - model_name: http-server
+    example: true
+  - model_name: https-server
+    example: true
+  - model_name: source-intrf
+    tf_name: source_interface
+    example: e1
+  - model_name: source-route
+    tf_name: ip_source_routing
+    example: true
+  - model_name: arp-proxy
+    example: true
+  - model_name: ftp-passive
+    example: true
+  - model_name: rcmd
+    tf_name: rsh_rcp
+    example: true
+  - model_name: bootp
+    example: true
+  - model_name: domain-lookup
+    example: true
+  - model_name: tcp-keepalives-out
+    example: true
+  - model_name: tcp-keepalives-in
+    example: true
+  - model_name: tcp-small-servers
+    example: true
+  - model_name: udp-small-servers
+    example: true
+  - model_name: lldp
+    example: true
+  - model_name: cdp
+    example: true
+  - model_name: snmp-ifindex-persist
+    example: true
+  - model_name: console-logging
+    example: true
+  - model_name: vty-logging
+    example: true
+  - model_name: line-vty
+    example: true

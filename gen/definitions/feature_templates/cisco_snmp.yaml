@@ -1,0 +1,75 @@
+---
+name: Cisco SNMP
+minimum_version: 15.0.0
+attributes:
+  - model_name: shutdown
+    example: false
+  - model_name: contact
+    example: Max
+  - model_name: location
+    example: Building 1
+  - model_name: view
+    tf_name: views
+    attributes:
+      - model_name: name
+        example: VIEW1
+      - model_name: oid
+        tf_name: object_identifiers
+        attributes:
+          - model_name: id
+            example: 1.2.3
+          - model_name: exclude
+            example: true
+  - model_name: community
+    tf_name: communities
+    attributes:
+      - model_name: name
+        example: community1
+      - model_name: view
+        example: VIEW1
+      - model_name: authorization
+        example: read-only
+  - model_name: group
+    tf_name: groups
+    attributes:
+      - model_name: name
+        example: GROUP1
+      - model_name: security-level
+        example: auth-priv
+      - model_name: view
+        example: VIEW1
+  - model_name: user
+    tf_name: users
+    attributes:
+      - model_name: name
+        example: user1
+      - model_name: auth
+        tf_name: authentication_protocol
+        example: sha
+      - model_name: auth-password
+        tf_name: authentication_password
+        example: password123
+      - model_name: priv
+        tf_name: privacy_protocol
+        example: aes-cfb-128
+      - model_name: priv-password
+        tf_name: privacy_password
+        example: password123
+      - model_name: group
+        example: GROUP1
+  - model_name: target
+    tf_name: trap_targets
+    attributes:
+      - model_name: vpn-id
+        example: 1
+      - model_name: ip
+        example: 1.1.1.1
+      - model_name: port
+        tf_name: udp_port
+        example: 12345
+      - model_name: community-name
+        example: community1
+      - model_name: user
+        example: user1
+      - model_name: source-interface
+        example: e1

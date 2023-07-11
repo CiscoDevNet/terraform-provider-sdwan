@@ -1,0 +1,42 @@
+---
+name: Cisco ThousandEyes
+minimum_version: 15.0.0
+attributes:
+  - model_name: virtual-application
+    tf_name: virtual_applications
+    attributes:
+      - model_name: instance-id
+        example: 1
+      - model_name: application-type
+        example: te
+      - model_name: token
+        tf_name: te_account_group_token
+        example: 1234567
+      - model_name: vpn
+        tf_name: te_vpn
+        example: 1
+      - model_name: te-mgmt-ip
+        tf_name: te_agent_ip
+        example: 1.1.1.2/24
+      - model_name: te-vpg-ip
+        tf_name: te_default_gateway
+        example: 1.1.1.255
+      - model_name: name-server
+        tf_name: te_name_server
+        example: 10.2.2.2
+      - model_name: hostname
+        tf_name: te_hostname
+        example: agent1
+      - model_name: proxy_type
+        tf_name: te_web_proxy_type
+        example: static
+      - model_name: proxy_host
+        tf_name: te_proxy_host
+        example: 3.3.3.3
+      - model_name: proxy_port
+        tf_name: te_proxy_port
+        example: 80
+      - model_name: pac_url
+        tf_name: te_pac_url
+        exclude_test: true
+        example: https://5.5.5.5

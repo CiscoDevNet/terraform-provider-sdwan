@@ -1,0 +1,296 @@
+---
+name: Cisco VPN
+minimum_version: 15.0.0
+attributes:
+  - model_name: vpn-id
+    example: 1
+  - model_name: name
+    tf_name: vpn_name
+    example: VPN1
+  - model_name: tenant-vpn-id
+    example: 1
+  - model_name: org-name
+    tf_name: organization_name
+    example: org1
+  - model_name: omp-admin-distance-ipv4
+    example: 10
+  - model_name: omp-admin-distance-ipv6
+    example: 10
+  - model_name: layer4
+    tf_name: enhance_ecmp_keying
+    example: true
+  - model_name: dns
+    tf_name: dns_ipv4_servers
+    attributes:
+      - model_name: dns-addr
+        tf_name: address
+        example: 9.9.9.9
+      - model_name: role
+        example: primary
+  - model_name: dns-ipv6
+    tf_name: dns_ipv6_servers
+    attributes:
+      - model_name: dns-addr
+        tf_name: address
+        example: 2001::9
+      - model_name: role
+        example: primary
+  - model_name: host
+    tf_name: dns_hosts
+    attributes:
+      - model_name: hostname
+        example: abc1
+      - model_name: ip
+        example: '["7.7.7.7"]'
+  - model_name: service
+    tf_name: services
+    attributes:
+      - model_name: svc-type
+        tf_name: service_types
+        example: FW
+      - model_name: address
+        example: '["8.8.8.8"]'
+      - model_name: interface
+        example: e1
+      - model_name: track-enable
+        example: true
+  - model_name: service-route
+    tf_name: ipv4_static_service_routes
+    attributes:
+      - model_name: prefix
+        example: 2.2.2.0/24
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 2
+      - model_name: service
+        example: sig
+  - model_name: route
+    data_path: [ip]
+    tf_name: ipv4_static_routes
+    attributes:
+      - model_name: prefix
+        example: 3.3.3.0/24
+      - model_name: null0
+        example: false
+      - model_name: distance
+        example: 10
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 5
+      - model_name: dhcp
+        example: false
+      - model_name: next-hop
+        tf_name: next_hops
+        attributes:
+          - model_name: address
+            example: 11.1.1.1
+          - model_name: distance
+            example: 20
+      - model_name: next-hop-with-track
+        tf_name: track_next_hops
+        attributes:
+          - model_name: address
+            example: 12.1.1.1
+          - model_name: distance
+            example: 20
+          - model_name: tracker
+            example: tracker1
+  - model_name: route
+    data_path: [ipv6]
+    tf_name: ipv6_static_routes
+    attributes:
+      - model_name: prefix
+        example: 2001::/48
+      - model_name: null0
+        example: false
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 5
+      - model_name: nat
+        example: NAT64
+      - model_name: next-hop
+        tf_name: next_hops
+        attributes:
+          - model_name: address
+            example: 2001::11
+          - model_name: distance
+            example: 20
+  - model_name: gre-route
+    tf_name: ipv4_static_gre_routes
+    attributes:
+      - model_name: prefix
+        example: 3.3.3.0/24
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 2
+      - model_name: interface
+        example: '["e1"]'
+  - model_name: ipsec-route
+    tf_name: ipv4_static_ipsec_routes
+    attributes:
+      - model_name: prefix
+        example: 4.4.4.0/24
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 2
+      - model_name: interface
+        example: '["e1"]'
+  - model_name: advertise
+    tf_name: omp_advertise_ipv4_routes
+    attributes:
+      - model_name: protocol
+        example: bgp
+      - model_name: route-policy
+        example: rp1
+      - model_name: protocol-sub-type
+        example: '["external"]'
+      - model_name: prefix-list
+        tf_name: prefixes
+        attributes:
+          - model_name: prefix-entry
+            example: 1.1.1.0/24
+          - model_name: aggregate-only
+            example: true
+  - model_name: ipv6-advertise
+    tf_name: omp_advertise_ipv6_routes
+    attributes:
+      - model_name: protocol
+        example: bgp
+      - model_name: route-policy
+        example: rp1
+      - model_name: protocol-sub-type
+        example: '["external"]'
+      - model_name: prefix-list
+        tf_name: prefixes
+        attributes:
+          - model_name: prefix-entry
+            example: 2001:2::/48
+          - model_name: aggregate-only
+            example: true
+  - model_name: pool
+    tf_name: nat64_pools
+    attributes:
+      - model_name: name
+        example: POOL1
+      - model_name: start-address
+        example: 100.1.1.1
+      - model_name: end-address
+        example: 100.1.2.255
+      - model_name: overload
+        example: true
+      - model_name: leak_from_global
+        example: true
+      - model_name: leak_from_global_protocol
+        example: rip
+      - model_name: leak_to_global
+        example: true
+  - model_name: natpool
+    tf_name: nat_pools
+    attributes:
+      - model_name: name
+        example: 1
+      - model_name: prefix-length
+        example: 24
+      - model_name: range-start
+        example: 101.1.1.1
+      - model_name: range-end
+        example: 101.1.2.255
+      - model_name: overload
+        example: true
+      - model_name: direction
+        example: inside
+      - model_name: tracker-id
+        example: 10
+  - model_name: static
+    tf_name: static_nat_rules
+    attributes:
+      - model_name: pool-name
+        example: POOL1
+      - model_name: source-ip
+        example: 10.1.1.1
+      - model_name: translate-ip
+        example: 105.1.1.1
+      - model_name: static-nat-direction
+        example: inside
+      - model_name: tracker-id
+        example: 10
+  - model_name: subnet-static
+    tf_name: static_nat_subnet_rules
+    attributes:
+      - model_name: source-ip-subnet
+        example: 10.2.1.0
+      - model_name: translate-ip-subnet
+        example: 105.2.1.0
+      - model_name: prefix-length
+        example: 24
+      - model_name: static-nat-direction
+        example: inside
+      - model_name: tracker-id
+        example: 10
+  - model_name: port-forward
+    tf_name: port_forward_rules
+    attributes:
+      - model_name: pool-name
+        example: POOL2
+      - model_name: source-port
+        example: 5000
+      - model_name: translate-port
+        example: 6000
+      - model_name: source-ip
+        example: 10.3.1.1
+      - model_name: translate-ip
+        example: 120.3.1.1
+      - model_name: proto
+        tf_name: protocol
+        example: tcp
+  - model_name: route-import
+    tf_name: route_global_imports
+    attributes:
+      - model_name: protocol
+        example: ospf
+      - model_name: protocol-sub-type
+        example: '["external"]'
+      - model_name: route-policy
+        example: policy1
+      - model_name: redistribute
+        tf_name: redistributes
+        attributes:
+          - model_name: protocol
+            example: bgp
+          - model_name: route-policy
+            example: policy1
+  - model_name: route-import-from
+    tf_name: route_vpn_imports
+    attributes:
+      - model_name: source-vpn
+        tf_name: source_vpn_id
+        example: 5
+      - model_name: protocol
+        example: ospf
+      - model_name: protocol-sub-type
+        example: '["external"]'
+      - model_name: route-policy
+        example: policy1
+      - model_name: redistribute
+        tf_name: redistributes
+        attributes:
+          - model_name: protocol
+            example: bgp
+          - model_name: route-policy
+            example: policy1
+  - model_name: route-export
+    tf_name: route_global_exports
+    attributes:
+      - model_name: protocol
+        example: ospf
+      - model_name: protocol-sub-type
+        example: '["external"]'
+      - model_name: route-policy
+        example: policy1
+      - model_name: redistribute
+        tf_name: redistributes
+        attributes:
+          - model_name: protocol
+            example: bgp
+          - model_name: route-policy
+            example: policy1
