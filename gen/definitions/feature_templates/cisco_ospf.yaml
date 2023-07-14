@@ -1,0 +1,117 @@
+---
+name: Cisco OSPF
+minimum_version: 15.0.0
+attributes:
+  - model_name: router-id
+    example: 1.2.3.4
+  - model_name: reference-bandwidth
+    tf_name: auto_cost_reference_bandwidth
+    example: 100000
+  - model_name: rfc1583
+    tf_name: compatible_rfc1583
+    example: true
+  - model_name: originate
+    tf_name: default_information_originate
+    example: true
+  - model_name: always
+    tf_name: default_information_originate_always
+    example: true
+  - model_name: metric
+    tf_name: default_information_originate_metric
+    example: 100
+  - model_name: metric-type
+    tf_name: default_information_originate_metric_type
+    example: type1
+  - model_name: external
+    tf_name: distance_external
+    example: 111
+  - model_name: inter-area
+    tf_name: distance_inter_area
+    example: 111
+  - model_name: intra-area
+    tf_name: distance_intra_area
+    example: 112
+  - model_name: delay
+    tf_name: timers_spf_delay
+    example: 300
+  - model_name: initial-hold
+    tf_name: timers_spf_initial_holf
+    example: 2000
+  - model_name: max-hold
+    tf_name: timers_spf_max_hold
+    example: 20000
+  - model_name: redistribute
+    attributes:
+      - model_name: protocol
+        example: static
+      - model_name: route-policy
+        example: RP1
+      - model_name: dia
+        tf_name: nat_dia
+        example: true
+  - model_name: router-lsa
+    tf_name: max_metric_router_lsa
+    attributes:
+      - model_name: ad-type
+        example: on-startup
+      - model_name: time
+        example: 100
+  - model_name: route-policy
+    tf_name: route_policies
+    attributes:
+      - model_name: direction
+        example: in
+      - model_name: pol-name
+        tf_name: policy_name
+        example: POLICY1
+  - model_name: area
+    tf_name: areas
+    attributes:
+      - model_name: a-num
+        tf_name: area_number
+        example: 1
+      - model_name: no-summary
+        data_path: [stub]
+        tf_name: stub_no_summary
+        example: false
+      - model_name: no-summary
+        data_path: [nssa]
+        tf_name: nssa_no_summary
+        example: true
+      - model_name: interface
+        tf_name: interfaces
+        attributes:
+          - model_name: name
+            example: e1
+          - model_name: hello-interval
+            example: 20
+          - model_name: dead-interval
+            example: 60
+          - model_name: retransmit-interval
+            example: 10
+          - model_name: cost
+            example: 100
+          - model_name: priority
+            example: 10
+          - model_name: network
+            example: point-to-point
+          - model_name: passive-interface
+            example: true
+          - model_name: type
+            tf_name: authentication_type
+            example: message-digest
+          - model_name: message-digest-key
+            tf_name: authentication_message_digest_key_id
+            example: 1
+          - model_name: md5
+            tf_name: authentication_message_digest_key
+            example: cisco123
+      - model_name: range
+        tf_name: ranges
+        attributes:
+          - model_name: address
+            example: 1.1.1.0/24
+          - model_name: cost
+            example: 100
+          - model_name: no-advertise
+            example: true
