@@ -2,6 +2,7 @@
 
 - Add `sdwan_cisco_ospf_feature_template` resource and data source
 - Add `sdwan_cisco_vpn_interface_ipsec_feature_template` resource and data source
+- Add `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source
 
 ## 0.2.0
 

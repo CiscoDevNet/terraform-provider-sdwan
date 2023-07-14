@@ -1,0 +1,176 @@
+---
+name: Cisco Secure Internet Gateway
+minimum_version: 15.0.0
+attributes:
+  - model_name: vpn-id
+    example: 1
+  - model_name: interface
+    tf_name: interfaces
+    attributes:
+      - model_name: if-name
+        tf_name: name
+        example: ipsec1
+      - model_name: auto
+        tf_name: auto_tunnel_mode
+        example: true
+      - model_name: shutdown
+        example: true
+      - model_name: description
+        example: My Description
+      - model_name: unnumbered
+        tf_name: ip_unnumbered
+        example: true
+      - model_name: address
+        tf_name: ipv4_address
+        example: 1.2.3.4/24
+      - model_name: tunnel-source
+        example: 3.3.3.3
+      - model_name: tunnel-source-interface
+        example: ge0/1
+      - model_name: tunnel-route-via
+        example: ge0/2
+      - model_name: tunnel-destination
+        example: 3.4.5.6
+      - model_name: application
+        example: sig
+      - model_name: tunnel-set
+        tf_name: sig_provider
+        example: secure-internet-gateway-umbrella
+      - model_name: tunnel-dc-preference
+        example: primary-dc
+      - model_name: tcp-mss-adjust
+        tf_name: tcp_mss
+        example: 1400
+      - model_name: mtu
+        example: 1500
+      - model_name: dpd-interval
+        tf_name: dead_peer_detection_interval
+        example: 30
+      - model_name: dpd-retries
+        tf_name: dead_peer_detection_retries
+        example: 5
+      - model_name: ike-version
+        example: 1
+      - model_name: pre-shared-secret
+        tf_name: ike_pre_shared_key
+        example: A1234567
+      - model_name: ike-rekey-interval
+        example: 600
+      - model_name: ike-ciphersuite
+        example: aes256-cbc-sha2
+      - model_name: ike-group
+        example: 14
+      - model_name: pre-shared-key-dynamic
+        tf_name: ike_pre_shared_key_dynamic
+        example: false
+      - model_name: ike-local-id
+        tf_name: ike_pre_shared_key_local_id
+        example: 1.2.3.4
+      - model_name: ike-remote-id
+        tf_name: ike_pre_shared_key_remote_id
+        example: 2.3.4.5
+      - model_name: ipsec-rekey-interval
+        example: 7200
+      - model_name: ipsec-replay-window
+        example: 1024
+      - model_name: ipsec-ciphersuite
+        example: aes256-cbc-sha1
+      - model_name: perfect-forward-secrecy
+        tf_name: ipsec_perfect_forward_secrecy
+        example: group-14
+      - model_name: track-enable
+        example: false
+      - model_name: tunnel-public-ip
+        example: 5.5.5.5
+  - model_name: service
+    tf_name: services
+    attributes:
+      - model_name: svc-type
+        tf_name: service_type
+        example: sig
+      - model_name: interface-pair
+        tf_name: interface_pairs
+        attributes:
+          - model_name: active-interface
+            ignore_enum: true
+            example: e1
+          - model_name: active-interface-weight
+            example: 10
+          - model_name: backup-interface
+            ignore_enum: true
+            example: e2
+          - model_name: backup-interface-weight
+            example: 20
+      - model_name: auth-required
+        tf_name: zscaler_authentication_required
+        example: true
+      - model_name: xff-forward-enabled
+        tf_name: zscaler_xff_forward
+        example: true
+      - model_name: ofw-enabled
+        tf_name: zscaler_firewall_enabled
+        example: true
+      - model_name: ips-control
+        tf_name: zscaler_ips_control_enabled
+        example: true
+      - model_name: caution-enabled
+        tf_name: zscaler_caution_enabled
+        example: true
+      - model_name: primary-data-center
+        tf_name: zscaler_primary_data_center
+        example: Auto
+      - model_name: secondary-data-center
+        tf_name: zscaler_secondary_data_center
+        example: Auto
+      - model_name: ip
+        tf_name: zscaler_surrogate_ip
+        example: true
+      - model_name: idle-time
+        tf_name: zscaler_surrogate_idle_time
+        example: 100
+      - model_name: display-time-unit
+        tf_name: zscaler_surrogate_display_time_unit
+        example: MINUTE
+      - model_name: ip-enforced-for-known-browsers
+        tf_name: zscaler_surrogate_ip_enforce_for_known_browsers
+        example: true
+      - model_name: refresh-time-unit
+        tf_name: zscaler_surrogate_refresh_time_unit
+        example: MINUTE
+      - model_name: enabled
+        tf_name: aup_enabled
+        example: true
+      - model_name: block-internet-until-accepted
+        tf_name: aup_block_internet_until_accepted
+        example: true
+      - model_name: force-ssl-inspection
+        tf_name: aup_force_ssl_inspection
+        example: true
+      - model_name: timeout
+        tf_name: aup_timeout
+        example: 60
+      - model_name: location-name
+        tf_name: zscaler_location_name
+        example: LOC1
+      - model_name: data-center-primary
+        tf_name: umbrella_primary_data_center
+        example: Auto
+      - model_name: data-center-secondary
+        tf_name: umbrella_secondary_data_center
+        example: Auto
+  - model_name: tracker-src-ip
+    tf_name: tracker_source_ip
+    example: 2.3.4.5
+  - model_name: tracker
+    tf_name: trackers
+    attributes:
+      - model_name: name
+        example: TRACKER1
+      - model_name: endpoint-api-url
+        example: https://1.1.1.1
+      - model_name: threshold
+        example: 500
+      - model_name: multiplier
+        example: 4
+      - model_name: tracker-type
+        example: SIG

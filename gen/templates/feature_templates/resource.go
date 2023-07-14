@@ -95,7 +95,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 			{{- range  .Attributes}}
 			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
-					{{- if len .EnumValues -}}
+					{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 					{{- end -}}
 					{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
@@ -112,7 +112,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 				ElementType:         types.StringType,
 				{{- end}}
 				Optional:            true,
-				{{- if len .EnumValues}}
+				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 				},
@@ -140,7 +140,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 						{{- range  .Attributes}}
 						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
-								{{- if len .EnumValues -}}
+								{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 								{{- end -}}
 								{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
@@ -157,7 +157,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 							ElementType:         types.StringType,
 							{{- end}}
 							Optional:            true,
-							{{- if len .EnumValues}}
+							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 							Validators: []validator.String{
 								stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 							},
@@ -185,7 +185,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 									{{- range  .Attributes}}
 									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
-											{{- if len .EnumValues -}}
+											{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 											{{- end -}}
 											{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
@@ -202,7 +202,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 										ElementType:         types.StringType,
 										{{- end}}
 										Optional:            true,
-										{{- if len .EnumValues}}
+										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 										Validators: []validator.String{
 											stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 										},
@@ -230,7 +230,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 												{{- range  .Attributes}}
 												"{{.TfName}}": schema.{{if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
-														{{- if len .EnumValues -}}
+														{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 														{{- end -}}
 														{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
@@ -247,7 +247,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 													ElementType:         types.StringType,
 													{{- end}}
 													Optional:            true,
-													{{- if len .EnumValues}}
+													{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 													Validators: []validator.String{
 														stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 													},

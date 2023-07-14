@@ -30,6 +30,7 @@ attribute:
   description: str(required=False)
   example: any(str(), int(), bool(), required=False)
   enum_values: list(str(), required=False)
+  ignore_enum: bool(required=False)
   min_list: int(required=False)
   max_list: int(required=False)
   min_int: int(required=False)

@@ -215,6 +215,7 @@ type YamlConfigAttribute struct {
 	Description     string                `yaml:"description"`
 	Example         string                `yaml:"example"`
 	EnumValues      []string              `yaml:"enum_values"`
+	IgnoreEnum      bool                  `yaml:"ignore_enum"`
 	MinList         int64                 `yaml:"min_list"`
 	MaxList         int64                 `yaml:"max_list"`
 	MinInt          int64                 `yaml:"min_int"`
