@@ -1,0 +1,32 @@
+resource "sdwan_cisco_vpn_interface_ipsec_feature_template" "example" {
+  name                          = "Example"
+  description                   = "My Example"
+  device_types                  = ["vedge-C8000V"]
+  interface_name                = "ipsec1"
+  shutdown                      = false
+  interface_description         = "My Description"
+  ip_address                    = "1.1.1.1/24"
+  tunnel_source                 = "1.2.3.4"
+  tunnel_source_interface       = "e1"
+  tunnel_destination            = "3.4.5.6"
+  application                   = "sig"
+  tcp_mss_adjust                = 1400
+  clear_dont_fragment           = true
+  mtu                           = 1500
+  dead_peer_detection_interval  = 100
+  dead_peer_detection_retries   = 4
+  ike_version                   = 2
+  ike_mode                      = "main"
+  ike_rekey_interval            = 20000
+  ike_ciphersuite               = "aes256-cbc-sha1"
+  ike_group                     = "20"
+  ike_pre_shared_key            = "cisco123"
+  ike_pre_shared_key_local_id   = "1"
+  ike_pre_shared_key_remote_id  = "2"
+  ipsec_rekey_interval          = 7200
+  ipsec_replay_window           = 128
+  ipsec_ciphersuite             = "aes256-cbc-sha256"
+  ipsec_perfect_forward_secrecy = "group-20"
+  tracker                       = ["TRACKER1"]
+  tunnel_route_via              = "g0/0"
+}
