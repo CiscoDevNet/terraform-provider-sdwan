@@ -79,8 +79,40 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- if eq .Type "List"}}
 {{ range .Attributes}}
 {{- if not .Value}}
+{{- $childChildName := toGoName .TfName}}
 {{- if eq .Type "List"}}
 type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
+{{- range .Attributes}}
+{{- if not .Value}}
+{{- if eq .Type "List"}}
+	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "ListString"}}
+	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+{{- else}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
+{{- end}}
+{{- end}}
+{{- end}}
+}
+{{- end}}
+{{- end}}
+{{- end}}
+{{- end}}
+{{- end}}
+{{ end}}
+
+{{ range .Attributes}}
+{{- if not .Value}}
+{{- $childName := toGoName .TfName}}
+{{- if eq .Type "List"}}
+{{ range .Attributes}}
+{{- if not .Value}}
+{{- $childChildName := toGoName .TfName}}
+{{- if eq .Type "List"}}
+{{ range .Attributes}}
+{{- if not .Value}}
+{{- if eq .Type "List"}}
+type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if not .Value}}
 {{- if eq .Type "ListString"}}
@@ -91,6 +123,9 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- end}}
 {{- end}}
 }
+{{- end}}
+{{- end}}
+{{- end}}
 {{- end}}
 {{- end}}
 {{- end}}
@@ -149,15 +184,40 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					{{- if .Value}}
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "{{.Value}}")
 					{{- else if not .TfOnly}}
-					{{- if eq .Type "ListString"}}
+					{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
+					if !childItem.{{toGoName .TfName}}.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}childItem.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
+					}
+					{{- else if eq .Type "ListString"}}
 					if !childItem.{{toGoName .TfName}}.IsNull() {
 						var values []string
 						childItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 					}
-					{{- else}}
-					if !childItem.{{toGoName .TfName}}.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}childItem.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
+					{{- else if eq .Type "List"}}
+					if len(childItem.{{toGoName .TfName}}) > 0 {
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{})
+						for _, childChildItem := range childItem.{{toGoName .TfName}} {
+							itemChildChildBody := ""
+							{{- range .Attributes}}
+							{{- if .Value}}
+							itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "{{.Value}}")
+							{{- else if not .TfOnly}}
+							{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
+							if !childChildItem.{{toGoName .TfName}}.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}childChildItem.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
+							}
+							{{- else if eq .Type "ListString"}}
+							if !childChildItem.{{toGoName .TfName}}.IsNull() {
+								var values []string
+								childChildItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
+							}
+							{{- end}}
+							{{- end}}
+							{{- end}}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.-1", itemChildChildBody)
+						}
 					}
 					{{- end}}
 					{{- end}}
@@ -227,6 +287,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := {{$name}}{{toGoName .TfName}}{}
 			{{- range .Attributes}}
+			{{- $ccname := toGoName .TfName}}
 			{{- if and (not .TfOnly) (not .Value)}}
 			{{- if eq .Type "String"}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists() {
@@ -283,6 +344,44 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					} else {
 						cItem.{{toGoName .TfName}} = types.ListNull(types.StringType)
 					}
+					{{- else if eq .Type "List"}}
+					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists() {
+						cItem.{{toGoName .TfName}} = make([]{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}, 0)
+						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
+							ccItem := {{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}{}
+							{{- range .Attributes}}
+							{{- if and (not .TfOnly) (not .Value)}}
+							{{- if eq .Type "String"}}
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists() {
+								ccItem.{{toGoName .TfName}} = types.StringValue(cccValue.String())
+							} else {
+								ccItem.{{toGoName .TfName}} = types.StringNull()
+							}
+							{{- else if eq .Type "Int64"}}
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists() {
+								ccItem.{{toGoName .TfName}} = types.Int64Value(cccValue.Int())
+							} else {
+								ccItem.{{toGoName .TfName}} = types.Int64Null()
+							}
+							{{- else if eq .Type "Float64"}}
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists() {
+								ccItem.{{toGoName .TfName}} = types.Float64Value(cccValue.Float())
+							} else {
+								ccItem.{{toGoName .TfName}} = types.Float64Null()
+							}
+							{{- else if eq .Type "ListString"}}
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists() {
+								ccItem.{{toGoName .TfName}} = helpers.GetStringList(cccValue.Array())
+							} else {
+								ccItem.{{toGoName .TfName}} = types.ListNull(types.StringType)
+							}
+							{{- end}}
+							{{- end}}
+							{{- end}}
+							cItem.{{toGoName .TfName}} = append(cItem.{{toGoName .TfName}}, ccItem)
+							return true
+						})
+					}
 					{{- end}}
 					{{- end}}
 					{{- end}}
@@ -335,10 +434,27 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 			} else {
 				for ii := range data.{{$name}}[i].{{toGoName .TfName}} {
 					{{- range .Attributes}}
+					{{- $ccname := toGoName .TfName}}
 					{{- if and (not .Value) (not .TfOnly)}}
+					{{- if ne .Type "List"}}
 					if !data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.Equal(state.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}) {
 						hasChanges = true
 					}
+					{{- else}}
+					if len(data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}) != len(state.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}) {
+						hasChanges = true
+					} else {
+						for iii := range data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} {
+							{{- range .Attributes}}
+							{{- if and (not .Value) (not .TfOnly)}}
+							if !data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}.Equal(state.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}) {
+								hasChanges = true
+							}
+							{{- end}}
+							{{- end}}
+						}
+					}
+					{{- end}}
 					{{- end}}
 					{{- end}}
 				}

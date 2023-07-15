@@ -47,7 +47,16 @@ func TestAccSdwan{{camelCase .Name}}PolicyDefinition(t *testing.T) {
 					{{- $clist := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+					{{- if eq .Type "List"}}
+					{{- $cclist := .TfName }}
+					{{- range  .Attributes}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_policy_definition.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"),
+					{{- end}}
+					{{- end}}
+					{{- else}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_policy_definition.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"),
+					{{- end}}
 					{{- end}}
 					{{- end}}
 					{{- else}}
@@ -81,7 +90,17 @@ func testAccSdwan{{camelCase .Name}}PolicyDefinitionConfig_all() string {
 			{{.TfName}} = [{
 				{{- range  .Attributes}}
 				{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+				{{- if eq .Type "List"}}
+				{{.TfName}} = [{
+					{{- range  .Attributes}}
+					{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+					{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+					{{- end}}
+					{{- end}}
+				}]
+				{{- else}}
 				{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+				{{- end}}
 				{{- end}}
 				{{- end}}
 			}]

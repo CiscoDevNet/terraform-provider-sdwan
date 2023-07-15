@@ -1,6 +1,7 @@
 ---
 name: Route
 type: vedgeRoute
+doc_category: Localized Policies
 skip_templates: [model.go, resource.go, data_source.go]
 attributes:
   - model_name: type

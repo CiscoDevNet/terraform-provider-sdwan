@@ -188,7 +188,7 @@ func (r *{{camelCase .Name}}PolicyDefinitionResource) Schema(ctx context.Context
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
 									{{- if not .Value}}
-									"{{.TfName}}": schema.{{if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 											{{- if len .EnumValues -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -232,6 +232,72 @@ func (r *{{camelCase .Name}}PolicyDefinitionResource) Schema(ctx context.Context
 										Validators: []validator.Float64{
 											float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
 										},
+										{{- end}}
+										{{- if eq .Type "List"}}
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												{{- range  .Attributes}}
+												{{- if not .Value}}
+												"{{.TfName}}": schema.{{if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
+														{{- if len .EnumValues -}}
+														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
+														{{- end -}}
+														{{- if or (ne .MinInt 0) (ne .MaxInt 0) -}}
+														.AddIntegerRangeDescription({{.MinInt}}, {{.MaxInt}})
+														{{- end -}}
+														{{- if or (ne .MinFloat 0.0) (ne .MaxFloat 0.0) -}}
+														.AddFloatRangeDescription({{.MinFloat}}, {{.MaxFloat}})
+														{{- end -}}
+														{{- if .DefaultValue -}}
+														.AddDefaultValueDescription("{{.DefaultValue}}")
+														{{- end -}}
+														.String,
+													{{- if eq .Type "ListString"}}
+													ElementType:         types.StringType,
+													{{- end}}
+													{{- if .Mandatory}}
+													Required:            true,
+													{{- else}}
+													Optional:            true,
+													{{- end}}
+													{{- if len .EnumValues}}
+													Validators: []validator.String{
+														stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
+													},
+													{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
+													Validators: []validator.String{
+														{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+														stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+														{{- end}}
+														{{- range .StringPatterns}}
+														stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
+														{{- end}}
+													},
+													{{- else if or (ne .MinInt 0) (ne .MaxInt 0)}}
+													Validators: []validator.Int64{
+														int64validator.Between({{.MinInt}}, {{.MaxInt}}),
+													},
+													{{- else if or (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
+													Validators: []validator.Float64{
+														float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
+													},
+													{{- end}}
+												},
+												{{- end}}
+												{{- end}}
+											},
+										},
+										{{- if or (ne .MinList 0) (ne .MaxList 0)}}
+										Validators: []validator.List{
+											{{- if ne .MinList 0}}
+											listvalidator.SizeAtLeast({{.MinList}}),
+											{{- end}}
+											{{- if ne .MaxList 0}}
+											listvalidator.SizeAtMost({{.MaxList}}),
+											{{- end}}
+										},
+										{{- end}}
 										{{- end}}
 									},
 									{{- end}}

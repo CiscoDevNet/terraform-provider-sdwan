@@ -1,6 +1,7 @@
 ---
 name: Device ACL
 type: deviceAccessPolicy
+doc_category: Localized Policies
 skip_templates: [model.go, resource.go]
 attributes:
   - model_name: type

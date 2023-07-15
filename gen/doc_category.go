@@ -35,7 +35,8 @@ const (
 )
 
 type YamlConfig struct {
-	Name string `yaml:"name"`
+	Name        string `yaml:"name"`
+	DocCategory string `yaml:"doc_category"`
 }
 
 var docPaths = []string{"./docs/data-sources/", "./docs/resources/"}
@@ -152,8 +153,9 @@ func main() {
 				log.Fatalf("Error opening documentation: %v", err)
 			}
 
+			cat := policyDefinitionConfigs[i].DocCategory
 			s := string(content)
-			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Localized Policies"`)
+			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
 
 			ioutil.WriteFile(filename, []byte(s), 0644)
 		}

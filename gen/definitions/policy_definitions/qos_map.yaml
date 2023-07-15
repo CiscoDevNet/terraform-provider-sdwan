@@ -2,6 +2,7 @@
 name: QoS Map
 type: qosMap
 root_element: definition
+doc_category: Localized Policies
 skip_templates: [data_source_test.go, resource_test.go, model.go, resource.go]
 attributes:
   - model_name: qosSchedulers

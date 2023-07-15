@@ -108,6 +108,23 @@ func (d *{{camelCase .Name}}PolicyDefinitionDataSource) Schema(ctx context.Conte
 										ElementType:         types.StringType,
 										{{- end}}
 										Computed:            true,
+										{{- if eq .Type "List"}}
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												{{- range  .Attributes}}
+												{{- if not .Value}}
+												"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+													MarkdownDescription: "{{.Description}}",
+													{{- if eq .Type "ListString"}}
+													ElementType:         types.StringType,
+													{{- end}}
+													Computed:            true,
+												},
+												{{- end}}
+												{{- end}}
+											},
+										},
+										{{- end}}
 									},
 									{{- end}}
 									{{- end}}
