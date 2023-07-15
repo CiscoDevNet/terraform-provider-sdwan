@@ -145,7 +145,7 @@ func (data *MeshTopology) hasChanges(ctx context.Context, state *MeshTopology) b
 
 func (data *MeshTopology) getSiteListVersions(ctx context.Context, name string) types.List {
 	for _, item := range data.Regions {
-		if item.Name.ValueString() == name {
+		if item.Name.ValueString() == name && !item.SiteListVersions.IsNull() {
 			return item.SiteListVersions
 		}
 	}
