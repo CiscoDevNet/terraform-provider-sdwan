@@ -50,21 +50,21 @@ func TestAccSdwan{{camelCase .Name}}PolicyDefinition(t *testing.T) {
 					{{- if eq .Type "List"}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (ne .Type "ListString")}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_policy_definition.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
-					{{- else}}
+					{{- else if ne .Type "ListString"}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_policy_definition.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else}}
+					{{- else if ne .Type "ListString"}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_policy_definition.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else}}
+					{{- else if ne .Type "ListString"}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_policy_definition.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}

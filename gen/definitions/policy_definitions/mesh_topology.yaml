@@ -1,0 +1,38 @@
+---
+name: Mesh Topology
+type: mesh
+root_element: definition
+doc_category: Centralized Policies
+attributes:
+  - model_name: vpnList
+    tf_name: vpn_list_id
+    type: String
+    description: VPN list ID
+    example: 04fcbb0b-efbf-43d2-a04b-847d3a7b104e
+  - tf_name: vpn_list_version
+    tf_only: true
+    type: Int64
+    description: VPN list version
+    exclude_test: true
+  - model_name: regions
+    tf_name: regions
+    type: List
+    mandatory: true
+    description: List of regions
+    attributes:
+      - model_name: name
+        tf_name: name
+        type: String
+        mandatory: true
+        description: Region name
+        example: Region1
+      - model_name: siteLists
+        tf_name: site_list_ids
+        type: ListString
+        description: Site list IDs
+        example: '["e858e1c4-6aa8-4de7-99df-c3adbf80290d"]'
+      - tf_name: site_list_versions
+        tf_only: true
+        type: ListString
+        description: Site list versions
+        exclude_test: true
