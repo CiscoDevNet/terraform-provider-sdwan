@@ -202,3 +202,48 @@ func (data *HubAndSpokeTopology) hasChanges(ctx context.Context, state *HubAndSp
 	}
 	return hasChanges
 }
+
+func (data *HubAndSpokeTopology) getSpokeSiteListVersion(ctx context.Context, name, spokeId string) types.Int64 {
+	for _, item := range data.Topologies {
+		if item.Name.ValueString() == name {
+			for _, cItem := range item.Spokes {
+				if cItem.SiteListId.ValueString() == spokeId {
+					return cItem.SiteListVersion
+				}
+			}
+		}
+	}
+	return types.Int64Null()
+}
+
+func (data *HubAndSpokeTopology) getHubSiteListVersion(ctx context.Context, name, spokeId, hubId string) types.Int64 {
+	for _, item := range data.Topologies {
+		if item.Name.ValueString() == name {
+			for _, cItem := range item.Spokes {
+				if cItem.SiteListId.ValueString() == spokeId {
+					for _, ccItem := range cItem.Hubs {
+						if ccItem.SiteListId.ValueString() == hubId {
+							return ccItem.SiteListVersion
+						}
+					}
+				}
+			}
+		}
+	}
+	return types.Int64Null()
+}
+
+func (data *HubAndSpokeTopology) updateVersions(ctx context.Context, state HubAndSpokeTopology) {
+	data.VpnListVersion = state.VpnListVersion
+	for t := range data.Topologies {
+		name := data.Topologies[t].Name.ValueString()
+		for s := range data.Topologies[t].Spokes {
+			spokeId := data.Topologies[t].Spokes[s].SiteListId.ValueString()
+			data.Topologies[t].Spokes[s].SiteListVersion = state.getSpokeSiteListVersion(ctx, name, spokeId)
+			for h := range data.Topologies[t].Spokes[s].Hubs {
+				hubId := data.Topologies[t].Spokes[s].Hubs[h].SiteListId.ValueString()
+				data.Topologies[t].Spokes[s].Hubs[h].SiteListVersion = state.getHubSiteListVersion(ctx, name, spokeId, hubId)
+			}
+		}
+	}
+}

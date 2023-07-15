@@ -182,10 +182,15 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Create(ctx context.Context
 }
 
 func (r *HubAndSpokeTopologyPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state HubAndSpokeTopology
+	var state, oldState HubAndSpokeTopology
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	diags = req.State.Get(ctx, &oldState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -203,6 +208,7 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Read(ctx context.Context, 
 	}
 
 	state.fromBody(ctx, res)
+	state.updateVersions(ctx, oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 

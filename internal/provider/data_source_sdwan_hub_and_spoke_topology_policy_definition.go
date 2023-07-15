@@ -156,6 +156,7 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Read(ctx context.Context
 	}
 
 	config.fromBody(ctx, res)
+	config.updateVersions(ctx, config)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

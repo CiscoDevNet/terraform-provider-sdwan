@@ -3,6 +3,7 @@ name: Hub and Spoke Topology
 type: hubAndSpoke
 root_element: definition
 doc_category: Centralized Policies
+skip_templates: [model.go, resource.go, data_source.go]
 attributes:
   - model_name: vpnList
     tf_name: vpn_list_id
