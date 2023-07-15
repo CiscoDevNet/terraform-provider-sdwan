@@ -160,10 +160,15 @@ func (r *MeshTopologyPolicyDefinitionResource) Create(ctx context.Context, req r
 }
 
 func (r *MeshTopologyPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state MeshTopology
+	var state, oldState MeshTopology
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	diags = req.State.Get(ctx, &oldState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -181,6 +186,7 @@ func (r *MeshTopologyPolicyDefinitionResource) Read(ctx context.Context, req res
 	}
 
 	state.fromBody(ctx, res)
+	state.updateVersions(ctx, oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 

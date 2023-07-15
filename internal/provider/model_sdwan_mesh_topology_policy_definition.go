@@ -142,3 +142,20 @@ func (data *MeshTopology) hasChanges(ctx context.Context, state *MeshTopology) b
 	}
 	return hasChanges
 }
+
+func (data *MeshTopology) getSiteListVersions(ctx context.Context, name string) types.List {
+	for _, item := range data.Regions {
+		if item.Name.ValueString() == name {
+			return item.SiteListVersions
+		}
+	}
+	return types.ListNull(types.StringType)
+}
+
+func (data *MeshTopology) updateVersions(ctx context.Context, state MeshTopology) {
+	data.VpnListVersion = state.VpnListVersion
+	for r := range data.Regions {
+		name := data.Regions[r].Name.ValueString()
+		data.Regions[r].SiteListVersions = state.getSiteListVersions(ctx, name)
+	}
+}

@@ -135,6 +135,7 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Read(ctx context.Context, req d
 	}
 
 	config.fromBody(ctx, res)
+	config.updateVersions(ctx, config)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
