@@ -1,0 +1,33 @@
+---
+name: VPN Membership
+type: vpnMembershipGroup
+root_element: definition
+doc_category: Centralized Policies
+skip_templates: [model.go, resource.go, data_source.go]
+attributes:
+  - model_name: sites
+    tf_name: sites
+    type: List
+    mandatory: true
+    description: List of sites
+    attributes:
+      - model_name: siteList
+        tf_name: site_list_id
+        type: String
+        description: Site list ID
+        example: e858e1c4-6aa8-4de7-99df-c3adbf80290d
+      - tf_name: site_list_version
+        tf_only: true
+        type: Int64
+        description: Site list version
+        exclude_test: true
+      - model_name: vpnList
+        tf_name: vpn_list_ids
+        type: ListString
+        description: VPN list IDs
+        example: '["04fcbb0b-efbf-43d2-a04b-847d3a7b104e"]'
+      - tf_name: vpn_list_versions
+        tf_only: true
+        type: ListString
+        description: VPN list versions
+        exclude_test: true

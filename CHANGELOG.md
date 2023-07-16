@@ -6,6 +6,7 @@
 - Add `sdwan_hub_and_spoke_topology_policy_definition` resource and data source
 - Add `sdwan_mesh_topology_policy_definition` resource and data source
 - Add `sdwan_custom_control_topology_policy_definition` resource and data source
+- Add `sdwan_vpn_membership_policy_definition` resource and data source
 
 ## 0.2.0
 
