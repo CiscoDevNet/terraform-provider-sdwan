@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.2.1 (unreleased)
+## 0.2.1
 
 - Add `sdwan_cisco_ospf_feature_template` resource and data source
 - Add `sdwan_cisco_vpn_interface_ipsec_feature_template` resource and data source
