@@ -1,0 +1,95 @@
+---
+name: Cflowd
+type: cflowd
+root_element: definition
+doc_category: Centralized Policies
+attributes:
+  - model_name: flowActiveTimeout
+    tf_name: active_flow_timeout
+    type: Int64
+    description: Active flow timeout in seconds
+    min_int: 30
+    max_int: 3600
+    example: 100
+  - model_name: flowInactiveTimeout
+    tf_name: inactive_flow_timeout
+    type: Int64
+    description: Inactive flow timeout in seconds
+    min_int: 1
+    max_int: 3600
+    example: 10
+  - model_name: flowSamplingInterval
+    tf_name: sampling_interval
+    type: Int64
+    description: Flow sampling interval
+    min_int: 1
+    max_int: 65536
+    example: 10
+  - model_name: templateRefresh
+    tf_name: flow_refresh
+    type: Int64
+    description: Flow refresh in seconds
+    min_int: 60
+    max_int: 86400
+    example: 120
+  - model_name: protocol
+    tf_name: protocol
+    type: String
+    enum_values: [ipv4, ipv6, all]
+    description: Protocol, either `ipv4`, `ipv6` or `all`
+    example: ipv4
+  - model_name: collectTos
+    data_path: [customizedIpv4RecordFields]
+    tf_name: tos
+    type: Bool
+    description: Collect TOS record field
+    example: true
+  - model_name: collectDscpOutput
+    data_path: [customizedIpv4RecordFields]
+    tf_name: remarked_dscp
+    type: Bool
+    description: Collect remarked DSCP
+    example: true
+  - model_name: collectors
+    tf_name: collectors
+    type: List
+    mandatory: true
+    description: List of collectors
+    attributes:
+      - model_name: vpn
+        tf_name: vpn_id
+        type: Int64
+        model_type_string: true
+        description: VPN ID
+        min_int: 1
+        max_int: 65535
+        example: 1
+      - model_name: address
+        tf_name: ip_address
+        type: String
+        description: IP address
+        example: 10.0.0.1
+      - model_name: port
+        tf_name: port
+        type: Int64
+        description: Port
+        min_int: 1024
+        max_int: 65535
+        example: 12345
+      - model_name: transport
+        tf_name: transport
+        type: String
+        enum_values: [transport_tcp, transport_udp]
+        description: Transport protocol
+        example: transport_tcp
+      - model_name: sourceInterface
+        tf_name: source_interface
+        type: String
+        description: Source interface
+        example: Ethernet1
+      - model_name: exportSpread
+        tf_name: export_spreading
+        type: String
+        enum_values: [enable, disable]
+        description: Export spreading
+        example: enable
