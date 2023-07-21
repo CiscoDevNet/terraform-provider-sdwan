@@ -1,3 +1,7 @@
+## 0.2.2 (unreleased)
+
+- Add `sdwan_application_aware_routing_policy_definition` resource and data source
+
 ## 0.2.1
 
 - Add `sdwan_cisco_ospf_feature_template` resource and data source

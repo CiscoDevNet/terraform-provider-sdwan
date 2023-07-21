@@ -1,0 +1,258 @@
+---
+name: Application Aware Routing
+type: appRoute
+doc_category: Centralized Policies
+skip_templates: [model.go, resource.go, data_source.go]
+attributes:
+  - model_name: sequences
+    tf_name: sequences
+    type: List
+    mandatory: true
+    description: List of sequences
+    attributes:
+      - model_name: sequenceId
+        tf_name: id
+        type: Int64
+        mandatory: true
+        description: Sequence ID
+        example: 1
+      - model_name: sequenceName
+        tf_name: name
+        type: String
+        mandatory: true
+        description: Sequence name
+        example: Region1
+      - model_name: sequenceType
+        value: appRoute
+      - model_name: sequenceIpType
+        tf_name: ip_type
+        type: String
+        enum_values: [ipv4, ipv6, all]
+        description: Sequence IP type, either `ipv4`, `ipv6` or `all`
+        example: ipv4
+      - model_name: entries
+        data_path: [match]
+        tf_name: match_entries
+        type: List
+        description: List of match entries
+        attributes:
+          - model_name: field
+            tf_name: type
+            type: String
+            mandatory: true
+            enum_values:
+              [
+                appList,
+                dnsAppList,
+                dns,
+                dscp,
+                plp,
+                protocol,
+                sourceDataPrefixList,
+                sourceIp,
+                sourcePort,
+                destinationDataPrefixList,
+                destinationIp,
+                destinationRegion,
+                destinationPort,
+                trafficTo,
+              ]
+            description: Type of match entry
+            example: appList
+          - model_name: ref
+            tf_name: application_list_id
+            type: String
+            description: Application list ID
+            example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
+          - tf_name: application_list_version
+            tf_only: true
+            type: Int64
+            description: Application list version
+            exclude_test: true
+          - model_name: ref
+            tf_name: dns_application_list_id
+            type: String
+            description: DNS Application list ID
+            example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
+            exclude_test: true
+          - tf_name: dns_application_list_version
+            tf_only: true
+            type: Int64
+            description: DNS Application list version
+            exclude_test: true
+          - model_name: value
+            tf_name: dns
+            type: String
+            enum_values: [request, response]
+            description: DNS request or response
+            example: request
+            exclude_test: true
+          - model_name: value
+            tf_name: dscp
+            type: Int64
+            model_type_string: true
+            description: DSCP value
+            min_int: 0
+            max_int: 63
+            example: 46
+            exclude_test: true
+          - model_name: value
+            tf_name: plp
+            type: String
+            enum_values: [low, high]
+            description: PLP
+            example: low
+            exclude_test: true
+          - model_name: value
+            tf_name: protocol
+            type: Int64
+            model_type_string: true
+            description: IP Protocol
+            min_int: 0
+            max_int: 255
+            example: 10
+            exclude_test: true
+          - model_name: ref
+            tf_name: source_data_prefix_list_id
+            type: String
+            description: Source Data Prefix list ID
+            example: 7d97276b-321c-4d0c-870e-342bbcd51011
+            exclude_test: true
+          - tf_name: source_data_prefix_list_version
+            tf_only: true
+            type: Int64
+            description: Source Data Prefix list version
+            exclude_test: true
+          - model_name: value
+            tf_name: source_ip
+            type: String
+            description: Source IP
+            example: 10.0.0.0/12
+            exclude_test: true
+          - model_name: value
+            tf_name: source_port
+            type: Int64
+            model_type_string: true
+            description: Source port
+            min_int: 0
+            max_int: 65535
+            example: 10
+            exclude_test: true
+          - model_name: ref
+            tf_name: destination_data_prefix_list_id
+            type: String
+            description: Destination Data Prefix list ID
+            example: 7d97276b-321c-4d0c-870e-342bbcd51011
+            exclude_test: true
+          - tf_name: destination_data_prefix_list_version
+            tf_only: true
+            type: Int64
+            description: Destination Data Prefix list version
+            exclude_test: true
+          - model_name: value
+            tf_name: destination_ip
+            type: String
+            description: Destination IP
+            example: 10.0.0.0/12
+            exclude_test: true
+          - model_name: value
+            tf_name: destination_port
+            type: Int64
+            model_type_string: true
+            description: Destination port
+            min_int: 0
+            max_int: 65535
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: destination_region
+            type: String
+            enum_values: [primary-region, secondary-region, other-region]
+            description: Destination region
+            example: primary-region
+            exclude_test: true
+          - model_name: value
+            tf_name: traffic_to
+            type: String
+            enum_values: [access, core, service]
+            description: Traffic to
+            example: access
+            exclude_test: true
+      - model_name: actions
+        tf_name: action_entries
+        type: List
+        description: List of action entries
+        attributes:
+          - model_name: type
+            tf_name: type
+            type: String
+            mandatory: true
+            enum_values:
+              [backupSlaPreferredColor, count, log, slaClass, cloudSaas]
+            description: Type of action entry
+            example: backupSlaPreferredColor
+          - model_name: parameter
+            tf_name: backup_sla_preferred_color
+            type: String
+            description: Backup SLA preferred color
+            example: bronze
+          - model_name: parameter
+            tf_name: counter
+            type: String
+            description: Counter name
+            example: count1
+            exclude_test: true
+          - model_name: parameter
+            tf_name: log
+            type: String
+            enum_values: [""]
+            description: Enable logging
+            example: ""
+            exclude_test: true
+          - model_name: parameter
+            tf_name: cloud_sla
+            type: String
+            enum_values: [""]
+            description: Cloud SLA
+            example: ""
+            exclude_test: true
+          - model_name: parameter
+            tf_name: cloud_sla_parameters
+            type: List
+            description: List of cloud SLA parameters
+            exclude_test: true
+            attributes:
+              - model_name: field
+                tf_name: type
+                type: String
+                mandatory: true
+                enum_values: [name, preferredColor, preferredColorGroup]
+                description: Type of cloud SLA parameter
+                example: name
+              - model_name: ref
+                tf_name: sla_class_list
+                type: String
+                description: SLA class list ID
+                example: 71920ba0-46e7-411a-a730-387414aabc08
+                exclude_test: true
+              - tf_name: sla_class_list_version
+                tf_only: true
+                type: Int64
+                description: SLA class list version
+                exclude_test: true
+              - model_name: ref
+                tf_name: preferred_color_group_list
+                type: String
+                description: Preferred color group list ID
+                example: 45bd33f6-f177-42f3-8aa6-60a62dfd6dd2
+                exclude_test: true
+              - tf_name: preferred_color_group_list_version
+                tf_only: true
+                type: Int64
+                description: Preferred color group list version
+                exclude_test: true
+              - model_name: value
+                tf_name: preferred_color
+                type: String
+                description: preferred color
+                example: bronze
