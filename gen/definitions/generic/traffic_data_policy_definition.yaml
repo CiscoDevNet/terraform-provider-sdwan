@@ -1,0 +1,768 @@
+---
+name: Traffic Data Policy Definition
+rest_endpoint: /template/policy/definition/data/
+has_version: true
+id_attribute: definitionId
+type: data
+doc_category: Centralized Policies
+attributes:
+  - model_name: type
+    value: data
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
+  - model_name: type
+    tf_name: default_action
+    data_path: [defaultAction]
+    type: String
+    enum_values: [accept, drop]
+    description: Default action, either `accept` or `drop`
+    example: drop
+  - model_name: sequences
+    tf_name: sequences
+    type: List
+    mandatory: true
+    description: List of sequences
+    attributes:
+      - model_name: sequenceId
+        tf_name: id
+        type: Int64
+        id: true
+        mandatory: true
+        description: Sequence ID
+        example: 1
+      - model_name: sequenceName
+        tf_name: name
+        type: String
+        id: true
+        mandatory: true
+        description: Sequence name
+        example: Seq1
+      - model_name: sequenceType
+        tf_name: type
+        type: String
+        enum_values:
+          [applicationFirewall, qos, serviceChaining, trafficEngineering, data]
+        mandatory: true
+        description: Sequence type
+        example: applicationFirewall
+      - model_name: sequenceIpType
+        tf_name: ip_type
+        type: String
+        enum_values: [ipv4, ipv6, all]
+        description: Sequence IP type, either `ipv4`, `ipv6` or `all`
+        example: ipv4
+      - model_name: entries
+        data_path: [match]
+        tf_name: match_entries
+        type: List
+        description: List of match entries
+        attributes:
+          - model_name: field
+            tf_name: type
+            type: String
+            id: true
+            mandatory: true
+            enum_values:
+              [
+                appList,
+                dnsAppList,
+                dns,
+                dscp,
+                packetLength,
+                plp,
+                protocol,
+                sourceDataPrefixList,
+                sourceIp,
+                sourcePort,
+                destinationDataPrefixList,
+                destinationIp,
+                destinationRegion,
+                destinationPort,
+                tcp,
+                trafficTo,
+              ]
+            description: Type of match entry
+            example: appList
+          - model_name: ref
+            tf_name: application_list_id
+            conditional_attribute:
+              name: type
+              value: appList
+            type: String
+            description: Application list ID
+            example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
+          - tf_name: application_list_version
+            tf_only: true
+            type: Version
+            description: Application list version
+            exclude_test: true
+          - model_name: ref
+            tf_name: dns_application_list_id
+            conditional_attribute:
+              name: type
+              value: dnsAppList
+            type: String
+            description: DNS Application list ID
+            example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
+            exclude_test: true
+          - tf_name: dns_application_list_version
+            tf_only: true
+            type: Version
+            description: DNS Application list version
+            exclude_test: true
+          - model_name: value
+            tf_name: dns
+            conditional_attribute:
+              name: type
+              value: dns
+            type: String
+            enum_values: [request, response]
+            description: DNS request or response
+            example: request
+            exclude_test: true
+          - model_name: value
+            tf_name: dscp
+            conditional_attribute:
+              name: type
+              value: dscp
+            type: Int64
+            model_type_string: true
+            description: DSCP value
+            min_int: 0
+            max_int: 63
+            example: 46
+            exclude_test: true
+          - model_name: value
+            tf_name: packet_length
+            conditional_attribute:
+              name: type
+              value: packetLength
+            type: Int64
+            model_type_string: true
+            description: Packet length
+            min_int: 0
+            max_int: 65535
+            example: 1500
+            exclude_test: true
+          - model_name: value
+            tf_name: plp
+            conditional_attribute:
+              name: type
+              value: plp
+            type: String
+            enum_values: [low, high]
+            description: PLP
+            example: low
+            exclude_test: true
+          - model_name: value
+            tf_name: protocol
+            conditional_attribute:
+              name: type
+              value: protocol
+            type: Int64
+            model_type_string: true
+            description: IP Protocol
+            min_int: 0
+            max_int: 255
+            example: 10
+            exclude_test: true
+          - model_name: ref
+            tf_name: source_data_prefix_list_id
+            conditional_attribute:
+              name: type
+              value: sourceDataPrefixList
+            type: String
+            description: Source Data Prefix list ID
+            example: 7d97276b-321c-4d0c-870e-342bbcd51011
+            exclude_test: true
+          - tf_name: source_data_prefix_list_version
+            tf_only: true
+            type: Version
+            description: Source Data Prefix list version
+            exclude_test: true
+          - model_name: value
+            tf_name: source_ip
+            conditional_attribute:
+              name: type
+              value: sourceIp
+            type: String
+            description: Source IP
+            example: 10.0.0.0/12
+            exclude_test: true
+          - model_name: value
+            tf_name: source_port
+            conditional_attribute:
+              name: type
+              value: sourcePort
+            type: Int64
+            model_type_string: true
+            description: Source port
+            min_int: 0
+            max_int: 65535
+            example: 10
+            exclude_test: true
+          - model_name: ref
+            tf_name: destination_data_prefix_list_id
+            conditional_attribute:
+              name: type
+              value: destinationDataPrefixList
+            type: String
+            description: Destination Data Prefix list ID
+            example: 7d97276b-321c-4d0c-870e-342bbcd51011
+            exclude_test: true
+          - tf_name: destination_data_prefix_list_version
+            tf_only: true
+            type: Version
+            description: Destination Data Prefix list version
+            exclude_test: true
+          - model_name: value
+            tf_name: destination_ip
+            conditional_attribute:
+              name: type
+              value: destinationIp
+            type: String
+            description: Destination IP
+            example: 10.0.0.0/12
+            exclude_test: true
+          - model_name: value
+            tf_name: destination_port
+            conditional_attribute:
+              name: type
+              value: destinationPort
+            type: Int64
+            model_type_string: true
+            description: Destination port
+            min_int: 0
+            max_int: 65535
+            example: 100
+            exclude_test: true
+          - model_name: value
+            tf_name: destination_region
+            type: String
+            conditional_attribute:
+              name: type
+              value: destinationRegion
+            enum_values: [primary-region, secondary-region, other-region]
+            description: Destination region
+            example: primary-region
+            exclude_test: true
+          - model_name: value
+            tf_name: tcp
+            type: String
+            conditional_attribute:
+              name: type
+              value: tcp
+            enum_values: [syn]
+            description: TCP flags
+            example: syn
+            exclude_test: true
+          - model_name: value
+            tf_name: traffic_to
+            conditional_attribute:
+              name: type
+              value: trafficTo
+            type: String
+            enum_values: [access, core, service]
+            description: Traffic to
+            example: access
+            exclude_test: true
+      - model_name: actions
+        tf_name: action_entries
+        type: List
+        description: List of action entries
+        attributes:
+          - model_name: type
+            tf_name: type
+            type: String
+            id: true
+            mandatory: true
+            enum_values:
+              [
+                cflowd,
+                count,
+                dreOptimization,
+                fallbackToRouting,
+                log,
+                lossProtect,
+                lossProtectFec,
+                nat,
+                redirectDns,
+                serviceNodeGroup,
+                set,
+                sig,
+                tcpOptimization,
+              ]
+            description: Type of action entry
+            example: log
+          - model_name: parameter
+            tf_name: cflowd
+            conditional_attribute:
+              name: type
+              value: cflowd
+            type: Bool
+            bool_empty_string: true
+            description: Enable cflowd
+            example: true
+            exclude_test: true
+          - model_name: parameter
+            tf_name: counter
+            conditional_attribute:
+              name: type
+              value: count
+            type: String
+            description: Counter name
+            example: count1
+            exclude_test: true
+          - model_name: parameter
+            tf_name: dre_optimization
+            conditional_attribute:
+              name: type
+              value: dreOptimization
+            type: Bool
+            bool_empty_string: true
+            description: Enable DRE optimization
+            example: true
+            exclude_test: true
+          - model_name: parameter
+            tf_name: fallback_to_routing
+            conditional_attribute:
+              name: type
+              value: fallbackToRouting
+            type: Bool
+            bool_empty_string: true
+            description: Enable fallback to routing
+            example: true
+            exclude_test: true
+          - model_name: parameter
+            tf_name: log
+            conditional_attribute:
+              name: type
+              value: log
+            type: Bool
+            bool_empty_string: true
+            description: Enable logging
+            example: true
+          - model_name: parameter
+            tf_name: loss_correction
+            conditional_attribute:
+              name: type
+              value: lossProtect
+            type: String
+            enum_values: [fecAdaptive, fecAlways, packetDuplication]
+            description: Loss correction
+            example: fecAdaptive
+            exclude_test: true
+          - model_name: parameter
+            tf_name: loss_correction_fec
+            conditional_attribute:
+              name: type
+              value: lossProtectFec
+            type: String
+            enum_values: [fecAdaptive, fecAlways, packetDuplication]
+            description: Loss correction FEC
+            example: fecAdaptive
+            exclude_test: true
+          - model_name: value
+            tf_name: loss_correction_fec_threshold
+            conditional_attribute:
+              name: type
+              value: lossProtectFec
+            type: Int64
+            description: Loss correction FEC threshold
+            min_int: 1
+            max_int: 5
+            example: 2
+            exclude_test: true
+          - model_name: field
+            data_path: [parameter]
+            tf_name: nat_pool
+            conditional_attribute:
+              name: type
+              value: nat
+            type: String
+            enum_values: [pool]
+            description: NAT pool
+            example: pool
+            exclude_test: true
+          - model_name: value
+            data_path: [parameter]
+            tf_name: nat_pool_id
+            conditional_attribute:
+              name: type
+              value: nat
+            type: Int64
+            description: NAT pool ID
+            min_int: 1
+            max_int: 31
+            example: 2
+            exclude_test: true
+          - model_name: field
+            data_path: [parameter]
+            tf_name: redirect_dns
+            conditional_attribute:
+              name: type
+              value: redirectDns
+            type: String
+            enum_values: [dnsType, ipAddress]
+            description: Redirect DNS
+            example: dnsType
+            exclude_test: true
+          - model_name: value
+            data_path: [parameter]
+            tf_name: redirect_dns_type
+            conditional_attribute:
+              name: type
+              value: redirectDns
+            type: String
+            enum_values: [host, umbrella]
+            description: Redirect DNS type
+            example: host
+            exclude_test: true
+          - model_name: value
+            data_path: [parameter]
+            tf_name: redirect_dns_address
+            conditional_attribute:
+              name: type
+              value: redirectDns
+            type: String
+            description: Redirect DNS IP address
+            example: 10.1.1.1
+            exclude_test: true
+          - model_name: parameter
+            tf_name: service_node_group
+            conditional_attribute:
+              name: type
+              value: serviceNodeGroup
+            type: String
+            description: Service node group
+            example: SNG-APPQOE1
+            exclude_test: true
+          - model_name: parameter
+            tf_name: secure_internet_gateway
+            conditional_attribute:
+              name: type
+              value: sig
+            type: Bool
+            bool_empty_string: true
+            description: Enable secure internet gateway
+            example: true
+            exclude_test: true
+          - model_name: parameter
+            tf_name: tcp_optimization
+            conditional_attribute:
+              name: type
+              value: tcpOptimization
+            type: Bool
+            bool_empty_string: true
+            description: Enable TCP optimization
+            example: true
+            exclude_test: true
+          - model_name: parameter
+            tf_name: set_parameters
+            conditional_attribute:
+              name: type
+              value: set
+            type: List
+            description: List of set parameters
+            exclude_test: true
+            attributes:
+              - model_name: field
+                tf_name: type
+                type: String
+                id: true
+                mandatory: true
+                enum_values:
+                  [
+                    dscp,
+                    forwardingClass,
+                    localTlocList,
+                    nextHop,
+                    nextHopLoose,
+                    policer,
+                    preferredColorGroup,
+                    tlocList,
+                    tloc,
+                    service,
+                    vpn,
+                  ]
+                description: Type of set parameter
+                exclude_test: true
+                example: dscp
+              - model_name: value
+                tf_name: dscp
+                conditional_attribute:
+                  name: type
+                  value: dscp
+                type: Int64
+                model_type_string: true
+                description: DSCP
+                min_int: 0
+                max_int: 63
+                example: 46
+                exclude_test: true
+              - model_name: value
+                tf_name: forwarding_class
+                conditional_attribute:
+                  name: type
+                  value: forwardingClass
+                type: String
+                description: Forwarding class
+                example: abc
+                exclude_test: true
+              - model_name: value
+                tf_name: next_hop
+                conditional_attribute:
+                  name: type
+                  value: nextHop
+                type: String
+                description: Next hop IP
+                example: 10.1.1.1
+                exclude_test: true
+              - model_name: color
+                data_path: [value]
+                tf_name: local_tloc_list_color
+                conditional_attribute:
+                  name: type
+                  value: localTlocList
+                type: String
+                description: Local TLOC list color
+                example: bronze
+                exclude_test: true
+              - model_name: encap
+                data_path: [value]
+                tf_name: local_tloc_list_encap
+                conditional_attribute:
+                  name: type
+                  value: localTlocList
+                type: String
+                enum_values: [ipsec, gre]
+                description: Local TLOC list encapsulation
+                example: ipsec
+                exclude_test: true
+              - model_name: restrict
+                data_path: [value]
+                tf_name: local_tloc_list_restrict
+                conditional_attribute:
+                  name: type
+                  value: localTlocList
+                type: Bool
+                bool_empty_string: true
+                description: Local TLOC list restrict
+                example: true
+                exclude_test: true
+              - model_name: value
+                tf_name: next_hop_loose
+                conditional_attribute:
+                  name: type
+                  value: nextHopLoose
+                type: Bool
+                model_type_string: true
+                description: Use routing table entry to forward the packet in case Next-hop is not available
+                example: true
+                exclude_test: true
+              - model_name: ref
+                tf_name: policer_list_id
+                conditional_attribute:
+                  name: type
+                  value: policer
+                type: String
+                description: Policer list ID
+                example: 4e3b33fb-6919-4f85-9869-2242c9b65aa4
+                exclude_test: true
+              - tf_name: policer_list_version
+                tf_only: true
+                type: Version
+                description: Policer list version
+                exclude_test: true
+              - model_name: ref
+                tf_name: preferred_color_group_list
+                conditional_attribute:
+                  name: type
+                  value: preferredColorGroup
+                type: String
+                description: Preferred color group list ID
+                example: 45bd33f6-f177-42f3-8aa6-60a62dfd6dd2
+                exclude_test: true
+              - tf_name: preferred_color_group_list_version
+                tf_only: true
+                type: Version
+                description: Preferred color group list version
+                exclude_test: true
+              - model_name: ref
+                tf_name: tloc_list_id
+                conditional_attribute:
+                  name: type
+                  value: tlocList
+                type: String
+                description: TLOC list ID
+                example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
+                exclude_test: true
+              - tf_name: tloc_list_version
+                tf_only: true
+                type: Version
+                description: TLOC list version
+                exclude_test: true
+              - model_name: ip
+                data_path: [value]
+                tf_name: tloc_ip
+                conditional_attribute:
+                  name: type
+                  value: tloc
+                type: String
+                description: TLOC IP address
+                example: 1.2.3.4
+                exclude_test: true
+              - model_name: color
+                data_path: [value]
+                tf_name: tloc_color
+                conditional_attribute:
+                  name: type
+                  value: tloc
+                type: String
+                description: TLOC color
+                example: bronze
+                exclude_test: true
+              - model_name: encap
+                data_path: [value]
+                tf_name: tloc_encapsulation
+                conditional_attribute:
+                  name: type
+                  value: tloc
+                type: String
+                enum_values: [ipsec, gre]
+                description: TLOC encapsulation
+                example: ipsec
+                exclude_test: true
+              - model_name: type
+                data_path: [value]
+                tf_name: service_type
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                enum_values:
+                  [FW, IDP, IDS, netsvc1, netsvc2, netsvc3, netsvc4, netsvc5]
+                description: Service type
+                example: IDP
+                exclude_test: true
+              - model_name: vpn
+                data_path: [value]
+                tf_name: service_vpn_id
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: Int64
+                model_type_string: true
+                description: Service VPN ID
+                min_int: 0
+                max_int: 65536
+                example: 100
+                exclude_test: true
+              - model_name: tlocList
+                data_path: [value]
+                tf_name: service_tloc_list_id
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                description: Service TLOC list ID
+                example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
+                exclude_test: true
+              - tf_name: service_tloc_list_version
+                tf_only: true
+                type: Version
+                description: Service TLOC list version
+                exclude_test: true
+              - model_name: ip
+                data_path: [value, tloc]
+                tf_name: service_tloc_ip
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                description: Service TLOC IP address
+                example: 1.2.3.4
+                exclude_test: true
+              - model_name: color
+                data_path: [value, tloc]
+                tf_name: service_tloc_color
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                description: Service TLOC color
+                example: bronze
+                exclude_test: true
+              - model_name: encap
+                data_path: [value, tloc]
+                tf_name: service_tloc_encapsulation
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                enum_values: [ipsec, gre]
+                description: Service TLOC encapsulation
+                example: ipsec
+                exclude_test: true
+              - model_name: value
+                tf_name: vpn_id
+                conditional_attribute:
+                  name: type
+                  value: vpn
+                type: Int64
+                model_type_string: true
+                description: DSCP
+                min_int: 0
+                max_int: 65530
+                example: 1
+                exclude_test: true
+          - model_name: parameter
+            tf_name: nat_parameters
+            conditional_attribute:
+              name: type
+              value: nat
+            type: List
+            description: List of NAT parameters
+            exclude_test: true
+            attributes:
+              - model_name: field
+                tf_name: type
+                type: String
+                id: true
+                mandatory: true
+                enum_values: [useVpn, fallback]
+                description: Type of NAT parameter
+                exclude_test: true
+                example: useVpn
+              - model_name: value
+                tf_name: vpn_id
+                conditional_attribute:
+                  name: type
+                  value: useVpn
+                type: Int64
+                model_type_string: true
+                description: DSCP
+                min_int: 0
+                max_int: 0
+                example: 0
+                exclude_test: true
+              - model_name: value
+                tf_name: fallback
+                conditional_attribute:
+                  name: type
+                  value: fallback
+                type: Bool
+                model_type_string: true
+                description: Fallback
+                example: true
+                exclude_test: true

@@ -40,6 +40,7 @@ const (
 	featureTemplateModelsPath       = "./gen/models/feature_templates/"
 	policyObjectDefinitionsPath     = "./gen/definitions/policy_objects/"
 	policyDefinitionDefinitionsPath = "./gen/definitions/policy_definitions/"
+	genericDefinitionsPath          = "./gen/definitions/generic/"
 	providerTemplate                = "./gen/templates/provider.go"
 	providerLocation                = "./internal/provider/provider.go"
 	changelogTemplate               = "./gen/templates/changelog.md.tmpl"
@@ -182,9 +183,53 @@ var policyDefinitionTemplates = []t{
 	},
 }
 
+var genericTemplates = []t{
+	{
+		path:   "./gen/templates/generic/model.go",
+		prefix: "./internal/provider/model_sdwan_",
+		suffix: ".go",
+	},
+	{
+		path:   "./gen/templates/generic/data_source.go",
+		prefix: "./internal/provider/data_source_sdwan_",
+		suffix: ".go",
+	},
+	{
+		path:   "./gen/templates/generic/data_source_test.go",
+		prefix: "./internal/provider/data_source_sdwan_",
+		suffix: "_test.go",
+	},
+	{
+		path:   "./gen/templates/generic/resource.go",
+		prefix: "./internal/provider/resource_sdwan_",
+		suffix: ".go",
+	},
+	{
+		path:   "./gen/templates/generic/resource_test.go",
+		prefix: "./internal/provider/resource_sdwan_",
+		suffix: "_test.go",
+	},
+	{
+		path:   "./gen/templates/generic/data-source.tf",
+		prefix: "./examples/data-sources/sdwan_",
+		suffix: "/data-source.tf",
+	},
+	{
+		path:   "./gen/templates/generic/resource.tf",
+		prefix: "./examples/resources/sdwan_",
+		suffix: "/resource.tf",
+	},
+	{
+		path:   "./gen/templates/generic/import.sh",
+		prefix: "./examples/resources/sdwan_",
+		suffix: "/import.sh",
+	},
+}
+
 type YamlConfig struct {
 	Name           string                `yaml:"name"`
 	Model          string                `yaml:"model"`
+	RestEndpoint   string                `yaml:"rest_endpoint"`
 	Type           string                `yaml:"type"`
 	MinimumVersion string                `yaml:"minimum_version"`
 	DsDescription  string                `yaml:"ds_description"`
@@ -192,42 +237,51 @@ type YamlConfig struct {
 	DocCategory    string                `yaml:"doc_category"`
 	ExcludeTest    bool                  `yaml:"exclude_test"`
 	RootElement    string                `yaml:"root_element"`
+	HasVersion     bool                  `yaml:"has_version"`
+	IdAttribute    string                `yaml:"id_attribute"`
 	SkipTemplates  []string              `yaml:"skip_templates"`
 	Attributes     []YamlConfigAttribute `yaml:"attributes"`
 }
 
 type YamlConfigAttribute struct {
-	ModelName       string                `yaml:"model_name"`
-	TfName          string                `yaml:"tf_name"`
-	Type            string                `yaml:"type"`
-	ObjectType      string                `yaml:"object_type"`
-	ModelTypeString bool                  `yaml:"model_type_string"`
-	DataPath        []string              `yaml:"data_path"`
-	Keys            []string              `yaml:"keys"`
-	Id              bool                  `yaml:"id"`
-	Variable        bool                  `yaml:"variable"`
-	Mandatory       bool                  `yaml:"mandatory"`
-	WriteOnly       bool                  `yaml:"write_only"`
-	TfOnly          bool                  `yaml:"tf_only"`
-	ExcludeTest     bool                  `yaml:"exclude_test"`
-	ExcludeExample  bool                  `yaml:"exclude_example"`
-	ExcludeIgnore   bool                  `yaml:"exclude_ignore"`
-	Description     string                `yaml:"description"`
-	Example         string                `yaml:"example"`
-	EnumValues      []string              `yaml:"enum_values"`
-	IgnoreEnum      bool                  `yaml:"ignore_enum"`
-	MinList         int64                 `yaml:"min_list"`
-	MaxList         int64                 `yaml:"max_list"`
-	MinInt          int64                 `yaml:"min_int"`
-	MaxInt          int64                 `yaml:"max_int"`
-	MinFloat        float64               `yaml:"min_float"`
-	MaxFloat        float64               `yaml:"max_float"`
-	StringPatterns  []string              `yaml:"string_patterns"`
-	StringMinLength int64                 `yaml:"string_min_length"`
-	StringMaxLength int64                 `yaml:"string_max_length"`
-	DefaultValue    string                `yaml:"default_value"`
-	Value           string                `yaml:"value"`
-	Attributes      []YamlConfigAttribute `yaml:"attributes"`
+	ModelName            string                         `yaml:"model_name"`
+	TfName               string                         `yaml:"tf_name"`
+	Type                 string                         `yaml:"type"`
+	ObjectType           string                         `yaml:"object_type"`
+	ModelTypeString      bool                           `yaml:"model_type_string"`
+	BoolEmptyString      bool                           `yaml:"bool_empty_string"`
+	DataPath             []string                       `yaml:"data_path"`
+	Keys                 []string                       `yaml:"keys"`
+	Id                   bool                           `yaml:"id"`
+	Variable             bool                           `yaml:"variable"`
+	Mandatory            bool                           `yaml:"mandatory"`
+	WriteOnly            bool                           `yaml:"write_only"`
+	TfOnly               bool                           `yaml:"tf_only"`
+	ExcludeTest          bool                           `yaml:"exclude_test"`
+	ExcludeExample       bool                           `yaml:"exclude_example"`
+	ExcludeIgnore        bool                           `yaml:"exclude_ignore"`
+	Description          string                         `yaml:"description"`
+	Example              string                         `yaml:"example"`
+	EnumValues           []string                       `yaml:"enum_values"`
+	IgnoreEnum           bool                           `yaml:"ignore_enum"`
+	MinList              int64                          `yaml:"min_list"`
+	MaxList              int64                          `yaml:"max_list"`
+	MinInt               int64                          `yaml:"min_int"`
+	MaxInt               int64                          `yaml:"max_int"`
+	MinFloat             float64                        `yaml:"min_float"`
+	MaxFloat             float64                        `yaml:"max_float"`
+	StringPatterns       []string                       `yaml:"string_patterns"`
+	StringMinLength      int64                          `yaml:"string_min_length"`
+	StringMaxLength      int64                          `yaml:"string_max_length"`
+	DefaultValue         string                         `yaml:"default_value"`
+	Value                string                         `yaml:"value"`
+	Attributes           []YamlConfigAttribute          `yaml:"attributes"`
+	ConditionalAttribute YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
+}
+
+type YamlConfigConditionalAttribute struct {
+	Name  string `yaml:"name"`
+	Value string `yaml:"value"`
 }
 
 // Templating helper function to convert TF name to GO name
@@ -274,6 +328,20 @@ func BuildPath(s []string) string {
 	return strings.Join(s, ".")
 }
 
+// Templating helper function to determine if attributes list contains one or more version attributes
+func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Type == "Version" {
+			return true
+		} else if attr.Type == "List" {
+			if HasVersionAttribute(attr.Attributes) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -285,12 +353,13 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":  ToGoName,
-	"camelCase": CamelCase,
-	"snakeCase": SnakeCase,
-	"sprintf":   fmt.Sprintf,
-	"toLower":   strings.ToLower,
-	"path":      BuildPath,
+	"toGoName":            ToGoName,
+	"camelCase":           CamelCase,
+	"snakeCase":           SnakeCase,
+	"sprintf":             fmt.Sprintf,
+	"toLower":             strings.ToLower,
+	"path":                BuildPath,
+	"hasVersionAttribute": HasVersionAttribute,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -526,6 +595,7 @@ func main() {
 	providerConfig["FeatureTemplates"] = make([]string, 0)
 	providerConfig["PolicyObjects"] = make([]string, 0)
 	providerConfig["PolicyDefinitions"] = make([]string, 0)
+	providerConfig["Generic"] = make([]string, 0)
 
 	// Load feature template configs
 	for i, filename := range featureTemplateFiles {
@@ -609,6 +679,35 @@ func main() {
 			renderTemplate(t.path, t.prefix+SnakeCase(policyDefinitionConfigs[i].Name)+t.suffix, policyDefinitionConfigs[i])
 		}
 		providerConfig["PolicyDefinitions"] = append(providerConfig["PolicyDefinitions"], policyDefinitionConfigs[i].Name)
+	}
+
+	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
+	genericConfigs := make([]YamlConfig, len(genericFiles))
+
+	// Load policy definition configs
+	for i, filename := range genericFiles {
+		yamlFile, err := os.ReadFile(filepath.Join(genericDefinitionsPath, filename.Name()))
+		if err != nil {
+			log.Fatalf("Error reading file: %v", err)
+		}
+
+		config := YamlConfig{}
+		err = yaml.Unmarshal(yamlFile, &config)
+		if err != nil {
+			log.Fatalf("Error parsing yaml: %v", err)
+		}
+		genericConfigs[i] = config
+	}
+
+	for i := range genericConfigs {
+		// Augment generic config
+		augmentGenericConfig(&genericConfigs[i], "")
+
+		// Iterate over templates and render files
+		for _, t := range genericTemplates {
+			renderTemplate(t.path, t.prefix+SnakeCase(genericConfigs[i].Name)+t.suffix, genericConfigs[i])
+		}
+		providerConfig["Generic"] = append(providerConfig["Generic"], genericConfigs[i].Name)
 	}
 
 	// render provider.go

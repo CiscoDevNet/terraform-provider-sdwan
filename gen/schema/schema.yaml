@@ -1,6 +1,7 @@
 ---
 name: str()
 model: str(required=False)
+rest_endpoint: str(required=False)
 type: str(required=False)
 minimum_version: str()
 ds_description: str(required=False)
@@ -8,15 +9,18 @@ res_description: str(required=False)
 doc_category: str(required=False)
 exclude_test: bool(required=False)
 root_element: str(required=False)
+has_version: bool(required=False)
+id_attribute: str(required=False)
 skip_templates: list(str(), required=False)
 attributes: list(include('attribute'), required=False)
 ---
 attribute:
   model_name: str()
   tf_name: str(required=False)
-  type: enum('String', 'Int64', 'Bool', 'List', required=False)
+  type: enum('String', 'Int64', 'Bool', 'List', 'Version', required=False)
   object_type: enum('object', 'tree', 'list', required=False)
   model_type_string: bool(required=False)
+  bool_empty_string: bool(required=False)
   data_path: list(str(), required=False)
   keys: list(str(), required=False)
   id: bool(required=False)
@@ -43,3 +47,8 @@ attribute:
   default_value: any(str(), int(), bool(), required=False)
   value: any(str(), int(), bool(), required=False)
   attributes: list(include('attribute'), required=False)
+  conditional_attribute: include('conditional_attribute', required=False)
+
+conditional_attribute:
+  name: str()
+  value: str()

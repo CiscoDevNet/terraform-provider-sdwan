@@ -32,6 +32,7 @@ const (
 	featureTemplateDefinitionsPath  = "./gen/definitions/feature_templates/"
 	policyObjectDefinitionsPath     = "./gen/definitions/policy_objects/"
 	policyDefinitionDefinitionsPath = "./gen/definitions/policy_definitions/"
+	genericDefinitionsPath          = "./gen/definitions/generic/"
 )
 
 type YamlConfig struct {
@@ -66,6 +67,8 @@ func main() {
 	policyObjectConfigs := make([]YamlConfig, len(policyObjectFiles))
 	policyDefinitionFiles, _ := ioutil.ReadDir(policyDefinitionDefinitionsPath)
 	policyDefinitionConfigs := make([]YamlConfig, len(policyDefinitionFiles))
+	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
+	genericConfigs := make([]YamlConfig, len(genericFiles))
 
 	// Load feature template configs
 	for i, filename := range featureTemplateFiles {
@@ -154,6 +157,38 @@ func main() {
 			}
 
 			cat := policyDefinitionConfigs[i].DocCategory
+			s := string(content)
+			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
+
+			ioutil.WriteFile(filename, []byte(s), 0644)
+		}
+	}
+
+	// Load generic configs
+	for i, filename := range genericFiles {
+		yamlFile, err := ioutil.ReadFile(filepath.Join(genericDefinitionsPath, filename.Name()))
+		if err != nil {
+			log.Fatalf("Error reading file: %v", err)
+		}
+
+		config := YamlConfig{}
+		err = yaml.Unmarshal(yamlFile, &config)
+		if err != nil {
+			log.Fatalf("Error parsing yaml: %v", err)
+		}
+		genericConfigs[i] = config
+	}
+
+	// Update generic doc category
+	for i := range genericConfigs {
+		for _, path := range docPaths {
+			filename := path + SnakeCase(genericConfigs[i].Name) + ".md"
+			content, err := ioutil.ReadFile(filename)
+			if err != nil {
+				log.Fatalf("Error opening documentation: %v", err)
+			}
+
+			cat := genericConfigs[i].DocCategory
 			s := string(content)
 			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
 
