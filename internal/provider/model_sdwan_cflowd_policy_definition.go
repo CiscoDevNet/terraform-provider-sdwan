@@ -28,23 +28,22 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type Cflowd struct {
-	Id                  types.String       `tfsdk:"id"`
-	Version             types.Int64        `tfsdk:"version"`
-	Type                types.String       `tfsdk:"type"`
-	Name                types.String       `tfsdk:"name"`
-	Description         types.String       `tfsdk:"description"`
-	ActiveFlowTimeout   types.Int64        `tfsdk:"active_flow_timeout"`
-	InactiveFlowTimeout types.Int64        `tfsdk:"inactive_flow_timeout"`
-	SamplingInterval    types.Int64        `tfsdk:"sampling_interval"`
-	FlowRefresh         types.Int64        `tfsdk:"flow_refresh"`
-	Protocol            types.String       `tfsdk:"protocol"`
-	Tos                 types.Bool         `tfsdk:"tos"`
-	RemarkedDscp        types.Bool         `tfsdk:"remarked_dscp"`
-	Collectors          []CflowdCollectors `tfsdk:"collectors"`
+type CflowdPolicyDefinition struct {
+	Id                  types.String                       `tfsdk:"id"`
+	Version             types.Int64                        `tfsdk:"version"`
+	Name                types.String                       `tfsdk:"name"`
+	Description         types.String                       `tfsdk:"description"`
+	ActiveFlowTimeout   types.Int64                        `tfsdk:"active_flow_timeout"`
+	InactiveFlowTimeout types.Int64                        `tfsdk:"inactive_flow_timeout"`
+	SamplingInterval    types.Int64                        `tfsdk:"sampling_interval"`
+	FlowRefresh         types.Int64                        `tfsdk:"flow_refresh"`
+	Protocol            types.String                       `tfsdk:"protocol"`
+	Tos                 types.Bool                         `tfsdk:"tos"`
+	RemarkedDscp        types.Bool                         `tfsdk:"remarked_dscp"`
+	Collectors          []CflowdPolicyDefinitionCollectors `tfsdk:"collectors"`
 }
 
-type CflowdCollectors struct {
+type CflowdPolicyDefinitionCollectors struct {
 	VpnId           types.Int64  `tfsdk:"vpn_id"`
 	IpAddress       types.String `tfsdk:"ip_address"`
 	Port            types.Int64  `tfsdk:"port"`
@@ -53,38 +52,46 @@ type CflowdCollectors struct {
 	ExportSpreading types.String `tfsdk:"export_spreading"`
 }
 
-func (data Cflowd) getType() string {
-	return "cflowd"
-}
-
-func (data Cflowd) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "cflowd")
-	path := "definition."
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if !data.ActiveFlowTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"flowActiveTimeout", data.ActiveFlowTimeout.ValueInt64())
+		body, _ = sjson.Set(body, "definition.flowActiveTimeout", data.ActiveFlowTimeout.ValueInt64())
 	}
 	if !data.InactiveFlowTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"flowInactiveTimeout", data.InactiveFlowTimeout.ValueInt64())
+		body, _ = sjson.Set(body, "definition.flowInactiveTimeout", data.InactiveFlowTimeout.ValueInt64())
 	}
 	if !data.SamplingInterval.IsNull() {
-		body, _ = sjson.Set(body, path+"flowSamplingInterval", data.SamplingInterval.ValueInt64())
+		body, _ = sjson.Set(body, "definition.flowSamplingInterval", data.SamplingInterval.ValueInt64())
 	}
 	if !data.FlowRefresh.IsNull() {
-		body, _ = sjson.Set(body, path+"templateRefresh", data.FlowRefresh.ValueInt64())
+		body, _ = sjson.Set(body, "definition.templateRefresh", data.FlowRefresh.ValueInt64())
 	}
 	if !data.Protocol.IsNull() {
-		body, _ = sjson.Set(body, path+"protocol", data.Protocol.ValueString())
+		body, _ = sjson.Set(body, "definition.protocol", data.Protocol.ValueString())
 	}
 	if !data.Tos.IsNull() {
-		body, _ = sjson.Set(body, path+"customizedIpv4RecordFields.collectTos", data.Tos.ValueBool())
+		if false && data.Tos.ValueBool() {
+			body, _ = sjson.Set(body, "definition.customizedIpv4RecordFields.collectTos", "")
+		} else {
+			body, _ = sjson.Set(body, "definition.customizedIpv4RecordFields.collectTos", data.Tos.ValueBool())
+		}
 	}
 	if !data.RemarkedDscp.IsNull() {
-		body, _ = sjson.Set(body, path+"customizedIpv4RecordFields.collectDscpOutput", data.RemarkedDscp.ValueBool())
+		if false && data.RemarkedDscp.ValueBool() {
+			body, _ = sjson.Set(body, "definition.customizedIpv4RecordFields.collectDscpOutput", "")
+		} else {
+			body, _ = sjson.Set(body, "definition.customizedIpv4RecordFields.collectDscpOutput", data.RemarkedDscp.ValueBool())
+		}
 	}
 	if len(data.Collectors) > 0 {
-		body, _ = sjson.Set(body, path+"collectors", []interface{}{})
+		body, _ = sjson.Set(body, "definition.collectors", []interface{}{})
 		for _, item := range data.Collectors {
 			itemBody := ""
 			if !item.VpnId.IsNull() {
@@ -105,13 +112,13 @@ func (data Cflowd) toBody(ctx context.Context) string {
 			if !item.ExportSpreading.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "exportSpread", item.ExportSpreading.ValueString())
 			}
-			body, _ = sjson.SetRaw(body, path+"collectors.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "definition.collectors.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *Cflowd) fromBody(ctx context.Context, res gjson.Result) {
+func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -122,51 +129,53 @@ func (data *Cflowd) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := "definition."
-	if value := res.Get(path + "flowActiveTimeout"); value.Exists() {
+	if value := res.Get("definition.flowActiveTimeout"); value.Exists() {
 		data.ActiveFlowTimeout = types.Int64Value(value.Int())
 	} else {
 		data.ActiveFlowTimeout = types.Int64Null()
 	}
-	if value := res.Get(path + "flowInactiveTimeout"); value.Exists() {
+	if value := res.Get("definition.flowInactiveTimeout"); value.Exists() {
 		data.InactiveFlowTimeout = types.Int64Value(value.Int())
 	} else {
 		data.InactiveFlowTimeout = types.Int64Null()
 	}
-	if value := res.Get(path + "flowSamplingInterval"); value.Exists() {
+	if value := res.Get("definition.flowSamplingInterval"); value.Exists() {
 		data.SamplingInterval = types.Int64Value(value.Int())
 	} else {
 		data.SamplingInterval = types.Int64Null()
 	}
-	if value := res.Get(path + "templateRefresh"); value.Exists() {
+	if value := res.Get("definition.templateRefresh"); value.Exists() {
 		data.FlowRefresh = types.Int64Value(value.Int())
 	} else {
 		data.FlowRefresh = types.Int64Null()
 	}
-	if value := res.Get(path + "protocol"); value.Exists() {
+	if value := res.Get("definition.protocol"); value.Exists() {
 		data.Protocol = types.StringValue(value.String())
 	} else {
 		data.Protocol = types.StringNull()
 	}
-	if value := res.Get(path + "customizedIpv4RecordFields.collectTos"); value.Exists() {
-		data.Tos = types.BoolValue(value.Bool())
+	if value := res.Get("definition.customizedIpv4RecordFields.collectTos"); value.Exists() {
+		if false && value.String() == "" {
+			data.Tos = types.BoolValue(true)
+		} else {
+			data.Tos = types.BoolValue(value.Bool())
+		}
 	} else {
 		data.Tos = types.BoolNull()
 	}
-	if value := res.Get(path + "customizedIpv4RecordFields.collectDscpOutput"); value.Exists() {
-		data.RemarkedDscp = types.BoolValue(value.Bool())
+	if value := res.Get("definition.customizedIpv4RecordFields.collectDscpOutput"); value.Exists() {
+		if false && value.String() == "" {
+			data.RemarkedDscp = types.BoolValue(true)
+		} else {
+			data.RemarkedDscp = types.BoolValue(value.Bool())
+		}
 	} else {
 		data.RemarkedDscp = types.BoolNull()
 	}
-	if value := res.Get(path + "collectors"); value.Exists() {
-		data.Collectors = make([]CflowdCollectors, 0)
+	if value := res.Get("definition.collectors"); value.Exists() {
+		data.Collectors = make([]CflowdPolicyDefinitionCollectors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CflowdCollectors{}
+			item := CflowdPolicyDefinitionCollectors{}
 			if cValue := v.Get("vpn"); cValue.Exists() {
 				item.VpnId = types.Int64Value(cValue.Int())
 			} else {
@@ -201,9 +210,10 @@ func (data *Cflowd) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
 }
 
-func (data *Cflowd) hasChanges(ctx context.Context, state *Cflowd) bool {
+func (data *CflowdPolicyDefinition) hasChanges(ctx context.Context, state *CflowdPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true

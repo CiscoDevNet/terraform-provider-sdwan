@@ -1,10 +1,26 @@
 ---
-name: Cflowd
-type: cflowd
-root_element: definition
+name: Cflowd Policy Definition
+rest_endpoint: /template/policy/definition/cflowd/
+has_version: true
+id_attribute: definitionId
 doc_category: Centralized Policies
 attributes:
+  - model_name: type
+    value: cflowd
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
   - model_name: flowActiveTimeout
+    data_path: [definition]
     tf_name: active_flow_timeout
     type: Int64
     description: Active flow timeout in seconds
@@ -12,6 +28,7 @@ attributes:
     max_int: 3600
     example: 100
   - model_name: flowInactiveTimeout
+    data_path: [definition]
     tf_name: inactive_flow_timeout
     type: Int64
     description: Inactive flow timeout in seconds
@@ -19,6 +36,7 @@ attributes:
     max_int: 3600
     example: 10
   - model_name: flowSamplingInterval
+    data_path: [definition]
     tf_name: sampling_interval
     type: Int64
     description: Flow sampling interval
@@ -26,6 +44,7 @@ attributes:
     max_int: 65536
     example: 10
   - model_name: templateRefresh
+    data_path: [definition]
     tf_name: flow_refresh
     type: Int64
     description: Flow refresh in seconds
@@ -33,24 +52,26 @@ attributes:
     max_int: 86400
     example: 120
   - model_name: protocol
+    data_path: [definition]
     tf_name: protocol
     type: String
     enum_values: [ipv4, ipv6, all]
     description: Protocol, either `ipv4`, `ipv6` or `all`
     example: ipv4
   - model_name: collectTos
-    data_path: [customizedIpv4RecordFields]
+    data_path: [definition, customizedIpv4RecordFields]
     tf_name: tos
     type: Bool
     description: Collect TOS record field
     example: true
   - model_name: collectDscpOutput
-    data_path: [customizedIpv4RecordFields]
+    data_path: [definition, customizedIpv4RecordFields]
     tf_name: remarked_dscp
     type: Bool
     description: Collect remarked DSCP
     example: true
   - model_name: collectors
+    data_path: [definition]
     tf_name: collectors
     type: List
     mandatory: true

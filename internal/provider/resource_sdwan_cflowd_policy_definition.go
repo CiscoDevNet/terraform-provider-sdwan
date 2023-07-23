@@ -59,33 +59,26 @@ func (r *CflowdPolicyDefinitionResource) Metadata(ctx context.Context, req resou
 func (r *CflowdPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Cflowd policy definition.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Cflowd Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy defintion type",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
 				Required:            true,
 			},
 			"active_flow_timeout": schema.Int64Attribute{
@@ -189,7 +182,7 @@ func (r *CflowdPolicyDefinitionResource) Configure(_ context.Context, req resour
 }
 
 func (r *CflowdPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan Cflowd
+	var plan CflowdPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -203,7 +196,7 @@ func (r *CflowdPolicyDefinitionResource) Create(ctx context.Context, req resourc
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/definition/cflowd", body)
+	res, err := r.client.Post("/template/policy/definition/cflowd/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -211,7 +204,6 @@ func (r *CflowdPolicyDefinitionResource) Create(ctx context.Context, req resourc
 
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
-	plan.Type = types.StringValue(plan.getType())
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -220,7 +212,7 @@ func (r *CflowdPolicyDefinitionResource) Create(ctx context.Context, req resourc
 }
 
 func (r *CflowdPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state Cflowd
+	var state CflowdPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -249,7 +241,7 @@ func (r *CflowdPolicyDefinitionResource) Read(ctx context.Context, req resource.
 }
 
 func (r *CflowdPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state Cflowd
+	var plan, state CflowdPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -282,7 +274,6 @@ func (r *CflowdPolicyDefinitionResource) Update(ctx context.Context, req resourc
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -292,7 +283,7 @@ func (r *CflowdPolicyDefinitionResource) Update(ctx context.Context, req resourc
 }
 
 func (r *CflowdPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state Cflowd
+	var state CflowdPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

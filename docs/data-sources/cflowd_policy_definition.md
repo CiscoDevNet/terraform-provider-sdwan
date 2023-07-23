@@ -3,12 +3,12 @@
 page_title: "sdwan_cflowd_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Centralized Policies"
 description: |-
-  This data source can read the Cflowd policy definition.
+  This data source can read the Cflowd Policy Definition .
 ---
 
 # sdwan_cflowd_policy_definition (Data Source)
 
-This data source can read the Cflowd policy definition.
+This data source can read the Cflowd Policy Definition .
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ data "sdwan_cflowd_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
@@ -37,8 +37,7 @@ data "sdwan_cflowd_policy_definition" "example" {
 - `remarked_dscp` (Boolean) Collect remarked DSCP
 - `sampling_interval` (Number) Flow sampling interval
 - `tos` (Boolean) Collect TOS record field
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 
 <a id="nestedatt--collectors"></a>
 ### Nested Schema for `collectors`

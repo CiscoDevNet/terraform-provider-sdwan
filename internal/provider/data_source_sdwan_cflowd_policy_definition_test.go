@@ -33,6 +33,8 @@ func TestAccDataSourceSdwanCflowdPolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanCflowdPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "active_flow_timeout", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "inactive_flow_timeout", "10"),
 					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "sampling_interval", "10"),
@@ -55,8 +57,8 @@ func TestAccDataSourceSdwanCflowdPolicyDefinition(t *testing.T) {
 const testAccDataSourceSdwanCflowdPolicyDefinitionConfig = `
 
 resource "sdwan_cflowd_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   active_flow_timeout = 100
   inactive_flow_timeout = 10
   sampling_interval = 10
