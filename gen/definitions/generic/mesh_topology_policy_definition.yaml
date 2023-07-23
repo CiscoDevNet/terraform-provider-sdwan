@@ -1,21 +1,37 @@
 ---
-name: Mesh Topology
-type: mesh
-root_element: definition
+name: Mesh Topology Policy Definition
+rest_endpoint: /template/policy/definition/mesh/
+has_version: true
+id_attribute: definitionId
 doc_category: Centralized Policies
-skip_templates: [model.go, resource.go, data_source.go]
 attributes:
+  - model_name: type
+    value: mesh
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
   - model_name: vpnList
+    data_path: [definition]
     tf_name: vpn_list_id
     type: String
     description: VPN list ID
     example: 04fcbb0b-efbf-43d2-a04b-847d3a7b104e
   - tf_name: vpn_list_version
     tf_only: true
-    type: Int64
+    type: Version
     description: VPN list version
     exclude_test: true
   - model_name: regions
+    data_path: [definition]
     tf_name: regions
     type: List
     mandatory: true
@@ -24,6 +40,7 @@ attributes:
       - model_name: name
         tf_name: name
         type: String
+        id: true
         mandatory: true
         description: Region name
         example: Region1
@@ -34,6 +51,6 @@ attributes:
         example: '["e858e1c4-6aa8-4de7-99df-c3adbf80290d"]'
       - tf_name: site_list_versions
         tf_only: true
-        type: ListString
+        type: Versions
         description: Site list versions
         exclude_test: true

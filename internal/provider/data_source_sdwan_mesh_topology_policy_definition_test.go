@@ -33,6 +33,8 @@ func TestAccDataSourceSdwanMeshTopologyPolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "vpn_list_id", "04fcbb0b-efbf-43d2-a04b-847d3a7b104e"),
 					resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "regions.0.name", "Region1"),
 				),
@@ -44,8 +46,8 @@ func TestAccDataSourceSdwanMeshTopologyPolicyDefinition(t *testing.T) {
 const testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig = `
 
 resource "sdwan_mesh_topology_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   vpn_list_id = "04fcbb0b-efbf-43d2-a04b-847d3a7b104e"
   regions = [{
     name = "Region1"

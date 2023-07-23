@@ -331,7 +331,7 @@ func BuildPath(s []string) string {
 // Templating helper function to determine if attributes list contains one or more version attributes
 func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
-		if attr.Type == "Version" {
+		if attr.Type == "Version" || attr.Type == "Versions" {
 			return true
 		} else if attr.Type == "List" {
 			if HasVersionAttribute(attr.Attributes) {

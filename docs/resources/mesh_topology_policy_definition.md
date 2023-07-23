@@ -3,12 +3,12 @@
 page_title: "sdwan_mesh_topology_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Centralized Policies"
 description: |-
-  This resource can manage a Mesh Topology policy definition.
+  This resource can manage a Mesh Topology Policy Definition .
 ---
 
 # sdwan_mesh_topology_policy_definition (Resource)
 
-This resource can manage a Mesh Topology policy definition.
+This resource can manage a Mesh Topology Policy Definition .
 
 ## Example Usage
 
@@ -42,9 +42,8 @@ resource "sdwan_mesh_topology_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--regions"></a>
 ### Nested Schema for `regions`

@@ -21,6 +21,7 @@ package provider
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -28,37 +29,36 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type MeshTopology struct {
-	Id             types.String          `tfsdk:"id"`
-	Version        types.Int64           `tfsdk:"version"`
-	Type           types.String          `tfsdk:"type"`
-	Name           types.String          `tfsdk:"name"`
-	Description    types.String          `tfsdk:"description"`
-	VpnListId      types.String          `tfsdk:"vpn_list_id"`
-	VpnListVersion types.Int64           `tfsdk:"vpn_list_version"`
-	Regions        []MeshTopologyRegions `tfsdk:"regions"`
+type MeshTopologyPolicyDefinition struct {
+	Id             types.String                          `tfsdk:"id"`
+	Version        types.Int64                           `tfsdk:"version"`
+	Name           types.String                          `tfsdk:"name"`
+	Description    types.String                          `tfsdk:"description"`
+	VpnListId      types.String                          `tfsdk:"vpn_list_id"`
+	VpnListVersion types.Int64                           `tfsdk:"vpn_list_version"`
+	Regions        []MeshTopologyPolicyDefinitionRegions `tfsdk:"regions"`
 }
 
-type MeshTopologyRegions struct {
+type MeshTopologyPolicyDefinitionRegions struct {
 	Name             types.String `tfsdk:"name"`
 	SiteListIds      types.List   `tfsdk:"site_list_ids"`
 	SiteListVersions types.List   `tfsdk:"site_list_versions"`
 }
 
-func (data MeshTopology) getType() string {
-	return "mesh"
-}
-
-func (data MeshTopology) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "mesh")
-	path := "definition."
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if !data.VpnListId.IsNull() {
-		body, _ = sjson.Set(body, path+"vpnList", data.VpnListId.ValueString())
+		body, _ = sjson.Set(body, "definition.vpnList", data.VpnListId.ValueString())
 	}
 	if len(data.Regions) > 0 {
-		body, _ = sjson.Set(body, path+"regions", []interface{}{})
+		body, _ = sjson.Set(body, "definition.regions", []interface{}{})
 		for _, item := range data.Regions {
 			itemBody := ""
 			if !item.Name.IsNull() {
@@ -69,13 +69,13 @@ func (data MeshTopology) toBody(ctx context.Context) string {
 				item.SiteListIds.ElementsAs(ctx, &values, false)
 				itemBody, _ = sjson.Set(itemBody, "siteLists", values)
 			}
-			body, _ = sjson.SetRaw(body, path+"regions.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "definition.regions.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *MeshTopology) fromBody(ctx context.Context, res gjson.Result) {
+func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -86,21 +86,15 @@ func (data *MeshTopology) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := "definition."
-	if value := res.Get(path + "vpnList"); value.Exists() {
+	if value := res.Get("definition.vpnList"); value.Exists() {
 		data.VpnListId = types.StringValue(value.String())
 	} else {
 		data.VpnListId = types.StringNull()
 	}
-	if value := res.Get(path + "regions"); value.Exists() {
-		data.Regions = make([]MeshTopologyRegions, 0)
+	if value := res.Get("definition.regions"); value.Exists() {
+		data.Regions = make([]MeshTopologyPolicyDefinitionRegions, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := MeshTopologyRegions{}
+			item := MeshTopologyPolicyDefinitionRegions{}
 			if cValue := v.Get("name"); cValue.Exists() {
 				item.Name = types.StringValue(cValue.String())
 			} else {
@@ -115,9 +109,12 @@ func (data *MeshTopology) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *MeshTopology) hasChanges(ctx context.Context, state *MeshTopology) bool {
+func (data *MeshTopologyPolicyDefinition) hasChanges(ctx context.Context, state *MeshTopologyPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -143,19 +140,23 @@ func (data *MeshTopology) hasChanges(ctx context.Context, state *MeshTopology) b
 	return hasChanges
 }
 
-func (data *MeshTopology) getSiteListVersions(ctx context.Context, name string) types.List {
-	for _, item := range data.Regions {
-		if item.Name.ValueString() == name && !item.SiteListVersions.IsNull() {
-			return item.SiteListVersions
-		}
-	}
-	return types.ListNull(types.StringType)
-}
-
-func (data *MeshTopology) updateVersions(ctx context.Context, state MeshTopology) {
+func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
 	data.VpnListVersion = state.VpnListVersion
-	for r := range data.Regions {
-		name := data.Regions[r].Name.ValueString()
-		data.Regions[r].SiteListVersions = state.getSiteListVersions(ctx, name)
+	for i := range data.Regions {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Regions[i].Name.ValueString())}
+		stateIndex := -1
+		for j := range state.Regions {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Regions[j].Name.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
+		}
+		if stateIndex >= -1 && !state.Regions[stateIndex].SiteListVersions.IsNull() {
+			data.Regions[i].SiteListVersions = state.Regions[stateIndex].SiteListVersions
+		} else {
+			data.Regions[i].SiteListVersions = types.ListNull(types.StringType)
+		}
 	}
 }
