@@ -33,6 +33,8 @@ func TestAccDataSourceSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T)
 			{
 				Config: testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.id", "1"),
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.name", "Region1"),
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.ip_type", "ipv4"),
@@ -49,8 +51,8 @@ func TestAccDataSourceSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T)
 const testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig = `
 
 resource "sdwan_application_aware_routing_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   sequences = [{
     id = 1
     name = "Region1"

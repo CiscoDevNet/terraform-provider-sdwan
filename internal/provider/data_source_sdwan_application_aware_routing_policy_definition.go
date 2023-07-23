@@ -50,19 +50,15 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Metadata(_ context.C
 func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Application Aware Routing policy definition.",
+		MarkdownDescription: "This data source can read the Application Aware Routing Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
-				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy definition type",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -191,21 +187,21 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										MarkdownDescription: "Counter name",
 										Computed:            true,
 									},
-									"log": schema.StringAttribute{
+									"log": schema.BoolAttribute{
 										MarkdownDescription: "Enable logging",
 										Computed:            true,
 									},
-									"cloud_sla": schema.StringAttribute{
+									"cloud_sla": schema.BoolAttribute{
 										MarkdownDescription: "Cloud SLA",
 										Computed:            true,
 									},
-									"cloud_sla_parameters": schema.ListNestedAttribute{
-										MarkdownDescription: "List of cloud SLA parameters",
+									"sla_class_parameters": schema.ListNestedAttribute{
+										MarkdownDescription: "List of SLA class parameters",
 										Computed:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"type": schema.StringAttribute{
-													MarkdownDescription: "Type of cloud SLA parameter",
+													MarkdownDescription: "Type of SLA class parameter",
 													Computed:            true,
 												},
 												"sla_class_list": schema.StringAttribute{
@@ -250,7 +246,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Configure(_ context.
 }
 
 func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ApplicationAwareRouting
+	var config ApplicationAwareRoutingPolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
@@ -268,7 +264,6 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Read(ctx context.Con
 	}
 
 	config.fromBody(ctx, res)
-	config.updateVersions(ctx, config)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

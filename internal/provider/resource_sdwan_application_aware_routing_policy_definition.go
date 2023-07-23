@@ -59,33 +59,26 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Metadata(ctx context.C
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Application Aware Routing policy definition.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Application Aware Routing Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy defintion type",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
 				Required:            true,
 			},
 			"sequences": schema.ListNestedAttribute{
@@ -239,27 +232,21 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										MarkdownDescription: helpers.NewAttributeDescription("Counter name").String,
 										Optional:            true,
 									},
-									"log": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Enable logging").AddStringEnumDescription("").String,
+									"log": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Enable logging").String,
 										Optional:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(""),
-										},
 									},
-									"cloud_sla": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Cloud SLA").AddStringEnumDescription("").String,
+									"cloud_sla": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Cloud SLA").String,
 										Optional:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(""),
-										},
 									},
-									"cloud_sla_parameters": schema.ListNestedAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("List of cloud SLA parameters").String,
+									"sla_class_parameters": schema.ListNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("List of SLA class parameters").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"type": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Type of cloud SLA parameter").AddStringEnumDescription("name", "preferredColor", "preferredColorGroup").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Type of SLA class parameter").AddStringEnumDescription("name", "preferredColor", "preferredColorGroup").String,
 													Required:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("name", "preferredColor", "preferredColorGroup"),
@@ -308,7 +295,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Configure(_ context.Co
 }
 
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ApplicationAwareRouting
+	var plan ApplicationAwareRoutingPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -322,7 +309,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Con
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/definition/approute", body)
+	res, err := r.client.Post("/template/policy/definition/approute/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -330,7 +317,6 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Con
 
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
-	plan.Type = types.StringValue(plan.getType())
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -339,15 +325,10 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Con
 }
 
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state, oldState ApplicationAwareRouting
+	var state ApplicationAwareRoutingPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	diags = req.State.Get(ctx, &oldState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -365,7 +346,6 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Read(ctx context.Conte
 	}
 
 	state.fromBody(ctx, res)
-	state.updateVersions(ctx, oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -374,7 +354,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Read(ctx context.Conte
 }
 
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ApplicationAwareRouting
+	var plan, state ApplicationAwareRoutingPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -407,7 +387,6 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Update(ctx context.Con
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -417,7 +396,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Update(ctx context.Con
 }
 
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ApplicationAwareRouting
+	var state ApplicationAwareRoutingPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

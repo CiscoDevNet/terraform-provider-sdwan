@@ -3,12 +3,12 @@
 page_title: "sdwan_application_aware_routing_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Centralized Policies"
 description: |-
-  This resource can manage a Application Aware Routing policy definition.
+  This resource can manage a Application Aware Routing Policy Definition .
 ---
 
 # sdwan_application_aware_routing_policy_definition (Resource)
 
-This resource can manage a Application Aware Routing policy definition.
+This resource can manage a Application Aware Routing Policy Definition .
 
 ## Example Usage
 
@@ -49,9 +49,8 @@ resource "sdwan_application_aware_routing_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`
@@ -79,19 +78,17 @@ Required:
 Optional:
 
 - `backup_sla_preferred_color` (String) Backup SLA preferred color
-- `cloud_sla` (String) Cloud SLA
-  - Choices: ``
-- `cloud_sla_parameters` (Attributes List) List of cloud SLA parameters (see [below for nested schema](#nestedatt--sequences--action_entries--cloud_sla_parameters))
+- `cloud_sla` (Boolean) Cloud SLA
 - `counter` (String) Counter name
-- `log` (String) Enable logging
-  - Choices: ``
+- `log` (Boolean) Enable logging
+- `sla_class_parameters` (Attributes List) List of SLA class parameters (see [below for nested schema](#nestedatt--sequences--action_entries--sla_class_parameters))
 
-<a id="nestedatt--sequences--action_entries--cloud_sla_parameters"></a>
-### Nested Schema for `sequences.action_entries.cloud_sla_parameters`
+<a id="nestedatt--sequences--action_entries--sla_class_parameters"></a>
+### Nested Schema for `sequences.action_entries.sla_class_parameters`
 
 Required:
 
-- `type` (String) Type of cloud SLA parameter
+- `type` (String) Type of SLA class parameter
   - Choices: `name`, `preferredColor`, `preferredColorGroup`
 
 Optional:

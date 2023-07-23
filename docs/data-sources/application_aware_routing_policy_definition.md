@@ -3,12 +3,12 @@
 page_title: "sdwan_application_aware_routing_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Centralized Policies"
 description: |-
-  This data source can read the Application Aware Routing policy definition.
+  This data source can read the Application Aware Routing Policy Definition .
 ---
 
 # sdwan_application_aware_routing_policy_definition (Data Source)
 
-This data source can read the Application Aware Routing policy definition.
+This data source can read the Application Aware Routing Policy Definition .
 
 ## Example Usage
 
@@ -23,15 +23,14 @@ data "sdwan_application_aware_routing_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `sequences` (Attributes List) List of sequences (see [below for nested schema](#nestedatt--sequences))
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`
@@ -50,14 +49,14 @@ Read-Only:
 Read-Only:
 
 - `backup_sla_preferred_color` (String) Backup SLA preferred color
-- `cloud_sla` (String) Cloud SLA
-- `cloud_sla_parameters` (Attributes List) List of cloud SLA parameters (see [below for nested schema](#nestedatt--sequences--action_entries--cloud_sla_parameters))
+- `cloud_sla` (Boolean) Cloud SLA
 - `counter` (String) Counter name
-- `log` (String) Enable logging
+- `log` (Boolean) Enable logging
+- `sla_class_parameters` (Attributes List) List of SLA class parameters (see [below for nested schema](#nestedatt--sequences--action_entries--sla_class_parameters))
 - `type` (String) Type of action entry
 
-<a id="nestedatt--sequences--action_entries--cloud_sla_parameters"></a>
-### Nested Schema for `sequences.action_entries.cloud_sla_parameters`
+<a id="nestedatt--sequences--action_entries--sla_class_parameters"></a>
+### Nested Schema for `sequences.action_entries.sla_class_parameters`
 
 Read-Only:
 
@@ -66,7 +65,7 @@ Read-Only:
 - `preferred_color_group_list_version` (Number) Preferred color group list version
 - `sla_class_list` (String) SLA class list ID
 - `sla_class_list_version` (Number) SLA class list version
-- `type` (String) Type of cloud SLA parameter
+- `type` (String) Type of SLA class parameter
 
 
 

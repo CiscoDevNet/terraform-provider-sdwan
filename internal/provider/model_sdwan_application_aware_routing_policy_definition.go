@@ -28,24 +28,23 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ApplicationAwareRouting struct {
-	Id          types.String                       `tfsdk:"id"`
-	Version     types.Int64                        `tfsdk:"version"`
-	Type        types.String                       `tfsdk:"type"`
-	Name        types.String                       `tfsdk:"name"`
-	Description types.String                       `tfsdk:"description"`
-	Sequences   []ApplicationAwareRoutingSequences `tfsdk:"sequences"`
+type ApplicationAwareRoutingPolicyDefinition struct {
+	Id          types.String                                       `tfsdk:"id"`
+	Version     types.Int64                                        `tfsdk:"version"`
+	Name        types.String                                       `tfsdk:"name"`
+	Description types.String                                       `tfsdk:"description"`
+	Sequences   []ApplicationAwareRoutingPolicyDefinitionSequences `tfsdk:"sequences"`
 }
 
-type ApplicationAwareRoutingSequences struct {
-	Id            types.Int64                                     `tfsdk:"id"`
-	Name          types.String                                    `tfsdk:"name"`
-	IpType        types.String                                    `tfsdk:"ip_type"`
-	MatchEntries  []ApplicationAwareRoutingSequencesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []ApplicationAwareRoutingSequencesActionEntries `tfsdk:"action_entries"`
+type ApplicationAwareRoutingPolicyDefinitionSequences struct {
+	Id            types.Int64                                                     `tfsdk:"id"`
+	Name          types.String                                                    `tfsdk:"name"`
+	IpType        types.String                                                    `tfsdk:"ip_type"`
+	MatchEntries  []ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
 
-type ApplicationAwareRoutingSequencesMatchEntries struct {
+type ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries struct {
 	Type                             types.String `tfsdk:"type"`
 	ApplicationListId                types.String `tfsdk:"application_list_id"`
 	ApplicationListVersion           types.Int64  `tfsdk:"application_list_version"`
@@ -66,16 +65,16 @@ type ApplicationAwareRoutingSequencesMatchEntries struct {
 	DestinationRegion                types.String `tfsdk:"destination_region"`
 	TrafficTo                        types.String `tfsdk:"traffic_to"`
 }
-type ApplicationAwareRoutingSequencesActionEntries struct {
-	Type                    types.String                                                      `tfsdk:"type"`
-	BackupSlaPreferredColor types.String                                                      `tfsdk:"backup_sla_preferred_color"`
-	Counter                 types.String                                                      `tfsdk:"counter"`
-	Log                     types.String                                                      `tfsdk:"log"`
-	CloudSla                types.String                                                      `tfsdk:"cloud_sla"`
-	CloudSlaParameters      []ApplicationAwareRoutingSequencesActionEntriesCloudSlaParameters `tfsdk:"cloud_sla_parameters"`
+type ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries struct {
+	Type                    types.String                                                                      `tfsdk:"type"`
+	BackupSlaPreferredColor types.String                                                                      `tfsdk:"backup_sla_preferred_color"`
+	Counter                 types.String                                                                      `tfsdk:"counter"`
+	Log                     types.Bool                                                                        `tfsdk:"log"`
+	CloudSla                types.Bool                                                                        `tfsdk:"cloud_sla"`
+	SlaClassParameters      []ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters `tfsdk:"sla_class_parameters"`
 }
 
-type ApplicationAwareRoutingSequencesActionEntriesCloudSlaParameters struct {
+type ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters struct {
 	Type                           types.String `tfsdk:"type"`
 	SlaClassList                   types.String `tfsdk:"sla_class_list"`
 	SlaClassListVersion            types.Int64  `tfsdk:"sla_class_list_version"`
@@ -84,17 +83,17 @@ type ApplicationAwareRoutingSequencesActionEntriesCloudSlaParameters struct {
 	PreferredColor                 types.String `tfsdk:"preferred_color"`
 }
 
-func (data ApplicationAwareRouting) getType() string {
-	return "appRoute"
-}
-
-func (data ApplicationAwareRouting) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "appRoute")
-	path := ""
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if len(data.Sequences) > 0 {
-		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.Id.IsNull() {
@@ -114,46 +113,46 @@ func (data ApplicationAwareRouting) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
-					if !childItem.ApplicationListId.IsNull() {
+					if !childItem.ApplicationListId.IsNull() && childItem.Type.ValueString() == "appList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ApplicationListId.ValueString())
 					}
-					if !childItem.DnsApplicationListId.IsNull() {
+					if !childItem.DnsApplicationListId.IsNull() && childItem.Type.ValueString() == "dnsAppList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DnsApplicationListId.ValueString())
 					}
-					if !childItem.Dns.IsNull() {
+					if !childItem.Dns.IsNull() && childItem.Type.ValueString() == "dns" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Dns.ValueString())
 					}
-					if !childItem.Dscp.IsNull() {
+					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
 					}
-					if !childItem.Plp.IsNull() {
+					if !childItem.Plp.IsNull() && childItem.Type.ValueString() == "plp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Plp.ValueString())
 					}
-					if !childItem.Protocol.IsNull() {
+					if !childItem.Protocol.IsNull() && childItem.Type.ValueString() == "protocol" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Protocol.ValueInt64()))
 					}
-					if !childItem.SourceDataPrefixListId.IsNull() {
+					if !childItem.SourceDataPrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataPrefixListId.ValueString())
 					}
-					if !childItem.SourceIp.IsNull() {
+					if !childItem.SourceIp.IsNull() && childItem.Type.ValueString() == "sourceIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
 					}
-					if !childItem.SourcePort.IsNull() {
+					if !childItem.SourcePort.IsNull() && childItem.Type.ValueString() == "sourcePort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SourcePort.ValueInt64()))
 					}
-					if !childItem.DestinationDataPrefixListId.IsNull() {
+					if !childItem.DestinationDataPrefixListId.IsNull() && childItem.Type.ValueString() == "destinationDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DestinationDataPrefixListId.ValueString())
 					}
-					if !childItem.DestinationIp.IsNull() {
+					if !childItem.DestinationIp.IsNull() && childItem.Type.ValueString() == "destinationIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
 					}
-					if !childItem.DestinationPort.IsNull() {
+					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
 					}
-					if !childItem.DestinationRegion.IsNull() {
+					if !childItem.DestinationRegion.IsNull() && childItem.Type.ValueString() == "destinationRegion" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationRegion.ValueString())
 					}
-					if !childItem.TrafficTo.IsNull() {
+					if !childItem.TrafficTo.IsNull() && childItem.Type.ValueString() == "trafficTo" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.TrafficTo.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
@@ -166,32 +165,40 @@ func (data ApplicationAwareRouting) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "type", childItem.Type.ValueString())
 					}
-					if !childItem.BackupSlaPreferredColor.IsNull() {
+					if !childItem.BackupSlaPreferredColor.IsNull() && childItem.Type.ValueString() == "backupSlaPreferredColor" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.BackupSlaPreferredColor.ValueString())
 					}
-					if !childItem.Counter.IsNull() {
+					if !childItem.Counter.IsNull() && childItem.Type.ValueString() == "count" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Counter.ValueString())
 					}
-					if !childItem.Log.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueString())
+					if !childItem.Log.IsNull() && childItem.Type.ValueString() == "log" {
+						if false && childItem.Log.ValueBool() {
+							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
+						} else {
+							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueBool())
+						}
 					}
-					if !childItem.CloudSla.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.CloudSla.ValueString())
+					if !childItem.CloudSla.IsNull() && childItem.Type.ValueString() == "cloudSaas" {
+						if true && childItem.CloudSla.ValueBool() {
+							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
+						} else {
+							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.CloudSla.ValueBool())
+						}
 					}
-					if len(childItem.CloudSlaParameters) > 0 {
+					if len(childItem.SlaClassParameters) > 0 && childItem.Type.ValueString() == "slaClass" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
-						for _, childChildItem := range childItem.CloudSlaParameters {
+						for _, childChildItem := range childItem.SlaClassParameters {
 							itemChildChildBody := ""
 							if !childChildItem.Type.IsNull() {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "field", childChildItem.Type.ValueString())
 							}
-							if !childChildItem.SlaClassList.IsNull() {
+							if !childChildItem.SlaClassList.IsNull() && childChildItem.Type.ValueString() == "name" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.SlaClassList.ValueString())
 							}
-							if !childChildItem.PreferredColorGroupList.IsNull() {
+							if !childChildItem.PreferredColorGroupList.IsNull() && childChildItem.Type.ValueString() == "preferredColorGroup" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.PreferredColorGroupList.ValueString())
 							}
-							if !childChildItem.PreferredColor.IsNull() {
+							if !childChildItem.PreferredColor.IsNull() && childChildItem.Type.ValueString() == "preferredColor" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", childChildItem.PreferredColor.ValueString())
 							}
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "parameter.-1", itemChildChildBody)
@@ -200,13 +207,13 @@ func (data ApplicationAwareRouting) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 				}
 			}
-			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *ApplicationAwareRouting) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -217,16 +224,10 @@ func (data *ApplicationAwareRouting) fromBody(ctx context.Context, res gjson.Res
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := ""
-	if value := res.Get(path + "sequences"); value.Exists() {
-		data.Sequences = make([]ApplicationAwareRoutingSequences, 0)
+	if value := res.Get("sequences"); value.Exists() {
+		data.Sequences = make([]ApplicationAwareRoutingPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ApplicationAwareRoutingSequences{}
+			item := ApplicationAwareRoutingPolicyDefinitionSequences{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.Id = types.Int64Value(cValue.Int())
 			} else {
@@ -243,80 +244,80 @@ func (data *ApplicationAwareRouting) fromBody(ctx context.Context, res gjson.Res
 				item.IpType = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() {
-				item.MatchEntries = make([]ApplicationAwareRoutingSequencesMatchEntries, 0)
+				item.MatchEntries = make([]ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ApplicationAwareRoutingSequencesMatchEntries{}
+					cItem := ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "appList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "appList" {
 						cItem.ApplicationListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ApplicationListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "dnsAppList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "dnsAppList" {
 						cItem.DnsApplicationListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.DnsApplicationListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "dns" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dns" {
 						cItem.Dns = types.StringValue(ccValue.String())
 					} else {
 						cItem.Dns = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "dscp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
 						cItem.Dscp = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Dscp = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "plp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "plp" {
 						cItem.Plp = types.StringValue(ccValue.String())
 					} else {
 						cItem.Plp = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "protocol" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "protocol" {
 						cItem.Protocol = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Protocol = types.Int64Null()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "sourceDataPrefixList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "sourceDataPrefixList" {
 						cItem.SourceDataPrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceDataPrefixListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "sourceIp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourceIp" {
 						cItem.SourceIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceIp = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "sourcePort" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
 						cItem.SourcePort = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.SourcePort = types.Int64Null()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "destinationDataPrefixList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "destinationDataPrefixList" {
 						cItem.DestinationDataPrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationDataPrefixListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "destinationIp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationIp" {
 						cItem.DestinationIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationIp = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "destinationPort" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationPort" {
 						cItem.DestinationPort = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.DestinationPort = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "destinationRegion" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationRegion" {
 						cItem.DestinationRegion = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationRegion = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "trafficTo" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "trafficTo" {
 						cItem.TrafficTo = types.StringValue(ccValue.String())
 					} else {
 						cItem.TrafficTo = types.StringNull()
@@ -326,59 +327,67 @@ func (data *ApplicationAwareRouting) fromBody(ctx context.Context, res gjson.Res
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() {
-				item.ActionEntries = make([]ApplicationAwareRoutingSequencesActionEntries, 0)
+				item.ActionEntries = make([]ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ApplicationAwareRoutingSequencesActionEntries{}
+					cItem := ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries{}
 					if ccValue := cv.Get("type"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); cItem.Type.ValueString() == "backupSlaPreferredColor" && ccValue.Exists() {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "backupSlaPreferredColor" {
 						cItem.BackupSlaPreferredColor = types.StringValue(ccValue.String())
 					} else {
 						cItem.BackupSlaPreferredColor = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); cItem.Type.ValueString() == "count" && ccValue.Exists() {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "count" {
 						cItem.Counter = types.StringValue(ccValue.String())
 					} else {
 						cItem.Counter = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); cItem.Type.ValueString() == "log" && ccValue.Exists() {
-						cItem.Log = types.StringValue(ccValue.String())
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "log" {
+						if false && ccValue.String() == "" {
+							cItem.Log = types.BoolValue(true)
+						} else {
+							cItem.Log = types.BoolValue(ccValue.Bool())
+						}
 					} else {
-						cItem.Log = types.StringNull()
+						cItem.Log = types.BoolNull()
 					}
-					if ccValue := cv.Get("parameter"); cItem.Type.ValueString() == "cloudSaas" && ccValue.Exists() {
-						cItem.CloudSla = types.StringValue(ccValue.String())
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "cloudSaas" {
+						if true && ccValue.String() == "" {
+							cItem.CloudSla = types.BoolValue(true)
+						} else {
+							cItem.CloudSla = types.BoolValue(ccValue.Bool())
+						}
 					} else {
-						cItem.CloudSla = types.StringNull()
+						cItem.CloudSla = types.BoolNull()
 					}
-					if ccValue := cv.Get("parameter"); cItem.Type.ValueString() == "slaClass" && ccValue.Exists() {
-						cItem.CloudSlaParameters = make([]ApplicationAwareRoutingSequencesActionEntriesCloudSlaParameters, 0)
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "slaClass" {
+						cItem.SlaClassParameters = make([]ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := ApplicationAwareRoutingSequencesActionEntriesCloudSlaParameters{}
+							ccItem := ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters{}
 							if cccValue := ccv.Get("field"); cccValue.Exists() {
 								ccItem.Type = types.StringValue(cccValue.String())
 							} else {
 								ccItem.Type = types.StringNull()
 							}
-							if cccValue := ccv.Get("ref"); ccItem.Type.ValueString() == "name" && cccValue.Exists() {
+							if cccValue := ccv.Get("ref"); cccValue.Exists() && ccItem.Type.ValueString() == "name" {
 								ccItem.SlaClassList = types.StringValue(cccValue.String())
 							} else {
 								ccItem.SlaClassList = types.StringNull()
 							}
-							if cccValue := ccv.Get("ref"); ccItem.Type.ValueString() == "preferredColorGroup" && cccValue.Exists() {
+							if cccValue := ccv.Get("ref"); cccValue.Exists() && ccItem.Type.ValueString() == "preferredColorGroup" {
 								ccItem.PreferredColorGroupList = types.StringValue(cccValue.String())
 							} else {
 								ccItem.PreferredColorGroupList = types.StringNull()
 							}
-							if cccValue := ccv.Get("value"); ccItem.Type.ValueString() == "preferredColor" && cccValue.Exists() {
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "preferredColor" {
 								ccItem.PreferredColor = types.StringValue(cccValue.String())
 							} else {
 								ccItem.PreferredColor = types.StringNull()
 							}
-							cItem.CloudSlaParameters = append(cItem.CloudSlaParameters, ccItem)
+							cItem.SlaClassParameters = append(cItem.SlaClassParameters, ccItem)
 							return true
 						})
 					}
@@ -390,9 +399,12 @@ func (data *ApplicationAwareRouting) fromBody(ctx context.Context, res gjson.Res
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *ApplicationAwareRouting) hasChanges(ctx context.Context, state *ApplicationAwareRouting) bool {
+func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Context, state *ApplicationAwareRoutingPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -483,20 +495,20 @@ func (data *ApplicationAwareRouting) hasChanges(ctx context.Context, state *Appl
 					if !data.Sequences[i].ActionEntries[ii].CloudSla.Equal(state.Sequences[i].ActionEntries[ii].CloudSla) {
 						hasChanges = true
 					}
-					if len(data.Sequences[i].ActionEntries[ii].CloudSlaParameters) != len(state.Sequences[i].ActionEntries[ii].CloudSlaParameters) {
+					if len(data.Sequences[i].ActionEntries[ii].SlaClassParameters) != len(state.Sequences[i].ActionEntries[ii].SlaClassParameters) {
 						hasChanges = true
 					} else {
-						for iii := range data.Sequences[i].ActionEntries[ii].CloudSlaParameters {
-							if !data.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].Type.Equal(state.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].Type) {
+						for iii := range data.Sequences[i].ActionEntries[ii].SlaClassParameters {
+							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].Type.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].Type) {
 								hasChanges = true
 							}
-							if !data.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].SlaClassList.Equal(state.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].SlaClassList) {
+							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassList.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassList) {
 								hasChanges = true
 							}
-							if !data.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].PreferredColorGroupList.Equal(state.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].PreferredColorGroupList) {
+							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupList.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupList) {
 								hasChanges = true
 							}
-							if !data.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].PreferredColor.Equal(state.Sequences[i].ActionEntries[ii].CloudSlaParameters[iii].PreferredColor) {
+							if !data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColor.Equal(state.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColor) {
 								hasChanges = true
 							}
 						}
@@ -508,118 +520,78 @@ func (data *ApplicationAwareRouting) hasChanges(ctx context.Context, state *Appl
 	return hasChanges
 }
 
-func (data *ApplicationAwareRouting) getMatchApplicationListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "appList" {
-					return cItem.ApplicationListVersion
-				}
+func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.Sequences {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
+		stateIndex := -1
+		for j := range state.Sequences {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[j].Id.ValueInt64()), fmt.Sprintf("%v", state.Sequences[j].Name.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
 			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ApplicationAwareRouting) getMatchDnsApplicationListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "dnsAppList" {
-					return cItem.DnsApplicationListVersion
+		for ii := range data.Sequences[i].MatchEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].MatchEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ApplicationAwareRouting) getMatchSourceDataPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "sourceDataPrefixList" {
-					return cItem.SourceDataPrefixListVersion
-				}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ApplicationListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DnsApplicationListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()
 			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ApplicationAwareRouting) getMatchDestinationDataPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "destinationDataPrefixList" {
-					return cItem.DestinationDataPrefixListVersion
+		for ii := range data.Sequences[i].ActionEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].ActionEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ApplicationAwareRouting) getActionSlaClassListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "slaClass" {
-					for _, ccItem := range cItem.CloudSlaParameters {
-						if ccItem.Type.ValueString() == "name" {
-							return ccItem.SlaClassListVersion
-						}
+			for iii := range data.Sequences[i].ActionEntries[ii].SlaClassParameters {
+				ccDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].Type.ValueString())}
+				ccStateIndex := -1
+				for jjj := range state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters {
+					ccStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters[jjj].Type.ValueString())}
+					if ccDataKeys == ccStateKeys {
+						ccStateIndex = jjj
+						break
 					}
 				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ApplicationAwareRouting) getActionPreferredColorGroupListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "slaClass" {
-					for _, ccItem := range cItem.CloudSlaParameters {
-						if ccItem.Type.ValueString() == "preferredColorGroup" {
-							return ccItem.PreferredColorGroupListVersion
-						}
-					}
+				if ccStateIndex >= -1 {
+					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters[ccStateIndex].SlaClassListVersion
+				} else {
+					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListVersion = types.Int64Null()
 				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ApplicationAwareRouting) updateVersions(ctx context.Context, state ApplicationAwareRouting) {
-	for s := range data.Sequences {
-		id := data.Sequences[s].Id.ValueInt64()
-		name := data.Sequences[s].Name.ValueString()
-		for m := range data.Sequences[s].MatchEntries {
-			t := data.Sequences[s].MatchEntries[m].Type.ValueString()
-			if t == "appList" {
-				data.Sequences[s].MatchEntries[m].ApplicationListVersion = state.getMatchApplicationListVersion(ctx, name, id)
-			} else if t == "dnsAppList" {
-				data.Sequences[s].MatchEntries[m].DnsApplicationListVersion = state.getMatchDnsApplicationListVersion(ctx, name, id)
-			} else if t == "sourceDataPrefixList" {
-				data.Sequences[s].MatchEntries[m].SourceDataPrefixListVersion = state.getMatchSourceDataPrefixListVersion(ctx, name, id)
-			} else if t == "destinationDataPrefixList" {
-				data.Sequences[s].MatchEntries[m].DestinationDataPrefixListVersion = state.getMatchDestinationDataPrefixListVersion(ctx, name, id)
-			}
-		}
-		for a := range data.Sequences[s].ActionEntries {
-			t := data.Sequences[s].ActionEntries[a].Type.ValueString()
-			if t == "slaClass" {
-				for s := range data.Sequences[s].ActionEntries[a].CloudSlaParameters {
-					st := data.Sequences[s].ActionEntries[a].CloudSlaParameters[s].Type.ValueString()
-					if st == "name" {
-						data.Sequences[s].ActionEntries[a].CloudSlaParameters[s].SlaClassListVersion = state.getActionSlaClassListVersion(ctx, name, id)
-					} else if st == "preferredColorGroup" && data.Sequences[s].ActionEntries[a].CloudSlaParameters[s].PreferredColorGroupList.ValueString() != "" {
-						data.Sequences[s].ActionEntries[a].CloudSlaParameters[s].PreferredColorGroupListVersion = state.getActionPreferredColorGroupListVersion(ctx, name, id)
-					}
+				if ccStateIndex >= -1 {
+					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters[ccStateIndex].PreferredColorGroupListVersion
+				} else {
+					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListVersion = types.Int64Null()
 				}
 			}
 		}
