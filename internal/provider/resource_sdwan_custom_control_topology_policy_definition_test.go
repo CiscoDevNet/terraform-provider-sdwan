@@ -33,6 +33,8 @@ func TestAccSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
 			{
 				Config: testAccSdwanCustomControlTopologyPolicyDefinitionConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_custom_control_topology_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_custom_control_topology_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("sdwan_custom_control_topology_policy_definition.test", "default_action", "reject"),
 					resource.TestCheckResourceAttr("sdwan_custom_control_topology_policy_definition.test", "sequences.0.id", "1"),
 					resource.TestCheckResourceAttr("sdwan_custom_control_topology_policy_definition.test", "sequences.0.name", "Region1"),
@@ -52,8 +54,8 @@ func TestAccSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
 func testAccSdwanCustomControlTopologyPolicyDefinitionConfig_all() string {
 	return `
 	resource "sdwan_custom_control_topology_policy_definition" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
+		name = "Example"
+		description = "My description"
 		default_action = "reject"
 		sequences = [{
 			id = 1

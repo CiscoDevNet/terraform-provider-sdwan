@@ -1,9 +1,24 @@
 ---
-name: Custom Control Topology
-type: control
+name: Custom Control Topology Policy Definition
+rest_endpoint: /template/policy/definition/control/
+has_version: true
+id_attribute: definitionId
 doc_category: Centralized Policies
-skip_templates: [model.go, resource.go, data_source.go]
 attributes:
+  - model_name: type
+    value: control
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
   - model_name: type
     tf_name: default_action
     data_path: [defaultAction]
@@ -20,12 +35,14 @@ attributes:
       - model_name: sequenceId
         tf_name: id
         type: Int64
+        id: true
         mandatory: true
         description: Sequence ID
         example: 1
       - model_name: sequenceName
         tf_name: name
         type: String
+        id: true
         mandatory: true
         description: Sequence name
         example: Region1
@@ -50,6 +67,7 @@ attributes:
           - model_name: field
             tf_name: type
             type: String
+            id: true
             mandatory: true
             enum_values:
               [
@@ -76,39 +94,51 @@ attributes:
             example: ompTag
           - model_name: ref
             tf_name: color_list_id
+            conditional_attribute:
+              name: type
+              value: colorList
             type: String
             description: Color list ID
             example: 0bfee1b7-1ac5-4ee3-bebc-61af04792e7c
             exclude_test: true
           - tf_name: color_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Color list version
             exclude_test: true
           - model_name: ref
             tf_name: community_list_id
+            conditional_attribute:
+              name: type
+              value: community
             type: String
             description: Community list ID
             example: 8bca4de4-78c7-4a44-9a55-5d4f3195cfe9
             exclude_test: true
           - tf_name: community_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Community list version
             exclude_test: true
           - model_name: ref
             tf_name: expanded_community_list_id
+            conditional_attribute:
+              name: type
+              value: expandedCommunity
             type: String
             description: Expanded community list ID
             example: f57a0c33-c6f8-4b07-ac92-d9a22ade9bb8
             exclude_test: true
           - tf_name: expanded_community_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Expanded community list version
             exclude_test: true
           - model_name: value
             tf_name: omp_tag
+            conditional_attribute:
+              name: type
+              value: ompTag
             type: Int64
             model_type_string: true
             description: OMP tag
@@ -117,6 +147,9 @@ attributes:
             example: 100
           - model_name: value
             tf_name: origin
+            conditional_attribute:
+              name: type
+              value: origin
             type: String
             enum_values: [igp, egp, incomplete]
             description: Origin
@@ -124,12 +157,18 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: originator
+            conditional_attribute:
+              name: type
+              value: originator
             type: String
             description: Originator IP
             example: 1.2.3.4
             exclude_test: true
           - model_name: value
             tf_name: preference
+            conditional_attribute:
+              name: type
+              value: preference
             type: Int64
             model_type_string: true
             description: Preference
@@ -139,17 +178,23 @@ attributes:
             exclude_test: true
           - model_name: ref
             tf_name: site_list_id
+            conditional_attribute:
+              name: type
+              value: siteList
             type: String
             description: Site list ID
             example: e858e1c4-6aa8-4de7-99df-c3adbf80290d
             exclude_test: true
           - tf_name: site_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Site list version
             exclude_test: true
           - model_name: value
             tf_name: path_type
+            conditional_attribute:
+              name: type
+              value: pathType
             type: String
             enum_values:
               [hierarchical-path, direct-path, transport-gateway-path]
@@ -158,39 +203,51 @@ attributes:
             exclude_test: true
           - model_name: ref
             tf_name: tloc_list_id
+            conditional_attribute:
+              name: type
+              value: tlocList
             type: String
             description: TLOC list ID
             example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
             exclude_test: true
           - tf_name: tloc_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: TLOC list version
             exclude_test: true
           - model_name: ref
             tf_name: vpn_list_id
+            conditional_attribute:
+              name: type
+              value: vpnList
             type: String
             description: VPN list ID
             example: 04fcbb0b-efbf-43d2-a04b-847d3a7b104e
             exclude_test: true
           - tf_name: vpn_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: VPN list version
             exclude_test: true
           - model_name: ref
             tf_name: prefix_list_id
+            conditional_attribute:
+              name: type
+              value: prefixList
             type: String
             description: Prefix list ID
             example: 3639191a-246a-4023-bbe3-658eec3bf2ab
             exclude_test: true
           - tf_name: prefix_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Prefix list version
             exclude_test: true
           - model_name: value
             tf_name: vpn_id
+            conditional_attribute:
+              name: type
+              value: vpn
             type: Int64
             model_type_string: true
             description: VPN ID
@@ -201,6 +258,9 @@ attributes:
           - model_name: ip
             data_path: [value]
             tf_name: tloc_ip
+            conditional_attribute:
+              name: type
+              value: tloc
             type: String
             description: TLOC IP address
             example: 1.2.3.4
@@ -208,6 +268,9 @@ attributes:
           - model_name: color
             data_path: [value]
             tf_name: tloc_color
+            conditional_attribute:
+              name: type
+              value: tloc
             type: String
             description: TLOC color
             example: bronze
@@ -215,6 +278,9 @@ attributes:
           - model_name: encap
             data_path: [value]
             tf_name: tloc_encapsulation
+            conditional_attribute:
+              name: type
+              value: tloc
             type: String
             enum_values: [ipsec, gre]
             description: TLOC encapsulation
@@ -222,6 +288,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: site_id
+            conditional_attribute:
+              name: type
+              value: siteId
             type: Int64
             model_type_string: true
             description: Site ID
@@ -231,6 +300,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: carrier
+            conditional_attribute:
+              name: type
+              value: carrier
             type: String
             enum_values:
               [
@@ -249,6 +321,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: domain_id
+            conditional_attribute:
+              name: type
+              value: domainId
             type: Int64
             model_type_string: true
             description: Domain ID
@@ -258,6 +333,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: group_id
+            conditional_attribute:
+              name: type
+              value: groupId
             type: Int64
             model_type_string: true
             description: Group ID
@@ -273,18 +351,23 @@ attributes:
           - model_name: type
             tf_name: type
             type: String
+            id: true
             mandatory: true
             enum_values: [set, exportTo]
             description: Type of action entry
             example: set
           - model_name: parameter
             tf_name: set_parameters
+            conditional_attribute:
+              name: type
+              value: set
             type: List
             description: List of set parameters
             attributes:
               - model_name: field
                 tf_name: type
                 type: String
+                id: true
                 mandatory: true
                 enum_values:
                   [
@@ -301,18 +384,24 @@ attributes:
                 example: preference
               - model_name: ref
                 tf_name: tloc_list_id
+                conditional_attribute:
+                  name: type
+                  value: tlocList
                 type: String
                 description: TLOC list ID
                 example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
                 exclude_test: true
               - tf_name: tloc_list_version
                 tf_only: true
-                type: Int64
+                type: Version
                 description: TLOC list version
                 exclude_test: true
               - model_name: ip
                 data_path: [value]
                 tf_name: tloc_ip
+                conditional_attribute:
+                  name: type
+                  value: tloc
                 type: String
                 description: TLOC IP address
                 example: 1.2.3.4
@@ -320,6 +409,9 @@ attributes:
               - model_name: color
                 data_path: [value]
                 tf_name: tloc_color
+                conditional_attribute:
+                  name: type
+                  value: tloc
                 type: String
                 description: TLOC color
                 example: bronze
@@ -327,6 +419,9 @@ attributes:
               - model_name: encap
                 data_path: [value]
                 tf_name: tloc_encapsulation
+                conditional_attribute:
+                  name: type
+                  value: tloc
                 type: String
                 enum_values: [ipsec, gre]
                 description: TLOC encapsulation
@@ -334,6 +429,9 @@ attributes:
                 exclude_test: true
               - model_name: value
                 tf_name: tloc_action
+                conditional_attribute:
+                  name: type
+                  value: tlocAction
                 type: String
                 enum_values: [strict, primary, backup, ecmp]
                 description: TLOC action
@@ -341,6 +439,9 @@ attributes:
                 exclude_test: true
               - model_name: value
                 tf_name: preference
+                conditional_attribute:
+                  name: type
+                  value: preference
                 type: Int64
                 model_type_string: true
                 description: Preference
@@ -349,6 +450,9 @@ attributes:
                 example: 100
               - model_name: value
                 tf_name: omp_tag
+                conditional_attribute:
+                  name: type
+                  value: ompTag
                 type: Int64
                 model_type_string: true
                 description: OMP tag
@@ -358,12 +462,18 @@ attributes:
                 exclude_test: true
               - model_name: value
                 tf_name: community
+                conditional_attribute:
+                  name: type
+                  value: community
                 type: String
                 description: Community value, e.g. `1000:10000` or `internet` or `local-AS`
                 example: 1000:10000
                 exclude_test: true
               - model_name: value
                 tf_name: community_additive
+                conditional_attribute:
+                  name: type
+                  value: communityAdditive
                 type: Bool
                 model_type_string: true
                 description: Community additive
@@ -372,6 +482,9 @@ attributes:
               - model_name: type
                 data_path: [value]
                 tf_name: service_type
+                conditional_attribute:
+                  name: type
+                  value: service
                 type: String
                 enum_values:
                   [FW, IDP, IDS, netsvc1, netsvc2, netsvc3, netsvc4, netsvc5]
@@ -381,6 +494,9 @@ attributes:
               - model_name: vpn
                 data_path: [value]
                 tf_name: service_vpn_id
+                conditional_attribute:
+                  name: type
+                  value: service
                 type: Int64
                 model_type_string: true
                 description: Service VPN ID
@@ -391,18 +507,24 @@ attributes:
               - model_name: tlocList
                 data_path: [value]
                 tf_name: service_tloc_list_id
+                conditional_attribute:
+                  name: type
+                  value: service
                 type: String
                 description: Service TLOC list ID
                 example: 8b249706-7c7f-4ab3-af6f-c91951c1a603
                 exclude_test: true
               - tf_name: service_tloc_list_version
                 tf_only: true
-                type: Int64
+                type: Version
                 description: Service TLOC list version
                 exclude_test: true
               - model_name: ip
                 data_path: [value, tloc]
                 tf_name: service_tloc_ip
+                conditional_attribute:
+                  name: type
+                  value: service
                 type: String
                 description: Service TLOC IP address
                 example: 1.2.3.4
@@ -410,6 +532,9 @@ attributes:
               - model_name: color
                 data_path: [value, tloc]
                 tf_name: service_tloc_color
+                conditional_attribute:
+                  name: type
+                  value: service
                 type: String
                 description: Service TLOC color
                 example: bronze
@@ -417,6 +542,9 @@ attributes:
               - model_name: encap
                 data_path: [value, tloc]
                 tf_name: service_tloc_encapsulation
+                conditional_attribute:
+                  name: type
+                  value: service
                 type: String
                 enum_values: [ipsec, gre]
                 description: Service TLOC encapsulation
@@ -425,12 +553,15 @@ attributes:
           - model_name: ref
             data_path: [parameter]
             tf_name: export_to_vpn_list_id
+            conditional_attribute:
+              name: type
+              value: exportTo
             type: String
             description: Export to VPN list ID
             example: 04fcbb0b-efbf-43d2-a04b-847d3a7b104e
             exclude_test: true
           - tf_name: export_to_vpn_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Export to VPN list version
             exclude_test: true

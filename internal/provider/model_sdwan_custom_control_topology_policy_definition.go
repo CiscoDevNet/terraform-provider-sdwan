@@ -28,26 +28,25 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type CustomControlTopology struct {
-	Id            types.String                     `tfsdk:"id"`
-	Version       types.Int64                      `tfsdk:"version"`
-	Type          types.String                     `tfsdk:"type"`
-	Name          types.String                     `tfsdk:"name"`
-	Description   types.String                     `tfsdk:"description"`
-	DefaultAction types.String                     `tfsdk:"default_action"`
-	Sequences     []CustomControlTopologySequences `tfsdk:"sequences"`
+type CustomControlTopologyPolicyDefinition struct {
+	Id            types.String                                     `tfsdk:"id"`
+	Version       types.Int64                                      `tfsdk:"version"`
+	Name          types.String                                     `tfsdk:"name"`
+	Description   types.String                                     `tfsdk:"description"`
+	DefaultAction types.String                                     `tfsdk:"default_action"`
+	Sequences     []CustomControlTopologyPolicyDefinitionSequences `tfsdk:"sequences"`
 }
 
-type CustomControlTopologySequences struct {
-	Id            types.Int64                                   `tfsdk:"id"`
-	Name          types.String                                  `tfsdk:"name"`
-	Type          types.String                                  `tfsdk:"type"`
-	IpType        types.String                                  `tfsdk:"ip_type"`
-	MatchEntries  []CustomControlTopologySequencesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []CustomControlTopologySequencesActionEntries `tfsdk:"action_entries"`
+type CustomControlTopologyPolicyDefinitionSequences struct {
+	Id            types.Int64                                                   `tfsdk:"id"`
+	Name          types.String                                                  `tfsdk:"name"`
+	Type          types.String                                                  `tfsdk:"type"`
+	IpType        types.String                                                  `tfsdk:"ip_type"`
+	MatchEntries  []CustomControlTopologyPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []CustomControlTopologyPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
 
-type CustomControlTopologySequencesMatchEntries struct {
+type CustomControlTopologyPolicyDefinitionSequencesMatchEntries struct {
 	Type                         types.String `tfsdk:"type"`
 	ColorListId                  types.String `tfsdk:"color_list_id"`
 	ColorListVersion             types.Int64  `tfsdk:"color_list_version"`
@@ -77,14 +76,14 @@ type CustomControlTopologySequencesMatchEntries struct {
 	DomainId                     types.Int64  `tfsdk:"domain_id"`
 	GroupId                      types.Int64  `tfsdk:"group_id"`
 }
-type CustomControlTopologySequencesActionEntries struct {
-	Type                   types.String                                               `tfsdk:"type"`
-	SetParameters          []CustomControlTopologySequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
-	ExportToVpnListId      types.String                                               `tfsdk:"export_to_vpn_list_id"`
-	ExportToVpnListVersion types.Int64                                                `tfsdk:"export_to_vpn_list_version"`
+type CustomControlTopologyPolicyDefinitionSequencesActionEntries struct {
+	Type                   types.String                                                               `tfsdk:"type"`
+	SetParameters          []CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
+	ExportToVpnListId      types.String                                                               `tfsdk:"export_to_vpn_list_id"`
+	ExportToVpnListVersion types.Int64                                                                `tfsdk:"export_to_vpn_list_version"`
 }
 
-type CustomControlTopologySequencesActionEntriesSetParameters struct {
+type CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	Type                     types.String `tfsdk:"type"`
 	TlocListId               types.String `tfsdk:"tloc_list_id"`
 	TlocListVersion          types.Int64  `tfsdk:"tloc_list_version"`
@@ -105,20 +104,20 @@ type CustomControlTopologySequencesActionEntriesSetParameters struct {
 	ServiceTlocEncapsulation types.String `tfsdk:"service_tloc_encapsulation"`
 }
 
-func (data CustomControlTopology) getType() string {
-	return "control"
-}
-
-func (data CustomControlTopology) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "control")
-	path := ""
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if !data.DefaultAction.IsNull() {
-		body, _ = sjson.Set(body, path+"defaultAction.type", data.DefaultAction.ValueString())
+		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
 	if len(data.Sequences) > 0 {
-		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.Id.IsNull() {
@@ -140,64 +139,64 @@ func (data CustomControlTopology) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
-					if !childItem.ColorListId.IsNull() {
+					if !childItem.ColorListId.IsNull() && childItem.Type.ValueString() == "colorList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ColorListId.ValueString())
 					}
-					if !childItem.CommunityListId.IsNull() {
+					if !childItem.CommunityListId.IsNull() && childItem.Type.ValueString() == "community" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.CommunityListId.ValueString())
 					}
-					if !childItem.ExpandedCommunityListId.IsNull() {
+					if !childItem.ExpandedCommunityListId.IsNull() && childItem.Type.ValueString() == "expandedCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ExpandedCommunityListId.ValueString())
 					}
-					if !childItem.OmpTag.IsNull() {
+					if !childItem.OmpTag.IsNull() && childItem.Type.ValueString() == "ompTag" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.OmpTag.ValueInt64()))
 					}
-					if !childItem.Origin.IsNull() {
+					if !childItem.Origin.IsNull() && childItem.Type.ValueString() == "origin" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Origin.ValueString())
 					}
-					if !childItem.Originator.IsNull() {
+					if !childItem.Originator.IsNull() && childItem.Type.ValueString() == "originator" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Originator.ValueString())
 					}
-					if !childItem.Preference.IsNull() {
+					if !childItem.Preference.IsNull() && childItem.Type.ValueString() == "preference" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Preference.ValueInt64()))
 					}
-					if !childItem.SiteListId.IsNull() {
+					if !childItem.SiteListId.IsNull() && childItem.Type.ValueString() == "siteList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SiteListId.ValueString())
 					}
-					if !childItem.PathType.IsNull() {
+					if !childItem.PathType.IsNull() && childItem.Type.ValueString() == "pathType" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.PathType.ValueString())
 					}
-					if !childItem.TlocListId.IsNull() {
+					if !childItem.TlocListId.IsNull() && childItem.Type.ValueString() == "tlocList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.TlocListId.ValueString())
 					}
-					if !childItem.VpnListId.IsNull() {
+					if !childItem.VpnListId.IsNull() && childItem.Type.ValueString() == "vpnList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.VpnListId.ValueString())
 					}
-					if !childItem.PrefixListId.IsNull() {
+					if !childItem.PrefixListId.IsNull() && childItem.Type.ValueString() == "prefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.PrefixListId.ValueString())
 					}
-					if !childItem.VpnId.IsNull() {
+					if !childItem.VpnId.IsNull() && childItem.Type.ValueString() == "vpn" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.VpnId.ValueInt64()))
 					}
-					if !childItem.TlocIp.IsNull() {
+					if !childItem.TlocIp.IsNull() && childItem.Type.ValueString() == "tloc" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value.ip", childItem.TlocIp.ValueString())
 					}
-					if !childItem.TlocColor.IsNull() {
+					if !childItem.TlocColor.IsNull() && childItem.Type.ValueString() == "tloc" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value.color", childItem.TlocColor.ValueString())
 					}
-					if !childItem.TlocEncapsulation.IsNull() {
+					if !childItem.TlocEncapsulation.IsNull() && childItem.Type.ValueString() == "tloc" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value.encap", childItem.TlocEncapsulation.ValueString())
 					}
-					if !childItem.SiteId.IsNull() {
+					if !childItem.SiteId.IsNull() && childItem.Type.ValueString() == "siteId" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SiteId.ValueInt64()))
 					}
-					if !childItem.Carrier.IsNull() {
+					if !childItem.Carrier.IsNull() && childItem.Type.ValueString() == "carrier" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Carrier.ValueString())
 					}
-					if !childItem.DomainId.IsNull() {
+					if !childItem.DomainId.IsNull() && childItem.Type.ValueString() == "domainId" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DomainId.ValueInt64()))
 					}
-					if !childItem.GroupId.IsNull() {
+					if !childItem.GroupId.IsNull() && childItem.Type.ValueString() == "groupId" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.GroupId.ValueInt64()))
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
@@ -210,71 +209,78 @@ func (data CustomControlTopology) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "type", childItem.Type.ValueString())
 					}
-					if len(childItem.SetParameters) > 0 {
+					if len(childItem.SetParameters) > 0 && childItem.Type.ValueString() == "set" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
 						for _, childChildItem := range childItem.SetParameters {
 							itemChildChildBody := ""
 							if !childChildItem.Type.IsNull() {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "field", childChildItem.Type.ValueString())
 							}
-							if !childChildItem.TlocListId.IsNull() {
+							if !childChildItem.TlocListId.IsNull() && childChildItem.Type.ValueString() == "tlocList" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ref", childChildItem.TlocListId.ValueString())
 							}
-							if !childChildItem.TlocIp.IsNull() {
+							if !childChildItem.TlocIp.IsNull() && childChildItem.Type.ValueString() == "tloc" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.ip", childChildItem.TlocIp.ValueString())
 							}
-							if !childChildItem.TlocColor.IsNull() {
+							if !childChildItem.TlocColor.IsNull() && childChildItem.Type.ValueString() == "tloc" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.color", childChildItem.TlocColor.ValueString())
 							}
-							if !childChildItem.TlocEncapsulation.IsNull() {
+							if !childChildItem.TlocEncapsulation.IsNull() && childChildItem.Type.ValueString() == "tloc" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.encap", childChildItem.TlocEncapsulation.ValueString())
 							}
-							if !childChildItem.TlocAction.IsNull() {
+							if !childChildItem.TlocAction.IsNull() && childChildItem.Type.ValueString() == "tlocAction" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", childChildItem.TlocAction.ValueString())
 							}
-							if !childChildItem.Preference.IsNull() {
+							if !childChildItem.Preference.IsNull() && childChildItem.Type.ValueString() == "preference" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", fmt.Sprint(childChildItem.Preference.ValueInt64()))
 							}
-							if !childChildItem.OmpTag.IsNull() {
+							if !childChildItem.OmpTag.IsNull() && childChildItem.Type.ValueString() == "ompTag" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", fmt.Sprint(childChildItem.OmpTag.ValueInt64()))
 							}
-							if !childChildItem.Community.IsNull() {
+							if !childChildItem.Community.IsNull() && childChildItem.Type.ValueString() == "community" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", childChildItem.Community.ValueString())
 							}
-							if !childChildItem.ServiceType.IsNull() {
+							if !childChildItem.CommunityAdditive.IsNull() && childChildItem.Type.ValueString() == "communityAdditive" {
+								if false && childChildItem.CommunityAdditive.ValueBool() {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", "")
+								} else {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", fmt.Sprint(childChildItem.CommunityAdditive.ValueBool()))
+								}
+							}
+							if !childChildItem.ServiceType.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.type", childChildItem.ServiceType.ValueString())
 							}
-							if !childChildItem.ServiceVpnId.IsNull() {
+							if !childChildItem.ServiceVpnId.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.vpn", fmt.Sprint(childChildItem.ServiceVpnId.ValueInt64()))
 							}
-							if !childChildItem.ServiceTlocListId.IsNull() {
+							if !childChildItem.ServiceTlocListId.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tlocList", childChildItem.ServiceTlocListId.ValueString())
 							}
-							if !childChildItem.ServiceTlocIp.IsNull() {
+							if !childChildItem.ServiceTlocIp.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.ip", childChildItem.ServiceTlocIp.ValueString())
 							}
-							if !childChildItem.ServiceTlocColor.IsNull() {
+							if !childChildItem.ServiceTlocColor.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.color", childChildItem.ServiceTlocColor.ValueString())
 							}
-							if !childChildItem.ServiceTlocEncapsulation.IsNull() {
+							if !childChildItem.ServiceTlocEncapsulation.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.encap", childChildItem.ServiceTlocEncapsulation.ValueString())
 							}
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "parameter.-1", itemChildChildBody)
 						}
 					}
-					if !childItem.ExportToVpnListId.IsNull() {
+					if !childItem.ExportToVpnListId.IsNull() && childItem.Type.ValueString() == "exportTo" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.ref", childItem.ExportToVpnListId.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 				}
 			}
-			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *CustomControlTopology) fromBody(ctx context.Context, res gjson.Result) {
+func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -285,21 +291,15 @@ func (data *CustomControlTopology) fromBody(ctx context.Context, res gjson.Resul
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := ""
-	if value := res.Get(path + "defaultAction.type"); value.Exists() {
+	if value := res.Get("defaultAction.type"); value.Exists() {
 		data.DefaultAction = types.StringValue(value.String())
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
-		data.Sequences = make([]CustomControlTopologySequences, 0)
+	if value := res.Get("sequences"); value.Exists() {
+		data.Sequences = make([]CustomControlTopologyPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CustomControlTopologySequences{}
+			item := CustomControlTopologyPolicyDefinitionSequences{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.Id = types.Int64Value(cValue.Int())
 			} else {
@@ -321,110 +321,110 @@ func (data *CustomControlTopology) fromBody(ctx context.Context, res gjson.Resul
 				item.IpType = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() {
-				item.MatchEntries = make([]CustomControlTopologySequencesMatchEntries, 0)
+				item.MatchEntries = make([]CustomControlTopologyPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CustomControlTopologySequencesMatchEntries{}
+					cItem := CustomControlTopologyPolicyDefinitionSequencesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "colorList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "colorList" {
 						cItem.ColorListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ColorListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "community" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "community" {
 						cItem.CommunityListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.CommunityListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "expandedCommunity" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "expandedCommunity" {
 						cItem.ExpandedCommunityListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ExpandedCommunityListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "ompTag" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "ompTag" {
 						cItem.OmpTag = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.OmpTag = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "origin" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "origin" {
 						cItem.Origin = types.StringValue(ccValue.String())
 					} else {
 						cItem.Origin = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "originator" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "originator" {
 						cItem.Originator = types.StringValue(ccValue.String())
 					} else {
 						cItem.Originator = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "preference" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "preference" {
 						cItem.Preference = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Preference = types.Int64Null()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "siteList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "siteList" {
 						cItem.SiteListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.SiteListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "pathType" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "pathType" {
 						cItem.PathType = types.StringValue(ccValue.String())
 					} else {
 						cItem.PathType = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "tlocList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "tlocList" {
 						cItem.TlocListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.TlocListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "vpnList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "vpnList" {
 						cItem.VpnListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.VpnListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "prefixList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "prefixList" {
 						cItem.PrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.PrefixListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "vpn" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "vpn" {
 						cItem.VpnId = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.VpnId = types.Int64Null()
 					}
-					if ccValue := cv.Get("value.ip"); cItem.Type.ValueString() == "tloc" && ccValue.Exists() {
+					if ccValue := cv.Get("value.ip"); ccValue.Exists() && cItem.Type.ValueString() == "tloc" {
 						cItem.TlocIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.TlocIp = types.StringNull()
 					}
-					if ccValue := cv.Get("value.color"); cItem.Type.ValueString() == "tloc" && ccValue.Exists() {
+					if ccValue := cv.Get("value.color"); ccValue.Exists() && cItem.Type.ValueString() == "tloc" {
 						cItem.TlocColor = types.StringValue(ccValue.String())
 					} else {
 						cItem.TlocColor = types.StringNull()
 					}
-					if ccValue := cv.Get("value.encap"); cItem.Type.ValueString() == "tloc" && ccValue.Exists() {
+					if ccValue := cv.Get("value.encap"); ccValue.Exists() && cItem.Type.ValueString() == "tloc" {
 						cItem.TlocEncapsulation = types.StringValue(ccValue.String())
 					} else {
 						cItem.TlocEncapsulation = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "siteId" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "siteId" {
 						cItem.SiteId = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.SiteId = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "carrier" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "carrier" {
 						cItem.Carrier = types.StringValue(ccValue.String())
 					} else {
 						cItem.Carrier = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "domainId" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "domainId" {
 						cItem.DomainId = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.DomainId = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "groupId" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "groupId" {
 						cItem.GroupId = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.GroupId = types.Int64Null()
@@ -434,89 +434,98 @@ func (data *CustomControlTopology) fromBody(ctx context.Context, res gjson.Resul
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() {
-				item.ActionEntries = make([]CustomControlTopologySequencesActionEntries, 0)
+				item.ActionEntries = make([]CustomControlTopologyPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CustomControlTopologySequencesActionEntries{}
+					cItem := CustomControlTopologyPolicyDefinitionSequencesActionEntries{}
 					if ccValue := cv.Get("type"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() {
-						cItem.SetParameters = make([]CustomControlTopologySequencesActionEntriesSetParameters, 0)
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "set" {
+						cItem.SetParameters = make([]CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := CustomControlTopologySequencesActionEntriesSetParameters{}
+							ccItem := CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters{}
 							if cccValue := ccv.Get("field"); cccValue.Exists() {
 								ccItem.Type = types.StringValue(cccValue.String())
 							} else {
 								ccItem.Type = types.StringNull()
 							}
-							if cccValue := ccv.Get("ref"); ccItem.Type.ValueString() == "tlocList" && cccValue.Exists() {
+							if cccValue := ccv.Get("ref"); cccValue.Exists() && ccItem.Type.ValueString() == "tlocList" {
 								ccItem.TlocListId = types.StringValue(cccValue.String())
 							} else {
 								ccItem.TlocListId = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.ip"); ccItem.Type.ValueString() == "tloc" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.ip"); cccValue.Exists() && ccItem.Type.ValueString() == "tloc" {
 								ccItem.TlocIp = types.StringValue(cccValue.String())
 							} else {
 								ccItem.TlocIp = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.color"); ccItem.Type.ValueString() == "tloc" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.color"); cccValue.Exists() && ccItem.Type.ValueString() == "tloc" {
 								ccItem.TlocColor = types.StringValue(cccValue.String())
 							} else {
 								ccItem.TlocColor = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.encap"); ccItem.Type.ValueString() == "tloc" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.encap"); cccValue.Exists() && ccItem.Type.ValueString() == "tloc" {
 								ccItem.TlocEncapsulation = types.StringValue(cccValue.String())
 							} else {
 								ccItem.TlocEncapsulation = types.StringNull()
 							}
-							if cccValue := ccv.Get("value"); ccItem.Type.ValueString() == "tlocAction" && cccValue.Exists() {
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "tlocAction" {
 								ccItem.TlocAction = types.StringValue(cccValue.String())
 							} else {
 								ccItem.TlocAction = types.StringNull()
 							}
-							if cccValue := ccv.Get("value"); ccItem.Type.ValueString() == "preference" && cccValue.Exists() {
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "preference" {
 								ccItem.Preference = types.Int64Value(cccValue.Int())
 							} else {
 								ccItem.Preference = types.Int64Null()
 							}
-							if cccValue := ccv.Get("value"); ccItem.Type.ValueString() == "ompTag" && cccValue.Exists() {
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "ompTag" {
 								ccItem.OmpTag = types.Int64Value(cccValue.Int())
 							} else {
 								ccItem.OmpTag = types.Int64Null()
 							}
-							if cccValue := ccv.Get("value"); ccItem.Type.ValueString() == "community" && cccValue.Exists() {
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "community" {
 								ccItem.Community = types.StringValue(cccValue.String())
 							} else {
 								ccItem.Community = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.type"); ccItem.Type.ValueString() == "service" && cccValue.Exists() {
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "communityAdditive" {
+								if false && cccValue.String() == "" {
+									ccItem.CommunityAdditive = types.BoolValue(true)
+								} else {
+									ccItem.CommunityAdditive = types.BoolValue(cccValue.Bool())
+								}
+							} else {
+								ccItem.CommunityAdditive = types.BoolNull()
+							}
+							if cccValue := ccv.Get("value.type"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceType = types.StringValue(cccValue.String())
 							} else {
 								ccItem.ServiceType = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.vpn"); ccItem.Type.ValueString() == "service" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.vpn"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceVpnId = types.Int64Value(cccValue.Int())
 							} else {
 								ccItem.ServiceVpnId = types.Int64Null()
 							}
-							if cccValue := ccv.Get("value.tlocList"); ccItem.Type.ValueString() == "service" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.tlocList"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocListId = types.StringValue(cccValue.String())
 							} else {
 								ccItem.ServiceTlocListId = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.tloc.ip"); ccItem.Type.ValueString() == "service" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.tloc.ip"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocIp = types.StringValue(cccValue.String())
 							} else {
 								ccItem.ServiceTlocIp = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.tloc.color"); ccItem.Type.ValueString() == "service" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.tloc.color"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocColor = types.StringValue(cccValue.String())
 							} else {
 								ccItem.ServiceTlocColor = types.StringNull()
 							}
-							if cccValue := ccv.Get("value.tloc.encap"); ccItem.Type.ValueString() == "service" && cccValue.Exists() {
+							if cccValue := ccv.Get("value.tloc.encap"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocEncapsulation = types.StringValue(cccValue.String())
 							} else {
 								ccItem.ServiceTlocEncapsulation = types.StringNull()
@@ -525,7 +534,7 @@ func (data *CustomControlTopology) fromBody(ctx context.Context, res gjson.Resul
 							return true
 						})
 					}
-					if ccValue := cv.Get("parameter.ref"); ccValue.Exists() {
+					if ccValue := cv.Get("parameter.ref"); ccValue.Exists() && cItem.Type.ValueString() == "exportTo" {
 						cItem.ExportToVpnListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ExportToVpnListId = types.StringNull()
@@ -538,9 +547,12 @@ func (data *CustomControlTopology) fromBody(ctx context.Context, res gjson.Resul
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *CustomControlTopology) hasChanges(ctx context.Context, state *CustomControlTopology) bool {
+func (data *CustomControlTopologyPolicyDefinition) hasChanges(ctx context.Context, state *CustomControlTopologyPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -707,179 +719,99 @@ func (data *CustomControlTopology) hasChanges(ctx context.Context, state *Custom
 	return hasChanges
 }
 
-func (data *CustomControlTopology) getMatchColorListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "colorList" {
-					return cItem.ColorListVersion
-				}
+func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.Sequences {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
+		stateIndex := -1
+		for j := range state.Sequences {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[j].Id.ValueInt64()), fmt.Sprintf("%v", state.Sequences[j].Name.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
 			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getMatchCommunityListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "community" {
-					return cItem.CommunityListVersion
+		for ii := range data.Sequences[i].MatchEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].MatchEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getMatchExpandedCommunityListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "expandedCommunity" {
-					return cItem.ExpandedCommunityListVersion
-				}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].ColorListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ColorListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].ColorListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ExpandedCommunityListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].SiteListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SiteListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].SiteListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].TlocListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].TlocListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].TlocListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].VpnListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].VpnListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].VpnListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].PrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].PrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].PrefixListVersion = types.Int64Null()
 			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getMatchSiteListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "siteList" {
-					return cItem.SiteListVersion
+		for ii := range data.Sequences[i].ActionEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].ActionEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getMatchTlocListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "tlocList" {
-					return cItem.TlocListVersion
-				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getMatchVpnListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "vpnList" {
-					return cItem.VpnListVersion
-				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getMatchPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "prefixList" {
-					return cItem.PrefixListVersion
-				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getActionExportToVpnListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "exportTo" {
-					return cItem.ExportToVpnListVersion
-				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getActionTlocListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "set" {
-					for _, ccItem := range cItem.SetParameters {
-						if ccItem.Type.ValueString() == "tlocList" {
-							return ccItem.TlocListVersion
-						}
+			for iii := range data.Sequences[i].ActionEntries[ii].SetParameters {
+				ccDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].SetParameters[iii].Type.ValueString())}
+				ccStateIndex := -1
+				for jjj := range state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters {
+					ccStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[jjj].Type.ValueString())}
+					if ccDataKeys == ccStateKeys {
+						ccStateIndex = jjj
+						break
 					}
 				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) getActionServiceTlocListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "set" {
-					for _, ccItem := range cItem.SetParameters {
-						if ccItem.Type.ValueString() == "service" {
-							return ccItem.ServiceTlocListVersion
-						}
-					}
+				if ccStateIndex >= -1 {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].TlocListVersion
+				} else {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = types.Int64Null()
+				}
+				if ccStateIndex >= -1 {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].ServiceTlocListVersion
+				} else {
+					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = types.Int64Null()
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *CustomControlTopology) updateVersions(ctx context.Context, state CustomControlTopology) {
-	for s := range data.Sequences {
-		id := data.Sequences[s].Id.ValueInt64()
-		name := data.Sequences[s].Name.ValueString()
-		for m := range data.Sequences[s].MatchEntries {
-			t := data.Sequences[s].MatchEntries[m].Type.ValueString()
-			if t == "colorList" {
-				data.Sequences[s].MatchEntries[m].ColorListVersion = state.getMatchColorListVersion(ctx, name, id)
-			} else if t == "community" {
-				data.Sequences[s].MatchEntries[m].CommunityListVersion = state.getMatchCommunityListVersion(ctx, name, id)
-			} else if t == "expandedCommunity" {
-				data.Sequences[s].MatchEntries[m].ExpandedCommunityListVersion = state.getMatchExpandedCommunityListVersion(ctx, name, id)
-			} else if t == "siteList" {
-				data.Sequences[s].MatchEntries[m].SiteListVersion = state.getMatchSiteListVersion(ctx, name, id)
-			} else if t == "tlocList" {
-				data.Sequences[s].MatchEntries[m].TlocListVersion = state.getMatchTlocListVersion(ctx, name, id)
-			} else if t == "vpnList" {
-				data.Sequences[s].MatchEntries[m].VpnListVersion = state.getMatchVpnListVersion(ctx, name, id)
-			} else if t == "prefixList" {
-				data.Sequences[s].MatchEntries[m].PrefixListVersion = state.getMatchPrefixListVersion(ctx, name, id)
-			}
-		}
-		for a := range data.Sequences[s].ActionEntries {
-			t := data.Sequences[s].ActionEntries[a].Type.ValueString()
-			if t == "set" {
-				for s := range data.Sequences[s].ActionEntries[a].SetParameters {
-					st := data.Sequences[s].ActionEntries[a].SetParameters[s].Type.ValueString()
-					if st == "tlocList" {
-						data.Sequences[s].ActionEntries[a].SetParameters[s].TlocListVersion = state.getActionTlocListVersion(ctx, name, id)
-					} else if st == "service" && data.Sequences[s].ActionEntries[a].SetParameters[s].ServiceTlocListId.ValueString() != "" {
-						data.Sequences[s].ActionEntries[a].SetParameters[s].ServiceTlocListVersion = state.getActionServiceTlocListVersion(ctx, name, id)
-					}
-				}
-			} else if t == "exportTo" {
-				data.Sequences[s].ActionEntries[a].ExportToVpnListVersion = state.getActionExportToVpnListVersion(ctx, name, id)
+			if cStateIndex >= -1 {
+				data.Sequences[i].ActionEntries[ii].ExportToVpnListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].ExportToVpnListVersion
+			} else {
+				data.Sequences[i].ActionEntries[ii].ExportToVpnListVersion = types.Int64Null()
 			}
 		}
 	}
