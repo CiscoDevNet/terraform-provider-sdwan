@@ -56,33 +56,26 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Metadata(ctx context.Conte
 func (r *HubAndSpokeTopologyPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Hub and Spoke Topology policy definition.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Hub and Spoke Topology Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy defintion type",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
 				Required:            true,
 			},
 			"vpn_list_id": schema.StringAttribute{
@@ -151,7 +144,7 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Configure(_ context.Contex
 }
 
 func (r *HubAndSpokeTopologyPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan HubAndSpokeTopology
+	var plan HubAndSpokeTopologyPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -165,7 +158,7 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Create(ctx context.Context
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/definition/hubandspoke", body)
+	res, err := r.client.Post("/template/policy/definition/hubandspoke/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -173,7 +166,6 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Create(ctx context.Context
 
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
-	plan.Type = types.StringValue(plan.getType())
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -182,15 +174,10 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Create(ctx context.Context
 }
 
 func (r *HubAndSpokeTopologyPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state, oldState HubAndSpokeTopology
+	var state HubAndSpokeTopologyPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	diags = req.State.Get(ctx, &oldState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -208,7 +195,6 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Read(ctx context.Context, 
 	}
 
 	state.fromBody(ctx, res)
-	state.updateVersions(ctx, oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -217,7 +203,7 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Read(ctx context.Context, 
 }
 
 func (r *HubAndSpokeTopologyPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state HubAndSpokeTopology
+	var plan, state HubAndSpokeTopologyPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -250,7 +236,6 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Update(ctx context.Context
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -260,7 +245,7 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Update(ctx context.Context
 }
 
 func (r *HubAndSpokeTopologyPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state HubAndSpokeTopology
+	var state HubAndSpokeTopologyPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

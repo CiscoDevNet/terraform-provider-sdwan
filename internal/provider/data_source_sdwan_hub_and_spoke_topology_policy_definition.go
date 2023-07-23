@@ -50,19 +50,15 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Metadata(_ context.Conte
 func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Hub and Spoke Topology policy definition.",
+		MarkdownDescription: "This data source can read the Hub and Spoke Topology Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
-				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy definition type",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -138,7 +134,7 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Configure(_ context.Cont
 }
 
 func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config HubAndSpokeTopology
+	var config HubAndSpokeTopologyPolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
@@ -156,7 +152,6 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Read(ctx context.Context
 	}
 
 	config.fromBody(ctx, res)
-	config.updateVersions(ctx, config)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

@@ -3,12 +3,12 @@
 page_title: "sdwan_hub_and_spoke_topology_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Centralized Policies"
 description: |-
-  This data source can read the Hub and Spoke Topology policy definition.
+  This data source can read the Hub and Spoke Topology Policy Definition .
 ---
 
 # sdwan_hub_and_spoke_topology_policy_definition (Data Source)
 
-This data source can read the Hub and Spoke Topology policy definition.
+This data source can read the Hub and Spoke Topology Policy Definition .
 
 ## Example Usage
 
@@ -23,15 +23,14 @@ data "sdwan_hub_and_spoke_topology_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `topologies` (Attributes List) List of topologies (see [below for nested schema](#nestedatt--topologies))
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 - `vpn_list_id` (String) VPN list ID
 - `vpn_list_version` (Number) VPN list version
 

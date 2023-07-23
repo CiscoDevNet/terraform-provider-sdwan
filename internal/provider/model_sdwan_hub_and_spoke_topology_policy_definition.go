@@ -21,53 +21,53 @@ package provider
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
-type HubAndSpokeTopology struct {
-	Id             types.String                    `tfsdk:"id"`
-	Version        types.Int64                     `tfsdk:"version"`
-	Type           types.String                    `tfsdk:"type"`
-	Name           types.String                    `tfsdk:"name"`
-	Description    types.String                    `tfsdk:"description"`
-	VpnListId      types.String                    `tfsdk:"vpn_list_id"`
-	VpnListVersion types.Int64                     `tfsdk:"vpn_list_version"`
-	Topologies     []HubAndSpokeTopologyTopologies `tfsdk:"topologies"`
+type HubAndSpokeTopologyPolicyDefinition struct {
+	Id             types.String                                    `tfsdk:"id"`
+	Version        types.Int64                                     `tfsdk:"version"`
+	Name           types.String                                    `tfsdk:"name"`
+	Description    types.String                                    `tfsdk:"description"`
+	VpnListId      types.String                                    `tfsdk:"vpn_list_id"`
+	VpnListVersion types.Int64                                     `tfsdk:"vpn_list_version"`
+	Topologies     []HubAndSpokeTopologyPolicyDefinitionTopologies `tfsdk:"topologies"`
 }
 
-type HubAndSpokeTopologyTopologies struct {
-	Name   types.String                          `tfsdk:"name"`
-	Spokes []HubAndSpokeTopologyTopologiesSpokes `tfsdk:"spokes"`
+type HubAndSpokeTopologyPolicyDefinitionTopologies struct {
+	Name   types.String                                          `tfsdk:"name"`
+	Spokes []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes `tfsdk:"spokes"`
 }
 
-type HubAndSpokeTopologyTopologiesSpokes struct {
-	SiteListId      types.String                              `tfsdk:"site_list_id"`
-	SiteListVersion types.Int64                               `tfsdk:"site_list_version"`
-	Hubs            []HubAndSpokeTopologyTopologiesSpokesHubs `tfsdk:"hubs"`
+type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes struct {
+	SiteListId      types.String                                              `tfsdk:"site_list_id"`
+	SiteListVersion types.Int64                                               `tfsdk:"site_list_version"`
+	Hubs            []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs `tfsdk:"hubs"`
 }
 
-type HubAndSpokeTopologyTopologiesSpokesHubs struct {
+type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs struct {
 	SiteListId      types.String `tfsdk:"site_list_id"`
 	SiteListVersion types.Int64  `tfsdk:"site_list_version"`
 }
 
-func (data HubAndSpokeTopology) getType() string {
-	return "hubAndSpoke"
-}
-
-func (data HubAndSpokeTopology) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "hubAndSpoke")
-	path := "definition."
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if !data.VpnListId.IsNull() {
-		body, _ = sjson.Set(body, path+"vpnList", data.VpnListId.ValueString())
+		body, _ = sjson.Set(body, "definition.vpnList", data.VpnListId.ValueString())
 	}
 	if len(data.Topologies) > 0 {
-		body, _ = sjson.Set(body, path+"subDefinitions", []interface{}{})
+		body, _ = sjson.Set(body, "definition.subDefinitions", []interface{}{})
 		for _, item := range data.Topologies {
 			itemBody := ""
 			if !item.Name.IsNull() {
@@ -93,13 +93,13 @@ func (data HubAndSpokeTopology) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "spokes.-1", itemChildBody)
 				}
 			}
-			body, _ = sjson.SetRaw(body, path+"subDefinitions.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "definition.subDefinitions.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *HubAndSpokeTopology) fromBody(ctx context.Context, res gjson.Result) {
+func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -110,39 +110,33 @@ func (data *HubAndSpokeTopology) fromBody(ctx context.Context, res gjson.Result)
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := "definition."
-	if value := res.Get(path + "vpnList"); value.Exists() {
+	if value := res.Get("definition.vpnList"); value.Exists() {
 		data.VpnListId = types.StringValue(value.String())
 	} else {
 		data.VpnListId = types.StringNull()
 	}
-	if value := res.Get(path + "subDefinitions"); value.Exists() {
-		data.Topologies = make([]HubAndSpokeTopologyTopologies, 0)
+	if value := res.Get("definition.subDefinitions"); value.Exists() {
+		data.Topologies = make([]HubAndSpokeTopologyPolicyDefinitionTopologies, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := HubAndSpokeTopologyTopologies{}
+			item := HubAndSpokeTopologyPolicyDefinitionTopologies{}
 			if cValue := v.Get("name"); cValue.Exists() {
 				item.Name = types.StringValue(cValue.String())
 			} else {
 				item.Name = types.StringNull()
 			}
 			if cValue := v.Get("spokes"); cValue.Exists() {
-				item.Spokes = make([]HubAndSpokeTopologyTopologiesSpokes, 0)
+				item.Spokes = make([]HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := HubAndSpokeTopologyTopologiesSpokes{}
+					cItem := HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes{}
 					if ccValue := cv.Get("siteList"); ccValue.Exists() {
 						cItem.SiteListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.SiteListId = types.StringNull()
 					}
 					if ccValue := cv.Get("hubs"); ccValue.Exists() {
-						cItem.Hubs = make([]HubAndSpokeTopologyTopologiesSpokesHubs, 0)
+						cItem.Hubs = make([]HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := HubAndSpokeTopologyTopologiesSpokesHubs{}
+							ccItem := HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs{}
 							if cccValue := ccv.Get("siteList"); cccValue.Exists() {
 								ccItem.SiteListId = types.StringValue(cccValue.String())
 							} else {
@@ -160,9 +154,12 @@ func (data *HubAndSpokeTopology) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *HubAndSpokeTopology) hasChanges(ctx context.Context, state *HubAndSpokeTopology) bool {
+func (data *HubAndSpokeTopologyPolicyDefinition) hasChanges(ctx context.Context, state *HubAndSpokeTopologyPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -203,46 +200,49 @@ func (data *HubAndSpokeTopology) hasChanges(ctx context.Context, state *HubAndSp
 	return hasChanges
 }
 
-func (data *HubAndSpokeTopology) getSpokeSiteListVersion(ctx context.Context, name, spokeId string) types.Int64 {
-	for _, item := range data.Topologies {
-		if item.Name.ValueString() == name {
-			for _, cItem := range item.Spokes {
-				if cItem.SiteListId.ValueString() == spokeId {
-					return cItem.SiteListVersion
-				}
+func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	data.VpnListVersion = state.VpnListVersion
+	for i := range data.Topologies {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Topologies[i].Name.ValueString())}
+		stateIndex := -1
+		for j := range state.Topologies {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Topologies[j].Name.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
 			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *HubAndSpokeTopology) getHubSiteListVersion(ctx context.Context, name, spokeId, hubId string) types.Int64 {
-	for _, item := range data.Topologies {
-		if item.Name.ValueString() == name {
-			for _, cItem := range item.Spokes {
-				if cItem.SiteListId.ValueString() == spokeId {
-					for _, ccItem := range cItem.Hubs {
-						if ccItem.SiteListId.ValueString() == hubId {
-							return ccItem.SiteListVersion
-						}
+		for ii := range data.Topologies[i].Spokes {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Topologies[i].Spokes[ii].SiteListId.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Topologies[stateIndex].Spokes {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Topologies[stateIndex].Spokes[jj].SiteListId.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
+				}
+			}
+			if cStateIndex >= -1 {
+				data.Topologies[i].Spokes[ii].SiteListVersion = state.Topologies[stateIndex].Spokes[cStateIndex].SiteListVersion
+			} else {
+				data.Topologies[i].Spokes[ii].SiteListVersion = types.Int64Null()
+			}
+			for iii := range data.Topologies[i].Spokes[ii].Hubs {
+				ccDataKeys := [...]string{fmt.Sprintf("%v", data.Topologies[i].Spokes[ii].Hubs[iii].SiteListId.ValueString())}
+				ccStateIndex := -1
+				for jjj := range state.Topologies[stateIndex].Spokes[cStateIndex].Hubs {
+					ccStateKeys := [...]string{fmt.Sprintf("%v", state.Topologies[stateIndex].Spokes[cStateIndex].Hubs[jjj].SiteListId.ValueString())}
+					if ccDataKeys == ccStateKeys {
+						ccStateIndex = jjj
+						break
 					}
 				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *HubAndSpokeTopology) updateVersions(ctx context.Context, state HubAndSpokeTopology) {
-	data.VpnListVersion = state.VpnListVersion
-	for t := range data.Topologies {
-		name := data.Topologies[t].Name.ValueString()
-		for s := range data.Topologies[t].Spokes {
-			spokeId := data.Topologies[t].Spokes[s].SiteListId.ValueString()
-			data.Topologies[t].Spokes[s].SiteListVersion = state.getSpokeSiteListVersion(ctx, name, spokeId)
-			for h := range data.Topologies[t].Spokes[s].Hubs {
-				hubId := data.Topologies[t].Spokes[s].Hubs[h].SiteListId.ValueString()
-				data.Topologies[t].Spokes[s].Hubs[h].SiteListVersion = state.getHubSiteListVersion(ctx, name, spokeId, hubId)
+				if ccStateIndex >= -1 {
+					data.Topologies[i].Spokes[ii].Hubs[iii].SiteListVersion = state.Topologies[stateIndex].Spokes[cStateIndex].Hubs[ccStateIndex].SiteListVersion
+				} else {
+					data.Topologies[i].Spokes[ii].Hubs[iii].SiteListVersion = types.Int64Null()
+				}
 			}
 		}
 	}

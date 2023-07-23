@@ -3,12 +3,12 @@
 page_title: "sdwan_hub_and_spoke_topology_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Centralized Policies"
 description: |-
-  This resource can manage a Hub and Spoke Topology policy definition.
+  This resource can manage a Hub and Spoke Topology Policy Definition .
 ---
 
 # sdwan_hub_and_spoke_topology_policy_definition (Resource)
 
-This resource can manage a Hub and Spoke Topology policy definition.
+This resource can manage a Hub and Spoke Topology Policy Definition .
 
 ## Example Usage
 
@@ -51,9 +51,8 @@ resource "sdwan_hub_and_spoke_topology_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--topologies"></a>
 ### Nested Schema for `topologies`
