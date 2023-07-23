@@ -21,6 +21,7 @@ package provider
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -28,33 +29,32 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type VPNMembership struct {
-	Id          types.String         `tfsdk:"id"`
-	Version     types.Int64          `tfsdk:"version"`
-	Type        types.String         `tfsdk:"type"`
-	Name        types.String         `tfsdk:"name"`
-	Description types.String         `tfsdk:"description"`
-	Sites       []VPNMembershipSites `tfsdk:"sites"`
+type VPNMembershipPolicyDefinition struct {
+	Id          types.String                         `tfsdk:"id"`
+	Version     types.Int64                          `tfsdk:"version"`
+	Name        types.String                         `tfsdk:"name"`
+	Description types.String                         `tfsdk:"description"`
+	Sites       []VPNMembershipPolicyDefinitionSites `tfsdk:"sites"`
 }
 
-type VPNMembershipSites struct {
+type VPNMembershipPolicyDefinitionSites struct {
 	SiteListId      types.String `tfsdk:"site_list_id"`
 	SiteListVersion types.Int64  `tfsdk:"site_list_version"`
 	VpnListIds      types.List   `tfsdk:"vpn_list_ids"`
 	VpnListVersions types.List   `tfsdk:"vpn_list_versions"`
 }
 
-func (data VPNMembership) getType() string {
-	return "vpnMembershipGroup"
-}
-
-func (data VPNMembership) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data VPNMembershipPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "vpnMembershipGroup")
-	path := "definition."
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if len(data.Sites) > 0 {
-		body, _ = sjson.Set(body, path+"sites", []interface{}{})
+		body, _ = sjson.Set(body, "definition.sites", []interface{}{})
 		for _, item := range data.Sites {
 			itemBody := ""
 			if !item.SiteListId.IsNull() {
@@ -65,13 +65,13 @@ func (data VPNMembership) toBody(ctx context.Context) string {
 				item.VpnListIds.ElementsAs(ctx, &values, false)
 				itemBody, _ = sjson.Set(itemBody, "vpnList", values)
 			}
-			body, _ = sjson.SetRaw(body, path+"sites.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "definition.sites.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *VPNMembership) fromBody(ctx context.Context, res gjson.Result) {
+func (data *VPNMembershipPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -82,16 +82,10 @@ func (data *VPNMembership) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := "definition."
-	if value := res.Get(path + "sites"); value.Exists() {
-		data.Sites = make([]VPNMembershipSites, 0)
+	if value := res.Get("definition.sites"); value.Exists() {
+		data.Sites = make([]VPNMembershipPolicyDefinitionSites, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNMembershipSites{}
+			item := VPNMembershipPolicyDefinitionSites{}
 			if cValue := v.Get("siteList"); cValue.Exists() {
 				item.SiteListId = types.StringValue(cValue.String())
 			} else {
@@ -106,9 +100,12 @@ func (data *VPNMembership) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *VPNMembership) hasChanges(ctx context.Context, state *VPNMembership) bool {
+func (data *VPNMembershipPolicyDefinition) hasChanges(ctx context.Context, state *VPNMembershipPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -131,28 +128,27 @@ func (data *VPNMembership) hasChanges(ctx context.Context, state *VPNMembership)
 	return hasChanges
 }
 
-func (data *VPNMembership) getSiteListVersion(ctx context.Context, id string) types.Int64 {
-	for _, item := range data.Sites {
-		if item.SiteListId.ValueString() == id {
-			return item.SiteListVersion
+func (data *VPNMembershipPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.Sites {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Sites[i].SiteListId.ValueString())}
+		stateIndex := -1
+		for j := range state.Sites {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Sites[j].SiteListId.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *VPNMembership) getVpnListVersions(ctx context.Context, id string) types.List {
-	for _, item := range data.Sites {
-		if item.SiteListId.ValueString() == id && !item.VpnListVersions.IsNull() {
-			return item.VpnListVersions
+		if stateIndex >= -1 {
+			data.Sites[i].SiteListVersion = state.Sites[stateIndex].SiteListVersion
+		} else {
+			data.Sites[i].SiteListVersion = types.Int64Null()
 		}
-	}
-	return types.ListNull(types.StringType)
-}
-
-func (data *VPNMembership) updateVersions(ctx context.Context, state VPNMembership) {
-	for s := range data.Sites {
-		id := data.Sites[s].SiteListId.ValueString()
-		data.Sites[s].SiteListVersion = state.getSiteListVersion(ctx, id)
-		data.Sites[s].VpnListVersions = state.getVpnListVersions(ctx, id)
+		if stateIndex >= -1 && !state.Sites[stateIndex].VpnListVersions.IsNull() {
+			data.Sites[i].VpnListVersions = state.Sites[stateIndex].VpnListVersions
+		} else {
+			data.Sites[i].VpnListVersions = types.ListNull(types.StringType)
+		}
 	}
 }

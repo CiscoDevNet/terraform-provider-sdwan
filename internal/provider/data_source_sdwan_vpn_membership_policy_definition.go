@@ -51,19 +51,15 @@ func (d *VPNMembershipPolicyDefinitionDataSource) Metadata(_ context.Context, re
 func (d *VPNMembershipPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the VPN Membership policy definition.",
+		MarkdownDescription: "This data source can read the VPN Membership Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
-				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy definition type",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -113,7 +109,7 @@ func (d *VPNMembershipPolicyDefinitionDataSource) Configure(_ context.Context, r
 }
 
 func (d *VPNMembershipPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config VPNMembership
+	var config VPNMembershipPolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
@@ -131,7 +127,6 @@ func (d *VPNMembershipPolicyDefinitionDataSource) Read(ctx context.Context, req 
 	}
 
 	config.fromBody(ctx, res)
-	config.updateVersions(ctx, config)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

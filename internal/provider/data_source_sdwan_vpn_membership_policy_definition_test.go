@@ -33,6 +33,8 @@ func TestAccDataSourceSdwanVPNMembershipPolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_vpn_membership_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_vpn_membership_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_vpn_membership_policy_definition.test", "sites.0.site_list_id", "e858e1c4-6aa8-4de7-99df-c3adbf80290d"),
 				),
 			},
@@ -43,8 +45,8 @@ func TestAccDataSourceSdwanVPNMembershipPolicyDefinition(t *testing.T) {
 const testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig = `
 
 resource "sdwan_vpn_membership_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   sites = [{
     site_list_id = "e858e1c4-6aa8-4de7-99df-c3adbf80290d"
     vpn_list_ids = ["04fcbb0b-efbf-43d2-a04b-847d3a7b104e"]

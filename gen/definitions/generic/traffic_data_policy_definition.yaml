@@ -3,7 +3,6 @@ name: Traffic Data Policy Definition
 rest_endpoint: /template/policy/definition/data/
 has_version: true
 id_attribute: definitionId
-type: data
 doc_category: Centralized Policies
 attributes:
   - model_name: type

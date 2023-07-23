@@ -70,9 +70,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 			{{- end}}
 			{{- range  .Attributes}}
 			{{- if not .Value}}
-			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "ListString") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
-				{{- if eq .Type "ListString"}}
+				{{- if or (eq .Type "ListString") (eq .Type "Versions")}}
 				ElementType:         types.StringType,
 				{{- end}}
 				Computed:            true,
@@ -81,9 +81,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
 						{{- if not .Value}}
-						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "ListString") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: "{{.Description}}",
-							{{- if eq .Type "ListString"}}
+							{{- if or (eq .Type "ListString") (eq .Type "Versions")}}
 							ElementType:         types.StringType,
 							{{- end}}
 							Computed:            true,
@@ -92,9 +92,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
 									{{- if not .Value}}
-									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}Lis{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "ListString") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: "{{.Description}}",
-										{{- if eq .Type "ListString"}}
+										{{- if or (eq .Type "ListString") (eq .Type "Versions")}}
 										ElementType:         types.StringType,
 										{{- end}}
 										Computed:            true,
@@ -103,9 +103,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
 												{{- if not .Value}}
-												"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "ListString") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: "{{.Description}}",
-													{{- if eq .Type "ListString"}}
+													{{- if or (eq .Type "ListString") (eq .Type "Versions")}}
 													ElementType:         types.StringType,
 													{{- end}}
 													Computed:            true,

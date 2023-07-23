@@ -124,10 +124,6 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters struct {
 	Fallback types.Bool   `tfsdk:"fallback"`
 }
 
-func (data TrafficDataPolicyDefinition) getType() string {
-	return "data"
-}
-
 func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "type", "data")

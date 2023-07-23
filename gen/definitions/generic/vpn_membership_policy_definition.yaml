@@ -1,11 +1,26 @@
 ---
-name: VPN Membership
-type: vpnMembershipGroup
-root_element: definition
+name: VPN Membership Policy Definition
+rest_endpoint: /template/policy/definition/vpnmembershipgroup/
+has_version: true
+id_attribute: definitionId
 doc_category: Centralized Policies
-skip_templates: [model.go, resource.go, data_source.go]
 attributes:
+  - model_name: type
+    value: vpnMembershipGroup
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
   - model_name: sites
+    data_path: [definition]
     tf_name: sites
     type: List
     mandatory: true
@@ -14,11 +29,12 @@ attributes:
       - model_name: siteList
         tf_name: site_list_id
         type: String
+        id: true
         description: Site list ID
         example: e858e1c4-6aa8-4de7-99df-c3adbf80290d
       - tf_name: site_list_version
         tf_only: true
-        type: Int64
+        type: Version
         description: Site list version
         exclude_test: true
       - model_name: vpnList
@@ -28,6 +44,6 @@ attributes:
         example: '["04fcbb0b-efbf-43d2-a04b-847d3a7b104e"]'
       - tf_name: vpn_list_versions
         tf_only: true
-        type: ListString
+        type: Versions
         description: VPN list versions
         exclude_test: true

@@ -3,12 +3,12 @@
 page_title: "sdwan_vpn_membership_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Centralized Policies"
 description: |-
-  This data source can read the VPN Membership policy definition.
+  This data source can read the VPN Membership Policy Definition .
 ---
 
 # sdwan_vpn_membership_policy_definition (Data Source)
 
-This data source can read the VPN Membership policy definition.
+This data source can read the VPN Membership Policy Definition .
 
 ## Example Usage
 
@@ -23,15 +23,14 @@ data "sdwan_vpn_membership_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `sites` (Attributes List) List of sites (see [below for nested schema](#nestedatt--sites))
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sites"></a>
 ### Nested Schema for `sites`

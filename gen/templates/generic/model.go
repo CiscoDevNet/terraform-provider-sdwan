@@ -42,7 +42,7 @@ type {{camelCase .Name}} struct {
 {{- if not .Value}}
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if eq .Type "ListString"}}
+{{- else if or (eq .Type "ListString") (eq .Type "Versions")}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -62,7 +62,7 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- if not .Value}}
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if eq .Type "ListString"}}
+{{- else if or (eq .Type "ListString") (eq .Type "Versions")}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -89,7 +89,7 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- if not .Value}}
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if eq .Type "ListString"}}
+{{- else if or (eq .Type "ListString") (eq .Type "Versions")}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -120,7 +120,7 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if not .Value}}
-{{- if eq .Type "ListString"}}
+{{- if or (eq .Type "ListString") (eq .Type "Versions")}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -139,10 +139,6 @@ type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- end}}
 {{- end}}
 {{ end}}
-
-func (data {{camelCase .Name}}) getType() string {
-	return "{{.Type}}"
-}
 
 func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	body := ""
@@ -553,6 +549,12 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context) {
 		} else {
 			data.{{$name}}[i].{{toGoName .TfName}} = types.Int64Null()
 		}
+		{{- else if eq .Type "Versions"}}
+		if stateIndex >= -1 && !state.{{$name}}[stateIndex].{{toGoName .TfName}}.IsNull() {
+			data.{{$name}}[i].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{toGoName .TfName}}
+		} else {
+			data.{{$name}}[i].{{toGoName .TfName}} = types.ListNull(types.StringType)
+		}
 		{{- else if and (eq .Type "List") (hasVersionAttribute .Attributes)}}
 		for ii := range data.{{$name}}[i].{{toGoName .TfName}} {
 			cDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
@@ -572,6 +574,12 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context) {
 			} else {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.Int64Null()
 			}
+			{{- else if eq .Type "Versions"}}
+			if cStateIndex >= -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}.IsNull() {
+				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}
+			} else {
+				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.ListNull(types.StringType)
+			}
 			{{- else if and (eq .Type "List") (hasVersionAttribute .Attributes)}}
 			for iii := range data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} {
 				ccDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
@@ -589,6 +597,12 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context) {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}
 				} else {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.Int64Null()
+				}
+				{{- else if eq .Type "Versions"}}
+				if ccStateIndex >= -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}.IsNull() {
+					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}
+				} else {
+					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.ListNull(types.StringType)
 				}
 				{{- end}}
 				{{- end}}
