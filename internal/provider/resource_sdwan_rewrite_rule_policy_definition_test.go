@@ -31,35 +31,36 @@ func TestAccSdwanRewriteRulePolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanRewriteRulePolicyDefinitionConfig_all(),
+				Config: testAccSdwanRewriteRulePolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.priority", "low"),
 					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.dscp", "16"),
-					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.layer2cos", "1"),
+					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.layer2_cos", "1"),
 				),
 			},
 		},
 	})
 }
 
-func testAccSdwanRewriteRulePolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_class_map_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			queue = 6
-		}]
-	}
-
-	resource "sdwan_rewrite_rule_policy_definition" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		rules = [{
-			class_map_id = sdwan_class_map_policy_object.test.id
-			priority = "low"
-			dscp = 16
-			layer2cos = 1
-		}]
-	}
-	`
+const testAccSdwanRewriteRulePolicyDefinitionConfig = `
+resource "sdwan_class_map_policy_object" "test" {
+  name = "TF_TEST_ALL"
+  entries = [{
+    queue = 6
+  }]
 }
+
+
+resource "sdwan_rewrite_rule_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	rules = [{
+		class_map_id = sdwan_class_map_policy_object.test.id
+		priority = "low"
+		dscp = 16
+		layer2_cos = 1
+	}]
+}
+`

@@ -3,12 +3,12 @@
 page_title: "sdwan_rewrite_rule_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This resource can manage a Rewrite Rule policy definition.
+  This resource can manage a Rewrite Rule Policy Definition .
 ---
 
 # sdwan_rewrite_rule_policy_definition (Resource)
 
-This resource can manage a Rewrite Rule policy definition.
+This resource can manage a Rewrite Rule Policy Definition .
 
 ## Example Usage
 
@@ -21,7 +21,7 @@ resource "sdwan_rewrite_rule_policy_definition" "example" {
       class_map_id = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
       priority     = "low"
       dscp         = 16
-      layer2cos    = 1
+      layer2_cos   = 1
     }
   ]
 }
@@ -38,9 +38,8 @@ resource "sdwan_rewrite_rule_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--rules"></a>
 ### Nested Schema for `rules`
@@ -56,7 +55,7 @@ Required:
 Optional:
 
 - `class_map_version` (Number) Class map version
-- `layer2cos` (Number) Layer2 CoS
+- `layer2_cos` (Number) Layer2 CoS
   - Range: `0`-`7`
 
 ## Import

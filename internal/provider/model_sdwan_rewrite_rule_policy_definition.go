@@ -28,34 +28,33 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type RewriteRule struct {
-	Id          types.String       `tfsdk:"id"`
-	Version     types.Int64        `tfsdk:"version"`
-	Type        types.String       `tfsdk:"type"`
-	Name        types.String       `tfsdk:"name"`
-	Description types.String       `tfsdk:"description"`
-	Rules       []RewriteRuleRules `tfsdk:"rules"`
+type RewriteRulePolicyDefinition struct {
+	Id          types.String                       `tfsdk:"id"`
+	Version     types.Int64                        `tfsdk:"version"`
+	Name        types.String                       `tfsdk:"name"`
+	Description types.String                       `tfsdk:"description"`
+	Rules       []RewriteRulePolicyDefinitionRules `tfsdk:"rules"`
 }
 
-type RewriteRuleRules struct {
+type RewriteRulePolicyDefinitionRules struct {
 	ClassMapId      types.String `tfsdk:"class_map_id"`
 	ClassMapVersion types.Int64  `tfsdk:"class_map_version"`
 	Priority        types.String `tfsdk:"priority"`
 	Dscp            types.Int64  `tfsdk:"dscp"`
-	Layer2cos       types.Int64  `tfsdk:"layer2cos"`
+	Layer2Cos       types.Int64  `tfsdk:"layer2_cos"`
 }
 
-func (data RewriteRule) getType() string {
-	return "rewriteRule"
-}
-
-func (data RewriteRule) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data RewriteRulePolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "rewriteRule")
-	path := "definition."
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if len(data.Rules) > 0 {
-		body, _ = sjson.Set(body, path+"rules", []interface{}{})
+		body, _ = sjson.Set(body, "definition.rules", []interface{}{})
 		for _, item := range data.Rules {
 			itemBody := ""
 			if !item.ClassMapId.IsNull() {
@@ -67,16 +66,16 @@ func (data RewriteRule) toBody(ctx context.Context) string {
 			if !item.Dscp.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "dscp", fmt.Sprint(item.Dscp.ValueInt64()))
 			}
-			if !item.Layer2cos.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "layer2Cos", fmt.Sprint(item.Layer2cos.ValueInt64()))
+			if !item.Layer2Cos.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "layer2Cos", fmt.Sprint(item.Layer2Cos.ValueInt64()))
 			}
-			body, _ = sjson.SetRaw(body, path+"rules.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "definition.rules.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *RewriteRule) fromBody(ctx context.Context, res gjson.Result) {
+func (data *RewriteRulePolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -87,16 +86,10 @@ func (data *RewriteRule) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := "definition."
-	if value := res.Get(path + "rules"); value.Exists() {
-		data.Rules = make([]RewriteRuleRules, 0)
+	if value := res.Get("definition.rules"); value.Exists() {
+		data.Rules = make([]RewriteRulePolicyDefinitionRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := RewriteRuleRules{}
+			item := RewriteRulePolicyDefinitionRules{}
 			if cValue := v.Get("class"); cValue.Exists() {
 				item.ClassMapId = types.StringValue(cValue.String())
 			} else {
@@ -113,17 +106,20 @@ func (data *RewriteRule) fromBody(ctx context.Context, res gjson.Result) {
 				item.Dscp = types.Int64Null()
 			}
 			if cValue := v.Get("layer2Cos"); cValue.Exists() {
-				item.Layer2cos = types.Int64Value(cValue.Int())
+				item.Layer2Cos = types.Int64Value(cValue.Int())
 			} else {
-				item.Layer2cos = types.Int64Null()
+				item.Layer2Cos = types.Int64Null()
 			}
 			data.Rules = append(data.Rules, item)
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *RewriteRule) hasChanges(ctx context.Context, state *RewriteRule) bool {
+func (data *RewriteRulePolicyDefinition) hasChanges(ctx context.Context, state *RewriteRulePolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -144,7 +140,7 @@ func (data *RewriteRule) hasChanges(ctx context.Context, state *RewriteRule) boo
 			if !data.Rules[i].Dscp.Equal(state.Rules[i].Dscp) {
 				hasChanges = true
 			}
-			if !data.Rules[i].Layer2cos.Equal(state.Rules[i].Layer2cos) {
+			if !data.Rules[i].Layer2Cos.Equal(state.Rules[i].Layer2Cos) {
 				hasChanges = true
 			}
 		}
@@ -152,18 +148,22 @@ func (data *RewriteRule) hasChanges(ctx context.Context, state *RewriteRule) boo
 	return hasChanges
 }
 
-func (data *RewriteRule) getClassMapVersion(ctx context.Context, id string) types.Int64 {
-	for _, item := range data.Rules {
-		if item.ClassMapId.ValueString() == id {
-			return item.ClassMapVersion
+func (data *RewriteRulePolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.Rules {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Rules[i].ClassMapId.ValueString())}
+		stateIndex := -1
+		for j := range state.Rules {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Rules[j].ClassMapId.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *RewriteRule) updateVersions(ctx context.Context, state RewriteRule) {
-	for r := range data.Rules {
-		id := data.Rules[r].ClassMapId.ValueString()
-		data.Rules[r].ClassMapVersion = state.getClassMapVersion(ctx, id)
+		if stateIndex >= -1 {
+			data.Rules[i].ClassMapVersion = state.Rules[stateIndex].ClassMapVersion
+		} else {
+			data.Rules[i].ClassMapVersion = types.Int64Null()
+		}
 	}
 }

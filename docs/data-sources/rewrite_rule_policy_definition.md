@@ -3,12 +3,12 @@
 page_title: "sdwan_rewrite_rule_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This data source can read the Rewrite Rule policy definition.
+  This data source can read the Rewrite Rule Policy Definition .
 ---
 
 # sdwan_rewrite_rule_policy_definition (Data Source)
 
-This data source can read the Rewrite Rule policy definition.
+This data source can read the Rewrite Rule Policy Definition .
 
 ## Example Usage
 
@@ -23,15 +23,14 @@ data "sdwan_rewrite_rule_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `rules` (Attributes List) List of rules (see [below for nested schema](#nestedatt--rules))
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 
 <a id="nestedatt--rules"></a>
 ### Nested Schema for `rules`
@@ -41,5 +40,5 @@ Read-Only:
 - `class_map_id` (String) Class map ID
 - `class_map_version` (Number) Class map version
 - `dscp` (Number) DSCP
-- `layer2cos` (Number) Layer2 CoS
+- `layer2_cos` (Number) Layer2 CoS
 - `priority` (String) Priority

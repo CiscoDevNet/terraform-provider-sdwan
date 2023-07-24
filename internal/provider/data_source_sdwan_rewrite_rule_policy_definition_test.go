@@ -33,9 +33,11 @@ func TestAccDataSourceSdwanRewriteRulePolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanRewriteRulePolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_rewrite_rule_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_rewrite_rule_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_rewrite_rule_policy_definition.test", "rules.0.priority", "low"),
 					resource.TestCheckResourceAttr("data.sdwan_rewrite_rule_policy_definition.test", "rules.0.dscp", "16"),
-					resource.TestCheckResourceAttr("data.sdwan_rewrite_rule_policy_definition.test", "rules.0.layer2cos", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_rewrite_rule_policy_definition.test", "rules.0.layer2_cos", "1"),
 				),
 			},
 		},
@@ -43,22 +45,22 @@ func TestAccDataSourceSdwanRewriteRulePolicyDefinition(t *testing.T) {
 }
 
 const testAccDataSourceSdwanRewriteRulePolicyDefinitionConfig = `
-
 resource "sdwan_class_map_policy_object" "test" {
-	name = "TF_TEST_ALL"
-	entries = [{
-		queue = 6
-	}]
+  name = "TF_TEST_ALL"
+  entries = [{
+    queue = 6
+  }]
 }
 
+
 resource "sdwan_rewrite_rule_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   rules = [{
     class_map_id = sdwan_class_map_policy_object.test.id
     priority = "low"
     dscp = 16
-    layer2cos = 1
+    layer2_cos = 1
   }]
 }
 

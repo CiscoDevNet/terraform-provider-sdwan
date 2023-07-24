@@ -1,11 +1,26 @@
 ---
-name: Rewrite Rule
-type: rewriteRule
-root_element: definition
+name: Rewrite Rule Policy Definition
+rest_endpoint: /template/policy/definition/rewriterule/
+has_version: true
+id_attribute: definitionId
 doc_category: Localized Policies
-skip_templates: [data_source_test.go, resource_test.go, model.go, resource.go]
 attributes:
+  - model_name: type
+    value: rewriteRule
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
   - model_name: rules
+    data_path: [definition]
     type: List
     mandatory: true
     description: List of rules
@@ -13,12 +28,14 @@ attributes:
       - model_name: class
         tf_name: class_map_id
         type: String
+        id: true
         mandatory: true
         description: Class map ID
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        test_value: sdwan_class_map_policy_object.test.id
       - tf_name: class_map_version
         tf_only: true
-        type: Int64
+        type: Version
         description: Class map version
       - model_name: plp
         tf_name: priority
@@ -36,9 +53,18 @@ attributes:
         max_int: 63
         example: 16
       - model_name: layer2Cos
+        tf_name: layer2_cos
         type: Int64
         model_type_string: true
         description: Layer2 CoS
         min_int: 0
         max_int: 7
         example: 1
+
+test_prerequisites: |
+  resource "sdwan_class_map_policy_object" "test" {
+    name = "TF_TEST_ALL"
+    entries = [{
+      queue = 6
+    }]
+  }

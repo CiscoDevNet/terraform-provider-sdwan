@@ -50,19 +50,15 @@ func (d *RewriteRulePolicyDefinitionDataSource) Metadata(_ context.Context, req 
 func (d *RewriteRulePolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Rewrite Rule policy definition.",
+		MarkdownDescription: "This data source can read the Rewrite Rule Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
-				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy definition type",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -94,7 +90,7 @@ func (d *RewriteRulePolicyDefinitionDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "DSCP",
 							Computed:            true,
 						},
-						"layer2cos": schema.Int64Attribute{
+						"layer2_cos": schema.Int64Attribute{
 							MarkdownDescription: "Layer2 CoS",
 							Computed:            true,
 						},
@@ -114,7 +110,7 @@ func (d *RewriteRulePolicyDefinitionDataSource) Configure(_ context.Context, req
 }
 
 func (d *RewriteRulePolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config RewriteRule
+	var config RewriteRulePolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
