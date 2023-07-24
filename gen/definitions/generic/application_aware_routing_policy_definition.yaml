@@ -277,7 +277,7 @@ attributes:
             type: Bool
             bool_empty_value: true
             description: Enable logging
-            example: ""
+            example: true
             exclude_test: true
           - model_name: parameter
             tf_name: cloud_sla
@@ -287,7 +287,7 @@ attributes:
             type: Bool
             bool_empty_string: true
             description: Cloud SLA
-            example: ""
+            example: true
             exclude_test: true
           - model_name: parameter
             tf_name: sla_class_parameters

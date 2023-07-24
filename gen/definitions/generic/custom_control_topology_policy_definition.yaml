@@ -380,7 +380,7 @@ attributes:
                     communityAdditive,
                     service,
                   ]
-                description: Type of action entry
+                description: Type of set parameter
                 example: preference
               - model_name: ref
                 tf_name: tloc_list_id

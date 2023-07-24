@@ -286,7 +286,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"type": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("tlocList", "tloc", "tlocAction", "preference", "ompTag", "community", "communityAdditive", "service").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Type of set parameter").AddStringEnumDescription("tlocList", "tloc", "tlocAction", "preference", "ompTag", "community", "communityAdditive", "service").String,
 													Required:            true,
 													Validators: []validator.String{
 														stringvalidator.OneOf("tlocList", "tloc", "tlocAction", "preference", "ompTag", "community", "communityAdditive", "service"),

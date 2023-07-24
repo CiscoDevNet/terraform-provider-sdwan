@@ -77,7 +77,7 @@ Read-Only:
 - `tloc_ip` (String) TLOC IP address
 - `tloc_list_id` (String) TLOC list ID
 - `tloc_list_version` (Number) TLOC list version
-- `type` (String) Type of action entry
+- `type` (String) Type of set parameter
 
 
 

@@ -229,7 +229,7 @@ func (d *CustomControlTopologyPolicyDefinitionDataSource) Schema(ctx context.Con
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"type": schema.StringAttribute{
-													MarkdownDescription: "Type of action entry",
+													MarkdownDescription: "Type of set parameter",
 													Computed:            true,
 												},
 												"tloc_list_id": schema.StringAttribute{

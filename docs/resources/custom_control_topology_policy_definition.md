@@ -100,7 +100,7 @@ Optional:
 
 Required:
 
-- `type` (String) Type of action entry
+- `type` (String) Type of set parameter
   - Choices: `tlocList`, `tloc`, `tlocAction`, `preference`, `ompTag`, `community`, `communityAdditive`, `service`
 
 Optional:
