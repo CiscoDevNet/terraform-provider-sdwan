@@ -22,11 +22,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -58,41 +58,29 @@ func (r *ClassMapPolicyObjectResource) Metadata(ctx context.Context, req resourc
 func (r *ClassMapPolicyObjectResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Class Map policy object.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Class Map Policy Object .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the feature template",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy object",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy object").String,
 				Required:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of entries, only 1 entry supported").String,
+			"queue": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Queue").AddIntegerRangeDescription(0, 7).String,
 				Required:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"queue": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Queue").AddIntegerRangeDescription(0, 7).String,
-							Required:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(0, 7),
-							},
-						},
-					},
-				},
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
-					listvalidator.SizeAtMost(1),
+				Validators: []validator.Int64{
+					int64validator.Between(0, 7),
 				},
 			},
 		},
@@ -109,7 +97,7 @@ func (r *ClassMapPolicyObjectResource) Configure(_ context.Context, req resource
 }
 
 func (r *ClassMapPolicyObjectResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ClassMap
+	var plan ClassMapPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -123,7 +111,7 @@ func (r *ClassMapPolicyObjectResource) Create(ctx context.Context, req resource.
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/list/class", body)
+	res, err := r.client.Post("/template/policy/list/class/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -139,7 +127,7 @@ func (r *ClassMapPolicyObjectResource) Create(ctx context.Context, req resource.
 }
 
 func (r *ClassMapPolicyObjectResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state ClassMap
+	var state ClassMapPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -168,7 +156,7 @@ func (r *ClassMapPolicyObjectResource) Read(ctx context.Context, req resource.Re
 }
 
 func (r *ClassMapPolicyObjectResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ClassMap
+	var plan, state ClassMapPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -185,19 +173,22 @@ func (r *ClassMapPolicyObjectResource) Update(ctx context.Context, req resource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
-	r.updateMutex.Lock()
-	res, err := r.client.Put("/template/policy/list/class/"+plan.Id.ValueString(), body)
-	r.updateMutex.Unlock()
-	if err != nil {
-		if res.Get("error.message").String() == "Failed to acquire lock, template or policy locked in edit mode." {
-			resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
-		} else {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-			return
+	if plan.hasChanges(ctx, &state) {
+		body := plan.toBody(ctx)
+		r.updateMutex.Lock()
+		res, err := r.client.Put("/template/policy/list/class/"+plan.Id.ValueString(), body)
+		r.updateMutex.Unlock()
+		if err != nil {
+			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
+				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
+			} else {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -207,7 +198,7 @@ func (r *ClassMapPolicyObjectResource) Update(ctx context.Context, req resource.
 }
 
 func (r *ClassMapPolicyObjectResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ClassMap
+	var state ClassMapPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

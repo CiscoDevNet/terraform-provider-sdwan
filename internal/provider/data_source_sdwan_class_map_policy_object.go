@@ -50,32 +50,24 @@ func (d *ClassMapPolicyObjectDataSource) Metadata(_ context.Context, req datasou
 func (d *ClassMapPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Class Map policy object.",
+		MarkdownDescription: "This data source can read the Class Map Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy object",
 				Computed:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: "List of entries, only 1 entry supported",
+			"queue": schema.Int64Attribute{
+				MarkdownDescription: "Queue",
 				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"queue": schema.Int64Attribute{
-							MarkdownDescription: "Queue",
-							Computed:            true,
-						},
-					},
-				},
 			},
 		},
 	}
@@ -90,7 +82,7 @@ func (d *ClassMapPolicyObjectDataSource) Configure(_ context.Context, req dataso
 }
 
 func (d *ClassMapPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ClassMap
+	var config ClassMapPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

@@ -33,7 +33,8 @@ func TestAccDataSourceSdwanClassMapPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanClassMapPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_class_map_policy_object.test", "entries.0.queue", "2"),
+					resource.TestCheckResourceAttr("data.sdwan_class_map_policy_object.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_class_map_policy_object.test", "queue", "2"),
 				),
 			},
 		},
@@ -42,11 +43,10 @@ func TestAccDataSourceSdwanClassMapPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanClassMapPolicyObjectConfig = `
 
+
 resource "sdwan_class_map_policy_object" "test" {
-  name = "TF_TEST_MIN"
-  entries = [{
-    queue = 2
-  }]
+  name = "Example"
+  queue = 2
 }
 
 data "sdwan_class_map_policy_object" "test" {

@@ -3,12 +3,12 @@
 page_title: "sdwan_class_map_policy_object Data Source - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This data source can read the Class Map policy object.
+  This data source can read the Class Map Policy Object .
 ---
 
 # sdwan_class_map_policy_object (Data Source)
 
-This data source can read the Class Map policy object.
+This data source can read the Class Map Policy Object .
 
 ## Example Usage
 
@@ -23,17 +23,10 @@ data "sdwan_class_map_policy_object" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy object
+- `id` (String) The id of the object
 
 ### Read-Only
 
-- `entries` (Attributes List) List of entries, only 1 entry supported (see [below for nested schema](#nestedatt--entries))
 - `name` (String) The name of the policy object
-- `version` (Number) The version of the policy object
-
-<a id="nestedatt--entries"></a>
-### Nested Schema for `entries`
-
-Read-Only:
-
 - `queue` (Number) Queue
+- `version` (Number) The version of the object

@@ -1,0 +1,24 @@
+---
+name: Class Map Policy Object
+rest_endpoint: /template/policy/list/class/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    value: class
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: queue
+    data_path: [entries.0]
+    type: Int64
+    mandatory: true
+    model_type_string: true
+    description: Queue
+    min_int: 0
+    max_int: 7
+    example: 2

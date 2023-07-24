@@ -28,55 +28,46 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ClassMap struct {
-	Id      types.String      `tfsdk:"id"`
-	Version types.Int64       `tfsdk:"version"`
-	Name    types.String      `tfsdk:"name"`
-	Entries []ClassMapEntries `tfsdk:"entries"`
+type ClassMapPolicyObject struct {
+	Id      types.String `tfsdk:"id"`
+	Version types.Int64  `tfsdk:"version"`
+	Name    types.String `tfsdk:"name"`
+	Queue   types.Int64  `tfsdk:"queue"`
 }
 
-type ClassMapEntries struct {
-	Queue types.Int64 `tfsdk:"queue"`
-}
-
-func (data ClassMap) getType() string {
-	return "class"
-}
-
-func (data ClassMap) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data ClassMapPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "class")
-	if len(data.Entries) > 0 {
-		body, _ = sjson.Set(body, "entries", []interface{}{})
-		for _, item := range data.Entries {
-			itemBody := ""
-			if !item.Queue.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "queue", fmt.Sprint(item.Queue.ValueInt64()))
-			}
-			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
-		}
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Queue.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.queue", fmt.Sprint(data.Queue.ValueInt64()))
 	}
 	return body
 }
 
-func (data *ClassMap) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ClassMapPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]ClassMapEntries, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := ClassMapEntries{}
-			if cValue := v.Get("queue"); cValue.Exists() {
-				item.Queue = types.Int64Value(cValue.Int())
-			} else {
-				item.Queue = types.Int64Null()
-			}
-			data.Entries = append(data.Entries, item)
-			return true
-		})
+	if value := res.Get("entries.0.queue"); value.Exists() {
+		data.Queue = types.Int64Value(value.Int())
+	} else {
+		data.Queue = types.Int64Null()
 	}
+
+}
+
+func (data *ClassMapPolicyObject) hasChanges(ctx context.Context, state *ClassMapPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if !data.Queue.Equal(state.Queue) {
+		hasChanges = true
+	}
+	return hasChanges
 }

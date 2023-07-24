@@ -3,23 +3,19 @@
 page_title: "sdwan_class_map_policy_object Resource - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This resource can manage a Class Map policy object.
+  This resource can manage a Class Map Policy Object .
 ---
 
 # sdwan_class_map_policy_object (Resource)
 
-This resource can manage a Class Map policy object.
+This resource can manage a Class Map Policy Object .
 
 ## Example Usage
 
 ```terraform
 resource "sdwan_class_map_policy_object" "example" {
-  name = "Example"
-  entries = [
-    {
-      queue = 2
-    }
-  ]
+  name  = "Example"
+  queue = 2
 }
 ```
 
@@ -28,21 +24,14 @@ resource "sdwan_class_map_policy_object" "example" {
 
 ### Required
 
-- `entries` (Attributes List) List of entries, only 1 entry supported (see [below for nested schema](#nestedatt--entries))
 - `name` (String) The name of the policy object
+- `queue` (Number) Queue
+  - Range: `0`-`7`
 
 ### Read-Only
 
-- `id` (String) The id of the policy object
-- `version` (Number) The version of the feature template
-
-<a id="nestedatt--entries"></a>
-### Nested Schema for `entries`
-
-Required:
-
-- `queue` (Number) Queue
-  - Range: `0`-`7`
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 
