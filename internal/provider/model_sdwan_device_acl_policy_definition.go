@@ -28,26 +28,25 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type DeviceACL struct {
-	Id            types.String         `tfsdk:"id"`
-	Version       types.Int64          `tfsdk:"version"`
-	Type          types.String         `tfsdk:"type"`
-	Name          types.String         `tfsdk:"name"`
-	Description   types.String         `tfsdk:"description"`
-	DefaultAction types.String         `tfsdk:"default_action"`
-	Sequences     []DeviceACLSequences `tfsdk:"sequences"`
+type DeviceACLPolicyDefinition struct {
+	Id            types.String                         `tfsdk:"id"`
+	Version       types.Int64                          `tfsdk:"version"`
+	Name          types.String                         `tfsdk:"name"`
+	Description   types.String                         `tfsdk:"description"`
+	DefaultAction types.String                         `tfsdk:"default_action"`
+	Sequences     []DeviceACLPolicyDefinitionSequences `tfsdk:"sequences"`
 }
 
-type DeviceACLSequences struct {
-	Id            types.Int64                       `tfsdk:"id"`
-	IpType        types.String                      `tfsdk:"ip_type"`
-	Name          types.String                      `tfsdk:"name"`
-	BaseAction    types.String                      `tfsdk:"base_action"`
-	MatchEntries  []DeviceACLSequencesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []DeviceACLSequencesActionEntries `tfsdk:"action_entries"`
+type DeviceACLPolicyDefinitionSequences struct {
+	Id            types.Int64                                       `tfsdk:"id"`
+	IpType        types.String                                      `tfsdk:"ip_type"`
+	Name          types.String                                      `tfsdk:"name"`
+	BaseAction    types.String                                      `tfsdk:"base_action"`
+	MatchEntries  []DeviceACLPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []DeviceACLPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
 
-type DeviceACLSequencesMatchEntries struct {
+type DeviceACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                             types.String `tfsdk:"type"`
 	SourceIp                         types.String `tfsdk:"source_ip"`
 	DestinationIp                    types.String `tfsdk:"destination_ip"`
@@ -58,25 +57,25 @@ type DeviceACLSequencesMatchEntries struct {
 	DestinationDataPrefixListId      types.String `tfsdk:"destination_data_prefix_list_id"`
 	DestinationDataPrefixListVersion types.Int64  `tfsdk:"destination_data_prefix_list_version"`
 }
-type DeviceACLSequencesActionEntries struct {
+type DeviceACLPolicyDefinitionSequencesActionEntries struct {
 	Type        types.String `tfsdk:"type"`
 	CounterName types.String `tfsdk:"counter_name"`
 }
 
-func (data DeviceACL) getType() string {
-	return "deviceAccessPolicy"
-}
-
-func (data DeviceACL) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "deviceAccessPolicy")
-	path := ""
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if !data.DefaultAction.IsNull() {
-		body, _ = sjson.Set(body, path+"defaultAction.type", data.DefaultAction.ValueString())
+		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
 	if len(data.Sequences) > 0 {
-		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.Id.IsNull() {
@@ -99,22 +98,22 @@ func (data DeviceACL) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
-					if !childItem.SourceIp.IsNull() {
+					if !childItem.SourceIp.IsNull() && childItem.Type.ValueString() == "sourceIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
 					}
-					if !childItem.DestinationIp.IsNull() {
+					if !childItem.DestinationIp.IsNull() && childItem.Type.ValueString() == "destinationIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
 					}
-					if !childItem.SourcePort.IsNull() {
+					if !childItem.SourcePort.IsNull() && childItem.Type.ValueString() == "sourcePort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SourcePort.ValueInt64()))
 					}
-					if !childItem.DestinationPort.IsNull() {
+					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
 					}
-					if !childItem.SourceDataPrefixListId.IsNull() {
+					if !childItem.SourceDataPrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataPrefixListId.ValueString())
 					}
-					if !childItem.DestinationDataPrefixListId.IsNull() {
+					if !childItem.DestinationDataPrefixListId.IsNull() && childItem.Type.ValueString() == "destinationDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DestinationDataPrefixListId.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
@@ -127,19 +126,19 @@ func (data DeviceACL) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "type", childItem.Type.ValueString())
 					}
-					if !childItem.CounterName.IsNull() {
+					if !childItem.CounterName.IsNull() && childItem.Type.ValueString() == "count" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.CounterName.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 				}
 			}
-			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *DeviceACL) fromBody(ctx context.Context, res gjson.Result) {
+func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -150,21 +149,15 @@ func (data *DeviceACL) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := ""
-	if value := res.Get(path + "defaultAction.type"); value.Exists() {
+	if value := res.Get("defaultAction.type"); value.Exists() {
 		data.DefaultAction = types.StringValue(value.String())
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
-		data.Sequences = make([]DeviceACLSequences, 0)
+	if value := res.Get("sequences"); value.Exists() {
+		data.Sequences = make([]DeviceACLPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := DeviceACLSequences{}
+			item := DeviceACLPolicyDefinitionSequences{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.Id = types.Int64Value(cValue.Int())
 			} else {
@@ -186,40 +179,40 @@ func (data *DeviceACL) fromBody(ctx context.Context, res gjson.Result) {
 				item.BaseAction = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() {
-				item.MatchEntries = make([]DeviceACLSequencesMatchEntries, 0)
+				item.MatchEntries = make([]DeviceACLPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := DeviceACLSequencesMatchEntries{}
+					cItem := DeviceACLPolicyDefinitionSequencesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "sourceIp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourceIp" {
 						cItem.SourceIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceIp = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "destinationIp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationIp" {
 						cItem.DestinationIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationIp = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "sourcePort" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
 						cItem.SourcePort = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.SourcePort = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "destinationPort" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationPort" {
 						cItem.DestinationPort = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.DestinationPort = types.Int64Null()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "sourceDataPrefixList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "sourceDataPrefixList" {
 						cItem.SourceDataPrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceDataPrefixListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "destinationDataPrefixList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "destinationDataPrefixList" {
 						cItem.DestinationDataPrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationDataPrefixListId = types.StringNull()
@@ -229,15 +222,15 @@ func (data *DeviceACL) fromBody(ctx context.Context, res gjson.Result) {
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() {
-				item.ActionEntries = make([]DeviceACLSequencesActionEntries, 0)
+				item.ActionEntries = make([]DeviceACLPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := DeviceACLSequencesActionEntries{}
+					cItem := DeviceACLPolicyDefinitionSequencesActionEntries{}
 					if ccValue := cv.Get("type"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "count" {
 						cItem.CounterName = types.StringValue(ccValue.String())
 					} else {
 						cItem.CounterName = types.StringNull()
@@ -250,9 +243,12 @@ func (data *DeviceACL) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *DeviceACL) hasChanges(ctx context.Context, state *DeviceACL) bool {
+func (data *DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state *DeviceACLPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -323,42 +319,37 @@ func (data *DeviceACL) hasChanges(ctx context.Context, state *DeviceACL) bool {
 	return hasChanges
 }
 
-func (data *DeviceACL) getMatchSourceDataPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "sourceDataPrefixList" {
-					return cItem.SourceDataPrefixListVersion
-				}
+func (data *DeviceACLPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.Sequences {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
+		stateIndex := -1
+		for j := range state.Sequences {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[j].Id.ValueInt64()), fmt.Sprintf("%v", state.Sequences[j].Name.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
 			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *DeviceACL) getMatchDestinationDataPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "destinationDataPrefixList" {
-					return cItem.DestinationDataPrefixListVersion
+		for ii := range data.Sequences[i].MatchEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].MatchEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *DeviceACL) updateVersions(ctx context.Context, state DeviceACL) {
-	for s := range data.Sequences {
-		id := data.Sequences[s].Id.ValueInt64()
-		name := data.Sequences[s].Name.ValueString()
-		for m := range data.Sequences[s].MatchEntries {
-			t := data.Sequences[s].MatchEntries[m].Type.ValueString()
-			if t == "sourceDataPrefixList" {
-				data.Sequences[s].MatchEntries[m].SourceDataPrefixListVersion = state.getMatchSourceDataPrefixListVersion(ctx, name, id)
-			} else if t == "destinationDataPrefixList" {
-				data.Sequences[s].MatchEntries[m].DestinationDataPrefixListVersion = state.getMatchDestinationDataPrefixListVersion(ctx, name, id)
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()
 			}
 		}
 	}

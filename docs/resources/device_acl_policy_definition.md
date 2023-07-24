@@ -3,12 +3,12 @@
 page_title: "sdwan_device_acl_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This resource can manage a Device ACL policy definition.
+  This resource can manage a Device ACL Policy Definition .
 ---
 
 # sdwan_device_acl_policy_definition (Resource)
 
-This resource can manage a Device ACL policy definition.
+This resource can manage a Device ACL Policy Definition .
 
 ## Example Usage
 
@@ -56,9 +56,8 @@ resource "sdwan_device_acl_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`
@@ -67,6 +66,7 @@ Required:
 
 - `id` (Number) Sequence ID
   - Range: `1`-`65534`
+- `name` (String) Sequence name
 
 Optional:
 
@@ -76,7 +76,6 @@ Optional:
 - `ip_type` (String) IP version, either `ipv4` or `ipv6`
   - Choices: `ipv4`, `ipv6`
 - `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
-- `name` (String) Sequence name
 
 <a id="nestedatt--sequences--action_entries"></a>
 ### Nested Schema for `sequences.action_entries`
@@ -104,7 +103,7 @@ Optional:
 - `destination_data_prefix_list_id` (String) Destination data prefix list ID
 - `destination_data_prefix_list_version` (Number) Destination data prefix list version
 - `destination_ip` (String) Destination IP prefix
-- `destination_port` (Number) Destination port
+- `destination_port` (Number) Destination port, only `22` and `161` supported
   - Range: `0`-`65535`
 - `source_data_prefix_list_id` (String) Source data prefix list ID
 - `source_data_prefix_list_version` (Number) Source data prefix list version

@@ -59,33 +59,26 @@ func (r *DeviceACLPolicyDefinitionResource) Metadata(ctx context.Context, req re
 func (r *DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Device ACL policy definition.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Device ACL Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy defintion type",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
 				Required:            true,
 			},
 			"default_action": schema.StringAttribute{
@@ -116,7 +109,7 @@ func (r *DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req reso
 						},
 						"name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Sequence name").String,
-							Optional:            true,
+							Required:            true,
 						},
 						"base_action": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Base action, either `accept` or `drop`").AddStringEnumDescription("accept", "drop").String,
@@ -153,7 +146,7 @@ func (r *DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req reso
 										},
 									},
 									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination port").AddIntegerRangeDescription(0, 65535).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Destination port, only `22` and `161` supported").AddIntegerRangeDescription(0, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(0, 65535),
@@ -214,7 +207,7 @@ func (r *DeviceACLPolicyDefinitionResource) Configure(_ context.Context, req res
 }
 
 func (r *DeviceACLPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan DeviceACL
+	var plan DeviceACLPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -228,7 +221,7 @@ func (r *DeviceACLPolicyDefinitionResource) Create(ctx context.Context, req reso
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/definition/deviceaccesspolicy", body)
+	res, err := r.client.Post("/template/policy/definition/deviceaccesspolicy/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -236,7 +229,6 @@ func (r *DeviceACLPolicyDefinitionResource) Create(ctx context.Context, req reso
 
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
-	plan.Type = types.StringValue(plan.getType())
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -245,15 +237,10 @@ func (r *DeviceACLPolicyDefinitionResource) Create(ctx context.Context, req reso
 }
 
 func (r *DeviceACLPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state, oldState DeviceACL
+	var state DeviceACLPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	diags = req.State.Get(ctx, &oldState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -271,7 +258,6 @@ func (r *DeviceACLPolicyDefinitionResource) Read(ctx context.Context, req resour
 	}
 
 	state.fromBody(ctx, res)
-	state.updateVersions(ctx, oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -280,7 +266,7 @@ func (r *DeviceACLPolicyDefinitionResource) Read(ctx context.Context, req resour
 }
 
 func (r *DeviceACLPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state DeviceACL
+	var plan, state DeviceACLPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -313,7 +299,6 @@ func (r *DeviceACLPolicyDefinitionResource) Update(ctx context.Context, req reso
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -323,7 +308,7 @@ func (r *DeviceACLPolicyDefinitionResource) Update(ctx context.Context, req reso
 }
 
 func (r *DeviceACLPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state DeviceACL
+	var state DeviceACLPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

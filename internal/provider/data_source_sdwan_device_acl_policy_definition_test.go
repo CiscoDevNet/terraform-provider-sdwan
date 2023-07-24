@@ -33,6 +33,8 @@ func TestAccDataSourceSdwanDeviceACLPolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanDeviceACLPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_device_acl_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_device_acl_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_device_acl_policy_definition.test", "default_action", "drop"),
 					resource.TestCheckResourceAttr("data.sdwan_device_acl_policy_definition.test", "sequences.0.id", "10"),
 					resource.TestCheckResourceAttr("data.sdwan_device_acl_policy_definition.test", "sequences.0.ip_type", "ipv4"),
@@ -51,8 +53,8 @@ func TestAccDataSourceSdwanDeviceACLPolicyDefinition(t *testing.T) {
 const testAccDataSourceSdwanDeviceACLPolicyDefinitionConfig = `
 
 resource "sdwan_device_acl_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   default_action = "drop"
   sequences = [{
     id = 10

@@ -50,19 +50,15 @@ func (d *DeviceACLPolicyDefinitionDataSource) Metadata(_ context.Context, req da
 func (d *DeviceACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Device ACL policy definition.",
+		MarkdownDescription: "This data source can read the Device ACL Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
-				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy definition type",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -174,7 +170,7 @@ func (d *DeviceACLPolicyDefinitionDataSource) Configure(_ context.Context, req d
 }
 
 func (d *DeviceACLPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config DeviceACL
+	var config DeviceACLPolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
