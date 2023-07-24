@@ -59,33 +59,26 @@ func (r *ACLPolicyDefinitionResource) Metadata(ctx context.Context, req resource
 func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a ACL policy definition.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a ACL Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy defintion type",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
 				Required:            true,
 			},
 			"default_action": schema.StringAttribute{
@@ -116,7 +109,7 @@ func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.S
 						},
 						"name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Sequence name").String,
-							Optional:            true,
+							Required:            true,
 						},
 						"base_action": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Base action, either `accept` or `drop`").AddStringEnumDescription("accept", "drop").String,
@@ -242,12 +235,9 @@ func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.S
 										MarkdownDescription: helpers.NewAttributeDescription("Counter name").String,
 										Optional:            true,
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP value").AddIntegerRangeDescription(0, 63).String,
+									"log": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Enable logging").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 63),
-										},
 									},
 									"mirror_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Mirror ID").String,
@@ -257,10 +247,6 @@ func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.S
 										MarkdownDescription: helpers.NewAttributeDescription("Mirror version").String,
 										Optional:            true,
 									},
-									"next_hop": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Next hop IP").String,
-										Optional:            true,
-									},
 									"policer_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Policer ID").String,
 										Optional:            true,
@@ -268,6 +254,32 @@ func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.S
 									"policer_version": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Policer version").String,
 										Optional:            true,
+									},
+									"set_parameters": schema.ListNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("List of set parameters").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"type": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Type of set parameter").AddStringEnumDescription("dscp", "nextHop").String,
+													Required:            true,
+													Validators: []validator.String{
+														stringvalidator.OneOf("dscp", "nextHop"),
+													},
+												},
+												"dscp": schema.Int64Attribute{
+													MarkdownDescription: helpers.NewAttributeDescription("DSCP value").AddIntegerRangeDescription(0, 63).String,
+													Optional:            true,
+													Validators: []validator.Int64{
+														int64validator.Between(0, 63),
+													},
+												},
+												"next_hop": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Next hop IP").String,
+													Optional:            true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -289,7 +301,7 @@ func (r *ACLPolicyDefinitionResource) Configure(_ context.Context, req resource.
 }
 
 func (r *ACLPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ACL
+	var plan ACLPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -303,7 +315,7 @@ func (r *ACLPolicyDefinitionResource) Create(ctx context.Context, req resource.C
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/definition/acl", body)
+	res, err := r.client.Post("/template/policy/definition/acl/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -311,7 +323,6 @@ func (r *ACLPolicyDefinitionResource) Create(ctx context.Context, req resource.C
 
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
-	plan.Type = types.StringValue(plan.getType())
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -320,15 +331,10 @@ func (r *ACLPolicyDefinitionResource) Create(ctx context.Context, req resource.C
 }
 
 func (r *ACLPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state, oldState ACL
+	var state ACLPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	diags = req.State.Get(ctx, &oldState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -346,7 +352,6 @@ func (r *ACLPolicyDefinitionResource) Read(ctx context.Context, req resource.Rea
 	}
 
 	state.fromBody(ctx, res)
-	state.updateVersions(ctx, oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -355,7 +360,7 @@ func (r *ACLPolicyDefinitionResource) Read(ctx context.Context, req resource.Rea
 }
 
 func (r *ACLPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ACL
+	var plan, state ACLPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -388,7 +393,6 @@ func (r *ACLPolicyDefinitionResource) Update(ctx context.Context, req resource.U
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -398,7 +402,7 @@ func (r *ACLPolicyDefinitionResource) Update(ctx context.Context, req resource.U
 }
 
 func (r *ACLPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ACL
+	var state ACLPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

@@ -28,26 +28,25 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ACL struct {
-	Id            types.String   `tfsdk:"id"`
-	Version       types.Int64    `tfsdk:"version"`
-	Type          types.String   `tfsdk:"type"`
-	Name          types.String   `tfsdk:"name"`
-	Description   types.String   `tfsdk:"description"`
-	DefaultAction types.String   `tfsdk:"default_action"`
-	Sequences     []ACLSequences `tfsdk:"sequences"`
+type ACLPolicyDefinition struct {
+	Id            types.String                   `tfsdk:"id"`
+	Version       types.Int64                    `tfsdk:"version"`
+	Name          types.String                   `tfsdk:"name"`
+	Description   types.String                   `tfsdk:"description"`
+	DefaultAction types.String                   `tfsdk:"default_action"`
+	Sequences     []ACLPolicyDefinitionSequences `tfsdk:"sequences"`
 }
 
-type ACLSequences struct {
-	Id            types.Int64                 `tfsdk:"id"`
-	IpType        types.String                `tfsdk:"ip_type"`
-	Name          types.String                `tfsdk:"name"`
-	BaseAction    types.String                `tfsdk:"base_action"`
-	MatchEntries  []ACLSequencesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []ACLSequencesActionEntries `tfsdk:"action_entries"`
+type ACLPolicyDefinitionSequences struct {
+	Id            types.Int64                                 `tfsdk:"id"`
+	IpType        types.String                                `tfsdk:"ip_type"`
+	Name          types.String                                `tfsdk:"name"`
+	BaseAction    types.String                                `tfsdk:"base_action"`
+	MatchEntries  []ACLPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []ACLPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
 
-type ACLSequencesMatchEntries struct {
+type ACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                             types.String `tfsdk:"type"`
 	Dscp                             types.Int64  `tfsdk:"dscp"`
 	SourceIp                         types.String `tfsdk:"source_ip"`
@@ -65,33 +64,39 @@ type ACLSequencesMatchEntries struct {
 	Protocol                         types.String `tfsdk:"protocol"`
 	Tcp                              types.String `tfsdk:"tcp"`
 }
-type ACLSequencesActionEntries struct {
-	Type            types.String `tfsdk:"type"`
-	ClassMapId      types.String `tfsdk:"class_map_id"`
-	ClassMapVersion types.Int64  `tfsdk:"class_map_version"`
-	CounterName     types.String `tfsdk:"counter_name"`
-	Dscp            types.Int64  `tfsdk:"dscp"`
-	MirrorId        types.String `tfsdk:"mirror_id"`
-	MirrorVersion   types.Int64  `tfsdk:"mirror_version"`
-	NextHop         types.String `tfsdk:"next_hop"`
-	PolicerId       types.String `tfsdk:"policer_id"`
-	PolicerVersion  types.Int64  `tfsdk:"policer_version"`
+type ACLPolicyDefinitionSequencesActionEntries struct {
+	Type            types.String                                             `tfsdk:"type"`
+	ClassMapId      types.String                                             `tfsdk:"class_map_id"`
+	ClassMapVersion types.Int64                                              `tfsdk:"class_map_version"`
+	CounterName     types.String                                             `tfsdk:"counter_name"`
+	Log             types.Bool                                               `tfsdk:"log"`
+	MirrorId        types.String                                             `tfsdk:"mirror_id"`
+	MirrorVersion   types.Int64                                              `tfsdk:"mirror_version"`
+	PolicerId       types.String                                             `tfsdk:"policer_id"`
+	PolicerVersion  types.Int64                                              `tfsdk:"policer_version"`
+	SetParameters   []ACLPolicyDefinitionSequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
 }
 
-func (data ACL) getType() string {
-	return "acl"
+type ACLPolicyDefinitionSequencesActionEntriesSetParameters struct {
+	Type    types.String `tfsdk:"type"`
+	Dscp    types.Int64  `tfsdk:"dscp"`
+	NextHop types.String `tfsdk:"next_hop"`
 }
 
-func (data ACL) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "acl")
-	path := ""
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if !data.DefaultAction.IsNull() {
-		body, _ = sjson.Set(body, path+"defaultAction.type", data.DefaultAction.ValueString())
+		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
 	if len(data.Sequences) > 0 {
-		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.Id.IsNull() {
@@ -114,40 +119,40 @@ func (data ACL) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
-					if !childItem.Dscp.IsNull() {
+					if !childItem.Dscp.IsNull() && childItem.Type.ValueString() == "dscp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Dscp.ValueInt64()))
 					}
-					if !childItem.SourceIp.IsNull() {
+					if !childItem.SourceIp.IsNull() && childItem.Type.ValueString() == "sourceIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
 					}
-					if !childItem.DestinationIp.IsNull() {
+					if !childItem.DestinationIp.IsNull() && childItem.Type.ValueString() == "destinationIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
 					}
-					if !childItem.ClassMapId.IsNull() {
+					if !childItem.ClassMapId.IsNull() && childItem.Type.ValueString() == "class" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ClassMapId.ValueString())
 					}
-					if !childItem.PacketLength.IsNull() {
+					if !childItem.PacketLength.IsNull() && childItem.Type.ValueString() == "packetLength" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.PacketLength.ValueInt64()))
 					}
-					if !childItem.Priority.IsNull() {
+					if !childItem.Priority.IsNull() && childItem.Type.ValueString() == "plp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Priority.ValueString())
 					}
-					if !childItem.SourcePort.IsNull() {
+					if !childItem.SourcePort.IsNull() && childItem.Type.ValueString() == "sourcePort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SourcePort.ValueInt64()))
 					}
-					if !childItem.DestinationPort.IsNull() {
+					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
 					}
-					if !childItem.SourceDataPrefixListId.IsNull() {
+					if !childItem.SourceDataPrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataPrefixListId.ValueString())
 					}
-					if !childItem.DestinationDataPrefixListId.IsNull() {
+					if !childItem.DestinationDataPrefixListId.IsNull() && childItem.Type.ValueString() == "destinationDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DestinationDataPrefixListId.ValueString())
 					}
-					if !childItem.Protocol.IsNull() {
+					if !childItem.Protocol.IsNull() && childItem.Type.ValueString() == "protocol" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Protocol.ValueString()))
 					}
-					if !childItem.Tcp.IsNull() {
+					if !childItem.Tcp.IsNull() && childItem.Type.ValueString() == "tcp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Tcp.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
@@ -160,36 +165,51 @@ func (data ACL) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "type", childItem.Type.ValueString())
 					}
-					if !childItem.ClassMapId.IsNull() {
+					if !childItem.ClassMapId.IsNull() && childItem.Type.ValueString() == "class" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.ref", childItem.ClassMapId.ValueString())
 					}
-					if !childItem.CounterName.IsNull() {
+					if !childItem.CounterName.IsNull() && childItem.Type.ValueString() == "count" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.CounterName.ValueString())
 					}
-					if !childItem.Dscp.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.0.field", "dscp")
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.0.value", fmt.Sprint(childItem.Dscp.ValueInt64()))
+					if !childItem.Log.IsNull() && childItem.Type.ValueString() == "log" {
+						if false && childItem.Log.ValueBool() {
+							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
+						} else {
+							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueBool())
+						}
 					}
-					if !childItem.MirrorId.IsNull() {
+					if !childItem.MirrorId.IsNull() && childItem.Type.ValueString() == "mirror" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.ref", childItem.MirrorId.ValueString())
 					}
-					if !childItem.NextHop.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.0.field", "nextHop")
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.0.value", childItem.NextHop.ValueString())
-					}
-					if !childItem.PolicerId.IsNull() {
+					if !childItem.PolicerId.IsNull() && childItem.Type.ValueString() == "policer" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.ref", childItem.PolicerId.ValueString())
+					}
+					if len(childItem.SetParameters) > 0 && childItem.Type.ValueString() == "set" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
+						for _, childChildItem := range childItem.SetParameters {
+							itemChildChildBody := ""
+							if !childChildItem.Type.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "field", childChildItem.Type.ValueString())
+							}
+							if !childChildItem.Dscp.IsNull() && childChildItem.Type.ValueString() == "dscp" {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", fmt.Sprint(childChildItem.Dscp.ValueInt64()))
+							}
+							if !childChildItem.NextHop.IsNull() && childChildItem.Type.ValueString() == "nextHop" {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value", childChildItem.NextHop.ValueString())
+							}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "parameter.-1", itemChildChildBody)
+						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 				}
 			}
-			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *ACL) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -200,21 +220,15 @@ func (data *ACL) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := ""
-	if value := res.Get(path + "defaultAction.type"); value.Exists() {
+	if value := res.Get("defaultAction.type"); value.Exists() {
 		data.DefaultAction = types.StringValue(value.String())
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
-		data.Sequences = make([]ACLSequences, 0)
+	if value := res.Get("sequences"); value.Exists() {
+		data.Sequences = make([]ACLPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ACLSequences{}
+			item := ACLPolicyDefinitionSequences{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.Id = types.Int64Value(cValue.Int())
 			} else {
@@ -236,70 +250,70 @@ func (data *ACL) fromBody(ctx context.Context, res gjson.Result) {
 				item.BaseAction = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() {
-				item.MatchEntries = make([]ACLSequencesMatchEntries, 0)
+				item.MatchEntries = make([]ACLPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ACLSequencesMatchEntries{}
+					cItem := ACLPolicyDefinitionSequencesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "dscp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dscp" {
 						cItem.Dscp = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Dscp = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "sourceIp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourceIp" {
 						cItem.SourceIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceIp = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "destinationIp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationIp" {
 						cItem.DestinationIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationIp = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "class" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "class" {
 						cItem.ClassMapId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ClassMapId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "packetLength" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "packetLength" {
 						cItem.PacketLength = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.PacketLength = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "plp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "plp" {
 						cItem.Priority = types.StringValue(ccValue.String())
 					} else {
 						cItem.Priority = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "sourcePort" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
 						cItem.SourcePort = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.SourcePort = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "destinationPort" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationPort" {
 						cItem.DestinationPort = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.DestinationPort = types.Int64Null()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "sourceDataPrefixList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "sourceDataPrefixList" {
 						cItem.SourceDataPrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceDataPrefixListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "destinationDataPrefixList" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "destinationDataPrefixList" {
 						cItem.DestinationDataPrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.DestinationDataPrefixListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "protocol" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "protocol" {
 						cItem.Protocol = types.StringValue(ccValue.String())
 					} else {
 						cItem.Protocol = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "tcp" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "tcp" {
 						cItem.Tcp = types.StringValue(ccValue.String())
 					} else {
 						cItem.Tcp = types.StringNull()
@@ -309,43 +323,65 @@ func (data *ACL) fromBody(ctx context.Context, res gjson.Result) {
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() {
-				item.ActionEntries = make([]ACLSequencesActionEntries, 0)
+				item.ActionEntries = make([]ACLPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ACLSequencesActionEntries{}
+					cItem := ACLPolicyDefinitionSequencesActionEntries{}
 					if ccValue := cv.Get("type"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter.ref"); cItem.Type.ValueString() == "class" && ccValue.Exists() {
+					if ccValue := cv.Get("parameter.ref"); ccValue.Exists() && cItem.Type.ValueString() == "class" {
 						cItem.ClassMapId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ClassMapId = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); cItem.Type.ValueString() == "count" && ccValue.Exists() {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "count" {
 						cItem.CounterName = types.StringValue(ccValue.String())
 					} else {
 						cItem.CounterName = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter.0.value"); cItem.Type.ValueString() == "set" && cv.Get("parameter.0.field").String() == "dscp" && ccValue.Exists() {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "log" {
+						if false && ccValue.String() == "" {
+							cItem.Log = types.BoolValue(true)
+						} else {
+							cItem.Log = types.BoolValue(ccValue.Bool())
+						}
 					} else {
-						cItem.Dscp = types.Int64Null()
+						cItem.Log = types.BoolNull()
 					}
-					if ccValue := cv.Get("parameter.ref"); cItem.Type.ValueString() == "mirror" && ccValue.Exists() {
+					if ccValue := cv.Get("parameter.ref"); ccValue.Exists() && cItem.Type.ValueString() == "mirror" {
 						cItem.MirrorId = types.StringValue(ccValue.String())
 					} else {
 						cItem.MirrorId = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter.0.value"); cItem.Type.ValueString() == "set" && cv.Get("parameter.0.field").String() == "nextHop" && ccValue.Exists() {
-						cItem.NextHop = types.StringValue(ccValue.String())
-					} else {
-						cItem.NextHop = types.StringNull()
-					}
-					if ccValue := cv.Get("parameter.ref"); cItem.Type.ValueString() == "policer" && ccValue.Exists() {
+					if ccValue := cv.Get("parameter.ref"); ccValue.Exists() && cItem.Type.ValueString() == "policer" {
 						cItem.PolicerId = types.StringValue(ccValue.String())
 					} else {
 						cItem.PolicerId = types.StringNull()
+					}
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "set" {
+						cItem.SetParameters = make([]ACLPolicyDefinitionSequencesActionEntriesSetParameters, 0)
+						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
+							ccItem := ACLPolicyDefinitionSequencesActionEntriesSetParameters{}
+							if cccValue := ccv.Get("field"); cccValue.Exists() {
+								ccItem.Type = types.StringValue(cccValue.String())
+							} else {
+								ccItem.Type = types.StringNull()
+							}
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "dscp" {
+								ccItem.Dscp = types.Int64Value(cccValue.Int())
+							} else {
+								ccItem.Dscp = types.Int64Null()
+							}
+							if cccValue := ccv.Get("value"); cccValue.Exists() && ccItem.Type.ValueString() == "nextHop" {
+								ccItem.NextHop = types.StringValue(cccValue.String())
+							} else {
+								ccItem.NextHop = types.StringNull()
+							}
+							cItem.SetParameters = append(cItem.SetParameters, ccItem)
+							return true
+						})
 					}
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
@@ -355,9 +391,12 @@ func (data *ACL) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *ACL) hasChanges(ctx context.Context, state *ACL) bool {
+func (data *ACLPolicyDefinition) hasChanges(ctx context.Context, state *ACLPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -442,17 +481,29 @@ func (data *ACL) hasChanges(ctx context.Context, state *ACL) bool {
 					if !data.Sequences[i].ActionEntries[ii].CounterName.Equal(state.Sequences[i].ActionEntries[ii].CounterName) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].ActionEntries[ii].Dscp.Equal(state.Sequences[i].ActionEntries[ii].Dscp) {
+					if !data.Sequences[i].ActionEntries[ii].Log.Equal(state.Sequences[i].ActionEntries[ii].Log) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].ActionEntries[ii].MirrorId.Equal(state.Sequences[i].ActionEntries[ii].MirrorId) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].ActionEntries[ii].NextHop.Equal(state.Sequences[i].ActionEntries[ii].NextHop) {
-						hasChanges = true
-					}
 					if !data.Sequences[i].ActionEntries[ii].PolicerId.Equal(state.Sequences[i].ActionEntries[ii].PolicerId) {
 						hasChanges = true
+					}
+					if len(data.Sequences[i].ActionEntries[ii].SetParameters) != len(state.Sequences[i].ActionEntries[ii].SetParameters) {
+						hasChanges = true
+					} else {
+						for iii := range data.Sequences[i].ActionEntries[ii].SetParameters {
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].Type.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].Type) {
+								hasChanges = true
+							}
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].Dscp.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].Dscp) {
+								hasChanges = true
+							}
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].NextHop.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].NextHop) {
+								hasChanges = true
+							}
+						}
 					}
 				}
 			}
@@ -461,106 +512,68 @@ func (data *ACL) hasChanges(ctx context.Context, state *ACL) bool {
 	return hasChanges
 }
 
-func (data *ACL) getMatchClassMapVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "class" {
-					return cItem.ClassMapVersion
+func (data *ACLPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.Sequences {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
+		stateIndex := -1
+		for j := range state.Sequences {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[j].Id.ValueInt64()), fmt.Sprintf("%v", state.Sequences[j].Name.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
+		}
+		for ii := range data.Sequences[i].MatchEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].MatchEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].ClassMapVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ClassMapVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].ClassMapVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()
+			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ACL) getMatchSourceDataPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "sourceDataPrefixList" {
-					return cItem.SourceDataPrefixListVersion
+		for ii := range data.Sequences[i].ActionEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].ActionEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ACL) getMatchDestinationDataPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "destinationDataPrefixList" {
-					return cItem.DestinationDataPrefixListVersion
-				}
+			if cStateIndex >= -1 {
+				data.Sequences[i].ActionEntries[ii].ClassMapVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].ClassMapVersion
+			} else {
+				data.Sequences[i].ActionEntries[ii].ClassMapVersion = types.Int64Null()
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ACL) getActionClassMapVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "class" {
-					return cItem.ClassMapVersion
-				}
+			if cStateIndex >= -1 {
+				data.Sequences[i].ActionEntries[ii].MirrorVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].MirrorVersion
+			} else {
+				data.Sequences[i].ActionEntries[ii].MirrorVersion = types.Int64Null()
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ACL) getActionMirrorVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "mirror" {
-					return cItem.MirrorVersion
-				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ACL) getActionPolicerVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.ActionEntries {
-				if cItem.Type.ValueString() == "policer" {
-					return cItem.PolicerVersion
-				}
-			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *ACL) updateVersions(ctx context.Context, state ACL) {
-	for s := range data.Sequences {
-		id := data.Sequences[s].Id.ValueInt64()
-		name := data.Sequences[s].Name.ValueString()
-		for m := range data.Sequences[s].MatchEntries {
-			t := data.Sequences[s].MatchEntries[m].Type.ValueString()
-			if t == "class" {
-				data.Sequences[s].MatchEntries[m].ClassMapVersion = state.getMatchClassMapVersion(ctx, name, id)
-			} else if t == "sourceDataPrefixList" {
-				data.Sequences[s].MatchEntries[m].SourceDataPrefixListVersion = state.getMatchSourceDataPrefixListVersion(ctx, name, id)
-			} else if t == "destinationDataPrefixList" {
-				data.Sequences[s].MatchEntries[m].DestinationDataPrefixListVersion = state.getMatchDestinationDataPrefixListVersion(ctx, name, id)
-			}
-		}
-		for a := range data.Sequences[s].ActionEntries {
-			t := data.Sequences[s].ActionEntries[a].Type.ValueString()
-			if t == "class" {
-				data.Sequences[s].ActionEntries[a].ClassMapVersion = state.getActionClassMapVersion(ctx, name, id)
-			} else if t == "mirror" {
-				data.Sequences[s].ActionEntries[a].MirrorVersion = state.getActionMirrorVersion(ctx, name, id)
-			} else if t == "policer" {
-				data.Sequences[s].ActionEntries[a].PolicerVersion = state.getActionPolicerVersion(ctx, name, id)
+			if cStateIndex >= -1 {
+				data.Sequences[i].ActionEntries[ii].PolicerVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].PolicerVersion
+			} else {
+				data.Sequences[i].ActionEntries[ii].PolicerVersion = types.Int64Null()
 			}
 		}
 	}

@@ -3,12 +3,12 @@
 page_title: "sdwan_acl_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This resource can manage a ACL policy definition.
+  This resource can manage a ACL Policy Definition .
 ---
 
 # sdwan_acl_policy_definition (Resource)
 
-This resource can manage a ACL policy definition.
+This resource can manage a ACL Policy Definition .
 
 ## Example Usage
 
@@ -31,8 +31,13 @@ resource "sdwan_acl_policy_definition" "example" {
       ]
       action_entries = [
         {
-          type     = "set"
-          next_hop = "10.1.1.2"
+          type = "set"
+          set_parameters = [
+            {
+              type = "dscp"
+              dscp = 16
+            }
+          ]
         }
       ]
     }
@@ -56,9 +61,8 @@ resource "sdwan_acl_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`
@@ -67,6 +71,7 @@ Required:
 
 - `id` (Number) Sequence ID
   - Range: `1`-`65534`
+- `name` (String) Sequence name
 
 Optional:
 
@@ -76,7 +81,6 @@ Optional:
 - `ip_type` (String) IP version, either `ipv4` or `ipv6`
   - Choices: `ipv4`, `ipv6`
 - `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
-- `name` (String) Sequence name
 
 <a id="nestedatt--sequences--action_entries"></a>
 ### Nested Schema for `sequences.action_entries`
@@ -91,13 +95,27 @@ Optional:
 - `class_map_id` (String) Class map ID
 - `class_map_version` (Number) Class map version
 - `counter_name` (String) Counter name
-- `dscp` (Number) DSCP value
-  - Range: `0`-`63`
+- `log` (Boolean) Enable logging
 - `mirror_id` (String) Mirror ID
 - `mirror_version` (Number) Mirror version
-- `next_hop` (String) Next hop IP
 - `policer_id` (String) Policer ID
 - `policer_version` (Number) Policer version
+- `set_parameters` (Attributes List) List of set parameters (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
+
+<a id="nestedatt--sequences--action_entries--set_parameters"></a>
+### Nested Schema for `sequences.action_entries.set_parameters`
+
+Required:
+
+- `type` (String) Type of set parameter
+  - Choices: `dscp`, `nextHop`
+
+Optional:
+
+- `dscp` (Number) DSCP value
+  - Range: `0`-`63`
+- `next_hop` (String) Next hop IP
+
 
 
 <a id="nestedatt--sequences--match_entries"></a>

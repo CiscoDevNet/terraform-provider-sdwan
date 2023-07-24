@@ -3,12 +3,12 @@
 page_title: "sdwan_acl_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This data source can read the ACL policy definition.
+  This data source can read the ACL Policy Definition .
 ---
 
 # sdwan_acl_policy_definition (Data Source)
 
-This data source can read the ACL policy definition.
+This data source can read the ACL Policy Definition .
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ data "sdwan_acl_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
@@ -31,8 +31,7 @@ data "sdwan_acl_policy_definition" "example" {
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `sequences` (Attributes List) List of ACL sequences (see [below for nested schema](#nestedatt--sequences))
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`
@@ -54,13 +53,23 @@ Read-Only:
 - `class_map_id` (String) Class map ID
 - `class_map_version` (Number) Class map version
 - `counter_name` (String) Counter name
-- `dscp` (Number) DSCP value
+- `log` (Boolean) Enable logging
 - `mirror_id` (String) Mirror ID
 - `mirror_version` (Number) Mirror version
-- `next_hop` (String) Next hop IP
 - `policer_id` (String) Policer ID
 - `policer_version` (Number) Policer version
+- `set_parameters` (Attributes List) List of set parameters (see [below for nested schema](#nestedatt--sequences--action_entries--set_parameters))
 - `type` (String) Type of action entry
+
+<a id="nestedatt--sequences--action_entries--set_parameters"></a>
+### Nested Schema for `sequences.action_entries.set_parameters`
+
+Read-Only:
+
+- `dscp` (Number) DSCP value
+- `next_hop` (String) Next hop IP
+- `type` (String) Type of set parameter
+
 
 
 <a id="nestedatt--sequences--match_entries"></a>

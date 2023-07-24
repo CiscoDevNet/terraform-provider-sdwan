@@ -3,6 +3,8 @@
 - Add `sdwan_application_aware_routing_policy_definition` resource and data source
 - Add `sdwan_cflowd_policy_definition` resource and data source
 - Add `sdwan_traffic_data_policy_definition` resource and data source
+- Add `set_parameters` to `sdwan_acl_policy_definition` resource and data source
+- BREAKING CHANGE: Remove `dscp` and `next_hop` attributes of `sdwan_acl_policy_definition` resource and data source
 
 ## 0.2.1
 

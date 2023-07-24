@@ -33,6 +33,8 @@ func TestAccDataSourceSdwanACLPolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanACLPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "default_action", "drop"),
 					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.id", "10"),
 					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.ip_type", "ipv4"),
@@ -41,7 +43,8 @@ func TestAccDataSourceSdwanACLPolicyDefinition(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.match_entries.0.type", "dscp"),
 					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.match_entries.0.dscp", "16"),
 					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.action_entries.0.type", "set"),
-					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.action_entries.0.next_hop", "10.1.1.2"),
+					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.type", "dscp"),
+					resource.TestCheckResourceAttr("data.sdwan_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.dscp", "16"),
 				),
 			},
 		},
@@ -51,8 +54,8 @@ func TestAccDataSourceSdwanACLPolicyDefinition(t *testing.T) {
 const testAccDataSourceSdwanACLPolicyDefinitionConfig = `
 
 resource "sdwan_acl_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   default_action = "drop"
   sequences = [{
     id = 10
@@ -65,7 +68,10 @@ resource "sdwan_acl_policy_definition" "test" {
 	}]
 	action_entries = [{
 		type = "set"
-		next_hop = "10.1.1.2"
+		set_parameters = [{
+			type = "dscp"
+			dscp = 16
+		}]
 	}]
   }]
 }

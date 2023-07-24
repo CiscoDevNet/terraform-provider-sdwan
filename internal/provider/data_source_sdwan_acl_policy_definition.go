@@ -50,19 +50,15 @@ func (d *ACLPolicyDefinitionDataSource) Metadata(_ context.Context, req datasour
 func (d *ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the ACL policy definition.",
+		MarkdownDescription: "This data source can read the ACL Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
-				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy definition type",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -191,8 +187,8 @@ func (d *ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasour
 										MarkdownDescription: "Counter name",
 										Computed:            true,
 									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: "DSCP value",
+									"log": schema.BoolAttribute{
+										MarkdownDescription: "Enable logging",
 										Computed:            true,
 									},
 									"mirror_id": schema.StringAttribute{
@@ -203,10 +199,6 @@ func (d *ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasour
 										MarkdownDescription: "Mirror version",
 										Computed:            true,
 									},
-									"next_hop": schema.StringAttribute{
-										MarkdownDescription: "Next hop IP",
-										Computed:            true,
-									},
 									"policer_id": schema.StringAttribute{
 										MarkdownDescription: "Policer ID",
 										Computed:            true,
@@ -214,6 +206,26 @@ func (d *ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasour
 									"policer_version": schema.Int64Attribute{
 										MarkdownDescription: "Policer version",
 										Computed:            true,
+									},
+									"set_parameters": schema.ListNestedAttribute{
+										MarkdownDescription: "List of set parameters",
+										Computed:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"type": schema.StringAttribute{
+													MarkdownDescription: "Type of set parameter",
+													Computed:            true,
+												},
+												"dscp": schema.Int64Attribute{
+													MarkdownDescription: "DSCP value",
+													Computed:            true,
+												},
+												"next_hop": schema.StringAttribute{
+													MarkdownDescription: "Next hop IP",
+													Computed:            true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -234,7 +246,7 @@ func (d *ACLPolicyDefinitionDataSource) Configure(_ context.Context, req datasou
 }
 
 func (d *ACLPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ACL
+	var config ACLPolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

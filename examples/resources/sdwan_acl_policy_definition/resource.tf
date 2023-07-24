@@ -16,8 +16,13 @@ resource "sdwan_acl_policy_definition" "example" {
       ]
       action_entries = [
         {
-          type     = "set"
-          next_hop = "10.1.1.2"
+          type = "set"
+          set_parameters = [
+            {
+              type = "dscp"
+              dscp = 16
+            }
+          ]
         }
       ]
     }
