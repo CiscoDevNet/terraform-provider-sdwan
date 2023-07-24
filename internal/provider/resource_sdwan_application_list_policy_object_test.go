@@ -31,8 +31,9 @@ func TestAccSdwanApplicationListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanApplicationListPolicyObjectConfig_all(),
+				Config: testAccSdwanApplicationListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_application_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_application_list_policy_object.test", "entries.0.application", "netflix"),
 				),
 			},
@@ -40,13 +41,13 @@ func TestAccSdwanApplicationListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanApplicationListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_application_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			application = "netflix"
-		}]
-	}
-	`
+const testAccSdwanApplicationListPolicyObjectConfig = `
+
+
+resource "sdwan_application_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		application = "netflix"
+	}]
 }
+`

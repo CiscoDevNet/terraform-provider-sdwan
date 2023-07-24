@@ -3,12 +3,12 @@
 page_title: "sdwan_application_list_policy_object Data Source - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This data source can read the Application List policy object.
+  This data source can read the Application List Policy Object .
 ---
 
 # sdwan_application_list_policy_object (Data Source)
 
-This data source can read the Application List policy object.
+This data source can read the Application List Policy Object .
 
 ## Example Usage
 
@@ -23,13 +23,13 @@ data "sdwan_application_list_policy_object" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy object
+- `id` (String) The id of the object
 
 ### Read-Only
 
 - `entries` (Attributes List) List of entries (see [below for nested schema](#nestedatt--entries))
 - `name` (String) The name of the policy object
-- `version` (Number) The version of the policy object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--entries"></a>
 ### Nested Schema for `entries`

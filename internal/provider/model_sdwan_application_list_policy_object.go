@@ -27,26 +27,24 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ApplicationList struct {
-	Id      types.String             `tfsdk:"id"`
-	Version types.Int64              `tfsdk:"version"`
-	Name    types.String             `tfsdk:"name"`
-	Entries []ApplicationListEntries `tfsdk:"entries"`
+type ApplicationListPolicyObject struct {
+	Id      types.String                         `tfsdk:"id"`
+	Version types.Int64                          `tfsdk:"version"`
+	Name    types.String                         `tfsdk:"name"`
+	Entries []ApplicationListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type ApplicationListEntries struct {
+type ApplicationListPolicyObjectEntries struct {
 	Application       types.String `tfsdk:"application"`
 	ApplicationFamily types.String `tfsdk:"application_family"`
 }
 
-func (data ApplicationList) getType() string {
-	return "app"
-}
-
-func (data ApplicationList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data ApplicationListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "app")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -63,16 +61,16 @@ func (data ApplicationList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *ApplicationList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ApplicationListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]ApplicationListEntries, 0)
+		data.Entries = make([]ApplicationListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ApplicationListEntries{}
+			item := ApplicationListPolicyObjectEntries{}
 			if cValue := v.Get("app"); cValue.Exists() {
 				item.Application = types.StringValue(cValue.String())
 			} else {
@@ -87,4 +85,25 @@ func (data *ApplicationList) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+}
+
+func (data *ApplicationListPolicyObject) hasChanges(ctx context.Context, state *ApplicationListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].Application.Equal(state.Entries[i].Application) {
+				hasChanges = true
+			}
+			if !data.Entries[i].ApplicationFamily.Equal(state.Entries[i].ApplicationFamily) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }

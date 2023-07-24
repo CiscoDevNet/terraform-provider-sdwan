@@ -50,15 +50,15 @@ func (d *ApplicationListPolicyObjectDataSource) Metadata(_ context.Context, req 
 func (d *ApplicationListPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Application List policy object.",
+		MarkdownDescription: "This data source can read the Application List Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -94,7 +94,7 @@ func (d *ApplicationListPolicyObjectDataSource) Configure(_ context.Context, req
 }
 
 func (d *ApplicationListPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ApplicationList
+	var config ApplicationListPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
