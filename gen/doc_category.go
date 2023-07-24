@@ -29,10 +29,9 @@ import (
 )
 
 const (
-	featureTemplateDefinitionsPath  = "./gen/definitions/feature_templates/"
-	policyObjectDefinitionsPath     = "./gen/definitions/policy_objects/"
-	policyDefinitionDefinitionsPath = "./gen/definitions/policy_definitions/"
-	genericDefinitionsPath          = "./gen/definitions/generic/"
+	featureTemplateDefinitionsPath = "./gen/definitions/feature_templates/"
+	policyObjectDefinitionsPath    = "./gen/definitions/policy_objects/"
+	genericDefinitionsPath         = "./gen/definitions/generic/"
 )
 
 type YamlConfig struct {
@@ -65,8 +64,6 @@ func main() {
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
 	policyObjectFiles, _ := ioutil.ReadDir(policyObjectDefinitionsPath)
 	policyObjectConfigs := make([]YamlConfig, len(policyObjectFiles))
-	policyDefinitionFiles, _ := ioutil.ReadDir(policyDefinitionDefinitionsPath)
-	policyDefinitionConfigs := make([]YamlConfig, len(policyDefinitionFiles))
 	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
 	genericConfigs := make([]YamlConfig, len(genericFiles))
 
@@ -127,38 +124,6 @@ func main() {
 
 			s := string(content)
 			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Policy Objects"`)
-
-			ioutil.WriteFile(filename, []byte(s), 0644)
-		}
-	}
-
-	// Load policy definition configs
-	for i, filename := range policyDefinitionFiles {
-		yamlFile, err := ioutil.ReadFile(filepath.Join(policyDefinitionDefinitionsPath, filename.Name()))
-		if err != nil {
-			log.Fatalf("Error reading file: %v", err)
-		}
-
-		config := YamlConfig{}
-		err = yaml.Unmarshal(yamlFile, &config)
-		if err != nil {
-			log.Fatalf("Error parsing yaml: %v", err)
-		}
-		policyDefinitionConfigs[i] = config
-	}
-
-	// Update policy definition doc category
-	for i := range policyDefinitionConfigs {
-		for _, path := range docPaths {
-			filename := path + SnakeCase(policyDefinitionConfigs[i].Name) + "_policy_definition.md"
-			content, err := ioutil.ReadFile(filename)
-			if err != nil {
-				log.Fatalf("Error opening documentation: %v", err)
-			}
-
-			cat := policyDefinitionConfigs[i].DocCategory
-			s := string(content)
-			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
 
 			ioutil.WriteFile(filename, []byte(s), 0644)
 		}

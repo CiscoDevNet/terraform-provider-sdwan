@@ -36,16 +36,15 @@ import (
 )
 
 const (
-	featureTemplateDefinitionsPath  = "./gen/definitions/feature_templates/"
-	featureTemplateModelsPath       = "./gen/models/feature_templates/"
-	policyObjectDefinitionsPath     = "./gen/definitions/policy_objects/"
-	policyDefinitionDefinitionsPath = "./gen/definitions/policy_definitions/"
-	genericDefinitionsPath          = "./gen/definitions/generic/"
-	providerTemplate                = "./gen/templates/provider.go"
-	providerLocation                = "./internal/provider/provider.go"
-	changelogTemplate               = "./gen/templates/changelog.md.tmpl"
-	changelogLocation               = "./templates/guides/changelog.md.tmpl"
-	changelogOriginal               = "./CHANGELOG.md"
+	featureTemplateDefinitionsPath = "./gen/definitions/feature_templates/"
+	featureTemplateModelsPath      = "./gen/models/feature_templates/"
+	policyObjectDefinitionsPath    = "./gen/definitions/policy_objects/"
+	genericDefinitionsPath         = "./gen/definitions/generic/"
+	providerTemplate               = "./gen/templates/provider.go"
+	providerLocation               = "./internal/provider/provider.go"
+	changelogTemplate              = "./gen/templates/changelog.md.tmpl"
+	changelogLocation              = "./templates/guides/changelog.md.tmpl"
+	changelogOriginal              = "./CHANGELOG.md"
 )
 
 type t struct {
@@ -137,49 +136,6 @@ var policyObjectTemplates = []t{
 		path:   "./gen/templates/policy_objects/import.sh",
 		prefix: "./examples/resources/sdwan_",
 		suffix: "_policy_object/import.sh",
-	},
-}
-
-var policyDefinitionTemplates = []t{
-	{
-		path:   "./gen/templates/policy_definitions/model.go",
-		prefix: "./internal/provider/model_sdwan_",
-		suffix: "_policy_definition.go",
-	},
-	{
-		path:   "./gen/templates/policy_definitions/data_source.go",
-		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_policy_definition.go",
-	},
-	{
-		path:   "./gen/templates/policy_definitions/data_source_test.go",
-		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_policy_definition_test.go",
-	},
-	{
-		path:   "./gen/templates/policy_definitions/resource.go",
-		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_policy_definition.go",
-	},
-	{
-		path:   "./gen/templates/policy_definitions/resource_test.go",
-		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_policy_definition_test.go",
-	},
-	{
-		path:   "./gen/templates/policy_definitions/data-source.tf",
-		prefix: "./examples/data-sources/sdwan_",
-		suffix: "_policy_definition/data-source.tf",
-	},
-	{
-		path:   "./gen/templates/policy_definitions/resource.tf",
-		prefix: "./examples/resources/sdwan_",
-		suffix: "_policy_definition/resource.tf",
-	},
-	{
-		path:   "./gen/templates/policy_definitions/import.sh",
-		prefix: "./examples/resources/sdwan_",
-		suffix: "_policy_definition/import.sh",
 	},
 }
 
@@ -596,7 +552,6 @@ func main() {
 	providerConfig := make(map[string][]string)
 	providerConfig["FeatureTemplates"] = make([]string, 0)
 	providerConfig["PolicyObjects"] = make([]string, 0)
-	providerConfig["PolicyDefinitions"] = make([]string, 0)
 	providerConfig["Generic"] = make([]string, 0)
 
 	// Load feature template configs
@@ -652,35 +607,6 @@ func main() {
 			renderTemplate(t.path, t.prefix+SnakeCase(policyObjectConfigs[i].Name)+t.suffix, policyObjectConfigs[i])
 		}
 		providerConfig["PolicyObjects"] = append(providerConfig["PolicyObjects"], policyObjectConfigs[i].Name)
-	}
-
-	policyDefinitionFiles, _ := ioutil.ReadDir(policyDefinitionDefinitionsPath)
-	policyDefinitionConfigs := make([]YamlConfig, len(policyDefinitionFiles))
-
-	// Load policy definition configs
-	for i, filename := range policyDefinitionFiles {
-		yamlFile, err := os.ReadFile(filepath.Join(policyDefinitionDefinitionsPath, filename.Name()))
-		if err != nil {
-			log.Fatalf("Error reading file: %v", err)
-		}
-
-		config := YamlConfig{}
-		err = yaml.Unmarshal(yamlFile, &config)
-		if err != nil {
-			log.Fatalf("Error parsing yaml: %v", err)
-		}
-		policyDefinitionConfigs[i] = config
-	}
-
-	for i := range policyDefinitionConfigs {
-		// Augment policy definition config
-		augmentGenericConfig(&policyDefinitionConfigs[i], "policy definition")
-
-		// Iterate over templates and render files
-		for _, t := range policyDefinitionTemplates {
-			renderTemplate(t.path, t.prefix+SnakeCase(policyDefinitionConfigs[i].Name)+t.suffix, policyDefinitionConfigs[i])
-		}
-		providerConfig["PolicyDefinitions"] = append(providerConfig["PolicyDefinitions"], policyDefinitionConfigs[i].Name)
 	}
 
 	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
