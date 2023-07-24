@@ -31,13 +31,15 @@ func TestAccSdwanQoSMapPolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanQoSMapPolicyDefinitionConfig_all(),
+				Config: testAccSdwanQoSMapPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "description", "My description"),
+					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "qos_schedulers.0.queue", "6"),
 					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "qos_schedulers.0.bandwidth_percent", "10"),
 					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "qos_schedulers.0.buffer_percent", "10"),
 					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "qos_schedulers.0.burst", "100000"),
 					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "qos_schedulers.0.drop_type", "red-drop"),
-					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "qos_schedulers.0.queue", "6"),
 					resource.TestCheckResourceAttr("sdwan_qos_map_policy_definition.test", "qos_schedulers.0.scheduling_type", "wrr"),
 				),
 			},
@@ -45,27 +47,26 @@ func TestAccSdwanQoSMapPolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanQoSMapPolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_class_map_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			queue = 6
-		}]
-	}
-
-	resource "sdwan_qos_map_policy_definition" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		qos_schedulers = [{
-			bandwidth_percent = 10
-			buffer_percent = 10
-			burst = 100000
-			class_map_id = sdwan_class_map_policy_object.test.id
-			drop_type = "red-drop"
-			queue = 6
-			scheduling_type = "wrr"
-		}]
-	}
-	`
+const testAccSdwanQoSMapPolicyDefinitionConfig = `
+resource "sdwan_class_map_policy_object" "test" {
+  name = "TF_TEST"
+  entries = [{
+    queue = 6
+  }]
 }
+
+
+resource "sdwan_qos_map_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	qos_schedulers = [{
+		queue = 6
+		class_map_id = sdwan_class_map_policy_object.test.id
+		bandwidth_percent = 10
+		buffer_percent = 10
+		burst = 100000
+		drop_type = "red-drop"
+		scheduling_type = "wrr"
+	}]
+}
+`

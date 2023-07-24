@@ -28,16 +28,15 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type QoSMap struct {
-	Id            types.String          `tfsdk:"id"`
-	Version       types.Int64           `tfsdk:"version"`
-	Type          types.String          `tfsdk:"type"`
-	Name          types.String          `tfsdk:"name"`
-	Description   types.String          `tfsdk:"description"`
-	QosSchedulers []QoSMapQosSchedulers `tfsdk:"qos_schedulers"`
+type QoSMapPolicyDefinition struct {
+	Id            types.String                          `tfsdk:"id"`
+	Version       types.Int64                           `tfsdk:"version"`
+	Name          types.String                          `tfsdk:"name"`
+	Description   types.String                          `tfsdk:"description"`
+	QosSchedulers []QoSMapPolicyDefinitionQosSchedulers `tfsdk:"qos_schedulers"`
 }
 
-type QoSMapQosSchedulers struct {
+type QoSMapPolicyDefinitionQosSchedulers struct {
 	Queue            types.Int64  `tfsdk:"queue"`
 	ClassMapId       types.String `tfsdk:"class_map_id"`
 	ClassMapVersion  types.Int64  `tfsdk:"class_map_version"`
@@ -48,17 +47,17 @@ type QoSMapQosSchedulers struct {
 	SchedulingType   types.String `tfsdk:"scheduling_type"`
 }
 
-func (data QoSMap) getType() string {
-	return "qosMap"
-}
-
-func (data QoSMap) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "qosMap")
-	path := "definition."
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if len(data.QosSchedulers) > 0 {
-		body, _ = sjson.Set(body, path+"qosSchedulers", []interface{}{})
+		body, _ = sjson.Set(body, "definition.qosSchedulers", []interface{}{})
 		for _, item := range data.QosSchedulers {
 			itemBody := ""
 			if !item.Queue.IsNull() {
@@ -82,13 +81,13 @@ func (data QoSMap) toBody(ctx context.Context) string {
 			if !item.SchedulingType.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "scheduling", item.SchedulingType.ValueString())
 			}
-			body, _ = sjson.SetRaw(body, path+"qosSchedulers.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "definition.qosSchedulers.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *QoSMap) fromBody(ctx context.Context, res gjson.Result) {
+func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -99,16 +98,10 @@ func (data *QoSMap) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := "definition."
-	if value := res.Get(path + "qosSchedulers"); value.Exists() {
-		data.QosSchedulers = make([]QoSMapQosSchedulers, 0)
+	if value := res.Get("definition.qosSchedulers"); value.Exists() {
+		data.QosSchedulers = make([]QoSMapPolicyDefinitionQosSchedulers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := QoSMapQosSchedulers{}
+			item := QoSMapPolicyDefinitionQosSchedulers{}
 			if cValue := v.Get("queue"); cValue.Exists() {
 				item.Queue = types.Int64Value(cValue.Int())
 			} else {
@@ -148,9 +141,12 @@ func (data *QoSMap) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *QoSMap) hasChanges(ctx context.Context, state *QoSMap) bool {
+func (data *QoSMapPolicyDefinition) hasChanges(ctx context.Context, state *QoSMapPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -188,18 +184,22 @@ func (data *QoSMap) hasChanges(ctx context.Context, state *QoSMap) bool {
 	return hasChanges
 }
 
-func (data *QoSMap) getClassMapVersion(ctx context.Context, queue int64) types.Int64 {
-	for _, item := range data.QosSchedulers {
-		if item.Queue.ValueInt64() == queue {
-			return item.ClassMapVersion
+func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.QosSchedulers {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.QosSchedulers[i].Queue.ValueInt64())}
+		stateIndex := -1
+		for j := range state.QosSchedulers {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.QosSchedulers[j].Queue.ValueInt64())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
+			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *QoSMap) updateVersions(ctx context.Context, state QoSMap) {
-	for qs := range data.QosSchedulers {
-		queue := data.QosSchedulers[qs].Queue.ValueInt64()
-		data.QosSchedulers[qs].ClassMapVersion = state.getClassMapVersion(ctx, queue)
+		if stateIndex >= -1 {
+			data.QosSchedulers[i].ClassMapVersion = state.QosSchedulers[stateIndex].ClassMapVersion
+		} else {
+			data.QosSchedulers[i].ClassMapVersion = types.Int64Null()
+		}
 	}
 }

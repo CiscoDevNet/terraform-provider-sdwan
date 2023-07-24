@@ -31,7 +31,7 @@ func TestAccSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanCustomControlTopologyPolicyDefinitionConfig_all(),
+				Config: testAccSdwanCustomControlTopologyPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_custom_control_topology_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_custom_control_topology_policy_definition.test", "description", "My description"),
@@ -51,29 +51,29 @@ func TestAccSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanCustomControlTopologyPolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_custom_control_topology_policy_definition" "test" {
-		name = "Example"
-		description = "My description"
-		default_action = "reject"
-		sequences = [{
-			id = 1
-			name = "Region1"
-			type = "route"
-			ip_type = "ipv4"
-			match_entries = [{
-				type = "ompTag"
-				omp_tag = 100
-			}]
-			action_entries = [{
-				type = "set"
-				set_parameters = [{
-					type = "preference"
-					preference = 100
-				}]
+const testAccSdwanCustomControlTopologyPolicyDefinitionConfig = `
+
+
+resource "sdwan_custom_control_topology_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	default_action = "reject"
+	sequences = [{
+		id = 1
+		name = "Region1"
+		type = "route"
+		ip_type = "ipv4"
+		match_entries = [{
+			type = "ompTag"
+			omp_tag = 100
+		}]
+		action_entries = [{
+			type = "set"
+			set_parameters = [{
+				type = "preference"
+				preference = 100
 			}]
 		}]
-	}
-	`
+	}]
 }
+`

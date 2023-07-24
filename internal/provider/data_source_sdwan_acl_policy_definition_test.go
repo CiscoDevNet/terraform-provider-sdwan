@@ -53,6 +53,7 @@ func TestAccDataSourceSdwanACLPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanACLPolicyDefinitionConfig = `
 
+
 resource "sdwan_acl_policy_definition" "test" {
   name = "Example"
   description = "My description"

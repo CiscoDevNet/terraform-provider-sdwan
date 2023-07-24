@@ -13,6 +13,7 @@ has_version: bool(required=False)
 id_attribute: str(required=False)
 skip_templates: list(str(), required=False)
 attributes: list(include('attribute'), required=False)
+test_prerequisites: str(required=False)
 ---
 attribute:
   model_name: str()
@@ -46,6 +47,7 @@ attribute:
   string_max_length: int(required=False)
   default_value: any(str(), int(), bool(), required=False)
   value: any(str(), int(), bool(), required=False)
+  test_value: str(required=False)
   attributes: list(include('attribute'), required=False)
   conditional_attribute: include('conditional_attribute', required=False)
 

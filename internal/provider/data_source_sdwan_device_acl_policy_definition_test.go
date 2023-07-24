@@ -52,6 +52,7 @@ func TestAccDataSourceSdwanDeviceACLPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanDeviceACLPolicyDefinitionConfig = `
 
+
 resource "sdwan_device_acl_policy_definition" "test" {
   name = "Example"
   description = "My description"

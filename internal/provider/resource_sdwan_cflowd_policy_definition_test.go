@@ -31,7 +31,7 @@ func TestAccSdwanCflowdPolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanCflowdPolicyDefinitionConfig_all(),
+				Config: testAccSdwanCflowdPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_cflowd_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_cflowd_policy_definition.test", "description", "My description"),
@@ -54,26 +54,26 @@ func TestAccSdwanCflowdPolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanCflowdPolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_cflowd_policy_definition" "test" {
-		name = "Example"
-		description = "My description"
-		active_flow_timeout = 100
-		inactive_flow_timeout = 10
-		sampling_interval = 10
-		flow_refresh = 120
-		protocol = "ipv4"
-		tos = true
-		remarked_dscp = true
-		collectors = [{
-			vpn_id = 1
-			ip_address = "10.0.0.1"
-			port = 12345
-			transport = "transport_tcp"
-			source_interface = "Ethernet1"
-			export_spreading = "enable"
-		}]
-	}
-	`
+const testAccSdwanCflowdPolicyDefinitionConfig = `
+
+
+resource "sdwan_cflowd_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	active_flow_timeout = 100
+	inactive_flow_timeout = 10
+	sampling_interval = 10
+	flow_refresh = 120
+	protocol = "ipv4"
+	tos = true
+	remarked_dscp = true
+	collectors = [{
+		vpn_id = 1
+		ip_address = "10.0.0.1"
+		port = 12345
+		transport = "transport_tcp"
+		source_interface = "Ethernet1"
+		export_spreading = "enable"
+	}]
 }
+`

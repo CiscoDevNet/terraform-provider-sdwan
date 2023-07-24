@@ -3,12 +3,12 @@
 page_title: "sdwan_qos_map_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This resource can manage a QoS Map policy definition.
+  This resource can manage a QoS Map Policy Definition .
 ---
 
 # sdwan_qos_map_policy_definition (Resource)
 
-This resource can manage a QoS Map policy definition.
+This resource can manage a QoS Map Policy Definition .
 
 ## Example Usage
 
@@ -41,9 +41,8 @@ resource "sdwan_qos_map_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--qos_schedulers"></a>
 ### Nested Schema for `qos_schedulers`

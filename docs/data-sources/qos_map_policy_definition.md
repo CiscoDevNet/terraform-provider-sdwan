@@ -3,12 +3,12 @@
 page_title: "sdwan_qos_map_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This data source can read the QoS Map policy definition.
+  This data source can read the QoS Map Policy Definition .
 ---
 
 # sdwan_qos_map_policy_definition (Data Source)
 
-This data source can read the QoS Map policy definition.
+This data source can read the QoS Map Policy Definition .
 
 ## Example Usage
 
@@ -23,15 +23,14 @@ data "sdwan_qos_map_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `qos_schedulers` (Attributes List) List of QoS schedulers (see [below for nested schema](#nestedatt--qos_schedulers))
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 
 <a id="nestedatt--qos_schedulers"></a>
 ### Nested Schema for `qos_schedulers`

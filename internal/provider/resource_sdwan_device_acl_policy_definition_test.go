@@ -31,7 +31,7 @@ func TestAccSdwanDeviceACLPolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanDeviceACLPolicyDefinitionConfig_all(),
+				Config: testAccSdwanDeviceACLPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_device_acl_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_device_acl_policy_definition.test", "description", "My description"),
@@ -50,26 +50,26 @@ func TestAccSdwanDeviceACLPolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanDeviceACLPolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_device_acl_policy_definition" "test" {
-		name = "Example"
-		description = "My description"
-		default_action = "drop"
-		sequences = [{
-			id = 10
-			ip_type = "ipv4"
-			name = "Sequence 10"
-			base_action = "accept"
-			match_entries = [{
-				type = "destinationPort"
-				destination_port = 22
-			}]
-			action_entries = [{
-				type = "count"
-				counter_name = "count1"
-			}]
+const testAccSdwanDeviceACLPolicyDefinitionConfig = `
+
+
+resource "sdwan_device_acl_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	default_action = "drop"
+	sequences = [{
+		id = 10
+		ip_type = "ipv4"
+		name = "Sequence 10"
+		base_action = "accept"
+		match_entries = [{
+			type = "destinationPort"
+			destination_port = 22
 		}]
-	}
-	`
+		action_entries = [{
+			type = "count"
+			counter_name = "count1"
+		}]
+	}]
 }
+`

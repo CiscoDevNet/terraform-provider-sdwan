@@ -45,6 +45,7 @@ func TestAccDataSourceSdwanMeshTopologyPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig = `
 
+
 resource "sdwan_mesh_topology_policy_definition" "test" {
   name = "Example"
   description = "My description"

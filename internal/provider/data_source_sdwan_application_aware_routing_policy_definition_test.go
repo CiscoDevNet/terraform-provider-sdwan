@@ -50,6 +50,7 @@ func TestAccDataSourceSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T)
 
 const testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig = `
 
+
 resource "sdwan_application_aware_routing_policy_definition" "test" {
   name = "Example"
   description = "My description"

@@ -33,11 +33,13 @@ func TestAccDataSourceSdwanQoSMapPolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanQoSMapPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "description", "My description"),
+					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "qos_schedulers.0.queue", "6"),
 					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "qos_schedulers.0.bandwidth_percent", "10"),
 					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "qos_schedulers.0.buffer_percent", "10"),
 					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "qos_schedulers.0.burst", "100000"),
 					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "qos_schedulers.0.drop_type", "red-drop"),
-					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "qos_schedulers.0.queue", "6"),
 					resource.TestCheckResourceAttr("data.sdwan_qos_map_policy_definition.test", "qos_schedulers.0.scheduling_type", "wrr"),
 				),
 			},
@@ -47,24 +49,25 @@ func TestAccDataSourceSdwanQoSMapPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanQoSMapPolicyDefinitionConfig = `
 resource "sdwan_class_map_policy_object" "test" {
-	name = "TF_TEST_ALL"
-	entries = [{
-		queue = 6
-	}]
+  name = "TF_TEST"
+  entries = [{
+    queue = 6
+  }]
 }
 
+
 resource "sdwan_qos_map_policy_definition" "test" {
-	name = "TF_TEST_ALL"
-	description = "Terraform integration test"
-	qos_schedulers = [{
-		bandwidth_percent = 10
-		buffer_percent = 10
-		burst = 100000
-		class_map_id = sdwan_class_map_policy_object.test.id
-		drop_type = "red-drop"
-		queue = 6
-		scheduling_type = "wrr"
-	}]
+  name = "Example"
+  description = "My description"
+  qos_schedulers = [{
+    queue = 6
+    class_map_id = sdwan_class_map_policy_object.test.id
+    bandwidth_percent = 10
+    buffer_percent = 10
+    burst = 100000
+    drop_type = "red-drop"
+    scheduling_type = "wrr"
+  }]
 }
 
 data "sdwan_qos_map_policy_definition" "test" {

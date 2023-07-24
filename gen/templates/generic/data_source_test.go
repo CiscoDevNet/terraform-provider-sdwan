@@ -38,19 +38,19 @@ func TestAccDataSourceSdwan{{camelCase .Name}}(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
 					{{- if eq .Type "List"}}
 					{{- $list := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
 					{{- if eq .Type "List"}}
 					{{- $clist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value)}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
 					{{- if eq .Type "List"}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (ne .Type "ListString")}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue) (ne .Type "ListString")}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
@@ -76,6 +76,7 @@ func TestAccDataSourceSdwan{{camelCase .Name}}(t *testing.T) {
 }
 
 const testAccDataSourceSdwan{{camelCase .Name}}Config = `
+{{if .TestPrerequisites}}{{.TestPrerequisites}}{{end}}
 
 resource "sdwan_{{snakeCase $name}}" "test" {
 {{- range  .Attributes}}
@@ -92,24 +93,24 @@ resource "sdwan_{{snakeCase $name}}" "test" {
 		{{.TfName}} = [{
 			{{- range  .Attributes}}
 			{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-			{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}{{end}}
 			{{- end}}
 			{{- end}}
 		}]
 		{{- else}}
-		{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}{{end}}
 		{{- end}}
 		{{- end}}
 		{{- end}}
 	}]
 	{{- else}}
-    {{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+    {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}{{end}}
     {{- end}}
 	{{- end}}
 	{{- end}}
   }]
 {{- else}}
-  {{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}{{end}}
 {{- end}}
 {{- end}}
 {{- end}}

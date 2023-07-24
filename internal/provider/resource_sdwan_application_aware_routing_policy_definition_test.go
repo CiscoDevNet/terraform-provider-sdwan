@@ -31,7 +31,7 @@ func TestAccSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanApplicationAwareRoutingPolicyDefinitionConfig_all(),
+				Config: testAccSdwanApplicationAwareRoutingPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_application_aware_routing_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_application_aware_routing_policy_definition.test", "description", "My description"),
@@ -48,24 +48,24 @@ func TestAccSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanApplicationAwareRoutingPolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_application_aware_routing_policy_definition" "test" {
-		name = "Example"
-		description = "My description"
-		sequences = [{
-			id = 1
-			name = "Region1"
-			ip_type = "ipv4"
-			match_entries = [{
-				type = "appList"
-				application_list_id = "e3aad846-abb9-425f-aaa8-9ed17b9c8d7c"
-			}]
-			action_entries = [{
-				type = "backupSlaPreferredColor"
-				backup_sla_preferred_color = "bronze"
-			}]
+const testAccSdwanApplicationAwareRoutingPolicyDefinitionConfig = `
+
+
+resource "sdwan_application_aware_routing_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	sequences = [{
+		id = 1
+		name = "Region1"
+		ip_type = "ipv4"
+		match_entries = [{
+			type = "appList"
+			application_list_id = "e3aad846-abb9-425f-aaa8-9ed17b9c8d7c"
 		}]
-	}
-	`
+		action_entries = [{
+			type = "backupSlaPreferredColor"
+			backup_sla_preferred_color = "bronze"
+		}]
+	}]
 }
+`

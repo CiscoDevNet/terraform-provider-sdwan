@@ -1,11 +1,26 @@
 ---
-name: QoS Map
-type: qosMap
-root_element: definition
+name: QoS Map Policy Definition
+rest_endpoint: /template/policy/definition/qosmap/
+has_version: true
+id_attribute: definitionId
 doc_category: Localized Policies
-skip_templates: [data_source_test.go, resource_test.go, model.go, resource.go]
 attributes:
+  - model_name: type
+    value: qosMap
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
   - model_name: qosSchedulers
+    data_path: [definition]
     tf_name: qos_schedulers
     type: List
     mandatory: true
@@ -13,6 +28,7 @@ attributes:
     attributes:
       - model_name: queue
         type: Int64
+        id: true
         mandatory: true
         model_type_string: true
         description: Queue number
@@ -25,9 +41,10 @@ attributes:
         mandatory: true
         description: Class map ID
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        test_value: sdwan_class_map_policy_object.test.id
       - tf_name: class_map_version
         tf_only: true
-        type: Int64
+        type: Version
         description: Class map version
       - model_name: bandwidthPercent
         tf_name: bandwidth_percent
@@ -68,3 +85,11 @@ attributes:
         enum_values: [llq, wrr]
         description: Scheduling type
         example: wrr
+
+test_prerequisites: |
+  resource "sdwan_class_map_policy_object" "test" {
+    name = "TF_TEST"
+    entries = [{
+      queue = 6
+    }]
+  }

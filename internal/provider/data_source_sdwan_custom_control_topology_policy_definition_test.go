@@ -53,6 +53,7 @@ func TestAccDataSourceSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanCustomControlTopologyPolicyDefinitionConfig = `
 
+
 resource "sdwan_custom_control_topology_policy_definition" "test" {
   name = "Example"
   description = "My description"

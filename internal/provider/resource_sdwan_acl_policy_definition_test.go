@@ -31,7 +31,7 @@ func TestAccSdwanACLPolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanACLPolicyDefinitionConfig_all(),
+				Config: testAccSdwanACLPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_acl_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_acl_policy_definition.test", "description", "My description"),
@@ -51,29 +51,29 @@ func TestAccSdwanACLPolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanACLPolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_acl_policy_definition" "test" {
-		name = "Example"
-		description = "My description"
-		default_action = "drop"
-		sequences = [{
-			id = 10
-			ip_type = "ipv4"
-			name = "Sequence 10"
-			base_action = "accept"
-			match_entries = [{
+const testAccSdwanACLPolicyDefinitionConfig = `
+
+
+resource "sdwan_acl_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	default_action = "drop"
+	sequences = [{
+		id = 10
+		ip_type = "ipv4"
+		name = "Sequence 10"
+		base_action = "accept"
+		match_entries = [{
+			type = "dscp"
+			dscp = 16
+		}]
+		action_entries = [{
+			type = "set"
+			set_parameters = [{
 				type = "dscp"
 				dscp = 16
 			}]
-			action_entries = [{
-				type = "set"
-				set_parameters = [{
-					type = "dscp"
-					dscp = 16
-				}]
-			}]
 		}]
-	}
-	`
+	}]
 }
+`

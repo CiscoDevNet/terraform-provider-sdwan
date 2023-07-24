@@ -44,6 +44,7 @@ func TestAccDataSourceSdwanVPNMembershipPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig = `
 
+
 resource "sdwan_vpn_membership_policy_definition" "test" {
   name = "Example"
   description = "My description"

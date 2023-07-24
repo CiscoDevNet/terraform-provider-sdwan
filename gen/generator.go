@@ -227,20 +227,21 @@ var genericTemplates = []t{
 }
 
 type YamlConfig struct {
-	Name           string                `yaml:"name"`
-	Model          string                `yaml:"model"`
-	RestEndpoint   string                `yaml:"rest_endpoint"`
-	Type           string                `yaml:"type"`
-	MinimumVersion string                `yaml:"minimum_version"`
-	DsDescription  string                `yaml:"ds_description"`
-	ResDescription string                `yaml:"res_description"`
-	DocCategory    string                `yaml:"doc_category"`
-	ExcludeTest    bool                  `yaml:"exclude_test"`
-	RootElement    string                `yaml:"root_element"`
-	HasVersion     bool                  `yaml:"has_version"`
-	IdAttribute    string                `yaml:"id_attribute"`
-	SkipTemplates  []string              `yaml:"skip_templates"`
-	Attributes     []YamlConfigAttribute `yaml:"attributes"`
+	Name              string                `yaml:"name"`
+	Model             string                `yaml:"model"`
+	RestEndpoint      string                `yaml:"rest_endpoint"`
+	Type              string                `yaml:"type"`
+	MinimumVersion    string                `yaml:"minimum_version"`
+	DsDescription     string                `yaml:"ds_description"`
+	ResDescription    string                `yaml:"res_description"`
+	DocCategory       string                `yaml:"doc_category"`
+	ExcludeTest       bool                  `yaml:"exclude_test"`
+	RootElement       string                `yaml:"root_element"`
+	HasVersion        bool                  `yaml:"has_version"`
+	IdAttribute       string                `yaml:"id_attribute"`
+	SkipTemplates     []string              `yaml:"skip_templates"`
+	Attributes        []YamlConfigAttribute `yaml:"attributes"`
+	TestPrerequisites string                `yaml:"test_prerequisites"`
 }
 
 type YamlConfigAttribute struct {
@@ -275,6 +276,7 @@ type YamlConfigAttribute struct {
 	StringMaxLength      int64                          `yaml:"string_max_length"`
 	DefaultValue         string                         `yaml:"default_value"`
 	Value                string                         `yaml:"value"`
+	TestValue            string                         `yaml:"test_value"`
 	Attributes           []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
 }

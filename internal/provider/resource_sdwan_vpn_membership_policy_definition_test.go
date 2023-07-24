@@ -31,7 +31,7 @@ func TestAccSdwanVPNMembershipPolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanVPNMembershipPolicyDefinitionConfig_all(),
+				Config: testAccSdwanVPNMembershipPolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_vpn_membership_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_vpn_membership_policy_definition.test", "description", "My description"),
@@ -42,15 +42,15 @@ func TestAccSdwanVPNMembershipPolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanVPNMembershipPolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_vpn_membership_policy_definition" "test" {
-		name = "Example"
-		description = "My description"
-		sites = [{
-			site_list_id = "e858e1c4-6aa8-4de7-99df-c3adbf80290d"
-			vpn_list_ids = ["04fcbb0b-efbf-43d2-a04b-847d3a7b104e"]
-		}]
-	}
-	`
+const testAccSdwanVPNMembershipPolicyDefinitionConfig = `
+
+
+resource "sdwan_vpn_membership_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	sites = [{
+		site_list_id = "e858e1c4-6aa8-4de7-99df-c3adbf80290d"
+		vpn_list_ids = ["04fcbb0b-efbf-43d2-a04b-847d3a7b104e"]
+	}]
 }
+`

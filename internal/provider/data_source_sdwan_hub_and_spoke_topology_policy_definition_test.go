@@ -47,6 +47,7 @@ func TestAccDataSourceSdwanHubAndSpokeTopologyPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanHubAndSpokeTopologyPolicyDefinitionConfig = `
 
+
 resource "sdwan_hub_and_spoke_topology_policy_definition" "test" {
   name = "Example"
   description = "My description"
