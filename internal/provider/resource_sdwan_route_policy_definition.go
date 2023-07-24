@@ -59,33 +59,26 @@ func (r *RoutePolicyDefinitionResource) Metadata(ctx context.Context, req resour
 func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Route policy definition.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Route Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy definition",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy definition",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
-			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "The policy defintion type",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the policy definition",
+				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
 				Required:            true,
 			},
 			"default_action": schema.StringAttribute{
@@ -116,7 +109,7 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 						},
 						"name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Sequence name").String,
-							Optional:            true,
+							Required:            true,
 						},
 						"base_action": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Base action, either `accept` or `reject`").AddStringEnumDescription("accept", "reject").String,
@@ -238,10 +231,10 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("aggregator", "asPath", "atomicAggregate", "community", "communityAdditive", "localPreference", "metric", "weight", "metrictype", "nextHop", "ompTag", "ospfTag", "origin", "originator").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("aggregator", "asPath", "atomicAggregate", "community", "communityAdditive", "localPreference", "metric", "weight", "metricType", "nextHop", "ompTag", "ospfTag", "origin", "originator").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("aggregator", "asPath", "atomicAggregate", "community", "communityAdditive", "localPreference", "metric", "weight", "metrictype", "nextHop", "ompTag", "ospfTag", "origin", "originator"),
+											stringvalidator.OneOf("aggregator", "asPath", "atomicAggregate", "community", "communityAdditive", "localPreference", "metric", "weight", "metricType", "nextHop", "ompTag", "ospfTag", "origin", "originator"),
 										},
 									},
 									"aggregator": schema.Int64Attribute{
@@ -352,7 +345,7 @@ func (r *RoutePolicyDefinitionResource) Configure(_ context.Context, req resourc
 }
 
 func (r *RoutePolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan Route
+	var plan RoutePolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -366,7 +359,7 @@ func (r *RoutePolicyDefinitionResource) Create(ctx context.Context, req resource
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/definition/vedgeroute", body)
+	res, err := r.client.Post("/template/policy/definition/vedgeroute/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -374,7 +367,6 @@ func (r *RoutePolicyDefinitionResource) Create(ctx context.Context, req resource
 
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
-	plan.Type = types.StringValue(plan.getType())
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -383,15 +375,10 @@ func (r *RoutePolicyDefinitionResource) Create(ctx context.Context, req resource
 }
 
 func (r *RoutePolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state, oldState Route
+	var state RoutePolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	diags = req.State.Get(ctx, &oldState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -409,7 +396,6 @@ func (r *RoutePolicyDefinitionResource) Read(ctx context.Context, req resource.R
 	}
 
 	state.fromBody(ctx, res)
-	state.updateVersions(ctx, oldState)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -418,7 +404,7 @@ func (r *RoutePolicyDefinitionResource) Read(ctx context.Context, req resource.R
 }
 
 func (r *RoutePolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state Route
+	var plan, state RoutePolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -451,7 +437,6 @@ func (r *RoutePolicyDefinitionResource) Update(ctx context.Context, req resource
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -461,7 +446,7 @@ func (r *RoutePolicyDefinitionResource) Update(ctx context.Context, req resource
 }
 
 func (r *RoutePolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state Route
+	var state RoutePolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

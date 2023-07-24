@@ -33,6 +33,8 @@ func TestAccDataSourceSdwanRoutePolicyDefinition(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanRoutePolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_route_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_route_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_route_policy_definition.test", "default_action", "reject"),
 					resource.TestCheckResourceAttr("data.sdwan_route_policy_definition.test", "sequences.0.id", "10"),
 					resource.TestCheckResourceAttr("data.sdwan_route_policy_definition.test", "sequences.0.ip_type", "ipv4"),
@@ -51,9 +53,10 @@ func TestAccDataSourceSdwanRoutePolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanRoutePolicyDefinitionConfig = `
 
+
 resource "sdwan_route_policy_definition" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
+  name = "Example"
+  description = "My description"
   default_action = "reject"
   sequences = [{
     id = 10

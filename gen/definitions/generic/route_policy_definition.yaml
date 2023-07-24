@@ -1,9 +1,24 @@
 ---
-name: Route
-type: vedgeRoute
+name: Route Policy Definition
+rest_endpoint: /template/policy/definition/vedgeroute/
+has_version: true
+id_attribute: definitionId
 doc_category: Localized Policies
-skip_templates: [model.go, resource.go, data_source.go]
 attributes:
+  - model_name: type
+    value: vedgeRoute
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
   - model_name: type
     tf_name: default_action
     data_path: [defaultAction]
@@ -18,6 +33,7 @@ attributes:
       - model_name: sequenceId
         tf_name: id
         type: Int64
+        id: true
         mandatory: true
         description: Sequence ID
         min_int: 1
@@ -32,6 +48,8 @@ attributes:
       - model_name: sequenceName
         tf_name: name
         type: String
+        id: true
+        mandatory: true
         description: Sequence name
         example: Sequence 10
       - model_name: sequenceType
@@ -51,6 +69,7 @@ attributes:
           - model_name: field
             tf_name: type
             type: String
+            id: true
             mandatory: true
             enum_values:
               [
@@ -71,39 +90,51 @@ attributes:
             example: metric
           - model_name: ref
             tf_name: prefix_list_id
+            conditional_attribute:
+              name: type
+              value: address
             type: String
             description: Prefix list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             exclude_test: true
           - tf_name: prefix_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Prefix list version
             exclude_test: true
           - model_name: ref
             tf_name: as_path_list_id
+            conditional_attribute:
+              name: type
+              value: asPath
             type: String
             description: AS path list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             exclude_test: true
           - tf_name: as_path_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: AS path list version
             exclude_test: true
           - model_name: refs
             tf_name: community_list_ids
+            conditional_attribute:
+              name: type
+              value: advancedCommunity
             type: ListString
             description: Community list IDs
             example: '["2081c2f4-3f9f-4fee-8078-dcc8904e368d"]'
             exclude_test: true
           - tf_name: community_list_versions
             tf_only: true
-            type: ListString
+            type: Versions
             description: Community list versions
             exclude_test: true
           - model_name: matchFlag
             tf_name: community_list_match_flag
+            conditional_attribute:
+              name: type
+              value: advancedCommunity
             type: String
             enum_values: [and, or, exact]
             description: Community list match flag
@@ -111,28 +142,37 @@ attributes:
             exclude_test: true
           - model_name: ref
             tf_name: expanded_community_list_id
+            conditional_attribute:
+              name: type
+              value: expandedCommunity
             type: String
             description: Expanded community list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             exclude_test: true
           - tf_name: expanded_community_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Expanded community list version
             exclude_test: true
           - model_name: ref
             tf_name: extended_community_list_id
+            conditional_attribute:
+              name: type
+              value: extCommunity
             type: String
             description: Extended community list ID
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             exclude_test: true
           - tf_name: extended_community_list_version
             tf_only: true
-            type: Int64
+            type: Version
             description: Extended community list version
             exclude_test: true
           - model_name: value
             tf_name: local_preference
+            conditional_attribute:
+              name: type
+              value: localPreference
             type: Int64
             model_type_string: true
             description: Local preference
@@ -142,6 +182,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: metric
+            conditional_attribute:
+              name: type
+              value: metric
             type: Int64
             model_type_string: true
             description: Metric
@@ -150,12 +193,18 @@ attributes:
             example: 100
           - model_name: value
             tf_name: next_hop
+            conditional_attribute:
+              name: type
+              value: nextHop
             type: String
             description: Next hop IP
             example: 10.1.1.5
             exclude_test: true
           - model_name: value
             tf_name: origin
+            conditional_attribute:
+              name: type
+              value: origin
             type: String
             enum_values: [igp, egp, incomplete]
             description: Origin
@@ -163,12 +212,18 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: peer
+            conditional_attribute:
+              name: type
+              value: peer
             type: String
             description: Peer IP
             example: 10.1.1.12
             exclude_test: true
           - model_name: value
             tf_name: omp_tag
+            conditional_attribute:
+              name: type
+              value: omp_tag
             type: Int64
             model_type_string: true
             description: OMP tag
@@ -178,6 +233,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: ospf_tag
+            conditional_attribute:
+              name: type
+              value: ospfTag
             type: Int64
             model_type_string: true
             description: OSPF tag
@@ -197,6 +255,7 @@ attributes:
           - model_name: field
             tf_name: type
             type: String
+            id: true
             mandatory: true
             enum_values:
               [
@@ -208,7 +267,7 @@ attributes:
                 localPreference,
                 metric,
                 weight,
-                metrictype,
+                metricType,
                 nextHop,
                 ompTag,
                 ospfTag,
@@ -220,6 +279,9 @@ attributes:
           - model_name: aggregator
             data_path: [value]
             tf_name: aggregator
+            conditional_attribute:
+              name: type
+              value: aggregator
             type: Int64
             model_type_string: true
             description: Aggregator
@@ -229,12 +291,18 @@ attributes:
           - model_name: ipAddress
             data_path: [value]
             tf_name: aggregator_ip_address
+            conditional_attribute:
+              name: type
+              value: aggregator
             type: String
             description: IP address
             example: 10.1.2.3
           - model_name: prepend
             data_path: [value]
             tf_name: as_path_prepend
+            conditional_attribute:
+              name: type
+              value: asPath
             type: String
             description: Space separated list of ASN to prepend
             example: 65521 65521
@@ -242,12 +310,18 @@ attributes:
           - model_name: exclude
             data_path: [value]
             tf_name: as_path_exclude
+            conditional_attribute:
+              name: type
+              value: asPath
             type: String
             description: Space separated list of ASN to exclude
             example: 110 120
             exclude_test: true
           - model_name: value
             tf_name: atomic_aggregate
+            conditional_attribute:
+              name: type
+              value: atomicAggregate
             type: Bool
             model_type_string: true
             description: Atomic aggregate
@@ -255,12 +329,18 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: community
+            conditional_attribute:
+              name: type
+              value: community
             type: String
             description: Community value, e.g. `1000:10000` or `internet` or `local-AS`
             example: 1000:10000
             exclude_test: true
           - model_name: value
             tf_name: community_additive
+            conditional_attribute:
+              name: type
+              value: communityAdditive
             type: Bool
             model_type_string: true
             description: Community additive
@@ -268,6 +348,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: local_preference
+            conditional_attribute:
+              name: type
+              value: localPreference
             type: Int64
             model_type_string: true
             description: Local preference
@@ -277,6 +360,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: metric
+            conditional_attribute:
+              name: type
+              value: metric
             type: Int64
             model_type_string: true
             description: Metric
@@ -286,6 +372,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: weight
+            conditional_attribute:
+              name: type
+              value: weight
             type: Int64
             model_type_string: true
             description: Weight
@@ -295,6 +384,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: metric_type
+            conditional_attribute:
+              name: type
+              value: metricType
             type: String
             enum_values: [type1, type2]
             description: Metric type
@@ -302,12 +394,18 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: next_hop
+            conditional_attribute:
+              name: type
+              value: nextHop
             type: String
             description: Next hop IP
             example: 10.1.1.5
             exclude_test: true
           - model_name: value
             tf_name: omp_tag
+            conditional_attribute:
+              name: type
+              value: ompTag
             type: Int64
             model_type_string: true
             description: OMP tag
@@ -317,6 +415,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: ospf_tag
+            conditional_attribute:
+              name: type
+              value: ospfTag
             type: Int64
             model_type_string: true
             description: OSPF tag
@@ -326,6 +427,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: origin
+            conditional_attribute:
+              name: type
+              value: origin
             type: String
             enum_values: [igp, egp, incomplete]
             description: Origin
@@ -333,6 +437,9 @@ attributes:
             exclude_test: true
           - model_name: value
             tf_name: originator
+            conditional_attribute:
+              name: type
+              value: originator
             type: String
             description: Originator IP
             example: 192.168.1.10

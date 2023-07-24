@@ -31,8 +31,10 @@ func TestAccSdwanRoutePolicyDefinition(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanRoutePolicyDefinitionConfig_all(),
+				Config: testAccSdwanRoutePolicyDefinitionConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "description", "My description"),
 					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "default_action", "reject"),
 					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.id", "10"),
 					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.ip_type", "ipv4"),
@@ -49,27 +51,27 @@ func TestAccSdwanRoutePolicyDefinition(t *testing.T) {
 	})
 }
 
-func testAccSdwanRoutePolicyDefinitionConfig_all() string {
-	return `
-	resource "sdwan_route_policy_definition" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		default_action = "reject"
-		sequences = [{
-			id = 10
-			ip_type = "ipv4"
-			name = "Sequence 10"
-			base_action = "accept"
-			match_entries = [{
-				type = "metric"
-				metric = 100
-			}]
-			action_entries = [{
-				type = "aggregator"
-				aggregator = 10
-				aggregator_ip_address = "10.1.2.3"
-			}]
+const testAccSdwanRoutePolicyDefinitionConfig = `
+
+
+resource "sdwan_route_policy_definition" "test" {
+	name = "Example"
+	description = "My description"
+	default_action = "reject"
+	sequences = [{
+		id = 10
+		ip_type = "ipv4"
+		name = "Sequence 10"
+		base_action = "accept"
+		match_entries = [{
+			type = "metric"
+			metric = 100
 		}]
-	}
-	`
+		action_entries = [{
+			type = "aggregator"
+			aggregator = 10
+			aggregator_ip_address = "10.1.2.3"
+		}]
+	}]
 }
+`

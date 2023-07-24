@@ -3,12 +3,12 @@
 page_title: "sdwan_route_policy_definition Resource - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This resource can manage a Route policy definition.
+  This resource can manage a Route Policy Definition .
 ---
 
 # sdwan_route_policy_definition (Resource)
 
-This resource can manage a Route policy definition.
+This resource can manage a Route Policy Definition .
 
 ## Example Usage
 
@@ -57,9 +57,8 @@ resource "sdwan_route_policy_definition" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy definition
-- `type` (String) The policy defintion type
-- `version` (Number) The version of the policy definition
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`
@@ -68,6 +67,7 @@ Required:
 
 - `id` (Number) Sequence ID
   - Range: `1`-`65534`
+- `name` (String) Sequence name
 
 Optional:
 
@@ -77,7 +77,6 @@ Optional:
 - `ip_type` (String) IP version, either `ipv4` or `ipv6`
   - Choices: `ipv4`, `ipv6`
 - `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
-- `name` (String) Sequence name
 
 <a id="nestedatt--sequences--action_entries"></a>
 ### Nested Schema for `sequences.action_entries`
@@ -85,7 +84,7 @@ Optional:
 Required:
 
 - `type` (String) Type of action entry
-  - Choices: `aggregator`, `asPath`, `atomicAggregate`, `community`, `communityAdditive`, `localPreference`, `metric`, `weight`, `metrictype`, `nextHop`, `ompTag`, `ospfTag`, `origin`, `originator`
+  - Choices: `aggregator`, `asPath`, `atomicAggregate`, `community`, `communityAdditive`, `localPreference`, `metric`, `weight`, `metricType`, `nextHop`, `ompTag`, `ospfTag`, `origin`, `originator`
 
 Optional:
 

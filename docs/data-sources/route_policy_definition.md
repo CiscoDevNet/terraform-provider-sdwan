@@ -3,12 +3,12 @@
 page_title: "sdwan_route_policy_definition Data Source - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This data source can read the Route policy definition.
+  This data source can read the Route Policy Definition .
 ---
 
 # sdwan_route_policy_definition (Data Source)
 
-This data source can read the Route policy definition.
+This data source can read the Route Policy Definition .
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ data "sdwan_route_policy_definition" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy definition
+- `id` (String) The id of the object
 
 ### Read-Only
 
@@ -31,8 +31,7 @@ data "sdwan_route_policy_definition" "example" {
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `sequences` (Attributes List) List of ACL sequences (see [below for nested schema](#nestedatt--sequences))
-- `type` (String) The policy definition type
-- `version` (Number) The version of the policy definition
+- `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`

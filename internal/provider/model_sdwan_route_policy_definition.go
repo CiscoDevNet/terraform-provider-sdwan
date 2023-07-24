@@ -29,26 +29,25 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type Route struct {
-	Id            types.String     `tfsdk:"id"`
-	Version       types.Int64      `tfsdk:"version"`
-	Type          types.String     `tfsdk:"type"`
-	Name          types.String     `tfsdk:"name"`
-	Description   types.String     `tfsdk:"description"`
-	DefaultAction types.String     `tfsdk:"default_action"`
-	Sequences     []RouteSequences `tfsdk:"sequences"`
+type RoutePolicyDefinition struct {
+	Id            types.String                     `tfsdk:"id"`
+	Version       types.Int64                      `tfsdk:"version"`
+	Name          types.String                     `tfsdk:"name"`
+	Description   types.String                     `tfsdk:"description"`
+	DefaultAction types.String                     `tfsdk:"default_action"`
+	Sequences     []RoutePolicyDefinitionSequences `tfsdk:"sequences"`
 }
 
-type RouteSequences struct {
-	Id            types.Int64                   `tfsdk:"id"`
-	IpType        types.String                  `tfsdk:"ip_type"`
-	Name          types.String                  `tfsdk:"name"`
-	BaseAction    types.String                  `tfsdk:"base_action"`
-	MatchEntries  []RouteSequencesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []RouteSequencesActionEntries `tfsdk:"action_entries"`
+type RoutePolicyDefinitionSequences struct {
+	Id            types.Int64                                   `tfsdk:"id"`
+	IpType        types.String                                  `tfsdk:"ip_type"`
+	Name          types.String                                  `tfsdk:"name"`
+	BaseAction    types.String                                  `tfsdk:"base_action"`
+	MatchEntries  []RoutePolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []RoutePolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
 
-type RouteSequencesMatchEntries struct {
+type RoutePolicyDefinitionSequencesMatchEntries struct {
 	Type                         types.String `tfsdk:"type"`
 	PrefixListId                 types.String `tfsdk:"prefix_list_id"`
 	PrefixListVersion            types.Int64  `tfsdk:"prefix_list_version"`
@@ -69,7 +68,7 @@ type RouteSequencesMatchEntries struct {
 	OmpTag                       types.Int64  `tfsdk:"omp_tag"`
 	OspfTag                      types.Int64  `tfsdk:"ospf_tag"`
 }
-type RouteSequencesActionEntries struct {
+type RoutePolicyDefinitionSequencesActionEntries struct {
 	Type                types.String `tfsdk:"type"`
 	Aggregator          types.Int64  `tfsdk:"aggregator"`
 	AggregatorIpAddress types.String `tfsdk:"aggregator_ip_address"`
@@ -89,20 +88,20 @@ type RouteSequencesActionEntries struct {
 	Originator          types.String `tfsdk:"originator"`
 }
 
-func (data Route) getType() string {
-	return "vedgeRoute"
-}
-
-func (data Route) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "vedgeRoute")
-	path := ""
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Description.IsNull() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	}
 	if !data.DefaultAction.IsNull() {
-		body, _ = sjson.Set(body, path+"defaultAction.type", data.DefaultAction.ValueString())
+		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
 	if len(data.Sequences) > 0 {
-		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.Id.IsNull() {
@@ -125,45 +124,45 @@ func (data Route) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
-					if !childItem.PrefixListId.IsNull() {
+					if !childItem.PrefixListId.IsNull() && childItem.Type.ValueString() == "address" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.PrefixListId.ValueString())
 					}
-					if !childItem.AsPathListId.IsNull() {
+					if !childItem.AsPathListId.IsNull() && childItem.Type.ValueString() == "asPath" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.AsPathListId.ValueString())
 					}
-					if !childItem.CommunityListIds.IsNull() {
+					if !childItem.CommunityListIds.IsNull() && childItem.Type.ValueString() == "advancedCommunity" {
 						var values []string
 						childItem.CommunityListIds.ElementsAs(ctx, &values, false)
 						itemChildBody, _ = sjson.Set(itemChildBody, "refs", values)
 					}
-					if !childItem.CommunityListMatchFlag.IsNull() {
+					if !childItem.CommunityListMatchFlag.IsNull() && childItem.Type.ValueString() == "advancedCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "matchFlag", childItem.CommunityListMatchFlag.ValueString())
 					}
-					if !childItem.ExpandedCommunityListId.IsNull() {
+					if !childItem.ExpandedCommunityListId.IsNull() && childItem.Type.ValueString() == "expandedCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ExpandedCommunityListId.ValueString())
 					}
-					if !childItem.ExtendedCommunityListId.IsNull() {
+					if !childItem.ExtendedCommunityListId.IsNull() && childItem.Type.ValueString() == "extCommunity" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.ExtendedCommunityListId.ValueString())
 					}
-					if !childItem.LocalPreference.IsNull() {
+					if !childItem.LocalPreference.IsNull() && childItem.Type.ValueString() == "localPreference" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.LocalPreference.ValueInt64()))
 					}
-					if !childItem.Metric.IsNull() {
+					if !childItem.Metric.IsNull() && childItem.Type.ValueString() == "metric" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Metric.ValueInt64()))
 					}
-					if !childItem.NextHop.IsNull() {
+					if !childItem.NextHop.IsNull() && childItem.Type.ValueString() == "nextHop" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.NextHop.ValueString())
 					}
-					if !childItem.Origin.IsNull() {
+					if !childItem.Origin.IsNull() && childItem.Type.ValueString() == "origin" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Origin.ValueString())
 					}
-					if !childItem.Peer.IsNull() {
+					if !childItem.Peer.IsNull() && childItem.Type.ValueString() == "peer" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Peer.ValueString())
 					}
-					if !childItem.OmpTag.IsNull() {
+					if !childItem.OmpTag.IsNull() && childItem.Type.ValueString() == "omp_tag" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.OmpTag.ValueInt64()))
 					}
-					if !childItem.OspfTag.IsNull() {
+					if !childItem.OspfTag.IsNull() && childItem.Type.ValueString() == "ospfTag" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.OspfTag.ValueInt64()))
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
@@ -177,64 +176,72 @@ func (data Route) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "field", childItem.Type.ValueString())
 					}
-					if !childItem.Aggregator.IsNull() {
+					if !childItem.Aggregator.IsNull() && childItem.Type.ValueString() == "aggregator" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value.aggregator", fmt.Sprint(childItem.Aggregator.ValueInt64()))
 					}
-					if !childItem.AggregatorIpAddress.IsNull() {
+					if !childItem.AggregatorIpAddress.IsNull() && childItem.Type.ValueString() == "aggregator" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value.ipAddress", childItem.AggregatorIpAddress.ValueString())
 					}
-					if !childItem.AsPathPrepend.IsNull() {
+					if !childItem.AsPathPrepend.IsNull() && childItem.Type.ValueString() == "asPath" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value.prepend", childItem.AsPathPrepend.ValueString())
 					}
-					if !childItem.AsPathExclude.IsNull() {
+					if !childItem.AsPathExclude.IsNull() && childItem.Type.ValueString() == "asPath" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value.exclude", childItem.AsPathExclude.ValueString())
 					}
-					if !childItem.AtomicAggregate.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.AtomicAggregate.ValueBool()))
+					if !childItem.AtomicAggregate.IsNull() && childItem.Type.ValueString() == "atomicAggregate" {
+						if false && childItem.AtomicAggregate.ValueBool() {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", "")
+						} else {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.AtomicAggregate.ValueBool()))
+						}
 					}
-					if !childItem.Community.IsNull() {
+					if !childItem.Community.IsNull() && childItem.Type.ValueString() == "community" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Community.ValueString())
 					}
-					if !childItem.CommunityAdditive.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.CommunityAdditive.ValueBool()))
+					if !childItem.CommunityAdditive.IsNull() && childItem.Type.ValueString() == "communityAdditive" {
+						if false && childItem.CommunityAdditive.ValueBool() {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", "")
+						} else {
+							itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.CommunityAdditive.ValueBool()))
+						}
 					}
-					if !childItem.LocalPreference.IsNull() {
+					if !childItem.LocalPreference.IsNull() && childItem.Type.ValueString() == "localPreference" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.LocalPreference.ValueInt64()))
 					}
-					if !childItem.Metric.IsNull() {
+					if !childItem.Metric.IsNull() && childItem.Type.ValueString() == "metric" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Metric.ValueInt64()))
 					}
-					if !childItem.Weight.IsNull() {
+					if !childItem.Weight.IsNull() && childItem.Type.ValueString() == "weight" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Weight.ValueInt64()))
 					}
-					if !childItem.MetricType.IsNull() {
+					if !childItem.MetricType.IsNull() && childItem.Type.ValueString() == "metricType" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.MetricType.ValueString())
 					}
-					if !childItem.NextHop.IsNull() {
+					if !childItem.NextHop.IsNull() && childItem.Type.ValueString() == "nextHop" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.NextHop.ValueString())
 					}
-					if !childItem.OmpTag.IsNull() {
+					if !childItem.OmpTag.IsNull() && childItem.Type.ValueString() == "ompTag" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.OmpTag.ValueInt64()))
 					}
-					if !childItem.OspfTag.IsNull() {
+					if !childItem.OspfTag.IsNull() && childItem.Type.ValueString() == "ospfTag" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.OspfTag.ValueInt64()))
 					}
-					if !childItem.Origin.IsNull() {
+					if !childItem.Origin.IsNull() && childItem.Type.ValueString() == "origin" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Origin.ValueString())
 					}
-					if !childItem.Originator.IsNull() {
+					if !childItem.Originator.IsNull() && childItem.Type.ValueString() == "originator" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Originator.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "actions.0.parameter.-1", itemChildBody)
 				}
 			}
-			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "sequences.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *Route) fromBody(ctx context.Context, res gjson.Result) {
+func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -245,21 +252,15 @@ func (data *Route) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("type"); value.Exists() {
-		data.Type = types.StringValue(value.String())
-	} else {
-		data.Type = types.StringNull()
-	}
-	path := ""
-	if value := res.Get(path + "defaultAction.type"); value.Exists() {
+	if value := res.Get("defaultAction.type"); value.Exists() {
 		data.DefaultAction = types.StringValue(value.String())
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get(path + "sequences"); value.Exists() {
-		data.Sequences = make([]RouteSequences, 0)
+	if value := res.Get("sequences"); value.Exists() {
+		data.Sequences = make([]RoutePolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := RouteSequences{}
+			item := RoutePolicyDefinitionSequences{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.Id = types.Int64Value(cValue.Int())
 			} else {
@@ -281,75 +282,75 @@ func (data *Route) fromBody(ctx context.Context, res gjson.Result) {
 				item.BaseAction = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() {
-				item.MatchEntries = make([]RouteSequencesMatchEntries, 0)
+				item.MatchEntries = make([]RoutePolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := RouteSequencesMatchEntries{}
+					cItem := RoutePolicyDefinitionSequencesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "address" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "address" {
 						cItem.PrefixListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.PrefixListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "asPath" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "asPath" {
 						cItem.AsPathListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.AsPathListId = types.StringNull()
 					}
-					if ccValue := cv.Get("refs"); cItem.Type.ValueString() == "advancedCommunity" && ccValue.Exists() {
+					if ccValue := cv.Get("refs"); ccValue.Exists() && cItem.Type.ValueString() == "advancedCommunity" {
 						cItem.CommunityListIds = helpers.GetStringList(ccValue.Array())
 					} else {
 						cItem.CommunityListIds = types.ListNull(types.StringType)
 					}
-					if ccValue := cv.Get("matchFlag"); cItem.Type.ValueString() == "advancedCommunity" && ccValue.Exists() {
+					if ccValue := cv.Get("matchFlag"); ccValue.Exists() && cItem.Type.ValueString() == "advancedCommunity" {
 						cItem.CommunityListMatchFlag = types.StringValue(ccValue.String())
 					} else {
 						cItem.CommunityListMatchFlag = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "expandedCommunity" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "expandedCommunity" {
 						cItem.ExpandedCommunityListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ExpandedCommunityListId = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); cItem.Type.ValueString() == "extCommunity" && ccValue.Exists() {
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "extCommunity" {
 						cItem.ExtendedCommunityListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.ExtendedCommunityListId = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "localPreference" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "localPreference" {
 						cItem.LocalPreference = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.LocalPreference = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "metric" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "metric" {
 						cItem.Metric = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Metric = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "nextHop" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "nextHop" {
 						cItem.NextHop = types.StringValue(ccValue.String())
 					} else {
 						cItem.NextHop = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "origin" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "origin" {
 						cItem.Origin = types.StringValue(ccValue.String())
 					} else {
 						cItem.Origin = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "peer" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "peer" {
 						cItem.Peer = types.StringValue(ccValue.String())
 					} else {
 						cItem.Peer = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "ompTag" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "omp_tag" {
 						cItem.OmpTag = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.OmpTag = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "ospfTag" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "ospfTag" {
 						cItem.OspfTag = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.OspfTag = types.Int64Null()
@@ -359,85 +360,98 @@ func (data *Route) fromBody(ctx context.Context, res gjson.Result) {
 				})
 			}
 			if cValue := v.Get("actions.0.parameter"); cValue.Exists() {
-				item.ActionEntries = make([]RouteSequencesActionEntries, 0)
+				item.ActionEntries = make([]RoutePolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := RouteSequencesActionEntries{}
+					cItem := RoutePolicyDefinitionSequencesActionEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("value.aggregator"); cItem.Type.ValueString() == "aggregator" && ccValue.Exists() {
+					if ccValue := cv.Get("value.aggregator"); ccValue.Exists() && cItem.Type.ValueString() == "aggregator" {
 						cItem.Aggregator = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Aggregator = types.Int64Null()
 					}
-					if ccValue := cv.Get("value.ipAddress"); cItem.Type.ValueString() == "aggregator" && ccValue.Exists() {
+					if ccValue := cv.Get("value.ipAddress"); ccValue.Exists() && cItem.Type.ValueString() == "aggregator" {
 						cItem.AggregatorIpAddress = types.StringValue(ccValue.String())
 					} else {
 						cItem.AggregatorIpAddress = types.StringNull()
 					}
-					if ccValue := cv.Get("value.prepend"); cItem.Type.ValueString() == "asPath" && ccValue.Exists() {
+					if ccValue := cv.Get("value.prepend"); ccValue.Exists() && cItem.Type.ValueString() == "asPath" {
 						cItem.AsPathPrepend = types.StringValue(ccValue.String())
 					} else {
 						cItem.AsPathPrepend = types.StringNull()
 					}
-					if ccValue := cv.Get("value.exclude"); cItem.Type.ValueString() == "asPath" && ccValue.Exists() {
+					if ccValue := cv.Get("value.exclude"); ccValue.Exists() && cItem.Type.ValueString() == "asPath" {
 						cItem.AsPathExclude = types.StringValue(ccValue.String())
 					} else {
 						cItem.AsPathExclude = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "community" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "atomicAggregate" {
+						if false && ccValue.String() == "" {
+							cItem.AtomicAggregate = types.BoolValue(true)
+						} else {
+							cItem.AtomicAggregate = types.BoolValue(ccValue.Bool())
+						}
+					} else {
+						cItem.AtomicAggregate = types.BoolNull()
+					}
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "community" {
 						cItem.Community = types.StringValue(ccValue.String())
 					} else {
 						cItem.Community = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "communityAdditive" && ccValue.Exists() {
-						cItem.CommunityAdditive = types.BoolValue(ccValue.Bool())
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "communityAdditive" {
+						if false && ccValue.String() == "" {
+							cItem.CommunityAdditive = types.BoolValue(true)
+						} else {
+							cItem.CommunityAdditive = types.BoolValue(ccValue.Bool())
+						}
 					} else {
 						cItem.CommunityAdditive = types.BoolNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "localPreference" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "localPreference" {
 						cItem.LocalPreference = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.LocalPreference = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "metric" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "metric" {
 						cItem.Metric = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Metric = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "weight" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "weight" {
 						cItem.Weight = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.Weight = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "metrictype" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "metricType" {
 						cItem.MetricType = types.StringValue(ccValue.String())
 					} else {
 						cItem.MetricType = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "nextHop" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "nextHop" {
 						cItem.NextHop = types.StringValue(ccValue.String())
 					} else {
 						cItem.NextHop = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "ompTag" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "ompTag" {
 						cItem.OmpTag = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.OmpTag = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "ospfTag" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "ospfTag" {
 						cItem.OspfTag = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.OspfTag = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "origin" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "origin" {
 						cItem.Origin = types.StringValue(ccValue.String())
 					} else {
 						cItem.Origin = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); cItem.Type.ValueString() == "originator" && ccValue.Exists() {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "originator" {
 						cItem.Originator = types.StringValue(ccValue.String())
 					} else {
 						cItem.Originator = types.StringNull()
@@ -450,9 +464,12 @@ func (data *Route) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+	data.updateVersions(ctx)
+
 }
 
-func (data *Route) hasChanges(ctx context.Context, state *Route) bool {
+func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RoutePolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -589,88 +606,52 @@ func (data *Route) hasChanges(ctx context.Context, state *Route) bool {
 	return hasChanges
 }
 
-func (data *Route) getMatchPrefixListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "address" {
-					return cItem.PrefixListVersion
-				}
+func (data *RoutePolicyDefinition) updateVersions(ctx context.Context) {
+	state := *data
+	for i := range data.Sequences {
+		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
+		stateIndex := -1
+		for j := range state.Sequences {
+			stateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[j].Id.ValueInt64()), fmt.Sprintf("%v", state.Sequences[j].Name.ValueString())}
+			if dataKeys == stateKeys {
+				stateIndex = j
+				break
 			}
 		}
-	}
-	return types.Int64Null()
-}
-
-func (data *Route) getMatchAsPathListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "asPath" {
-					return cItem.AsPathListVersion
+		for ii := range data.Sequences[i].MatchEntries {
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
+			cStateIndex := -1
+			for jj := range state.Sequences[stateIndex].MatchEntries {
+				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+				if cDataKeys == cStateKeys {
+					cStateIndex = jj
+					break
 				}
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *Route) getMatchCommunityListVersions(ctx context.Context, name string, id int64) types.List {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "advancedCommunity" {
-					return cItem.CommunityListVersions
-				}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].PrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].PrefixListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].PrefixListVersion = types.Int64Null()
 			}
-		}
-	}
-	return types.ListNull(types.StringType)
-}
-
-func (data *Route) getMatchExpandedCommunityListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "expandedCommunity" {
-					return cItem.ExpandedCommunityListVersion
-				}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].AsPathListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].AsPathListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].AsPathListVersion = types.Int64Null()
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *Route) getMatchExtendedCommunityListVersion(ctx context.Context, name string, id int64) types.Int64 {
-	for _, item := range data.Sequences {
-		if item.Name.ValueString() == name && item.Id.ValueInt64() == id {
-			for _, cItem := range item.MatchEntries {
-				if cItem.Type.ValueString() == "extCommunity" {
-					return cItem.ExtendedCommunityListVersion
-				}
+			if cStateIndex >= -1 && !state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersions.IsNull() {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersions = state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersions
+			} else {
+				data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListNull(types.StringType)
 			}
-		}
-	}
-	return types.Int64Null()
-}
-
-func (data *Route) updateVersions(ctx context.Context, state Route) {
-	for s := range data.Sequences {
-		id := data.Sequences[s].Id.ValueInt64()
-		name := data.Sequences[s].Name.ValueString()
-		for m := range data.Sequences[s].MatchEntries {
-			t := data.Sequences[s].MatchEntries[m].Type.ValueString()
-			data.Sequences[s].MatchEntries[m].CommunityListVersions = types.ListNull(types.StringType)
-			if t == "address" {
-				data.Sequences[s].MatchEntries[m].PrefixListVersion = state.getMatchPrefixListVersion(ctx, name, id)
-			} else if t == "asPath" {
-				data.Sequences[s].MatchEntries[m].AsPathListVersion = state.getMatchAsPathListVersion(ctx, name, id)
-			} else if t == "advancedCommunity" {
-				data.Sequences[s].MatchEntries[m].CommunityListVersions = state.getMatchCommunityListVersions(ctx, name, id)
-			} else if t == "expandedCommunity" {
-				data.Sequences[s].MatchEntries[m].ExpandedCommunityListVersion = state.getMatchExpandedCommunityListVersion(ctx, name, id)
-			} else if t == "extCommunity" {
-				data.Sequences[s].MatchEntries[m].ExtendedCommunityListVersion = state.getMatchExtendedCommunityListVersion(ctx, name, id)
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ExpandedCommunityListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Null()
+			}
+			if cStateIndex >= -1 {
+				data.Sequences[i].MatchEntries[ii].ExtendedCommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ExtendedCommunityListVersion
+			} else {
+				data.Sequences[i].MatchEntries[ii].ExtendedCommunityListVersion = types.Int64Null()
 			}
 		}
 	}
