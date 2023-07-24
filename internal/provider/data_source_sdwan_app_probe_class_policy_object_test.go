@@ -33,9 +33,10 @@ func TestAccDataSourceSdwanAppProbeClassPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanAppProbeClassPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "entries.0.forwarding_class", "FC1"),
-					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "entries.0.mappings.0.color", "blue"),
-					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "entries.0.mappings.0.dscp", "8"),
+					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "forwarding_class", "FC1"),
+					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "mappings.0.color", "blue"),
+					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "mappings.0.dscp", "8"),
 				),
 			},
 		},
@@ -44,14 +45,13 @@ func TestAccDataSourceSdwanAppProbeClassPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanAppProbeClassPolicyObjectConfig = `
 
+
 resource "sdwan_app_probe_class_policy_object" "test" {
-  name = "TF_TEST_MIN"
-  entries = [{
-    forwarding_class = "FC1"
-	mappings = [{
-		color = "blue"
-		dscp = 8
-	}]
+  name = "Example"
+  forwarding_class = "FC1"
+  mappings = [{
+    color = "blue"
+    dscp = 8
   }]
 }
 

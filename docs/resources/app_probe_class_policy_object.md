@@ -3,27 +3,23 @@
 page_title: "sdwan_app_probe_class_policy_object Resource - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This resource can manage a App Probe Class policy object.
+  This resource can manage a App Probe Class Policy Object .
 ---
 
 # sdwan_app_probe_class_policy_object (Resource)
 
-This resource can manage a App Probe Class policy object.
+This resource can manage a App Probe Class Policy Object .
 
 ## Example Usage
 
 ```terraform
 resource "sdwan_app_probe_class_policy_object" "example" {
-  name = "Example"
-  entries = [
+  name             = "Example"
+  forwarding_class = "FC1"
+  mappings = [
     {
-      forwarding_class = "FC1"
-      mappings = [
-        {
-          color = "blue"
-          dscp  = 8
-        }
-      ]
+      color = "blue"
+      dscp  = 8
     }
   ]
 }
@@ -34,24 +30,17 @@ resource "sdwan_app_probe_class_policy_object" "example" {
 
 ### Required
 
-- `entries` (Attributes List) List of entries, only 1 entry supported (see [below for nested schema](#nestedatt--entries))
+- `forwarding_class` (String) Forwarding class name
+- `mappings` (Attributes List) Color mappings (see [below for nested schema](#nestedatt--mappings))
 - `name` (String) The name of the policy object
 
 ### Read-Only
 
-- `id` (String) The id of the policy object
-- `version` (Number) The version of the feature template
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
-<a id="nestedatt--entries"></a>
-### Nested Schema for `entries`
-
-Required:
-
-- `forwarding_class` (String) Forwarding class name
-- `mappings` (Attributes List) Color mappings (see [below for nested schema](#nestedatt--entries--mappings))
-
-<a id="nestedatt--entries--mappings"></a>
-### Nested Schema for `entries.mappings`
+<a id="nestedatt--mappings"></a>
+### Nested Schema for `mappings`
 
 Required:
 

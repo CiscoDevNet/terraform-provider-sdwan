@@ -27,92 +27,95 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type AppProbeClass struct {
-	Id      types.String           `tfsdk:"id"`
-	Version types.Int64            `tfsdk:"version"`
-	Name    types.String           `tfsdk:"name"`
-	Entries []AppProbeClassEntries `tfsdk:"entries"`
+type AppProbeClassPolicyObject struct {
+	Id              types.String                        `tfsdk:"id"`
+	Version         types.Int64                         `tfsdk:"version"`
+	Name            types.String                        `tfsdk:"name"`
+	ForwardingClass types.String                        `tfsdk:"forwarding_class"`
+	Mappings        []AppProbeClassPolicyObjectMappings `tfsdk:"mappings"`
 }
 
-type AppProbeClassEntries struct {
-	ForwardingClass types.String                   `tfsdk:"forwarding_class"`
-	Mappings        []AppProbeClassEntriesMappings `tfsdk:"mappings"`
-}
-
-type AppProbeClassEntriesMappings struct {
+type AppProbeClassPolicyObjectMappings struct {
 	Color types.String `tfsdk:"color"`
 	Dscp  types.Int64  `tfsdk:"dscp"`
 }
 
-func (data AppProbeClass) getType() string {
-	return "appProbe"
-}
-
-func (data AppProbeClass) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data AppProbeClassPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "appProbe")
-	if len(data.Entries) > 0 {
-		body, _ = sjson.Set(body, "entries", []interface{}{})
-		for _, item := range data.Entries {
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.ForwardingClass.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.forwardingClass", data.ForwardingClass.ValueString())
+	}
+	if len(data.Mappings) > 0 {
+		body, _ = sjson.Set(body, "entries.0.map", []interface{}{})
+		for _, item := range data.Mappings {
 			itemBody := ""
-			if !item.ForwardingClass.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "forwardingClass", item.ForwardingClass.ValueString())
+			if !item.Color.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "color", item.Color.ValueString())
 			}
-			if len(item.Mappings) > 0 {
-				itemBody, _ = sjson.Set(itemBody, "map", []interface{}{})
-				for _, childItem := range item.Mappings {
-					itemChildBody := ""
-					if !childItem.Color.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "color", childItem.Color.ValueString())
-					}
-					if !childItem.Dscp.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "dscp", childItem.Dscp.ValueInt64())
-					}
-					itemBody, _ = sjson.SetRaw(itemBody, "map.-1", itemChildBody)
-				}
+			if !item.Dscp.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "dscp", item.Dscp.ValueInt64())
 			}
-			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
+			body, _ = sjson.SetRaw(body, "entries.0.map.-1", itemBody)
 		}
 	}
 	return body
 }
 
-func (data *AppProbeClass) fromBody(ctx context.Context, res gjson.Result) {
+func (data *AppProbeClassPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]AppProbeClassEntries, 0)
+	if value := res.Get("entries.0.forwardingClass"); value.Exists() {
+		data.ForwardingClass = types.StringValue(value.String())
+	} else {
+		data.ForwardingClass = types.StringNull()
+	}
+	if value := res.Get("entries.0.map"); value.Exists() {
+		data.Mappings = make([]AppProbeClassPolicyObjectMappings, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := AppProbeClassEntries{}
-			if cValue := v.Get("forwardingClass"); cValue.Exists() {
-				item.ForwardingClass = types.StringValue(cValue.String())
+			item := AppProbeClassPolicyObjectMappings{}
+			if cValue := v.Get("color"); cValue.Exists() {
+				item.Color = types.StringValue(cValue.String())
 			} else {
-				item.ForwardingClass = types.StringNull()
+				item.Color = types.StringNull()
 			}
-			if cValue := v.Get("map"); cValue.Exists() {
-				item.Mappings = make([]AppProbeClassEntriesMappings, 0)
-				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := AppProbeClassEntriesMappings{}
-					if ccValue := cv.Get("color"); ccValue.Exists() {
-						cItem.Color = types.StringValue(ccValue.String())
-					} else {
-						cItem.Color = types.StringNull()
-					}
-					if ccValue := cv.Get("dscp"); ccValue.Exists() {
-						cItem.Dscp = types.Int64Value(ccValue.Int())
-					} else {
-						cItem.Dscp = types.Int64Null()
-					}
-					item.Mappings = append(item.Mappings, cItem)
-					return true
-				})
+			if cValue := v.Get("dscp"); cValue.Exists() {
+				item.Dscp = types.Int64Value(cValue.Int())
+			} else {
+				item.Dscp = types.Int64Null()
 			}
-			data.Entries = append(data.Entries, item)
+			data.Mappings = append(data.Mappings, item)
 			return true
 		})
 	}
+
+}
+
+func (data *AppProbeClassPolicyObject) hasChanges(ctx context.Context, state *AppProbeClassPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if !data.ForwardingClass.Equal(state.ForwardingClass) {
+		hasChanges = true
+	}
+	if len(data.Mappings) != len(state.Mappings) {
+		hasChanges = true
+	} else {
+		for i := range data.Mappings {
+			if !data.Mappings[i].Color.Equal(state.Mappings[i].Color) {
+				hasChanges = true
+			}
+			if !data.Mappings[i].Dscp.Equal(state.Mappings[i].Dscp) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }

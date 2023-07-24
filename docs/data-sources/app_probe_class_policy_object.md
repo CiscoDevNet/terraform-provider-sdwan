@@ -3,12 +3,12 @@
 page_title: "sdwan_app_probe_class_policy_object Data Source - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This data source can read the App Probe Class policy object.
+  This data source can read the App Probe Class Policy Object .
 ---
 
 # sdwan_app_probe_class_policy_object (Data Source)
 
-This data source can read the App Probe Class policy object.
+This data source can read the App Probe Class Policy Object .
 
 ## Example Usage
 
@@ -23,24 +23,17 @@ data "sdwan_app_probe_class_policy_object" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy object
+- `id` (String) The id of the object
 
 ### Read-Only
 
-- `entries` (Attributes List) List of entries, only 1 entry supported (see [below for nested schema](#nestedatt--entries))
-- `name` (String) The name of the policy object
-- `version` (Number) The version of the policy object
-
-<a id="nestedatt--entries"></a>
-### Nested Schema for `entries`
-
-Read-Only:
-
 - `forwarding_class` (String) Forwarding class name
-- `mappings` (Attributes List) Color mappings (see [below for nested schema](#nestedatt--entries--mappings))
+- `mappings` (Attributes List) Color mappings (see [below for nested schema](#nestedatt--mappings))
+- `name` (String) The name of the policy object
+- `version` (Number) The version of the object
 
-<a id="nestedatt--entries--mappings"></a>
-### Nested Schema for `entries.mappings`
+<a id="nestedatt--mappings"></a>
+### Nested Schema for `mappings`
 
 Read-Only:
 

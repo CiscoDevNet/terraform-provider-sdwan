@@ -22,11 +22,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -59,60 +59,48 @@ func (r *AppProbeClassPolicyObjectResource) Metadata(ctx context.Context, req re
 func (r *AppProbeClassPolicyObjectResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a App Probe Class policy object.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a App Probe Class Policy Object .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the feature template",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy object",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy object").String,
 				Required:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of entries, only 1 entry supported").String,
+			"forwarding_class": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Forwarding class name").String,
+				Required:            true,
+			},
+			"mappings": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Color mappings").String,
 				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"forwarding_class": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Forwarding class name").String,
+						"color": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Color").AddStringEnumDescription("default", "3g", "biz-internet", "blue", "bronze", "custom1", "custom2", "custom3", "gold", "green", "lte", "metro-ethernet", "mpls", "private1", "private2", "private3", "private4", "private5", "private6", "public-internet", "red", "silver").String,
 							Required:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("default", "3g", "biz-internet", "blue", "bronze", "custom1", "custom2", "custom3", "gold", "green", "lte", "metro-ethernet", "mpls", "private1", "private2", "private3", "private4", "private5", "private6", "public-internet", "red", "silver"),
+							},
 						},
-						"mappings": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Color mappings").String,
-							Required:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"color": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Color").AddStringEnumDescription("default", "3g", "biz-internet", "blue", "bronze", "custom1", "custom2", "custom3", "gold", "green", "lte", "metro-ethernet", "mpls", "private1", "private2", "private3", "private4", "private5", "private6", "public-internet", "red", "silver").String,
-										Required:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf("default", "3g", "biz-internet", "blue", "bronze", "custom1", "custom2", "custom3", "gold", "green", "lte", "metro-ethernet", "mpls", "private1", "private2", "private3", "private4", "private5", "private6", "public-internet", "red", "silver"),
-										},
-									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("DSCP").AddIntegerRangeDescription(0, 63).String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 63),
-										},
-									},
-								},
+						"dscp": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("DSCP").AddIntegerRangeDescription(0, 63).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(0, 63),
 							},
 						},
 					},
-				},
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
-					listvalidator.SizeAtMost(1),
 				},
 			},
 		},
@@ -129,7 +117,7 @@ func (r *AppProbeClassPolicyObjectResource) Configure(_ context.Context, req res
 }
 
 func (r *AppProbeClassPolicyObjectResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan AppProbeClass
+	var plan AppProbeClassPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -143,7 +131,7 @@ func (r *AppProbeClassPolicyObjectResource) Create(ctx context.Context, req reso
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/list/appprobe", body)
+	res, err := r.client.Post("/template/policy/list/appprobe/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -159,7 +147,7 @@ func (r *AppProbeClassPolicyObjectResource) Create(ctx context.Context, req reso
 }
 
 func (r *AppProbeClassPolicyObjectResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state AppProbeClass
+	var state AppProbeClassPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -188,7 +176,7 @@ func (r *AppProbeClassPolicyObjectResource) Read(ctx context.Context, req resour
 }
 
 func (r *AppProbeClassPolicyObjectResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state AppProbeClass
+	var plan, state AppProbeClassPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -205,19 +193,22 @@ func (r *AppProbeClassPolicyObjectResource) Update(ctx context.Context, req reso
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
-	r.updateMutex.Lock()
-	res, err := r.client.Put("/template/policy/list/appprobe/"+plan.Id.ValueString(), body)
-	r.updateMutex.Unlock()
-	if err != nil {
-		if res.Get("error.message").String() == "Failed to acquire lock, template or policy locked in edit mode." {
-			resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
-		} else {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-			return
+	if plan.hasChanges(ctx, &state) {
+		body := plan.toBody(ctx)
+		r.updateMutex.Lock()
+		res, err := r.client.Put("/template/policy/list/appprobe/"+plan.Id.ValueString(), body)
+		r.updateMutex.Unlock()
+		if err != nil {
+			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
+				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
+			} else {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -227,7 +218,7 @@ func (r *AppProbeClassPolicyObjectResource) Update(ctx context.Context, req reso
 }
 
 func (r *AppProbeClassPolicyObjectResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state AppProbeClass
+	var state AppProbeClassPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

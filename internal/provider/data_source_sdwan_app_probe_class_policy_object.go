@@ -50,45 +50,37 @@ func (d *AppProbeClassPolicyObjectDataSource) Metadata(_ context.Context, req da
 func (d *AppProbeClassPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the App Probe Class policy object.",
+		MarkdownDescription: "This data source can read the App Probe Class Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy object",
 				Computed:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: "List of entries, only 1 entry supported",
+			"forwarding_class": schema.StringAttribute{
+				MarkdownDescription: "Forwarding class name",
+				Computed:            true,
+			},
+			"mappings": schema.ListNestedAttribute{
+				MarkdownDescription: "Color mappings",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"forwarding_class": schema.StringAttribute{
-							MarkdownDescription: "Forwarding class name",
+						"color": schema.StringAttribute{
+							MarkdownDescription: "Color",
 							Computed:            true,
 						},
-						"mappings": schema.ListNestedAttribute{
-							MarkdownDescription: "Color mappings",
+						"dscp": schema.Int64Attribute{
+							MarkdownDescription: "DSCP",
 							Computed:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"color": schema.StringAttribute{
-										MarkdownDescription: "Color",
-										Computed:            true,
-									},
-									"dscp": schema.Int64Attribute{
-										MarkdownDescription: "DSCP",
-										Computed:            true,
-									},
-								},
-							},
 						},
 					},
 				},
@@ -106,7 +98,7 @@ func (d *AppProbeClassPolicyObjectDataSource) Configure(_ context.Context, req d
 }
 
 func (d *AppProbeClassPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config AppProbeClass
+	var config AppProbeClassPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
