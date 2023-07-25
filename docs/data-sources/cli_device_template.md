@@ -3,12 +3,12 @@
 page_title: "sdwan_cli_device_template Data Source - terraform-provider-sdwan"
 subcategory: "Device Templates"
 description: |-
-  This data source can read a CLI device template.
+  This data source can read the CLI Device Template .
 ---
 
 # sdwan_cli_device_template (Data Source)
 
-This data source can read a CLI device template.
+This data source can read the CLI Device Template .
 
 ## Example Usage
 
@@ -23,12 +23,13 @@ data "sdwan_cli_device_template" "example" {
 
 ### Required
 
-- `id` (String) The id of the deivce template
+- `id` (String) The id of the object
 
 ### Read-Only
 
 - `cli_configuration` (String) CLI configuration
 - `cli_type` (String) CLI type
-- `description` (String) The description of the feature template
+- `description` (String) The description of the device template
 - `device_type` (String) The device type (e.g., `vedge-ISR-4331`)
 - `name` (String) The name of the device template
+- `version` (Number) The version of the object

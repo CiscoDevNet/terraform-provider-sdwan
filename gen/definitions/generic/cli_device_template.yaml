@@ -1,0 +1,46 @@
+---
+name: CLI Device Template
+rest_endpoint: /template/device/
+get_rest_endpoint: /template/device/object/
+post_rest_endpoint: /template/device/cli/
+has_version: true
+id_attribute: templateId
+doc_category: Device Templates
+attributes:
+  - model_name: configType
+    type: String
+    value: file
+  - model_name: factoryDefault
+    Type: Bool
+    value: false
+  - model_name: templateName
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the device template
+    example: Example
+  - model_name: templateDescription
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the device template
+    example: My description
+  - model_name: deviceType
+    tf_name: device_type
+    type: String
+    mandatory: true
+    description: The device type (e.g., `vedge-ISR-4331`)
+    example: vedge-ISR-4331
+  - model_name: cliType
+    tf_name: cli_type
+    type: String
+    mandatory: true
+    enum_values: [device, intend]
+    description: CLI type
+    example: device
+  - model_name: templateConfiguration
+    tf_name: cli_configuration
+    type: String
+    mandatory: true
+    description: CLI configuration
+    example: " system\\n host-name             R1-ISR4331-1200-1"

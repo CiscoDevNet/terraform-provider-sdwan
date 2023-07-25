@@ -143,6 +143,7 @@ type YamlConfig struct {
 	Model             string                `yaml:"model"`
 	RestEndpoint      string                `yaml:"rest_endpoint"`
 	GetRestEndpoint   string                `yaml:"get_rest_endpoint"`
+	PostRestEndpoint  string                `yaml:"post_rest_endpoint"`
 	Type              string                `yaml:"type"`
 	MinimumVersion    string                `yaml:"minimum_version"`
 	DsDescription     string                `yaml:"ds_description"`

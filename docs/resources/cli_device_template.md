@@ -3,25 +3,22 @@
 page_title: "sdwan_cli_device_template Resource - terraform-provider-sdwan"
 subcategory: "Device Templates"
 description: |-
-  This resource can manage a CLI device template.
+  This resource can manage a CLI Device Template .
 ---
 
 # sdwan_cli_device_template (Resource)
 
-This resource can manage a CLI device template.
+This resource can manage a CLI Device Template .
 
 ## Example Usage
 
 ```terraform
-resource "sdwan_cli_device_template" "test" {
-  name              = "cli_template_1"
-  description       = "Terraform integration test"
+resource "sdwan_cli_device_template" "example" {
+  name              = "Example"
+  description       = "My description"
   device_type       = "vedge-ISR-4331"
   cli_type          = "device"
-  cli_configuration = <<-EOT
-    system
-    host-name             {{test}}-ISR4331-1200-1
-  EOT
+  cli_configuration = " system\n host-name             R1-ISR4331-1200-1"
 }
 ```
 
@@ -39,7 +36,8 @@ resource "sdwan_cli_device_template" "test" {
 
 ### Read-Only
 
-- `id` (String) The id of the device template
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 
