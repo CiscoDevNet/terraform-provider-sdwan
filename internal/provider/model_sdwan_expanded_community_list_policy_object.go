@@ -27,25 +27,23 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ExpandedCommunityList struct {
-	Id      types.String                   `tfsdk:"id"`
-	Version types.Int64                    `tfsdk:"version"`
-	Name    types.String                   `tfsdk:"name"`
-	Entries []ExpandedCommunityListEntries `tfsdk:"entries"`
+type ExpandedCommunityListPolicyObject struct {
+	Id      types.String                               `tfsdk:"id"`
+	Version types.Int64                                `tfsdk:"version"`
+	Name    types.String                               `tfsdk:"name"`
+	Entries []ExpandedCommunityListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type ExpandedCommunityListEntries struct {
+type ExpandedCommunityListPolicyObjectEntries struct {
 	Community types.String `tfsdk:"community"`
 }
 
-func (data ExpandedCommunityList) getType() string {
-	return "expandedcommunity"
-}
-
-func (data ExpandedCommunityList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "type", "expandedcommunity")
+func (data ExpandedCommunityListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
+	body, _ = sjson.Set(body, "type", "expandedCommunity")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -59,16 +57,16 @@ func (data ExpandedCommunityList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *ExpandedCommunityList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ExpandedCommunityListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]ExpandedCommunityListEntries, 0)
+		data.Entries = make([]ExpandedCommunityListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ExpandedCommunityListEntries{}
+			item := ExpandedCommunityListPolicyObjectEntries{}
 			if cValue := v.Get("community"); cValue.Exists() {
 				item.Community = types.StringValue(cValue.String())
 			} else {
@@ -78,4 +76,22 @@ func (data *ExpandedCommunityList) fromBody(ctx context.Context, res gjson.Resul
 			return true
 		})
 	}
+
+}
+
+func (data *ExpandedCommunityListPolicyObject) hasChanges(ctx context.Context, state *ExpandedCommunityListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].Community.Equal(state.Entries[i].Community) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }

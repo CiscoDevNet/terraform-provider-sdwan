@@ -1,0 +1,26 @@
+---
+name: Expanded Community List Policy Object
+rest_endpoint: /template/policy/list/expandedcommunity/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    value: expandedCommunity
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: community
+        type: String
+        mandatory: true
+        description: Expanded community value, e.g. `100:1000`
+        example: 100:1000
