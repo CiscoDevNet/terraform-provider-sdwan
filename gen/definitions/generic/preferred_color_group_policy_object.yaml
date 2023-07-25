@@ -1,0 +1,55 @@
+---
+name: Preferred Color Group Policy Object
+rest_endpoint: /template/policy/list/preferredcolorgroup/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    value: preferredColorGroup
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: colorPreference
+    data_path: [entries.0, primaryPreference]
+    tf_name: primary_color_preference
+    type: String
+    mandatory: true
+    description: Color or space separated list of colors
+    example: blue bronze
+  - model_name: pathPreference
+    data_path: [entries.0, primaryPreference]
+    tf_name: primary_path_preference
+    type: String
+    enum_values: [direct-path, multi-hop-path, all-paths]
+    description: Path preference
+    example: direct-path
+  - model_name: colorPreference
+    data_path: [entries.0, secondaryPreference]
+    tf_name: secondary_color_preference
+    type: String
+    description: Color or space separated list of colors
+    example: 3g
+  - model_name: pathPreference
+    data_path: [entries.0, secondaryPreference]
+    tf_name: secondary_path_preference
+    type: String
+    enum_values: [direct-path, multi-hop-path, all-paths]
+    description: Path preference
+    example: multi-hop-path
+  - model_name: colorPreference
+    data_path: [entries.0, tertiaryPreference]
+    tf_name: tertiary_color_preference
+    type: String
+    description: Color or space separated list of colors
+    example: custom1
+  - model_name: pathPreference
+    data_path: [entries.0, tertiaryPreference]
+    tf_name: tertiary_path_preference
+    type: String
+    enum_values: [direct-path, multi-hop-path, all-paths]
+    description: Path preference
+    example: all-paths

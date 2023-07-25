@@ -22,10 +22,10 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -58,67 +58,55 @@ func (r *PreferredColorGroupPolicyObjectResource) Metadata(ctx context.Context, 
 func (r *PreferredColorGroupPolicyObjectResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Preferred Color Group policy object.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Preferred Color Group Policy Object .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the feature template",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy object",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy object").String,
 				Required:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of entries, only 1 entry supported").String,
+			"primary_color_preference": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Color or space separated list of colors").String,
 				Required:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"primary_color_preference": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Color or space separated list of colors").String,
-							Required:            true,
-						},
-						"primary_path_preference": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Path preference").AddStringEnumDescription("direct-path", "multi-hop-path", "all-paths").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("direct-path", "multi-hop-path", "all-paths"),
-							},
-						},
-						"secondary_color_preference": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Color or space separated list of colors").String,
-							Optional:            true,
-						},
-						"secondary_path_preference": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Path preference").AddStringEnumDescription("direct-path", "multi-hop-path", "all-paths").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("direct-path", "multi-hop-path", "all-paths"),
-							},
-						},
-						"tertiary_color_preference": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Color or space separated list of colors").String,
-							Optional:            true,
-						},
-						"tertiary_path_preference": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Path preference").AddStringEnumDescription("direct-path", "multi-hop-path", "all-paths").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("direct-path", "multi-hop-path", "all-paths"),
-							},
-						},
-					},
+			},
+			"primary_path_preference": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Path preference").AddStringEnumDescription("direct-path", "multi-hop-path", "all-paths").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("direct-path", "multi-hop-path", "all-paths"),
 				},
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
-					listvalidator.SizeAtMost(1),
+			},
+			"secondary_color_preference": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Color or space separated list of colors").String,
+				Optional:            true,
+			},
+			"secondary_path_preference": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Path preference").AddStringEnumDescription("direct-path", "multi-hop-path", "all-paths").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("direct-path", "multi-hop-path", "all-paths"),
+				},
+			},
+			"tertiary_color_preference": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Color or space separated list of colors").String,
+				Optional:            true,
+			},
+			"tertiary_path_preference": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Path preference").AddStringEnumDescription("direct-path", "multi-hop-path", "all-paths").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("direct-path", "multi-hop-path", "all-paths"),
 				},
 			},
 		},
@@ -135,7 +123,7 @@ func (r *PreferredColorGroupPolicyObjectResource) Configure(_ context.Context, r
 }
 
 func (r *PreferredColorGroupPolicyObjectResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan PreferredColorGroup
+	var plan PreferredColorGroupPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -149,7 +137,7 @@ func (r *PreferredColorGroupPolicyObjectResource) Create(ctx context.Context, re
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/list/preferredcolorgroup", body)
+	res, err := r.client.Post("/template/policy/list/preferredcolorgroup/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -165,7 +153,7 @@ func (r *PreferredColorGroupPolicyObjectResource) Create(ctx context.Context, re
 }
 
 func (r *PreferredColorGroupPolicyObjectResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state PreferredColorGroup
+	var state PreferredColorGroupPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -194,7 +182,7 @@ func (r *PreferredColorGroupPolicyObjectResource) Read(ctx context.Context, req 
 }
 
 func (r *PreferredColorGroupPolicyObjectResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state PreferredColorGroup
+	var plan, state PreferredColorGroupPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -211,19 +199,22 @@ func (r *PreferredColorGroupPolicyObjectResource) Update(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
-	r.updateMutex.Lock()
-	res, err := r.client.Put("/template/policy/list/preferredcolorgroup/"+plan.Id.ValueString(), body)
-	r.updateMutex.Unlock()
-	if err != nil {
-		if res.Get("error.message").String() == "Failed to acquire lock, template or policy locked in edit mode." {
-			resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
-		} else {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-			return
+	if plan.hasChanges(ctx, &state) {
+		body := plan.toBody(ctx)
+		r.updateMutex.Lock()
+		res, err := r.client.Put("/template/policy/list/preferredcolorgroup/"+plan.Id.ValueString(), body)
+		r.updateMutex.Unlock()
+		if err != nil {
+			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
+				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
+			} else {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -233,7 +224,7 @@ func (r *PreferredColorGroupPolicyObjectResource) Update(ctx context.Context, re
 }
 
 func (r *PreferredColorGroupPolicyObjectResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state PreferredColorGroup
+	var state PreferredColorGroupPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

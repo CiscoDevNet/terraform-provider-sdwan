@@ -27,14 +27,10 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type PreferredColorGroup struct {
-	Id      types.String                 `tfsdk:"id"`
-	Version types.Int64                  `tfsdk:"version"`
-	Name    types.String                 `tfsdk:"name"`
-	Entries []PreferredColorGroupEntries `tfsdk:"entries"`
-}
-
-type PreferredColorGroupEntries struct {
+type PreferredColorGroupPolicyObject struct {
+	Id                       types.String `tfsdk:"id"`
+	Version                  types.Int64  `tfsdk:"version"`
+	Name                     types.String `tfsdk:"name"`
 	PrimaryColorPreference   types.String `tfsdk:"primary_color_preference"`
 	PrimaryPathPreference    types.String `tfsdk:"primary_path_preference"`
 	SecondaryColorPreference types.String `tfsdk:"secondary_color_preference"`
@@ -43,84 +39,94 @@ type PreferredColorGroupEntries struct {
 	TertiaryPathPreference   types.String `tfsdk:"tertiary_path_preference"`
 }
 
-func (data PreferredColorGroup) getType() string {
-	return "preferredColorGroup"
-}
-
-func (data PreferredColorGroup) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data PreferredColorGroupPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "preferredColorGroup")
-	if len(data.Entries) > 0 {
-		body, _ = sjson.Set(body, "entries", []interface{}{})
-		for _, item := range data.Entries {
-			itemBody := ""
-			if !item.PrimaryColorPreference.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "primaryPreference.colorPreference", item.PrimaryColorPreference.ValueString())
-			}
-			if !item.PrimaryPathPreference.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "primaryPreference.pathPreference", item.PrimaryPathPreference.ValueString())
-			}
-			if !item.SecondaryColorPreference.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "secondaryPreference.colorPreference", item.SecondaryColorPreference.ValueString())
-			}
-			if !item.SecondaryPathPreference.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "secondaryPreference.pathPreference", item.SecondaryPathPreference.ValueString())
-			}
-			if !item.TertiaryColorPreference.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "tertiaryPreference.colorPreference", item.TertiaryColorPreference.ValueString())
-			}
-			if !item.TertiaryPathPreference.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "tertiaryPreference.pathPreference", item.TertiaryPathPreference.ValueString())
-			}
-			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
-		}
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.PrimaryColorPreference.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.primaryPreference.colorPreference", data.PrimaryColorPreference.ValueString())
+	}
+	if !data.PrimaryPathPreference.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.primaryPreference.pathPreference", data.PrimaryPathPreference.ValueString())
+	}
+	if !data.SecondaryColorPreference.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.secondaryPreference.colorPreference", data.SecondaryColorPreference.ValueString())
+	}
+	if !data.SecondaryPathPreference.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.secondaryPreference.pathPreference", data.SecondaryPathPreference.ValueString())
+	}
+	if !data.TertiaryColorPreference.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.tertiaryPreference.colorPreference", data.TertiaryColorPreference.ValueString())
+	}
+	if !data.TertiaryPathPreference.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.tertiaryPreference.pathPreference", data.TertiaryPathPreference.ValueString())
 	}
 	return body
 }
 
-func (data *PreferredColorGroup) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PreferredColorGroupPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]PreferredColorGroupEntries, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := PreferredColorGroupEntries{}
-			if cValue := v.Get("primaryPreference.colorPreference"); cValue.Exists() {
-				item.PrimaryColorPreference = types.StringValue(cValue.String())
-			} else {
-				item.PrimaryColorPreference = types.StringNull()
-			}
-			if cValue := v.Get("primaryPreference.pathPreference"); cValue.Exists() {
-				item.PrimaryPathPreference = types.StringValue(cValue.String())
-			} else {
-				item.PrimaryPathPreference = types.StringNull()
-			}
-			if cValue := v.Get("secondaryPreference.colorPreference"); cValue.Exists() {
-				item.SecondaryColorPreference = types.StringValue(cValue.String())
-			} else {
-				item.SecondaryColorPreference = types.StringNull()
-			}
-			if cValue := v.Get("secondaryPreference.pathPreference"); cValue.Exists() {
-				item.SecondaryPathPreference = types.StringValue(cValue.String())
-			} else {
-				item.SecondaryPathPreference = types.StringNull()
-			}
-			if cValue := v.Get("tertiaryPreference.colorPreference"); cValue.Exists() {
-				item.TertiaryColorPreference = types.StringValue(cValue.String())
-			} else {
-				item.TertiaryColorPreference = types.StringNull()
-			}
-			if cValue := v.Get("tertiaryPreference.pathPreference"); cValue.Exists() {
-				item.TertiaryPathPreference = types.StringValue(cValue.String())
-			} else {
-				item.TertiaryPathPreference = types.StringNull()
-			}
-			data.Entries = append(data.Entries, item)
-			return true
-		})
+	if value := res.Get("entries.0.primaryPreference.colorPreference"); value.Exists() {
+		data.PrimaryColorPreference = types.StringValue(value.String())
+	} else {
+		data.PrimaryColorPreference = types.StringNull()
 	}
+	if value := res.Get("entries.0.primaryPreference.pathPreference"); value.Exists() {
+		data.PrimaryPathPreference = types.StringValue(value.String())
+	} else {
+		data.PrimaryPathPreference = types.StringNull()
+	}
+	if value := res.Get("entries.0.secondaryPreference.colorPreference"); value.Exists() {
+		data.SecondaryColorPreference = types.StringValue(value.String())
+	} else {
+		data.SecondaryColorPreference = types.StringNull()
+	}
+	if value := res.Get("entries.0.secondaryPreference.pathPreference"); value.Exists() {
+		data.SecondaryPathPreference = types.StringValue(value.String())
+	} else {
+		data.SecondaryPathPreference = types.StringNull()
+	}
+	if value := res.Get("entries.0.tertiaryPreference.colorPreference"); value.Exists() {
+		data.TertiaryColorPreference = types.StringValue(value.String())
+	} else {
+		data.TertiaryColorPreference = types.StringNull()
+	}
+	if value := res.Get("entries.0.tertiaryPreference.pathPreference"); value.Exists() {
+		data.TertiaryPathPreference = types.StringValue(value.String())
+	} else {
+		data.TertiaryPathPreference = types.StringNull()
+	}
+
+}
+
+func (data *PreferredColorGroupPolicyObject) hasChanges(ctx context.Context, state *PreferredColorGroupPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if !data.PrimaryColorPreference.Equal(state.PrimaryColorPreference) {
+		hasChanges = true
+	}
+	if !data.PrimaryPathPreference.Equal(state.PrimaryPathPreference) {
+		hasChanges = true
+	}
+	if !data.SecondaryColorPreference.Equal(state.SecondaryColorPreference) {
+		hasChanges = true
+	}
+	if !data.SecondaryPathPreference.Equal(state.SecondaryPathPreference) {
+		hasChanges = true
+	}
+	if !data.TertiaryColorPreference.Equal(state.TertiaryColorPreference) {
+		hasChanges = true
+	}
+	if !data.TertiaryPathPreference.Equal(state.TertiaryPathPreference) {
+		hasChanges = true
+	}
+	return hasChanges
 }

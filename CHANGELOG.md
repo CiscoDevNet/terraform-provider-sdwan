@@ -10,6 +10,7 @@
 - BREAKING CHANGE: Remove `entries` attribute of `sdwan_app_probe_class_policy_object` resource and data source
 - BREAKING CHANGE: Remove `entries` attribute of `sdwan_mirror_policy_object` resource and data source
 - BREAKING CHANGE: Remove `entries` attribute of `sdwan_policer_policy_object` resource and data source
+- BREAKING CHANGE: Remove `entries` attribute of `sdwan_preferred_color_group_policy_object` resource and data source
 
 ## 0.2.1
 

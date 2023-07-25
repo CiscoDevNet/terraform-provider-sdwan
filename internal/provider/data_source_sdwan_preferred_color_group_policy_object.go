@@ -50,52 +50,44 @@ func (d *PreferredColorGroupPolicyObjectDataSource) Metadata(_ context.Context, 
 func (d *PreferredColorGroupPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Preferred Color Group policy object.",
+		MarkdownDescription: "This data source can read the Preferred Color Group Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy object",
 				Computed:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: "List of entries, only 1 entry supported",
+			"primary_color_preference": schema.StringAttribute{
+				MarkdownDescription: "Color or space separated list of colors",
 				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"primary_color_preference": schema.StringAttribute{
-							MarkdownDescription: "Color or space separated list of colors",
-							Computed:            true,
-						},
-						"primary_path_preference": schema.StringAttribute{
-							MarkdownDescription: "Path preference",
-							Computed:            true,
-						},
-						"secondary_color_preference": schema.StringAttribute{
-							MarkdownDescription: "Color or space separated list of colors",
-							Computed:            true,
-						},
-						"secondary_path_preference": schema.StringAttribute{
-							MarkdownDescription: "Path preference",
-							Computed:            true,
-						},
-						"tertiary_color_preference": schema.StringAttribute{
-							MarkdownDescription: "Color or space separated list of colors",
-							Computed:            true,
-						},
-						"tertiary_path_preference": schema.StringAttribute{
-							MarkdownDescription: "Path preference",
-							Computed:            true,
-						},
-					},
-				},
+			},
+			"primary_path_preference": schema.StringAttribute{
+				MarkdownDescription: "Path preference",
+				Computed:            true,
+			},
+			"secondary_color_preference": schema.StringAttribute{
+				MarkdownDescription: "Color or space separated list of colors",
+				Computed:            true,
+			},
+			"secondary_path_preference": schema.StringAttribute{
+				MarkdownDescription: "Path preference",
+				Computed:            true,
+			},
+			"tertiary_color_preference": schema.StringAttribute{
+				MarkdownDescription: "Color or space separated list of colors",
+				Computed:            true,
+			},
+			"tertiary_path_preference": schema.StringAttribute{
+				MarkdownDescription: "Path preference",
+				Computed:            true,
 			},
 		},
 	}
@@ -110,7 +102,7 @@ func (d *PreferredColorGroupPolicyObjectDataSource) Configure(_ context.Context,
 }
 
 func (d *PreferredColorGroupPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config PreferredColorGroup
+	var config PreferredColorGroupPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

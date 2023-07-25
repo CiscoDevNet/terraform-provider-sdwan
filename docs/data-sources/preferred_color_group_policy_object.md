@@ -3,12 +3,12 @@
 page_title: "sdwan_preferred_color_group_policy_object Data Source - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This data source can read the Preferred Color Group policy object.
+  This data source can read the Preferred Color Group Policy Object .
 ---
 
 # sdwan_preferred_color_group_policy_object (Data Source)
 
-This data source can read the Preferred Color Group policy object.
+This data source can read the Preferred Color Group Policy Object .
 
 ## Example Usage
 
@@ -23,22 +23,15 @@ data "sdwan_preferred_color_group_policy_object" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy object
+- `id` (String) The id of the object
 
 ### Read-Only
 
-- `entries` (Attributes List) List of entries, only 1 entry supported (see [below for nested schema](#nestedatt--entries))
 - `name` (String) The name of the policy object
-- `version` (Number) The version of the policy object
-
-<a id="nestedatt--entries"></a>
-### Nested Schema for `entries`
-
-Read-Only:
-
 - `primary_color_preference` (String) Color or space separated list of colors
 - `primary_path_preference` (String) Path preference
 - `secondary_color_preference` (String) Color or space separated list of colors
 - `secondary_path_preference` (String) Path preference
 - `tertiary_color_preference` (String) Color or space separated list of colors
 - `tertiary_path_preference` (String) Path preference
+- `version` (Number) The version of the object

@@ -33,12 +33,13 @@ func TestAccDataSourceSdwanPreferredColorGroupPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanPreferredColorGroupPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "entries.0.primary_color_preference", "blue bronze"),
-					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "entries.0.primary_path_preference", "direct-path"),
-					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "entries.0.secondary_color_preference", "3g"),
-					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "entries.0.secondary_path_preference", "multi-hop-path"),
-					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "entries.0.tertiary_color_preference", "custom1"),
-					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "entries.0.tertiary_path_preference", "all-paths"),
+					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "primary_color_preference", "blue bronze"),
+					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "primary_path_preference", "direct-path"),
+					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "secondary_color_preference", "3g"),
+					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "secondary_path_preference", "multi-hop-path"),
+					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "tertiary_color_preference", "custom1"),
+					resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "tertiary_path_preference", "all-paths"),
 				),
 			},
 		},
@@ -47,16 +48,15 @@ func TestAccDataSourceSdwanPreferredColorGroupPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanPreferredColorGroupPolicyObjectConfig = `
 
+
 resource "sdwan_preferred_color_group_policy_object" "test" {
-  name = "TF_TEST_MIN"
-  entries = [{
-    primary_color_preference = "blue bronze"
-    primary_path_preference = "direct-path"
-    secondary_color_preference = "3g"
-    secondary_path_preference = "multi-hop-path"
-    tertiary_color_preference = "custom1"
-    tertiary_path_preference = "all-paths"
-  }]
+  name = "Example"
+  primary_color_preference = "blue bronze"
+  primary_path_preference = "direct-path"
+  secondary_color_preference = "3g"
+  secondary_path_preference = "multi-hop-path"
+  tertiary_color_preference = "custom1"
+  tertiary_path_preference = "all-paths"
 }
 
 data "sdwan_preferred_color_group_policy_object" "test" {
