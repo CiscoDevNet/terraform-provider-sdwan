@@ -33,9 +33,10 @@ func TestAccDataSourceSdwanPolicerPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanPolicerPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "entries.0.burst", "100000"),
-					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "entries.0.exceed_action", "remark"),
-					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "entries.0.rate", "100"),
+					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "name", "Example"),
+					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "burst", "100000"),
+					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "exceed_action", "remark"),
+					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "rate", "100"),
 				),
 			},
 		},
@@ -44,13 +45,12 @@ func TestAccDataSourceSdwanPolicerPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanPolicerPolicyObjectConfig = `
 
+
 resource "sdwan_policer_policy_object" "test" {
-  name = "TF_TEST_MIN"
-  entries = [{
-    burst = 100000
-    exceed_action = "remark"
-    rate = 100
-  }]
+  name = "Example"
+  burst = 100000
+  exceed_action = "remark"
+  rate = 100
 }
 
 data "sdwan_policer_policy_object" "test" {

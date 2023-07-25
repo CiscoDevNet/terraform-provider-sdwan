@@ -3,12 +3,12 @@
 page_title: "sdwan_policer_policy_object Data Source - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This data source can read the Policer policy object.
+  This data source can read the Policer Policy Object .
 ---
 
 # sdwan_policer_policy_object (Data Source)
 
-This data source can read the Policer policy object.
+This data source can read the Policer Policy Object .
 
 ## Example Usage
 
@@ -23,19 +23,12 @@ data "sdwan_policer_policy_object" "example" {
 
 ### Required
 
-- `id` (String) The id of the policy object
+- `id` (String) The id of the object
 
 ### Read-Only
 
-- `entries` (Attributes List) List of entries, only 1 entry supported (see [below for nested schema](#nestedatt--entries))
-- `name` (String) The name of the policy object
-- `version` (Number) The version of the policy object
-
-<a id="nestedatt--entries"></a>
-### Nested Schema for `entries`
-
-Read-Only:
-
 - `burst` (Number) Burst in bytes
 - `exceed_action` (String) Exceed action
+- `name` (String) The name of the policy object
 - `rate` (Number) Rate in bps
+- `version` (Number) The version of the object

@@ -31,26 +31,25 @@ func TestAccSdwanPolicerPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPolicerPolicyObjectConfig_all(),
+				Config: testAccSdwanPolicerPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "entries.0.burst", "100000"),
-					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "entries.0.exceed_action", "remark"),
-					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "entries.0.rate", "100"),
+					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "burst", "100000"),
+					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "exceed_action", "remark"),
+					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "rate", "100"),
 				),
 			},
 		},
 	})
 }
 
-func testAccSdwanPolicerPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_policer_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			burst = 100000
-			exceed_action = "remark"
-			rate = 100
-		}]
-	}
-	`
+const testAccSdwanPolicerPolicyObjectConfig = `
+
+
+resource "sdwan_policer_policy_object" "test" {
+	name = "Example"
+	burst = 100000
+	exceed_action = "remark"
+	rate = 100
 }
+`

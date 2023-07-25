@@ -50,40 +50,32 @@ func (d *PolicerPolicyObjectDataSource) Metadata(_ context.Context, req datasour
 func (d *PolicerPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Policer policy object.",
+		MarkdownDescription: "This data source can read the Policer Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy object",
 				Computed:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: "List of entries, only 1 entry supported",
+			"burst": schema.Int64Attribute{
+				MarkdownDescription: "Burst in bytes",
 				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"burst": schema.Int64Attribute{
-							MarkdownDescription: "Burst in bytes",
-							Computed:            true,
-						},
-						"exceed_action": schema.StringAttribute{
-							MarkdownDescription: "Exceed action",
-							Computed:            true,
-						},
-						"rate": schema.Int64Attribute{
-							MarkdownDescription: "Rate in bps",
-							Computed:            true,
-						},
-					},
-				},
+			},
+			"exceed_action": schema.StringAttribute{
+				MarkdownDescription: "Exceed action",
+				Computed:            true,
+			},
+			"rate": schema.Int64Attribute{
+				MarkdownDescription: "Rate in bps",
+				Computed:            true,
 			},
 		},
 	}
@@ -98,7 +90,7 @@ func (d *PolicerPolicyObjectDataSource) Configure(_ context.Context, req datasou
 }
 
 func (d *PolicerPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config Policer
+	var config PolicerPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

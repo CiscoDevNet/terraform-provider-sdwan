@@ -28,73 +28,70 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type Policer struct {
-	Id      types.String     `tfsdk:"id"`
-	Version types.Int64      `tfsdk:"version"`
-	Name    types.String     `tfsdk:"name"`
-	Entries []PolicerEntries `tfsdk:"entries"`
-}
-
-type PolicerEntries struct {
+type PolicerPolicyObject struct {
+	Id           types.String `tfsdk:"id"`
+	Version      types.Int64  `tfsdk:"version"`
+	Name         types.String `tfsdk:"name"`
 	Burst        types.Int64  `tfsdk:"burst"`
 	ExceedAction types.String `tfsdk:"exceed_action"`
 	Rate         types.Int64  `tfsdk:"rate"`
 }
 
-func (data Policer) getType() string {
-	return "policer"
-}
-
-func (data Policer) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data PolicerPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "policer")
-	if len(data.Entries) > 0 {
-		body, _ = sjson.Set(body, "entries", []interface{}{})
-		for _, item := range data.Entries {
-			itemBody := ""
-			if !item.Burst.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "burst", fmt.Sprint(item.Burst.ValueInt64()))
-			}
-			if !item.ExceedAction.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "exceed", item.ExceedAction.ValueString())
-			}
-			if !item.Rate.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "rate", fmt.Sprint(item.Rate.ValueInt64()))
-			}
-			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
-		}
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.Burst.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.burst", fmt.Sprint(data.Burst.ValueInt64()))
+	}
+	if !data.ExceedAction.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.exceed", data.ExceedAction.ValueString())
+	}
+	if !data.Rate.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.rate", fmt.Sprint(data.Rate.ValueInt64()))
 	}
 	return body
 }
 
-func (data *Policer) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicerPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]PolicerEntries, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := PolicerEntries{}
-			if cValue := v.Get("burst"); cValue.Exists() {
-				item.Burst = types.Int64Value(cValue.Int())
-			} else {
-				item.Burst = types.Int64Null()
-			}
-			if cValue := v.Get("exceed"); cValue.Exists() {
-				item.ExceedAction = types.StringValue(cValue.String())
-			} else {
-				item.ExceedAction = types.StringNull()
-			}
-			if cValue := v.Get("rate"); cValue.Exists() {
-				item.Rate = types.Int64Value(cValue.Int())
-			} else {
-				item.Rate = types.Int64Null()
-			}
-			data.Entries = append(data.Entries, item)
-			return true
-		})
+	if value := res.Get("entries.0.burst"); value.Exists() {
+		data.Burst = types.Int64Value(value.Int())
+	} else {
+		data.Burst = types.Int64Null()
 	}
+	if value := res.Get("entries.0.exceed"); value.Exists() {
+		data.ExceedAction = types.StringValue(value.String())
+	} else {
+		data.ExceedAction = types.StringNull()
+	}
+	if value := res.Get("entries.0.rate"); value.Exists() {
+		data.Rate = types.Int64Value(value.Int())
+	} else {
+		data.Rate = types.Int64Null()
+	}
+
+}
+
+func (data *PolicerPolicyObject) hasChanges(ctx context.Context, state *PolicerPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if !data.Burst.Equal(state.Burst) {
+		hasChanges = true
+	}
+	if !data.ExceedAction.Equal(state.ExceedAction) {
+		hasChanges = true
+	}
+	if !data.Rate.Equal(state.Rate) {
+		hasChanges = true
+	}
+	return hasChanges
 }

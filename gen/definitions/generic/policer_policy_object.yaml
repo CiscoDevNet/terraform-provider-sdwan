@@ -1,0 +1,41 @@
+---
+name: Policer Policy Object
+rest_endpoint: /template/policy/list/policer/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    value: policer
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: burst
+    data_path: [entries.0]
+    type: Int64
+    mandatory: true
+    model_type_string: true
+    description: Burst in bytes
+    min_int: 15000
+    max_int: 10000000
+    example: 100000
+  - model_name: exceed
+    data_path: [entries.0]
+    tf_name: exceed_action
+    type: String
+    mandatory: true
+    description: Exceed action
+    enum_values: [drop, remark]
+    example: remark
+  - model_name: rate
+    data_path: [entries.0]
+    type: Int64
+    mandatory: true
+    model_type_string: true
+    description: Rate in bps
+    min_int: 8
+    max_int: 100000000000
+    example: 100
