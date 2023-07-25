@@ -31,8 +31,9 @@ func TestAccSdwanColorListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanColorListPolicyObjectConfig_all(),
+				Config: testAccSdwanColorListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_color_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_color_list_policy_object.test", "entries.0.color", "blue"),
 				),
 			},
@@ -40,13 +41,13 @@ func TestAccSdwanColorListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanColorListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_color_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			color = "blue"
-		}]
-	}
-	`
+const testAccSdwanColorListPolicyObjectConfig = `
+
+
+resource "sdwan_color_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		color = "blue"
+	}]
 }
+`

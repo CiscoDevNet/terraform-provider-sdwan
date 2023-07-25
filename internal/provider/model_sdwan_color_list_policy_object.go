@@ -27,25 +27,23 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ColorList struct {
-	Id      types.String       `tfsdk:"id"`
-	Version types.Int64        `tfsdk:"version"`
-	Name    types.String       `tfsdk:"name"`
-	Entries []ColorListEntries `tfsdk:"entries"`
+type ColorListPolicyObject struct {
+	Id      types.String                   `tfsdk:"id"`
+	Version types.Int64                    `tfsdk:"version"`
+	Name    types.String                   `tfsdk:"name"`
+	Entries []ColorListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type ColorListEntries struct {
+type ColorListPolicyObjectEntries struct {
 	Color types.String `tfsdk:"color"`
 }
 
-func (data ColorList) getType() string {
-	return "color"
-}
-
-func (data ColorList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data ColorListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "color")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -59,16 +57,16 @@ func (data ColorList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *ColorList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ColorListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]ColorListEntries, 0)
+		data.Entries = make([]ColorListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ColorListEntries{}
+			item := ColorListPolicyObjectEntries{}
 			if cValue := v.Get("color"); cValue.Exists() {
 				item.Color = types.StringValue(cValue.String())
 			} else {
@@ -78,4 +76,22 @@ func (data *ColorList) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+}
+
+func (data *ColorListPolicyObject) hasChanges(ctx context.Context, state *ColorListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].Color.Equal(state.Entries[i].Color) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }

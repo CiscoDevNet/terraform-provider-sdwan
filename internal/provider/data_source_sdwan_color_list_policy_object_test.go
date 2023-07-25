@@ -33,6 +33,7 @@ func TestAccDataSourceSdwanColorListPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanColorListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_color_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("data.sdwan_color_list_policy_object.test", "entries.0.color", "blue"),
 				),
 			},
@@ -42,8 +43,9 @@ func TestAccDataSourceSdwanColorListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanColorListPolicyObjectConfig = `
 
+
 resource "sdwan_color_list_policy_object" "test" {
-  name = "TF_TEST_MIN"
+  name = "Example"
   entries = [{
     color = "blue"
   }]
