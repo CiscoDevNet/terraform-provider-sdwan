@@ -94,7 +94,6 @@ func (data *AppProbeClassPolicyObject) fromBody(ctx context.Context, res gjson.R
 			return true
 		})
 	}
-
 }
 
 func (data *AppProbeClassPolicyObject) hasChanges(ctx context.Context, state *AppProbeClassPolicyObject) bool {

@@ -76,7 +76,6 @@ func (data *ExpandedCommunityListPolicyObject) fromBody(ctx context.Context, res
 			return true
 		})
 	}
-
 }
 
 func (data *ExpandedCommunityListPolicyObject) hasChanges(ctx context.Context, state *ExpandedCommunityListPolicyObject) bool {

@@ -85,7 +85,6 @@ func (data *CLIDeviceTemplate) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.CliConfiguration = types.StringNull()
 	}
-
 }
 
 func (data *CLIDeviceTemplate) hasChanges(ctx context.Context, state *CLIDeviceTemplate) bool {

@@ -76,6 +76,7 @@ func (data RewriteRulePolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *RewriteRulePolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -114,9 +115,7 @@ func (data *RewriteRulePolicyDefinition) fromBody(ctx context.Context, res gjson
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *RewriteRulePolicyDefinition) hasChanges(ctx context.Context, state *RewriteRulePolicyDefinition) bool {
@@ -148,8 +147,7 @@ func (data *RewriteRulePolicyDefinition) hasChanges(ctx context.Context, state *
 	return hasChanges
 }
 
-func (data *RewriteRulePolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *RewriteRulePolicyDefinition) updateVersions(ctx context.Context, state *RewriteRulePolicyDefinition) {
 	for i := range data.Rules {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Rules[i].ClassMapId.ValueString())}
 		stateIndex := -1

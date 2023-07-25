@@ -58,7 +58,6 @@ func (data *ClassMapPolicyObject) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.Queue = types.Int64Null()
 	}
-
 }
 
 func (data *ClassMapPolicyObject) hasChanges(ctx context.Context, state *ClassMapPolicyObject) bool {

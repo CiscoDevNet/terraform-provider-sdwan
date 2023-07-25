@@ -95,7 +95,6 @@ func (data *IPv6PrefixListPolicyObject) fromBody(ctx context.Context, res gjson.
 			return true
 		})
 	}
-
 }
 
 func (data *IPv6PrefixListPolicyObject) hasChanges(ctx context.Context, state *IPv6PrefixListPolicyObject) bool {

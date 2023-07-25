@@ -95,7 +95,6 @@ func (data *IPv4PrefixListPolicyObject) fromBody(ctx context.Context, res gjson.
 			return true
 		})
 	}
-
 }
 
 func (data *IPv4PrefixListPolicyObject) hasChanges(ctx context.Context, state *IPv4PrefixListPolicyObject) bool {

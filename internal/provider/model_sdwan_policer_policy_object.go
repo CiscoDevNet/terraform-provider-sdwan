@@ -76,7 +76,6 @@ func (data *PolicerPolicyObject) fromBody(ctx context.Context, res gjson.Result)
 	} else {
 		data.Rate = types.Int64Null()
 	}
-
 }
 
 func (data *PolicerPolicyObject) hasChanges(ctx context.Context, state *PolicerPolicyObject) bool {

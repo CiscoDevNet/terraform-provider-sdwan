@@ -102,7 +102,6 @@ func (data *PreferredColorGroupPolicyObject) fromBody(ctx context.Context, res g
 	} else {
 		data.TertiaryPathPreference = types.StringNull()
 	}
-
 }
 
 func (data *PreferredColorGroupPolicyObject) hasChanges(ctx context.Context, state *PreferredColorGroupPolicyObject) bool {

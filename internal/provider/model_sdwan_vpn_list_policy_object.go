@@ -76,7 +76,6 @@ func (data *VPNListPolicyObject) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-
 }
 
 func (data *VPNListPolicyObject) hasChanges(ctx context.Context, state *VPNListPolicyObject) bool {

@@ -128,6 +128,7 @@ func (data FeatureDeviceTemplate) toBody(ctx context.Context) string {
 }
 
 func (data *FeatureDeviceTemplate) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("templateName"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -212,9 +213,7 @@ func (data *FeatureDeviceTemplate) fromBody(ctx context.Context, res gjson.Resul
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *FeatureDeviceTemplate) hasChanges(ctx context.Context, state *FeatureDeviceTemplate) bool {
@@ -276,8 +275,7 @@ func (data *FeatureDeviceTemplate) hasChanges(ctx context.Context, state *Featur
 	return hasChanges
 }
 
-func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context) {
-	state := *data
+func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *FeatureDeviceTemplate) {
 	data.PolicyVersion = state.PolicyVersion
 	data.SecurityPolicyVersion = state.SecurityPolicyVersion
 	for i := range data.GeneralTemplates {

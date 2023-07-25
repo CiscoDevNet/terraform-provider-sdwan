@@ -85,7 +85,6 @@ func (data *ApplicationListPolicyObject) fromBody(ctx context.Context, res gjson
 			return true
 		})
 	}
-
 }
 
 func (data *ApplicationListPolicyObject) hasChanges(ctx context.Context, state *ApplicationListPolicyObject) bool {

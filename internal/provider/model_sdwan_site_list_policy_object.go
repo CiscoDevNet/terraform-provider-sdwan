@@ -76,7 +76,6 @@ func (data *SiteListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	}
-
 }
 
 func (data *SiteListPolicyObject) hasChanges(ctx context.Context, state *SiteListPolicyObject) bool {

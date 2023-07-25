@@ -397,6 +397,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -798,9 +799,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *TrafficDataPolicyDefinition) bool {
@@ -1033,8 +1032,7 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 	return hasChanges
 }
 
-func (data *TrafficDataPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *TrafficDataPolicyDefinition) updateVersions(ctx context.Context, state *TrafficDataPolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
 		stateIndex := -1

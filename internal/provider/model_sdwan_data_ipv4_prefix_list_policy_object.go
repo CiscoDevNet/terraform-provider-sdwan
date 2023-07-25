@@ -76,7 +76,6 @@ func (data *DataIPv4PrefixListPolicyObject) fromBody(ctx context.Context, res gj
 			return true
 		})
 	}
-
 }
 
 func (data *DataIPv4PrefixListPolicyObject) hasChanges(ctx context.Context, state *DataIPv4PrefixListPolicyObject) bool {

@@ -76,7 +76,6 @@ func (data *ColorListPolicyObject) fromBody(ctx context.Context, res gjson.Resul
 			return true
 		})
 	}
-
 }
 
 func (data *ColorListPolicyObject) hasChanges(ctx context.Context, state *ColorListPolicyObject) bool {

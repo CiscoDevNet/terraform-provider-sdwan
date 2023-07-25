@@ -72,6 +72,7 @@ func (data VPNMembershipPolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *VPNMembershipPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -100,9 +101,7 @@ func (data *VPNMembershipPolicyDefinition) fromBody(ctx context.Context, res gjs
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *VPNMembershipPolicyDefinition) hasChanges(ctx context.Context, state *VPNMembershipPolicyDefinition) bool {
@@ -128,8 +127,7 @@ func (data *VPNMembershipPolicyDefinition) hasChanges(ctx context.Context, state
 	return hasChanges
 }
 
-func (data *VPNMembershipPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *VPNMembershipPolicyDefinition) updateVersions(ctx context.Context, state *VPNMembershipPolicyDefinition) {
 	for i := range data.Sites {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sites[i].SiteListId.ValueString())}
 		stateIndex := -1

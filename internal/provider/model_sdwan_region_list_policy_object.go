@@ -76,7 +76,6 @@ func (data *RegionListPolicyObject) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	}
-
 }
 
 func (data *RegionListPolicyObject) hasChanges(ctx context.Context, state *RegionListPolicyObject) bool {

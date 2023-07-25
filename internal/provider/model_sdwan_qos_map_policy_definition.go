@@ -88,6 +88,7 @@ func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -141,9 +142,7 @@ func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *QoSMapPolicyDefinition) hasChanges(ctx context.Context, state *QoSMapPolicyDefinition) bool {
@@ -184,8 +183,7 @@ func (data *QoSMapPolicyDefinition) hasChanges(ctx context.Context, state *QoSMa
 	return hasChanges
 }
 
-func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context, state *QoSMapPolicyDefinition) {
 	for i := range data.QosSchedulers {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.QosSchedulers[i].Queue.ValueInt64())}
 		stateIndex := -1

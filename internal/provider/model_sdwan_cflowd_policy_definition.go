@@ -210,7 +210,6 @@ func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	}
-
 }
 
 func (data *CflowdPolicyDefinition) hasChanges(ctx context.Context, state *CflowdPolicyDefinition) bool {

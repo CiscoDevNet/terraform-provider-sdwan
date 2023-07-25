@@ -242,6 +242,7 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -464,9 +465,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RoutePolicyDefinition) bool {
@@ -606,8 +605,7 @@ func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RouteP
 	return hasChanges
 }
 
-func (data *RoutePolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *RoutePolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
 		stateIndex := -1

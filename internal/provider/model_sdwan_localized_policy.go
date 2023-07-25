@@ -136,6 +136,7 @@ func (data LocalizedPolicy) toBody(ctx context.Context) string {
 }
 
 func (data *LocalizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("policyName"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -242,9 +243,7 @@ func (data *LocalizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *LocalizedPolicy) hasChanges(ctx context.Context, state *LocalizedPolicy) bool {
@@ -300,8 +299,7 @@ func (data *LocalizedPolicy) hasChanges(ctx context.Context, state *LocalizedPol
 	return hasChanges
 }
 
-func (data *LocalizedPolicy) updateVersions(ctx context.Context) {
-	state := *data
+func (data *LocalizedPolicy) updateVersions(ctx context.Context, state *LocalizedPolicy) {
 	for i := range data.Definitions {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Definitions[i].Id.ValueString())}
 		stateIndex := -1

@@ -210,6 +210,7 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -391,9 +392,7 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *ACLPolicyDefinition) hasChanges(ctx context.Context, state *ACLPolicyDefinition) bool {
@@ -512,8 +511,7 @@ func (data *ACLPolicyDefinition) hasChanges(ctx context.Context, state *ACLPolic
 	return hasChanges
 }
 
-func (data *ACLPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *ACLPolicyDefinition) updateVersions(ctx context.Context, state *ACLPolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
 		stateIndex := -1

@@ -104,7 +104,6 @@ func (data *TLOCListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	}
-
 }
 
 func (data *TLOCListPolicyObject) hasChanges(ctx context.Context, state *TLOCListPolicyObject) bool {

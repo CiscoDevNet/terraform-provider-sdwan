@@ -66,7 +66,6 @@ func (data *MirrorPolicyObject) fromBody(ctx context.Context, res gjson.Result) 
 	} else {
 		data.SourceIp = types.StringNull()
 	}
-
 }
 
 func (data *MirrorPolicyObject) hasChanges(ctx context.Context, state *MirrorPolicyObject) bool {

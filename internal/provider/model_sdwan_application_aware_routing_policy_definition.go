@@ -214,6 +214,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 }
 
 func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -399,9 +400,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Context, state *ApplicationAwareRoutingPolicyDefinition) bool {
@@ -520,8 +519,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) hasChanges(ctx context.Cont
 	return hasChanges
 }
 
-func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.Context, state *ApplicationAwareRoutingPolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
 		stateIndex := -1

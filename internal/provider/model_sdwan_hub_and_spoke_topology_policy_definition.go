@@ -100,6 +100,7 @@ func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) stri
 }
 
 func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -154,9 +155,7 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *HubAndSpokeTopologyPolicyDefinition) hasChanges(ctx context.Context, state *HubAndSpokeTopologyPolicyDefinition) bool {
@@ -200,8 +199,7 @@ func (data *HubAndSpokeTopologyPolicyDefinition) hasChanges(ctx context.Context,
 	return hasChanges
 }
 
-func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Context, state *HubAndSpokeTopologyPolicyDefinition) {
 	data.VpnListVersion = state.VpnListVersion
 	for i := range data.Topologies {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Topologies[i].Name.ValueString())}

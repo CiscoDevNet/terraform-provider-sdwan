@@ -76,7 +76,6 @@ func (data *ASPathListPolicyObject) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	}
-
 }
 
 func (data *ASPathListPolicyObject) hasChanges(ctx context.Context, state *ASPathListPolicyObject) bool {

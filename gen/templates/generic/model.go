@@ -270,6 +270,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 }
 
 func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result) {
+	{{- if hasVersionAttribute .Attributes}}
+	state := *data
+	{{- end}}
 	{{- range .Attributes}}
 	{{- if and (not .TfOnly) (not .Value)}}
 	{{- $cname := toGoName .TfName}}
@@ -455,9 +458,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	{{- end}}
 	{{- end}}
 	{{- end}}
-	{{if hasVersionAttribute .Attributes}}
-	data.updateVersions(ctx)
-	{{end}}
+	{{- if hasVersionAttribute .Attributes}}
+	data.updateVersions(ctx, &state)
+	{{- end}}
 }
 
 func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelCase .Name}}) bool {
@@ -524,8 +527,7 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 }
 
 {{if hasVersionAttribute .Attributes}}
-func (data *{{camelCase .Name}}) updateVersions(ctx context.Context) {
-	state := *data
+func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{camelCase .Name}}) {
 	{{- range .Attributes}}
 	{{- $name := toGoName .TfName}}
 	{{- if eq .Type "Version"}}

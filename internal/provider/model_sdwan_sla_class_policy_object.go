@@ -77,6 +77,7 @@ func (data SLAClassPolicyObject) toBody(ctx context.Context) string {
 }
 
 func (data *SLAClassPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -122,9 +123,7 @@ func (data *SLAClassPolicyObject) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.FallbackBestTunnelLoss = types.Int64Null()
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *SLAClassPolicyObject) hasChanges(ctx context.Context, state *SLAClassPolicyObject) bool {
@@ -159,7 +158,6 @@ func (data *SLAClassPolicyObject) hasChanges(ctx context.Context, state *SLAClas
 	return hasChanges
 }
 
-func (data *SLAClassPolicyObject) updateVersions(ctx context.Context) {
-	state := *data
+func (data *SLAClassPolicyObject) updateVersions(ctx context.Context, state *SLAClassPolicyObject) {
 	data.AppProbeClassVersion = state.AppProbeClassVersion
 }

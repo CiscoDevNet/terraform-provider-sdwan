@@ -76,6 +76,7 @@ func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -109,9 +110,7 @@ func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjso
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *MeshTopologyPolicyDefinition) hasChanges(ctx context.Context, state *MeshTopologyPolicyDefinition) bool {
@@ -140,8 +139,7 @@ func (data *MeshTopologyPolicyDefinition) hasChanges(ctx context.Context, state 
 	return hasChanges
 }
 
-func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context, state *MeshTopologyPolicyDefinition) {
 	data.VpnListVersion = state.VpnListVersion
 	for i := range data.Regions {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Regions[i].Name.ValueString())}

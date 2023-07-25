@@ -139,6 +139,7 @@ func (data DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -243,9 +244,7 @@ func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.R
 			return true
 		})
 	}
-
-	data.updateVersions(ctx)
-
+	data.updateVersions(ctx, &state)
 }
 
 func (data *DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state *DeviceACLPolicyDefinition) bool {
@@ -319,8 +318,7 @@ func (data *DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state *De
 	return hasChanges
 }
 
-func (data *DeviceACLPolicyDefinition) updateVersions(ctx context.Context) {
-	state := *data
+func (data *DeviceACLPolicyDefinition) updateVersions(ctx context.Context, state *DeviceACLPolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
 		stateIndex := -1
