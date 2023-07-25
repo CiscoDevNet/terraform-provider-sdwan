@@ -31,8 +31,9 @@ func TestAccSdwanIPv4PrefixListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanIPv4PrefixListPolicyObjectConfig_all(),
+				Config: testAccSdwanIPv4PrefixListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.prefix", "10.0.0.0/12"),
 					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.le", "32"),
 					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.ge", "24"),
@@ -42,15 +43,15 @@ func TestAccSdwanIPv4PrefixListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanIPv4PrefixListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_ipv4_prefix_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			prefix = "10.0.0.0/12"
-			le = 32
-			ge = 24
-		}]
-	}
-	`
+const testAccSdwanIPv4PrefixListPolicyObjectConfig = `
+
+
+resource "sdwan_ipv4_prefix_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		prefix = "10.0.0.0/12"
+		le = 32
+		ge = 24
+	}]
 }
+`

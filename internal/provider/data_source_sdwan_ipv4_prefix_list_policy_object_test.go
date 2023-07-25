@@ -33,6 +33,7 @@ func TestAccDataSourceSdwanIPv4PrefixListPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanIPv4PrefixListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.prefix", "10.0.0.0/12"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.le", "32"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.ge", "24"),
@@ -44,8 +45,9 @@ func TestAccDataSourceSdwanIPv4PrefixListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanIPv4PrefixListPolicyObjectConfig = `
 
+
 resource "sdwan_ipv4_prefix_list_policy_object" "test" {
-  name = "TF_TEST_MIN"
+  name = "Example"
   entries = [{
     prefix = "10.0.0.0/12"
     le = 32
