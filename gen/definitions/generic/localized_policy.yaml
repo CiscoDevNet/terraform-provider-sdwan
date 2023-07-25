@@ -1,0 +1,152 @@
+---
+name: Localized Policy
+rest_endpoint: /template/policy/vedge/
+get_rest_endpoint: /template/policy/vedge/definition/
+has_version: true
+id_attribute: policyId
+doc_category: Localized Policies
+attributes:
+  - model_name: policyType
+    value: feature
+  - model_name: policyName
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the localized policy
+    example: Example
+  - model_name: policyDescription
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the localized policy
+    example: My description
+  - model_name: flowVisibility
+    data_path: [policyDefinition, settings]
+    tf_name: flow_visibility_ipv4
+    type: Bool
+    description: IPv4 flow visibilty
+    default_value: true
+    example: true
+  - model_name: flowVisibilityIPv6
+    data_path: [policyDefinition, settings]
+    tf_name: flow_visibility_ipv6
+    type: Bool
+    description: IPv6 flow visibilty
+    default_value: true
+    example: true
+  - model_name: appVisibility
+    data_path: [policyDefinition, settings]
+    tf_name: application_visibility_ipv4
+    type: Bool
+    description: IPv4 application visibilty
+    default_value: true
+    example: true
+  - model_name: appVisibilityIPv6
+    data_path: [policyDefinition, settings]
+    tf_name: application_visibility_ipv6
+    type: Bool
+    description: IPv6 application visibilty
+    default_value: true
+    example: true
+  - model_name: cloudQos
+    data_path: [policyDefinition, settings]
+    tf_name: cloud_qos
+    type: Bool
+    description: Cloud QoS
+    default_value: true
+    example: true
+  - model_name: cloudQosServiceSide
+    data_path: [policyDefinition, settings]
+    tf_name: cloud_qos_service_side
+    type: Bool
+    description: Cloud QoS service side
+    default_value: true
+    example: true
+  - model_name: implicitAclLogging
+    data_path: [policyDefinition, settings]
+    tf_name: implicit_acl_logging
+    type: Bool
+    description: Implicit ACL logging
+    default_value: true
+    example: true
+  - model_name: logFrequency
+    data_path: [policyDefinition, settings]
+    tf_name: log_frequency
+    type: Int64
+    min_int: 1
+    max_int: 2147483647
+    description: Log frequency
+    example: 1000
+  - model_name: ipVisibilityCacheEntries
+    data_path: [policyDefinition, settings]
+    tf_name: ipv4_visibility_cache_entries
+    type: Int64
+    min_int: 16
+    max_int: 2000000
+    description: IPv4 visibility cache entries
+    example: 1000
+  - model_name: ipV6VisibilityCacheEntries
+    data_path: [policyDefinition, settings]
+    tf_name: ipv6_visibility_cache_entries
+    type: Int64
+    min_int: 16
+    max_int: 2000000
+    description: IPv6 visibility cache entries
+    example: 1000
+  - model_name: assembly
+    data_path: [policyDefinition]
+    tf_name: definitions
+    type: Set
+    description: List of policy definitions
+    attributes:
+      - model_name: definitionId
+        tf_name: id
+        type: String
+        id: true
+        mandatory: true
+        description: Policy definition ID
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        test_value: sdwan_acl_policy_definition.test.id
+      - tf_name: version
+        tf_only: true
+        type: Version
+        description: Policy definition version
+        exclude_test: true
+      - model_name: type
+        tf_name: type
+        type: String
+        mandatory: true
+        description: Policy definiton type
+        example: acl
+
+test_prerequisites: |
+  resource "sdwan_acl_policy_definition" "test" {
+    name           = "TF_TEST"
+    description    = "Terraform test"
+    default_action = "drop"
+    sequences = [
+      {
+        id          = 10
+        ip_type     = "ipv4"
+        name        = "Sequence 10"
+        base_action = "accept"
+        match_entries = [
+          {
+            type = "dscp"
+            dscp = 16
+          }
+        ]
+        action_entries = [
+          {
+            type = "set"
+            set_parameters = [
+              {
+                type = "dscp"
+                dscp = 16
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

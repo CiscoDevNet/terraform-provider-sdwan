@@ -154,7 +154,7 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("{{toLower .RestEndpoint}}" + config.Id.ValueString())
+	res, err := d.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + config.Id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

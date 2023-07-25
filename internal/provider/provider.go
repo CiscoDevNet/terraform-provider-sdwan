@@ -278,6 +278,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewHubAndSpokeTopologyPolicyDefinitionResource,
 		NewIPv4PrefixListPolicyObjectResource,
 		NewIPv6PrefixListPolicyObjectResource,
+		NewLocalizedPolicyResource,
 		NewMeshTopologyPolicyDefinitionResource,
 		NewMirrorPolicyObjectResource,
 		NewPolicerPolicyObjectResource,
@@ -296,7 +297,6 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewCLIDeviceTemplateResource,
 		NewFeatureDeviceTemplateResource,
 		NewAttachFeatureDeviceTemplateResource,
-		NewLocalizedPolicyResource,
 	}
 }
 
@@ -339,6 +339,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewHubAndSpokeTopologyPolicyDefinitionDataSource,
 		NewIPv4PrefixListPolicyObjectDataSource,
 		NewIPv6PrefixListPolicyObjectDataSource,
+		NewLocalizedPolicyDataSource,
 		NewMeshTopologyPolicyDefinitionDataSource,
 		NewMirrorPolicyObjectDataSource,
 		NewPolicerPolicyObjectDataSource,
@@ -356,7 +357,6 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewVPNMembershipPolicyDefinitionDataSource,
 		NewCLIDeviceTemplateDataSource,
 		NewFeatureDeviceTemplateDataSource,
-		NewLocalizedPolicyDataSource,
 	}
 }
 

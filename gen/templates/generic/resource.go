@@ -38,6 +38,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces
@@ -101,6 +104,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- else}}
 				Optional:            true,
 				{{- end}}
+				{{- if len .DefaultValue}}
+				Computed:            true,
+				{{- end}}
 				{{- if len .EnumValues}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
@@ -122,6 +128,13 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				Validators: []validator.Float64{
 					float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
 				},
+				{{- end}}
+				{{- if and (len .DefaultValue) (eq .Type "Int64")}}
+				Default:             int64default.StaticInt64({{.DefaultValue}}),
+				{{- else if and (len .DefaultValue) (eq .Type "Bool")}}
+				Default:             booldefault.StaticBool({{.DefaultValue}}),
+				{{- else if and (len .DefaultValue) (eq .Type "String")}}
+				Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 				{{- end}}
 				{{- if or (eq .Type "List") (eq .Type "Set")}}
 				NestedObject: schema.NestedAttributeObject{
@@ -151,6 +164,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							{{- else}}
 							Optional:            true,
 							{{- end}}
+							{{- if len .DefaultValue}}
+							Computed:            true,
+							{{- end}}
 							{{- if len .EnumValues}}
 							Validators: []validator.String{
 								stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
@@ -172,6 +188,13 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							Validators: []validator.Float64{
 								float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
 							},
+							{{- end}}
+							{{- if and (len .DefaultValue) (eq .Type "Int64")}}
+							Default:             int64default.StaticInt64({{.DefaultValue}}),
+							{{- else if and (len .DefaultValue) (eq .Type "Bool")}}
+							Default:             booldefault.StaticBool({{.DefaultValue}}),
+							{{- else if and (len .DefaultValue) (eq .Type "String")}}
+							Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 							{{- end}}
 							{{- if or (eq .Type "List") (eq .Type "Set")}}
 							NestedObject: schema.NestedAttributeObject{
@@ -201,6 +224,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										{{- else}}
 										Optional:            true,
 										{{- end}}
+										{{- if len .DefaultValue}}
+										Computed:            true,
+										{{- end}}
 										{{- if len .EnumValues}}
 										Validators: []validator.String{
 											stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
@@ -222,6 +248,13 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										Validators: []validator.Float64{
 											float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
 										},
+										{{- end}}
+										{{- if and (len .DefaultValue) (eq .Type "Int64")}}
+										Default:             int64default.StaticInt64({{.DefaultValue}}),
+										{{- else if and (len .DefaultValue) (eq .Type "Bool")}}
+										Default:             booldefault.StaticBool({{.DefaultValue}}),
+										{{- else if and (len .DefaultValue) (eq .Type "String")}}
+										Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 										{{- end}}
 										{{- if or (eq .Type "List") (eq .Type "Set")}}
 										NestedObject: schema.NestedAttributeObject{
@@ -251,6 +284,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													{{- else}}
 													Optional:            true,
 													{{- end}}
+													{{- if len .DefaultValue}}
+													Computed:            true,
+													{{- end}}
 													{{- if len .EnumValues}}
 													Validators: []validator.String{
 														stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
@@ -272,6 +308,13 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													Validators: []validator.Float64{
 														float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
 													},
+													{{- end}}
+													{{- if and (len .DefaultValue) (eq .Type "Int64")}}
+													Default:             int64default.StaticInt64({{.DefaultValue}}),
+													{{- else if and (len .DefaultValue) (eq .Type "Bool")}}
+													Default:             booldefault.StaticBool({{.DefaultValue}}),
+													{{- else if and (len .DefaultValue) (eq .Type "String")}}
+													Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 													{{- end}}
 												},
 												{{- end}}
@@ -381,7 +424,7 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("{{.RestEndpoint}}" + state.Id.ValueString())
+	res, err := r.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + state.Id.ValueString())
 	if res.Get("error.message").String() == "Failed to find specified resource" {
 		resp.State.RemoveResource(ctx)
 		return

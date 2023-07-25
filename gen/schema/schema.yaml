@@ -2,6 +2,7 @@
 name: str()
 model: str(required=False)
 rest_endpoint: str(required=False)
+get_rest_endpoint: str(required=False)
 type: str(required=False)
 minimum_version: str()
 ds_description: str(required=False)

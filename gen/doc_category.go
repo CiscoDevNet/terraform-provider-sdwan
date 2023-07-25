@@ -44,7 +44,6 @@ var extraDocs = map[string]string{
 	"cli_device_template":            "Device Templates",
 	"feature_device_template":        "Device Templates",
 	"attach_feature_device_template": "Device Templates",
-	"localized_policy":               "Localized Policies",
 }
 
 func SnakeCase(s string) string {

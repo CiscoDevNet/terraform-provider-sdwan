@@ -142,6 +142,7 @@ type YamlConfig struct {
 	Name              string                `yaml:"name"`
 	Model             string                `yaml:"model"`
 	RestEndpoint      string                `yaml:"rest_endpoint"`
+	GetRestEndpoint   string                `yaml:"get_rest_endpoint"`
 	Type              string                `yaml:"type"`
 	MinimumVersion    string                `yaml:"minimum_version"`
 	DsDescription     string                `yaml:"ds_description"`
@@ -247,7 +248,7 @@ func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
 		if attr.Type == "Version" || attr.Type == "Versions" {
 			return true
-		} else if attr.Type == "List" {
+		} else if attr.Type == "List" || attr.Type == "Set" {
 			if HasVersionAttribute(attr.Attributes) {
 				return true
 			}
@@ -437,7 +438,7 @@ func augmentGenericAttribute(attr *YamlConfigAttribute) {
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
-	if attr.Type == "List" {
+	if attr.Type == "List" || attr.Type == "Set" {
 		for a := range attr.Attributes {
 			augmentGenericAttribute(&attr.Attributes[a])
 		}

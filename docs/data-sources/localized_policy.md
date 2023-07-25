@@ -3,12 +3,12 @@
 page_title: "sdwan_localized_policy Data Source - terraform-provider-sdwan"
 subcategory: "Localized Policies"
 description: |-
-  This data source can read a localized policy.
+  This data source can read the Localized Policy .
 ---
 
 # sdwan_localized_policy (Data Source)
 
-This data source can read a localized policy.
+This data source can read the Localized Policy .
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ data "sdwan_localized_policy" "example" {
 
 ### Required
 
-- `id` (String) The id of the localized policy
+- `id` (String) The id of the object
 
 ### Read-Only
 
@@ -40,7 +40,7 @@ data "sdwan_localized_policy" "example" {
 - `ipv6_visibility_cache_entries` (Number) IPv6 visibility cache entries
 - `log_frequency` (Number) Log frequency
 - `name` (String) The name of the localized policy
-- `version` (Number) The version of the localized policy
+- `version` (Number) The version of the object
 
 <a id="nestedatt--definitions"></a>
 ### Nested Schema for `definitions`
