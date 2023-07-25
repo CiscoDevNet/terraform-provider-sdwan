@@ -39,15 +39,15 @@ func TestAccSdwan{{camelCase .Name}}(t *testing.T) {
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
-					{{- if eq .Type "List"}}
+					{{- if or (eq .Type "List") (eq .Type "Set")}}
 					{{- $list := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
-					{{- if eq .Type "List"}}
+					{{- if or (eq .Type "List") (eq .Type "Set")}}
 					{{- $clist := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
-					{{- if eq .Type "List"}}
+					{{- if or (eq .Type "List") (eq .Type "Set")}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue) (ne .Type "ListString")}}
@@ -81,15 +81,15 @@ const testAccSdwan{{camelCase .Name}}Config = `
 resource "sdwan_{{snakeCase $name}}" "test" {
 	{{- range  .Attributes}}
 	{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-	{{- if eq .Type "List"}}
+	{{- if or (eq .Type "List") (eq .Type "Set")}}
 	{{.TfName}} = [{
 		{{- range  .Attributes}}
 		{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-		{{- if eq .Type "List"}}
+		{{- if or (eq .Type "List") (eq .Type "Set")}}
 		{{.TfName}} = [{
 			{{- range  .Attributes}}
 			{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-			{{- if eq .Type "List"}}
+			{{- if or (eq .Type "List") (eq .Type "Set")}}
 			{{.TfName}} = [{
 				{{- range  .Attributes}}
 				{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}

@@ -18,7 +18,7 @@ test_prerequisites: str(required=False)
 attribute:
   model_name: str()
   tf_name: str(required=False)
-  type: enum('String', 'Int64', 'Bool', 'List', 'Version', 'Versions', required=False)
+  type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', required=False)
   object_type: enum('object', 'tree', 'list', required=False)
   model_type_string: bool(required=False)
   bool_empty_string: bool(required=False)
