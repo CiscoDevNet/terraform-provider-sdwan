@@ -276,6 +276,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewDeviceACLPolicyDefinitionResource,
 		NewExpandedCommunityListPolicyObjectResource,
 		NewExtendedCommunityListPolicyObjectResource,
+		NewFeatureDeviceTemplateResource,
 		NewHubAndSpokeTopologyPolicyDefinitionResource,
 		NewIPv4PrefixListPolicyObjectResource,
 		NewIPv6PrefixListPolicyObjectResource,
@@ -295,7 +296,6 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewTrafficDataPolicyDefinitionResource,
 		NewVPNListPolicyObjectResource,
 		NewVPNMembershipPolicyDefinitionResource,
-		NewFeatureDeviceTemplateResource,
 		NewAttachFeatureDeviceTemplateResource,
 	}
 }
@@ -337,6 +337,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewDeviceACLPolicyDefinitionDataSource,
 		NewExpandedCommunityListPolicyObjectDataSource,
 		NewExtendedCommunityListPolicyObjectDataSource,
+		NewFeatureDeviceTemplateDataSource,
 		NewHubAndSpokeTopologyPolicyDefinitionDataSource,
 		NewIPv4PrefixListPolicyObjectDataSource,
 		NewIPv6PrefixListPolicyObjectDataSource,
@@ -356,7 +357,6 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewTrafficDataPolicyDefinitionDataSource,
 		NewVPNListPolicyObjectDataSource,
 		NewVPNMembershipPolicyDefinitionDataSource,
-		NewFeatureDeviceTemplateDataSource,
 	}
 }
 

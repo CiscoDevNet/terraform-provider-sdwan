@@ -41,7 +41,6 @@ type YamlConfig struct {
 var docPaths = []string{"./docs/data-sources/", "./docs/resources/"}
 
 var extraDocs = map[string]string{
-	"feature_device_template":        "Device Templates",
 	"attach_feature_device_template": "Device Templates",
 }
 

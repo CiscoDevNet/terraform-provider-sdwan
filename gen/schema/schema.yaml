@@ -50,6 +50,7 @@ attribute:
   default_value: any(str(), int(), bool(), required=False)
   value: any(str(), int(), bool(), required=False)
   test_value: str(required=False)
+  always_include: bool(required=False)
   attributes: list(include('attribute'), required=False)
   conditional_attribute: include('conditional_attribute', required=False)
 

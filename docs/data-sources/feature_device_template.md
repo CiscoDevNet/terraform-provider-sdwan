@@ -3,12 +3,12 @@
 page_title: "sdwan_feature_device_template Data Source - terraform-provider-sdwan"
 subcategory: "Device Templates"
 description: |-
-  This data source can read a feature device template.
+  This data source can read the Feature Device Template .
 ---
 
 # sdwan_feature_device_template (Data Source)
 
-This data source can read a feature device template.
+This data source can read the Feature Device Template .
 
 ## Example Usage
 
@@ -23,19 +23,20 @@ data "sdwan_feature_device_template" "example" {
 
 ### Required
 
-- `id` (String) The id of the device template
+- `id` (String) The id of the object
 
 ### Read-Only
 
-- `description` (String) The description of the feature template
+- `description` (String) The description of the device template
 - `device_role` (String) The device role
 - `device_type` (String) The device type (e.g., `vedge-ISR-4331`)
-- `general_templates` (Attributes Set) General templates (see [below for nested schema](#nestedatt--general_templates))
+- `general_templates` (Attributes Set) List of general templates (see [below for nested schema](#nestedatt--general_templates))
 - `name` (String) The name of the device template
 - `policy_id` (String) The policy ID
 - `policy_version` (Number) The policy version
 - `security_policy_id` (String) The security policy ID
-- `version` (Number) The version of the device template
+- `security_policy_version` (Number) The security policy version
+- `version` (Number) The version of the object
 
 <a id="nestedatt--general_templates"></a>
 ### Nested Schema for `general_templates`
@@ -43,9 +44,9 @@ data "sdwan_feature_device_template" "example" {
 Read-Only:
 
 - `id` (String) Feature template ID
-- `sub_templates` (Attributes Set) Sub templates (see [below for nested schema](#nestedatt--general_templates--sub_templates))
+- `sub_templates` (Attributes Set) List of sub templates (see [below for nested schema](#nestedatt--general_templates--sub_templates))
 - `type` (String) Feature template type
-- `version` (Number) The version of the feature template
+- `version` (Number) Feature template version
 
 <a id="nestedatt--general_templates--sub_templates"></a>
 ### Nested Schema for `general_templates.sub_templates`
@@ -53,9 +54,9 @@ Read-Only:
 Read-Only:
 
 - `id` (String) Feature template ID
-- `sub_templates` (Attributes Set) Sub templates (see [below for nested schema](#nestedatt--general_templates--sub_templates--sub_templates))
+- `sub_templates` (Attributes Set) List of sub templates (see [below for nested schema](#nestedatt--general_templates--sub_templates--sub_templates))
 - `type` (String) Feature template type
-- `version` (Number) The version of the feature template
+- `version` (Number) Feature template version
 
 <a id="nestedatt--general_templates--sub_templates--sub_templates"></a>
 ### Nested Schema for `general_templates.sub_templates.sub_templates`
@@ -64,4 +65,4 @@ Read-Only:
 
 - `id` (String) Feature template ID
 - `type` (String) Feature template type
-- `version` (Number) The version of the feature template
+- `version` (Number) Feature template version

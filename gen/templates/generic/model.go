@@ -147,11 +147,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 	{{- else if not .TfOnly}}
 	{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
-	if !data.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if {{if not .AlwaysInclude}}!data.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 		body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}data.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 	}
 	{{- else if eq .Type "Bool"}}
-	if !data.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if {{if not .AlwaysInclude}}!data.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 		if {{.BoolEmptyString}} && data.{{toGoName .TfName}}.Value{{.Type}}() {
 			body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
 		} else {
@@ -159,7 +159,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		}
 	}
 	{{- else if eq .Type "ListString"}}
-	if !data.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if {{if not .AlwaysInclude}}!data.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 		var values []string
 		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
@@ -174,11 +174,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 			{{- else if not .TfOnly}}
 			{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
-			if !item.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if {{if not .AlwaysInclude}}!item.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}item.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 			}
 			{{- else if eq .Type "Bool"}}
-			if !item.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if {{if not .AlwaysInclude}}!item.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 				if {{.BoolEmptyString}} && item.{{toGoName .TfName}}.Value{{.Type}}() {
 					itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
 				} else {
@@ -186,7 +186,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				}
 			}
 			{{- else if eq .Type "ListString"}}
-			if !item.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if {{if not .AlwaysInclude}}!item.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 				var values []string
 				item.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
@@ -201,11 +201,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 					{{- else if not .TfOnly}}
 					{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
-					if !childItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if {{if not .AlwaysInclude}}!childItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}childItem.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 					}
 					{{- else if eq .Type "Bool"}}
-					if !childItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if {{if not .AlwaysInclude}}!childItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 						if {{.BoolEmptyString}} && childItem.{{toGoName .TfName}}.Value{{.Type}}() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
 						} else {
@@ -213,7 +213,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 						}
 					}
 					{{- else if eq .Type "ListString"}}
-					if !childItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if {{if not .AlwaysInclude}}!childItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 						var values []string
 						childItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
@@ -228,11 +228,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 							itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 							{{- else if not .TfOnly}}
 							{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
-							if !childChildItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if {{if not .AlwaysInclude}}!childChildItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}childChildItem.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 							}
 							{{- else if eq .Type "Bool"}}
-							if !childChildItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if {{if not .AlwaysInclude}}!childChildItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 								if {{.BoolEmptyString}} && childChildItem.{{toGoName .TfName}}.Value{{.Type}}() {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
 								} else {
@@ -240,7 +240,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 								}
 							}
 							{{- else if eq .Type "ListString"}}
-							if !childChildItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if {{if not .AlwaysInclude}}!childChildItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 								var values []string
 								childChildItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
@@ -274,25 +274,25 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	{{- if and (not .TfOnly) (not .Value)}}
 	{{- $cname := toGoName .TfName}}
 	{{- if eq .Type "String"}}
-	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
 		data.{{toGoName .TfName}} = types.StringValue(value.String())
 	} else {
 		data.{{toGoName .TfName}} = types.StringNull()
 	}
 	{{- else if eq .Type "Int64"}}
-	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
 		data.{{toGoName .TfName}} = types.Int64Value(value.Int())
 	} else {
 		data.{{toGoName .TfName}} = types.Int64Null()
 	}
 	{{- else if eq .Type "Float64"}}
-	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
 		data.{{toGoName .TfName}} = types.Float64Value(value.Float())
 	} else {
 		data.{{toGoName .TfName}} = types.Float64Null()
 	}
 	{{- else if eq .Type "Bool"}}
-	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
 		if {{.BoolEmptyString}} && value.String() == "" {
 			data.{{toGoName .TfName}} = types.BoolValue(true)
 		} else {
@@ -302,7 +302,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 		data.{{toGoName .TfName}} = types.BoolNull()
 	}
 	{{- else if eq .Type "ListString"}}
-	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
 		data.{{toGoName .TfName}} = helpers.GetStringList(value.Array())
 	} else {
 		data.{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -316,25 +316,25 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			{{- $ccname := toGoName .TfName}}
 			{{- if and (not .TfOnly) (not .Value)}}
 			{{- if eq .Type "String"}}
-			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				item.{{toGoName .TfName}} = types.StringValue(cValue.String())
 			} else {
 				item.{{toGoName .TfName}} = types.StringNull()
 			}
 			{{- else if eq .Type "Int64"}}
-			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				item.{{toGoName .TfName}} = types.Int64Value(cValue.Int())
 			} else {
 				item.{{toGoName .TfName}} = types.Int64Null()
 			}
 			{{- else if eq .Type "Float64"}}
-			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				item.{{toGoName .TfName}} = types.Float64Value(cValue.Float())
 			} else {
 				item.{{toGoName .TfName}} = types.Float64Null()
 			}
 			{{- else if eq .Type "Bool"}}
-			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				if {{.BoolEmptyString}} && cValue.String() == "" {
 					item.{{toGoName .TfName}} = types.BoolValue(true)
 				} else {
@@ -344,7 +344,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 				item.{{toGoName .TfName}} = types.BoolNull()
 			}
 			{{- else if eq .Type "ListString"}}
-			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				item.{{toGoName .TfName}} = helpers.GetStringList(cValue.Array())
 			} else {
 				item.{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -357,25 +357,25 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					{{- range .Attributes}}
 					{{- if and (not .TfOnly) (not .Value)}}
 					{{- if eq .Type "String"}}
-					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						cItem.{{toGoName .TfName}} = types.StringValue(ccValue.String())
 					} else {
 						cItem.{{toGoName .TfName}} = types.StringNull()
 					}
 					{{- else if eq .Type "Int64"}}
-					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						cItem.{{toGoName .TfName}} = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.{{toGoName .TfName}} = types.Int64Null()
 					}
 					{{- else if eq .Type "Float64"}}
-					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						cItem.{{toGoName .TfName}} = types.Float64Value(ccValue.Float())
 					} else {
 						cItem.{{toGoName .TfName}} = types.Float64Null()
 					}
 					{{- else if eq .Type "Bool"}}
-					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						if {{.BoolEmptyString}} && ccValue.String() == "" {
 							cItem.{{toGoName .TfName}} = types.BoolValue(true)
 						} else {
@@ -385,7 +385,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 						cItem.{{toGoName .TfName}} = types.BoolNull()
 					}
 					{{- else if eq .Type "ListString"}}
-					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						cItem.{{toGoName .TfName}} = helpers.GetStringList(ccValue.Array())
 					} else {
 						cItem.{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -398,25 +398,25 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							{{- range .Attributes}}
 							{{- if and (not .TfOnly) (not .Value)}}
 							{{- if eq .Type "String"}}
-							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								ccItem.{{toGoName .TfName}} = types.StringValue(cccValue.String())
 							} else {
 								ccItem.{{toGoName .TfName}} = types.StringNull()
 							}
 							{{- else if eq .Type "Int64"}}
-							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								ccItem.{{toGoName .TfName}} = types.Int64Value(cccValue.Int())
 							} else {
 								ccItem.{{toGoName .TfName}} = types.Int64Null()
 							}
 							{{- else if eq .Type "Float64"}}
-							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								ccItem.{{toGoName .TfName}} = types.Float64Value(cccValue.Float())
 							} else {
 								ccItem.{{toGoName .TfName}} = types.Float64Null()
 							}
 							{{- else if eq .Type "Bool"}}
-							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								if {{.BoolEmptyString}} && cccValue.String() == "" {
 									ccItem.{{toGoName .TfName}} = types.BoolValue(true)
 								} else {
@@ -426,7 +426,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 								ccItem.{{toGoName .TfName}} = types.BoolNull()
 							}
 							{{- else if eq .Type "ListString"}}
-							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
+							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								ccItem.{{toGoName .TfName}} = helpers.GetStringList(cccValue.Array())
 							} else {
 								ccItem.{{toGoName .TfName}} = types.ListNull(types.StringType)

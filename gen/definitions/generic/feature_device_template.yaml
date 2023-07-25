@@ -1,0 +1,151 @@
+---
+name: Feature Device Template
+rest_endpoint: /template/device/
+post_rest_endpoint: /template/device/feature/
+get_rest_endpoint: /template/device/object/
+has_version: true
+id_attribute: templateId
+doc_category: Device Templates
+attributes:
+  - model_name: configType
+    type: String
+    value: template
+  - model_name: factoryDefault
+    type: Bool
+    value: false
+  - model_name: featureTemplateUidRange
+    type: List
+    value: "[]interface{}{}"
+  - model_name: templateName
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the device template
+    example: Example
+  - model_name: templateDescription
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the device template
+    example: My description
+  - model_name: deviceType
+    tf_name: device_type
+    type: String
+    mandatory: true
+    description: The device type (e.g., `vedge-ISR-4331`)
+    example: vedge-ISR-4331
+  - model_name: deviceRole
+    tf_name: device_role
+    type: String
+    enum_values: [sdwan-edge, service-node]
+    description: The device role
+    example: sdwan-edge
+    always_include: true
+    exclude_test: true
+  - model_name: policyId
+    tf_name: policy_id
+    type: String
+    description: The policy ID
+    example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+    always_include: true
+    exclude_test: true
+  - tf_name: policy_version
+    tf_only: true
+    type: Version
+    description: The policy version
+    exclude_test: true
+  - model_name: securityPolicyId
+    tf_name: security_policy_id
+    type: String
+    description: The security policy ID
+    example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+    exclude_test: true
+  - tf_name: security_policy_version
+    tf_only: true
+    type: Version
+    description: The security policy version
+    exclude_test: true
+  - model_name: generalTemplates
+    tf_name: general_templates
+    type: Set
+    description: List of general templates
+    attributes:
+      - model_name: templateId
+        tf_name: id
+        type: String
+        id: true
+        mandatory: true
+        description: Feature template ID
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        test_value: sdwan_cisco_system_feature_template.system.id
+      - tf_name: version
+        tf_only: true
+        type: Version
+        description: Feature template version
+        exclude_test: true
+      - model_name: templateType
+        tf_name: type
+        type: String
+        mandatory: true
+        description: Feature template type
+        example: cisco_system
+      - model_name: subTemplates
+        tf_name: sub_templates
+        type: Set
+        description: List of sub templates
+        exclude_test: true
+        attributes:
+          - model_name: templateId
+            tf_name: id
+            type: String
+            id: true
+            mandatory: true
+            description: Feature template ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: version
+            tf_only: true
+            type: Version
+            description: Feature template version
+            exclude_test: true
+          - model_name: templateType
+            tf_name: type
+            type: String
+            mandatory: true
+            description: Feature template type
+            example: cisco_vpn_interface
+          - model_name: subTemplates
+            tf_name: sub_templates
+            type: Set
+            description: List of sub templates
+            exclude_test: true
+            attributes:
+              - model_name: templateId
+                tf_name: id
+                type: String
+                id: true
+                mandatory: true
+                description: Feature template ID
+                example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+              - tf_name: version
+                tf_only: true
+                type: Version
+                description: Feature template version
+                exclude_test: true
+              - model_name: templateType
+                tf_name: type
+                type: String
+                mandatory: true
+                description: Feature template type
+                example: cisco_vpn_interface
+
+test_prerequisites: |
+  resource "sdwan_cisco_system_feature_template" "system" {
+    name = "TF_SYSTEM_1"
+    description = "Terraform integration test"
+    device_types = ["vedge-C8000V"]
+    hostname = "Router1"
+    system_ip = "5.5.5.5"
+    site_id = 1
+    console_baud_rate = "115200"
+    multi_tenant = true
+  }

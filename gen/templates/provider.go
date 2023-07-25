@@ -248,7 +248,6 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		{{- range .Generic}}
 		New{{camelCase .}}Resource,
 		{{- end}}
-		NewFeatureDeviceTemplateResource,
 		NewAttachFeatureDeviceTemplateResource,
 	}
 }
@@ -261,7 +260,6 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		{{- range .Generic}}
 		New{{camelCase .}}DataSource,
 		{{- end}}
-		NewFeatureDeviceTemplateDataSource,
 	}
 }
 
