@@ -31,8 +31,9 @@ func TestAccSdwanASPathListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanASPathListPolicyObjectConfig_all(),
+				Config: testAccSdwanASPathListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_as_path_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_as_path_list_policy_object.test", "entries.0.as_path", "^1239_[0-9]*$"),
 				),
 			},
@@ -40,13 +41,13 @@ func TestAccSdwanASPathListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanASPathListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_as_path_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			as_path = "^1239_[0-9]*$"
-		}]
-	}
-	`
+const testAccSdwanASPathListPolicyObjectConfig = `
+
+
+resource "sdwan_as_path_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		as_path = "^1239_[0-9]*$"
+	}]
 }
+`

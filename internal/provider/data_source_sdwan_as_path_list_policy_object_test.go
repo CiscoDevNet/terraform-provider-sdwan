@@ -33,6 +33,7 @@ func TestAccDataSourceSdwanASPathListPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanASPathListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_as_path_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("data.sdwan_as_path_list_policy_object.test", "entries.0.as_path", "^1239_[0-9]*$"),
 				),
 			},
@@ -42,8 +43,9 @@ func TestAccDataSourceSdwanASPathListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanASPathListPolicyObjectConfig = `
 
+
 resource "sdwan_as_path_list_policy_object" "test" {
-  name = "TF_TEST_MIN"
+  name = "Example"
   entries = [{
     as_path = "^1239_[0-9]*$"
   }]

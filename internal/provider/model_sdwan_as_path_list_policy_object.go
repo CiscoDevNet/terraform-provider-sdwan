@@ -27,25 +27,23 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ASPathList struct {
-	Id      types.String        `tfsdk:"id"`
-	Version types.Int64         `tfsdk:"version"`
-	Name    types.String        `tfsdk:"name"`
-	Entries []ASPathListEntries `tfsdk:"entries"`
+type ASPathListPolicyObject struct {
+	Id      types.String                    `tfsdk:"id"`
+	Version types.Int64                     `tfsdk:"version"`
+	Name    types.String                    `tfsdk:"name"`
+	Entries []ASPathListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type ASPathListEntries struct {
+type ASPathListPolicyObjectEntries struct {
 	AsPath types.String `tfsdk:"as_path"`
 }
 
-func (data ASPathList) getType() string {
-	return "aspath"
-}
-
-func (data ASPathList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data ASPathListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "aspath")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -59,16 +57,16 @@ func (data ASPathList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *ASPathList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ASPathListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]ASPathListEntries, 0)
+		data.Entries = make([]ASPathListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ASPathListEntries{}
+			item := ASPathListPolicyObjectEntries{}
 			if cValue := v.Get("asPath"); cValue.Exists() {
 				item.AsPath = types.StringValue(cValue.String())
 			} else {
@@ -78,4 +76,22 @@ func (data *ASPathList) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+}
+
+func (data *ASPathListPolicyObject) hasChanges(ctx context.Context, state *ASPathListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].AsPath.Equal(state.Entries[i].AsPath) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }
