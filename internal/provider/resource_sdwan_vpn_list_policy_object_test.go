@@ -31,8 +31,9 @@ func TestAccSdwanVPNListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanVPNListPolicyObjectConfig_all(),
+				Config: testAccSdwanVPNListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_vpn_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_vpn_list_policy_object.test", "entries.0.vpn_id", "100-200"),
 				),
 			},
@@ -40,13 +41,13 @@ func TestAccSdwanVPNListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanVPNListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_vpn_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			vpn_id = "100-200"
-		}]
-	}
-	`
+const testAccSdwanVPNListPolicyObjectConfig = `
+
+
+resource "sdwan_vpn_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		vpn_id = "100-200"
+	}]
 }
+`
