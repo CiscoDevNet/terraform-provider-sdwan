@@ -33,6 +33,7 @@ func TestAccDataSourceSdwanStandardCommunityListPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanStandardCommunityListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_standard_community_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("data.sdwan_standard_community_list_policy_object.test", "entries.0.community", "100:1000"),
 				),
 			},
@@ -42,8 +43,9 @@ func TestAccDataSourceSdwanStandardCommunityListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanStandardCommunityListPolicyObjectConfig = `
 
+
 resource "sdwan_standard_community_list_policy_object" "test" {
-  name = "TF_TEST_MIN"
+  name = "Example"
   entries = [{
     community = "100:1000"
   }]

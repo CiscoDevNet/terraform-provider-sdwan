@@ -31,8 +31,9 @@ func TestAccSdwanStandardCommunityListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanStandardCommunityListPolicyObjectConfig_all(),
+				Config: testAccSdwanStandardCommunityListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_standard_community_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_standard_community_list_policy_object.test", "entries.0.community", "100:1000"),
 				),
 			},
@@ -40,13 +41,13 @@ func TestAccSdwanStandardCommunityListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanStandardCommunityListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_standard_community_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			community = "100:1000"
-		}]
-	}
-	`
+const testAccSdwanStandardCommunityListPolicyObjectConfig = `
+
+
+resource "sdwan_standard_community_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		community = "100:1000"
+	}]
 }
+`
