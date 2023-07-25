@@ -33,8 +33,9 @@ func TestAccSdwanRegionListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanRegionListPolicyObjectConfig_all(),
+				Config: testAccSdwanRegionListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_region_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_region_list_policy_object.test", "entries.0.region_id", "1-2"),
 				),
 			},
@@ -42,13 +43,13 @@ func TestAccSdwanRegionListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanRegionListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_region_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			region_id = "1-2"
-		}]
-	}
-	`
+const testAccSdwanRegionListPolicyObjectConfig = `
+
+
+resource "sdwan_region_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		region_id = "1-2"
+	}]
 }
+`

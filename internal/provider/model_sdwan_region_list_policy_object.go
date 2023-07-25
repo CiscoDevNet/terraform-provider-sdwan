@@ -27,25 +27,23 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type RegionList struct {
-	Id      types.String        `tfsdk:"id"`
-	Version types.Int64         `tfsdk:"version"`
-	Name    types.String        `tfsdk:"name"`
-	Entries []RegionListEntries `tfsdk:"entries"`
+type RegionListPolicyObject struct {
+	Id      types.String                    `tfsdk:"id"`
+	Version types.Int64                     `tfsdk:"version"`
+	Name    types.String                    `tfsdk:"name"`
+	Entries []RegionListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type RegionListEntries struct {
+type RegionListPolicyObjectEntries struct {
 	RegionId types.String `tfsdk:"region_id"`
 }
 
-func (data RegionList) getType() string {
-	return "region"
-}
-
-func (data RegionList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data RegionListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "region")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -59,16 +57,16 @@ func (data RegionList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *RegionList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *RegionListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]RegionListEntries, 0)
+		data.Entries = make([]RegionListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := RegionListEntries{}
+			item := RegionListPolicyObjectEntries{}
 			if cValue := v.Get("regionId"); cValue.Exists() {
 				item.RegionId = types.StringValue(cValue.String())
 			} else {
@@ -78,4 +76,22 @@ func (data *RegionList) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+}
+
+func (data *RegionListPolicyObject) hasChanges(ctx context.Context, state *RegionListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].RegionId.Equal(state.Entries[i].RegionId) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }

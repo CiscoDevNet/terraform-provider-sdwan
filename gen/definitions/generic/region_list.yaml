@@ -1,8 +1,19 @@
 ---
-name: Region List
-type: region
+name: Region List Policy Object
+rest_endpoint: /template/policy/list/region/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
 exclude_test: true
 attributes:
+  - model_name: type
+    value: region
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
   - model_name: entries
     type: List
     mandatory: true

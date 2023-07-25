@@ -35,6 +35,7 @@ func TestAccDataSourceSdwanRegionListPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanRegionListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_region_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("data.sdwan_region_list_policy_object.test", "entries.0.region_id", "1-2"),
 				),
 			},
@@ -44,8 +45,9 @@ func TestAccDataSourceSdwanRegionListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanRegionListPolicyObjectConfig = `
 
+
 resource "sdwan_region_list_policy_object" "test" {
-  name = "TF_TEST_MIN"
+  name = "Example"
   entries = [{
     region_id = "1-2"
   }]
