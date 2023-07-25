@@ -28,28 +28,26 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type TLOCList struct {
-	Id      types.String      `tfsdk:"id"`
-	Version types.Int64       `tfsdk:"version"`
-	Name    types.String      `tfsdk:"name"`
-	Entries []TLOCListEntries `tfsdk:"entries"`
+type TLOCListPolicyObject struct {
+	Id      types.String                  `tfsdk:"id"`
+	Version types.Int64                   `tfsdk:"version"`
+	Name    types.String                  `tfsdk:"name"`
+	Entries []TLOCListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type TLOCListEntries struct {
+type TLOCListPolicyObjectEntries struct {
 	TlocIp        types.String `tfsdk:"tloc_ip"`
 	Color         types.String `tfsdk:"color"`
 	Encapsulation types.String `tfsdk:"encapsulation"`
 	Preference    types.Int64  `tfsdk:"preference"`
 }
 
-func (data TLOCList) getType() string {
-	return "tloc"
-}
-
-func (data TLOCList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data TLOCListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "tloc")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -72,16 +70,16 @@ func (data TLOCList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *TLOCList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *TLOCListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]TLOCListEntries, 0)
+		data.Entries = make([]TLOCListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TLOCListEntries{}
+			item := TLOCListPolicyObjectEntries{}
 			if cValue := v.Get("tloc"); cValue.Exists() {
 				item.TlocIp = types.StringValue(cValue.String())
 			} else {
@@ -106,4 +104,31 @@ func (data *TLOCList) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+}
+
+func (data *TLOCListPolicyObject) hasChanges(ctx context.Context, state *TLOCListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].TlocIp.Equal(state.Entries[i].TlocIp) {
+				hasChanges = true
+			}
+			if !data.Entries[i].Color.Equal(state.Entries[i].Color) {
+				hasChanges = true
+			}
+			if !data.Entries[i].Encapsulation.Equal(state.Entries[i].Encapsulation) {
+				hasChanges = true
+			}
+			if !data.Entries[i].Preference.Equal(state.Entries[i].Preference) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }

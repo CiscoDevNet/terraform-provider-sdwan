@@ -3,12 +3,12 @@
 page_title: "sdwan_tloc_list_policy_object Resource - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This resource can manage a TLOC List policy object.
+  This resource can manage a TLOC List Policy Object .
 ---
 
 # sdwan_tloc_list_policy_object (Resource)
 
-This resource can manage a TLOC List policy object.
+This resource can manage a TLOC List Policy Object .
 
 ## Example Usage
 
@@ -36,8 +36,8 @@ resource "sdwan_tloc_list_policy_object" "example" {
 
 ### Read-Only
 
-- `id` (String) The id of the policy object
-- `version` (Number) The version of the feature template
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 <a id="nestedatt--entries"></a>
 ### Nested Schema for `entries`

@@ -31,8 +31,9 @@ func TestAccSdwanTLOCListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanTLOCListPolicyObjectConfig_all(),
+				Config: testAccSdwanTLOCListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.tloc_ip", "1.1.1.2"),
 					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.color", "blue"),
 					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.encapsulation", "gre"),
@@ -43,16 +44,16 @@ func TestAccSdwanTLOCListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanTLOCListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_tloc_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			tloc_ip = "1.1.1.2"
-			color = "blue"
-			encapsulation = "gre"
-			preference = 10
-		}]
-	}
-	`
+const testAccSdwanTLOCListPolicyObjectConfig = `
+
+
+resource "sdwan_tloc_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		tloc_ip = "1.1.1.2"
+		color = "blue"
+		encapsulation = "gre"
+		preference = 10
+	}]
 }
+`
