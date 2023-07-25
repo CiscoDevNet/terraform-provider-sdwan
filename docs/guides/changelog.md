@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.2.2 (unreleased)
+## 0.2.2
 
 - Add `sdwan_application_aware_routing_policy_definition` resource and data source
 - Add `sdwan_cflowd_policy_definition` resource and data source
