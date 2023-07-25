@@ -1,12 +1,12 @@
 ---
-name: AS Path List Policy Object
-rest_endpoint: /template/policy/list/aspath/
+name: Data IPv4 Prefix List Policy Object
+rest_endpoint: /template/policy/list/dataprefix/
 has_version: true
 id_attribute: listId
 doc_category: Policy Objects
 attributes:
   - model_name: type
-    value: asPath
+    value: dataPrefix
   - model_name: name
     tf_name: name
     type: String
@@ -19,9 +19,9 @@ attributes:
     min_list: 1
     description: List of entries
     attributes:
-      - model_name: asPath
-        tf_name: as_path
+      - model_name: ipPrefix
+        tf_name: prefix
         type: String
         mandatory: true
-        description: Regular expression to match the BGP AS paths e.g., `^1239_[0-9]*$`
-        example: ^1239_[0-9]*$
+        description: IP prefix list entry, e.g. `10.0.0.0/12`
+        example: 10.0.0.0/12

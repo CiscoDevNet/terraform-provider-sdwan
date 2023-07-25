@@ -50,15 +50,15 @@ func (d *DataIPv4PrefixListPolicyObjectDataSource) Metadata(_ context.Context, r
 func (d *DataIPv4PrefixListPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Data IPv4 Prefix List policy object.",
+		MarkdownDescription: "This data source can read the Data IPv4 Prefix List Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -90,7 +90,7 @@ func (d *DataIPv4PrefixListPolicyObjectDataSource) Configure(_ context.Context, 
 }
 
 func (d *DataIPv4PrefixListPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config DataIPv4PrefixList
+	var config DataIPv4PrefixListPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

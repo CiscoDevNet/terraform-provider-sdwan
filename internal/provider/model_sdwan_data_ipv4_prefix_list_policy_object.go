@@ -27,25 +27,23 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type DataIPv4PrefixList struct {
-	Id      types.String                `tfsdk:"id"`
-	Version types.Int64                 `tfsdk:"version"`
-	Name    types.String                `tfsdk:"name"`
-	Entries []DataIPv4PrefixListEntries `tfsdk:"entries"`
+type DataIPv4PrefixListPolicyObject struct {
+	Id      types.String                            `tfsdk:"id"`
+	Version types.Int64                             `tfsdk:"version"`
+	Name    types.String                            `tfsdk:"name"`
+	Entries []DataIPv4PrefixListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type DataIPv4PrefixListEntries struct {
+type DataIPv4PrefixListPolicyObjectEntries struct {
 	Prefix types.String `tfsdk:"prefix"`
 }
 
-func (data DataIPv4PrefixList) getType() string {
-	return "dataprefix"
-}
-
-func (data DataIPv4PrefixList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
-	body, _ = sjson.Set(body, "type", "dataprefix")
+func (data DataIPv4PrefixListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
+	body, _ = sjson.Set(body, "type", "dataPrefix")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -59,16 +57,16 @@ func (data DataIPv4PrefixList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *DataIPv4PrefixList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *DataIPv4PrefixListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]DataIPv4PrefixListEntries, 0)
+		data.Entries = make([]DataIPv4PrefixListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := DataIPv4PrefixListEntries{}
+			item := DataIPv4PrefixListPolicyObjectEntries{}
 			if cValue := v.Get("ipPrefix"); cValue.Exists() {
 				item.Prefix = types.StringValue(cValue.String())
 			} else {
@@ -78,4 +76,22 @@ func (data *DataIPv4PrefixList) fromBody(ctx context.Context, res gjson.Result) 
 			return true
 		})
 	}
+
+}
+
+func (data *DataIPv4PrefixListPolicyObject) hasChanges(ctx context.Context, state *DataIPv4PrefixListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].Prefix.Equal(state.Entries[i].Prefix) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }
