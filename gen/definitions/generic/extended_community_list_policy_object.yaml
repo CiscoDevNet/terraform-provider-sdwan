@@ -1,7 +1,18 @@
 ---
-name: Extended Community List
-type: extcommunity
+name: Extended Community List Policy Object
+rest_endpoint: /template/policy/list/extcommunity/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
 attributes:
+  - model_name: type
+    value: extCommunity
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
   - model_name: entries
     type: List
     mandatory: true
