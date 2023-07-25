@@ -38,7 +38,6 @@ import (
 const (
 	featureTemplateDefinitionsPath = "./gen/definitions/feature_templates/"
 	featureTemplateModelsPath      = "./gen/models/feature_templates/"
-	policyObjectDefinitionsPath    = "./gen/definitions/policy_objects/"
 	genericDefinitionsPath         = "./gen/definitions/generic/"
 	providerTemplate               = "./gen/templates/provider.go"
 	providerLocation               = "./internal/provider/provider.go"
@@ -93,49 +92,6 @@ var featureTemplateTemplates = []t{
 		path:   "./gen/templates/feature_templates/import.sh",
 		prefix: "./examples/resources/sdwan_",
 		suffix: "_feature_template/import.sh",
-	},
-}
-
-var policyObjectTemplates = []t{
-	{
-		path:   "./gen/templates/policy_objects/model.go",
-		prefix: "./internal/provider/model_sdwan_",
-		suffix: "_policy_object.go",
-	},
-	{
-		path:   "./gen/templates/policy_objects/data_source.go",
-		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_policy_object.go",
-	},
-	{
-		path:   "./gen/templates/policy_objects/data_source_test.go",
-		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_policy_object_test.go",
-	},
-	{
-		path:   "./gen/templates/policy_objects/resource.go",
-		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_policy_object.go",
-	},
-	{
-		path:   "./gen/templates/policy_objects/resource_test.go",
-		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_policy_object_test.go",
-	},
-	{
-		path:   "./gen/templates/policy_objects/data-source.tf",
-		prefix: "./examples/data-sources/sdwan_",
-		suffix: "_policy_object/data-source.tf",
-	},
-	{
-		path:   "./gen/templates/policy_objects/resource.tf",
-		prefix: "./examples/resources/sdwan_",
-		suffix: "_policy_object/resource.tf",
-	},
-	{
-		path:   "./gen/templates/policy_objects/import.sh",
-		prefix: "./examples/resources/sdwan_",
-		suffix: "_policy_object/import.sh",
 	},
 }
 
@@ -551,7 +507,6 @@ func main() {
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
 	providerConfig := make(map[string][]string)
 	providerConfig["FeatureTemplates"] = make([]string, 0)
-	providerConfig["PolicyObjects"] = make([]string, 0)
 	providerConfig["Generic"] = make([]string, 0)
 
 	// Load feature template configs
@@ -580,39 +535,10 @@ func main() {
 		providerConfig["FeatureTemplates"] = append(providerConfig["FeatureTemplates"], featureTemplateConfigs[i].Name)
 	}
 
-	policyObjectFiles, _ := ioutil.ReadDir(policyObjectDefinitionsPath)
-	policyObjectConfigs := make([]YamlConfig, len(policyObjectFiles))
-
-	// Load policy object configs
-	for i, filename := range policyObjectFiles {
-		yamlFile, err := os.ReadFile(filepath.Join(policyObjectDefinitionsPath, filename.Name()))
-		if err != nil {
-			log.Fatalf("Error reading file: %v", err)
-		}
-
-		config := YamlConfig{}
-		err = yaml.Unmarshal(yamlFile, &config)
-		if err != nil {
-			log.Fatalf("Error parsing yaml: %v", err)
-		}
-		policyObjectConfigs[i] = config
-	}
-
-	for i := range policyObjectConfigs {
-		// Augment policy object config
-		augmentGenericConfig(&policyObjectConfigs[i], "policy object")
-
-		// Iterate over templates and render files
-		for _, t := range policyObjectTemplates {
-			renderTemplate(t.path, t.prefix+SnakeCase(policyObjectConfigs[i].Name)+t.suffix, policyObjectConfigs[i])
-		}
-		providerConfig["PolicyObjects"] = append(providerConfig["PolicyObjects"], policyObjectConfigs[i].Name)
-	}
-
 	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
 	genericConfigs := make([]YamlConfig, len(genericFiles))
 
-	// Load policy definition configs
+	// Load generic configs
 	for i, filename := range genericFiles {
 		yamlFile, err := os.ReadFile(filepath.Join(genericDefinitionsPath, filename.Name()))
 		if err != nil {
