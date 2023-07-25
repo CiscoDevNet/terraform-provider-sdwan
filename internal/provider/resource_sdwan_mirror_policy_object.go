@@ -22,16 +22,15 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
@@ -57,43 +56,31 @@ func (r *MirrorPolicyObjectResource) Metadata(ctx context.Context, req resource.
 func (r *MirrorPolicyObjectResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Mirror policy object.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Mirror Policy Object .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the feature template",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy object",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy object").String,
 				Required:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of entries, only 1 entry supported").String,
+			"remote_destination_ip": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Remote destination IP").String,
 				Required:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"remote_destination_ip": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Remote destination IP").String,
-							Required:            true,
-						},
-						"source_ip": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Source IP").String,
-							Required:            true,
-						},
-					},
-				},
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
-					listvalidator.SizeAtMost(1),
-				},
+			},
+			"source_ip": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Source IP").String,
+				Required:            true,
 			},
 		},
 	}
@@ -109,7 +96,7 @@ func (r *MirrorPolicyObjectResource) Configure(_ context.Context, req resource.C
 }
 
 func (r *MirrorPolicyObjectResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan Mirror
+	var plan MirrorPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -123,7 +110,7 @@ func (r *MirrorPolicyObjectResource) Create(ctx context.Context, req resource.Cr
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/list/mirror", body)
+	res, err := r.client.Post("/template/policy/list/mirror/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -139,7 +126,7 @@ func (r *MirrorPolicyObjectResource) Create(ctx context.Context, req resource.Cr
 }
 
 func (r *MirrorPolicyObjectResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state Mirror
+	var state MirrorPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -168,7 +155,7 @@ func (r *MirrorPolicyObjectResource) Read(ctx context.Context, req resource.Read
 }
 
 func (r *MirrorPolicyObjectResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state Mirror
+	var plan, state MirrorPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -185,19 +172,22 @@ func (r *MirrorPolicyObjectResource) Update(ctx context.Context, req resource.Up
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
-	r.updateMutex.Lock()
-	res, err := r.client.Put("/template/policy/list/mirror/"+plan.Id.ValueString(), body)
-	r.updateMutex.Unlock()
-	if err != nil {
-		if res.Get("error.message").String() == "Failed to acquire lock, template or policy locked in edit mode." {
-			resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
-		} else {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-			return
+	if plan.hasChanges(ctx, &state) {
+		body := plan.toBody(ctx)
+		r.updateMutex.Lock()
+		res, err := r.client.Put("/template/policy/list/mirror/"+plan.Id.ValueString(), body)
+		r.updateMutex.Unlock()
+		if err != nil {
+			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
+				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
+			} else {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -207,7 +197,7 @@ func (r *MirrorPolicyObjectResource) Update(ctx context.Context, req resource.Up
 }
 
 func (r *MirrorPolicyObjectResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state Mirror
+	var state MirrorPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

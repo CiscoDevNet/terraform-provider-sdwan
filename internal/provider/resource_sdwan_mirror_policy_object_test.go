@@ -31,24 +31,23 @@ func TestAccSdwanMirrorPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanMirrorPolicyObjectConfig_all(),
+				Config: testAccSdwanMirrorPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_mirror_policy_object.test", "entries.0.remote_destination_ip", "10.1.1.1"),
-					resource.TestCheckResourceAttr("sdwan_mirror_policy_object.test", "entries.0.source_ip", "10.2.1.1"),
+					resource.TestCheckResourceAttr("sdwan_mirror_policy_object.test", "name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_mirror_policy_object.test", "remote_destination_ip", "10.1.1.1"),
+					resource.TestCheckResourceAttr("sdwan_mirror_policy_object.test", "source_ip", "10.2.1.1"),
 				),
 			},
 		},
 	})
 }
 
-func testAccSdwanMirrorPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_mirror_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			remote_destination_ip = "10.1.1.1"
-			source_ip = "10.2.1.1"
-		}]
-	}
-	`
+const testAccSdwanMirrorPolicyObjectConfig = `
+
+
+resource "sdwan_mirror_policy_object" "test" {
+	name = "Example"
+	remote_destination_ip = "10.1.1.1"
+	source_ip = "10.2.1.1"
 }
+`

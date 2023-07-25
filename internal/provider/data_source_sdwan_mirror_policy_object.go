@@ -50,36 +50,28 @@ func (d *MirrorPolicyObjectDataSource) Metadata(_ context.Context, req datasourc
 func (d *MirrorPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Mirror policy object.",
+		MarkdownDescription: "This data source can read the Mirror Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy object",
 				Computed:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: "List of entries, only 1 entry supported",
+			"remote_destination_ip": schema.StringAttribute{
+				MarkdownDescription: "Remote destination IP",
 				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"remote_destination_ip": schema.StringAttribute{
-							MarkdownDescription: "Remote destination IP",
-							Computed:            true,
-						},
-						"source_ip": schema.StringAttribute{
-							MarkdownDescription: "Source IP",
-							Computed:            true,
-						},
-					},
-				},
+			},
+			"source_ip": schema.StringAttribute{
+				MarkdownDescription: "Source IP",
+				Computed:            true,
 			},
 		},
 	}
@@ -94,7 +86,7 @@ func (d *MirrorPolicyObjectDataSource) Configure(_ context.Context, req datasour
 }
 
 func (d *MirrorPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config Mirror
+	var config MirrorPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

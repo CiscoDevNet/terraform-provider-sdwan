@@ -27,64 +27,58 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type Mirror struct {
-	Id      types.String    `tfsdk:"id"`
-	Version types.Int64     `tfsdk:"version"`
-	Name    types.String    `tfsdk:"name"`
-	Entries []MirrorEntries `tfsdk:"entries"`
-}
-
-type MirrorEntries struct {
+type MirrorPolicyObject struct {
+	Id                  types.String `tfsdk:"id"`
+	Version             types.Int64  `tfsdk:"version"`
+	Name                types.String `tfsdk:"name"`
 	RemoteDestinationIp types.String `tfsdk:"remote_destination_ip"`
 	SourceIp            types.String `tfsdk:"source_ip"`
 }
 
-func (data Mirror) getType() string {
-	return "mirror"
-}
-
-func (data Mirror) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data MirrorPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "mirror")
-	if len(data.Entries) > 0 {
-		body, _ = sjson.Set(body, "entries", []interface{}{})
-		for _, item := range data.Entries {
-			itemBody := ""
-			if !item.RemoteDestinationIp.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "remoteDest", item.RemoteDestinationIp.ValueString())
-			}
-			if !item.SourceIp.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "source", item.SourceIp.ValueString())
-			}
-			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
-		}
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.RemoteDestinationIp.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.remoteDest", data.RemoteDestinationIp.ValueString())
+	}
+	if !data.SourceIp.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.source", data.SourceIp.ValueString())
 	}
 	return body
 }
 
-func (data *Mirror) fromBody(ctx context.Context, res gjson.Result) {
+func (data *MirrorPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]MirrorEntries, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := MirrorEntries{}
-			if cValue := v.Get("remoteDest"); cValue.Exists() {
-				item.RemoteDestinationIp = types.StringValue(cValue.String())
-			} else {
-				item.RemoteDestinationIp = types.StringNull()
-			}
-			if cValue := v.Get("source"); cValue.Exists() {
-				item.SourceIp = types.StringValue(cValue.String())
-			} else {
-				item.SourceIp = types.StringNull()
-			}
-			data.Entries = append(data.Entries, item)
-			return true
-		})
+	if value := res.Get("entries.0.remoteDest"); value.Exists() {
+		data.RemoteDestinationIp = types.StringValue(value.String())
+	} else {
+		data.RemoteDestinationIp = types.StringNull()
 	}
+	if value := res.Get("entries.0.source"); value.Exists() {
+		data.SourceIp = types.StringValue(value.String())
+	} else {
+		data.SourceIp = types.StringNull()
+	}
+
+}
+
+func (data *MirrorPolicyObject) hasChanges(ctx context.Context, state *MirrorPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if !data.RemoteDestinationIp.Equal(state.RemoteDestinationIp) {
+		hasChanges = true
+	}
+	if !data.SourceIp.Equal(state.SourceIp) {
+		hasChanges = true
+	}
+	return hasChanges
 }

@@ -1,0 +1,29 @@
+---
+name: Mirror Policy Object
+rest_endpoint: /template/policy/list/mirror/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    value: mirror
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: remoteDest
+    data_path: [entries.0]
+    tf_name: remote_destination_ip
+    type: String
+    mandatory: true
+    description: Remote destination IP
+    example: 10.1.1.1
+  - model_name: source
+    data_path: [entries.0]
+    tf_name: source_ip
+    type: String
+    mandatory: true
+    description: Source IP
+    example: 10.2.1.1
