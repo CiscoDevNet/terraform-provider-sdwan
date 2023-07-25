@@ -17,6 +17,7 @@ description: |-
 - BREAKING CHANGE: Rename `layer2cos` attribute of `sdwan_rewrite_rule_policy_definition` resource and data source to `layer2_cos`
 - BREAKING CHANGE: Remove `entries` attribute of `sdwan_class_map_policy_object` resource and data source
 - BREAKING CHANGE: Remove `entries` attribute of `sdwan_app_probe_class_policy_object` resource and data source
+- BREAKING CHANGE: Remove `entries` attribute of `sdwan_mirror_policy_object` resource and data source
 
 ## 0.2.1
 
