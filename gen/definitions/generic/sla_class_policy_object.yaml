@@ -1,0 +1,101 @@
+---
+name: SLA Class Policy Object
+rest_endpoint: /template/policy/list/sla/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    value: sla
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: appProbeClass
+    data_path: [entries.0]
+    tf_name: app_probe_class_id
+    type: String
+    description: App Probe Class Policy Object ID
+    exclude_test: true
+    example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+  - tf_name: app_probe_class_version
+    tf_only: true
+    type: Version
+    description: App Probe Class Policy Object version
+    exclude_test: true
+  - model_name: jitter
+    data_path: [entries.0]
+    type: Int64
+    model_type_string: true
+    min_int: 1
+    max_int: 1000
+    description: Jitter in ms
+    example: 100
+  - model_name: latency
+    data_path: [entries.0]
+    type: Int64
+    model_type_string: true
+    min_int: 1
+    max_int: 1000
+    description: Latency in ms
+    example: 10
+  - model_name: loss
+    data_path: [entries.0]
+    type: Int64
+    model_type_string: true
+    min_int: 1
+    max_int: 100
+    description: Loss in percent
+    example: 1
+  - model_name: criteria
+    tf_name: fallback_best_tunnel_criteria
+    data_path: [entries.0, fallbackBestTunnel]
+    type: String
+    enum_values:
+      [
+        loss,
+        latency,
+        jitter,
+        loss-latency,
+        loss-jitter,
+        latency-loss,
+        latency-jitter,
+        jitter-latency,
+        jitter-loss,
+        loss-latency-jitter,
+        loss-jitter-latency,
+        latency-loss-jitter,
+        latency-jitter-loss,
+        jitter-latency-loss,
+        jitter-loss-latency,
+      ]
+    example: jitter-loss-latency
+  - model_name: jitterVariance
+    tf_name: fallback_best_tunnel_jitter
+    data_path: [entries.0, fallbackBestTunnel]
+    type: Int64
+    model_type_string: true
+    min_int: 1
+    max_int: 1000
+    description: Jitter variance in ms
+    example: 100
+  - model_name: latencyVariance
+    tf_name: fallback_best_tunnel_latency
+    data_path: [entries.0, fallbackBestTunnel]
+    type: Int64
+    model_type_string: true
+    min_int: 1
+    max_int: 1000
+    description: Latency variance in ms
+    example: 10
+  - model_name: lossVariance
+    tf_name: fallback_best_tunnel_loss
+    data_path: [entries.0, fallbackBestTunnel]
+    type: Int64
+    model_type_string: true
+    min_int: 1
+    max_int: 100
+    description: Loss variance in percent
+    example: 1

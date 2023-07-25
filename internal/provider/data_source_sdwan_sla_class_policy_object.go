@@ -50,60 +50,56 @@ func (d *SLAClassPolicyObjectDataSource) Metadata(_ context.Context, req datasou
 func (d *SLAClassPolicyObjectDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the SLA Class policy object.",
+		MarkdownDescription: "This data source can read the SLA Class Policy Object .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the policy object",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy object",
 				Computed:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: "List of entries, only 1 entry supported",
+			"app_probe_class_id": schema.StringAttribute{
+				MarkdownDescription: "App Probe Class Policy Object ID",
 				Computed:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"app_probe_class_id": schema.StringAttribute{
-							MarkdownDescription: "App Probe Class Policy Object ID",
-							Computed:            true,
-						},
-						"jitter": schema.Int64Attribute{
-							MarkdownDescription: "Jitter in ms",
-							Computed:            true,
-						},
-						"latency": schema.Int64Attribute{
-							MarkdownDescription: "Latency in ms",
-							Computed:            true,
-						},
-						"loss": schema.Int64Attribute{
-							MarkdownDescription: "Loss in percent",
-							Computed:            true,
-						},
-						"fallback_best_tunnel_criteria": schema.StringAttribute{
-							MarkdownDescription: "",
-							Computed:            true,
-						},
-						"fallback_best_tunnel_jitter": schema.Int64Attribute{
-							MarkdownDescription: "Jitter variance in ms",
-							Computed:            true,
-						},
-						"fallback_best_tunnel_latency": schema.Int64Attribute{
-							MarkdownDescription: "Latency variance in ms",
-							Computed:            true,
-						},
-						"fallback_best_tunnel_loss": schema.Int64Attribute{
-							MarkdownDescription: "Loss variance in percent",
-							Computed:            true,
-						},
-					},
-				},
+			},
+			"app_probe_class_version": schema.Int64Attribute{
+				MarkdownDescription: "App Probe Class Policy Object version",
+				Computed:            true,
+			},
+			"jitter": schema.Int64Attribute{
+				MarkdownDescription: "Jitter in ms",
+				Computed:            true,
+			},
+			"latency": schema.Int64Attribute{
+				MarkdownDescription: "Latency in ms",
+				Computed:            true,
+			},
+			"loss": schema.Int64Attribute{
+				MarkdownDescription: "Loss in percent",
+				Computed:            true,
+			},
+			"fallback_best_tunnel_criteria": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
+			"fallback_best_tunnel_jitter": schema.Int64Attribute{
+				MarkdownDescription: "Jitter variance in ms",
+				Computed:            true,
+			},
+			"fallback_best_tunnel_latency": schema.Int64Attribute{
+				MarkdownDescription: "Latency variance in ms",
+				Computed:            true,
+			},
+			"fallback_best_tunnel_loss": schema.Int64Attribute{
+				MarkdownDescription: "Loss variance in percent",
+				Computed:            true,
 			},
 		},
 	}
@@ -118,7 +114,7 @@ func (d *SLAClassPolicyObjectDataSource) Configure(_ context.Context, req dataso
 }
 
 func (d *SLAClassPolicyObjectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config SLAClass
+	var config SLAClassPolicyObject
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

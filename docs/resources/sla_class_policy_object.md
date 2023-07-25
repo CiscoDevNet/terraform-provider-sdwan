@@ -3,29 +3,25 @@
 page_title: "sdwan_sla_class_policy_object Resource - terraform-provider-sdwan"
 subcategory: "Policy Objects"
 description: |-
-  This resource can manage a SLA Class policy object.
+  This resource can manage a SLA Class Policy Object .
 ---
 
 # sdwan_sla_class_policy_object (Resource)
 
-This resource can manage a SLA Class policy object.
+This resource can manage a SLA Class Policy Object .
 
 ## Example Usage
 
 ```terraform
 resource "sdwan_sla_class_policy_object" "example" {
-  name = "Example"
-  entries = [
-    {
-      jitter                        = 100
-      latency                       = 10
-      loss                          = 1
-      fallback_best_tunnel_criteria = "jitter-loss-latency"
-      fallback_best_tunnel_jitter   = 100
-      fallback_best_tunnel_latency  = 10
-      fallback_best_tunnel_loss     = 1
-    }
-  ]
+  name                          = "Example"
+  jitter                        = 100
+  latency                       = 10
+  loss                          = 1
+  fallback_best_tunnel_criteria = "jitter-loss-latency"
+  fallback_best_tunnel_jitter   = 100
+  fallback_best_tunnel_latency  = 10
+  fallback_best_tunnel_loss     = 1
 }
 ```
 
@@ -34,20 +30,12 @@ resource "sdwan_sla_class_policy_object" "example" {
 
 ### Required
 
-- `entries` (Attributes List) List of entries, only 1 entry supported (see [below for nested schema](#nestedatt--entries))
 - `name` (String) The name of the policy object
 
-### Read-Only
-
-- `id` (String) The id of the policy object
-- `version` (Number) The version of the feature template
-
-<a id="nestedatt--entries"></a>
-### Nested Schema for `entries`
-
-Optional:
+### Optional
 
 - `app_probe_class_id` (String) App Probe Class Policy Object ID
+- `app_probe_class_version` (Number) App Probe Class Policy Object version
 - `fallback_best_tunnel_criteria` (String) - Choices: `loss`, `latency`, `jitter`, `loss-latency`, `loss-jitter`, `latency-loss`, `latency-jitter`, `jitter-latency`, `jitter-loss`, `loss-latency-jitter`, `loss-jitter-latency`, `latency-loss-jitter`, `latency-jitter-loss`, `jitter-latency-loss`, `jitter-loss-latency`
 - `fallback_best_tunnel_jitter` (Number) Jitter variance in ms
   - Range: `1`-`1000`
@@ -61,6 +49,11 @@ Optional:
   - Range: `1`-`1000`
 - `loss` (Number) Loss in percent
   - Range: `1`-`100`
+
+### Read-Only
+
+- `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 

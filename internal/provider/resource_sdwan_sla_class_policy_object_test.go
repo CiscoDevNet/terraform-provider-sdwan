@@ -31,34 +31,33 @@ func TestAccSdwanSLAClassPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanSLAClassPolicyObjectConfig_all(),
+				Config: testAccSdwanSLAClassPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "entries.0.jitter", "100"),
-					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "entries.0.latency", "10"),
-					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "entries.0.loss", "1"),
-					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "entries.0.fallback_best_tunnel_criteria", "jitter-loss-latency"),
-					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "entries.0.fallback_best_tunnel_jitter", "100"),
-					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "entries.0.fallback_best_tunnel_latency", "10"),
-					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "entries.0.fallback_best_tunnel_loss", "1"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "jitter", "100"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "latency", "10"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "loss", "1"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "fallback_best_tunnel_criteria", "jitter-loss-latency"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "fallback_best_tunnel_jitter", "100"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "fallback_best_tunnel_latency", "10"),
+					resource.TestCheckResourceAttr("sdwan_sla_class_policy_object.test", "fallback_best_tunnel_loss", "1"),
 				),
 			},
 		},
 	})
 }
 
-func testAccSdwanSLAClassPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_sla_class_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			jitter = 100
-			latency = 10
-			loss = 1
-			fallback_best_tunnel_criteria = "jitter-loss-latency"
-			fallback_best_tunnel_jitter = 100
-			fallback_best_tunnel_latency = 10
-			fallback_best_tunnel_loss = 1
-		}]
-	}
-	`
+const testAccSdwanSLAClassPolicyObjectConfig = `
+
+
+resource "sdwan_sla_class_policy_object" "test" {
+	name = "Example"
+	jitter = 100
+	latency = 10
+	loss = 1
+	fallback_best_tunnel_criteria = "jitter-loss-latency"
+	fallback_best_tunnel_jitter = 100
+	fallback_best_tunnel_latency = 10
+	fallback_best_tunnel_loss = 1
 }
+`

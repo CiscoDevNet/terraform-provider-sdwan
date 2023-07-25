@@ -28,15 +28,12 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type SLAClass struct {
-	Id      types.String      `tfsdk:"id"`
-	Version types.Int64       `tfsdk:"version"`
-	Name    types.String      `tfsdk:"name"`
-	Entries []SLAClassEntries `tfsdk:"entries"`
-}
-
-type SLAClassEntries struct {
+type SLAClassPolicyObject struct {
+	Id                         types.String `tfsdk:"id"`
+	Version                    types.Int64  `tfsdk:"version"`
+	Name                       types.String `tfsdk:"name"`
 	AppProbeClassId            types.String `tfsdk:"app_probe_class_id"`
+	AppProbeClassVersion       types.Int64  `tfsdk:"app_probe_class_version"`
 	Jitter                     types.Int64  `tfsdk:"jitter"`
 	Latency                    types.Int64  `tfsdk:"latency"`
 	Loss                       types.Int64  `tfsdk:"loss"`
@@ -46,100 +43,123 @@ type SLAClassEntries struct {
 	FallbackBestTunnelLoss     types.Int64  `tfsdk:"fallback_best_tunnel_loss"`
 }
 
-func (data SLAClass) getType() string {
-	return "sla"
-}
-
-func (data SLAClass) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data SLAClassPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "sla")
-	if len(data.Entries) > 0 {
-		body, _ = sjson.Set(body, "entries", []interface{}{})
-		for _, item := range data.Entries {
-			itemBody := ""
-			if !item.AppProbeClassId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "appProbeClass", item.AppProbeClassId.ValueString())
-			}
-			if !item.Jitter.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "jitter", fmt.Sprint(item.Jitter.ValueInt64()))
-			}
-			if !item.Latency.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "latency", fmt.Sprint(item.Latency.ValueInt64()))
-			}
-			if !item.Loss.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "loss", fmt.Sprint(item.Loss.ValueInt64()))
-			}
-			if !item.FallbackBestTunnelCriteria.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "fallbackBestTunnel.criteria", item.FallbackBestTunnelCriteria.ValueString())
-			}
-			if !item.FallbackBestTunnelJitter.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "fallbackBestTunnel.jitterVariance", fmt.Sprint(item.FallbackBestTunnelJitter.ValueInt64()))
-			}
-			if !item.FallbackBestTunnelLatency.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "fallbackBestTunnel.latencyVariance", fmt.Sprint(item.FallbackBestTunnelLatency.ValueInt64()))
-			}
-			if !item.FallbackBestTunnelLoss.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "fallbackBestTunnel.lossVariance", fmt.Sprint(item.FallbackBestTunnelLoss.ValueInt64()))
-			}
-			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
-		}
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
+	if !data.AppProbeClassId.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.appProbeClass", data.AppProbeClassId.ValueString())
+	}
+	if !data.Jitter.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.jitter", fmt.Sprint(data.Jitter.ValueInt64()))
+	}
+	if !data.Latency.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.latency", fmt.Sprint(data.Latency.ValueInt64()))
+	}
+	if !data.Loss.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.loss", fmt.Sprint(data.Loss.ValueInt64()))
+	}
+	if !data.FallbackBestTunnelCriteria.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.criteria", data.FallbackBestTunnelCriteria.ValueString())
+	}
+	if !data.FallbackBestTunnelJitter.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.jitterVariance", fmt.Sprint(data.FallbackBestTunnelJitter.ValueInt64()))
+	}
+	if !data.FallbackBestTunnelLatency.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.latencyVariance", fmt.Sprint(data.FallbackBestTunnelLatency.ValueInt64()))
+	}
+	if !data.FallbackBestTunnelLoss.IsNull() {
+		body, _ = sjson.Set(body, "entries.0.fallbackBestTunnel.lossVariance", fmt.Sprint(data.FallbackBestTunnelLoss.ValueInt64()))
 	}
 	return body
 }
 
-func (data *SLAClass) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SLAClassPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]SLAClassEntries, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := SLAClassEntries{}
-			if cValue := v.Get("appProbeClass"); cValue.Exists() {
-				item.AppProbeClassId = types.StringValue(cValue.String())
-			} else {
-				item.AppProbeClassId = types.StringNull()
-			}
-			if cValue := v.Get("jitter"); cValue.Exists() {
-				item.Jitter = types.Int64Value(cValue.Int())
-			} else {
-				item.Jitter = types.Int64Null()
-			}
-			if cValue := v.Get("latency"); cValue.Exists() {
-				item.Latency = types.Int64Value(cValue.Int())
-			} else {
-				item.Latency = types.Int64Null()
-			}
-			if cValue := v.Get("loss"); cValue.Exists() {
-				item.Loss = types.Int64Value(cValue.Int())
-			} else {
-				item.Loss = types.Int64Null()
-			}
-			if cValue := v.Get("fallbackBestTunnel.criteria"); cValue.Exists() {
-				item.FallbackBestTunnelCriteria = types.StringValue(cValue.String())
-			} else {
-				item.FallbackBestTunnelCriteria = types.StringNull()
-			}
-			if cValue := v.Get("fallbackBestTunnel.jitterVariance"); cValue.Exists() {
-				item.FallbackBestTunnelJitter = types.Int64Value(cValue.Int())
-			} else {
-				item.FallbackBestTunnelJitter = types.Int64Null()
-			}
-			if cValue := v.Get("fallbackBestTunnel.latencyVariance"); cValue.Exists() {
-				item.FallbackBestTunnelLatency = types.Int64Value(cValue.Int())
-			} else {
-				item.FallbackBestTunnelLatency = types.Int64Null()
-			}
-			if cValue := v.Get("fallbackBestTunnel.lossVariance"); cValue.Exists() {
-				item.FallbackBestTunnelLoss = types.Int64Value(cValue.Int())
-			} else {
-				item.FallbackBestTunnelLoss = types.Int64Null()
-			}
-			data.Entries = append(data.Entries, item)
-			return true
-		})
+	if value := res.Get("entries.0.appProbeClass"); value.Exists() {
+		data.AppProbeClassId = types.StringValue(value.String())
+	} else {
+		data.AppProbeClassId = types.StringNull()
 	}
+	if value := res.Get("entries.0.jitter"); value.Exists() {
+		data.Jitter = types.Int64Value(value.Int())
+	} else {
+		data.Jitter = types.Int64Null()
+	}
+	if value := res.Get("entries.0.latency"); value.Exists() {
+		data.Latency = types.Int64Value(value.Int())
+	} else {
+		data.Latency = types.Int64Null()
+	}
+	if value := res.Get("entries.0.loss"); value.Exists() {
+		data.Loss = types.Int64Value(value.Int())
+	} else {
+		data.Loss = types.Int64Null()
+	}
+	if value := res.Get("entries.0.fallbackBestTunnel.criteria"); value.Exists() {
+		data.FallbackBestTunnelCriteria = types.StringValue(value.String())
+	} else {
+		data.FallbackBestTunnelCriteria = types.StringNull()
+	}
+	if value := res.Get("entries.0.fallbackBestTunnel.jitterVariance"); value.Exists() {
+		data.FallbackBestTunnelJitter = types.Int64Value(value.Int())
+	} else {
+		data.FallbackBestTunnelJitter = types.Int64Null()
+	}
+	if value := res.Get("entries.0.fallbackBestTunnel.latencyVariance"); value.Exists() {
+		data.FallbackBestTunnelLatency = types.Int64Value(value.Int())
+	} else {
+		data.FallbackBestTunnelLatency = types.Int64Null()
+	}
+	if value := res.Get("entries.0.fallbackBestTunnel.lossVariance"); value.Exists() {
+		data.FallbackBestTunnelLoss = types.Int64Value(value.Int())
+	} else {
+		data.FallbackBestTunnelLoss = types.Int64Null()
+	}
+
+	data.updateVersions(ctx)
+
+}
+
+func (data *SLAClassPolicyObject) hasChanges(ctx context.Context, state *SLAClassPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if !data.AppProbeClassId.Equal(state.AppProbeClassId) {
+		hasChanges = true
+	}
+	if !data.Jitter.Equal(state.Jitter) {
+		hasChanges = true
+	}
+	if !data.Latency.Equal(state.Latency) {
+		hasChanges = true
+	}
+	if !data.Loss.Equal(state.Loss) {
+		hasChanges = true
+	}
+	if !data.FallbackBestTunnelCriteria.Equal(state.FallbackBestTunnelCriteria) {
+		hasChanges = true
+	}
+	if !data.FallbackBestTunnelJitter.Equal(state.FallbackBestTunnelJitter) {
+		hasChanges = true
+	}
+	if !data.FallbackBestTunnelLatency.Equal(state.FallbackBestTunnelLatency) {
+		hasChanges = true
+	}
+	if !data.FallbackBestTunnelLoss.Equal(state.FallbackBestTunnelLoss) {
+		hasChanges = true
+	}
+	return hasChanges
+}
+
+func (data *SLAClassPolicyObject) updateVersions(ctx context.Context) {
+	state := *data
+	data.AppProbeClassVersion = state.AppProbeClassVersion
 }

@@ -22,11 +22,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -59,87 +59,79 @@ func (r *SLAClassPolicyObjectResource) Metadata(ctx context.Context, req resourc
 func (r *SLAClassPolicyObjectResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a SLA Class policy object.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a SLA Class Policy Object .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the feature template",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy object",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy object").String,
 				Required:            true,
 			},
-			"entries": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of entries, only 1 entry supported").String,
-				Required:            true,
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"app_probe_class_id": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("App Probe Class Policy Object ID").String,
-							Optional:            true,
-						},
-						"jitter": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Jitter in ms").AddIntegerRangeDescription(1, 1000).String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 1000),
-							},
-						},
-						"latency": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Latency in ms").AddIntegerRangeDescription(1, 1000).String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 1000),
-							},
-						},
-						"loss": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Loss in percent").AddIntegerRangeDescription(1, 100).String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 100),
-							},
-						},
-						"fallback_best_tunnel_criteria": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("loss", "latency", "jitter", "loss-latency", "loss-jitter", "latency-loss", "latency-jitter", "jitter-latency", "jitter-loss", "loss-latency-jitter", "loss-jitter-latency", "latency-loss-jitter", "latency-jitter-loss", "jitter-latency-loss", "jitter-loss-latency").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("loss", "latency", "jitter", "loss-latency", "loss-jitter", "latency-loss", "latency-jitter", "jitter-latency", "jitter-loss", "loss-latency-jitter", "loss-jitter-latency", "latency-loss-jitter", "latency-jitter-loss", "jitter-latency-loss", "jitter-loss-latency"),
-							},
-						},
-						"fallback_best_tunnel_jitter": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Jitter variance in ms").AddIntegerRangeDescription(1, 1000).String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 1000),
-							},
-						},
-						"fallback_best_tunnel_latency": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Latency variance in ms").AddIntegerRangeDescription(1, 1000).String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 1000),
-							},
-						},
-						"fallback_best_tunnel_loss": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Loss variance in percent").AddIntegerRangeDescription(1, 100).String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 100),
-							},
-						},
-					},
+			"app_probe_class_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("App Probe Class Policy Object ID").String,
+				Optional:            true,
+			},
+			"app_probe_class_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("App Probe Class Policy Object version").String,
+				Optional:            true,
+			},
+			"jitter": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Jitter in ms").AddIntegerRangeDescription(1, 1000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 1000),
 				},
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
-					listvalidator.SizeAtMost(1),
+			},
+			"latency": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Latency in ms").AddIntegerRangeDescription(1, 1000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 1000),
+				},
+			},
+			"loss": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Loss in percent").AddIntegerRangeDescription(1, 100).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 100),
+				},
+			},
+			"fallback_best_tunnel_criteria": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("loss", "latency", "jitter", "loss-latency", "loss-jitter", "latency-loss", "latency-jitter", "jitter-latency", "jitter-loss", "loss-latency-jitter", "loss-jitter-latency", "latency-loss-jitter", "latency-jitter-loss", "jitter-latency-loss", "jitter-loss-latency").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("loss", "latency", "jitter", "loss-latency", "loss-jitter", "latency-loss", "latency-jitter", "jitter-latency", "jitter-loss", "loss-latency-jitter", "loss-jitter-latency", "latency-loss-jitter", "latency-jitter-loss", "jitter-latency-loss", "jitter-loss-latency"),
+				},
+			},
+			"fallback_best_tunnel_jitter": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Jitter variance in ms").AddIntegerRangeDescription(1, 1000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 1000),
+				},
+			},
+			"fallback_best_tunnel_latency": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Latency variance in ms").AddIntegerRangeDescription(1, 1000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 1000),
+				},
+			},
+			"fallback_best_tunnel_loss": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Loss variance in percent").AddIntegerRangeDescription(1, 100).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 100),
 				},
 			},
 		},
@@ -156,7 +148,7 @@ func (r *SLAClassPolicyObjectResource) Configure(_ context.Context, req resource
 }
 
 func (r *SLAClassPolicyObjectResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan SLAClass
+	var plan SLAClassPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -170,7 +162,7 @@ func (r *SLAClassPolicyObjectResource) Create(ctx context.Context, req resource.
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/list/sla", body)
+	res, err := r.client.Post("/template/policy/list/sla/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -186,7 +178,7 @@ func (r *SLAClassPolicyObjectResource) Create(ctx context.Context, req resource.
 }
 
 func (r *SLAClassPolicyObjectResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state SLAClass
+	var state SLAClassPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -215,7 +207,7 @@ func (r *SLAClassPolicyObjectResource) Read(ctx context.Context, req resource.Re
 }
 
 func (r *SLAClassPolicyObjectResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state SLAClass
+	var plan, state SLAClassPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -232,19 +224,22 @@ func (r *SLAClassPolicyObjectResource) Update(ctx context.Context, req resource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
-	r.updateMutex.Lock()
-	res, err := r.client.Put("/template/policy/list/sla/"+plan.Id.ValueString(), body)
-	r.updateMutex.Unlock()
-	if err != nil {
-		if res.Get("error.message").String() == "Failed to acquire lock, template or policy locked in edit mode." {
-			resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
-		} else {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-			return
+	if plan.hasChanges(ctx, &state) {
+		body := plan.toBody(ctx)
+		r.updateMutex.Lock()
+		res, err := r.client.Put("/template/policy/list/sla/"+plan.Id.ValueString(), body)
+		r.updateMutex.Unlock()
+		if err != nil {
+			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
+				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
+			} else {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -254,7 +249,7 @@ func (r *SLAClassPolicyObjectResource) Update(ctx context.Context, req resource.
 }
 
 func (r *SLAClassPolicyObjectResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state SLAClass
+	var state SLAClassPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
