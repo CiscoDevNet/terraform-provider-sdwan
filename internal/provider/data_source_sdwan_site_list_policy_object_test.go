@@ -33,6 +33,7 @@ func TestAccDataSourceSdwanSiteListPolicyObject(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanSiteListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("data.sdwan_site_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("data.sdwan_site_list_policy_object.test", "entries.0.site_id", "100-200"),
 				),
 			},
@@ -42,8 +43,9 @@ func TestAccDataSourceSdwanSiteListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanSiteListPolicyObjectConfig = `
 
+
 resource "sdwan_site_list_policy_object" "test" {
-  name = "TF_TEST_MIN"
+  name = "Example"
   entries = [{
     site_id = "100-200"
   }]

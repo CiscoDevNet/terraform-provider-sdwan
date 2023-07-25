@@ -27,25 +27,23 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type SiteList struct {
-	Id      types.String      `tfsdk:"id"`
-	Version types.Int64       `tfsdk:"version"`
-	Name    types.String      `tfsdk:"name"`
-	Entries []SiteListEntries `tfsdk:"entries"`
+type SiteListPolicyObject struct {
+	Id      types.String                  `tfsdk:"id"`
+	Version types.Int64                   `tfsdk:"version"`
+	Name    types.String                  `tfsdk:"name"`
+	Entries []SiteListPolicyObjectEntries `tfsdk:"entries"`
 }
 
-type SiteListEntries struct {
+type SiteListPolicyObjectEntries struct {
 	SiteId types.String `tfsdk:"site_id"`
 }
 
-func (data SiteList) getType() string {
-	return "site"
-}
-
-func (data SiteList) toBody(ctx context.Context) string {
-	body, _ := sjson.Set("", "description", "Desc Not Required")
-	body, _ = sjson.Set(body, "name", data.Name.ValueString())
+func (data SiteListPolicyObject) toBody(ctx context.Context) string {
+	body := ""
 	body, _ = sjson.Set(body, "type", "site")
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "name", data.Name.ValueString())
+	}
 	if len(data.Entries) > 0 {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
@@ -59,16 +57,16 @@ func (data SiteList) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *SiteList) fromBody(ctx context.Context, res gjson.Result) {
+func (data *SiteListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
 	if value := res.Get("entries"); value.Exists() {
-		data.Entries = make([]SiteListEntries, 0)
+		data.Entries = make([]SiteListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := SiteListEntries{}
+			item := SiteListPolicyObjectEntries{}
 			if cValue := v.Get("siteId"); cValue.Exists() {
 				item.SiteId = types.StringValue(cValue.String())
 			} else {
@@ -78,4 +76,22 @@ func (data *SiteList) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
+
+}
+
+func (data *SiteListPolicyObject) hasChanges(ctx context.Context, state *SiteListPolicyObject) bool {
+	hasChanges := false
+	if !data.Name.Equal(state.Name) {
+		hasChanges = true
+	}
+	if len(data.Entries) != len(state.Entries) {
+		hasChanges = true
+	} else {
+		for i := range data.Entries {
+			if !data.Entries[i].SiteId.Equal(state.Entries[i].SiteId) {
+				hasChanges = true
+			}
+		}
+	}
+	return hasChanges
 }
