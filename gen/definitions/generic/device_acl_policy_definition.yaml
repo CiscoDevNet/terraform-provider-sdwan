@@ -6,6 +6,7 @@ id_attribute: definitionId
 doc_category: Localized Policies
 attributes:
   - model_name: type
+    type: String
     value: deviceAccessPolicy
   - model_name: name
     tf_name: name
@@ -54,6 +55,7 @@ attributes:
         description: Sequence name
         example: Sequence 10
       - model_name: sequenceType
+        type: String
         value: deviceaccesspolicy
       - model_name: baseAction
         tf_name: base_action

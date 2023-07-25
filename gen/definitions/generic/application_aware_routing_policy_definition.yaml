@@ -6,6 +6,7 @@ id_attribute: definitionId
 doc_category: Centralized Policies
 attributes:
   - model_name: type
+    type: String
     value: appRoute
   - model_name: name
     tf_name: name
@@ -40,6 +41,7 @@ attributes:
         description: Sequence name
         example: Region1
       - model_name: sequenceType
+        type: String
         value: appRoute
       - model_name: sequenceIpType
         tf_name: ip_type

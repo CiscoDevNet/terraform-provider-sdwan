@@ -144,7 +144,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	body := ""
 	{{- range .Attributes}}
 	{{- if .Value}}
-	body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "{{.Value}}")
+	body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 	{{- else if not .TfOnly}}
 	{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 	if !data.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
@@ -171,7 +171,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody := ""
 			{{- range .Attributes}}
 			{{- if .Value}}
-			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "{{.Value}}")
+			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 			{{- else if not .TfOnly}}
 			{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 			if !item.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
@@ -198,7 +198,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					itemChildBody := ""
 					{{- range .Attributes}}
 					{{- if .Value}}
-					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "{{.Value}}")
+					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 					{{- else if not .TfOnly}}
 					{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 					if !childItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
@@ -225,7 +225,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 							itemChildChildBody := ""
 							{{- range .Attributes}}
 							{{- if .Value}}
-							itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "{{.Value}}")
+							itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if eq .Type "String"}}"{{end}}{{.Value}}{{if eq .Type "String"}}"{{end}})
 							{{- else if not .TfOnly}}
 							{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 							if !childChildItem.{{toGoName .TfName}}.IsNull(){{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {

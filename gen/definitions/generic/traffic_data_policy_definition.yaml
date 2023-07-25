@@ -6,6 +6,7 @@ id_attribute: definitionId
 doc_category: Centralized Policies
 attributes:
   - model_name: type
+    type: String
     value: data
   - model_name: name
     tf_name: name

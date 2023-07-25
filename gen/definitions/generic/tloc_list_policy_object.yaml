@@ -6,6 +6,7 @@ id_attribute: listId
 doc_category: Policy Objects
 attributes:
   - model_name: type
+    type: String
     value: tloc
   - model_name: name
     tf_name: name
