@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -57,22 +58,22 @@ func (r *IPv6PrefixListPolicyObjectResource) Metadata(ctx context.Context, req r
 func (r *IPv6PrefixListPolicyObjectResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a IPv6 Prefix List policy object.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a IPv6 Prefix List Policy Object .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the policy object",
+				MarkdownDescription: "The id of the object",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the feature template",
+				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy object",
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy object").String,
 				Required:            true,
 			},
 			"entries": schema.ListNestedAttribute{
@@ -112,7 +113,7 @@ func (r *IPv6PrefixListPolicyObjectResource) Configure(_ context.Context, req re
 }
 
 func (r *IPv6PrefixListPolicyObjectResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan IPv6PrefixList
+	var plan IPv6PrefixListPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -126,7 +127,7 @@ func (r *IPv6PrefixListPolicyObjectResource) Create(ctx context.Context, req res
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/list/ipv6prefix", body)
+	res, err := r.client.Post("/template/policy/list/ipv6prefix/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -142,7 +143,7 @@ func (r *IPv6PrefixListPolicyObjectResource) Create(ctx context.Context, req res
 }
 
 func (r *IPv6PrefixListPolicyObjectResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state IPv6PrefixList
+	var state IPv6PrefixListPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -171,7 +172,7 @@ func (r *IPv6PrefixListPolicyObjectResource) Read(ctx context.Context, req resou
 }
 
 func (r *IPv6PrefixListPolicyObjectResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state IPv6PrefixList
+	var plan, state IPv6PrefixListPolicyObject
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -188,19 +189,22 @@ func (r *IPv6PrefixListPolicyObjectResource) Update(ctx context.Context, req res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Name.ValueString()))
 
-	body := plan.toBody(ctx)
-	r.updateMutex.Lock()
-	res, err := r.client.Put("/template/policy/list/ipv6prefix/"+plan.Id.ValueString(), body)
-	r.updateMutex.Unlock()
-	if err != nil {
-		if res.Get("error.message").String() == "Failed to acquire lock, template or policy locked in edit mode." {
-			resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
-		} else {
-			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
-			return
+	if plan.hasChanges(ctx, &state) {
+		body := plan.toBody(ctx)
+		r.updateMutex.Lock()
+		res, err := r.client.Put("/template/policy/list/ipv6prefix/"+plan.Id.ValueString(), body)
+		r.updateMutex.Unlock()
+		if err != nil {
+			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
+				resp.Diagnostics.AddWarning("Client Warning", "Failed to modify policy due to policy being locked by another change. Policy changes will not be applied. Re-run 'terraform apply' to try again.")
+			} else {
+				resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (PUT), got error: %s, %s", err, res.String()))
+				return
+			}
 		}
+	} else {
+		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
-
 	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
@@ -210,7 +214,7 @@ func (r *IPv6PrefixListPolicyObjectResource) Update(ctx context.Context, req res
 }
 
 func (r *IPv6PrefixListPolicyObjectResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state IPv6PrefixList
+	var state IPv6PrefixListPolicyObject
 
 	// Read state
 	diags := req.State.Get(ctx, &state)

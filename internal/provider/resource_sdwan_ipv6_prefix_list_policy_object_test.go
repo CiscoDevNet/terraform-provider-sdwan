@@ -31,8 +31,9 @@ func TestAccSdwanIPv6PrefixListPolicyObject(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanIPv6PrefixListPolicyObjectConfig_all(),
+				Config: testAccSdwanIPv6PrefixListPolicyObjectConfig,
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_ipv6_prefix_list_policy_object.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_ipv6_prefix_list_policy_object.test", "entries.0.prefix", "2001:1:1:2::/64"),
 					resource.TestCheckResourceAttr("sdwan_ipv6_prefix_list_policy_object.test", "entries.0.le", "80"),
 					resource.TestCheckResourceAttr("sdwan_ipv6_prefix_list_policy_object.test", "entries.0.ge", "128"),
@@ -42,15 +43,15 @@ func TestAccSdwanIPv6PrefixListPolicyObject(t *testing.T) {
 	})
 }
 
-func testAccSdwanIPv6PrefixListPolicyObjectConfig_all() string {
-	return `
-	resource "sdwan_ipv6_prefix_list_policy_object" "test" {
-		name = "TF_TEST_ALL"
-		entries = [{
-			prefix = "2001:1:1:2::/64"
-			le = 80
-			ge = 128
-		}]
-	}
-	`
+const testAccSdwanIPv6PrefixListPolicyObjectConfig = `
+
+
+resource "sdwan_ipv6_prefix_list_policy_object" "test" {
+	name = "Example"
+	entries = [{
+		prefix = "2001:1:1:2::/64"
+		le = 80
+		ge = 128
+	}]
 }
+`
