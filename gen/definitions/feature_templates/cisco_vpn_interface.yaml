@@ -451,7 +451,7 @@ attributes:
       - model_name: track-prefix-list
         example: PL1
       - model_name: ipv6
-        tf_name: ipv6_adresses
+        tf_name: ipv6_addresses
         attributes:
           - model_name: ipv6-link-local
             example: fe80::260:8ff:fe52:f9d8

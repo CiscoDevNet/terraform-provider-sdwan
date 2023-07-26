@@ -94,7 +94,7 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Policy definiton type").AddStringEnumDescription("hubAndSpoke", "mesh", "control", "vpnMembershipGroup", "appRoute", "cflowd", "data").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Policy definition type").AddStringEnumDescription("hubAndSpoke", "mesh", "control", "vpnMembershipGroup", "appRoute", "cflowd", "data").String,
 							Required:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("hubAndSpoke", "mesh", "control", "vpnMembershipGroup", "appRoute", "cflowd", "data"),

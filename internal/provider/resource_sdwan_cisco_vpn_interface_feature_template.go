@@ -1549,7 +1549,7 @@ func (r *CiscoVPNInterfaceFeatureTemplateResource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"ipv6_adresses": schema.ListNestedAttribute{
+						"ipv6_addresses": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 VRRP").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

@@ -196,7 +196,7 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
       timer             = 100
       track_omp         = false
       track_prefix_list = "PL1"
-      ipv6_adresses = [
+      ipv6_addresses = [
         {
           ipv6_link_local = "fe80::260:8ff:fe52:f9d8"
           prefix          = "2001:9::/48"
