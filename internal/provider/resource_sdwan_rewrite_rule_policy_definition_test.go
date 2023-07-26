@@ -47,9 +47,7 @@ func TestAccSdwanRewriteRulePolicyDefinition(t *testing.T) {
 const testAccSdwanRewriteRulePolicyDefinitionConfig = `
 resource "sdwan_class_map_policy_object" "test" {
   name = "TF_TEST_ALL"
-  entries = [{
-    queue = 6
-  }]
+  queue = 6
 }
 
 
