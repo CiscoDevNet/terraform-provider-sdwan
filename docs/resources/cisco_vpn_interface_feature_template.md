@@ -213,7 +213,7 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
       timer             = 100
       track_omp         = false
       track_prefix_list = "PL1"
-      ipv6_adresses = [
+      ipv6_addresses = [
         {
           ipv6_link_local = "fe80::260:8ff:fe52:f9d8"
           prefix          = "2001:9::/48"
@@ -680,7 +680,7 @@ Optional:
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name
-- `ipv6_adresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--ipv6_adresses))
+- `ipv6_addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--ipv6_addresses))
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `priority` (Number) Set priority
   - Range: `1`-`254`
@@ -696,8 +696,8 @@ Optional:
 - `track_prefix_list` (String) Track Prefix List
 - `track_prefix_list_variable` (String) Variable name
 
-<a id="nestedatt--ipv6_vrrps--ipv6_adresses"></a>
-### Nested Schema for `ipv6_vrrps.ipv6_adresses`
+<a id="nestedatt--ipv6_vrrps--ipv6_addresses"></a>
+### Nested Schema for `ipv6_vrrps.ipv6_addresses`
 
 Optional:
 

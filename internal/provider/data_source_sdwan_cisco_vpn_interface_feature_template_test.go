@@ -169,8 +169,8 @@ func TestAccDataSourceSdwanCiscoVPNInterfaceFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ipv6_vrrps.0.timer", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ipv6_vrrps.0.track_omp", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ipv6_vrrps.0.track_prefix_list", "PL1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ipv6_vrrps.0.ipv6_adresses.0.ipv6_link_local", "fe80::260:8ff:fe52:f9d8"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ipv6_vrrps.0.ipv6_adresses.0.prefix", "2001:9::/48"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ipv6_vrrps.0.ipv6_addresses.0.ipv6_link_local", "fe80::260:8ff:fe52:f9d8"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ipv6_vrrps.0.ipv6_addresses.0.prefix", "2001:9::/48"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "propagate_sgt", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "static_sgt", "1003"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "static_sgt_trusted", "false"),
@@ -356,7 +356,7 @@ resource "sdwan_cisco_vpn_interface_feature_template" "test" {
     timer = 100
     track_omp = false
     track_prefix_list = "PL1"
-	ipv6_adresses = [{
+	ipv6_addresses = [{
 		ipv6_link_local = "fe80::260:8ff:fe52:f9d8"
 		prefix = "2001:9::/48"
 	}]

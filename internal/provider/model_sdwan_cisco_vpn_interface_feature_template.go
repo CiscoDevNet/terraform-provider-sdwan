@@ -370,7 +370,7 @@ type CiscoVPNInterfaceIpv6Vrrps struct {
 	TrackOmpVariable        types.String                             `tfsdk:"track_omp_variable"`
 	TrackPrefixList         types.String                             `tfsdk:"track_prefix_list"`
 	TrackPrefixListVariable types.String                             `tfsdk:"track_prefix_list_variable"`
-	Ipv6Adresses            []CiscoVPNInterfaceIpv6VrrpsIpv6Adresses `tfsdk:"ipv6_adresses"`
+	Ipv6Addresses            []CiscoVPNInterfaceIpv6VrrpsIpv6Addresses `tfsdk:"ipv6_addresses"`
 }
 
 type CiscoVPNInterfaceIpv4VrrpsIpv4SecondaryAddresses struct {
@@ -388,7 +388,7 @@ type CiscoVPNInterfaceIpv4VrrpsTrackingObjects struct {
 	DecrementValueVariable types.String `tfsdk:"decrement_value_variable"`
 }
 
-type CiscoVPNInterfaceIpv6VrrpsIpv6Adresses struct {
+type CiscoVPNInterfaceIpv6VrrpsIpv6Addresses struct {
 	Optional              types.Bool   `tfsdk:"optional"`
 	Ipv6LinkLocal         types.String `tfsdk:"ipv6_link_local"`
 	Ipv6LinkLocalVariable types.String `tfsdk:"ipv6_link_local_variable"`
@@ -2376,7 +2376,7 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "track-prefix-list."+"vipValue", item.TrackPrefixList.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "ipv6")
-		if len(item.Ipv6Adresses) > 0 {
+		if len(item.Ipv6Addresses) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "ipv6."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "ipv6."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ipv6."+"vipPrimaryKey", []string{"ipv6-link-local"})
@@ -2387,7 +2387,7 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipv6."+"vipPrimaryKey", []string{"ipv6-link-local"})
 			itemBody, _ = sjson.Set(itemBody, "ipv6."+"vipValue", []interface{}{})
 		}
-		for _, childItem := range item.Ipv6Adresses {
+		for _, childItem := range item.Ipv6Addresses {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			itemChildAttributes = append(itemChildAttributes, "ipv6-link-local")
@@ -5327,9 +5327,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 				item.TrackPrefixListVariable = types.StringNull()
 			}
 			if cValue := v.Get("ipv6.vipValue"); len(cValue.Array()) > 0 {
-				item.Ipv6Adresses = make([]CiscoVPNInterfaceIpv6VrrpsIpv6Adresses, 0)
+				item.Ipv6Addresses = make([]CiscoVPNInterfaceIpv6VrrpsIpv6Addresses, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CiscoVPNInterfaceIpv6VrrpsIpv6Adresses{}
+					cItem := CiscoVPNInterfaceIpv6VrrpsIpv6Addresses{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -5373,7 +5373,7 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.Prefix = types.StringNull()
 						cItem.PrefixVariable = types.StringNull()
 					}
-					item.Ipv6Adresses = append(item.Ipv6Adresses, cItem)
+					item.Ipv6Addresses = append(item.Ipv6Addresses, cItem)
 					return true
 				})
 			}
@@ -5989,14 +5989,14 @@ func (data *CiscoVPNInterface) hasChanges(ctx context.Context, state *CiscoVPNIn
 			if !data.Ipv6Vrrps[i].TrackPrefixList.Equal(state.Ipv6Vrrps[i].TrackPrefixList) {
 				hasChanges = true
 			}
-			if len(data.Ipv6Vrrps[i].Ipv6Adresses) != len(state.Ipv6Vrrps[i].Ipv6Adresses) {
+			if len(data.Ipv6Vrrps[i].Ipv6Addresses) != len(state.Ipv6Vrrps[i].Ipv6Addresses) {
 				hasChanges = true
 			} else {
-				for ii := range data.Ipv6Vrrps[i].Ipv6Adresses {
-					if !data.Ipv6Vrrps[i].Ipv6Adresses[ii].Ipv6LinkLocal.Equal(state.Ipv6Vrrps[i].Ipv6Adresses[ii].Ipv6LinkLocal) {
+				for ii := range data.Ipv6Vrrps[i].Ipv6Addresses {
+					if !data.Ipv6Vrrps[i].Ipv6Addresses[ii].Ipv6LinkLocal.Equal(state.Ipv6Vrrps[i].Ipv6Addresses[ii].Ipv6LinkLocal) {
 						hasChanges = true
 					}
-					if !data.Ipv6Vrrps[i].Ipv6Adresses[ii].Prefix.Equal(state.Ipv6Vrrps[i].Ipv6Adresses[ii].Prefix) {
+					if !data.Ipv6Vrrps[i].Ipv6Addresses[ii].Prefix.Equal(state.Ipv6Vrrps[i].Ipv6Addresses[ii].Prefix) {
 						hasChanges = true
 					}
 				}
