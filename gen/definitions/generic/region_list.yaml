@@ -4,7 +4,6 @@ rest_endpoint: /template/policy/list/region/
 has_version: true
 id_attribute: listId
 doc_category: Policy Objects
-exclude_test: true
 attributes:
   - model_name: type
     type: String
