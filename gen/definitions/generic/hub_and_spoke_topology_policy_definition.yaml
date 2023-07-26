@@ -27,6 +27,7 @@ attributes:
     type: String
     description: VPN list ID
     example: 04fcbb0b-efbf-43d2-a04b-847d3a7b104e
+    test_value: sdwan_vpn_list_policy_object.vpns1.id
   - tf_name: vpn_list_version
     tf_only: true
     type: Version
@@ -57,6 +58,7 @@ attributes:
             id: true
             description: Site list ID
             example: e858e1c4-6aa8-4de7-99df-c3adbf80290d
+            test_value: sdwan_site_list_policy_object.sites1.id
           - tf_name: site_list_version
             tf_only: true
             type: Version
@@ -73,8 +75,28 @@ attributes:
                 id: true
                 description: Site list ID
                 example: e858e1c4-6aa8-4de7-99df-c3adbf80290d
+                test_value: sdwan_site_list_policy_object.sites1.id
               - tf_name: site_list_version
                 tf_only: true
                 type: Version
                 description: Site list version
                 exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_site_list_policy_object" "sites1" {
+    name = "TF_TEST"
+    entries = [
+      {
+        site_id = "100-200"
+      }
+    ]
+  }
+
+  resource "sdwan_vpn_list_policy_object" "vpns1" {
+    name = "TF_TEST"
+    entries = [
+      {
+        vpn_id = "100-200"
+      }
+    ]
+  }

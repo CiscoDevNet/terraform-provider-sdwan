@@ -35,10 +35,7 @@ func TestAccSdwanHubAndSpokeTopologyPolicyDefinition(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "vpn_list_id", "04fcbb0b-efbf-43d2-a04b-847d3a7b104e"),
 					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.name", "Topology1"),
-					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.spokes.0.site_list_id", "e858e1c4-6aa8-4de7-99df-c3adbf80290d"),
-					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.spokes.0.hubs.0.site_list_id", "e858e1c4-6aa8-4de7-99df-c3adbf80290d"),
 				),
 			},
 		},
@@ -46,18 +43,35 @@ func TestAccSdwanHubAndSpokeTopologyPolicyDefinition(t *testing.T) {
 }
 
 const testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig = `
+resource "sdwan_site_list_policy_object" "sites1" {
+  name = "TF_TEST"
+  entries = [
+    {
+      site_id = "100-200"
+    }
+  ]
+}
+
+resource "sdwan_vpn_list_policy_object" "vpns1" {
+  name = "TF_TEST"
+  entries = [
+    {
+      vpn_id = "100-200"
+    }
+  ]
+}
 
 
 resource "sdwan_hub_and_spoke_topology_policy_definition" "test" {
 	name = "Example"
 	description = "My description"
-	vpn_list_id = "04fcbb0b-efbf-43d2-a04b-847d3a7b104e"
+	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id
 	topologies = [{
 		name = "Topology1"
 		spokes = [{
-			site_list_id = "e858e1c4-6aa8-4de7-99df-c3adbf80290d"
+			site_list_id = sdwan_site_list_policy_object.sites1.id
 			hubs = [{
-				site_list_id = "e858e1c4-6aa8-4de7-99df-c3adbf80290d"
+				site_list_id = sdwan_site_list_policy_object.sites1.id
 			}]
 		}]
 	}]
