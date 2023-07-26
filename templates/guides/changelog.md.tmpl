@@ -10,6 +10,7 @@ description: |-
 ## 0.2.3 (unreleased)
 
 - Add `sdwan_centralized_policy` resource and data source
+- Add `sdwan_activate_centralized_policy` resource
 
 ## 0.2.2
 

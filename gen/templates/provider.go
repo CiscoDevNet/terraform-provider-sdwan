@@ -249,6 +249,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		New{{camelCase .}}Resource,
 		{{- end}}
 		NewAttachFeatureDeviceTemplateResource,
+		NewActivateCentralizedPolicyResource,
 	}
 }
 

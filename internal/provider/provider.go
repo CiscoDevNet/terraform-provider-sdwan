@@ -298,6 +298,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewVPNListPolicyObjectResource,
 		NewVPNMembershipPolicyDefinitionResource,
 		NewAttachFeatureDeviceTemplateResource,
+		NewActivateCentralizedPolicyResource,
 	}
 }
 

@@ -42,6 +42,7 @@ var docPaths = []string{"./docs/data-sources/", "./docs/resources/"}
 
 var extraDocs = map[string]string{
 	"attach_feature_device_template": "Device Templates",
+	"activate_centralized_policy":    "Centralized Policies",
 }
 
 func SnakeCase(s string) string {
