@@ -540,22 +540,22 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ApplicationListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DnsApplicationListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()
@@ -581,12 +581,12 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 						break
 					}
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters[ccStateIndex].SlaClassListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].SlaClassListVersion = types.Int64Null()
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters[ccStateIndex].PreferredColorGroupListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].PreferredColorGroupListVersion = types.Int64Null()

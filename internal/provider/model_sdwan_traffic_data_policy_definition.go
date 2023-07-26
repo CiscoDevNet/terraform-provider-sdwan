@@ -1053,22 +1053,22 @@ func (data *TrafficDataPolicyDefinition) updateVersions(ctx context.Context, sta
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ApplicationListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].ApplicationListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DnsApplicationListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].DnsApplicationListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()
@@ -1094,22 +1094,22 @@ func (data *TrafficDataPolicyDefinition) updateVersions(ctx context.Context, sta
 						break
 					}
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].PolicerListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].PolicerListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].PolicerListVersion = types.Int64Null()
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].PreferredColorGroupListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].PreferredColorGroupListVersion = types.Int64Null()
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].TlocListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = types.Int64Null()
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].ServiceTlocListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = types.Int64Null()

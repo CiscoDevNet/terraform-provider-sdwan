@@ -221,7 +221,7 @@ func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Cont
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Topologies[i].Spokes[ii].SiteListVersion = state.Topologies[stateIndex].Spokes[cStateIndex].SiteListVersion
 			} else {
 				data.Topologies[i].Spokes[ii].SiteListVersion = types.Int64Null()
@@ -236,7 +236,7 @@ func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Cont
 						break
 					}
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Topologies[i].Spokes[ii].Hubs[iii].SiteListVersion = state.Topologies[stateIndex].Spokes[cStateIndex].Hubs[ccStateIndex].SiteListVersion
 				} else {
 					data.Topologies[i].Spokes[ii].Hubs[iii].SiteListVersion = types.Int64Null()

@@ -158,7 +158,7 @@ func (data *RewriteRulePolicyDefinition) updateVersions(ctx context.Context, sta
 				break
 			}
 		}
-		if stateIndex >= -1 {
+		if stateIndex > -1 {
 			data.Rules[i].ClassMapVersion = state.Rules[stateIndex].ClassMapVersion
 		} else {
 			data.Rules[i].ClassMapVersion = types.Int64Null()

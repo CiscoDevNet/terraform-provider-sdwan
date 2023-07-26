@@ -532,17 +532,17 @@ func (data *ACLPolicyDefinition) updateVersions(ctx context.Context, state *ACLP
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].ClassMapVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ClassMapVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].ClassMapVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()
@@ -558,17 +558,17 @@ func (data *ACLPolicyDefinition) updateVersions(ctx context.Context, state *ACLP
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].ActionEntries[ii].ClassMapVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].ClassMapVersion
 			} else {
 				data.Sequences[i].ActionEntries[ii].ClassMapVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].ActionEntries[ii].MirrorVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].MirrorVersion
 			} else {
 				data.Sequences[i].ActionEntries[ii].MirrorVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].ActionEntries[ii].PolicerVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].PolicerVersion
 			} else {
 				data.Sequences[i].ActionEntries[ii].PolicerVersion = types.Int64Null()

@@ -288,7 +288,7 @@ func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *Fe
 				break
 			}
 		}
-		if stateIndex >= -1 {
+		if stateIndex > -1 {
 			data.GeneralTemplates[i].Version = state.GeneralTemplates[stateIndex].Version
 		} else {
 			data.GeneralTemplates[i].Version = types.Int64Null()
@@ -303,7 +303,7 @@ func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *Fe
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.GeneralTemplates[i].SubTemplates[ii].Version = state.GeneralTemplates[stateIndex].SubTemplates[cStateIndex].Version
 			} else {
 				data.GeneralTemplates[i].SubTemplates[ii].Version = types.Int64Null()
@@ -318,7 +318,7 @@ func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *Fe
 						break
 					}
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.GeneralTemplates[i].SubTemplates[ii].SubTemplates[iii].Version = state.GeneralTemplates[stateIndex].SubTemplates[cStateIndex].SubTemplates[ccStateIndex].Version
 				} else {
 					data.GeneralTemplates[i].SubTemplates[ii].SubTemplates[iii].Version = types.Int64Null()

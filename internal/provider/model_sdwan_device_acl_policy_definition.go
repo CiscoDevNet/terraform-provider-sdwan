@@ -339,12 +339,12 @@ func (data *DeviceACLPolicyDefinition) updateVersions(ctx context.Context, state
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()

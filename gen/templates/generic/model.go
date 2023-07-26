@@ -534,10 +534,10 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 	data.{{toGoName .TfName}} = state.{{toGoName .TfName}}
 	{{- else if and (or (eq .Type "List") (eq .Type "Set")) (hasVersionAttribute .Attributes)}}
 	for i := range data.{{toGoName .TfName}} {
-		dataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
+		dataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 		stateIndex := -1
 		for j := range state.{{toGoName .TfName}} {
-			stateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[j].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
+			stateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[j].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 			if dataKeys == stateKeys {
 				stateIndex = j
                 break
@@ -546,23 +546,23 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 		{{- range .Attributes}}
 		{{- $cname := toGoName .TfName}}
 		{{- if eq .Type "Version"}}
-		if stateIndex >= -1 {
+		if stateIndex > -1 {
 			data.{{$name}}[i].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{toGoName .TfName}}
 		} else {
 			data.{{$name}}[i].{{toGoName .TfName}} = types.Int64Null()
 		}
 		{{- else if eq .Type "Versions"}}
-		if stateIndex >= -1 && !state.{{$name}}[stateIndex].{{toGoName .TfName}}.IsNull() {
+		if stateIndex > -1 && !state.{{$name}}[stateIndex].{{toGoName .TfName}}.IsNull() {
 			data.{{$name}}[i].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{toGoName .TfName}}
 		} else {
 			data.{{$name}}[i].{{toGoName .TfName}} = types.ListNull(types.StringType)
 		}
 		{{- else if and (or (eq .Type "List") (eq .Type "Set")) (hasVersionAttribute .Attributes)}}
 		for ii := range data.{{$name}}[i].{{toGoName .TfName}} {
-			cDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
+			cDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 			cStateIndex := -1
 			for jj := range state.{{$name}}[stateIndex].{{toGoName .TfName}} {
-				cStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[jj].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
+				cStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[jj].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 				if cDataKeys == cStateKeys {
 					cStateIndex = jj
 					break
@@ -571,23 +571,23 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 			{{- range .Attributes}}
 			{{- $ccname := toGoName .TfName}}
 			{{- if eq .Type "Version"}}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}
 			} else {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.Int64Null()
 			}
 			{{- else if eq .Type "Versions"}}
-			if cStateIndex >= -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}.IsNull() {
+			if cStateIndex > -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}.IsNull() {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}}
 			} else {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.ListNull(types.StringType)
 			}
 			{{- else if and (or (eq .Type "List") (eq .Type "Set")) (hasVersionAttribute .Attributes)}}
 			for iii := range data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} {
-				ccDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
+				ccDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 				ccStateIndex := -1
 				for jjj := range state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}} {
-					ccStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[jjj].{{toGoName .TfName}}.Value{{.Type}}()), {{end}}{{end}} }
+					ccStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[jjj].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 					if ccDataKeys == ccStateKeys {
 						ccStateIndex = jjj
 						break
@@ -595,13 +595,13 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 				}
 				{{- range .Attributes}}
 				{{- if eq .Type "Version"}}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}
 				} else {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.Int64Null()
 				}
 				{{- else if eq .Type "Versions"}}
-				if ccStateIndex >= -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}.IsNull() {
+				if ccStateIndex > -1 && !state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}.IsNull() {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[ccStateIndex].{{toGoName .TfName}}
 				} else {
 					data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}} = types.ListNull(types.StringType)

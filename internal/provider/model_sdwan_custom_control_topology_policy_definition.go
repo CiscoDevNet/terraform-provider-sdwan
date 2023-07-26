@@ -739,37 +739,37 @@ func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Co
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].ColorListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ColorListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].ColorListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ExpandedCommunityListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].SiteListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SiteListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].SiteListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].TlocListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].TlocListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].TlocListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].VpnListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].VpnListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].VpnListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].PrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].PrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].PrefixListVersion = types.Int64Null()
@@ -795,18 +795,18 @@ func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Co
 						break
 					}
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].TlocListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].TlocListVersion = types.Int64Null()
 				}
-				if ccStateIndex >= -1 {
+				if ccStateIndex > -1 {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[ccStateIndex].ServiceTlocListVersion
 				} else {
 					data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocListVersion = types.Int64Null()
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].ActionEntries[ii].ExportToVpnListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].ExportToVpnListVersion
 			} else {
 				data.Sequences[i].ActionEntries[ii].ExportToVpnListVersion = types.Int64Null()

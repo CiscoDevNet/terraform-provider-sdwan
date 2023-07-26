@@ -194,7 +194,7 @@ func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context, state *Q
 				break
 			}
 		}
-		if stateIndex >= -1 {
+		if stateIndex > -1 {
 			data.QosSchedulers[i].ClassMapVersion = state.QosSchedulers[stateIndex].ClassMapVersion
 		} else {
 			data.QosSchedulers[i].ClassMapVersion = types.Int64Null()

@@ -138,12 +138,12 @@ func (data *VPNMembershipPolicyDefinition) updateVersions(ctx context.Context, s
 				break
 			}
 		}
-		if stateIndex >= -1 {
+		if stateIndex > -1 {
 			data.Sites[i].SiteListVersion = state.Sites[stateIndex].SiteListVersion
 		} else {
 			data.Sites[i].SiteListVersion = types.Int64Null()
 		}
-		if stateIndex >= -1 && !state.Sites[stateIndex].VpnListVersions.IsNull() {
+		if stateIndex > -1 && !state.Sites[stateIndex].VpnListVersions.IsNull() {
 			data.Sites[i].VpnListVersions = state.Sites[stateIndex].VpnListVersions
 		} else {
 			data.Sites[i].VpnListVersions = types.ListNull(types.StringType)

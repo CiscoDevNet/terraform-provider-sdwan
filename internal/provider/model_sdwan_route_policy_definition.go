@@ -626,27 +626,27 @@ func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *Ro
 					break
 				}
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].PrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].PrefixListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].PrefixListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].AsPathListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].AsPathListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].AsPathListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 && !state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersions.IsNull() {
+			if cStateIndex > -1 && !state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersions.IsNull() {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersions = state.Sequences[stateIndex].MatchEntries[cStateIndex].CommunityListVersions
 			} else {
 				data.Sequences[i].MatchEntries[ii].CommunityListVersions = types.ListNull(types.StringType)
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ExpandedCommunityListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].ExpandedCommunityListVersion = types.Int64Null()
 			}
-			if cStateIndex >= -1 {
+			if cStateIndex > -1 {
 				data.Sequences[i].MatchEntries[ii].ExtendedCommunityListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].ExtendedCommunityListVersion
 			} else {
 				data.Sequences[i].MatchEntries[ii].ExtendedCommunityListVersion = types.Int64Null()

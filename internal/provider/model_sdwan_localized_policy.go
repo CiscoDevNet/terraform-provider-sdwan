@@ -310,7 +310,7 @@ func (data *LocalizedPolicy) updateVersions(ctx context.Context, state *Localize
 				break
 			}
 		}
-		if stateIndex >= -1 {
+		if stateIndex > -1 {
 			data.Definitions[i].Version = state.Definitions[stateIndex].Version
 		} else {
 			data.Definitions[i].Version = types.Int64Null()

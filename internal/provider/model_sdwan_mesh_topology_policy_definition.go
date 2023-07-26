@@ -151,7 +151,7 @@ func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context, st
 				break
 			}
 		}
-		if stateIndex >= -1 && !state.Regions[stateIndex].SiteListVersions.IsNull() {
+		if stateIndex > -1 && !state.Regions[stateIndex].SiteListVersions.IsNull() {
 			data.Regions[i].SiteListVersions = state.Regions[stateIndex].SiteListVersions
 		} else {
 			data.Regions[i].SiteListVersions = types.ListNull(types.StringType)
