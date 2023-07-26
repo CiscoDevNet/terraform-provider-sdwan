@@ -45,18 +45,18 @@ resource "sdwan_localized_policy" "example" {
 
 ### Optional
 
-- `application_visibility_ipv4` (Boolean) IPv4 application visibilty
+- `application_visibility_ipv4` (Boolean) IPv4 application visibility
   - Default value: `true`
-- `application_visibility_ipv6` (Boolean) IPv6 application visibilty
+- `application_visibility_ipv6` (Boolean) IPv6 application visibility
   - Default value: `true`
 - `cloud_qos` (Boolean) Cloud QoS
   - Default value: `true`
 - `cloud_qos_service_side` (Boolean) Cloud QoS service side
   - Default value: `true`
 - `definitions` (Attributes Set) List of policy definitions (see [below for nested schema](#nestedatt--definitions))
-- `flow_visibility_ipv4` (Boolean) IPv4 flow visibilty
+- `flow_visibility_ipv4` (Boolean) IPv4 flow visibility
   - Default value: `true`
-- `flow_visibility_ipv6` (Boolean) IPv6 flow visibilty
+- `flow_visibility_ipv6` (Boolean) IPv6 flow visibility
   - Default value: `true`
 - `implicit_acl_logging` (Boolean) Implicit ACL logging
   - Default value: `true`
@@ -78,7 +78,7 @@ resource "sdwan_localized_policy" "example" {
 Required:
 
 - `id` (String) Policy definition ID
-- `type` (String) Policy definiton type
+- `type` (String) Policy definition type
 
 Optional:
 

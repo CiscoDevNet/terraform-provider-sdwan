@@ -55,7 +55,7 @@ resource "sdwan_centralized_policy" "example" {
 Required:
 
 - `id` (String) Policy definition ID
-- `type` (String) Policy definiton type
+- `type` (String) Policy definition type
   - Choices: `hubAndSpoke`, `mesh`, `control`, `vpnMembershipGroup`, `appRoute`, `cflowd`, `data`
 
 Optional:

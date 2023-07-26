@@ -1,3 +1,7 @@
+## 0.2.4 (unreleased)
+
+- BREAKING CHANGE: Rename `ipv6_adresses` attribute of `sdwan_cisco_vpn_interface_feature_template` resource and data source to `ipv6_addresses`
+
 ## 0.2.3
 
 - Add `sdwan_centralized_policy` resource and data source

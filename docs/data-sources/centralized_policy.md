@@ -39,7 +39,7 @@ Read-Only:
 
 - `entries` (Attributes Set) List of entries (see [below for nested schema](#nestedatt--definitions--entries))
 - `id` (String) Policy definition ID
-- `type` (String) Policy definiton type
+- `type` (String) Policy definition type
 - `version` (Number) Policy definition version
 
 <a id="nestedatt--definitions--entries"></a>

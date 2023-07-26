@@ -359,18 +359,18 @@ type CiscoVPNInterfaceIpv4Vrrps struct {
 }
 
 type CiscoVPNInterfaceIpv6Vrrps struct {
-	Optional                types.Bool                               `tfsdk:"optional"`
-	GroupId                 types.Int64                              `tfsdk:"group_id"`
-	GroupIdVariable         types.String                             `tfsdk:"group_id_variable"`
-	Priority                types.Int64                              `tfsdk:"priority"`
-	PriorityVariable        types.String                             `tfsdk:"priority_variable"`
-	Timer                   types.Int64                              `tfsdk:"timer"`
-	TimerVariable           types.String                             `tfsdk:"timer_variable"`
-	TrackOmp                types.Bool                               `tfsdk:"track_omp"`
-	TrackOmpVariable        types.String                             `tfsdk:"track_omp_variable"`
-	TrackPrefixList         types.String                             `tfsdk:"track_prefix_list"`
-	TrackPrefixListVariable types.String                             `tfsdk:"track_prefix_list_variable"`
-	Ipv6Addresses            []CiscoVPNInterfaceIpv6VrrpsIpv6Addresses `tfsdk:"ipv6_addresses"`
+	Optional                types.Bool                                `tfsdk:"optional"`
+	GroupId                 types.Int64                               `tfsdk:"group_id"`
+	GroupIdVariable         types.String                              `tfsdk:"group_id_variable"`
+	Priority                types.Int64                               `tfsdk:"priority"`
+	PriorityVariable        types.String                              `tfsdk:"priority_variable"`
+	Timer                   types.Int64                               `tfsdk:"timer"`
+	TimerVariable           types.String                              `tfsdk:"timer_variable"`
+	TrackOmp                types.Bool                                `tfsdk:"track_omp"`
+	TrackOmpVariable        types.String                              `tfsdk:"track_omp_variable"`
+	TrackPrefixList         types.String                              `tfsdk:"track_prefix_list"`
+	TrackPrefixListVariable types.String                              `tfsdk:"track_prefix_list_variable"`
+	Ipv6Addresses           []CiscoVPNInterfaceIpv6VrrpsIpv6Addresses `tfsdk:"ipv6_addresses"`
 }
 
 type CiscoVPNInterfaceIpv4VrrpsIpv4SecondaryAddresses struct {
