@@ -70,19 +70,19 @@ func (d *LocalizedPolicyDataSource) Schema(ctx context.Context, req datasource.S
 				Computed:            true,
 			},
 			"flow_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: "IPv4 flow visibilty",
+				MarkdownDescription: "IPv4 flow visibility",
 				Computed:            true,
 			},
 			"flow_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: "IPv6 flow visibilty",
+				MarkdownDescription: "IPv6 flow visibility",
 				Computed:            true,
 			},
 			"application_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: "IPv4 application visibilty",
+				MarkdownDescription: "IPv4 application visibility",
 				Computed:            true,
 			},
 			"application_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: "IPv6 application visibilty",
+				MarkdownDescription: "IPv6 application visibility",
 				Computed:            true,
 			},
 			"cloud_qos": schema.BoolAttribute{
@@ -123,7 +123,7 @@ func (d *LocalizedPolicyDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Policy definiton type",
+							MarkdownDescription: "Policy definition type",
 							Computed:            true,
 						},
 					},

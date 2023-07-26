@@ -82,25 +82,25 @@ func (r *LocalizedPolicyResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 			},
 			"flow_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 flow visibilty").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 flow visibility").AddDefaultValueDescription("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"flow_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 flow visibilty").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 flow visibility").AddDefaultValueDescription("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"application_visibility_ipv4": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv4 application visibilty").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 application visibility").AddDefaultValueDescription("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"application_visibility_ipv6": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IPv6 application visibilty").AddDefaultValueDescription("true").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 application visibility").AddDefaultValueDescription("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -158,7 +158,7 @@ func (r *LocalizedPolicyResource) Schema(ctx context.Context, req resource.Schem
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Policy definiton type").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Policy definition type").String,
 							Required:            true,
 						},
 					},

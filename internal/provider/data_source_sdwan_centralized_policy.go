@@ -84,7 +84,7 @@ func (d *CentralizedPolicyDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Policy definiton type",
+							MarkdownDescription: "Policy definition type",
 							Computed:            true,
 						},
 						"entries": schema.SetNestedAttribute{

@@ -54,7 +54,7 @@ attributes:
             data,
           ]
         mandatory: true
-        description: Policy definiton type
+        description: Policy definition type
         example: data
       - model_name: entries
         tf_name: entries
