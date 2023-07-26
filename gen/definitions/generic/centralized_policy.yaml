@@ -1,0 +1,132 @@
+---
+name: Centralized Policy
+rest_endpoint: /template/policy/vsmart/
+get_rest_endpoint: /template/policy/vsmart/definition/
+has_version: true
+id_attribute: policyId
+doc_category: Centralized Policies
+attributes:
+  - model_name: policyType
+    type: String
+    value: feature
+  - model_name: policyName
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the centralized policy
+    example: Example
+  - model_name: policyDescription
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the centralized policy
+    example: My description
+  - model_name: assembly
+    data_path: [policyDefinition]
+    tf_name: definitions
+    type: Set
+    description: List of policy definitions
+    attributes:
+      - model_name: definitionId
+        tf_name: id
+        type: String
+        id: true
+        mandatory: true
+        description: Policy definition ID
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        test_value: sdwan_traffic_data_policy_definition.data1.id
+      - tf_name: version
+        tf_only: true
+        type: Version
+        description: Policy definition version
+        exclude_test: true
+      - model_name: type
+        tf_name: type
+        type: String
+        enum_values:
+          [
+            hubAndSpoke,
+            mesh,
+            control,
+            vpnMembershipGroup,
+            appRoute,
+            cflowd,
+            data,
+          ]
+        mandatory: true
+        description: Policy definiton type
+        example: data
+      - model_name: entries
+        tf_name: entries
+        type: Set
+        description: List of entries
+        attributes:
+          - model_name: siteLists
+            tf_name: site_list_ids
+            type: ListString
+            id: true
+            mandatory: true
+            description: List of site list IDs
+            example: '["2081c2f4-3f9f-4fee-8078-dcc8904e368d"]'
+            test_value: "[sdwan_site_list_policy_object.sites1.id]"
+          - tf_name: site_list_versions
+            tf_only: true
+            type: Versions
+            description: List of site list versions
+            exclude_test: true
+          - model_name: vpnLists
+            tf_name: vpn_list_ids
+            type: ListString
+            description: List of VPN list IDs
+            example: '["7d0c2444-8743-4414-add0-866945ea9f70"]'
+            test_value: "[sdwan_vpn_list_policy_object.vpns1.id]"
+          - tf_name: vpn_list_versions
+            tf_only: true
+            type: Versions
+            description: List of VPN list versions
+            exclude_test: true
+          - model_name: direction
+            tf_name: direction
+            type: String
+            enum_values: [service, tunnel, all]
+            description: Direction
+            example: service
+
+test_prerequisites: |
+  resource "sdwan_site_list_policy_object" "sites1" {
+    name = "TF_TEST"
+    entries = [
+      {
+        site_id = "100-200"
+      }
+    ]
+  }
+
+  resource "sdwan_vpn_list_policy_object" "vpns1" {
+    name = "TF_TEST"
+    entries = [
+      {
+        vpn_id = "100-200"
+      }
+    ]
+  }
+
+  resource "sdwan_traffic_data_policy_definition" "data1" {
+    name           = "TF_TEST"
+    description    = "My description"
+    default_action = "drop"
+    sequences = [
+      {
+        id      = 1
+        name    = "Seq1"
+        type    = "applicationFirewall"
+        ip_type = "ipv4"
+        action_entries = [
+          {
+            type = "log"
+            log  = true
+          }
+        ]
+      }
+    ]
+  }

@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.2.3 (unreleased)
+
+- Add `sdwan_centralized_policy` resource and data source
+
 ## 0.2.2
 
 - Add `sdwan_application_aware_routing_policy_definition` resource and data source
