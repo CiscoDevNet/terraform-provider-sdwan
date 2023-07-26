@@ -214,11 +214,13 @@ func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Cont
 		for ii := range data.Topologies[i].Spokes {
 			cDataKeys := [...]string{fmt.Sprintf("%v", data.Topologies[i].Spokes[ii].SiteListId.ValueString())}
 			cStateIndex := -1
-			for jj := range state.Topologies[stateIndex].Spokes {
-				cStateKeys := [...]string{fmt.Sprintf("%v", state.Topologies[stateIndex].Spokes[jj].SiteListId.ValueString())}
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.Topologies[stateIndex].Spokes {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Topologies[stateIndex].Spokes[jj].SiteListId.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			if cStateIndex > -1 {
@@ -229,11 +231,13 @@ func (data *HubAndSpokeTopologyPolicyDefinition) updateVersions(ctx context.Cont
 			for iii := range data.Topologies[i].Spokes[ii].Hubs {
 				ccDataKeys := [...]string{fmt.Sprintf("%v", data.Topologies[i].Spokes[ii].Hubs[iii].SiteListId.ValueString())}
 				ccStateIndex := -1
-				for jjj := range state.Topologies[stateIndex].Spokes[cStateIndex].Hubs {
-					ccStateKeys := [...]string{fmt.Sprintf("%v", state.Topologies[stateIndex].Spokes[cStateIndex].Hubs[jjj].SiteListId.ValueString())}
-					if ccDataKeys == ccStateKeys {
-						ccStateIndex = jjj
-						break
+				if cStateIndex > -1 {
+					for jjj := range state.Topologies[stateIndex].Spokes[cStateIndex].Hubs {
+						ccStateKeys := [...]string{fmt.Sprintf("%v", state.Topologies[stateIndex].Spokes[cStateIndex].Hubs[jjj].SiteListId.ValueString())}
+						if ccDataKeys == ccStateKeys {
+							ccStateIndex = jjj
+							break
+						}
 					}
 				}
 				if ccStateIndex > -1 {

@@ -332,11 +332,13 @@ func (data *DeviceACLPolicyDefinition) updateVersions(ctx context.Context, state
 		for ii := range data.Sequences[i].MatchEntries {
 			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
 			cStateIndex := -1
-			for jj := range state.Sequences[stateIndex].MatchEntries {
-				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.Sequences[stateIndex].MatchEntries {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			if cStateIndex > -1 {

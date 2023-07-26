@@ -732,11 +732,13 @@ func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Co
 		for ii := range data.Sequences[i].MatchEntries {
 			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
 			cStateIndex := -1
-			for jj := range state.Sequences[stateIndex].MatchEntries {
-				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.Sequences[stateIndex].MatchEntries {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			if cStateIndex > -1 {
@@ -778,21 +780,25 @@ func (data *CustomControlTopologyPolicyDefinition) updateVersions(ctx context.Co
 		for ii := range data.Sequences[i].ActionEntries {
 			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].Type.ValueString())}
 			cStateIndex := -1
-			for jj := range state.Sequences[stateIndex].ActionEntries {
-				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.Sequences[stateIndex].ActionEntries {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			for iii := range data.Sequences[i].ActionEntries[ii].SetParameters {
 				ccDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].SetParameters[iii].Type.ValueString())}
 				ccStateIndex := -1
-				for jjj := range state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters {
-					ccStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[jjj].Type.ValueString())}
-					if ccDataKeys == ccStateKeys {
-						ccStateIndex = jjj
-						break
+				if cStateIndex > -1 {
+					for jjj := range state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters {
+						ccStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[cStateIndex].SetParameters[jjj].Type.ValueString())}
+						if ccDataKeys == ccStateKeys {
+							ccStateIndex = jjj
+							break
+						}
 					}
 				}
 				if ccStateIndex > -1 {

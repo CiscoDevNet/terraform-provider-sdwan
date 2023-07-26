@@ -561,11 +561,13 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 		for ii := range data.{{$name}}[i].{{toGoName .TfName}} {
 			cDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 			cStateIndex := -1
-			for jj := range state.{{$name}}[stateIndex].{{toGoName .TfName}} {
-				cStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[jj].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.{{$name}}[stateIndex].{{toGoName .TfName}} {
+					cStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[jj].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			{{- range .Attributes}}
@@ -586,11 +588,13 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 			for iii := range data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} {
 				ccDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 				ccStateIndex := -1
-				for jjj := range state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}} {
-					ccStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[jjj].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
-					if ccDataKeys == ccStateKeys {
-						ccStateIndex = jjj
-						break
+				if cStateIndex > -1 {
+					for jjj := range state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}} {
+						ccStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[jjj].{{toGoName .TfName}}.{{if eq .Type "ListString"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+						if ccDataKeys == ccStateKeys {
+							ccStateIndex = jjj
+							break
+						}
 					}
 				}
 				{{- range .Attributes}}

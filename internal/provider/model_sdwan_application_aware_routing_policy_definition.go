@@ -533,11 +533,13 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 		for ii := range data.Sequences[i].MatchEntries {
 			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].MatchEntries[ii].Type.ValueString())}
 			cStateIndex := -1
-			for jj := range state.Sequences[stateIndex].MatchEntries {
-				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.Sequences[stateIndex].MatchEntries {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].MatchEntries[jj].Type.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			if cStateIndex > -1 {
@@ -564,21 +566,25 @@ func (data *ApplicationAwareRoutingPolicyDefinition) updateVersions(ctx context.
 		for ii := range data.Sequences[i].ActionEntries {
 			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].Type.ValueString())}
 			cStateIndex := -1
-			for jj := range state.Sequences[stateIndex].ActionEntries {
-				cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.Sequences[stateIndex].ActionEntries {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			for iii := range data.Sequences[i].ActionEntries[ii].SlaClassParameters {
 				ccDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].SlaClassParameters[iii].Type.ValueString())}
 				ccStateIndex := -1
-				for jjj := range state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters {
-					ccStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters[jjj].Type.ValueString())}
-					if ccDataKeys == ccStateKeys {
-						ccStateIndex = jjj
-						break
+				if cStateIndex > -1 {
+					for jjj := range state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters {
+						ccStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[cStateIndex].SlaClassParameters[jjj].Type.ValueString())}
+						if ccDataKeys == ccStateKeys {
+							ccStateIndex = jjj
+							break
+						}
 					}
 				}
 				if ccStateIndex > -1 {

@@ -296,11 +296,13 @@ func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *Fe
 		for ii := range data.GeneralTemplates[i].SubTemplates {
 			cDataKeys := [...]string{fmt.Sprintf("%v", data.GeneralTemplates[i].SubTemplates[ii].Id.ValueString())}
 			cStateIndex := -1
-			for jj := range state.GeneralTemplates[stateIndex].SubTemplates {
-				cStateKeys := [...]string{fmt.Sprintf("%v", state.GeneralTemplates[stateIndex].SubTemplates[jj].Id.ValueString())}
-				if cDataKeys == cStateKeys {
-					cStateIndex = jj
-					break
+			if stateIndex > -1 {
+				for jj := range state.GeneralTemplates[stateIndex].SubTemplates {
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.GeneralTemplates[stateIndex].SubTemplates[jj].Id.ValueString())}
+					if cDataKeys == cStateKeys {
+						cStateIndex = jj
+						break
+					}
 				}
 			}
 			if cStateIndex > -1 {
@@ -311,11 +313,13 @@ func (data *FeatureDeviceTemplate) updateVersions(ctx context.Context, state *Fe
 			for iii := range data.GeneralTemplates[i].SubTemplates[ii].SubTemplates {
 				ccDataKeys := [...]string{fmt.Sprintf("%v", data.GeneralTemplates[i].SubTemplates[ii].SubTemplates[iii].Id.ValueString())}
 				ccStateIndex := -1
-				for jjj := range state.GeneralTemplates[stateIndex].SubTemplates[cStateIndex].SubTemplates {
-					ccStateKeys := [...]string{fmt.Sprintf("%v", state.GeneralTemplates[stateIndex].SubTemplates[cStateIndex].SubTemplates[jjj].Id.ValueString())}
-					if ccDataKeys == ccStateKeys {
-						ccStateIndex = jjj
-						break
+				if cStateIndex > -1 {
+					for jjj := range state.GeneralTemplates[stateIndex].SubTemplates[cStateIndex].SubTemplates {
+						ccStateKeys := [...]string{fmt.Sprintf("%v", state.GeneralTemplates[stateIndex].SubTemplates[cStateIndex].SubTemplates[jjj].Id.ValueString())}
+						if ccDataKeys == ccStateKeys {
+							ccStateIndex = jjj
+							break
+						}
 					}
 				}
 				if ccStateIndex > -1 {
