@@ -35,7 +35,6 @@ func TestAccSdwanVPNMembershipPolicyDefinition(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_vpn_membership_policy_definition.test", "name", "Example"),
 					resource.TestCheckResourceAttr("sdwan_vpn_membership_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_vpn_membership_policy_definition.test", "sites.0.site_list_id", "e858e1c4-6aa8-4de7-99df-c3adbf80290d"),
 				),
 			},
 		},
@@ -43,14 +42,31 @@ func TestAccSdwanVPNMembershipPolicyDefinition(t *testing.T) {
 }
 
 const testAccSdwanVPNMembershipPolicyDefinitionConfig = `
+resource "sdwan_site_list_policy_object" "sites1" {
+  name = "TF_TEST"
+  entries = [
+    {
+      site_id = "100-200"
+    }
+  ]
+}
+
+resource "sdwan_vpn_list_policy_object" "vpns1" {
+  name = "TF_TEST"
+  entries = [
+    {
+      vpn_id = "100-200"
+    }
+  ]
+}
 
 
 resource "sdwan_vpn_membership_policy_definition" "test" {
 	name = "Example"
 	description = "My description"
 	sites = [{
-		site_list_id = "e858e1c4-6aa8-4de7-99df-c3adbf80290d"
-		vpn_list_ids = ["04fcbb0b-efbf-43d2-a04b-847d3a7b104e"]
+		site_list_id = sdwan_site_list_policy_object.sites1.id
+		vpn_list_ids = [sdwan_vpn_list_policy_object.vpns1.id]
 	}]
 }
 `
