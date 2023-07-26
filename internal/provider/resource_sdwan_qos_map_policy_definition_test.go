@@ -50,9 +50,7 @@ func TestAccSdwanQoSMapPolicyDefinition(t *testing.T) {
 const testAccSdwanQoSMapPolicyDefinitionConfig = `
 resource "sdwan_class_map_policy_object" "test" {
   name = "TF_TEST"
-  entries = [{
-    queue = 6
-  }]
+  queue = 6
 }
 
 
