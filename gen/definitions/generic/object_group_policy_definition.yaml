@@ -1,0 +1,101 @@
+---
+name: Object Group Policy Definition
+rest_endpoint: /template/policy/definition/securitygroup/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: securityGroup
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
+  - model_name: ref
+    data_path: [definition, dataPrefixList]
+    tf_name: data_ipv4_prefix_list_id
+    type: String
+    description: Data IPv4 prefix list ID
+    example: da158434-4dfd-4e01-a2ba-c8a0b6ec7a96
+    exclude_test: true
+  - tf_name: data_ipv4_prefix_list_version
+    tf_only: true
+    type: Version
+    description: Data IPv4 prefix list version
+    exclude_test: true
+  - model_name: vipVariableName
+    data_path: [definition, dataPrefix]
+    tf_name: ipv4_prefix_variable
+    type: String
+    description: IPv4 prefix variable name
+    example: my_prefix
+    exclude_test: true
+  - model_name: dataPrefix
+    data_path: [definition]
+    tf_name: ipv4_prefix
+    type: String
+    description: IPv4 prefix
+    example: 10.1.1.0/24
+  - model_name: ref
+    data_path: [definition, fqdnList]
+    tf_name: data_fqdn_prefix_list_id
+    type: String
+    description: Data FQDN prefix list ID
+    example: d8e30ba3-4df7-4dce-959b-21993cce5182
+    exclude_test: true
+  - tf_name: data_fqdn_prefix_list_version
+    tf_only: true
+    type: Version
+    description: Data FQDN prefix list version
+    exclude_test: true
+  - model_name: fqdn
+    data_path: [definition]
+    tf_name: fqdn
+    type: String
+    description: Fully qualified domain name
+    example: cisco.com
+  - model_name: ref
+    data_path: [definition, portList]
+    tf_name: port_list_id
+    type: String
+    description: Port list ID
+    example: da158434-4dfd-4e01-a2ba-c8a0b6ec7a96
+    exclude_test: true
+  - tf_name: port_list_version
+    tf_only: true
+    type: Version
+    description: Port list version
+    exclude_test: true
+  - model_name: port
+    data_path: [definition]
+    tf_name: port
+    type: String
+    description: Port or range of ports
+    example: 80-90
+  - model_name: ref
+    data_path: [definition, geoLocationList]
+    tf_name: geo_location_list_id
+    type: String
+    description: Geo location list ID
+    example: 691510d3-d188-44ba-9e24-4c9c8496ddf3
+    exclude_test: true
+  - tf_name: geo_location_list_version
+    tf_only: true
+    type: Version
+    description: Geo location list version
+    exclude_test: true
+  - model_name: geoLocation
+    data_path: [definition]
+    tf_name: geo_location
+    type: String
+    description: Geo location
+    example: AF

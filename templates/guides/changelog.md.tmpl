@@ -19,6 +19,7 @@ description: |-
 - Add `sdwan_protocol_list_policy_object` resource and data source
 - Add `sdwan_geo_location_list_policy_object` resource and data source
 - Add `sdwan_data_fqdn_prefix_list_policy_object` resource and data source
+- Add `sdwan_object_group_policy_definition` resource and data source
 
 ## 0.2.4
 
