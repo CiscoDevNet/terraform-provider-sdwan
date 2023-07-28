@@ -1,0 +1,244 @@
+---
+name: Rule Set Policy Definition
+rest_endpoint: /template/policy/definition/ruleset/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: ruleSet
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
+  - model_name: rules
+    data_path: [definition]
+    type: List
+    mandatory: true
+    description: List of rules
+    attributes:
+      - model_name: action
+        type: String
+        value: permit
+      - model_name: rule
+        tf_name: name
+        type: String
+        mandatory: true
+        description: The name of the rule
+        example: Rule1
+      - model_name: order
+        tf_name: order
+        type: Int64
+        mandatory: true
+        description: The order of the rule
+        model_type_string: true
+        example: 1
+      - model_name: ref
+        data_path: [sourceSecurityGroup]
+        tf_name: source_object_group_id
+        type: String
+        description: Source object group ID
+        example: 939ec55b-6301-4136-aad5-d36dfde44f31
+        exclude_test: true
+      - tf_name: source_object_group_version
+        tf_only: true
+        type: Version
+        description: Source object group version
+        exclude_test: true
+      - model_name: ref
+        data_path: [sourceDataPrefixList]
+        tf_name: source_data_ipv4_prefix_list_id
+        type: String
+        description: Source data IPv4 prefix list ID
+        example: da158434-4dfd-4e01-a2ba-c8a0b6ec7a96
+        exclude_test: true
+      - tf_name: source_data_ipv4_prefix_list_version
+        tf_only: true
+        type: Version
+        description: Source data IPv4 prefix list version
+        exclude_test: true
+      - model_name: sourceIP
+        tf_name: source_ipv4_prefix
+        type: String
+        description: Source IPv4 prefix
+        example: 10.1.1.0/24
+      - model_name: vipVariableName
+        data_path: [sourceIP]
+        tf_name: source_ipv4_prefix_variable
+        type: String
+        description: Source IPv4 prefix variable name
+        example: my_prefix
+        exclude_test: true
+      - model_name: ref
+        data_path: [sourceFqdnList]
+        tf_name: source_data_fqdn_prefix_list_id
+        type: String
+        description: Source data FQDN prefix list ID
+        example: d8e30ba3-4df7-4dce-959b-21993cce5182
+        exclude_test: true
+      - tf_name: source_data_fqdn_prefix_list_version
+        tf_only: true
+        type: Version
+        description: Source data FQDN prefix list version
+        exclude_test: true
+      - model_name: sourceFqdn
+        tf_name: source_fqdn
+        type: String
+        description: Source fully qualified domain name
+        example: cisco.com
+      - model_name: ref
+        data_path: [sourcePortList]
+        tf_name: source_port_list_id
+        type: String
+        description: Source port list ID
+        example: da158434-4dfd-4e01-a2ba-c8a0b6ec7a96
+        exclude_test: true
+      - tf_name: source_port_list_version
+        tf_only: true
+        type: Version
+        description: Source port list version
+        exclude_test: true
+      - model_name: sourcePort
+        tf_name: source_port
+        type: String
+        description: Source port or range of ports
+        example: 80-90
+      - model_name: ref
+        data_path: [sourceGeoLocationList]
+        tf_name: source_geo_location_list_id
+        type: String
+        description: Source geo location list ID
+        example: 691510d3-d188-44ba-9e24-4c9c8496ddf3
+        exclude_test: true
+      - tf_name: source_geo_location_list_version
+        tf_only: true
+        type: Version
+        description: Source geo location list version
+        exclude_test: true
+      - model_name: sourceGeoLocation
+        tf_name: source_geo_location
+        type: String
+        description: Source geo location
+        example: AF
+      - model_name: ref
+        data_path: [destinationSecurityGroup]
+        tf_name: destination_object_group_id
+        type: String
+        description: Destination object group ID
+        example: 939ec55b-6301-4136-aad5-d36dfde44f31
+        exclude_test: true
+      - tf_name: destination_object_group_version
+        tf_only: true
+        type: Version
+        description: Destination object group version
+        exclude_test: true
+      - model_name: ref
+        data_path: [destinationDataPrefixList]
+        tf_name: destination_data_ipv4_prefix_list_id
+        type: String
+        description: Destination data IPv4 prefix list ID
+        example: da158434-4dfd-4e01-a2ba-c8a0b6ec7a96
+        exclude_test: true
+      - tf_name: destination_data_ipv4_prefix_list_version
+        tf_only: true
+        type: Version
+        description: Destination data IPv4 prefix list version
+        exclude_test: true
+      - model_name: destinationIP
+        tf_name: destination_ipv4_prefix
+        type: String
+        description: Destination IPv4 prefix
+        example: 10.1.1.0/24
+      - model_name: vipVariableName
+        data_path: [destinationIP]
+        tf_name: destination_ipv4_prefix_variable
+        type: String
+        description: Destination IPv4 prefix variable name
+        example: my_prefix
+        exclude_test: true
+      - model_name: ref
+        data_path: [destinationFqdnList]
+        tf_name: destination_data_fqdn_prefix_list_id
+        type: String
+        description: Destination data FQDN prefix list ID
+        example: d8e30ba3-4df7-4dce-959b-21993cce5182
+        exclude_test: true
+      - tf_name: destination_data_fqdn_prefix_list_version
+        tf_only: true
+        type: Version
+        description: Destination data FQDN prefix list version
+        exclude_test: true
+      - model_name: destinationFqdn
+        tf_name: destination_fqdn
+        type: String
+        description: Destination fully qualified domain name
+        example: cisco.com
+      - model_name: ref
+        data_path: [destinationPortList]
+        tf_name: destination_port_list_id
+        type: String
+        description: Destination port list ID
+        example: da158434-4dfd-4e01-a2ba-c8a0b6ec7a96
+        exclude_test: true
+      - tf_name: destination_port_list_version
+        tf_only: true
+        type: Version
+        description: Destination port list version
+        exclude_test: true
+      - model_name: destinationPort
+        tf_name: destination_port
+        type: String
+        description: Destination port or range of ports
+        example: 80-90
+      - model_name: ref
+        data_path: [destinationGeoLocationList]
+        tf_name: destination_geo_location_list_id
+        type: String
+        description: Destination geo location list ID
+        example: 691510d3-d188-44ba-9e24-4c9c8496ddf3
+        exclude_test: true
+      - tf_name: destination_geo_location_list_version
+        tf_only: true
+        type: Version
+        description: Destination geo location list version
+        exclude_test: true
+      - model_name: destinationGeoLocation
+        tf_name: destination_geo_location
+        type: String
+        description: Destination geo location
+        example: AF
+      - model_name: ref
+        data_path: [protocolNameList]
+        tf_name: protocol_list_id
+        type: String
+        description: Protocol list ID
+        example: e7736617-dcd1-44be-9da8-800c00addebf
+        exclude_test: true
+      - tf_name: protocol_list_version
+        tf_only: true
+        type: Version
+        description: Protocol list version
+        exclude_test: true
+      - model_name: protocolName
+        tf_name: protocol
+        type: String
+        description: Protocol name
+        example: cifs
+      - model_name: protocol
+        tf_name: protocol_number
+        type: Int64
+        model_type_string: true
+        description: Protocol number
+        min_int: 0
+        max_int: 255
+        example: 10
+        exclude_test: true
