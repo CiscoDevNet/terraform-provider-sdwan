@@ -11,6 +11,7 @@ description: |-
 
 - Add `sdwan_local_application_list_policy_object` resource and data source
 - Add `sdwan_domain_list_policy_object` resource and data source
+- Add `sdwan_ips_signature_list_policy_object` resource and data source
 
 ## 0.2.4
 

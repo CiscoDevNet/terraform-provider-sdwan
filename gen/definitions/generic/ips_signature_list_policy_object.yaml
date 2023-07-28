@@ -1,0 +1,38 @@
+---
+name: IPS Signature List Policy Object
+rest_endpoint: /template/policy/list/ipssignature/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    type: String
+    value: ipssignature
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: generatorId
+        tf_name: generator_id
+        type: Int64
+        model_type_string: true
+        min_int: 0
+        max_int: 4294967295
+        description: Signature generator ID
+        example: 1111
+      - model_name: signatureId
+        tf_name: signature_id
+        type: Int64
+        model_type_string: true
+        min_int: 0
+        max_int: 4294967295
+        description: Signature ID
+        example: 2222
