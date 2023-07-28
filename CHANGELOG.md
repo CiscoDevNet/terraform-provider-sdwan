@@ -1,4 +1,4 @@
-## 0.2.5 (unreleased)
+## 0.2.5
 
 - Add `sdwan_local_application_list_policy_object` resource and data source
 - Add `sdwan_domain_list_policy_object` resource and data source
