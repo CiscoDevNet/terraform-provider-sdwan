@@ -15,6 +15,7 @@ description: |-
 - Add `sdwan_allow_url_list_policy_object` resource and data source
 - Add `sdwan_block_url_list_policy_object` resource and data source
 - Add `sdwan_zone_list_policy_object` resource and data source
+- Add `sdwan_port_list_policy_object` resource and data source
 
 ## 0.2.4
 
