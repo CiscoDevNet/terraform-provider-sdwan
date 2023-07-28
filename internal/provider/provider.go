@@ -302,6 +302,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewTrafficDataPolicyDefinitionResource,
 		NewVPNListPolicyObjectResource,
 		NewVPNMembershipPolicyDefinitionResource,
+		NewZoneListPolicyObjectResource,
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
 	}
@@ -370,6 +371,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewTrafficDataPolicyDefinitionDataSource,
 		NewVPNListPolicyObjectDataSource,
 		NewVPNMembershipPolicyDefinitionDataSource,
+		NewZoneListPolicyObjectDataSource,
 	}
 }
 
