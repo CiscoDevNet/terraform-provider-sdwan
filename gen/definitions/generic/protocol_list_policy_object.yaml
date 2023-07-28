@@ -1,0 +1,27 @@
+---
+name: Protocol List Policy Object
+rest_endpoint: /template/policy/list/protocolname/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    type: String
+    value: protocolname
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: protocolName
+        tf_name: protocol
+        type: String
+        description: Protocol name
+        example: cifs
