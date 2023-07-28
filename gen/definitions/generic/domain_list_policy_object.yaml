@@ -1,0 +1,27 @@
+---
+name: Domain List Policy Object
+rest_endpoint: /template/policy/list/localdomain/
+has_version: true
+id_attribute: listId
+doc_category: Policy Objects
+attributes:
+  - model_name: type
+    type: String
+    value: localdomain
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy object
+    example: Example
+  - model_name: entries
+    type: List
+    mandatory: true
+    min_list: 1
+    description: List of entries
+    attributes:
+      - model_name: nameServer
+        tf_name: domain
+        type: String
+        description: Domain name, must not start with `*`
+        example: ".*.cisco.com"
