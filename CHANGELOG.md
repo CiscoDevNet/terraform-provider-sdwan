@@ -1,4 +1,4 @@
-## 0.2.7 (unreleased)
+## 0.2.7
 
 - Add option to feature template data sources to identify templates by its name
 
