@@ -1,3 +1,7 @@
+## 0.2.8 (unreleased)
+
+- Correctly populate system-level variables when attaching existing (factory default) feature templates
+
 ## 0.2.7
 
 - Add option to feature template data sources to identify templates by its name

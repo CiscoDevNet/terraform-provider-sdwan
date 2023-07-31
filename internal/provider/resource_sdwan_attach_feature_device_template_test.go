@@ -15,11 +15,10 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-//go:build testAll
-
 package provider
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -31,51 +30,117 @@ func TestAccSdwanAttachFeatureDeviceTemplate(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all(),
+				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("1.1.1.1"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "variables.0.var_site_id", "1001"),
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "variables.0.var_system_ip", "1.1.1.1"),
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "variables.0.var_hostname", "router1"),
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "variables.0.vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface", "GigabitEthernet1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_site_id", "1001"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_system_ip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_host_name", "router1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface", "GigabitEthernet1"),
+				),
+			},
+			{
+				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("1.1.1.2"),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_system_ip", "1.1.1.2"),
 				),
 			},
 		},
 	})
 }
 
-func testAccSdwanAttachFeatureDeviceTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_system_feature_template" "system" {
-		name = "TF_SYSTEM_1"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		hostname_variable = "var_hostname"
-		system_ip_variable = "var_system_ip"
-		site_id_variable = "var_site_id"
-		console_baud_rate = "115200"
-	}
+func testAccSdwanAttachFeatureDeviceTemplateConfig_all(ip string) string {
+	return fmt.Sprintf(`
+		data "sdwan_cisco_system_feature_template" "Factory_Default_Cisco_System_Template" {
+			name = "Factory_Default_Cisco_System_Template"
+		}
+		
+		data "sdwan_cisco_logging_feature_template" "Factory_Default_Cisco_Logging_Template" {
+			name = "Factory_Default_Cisco_Logging_Template"
+		}
+		
+		data "sdwan_cisco_omp_feature_template" "Factory_Default_Cisco_OMP_ipv46_Template" {
+			name = "Factory_Default_Cisco_OMP_ipv46_Template"
+		}
+		
+		data "sdwan_cisco_bfd_feature_template" "Factory_Default_Cisco_BFD_Template" {
+			name = "Factory_Default_Cisco_BFD_Template"
+		}
+		
+		data "sdwan_cisco_security_feature_template" "Factory_Default_Cisco_Security_Template" {
+			name = "Factory_Default_Cisco_Security_Template"
+		}
+		
+		data "sdwan_cisco_vpn_feature_template" "Factory_Default_Cisco_VPN_0_Template" {
+			name = "Factory_Default_Cisco_VPN_0_Template"
+		}
+		
+		data "sdwan_cisco_vpn_interface_feature_template" "Factory_Default_Cisco_DHCP_Tunnel_Interface" {
+			name = "Factory_Default_Cisco_DHCP_Tunnel_Interface"
+		}
+		
+		data "sdwan_cisco_vpn_feature_template" "Factory_Default_Cisco_VPN_512_Template" {
+			name = "Factory_Default_Cisco_VPN_512_Template"
+		}
+		
+		data "sdwan_cedge_global_feature_template" "Factory_Default_Global_CISCO_Template" {
+			name = "Factory_Default_Global_CISCO_Template"
+		}
 
-	resource "sdwan_feature_device_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_type = "vedge-C8000V"
-		general_templates = [{
-			id = sdwan_cisco_system_feature_template.system.id
-			type = sdwan_cisco_system_feature_template.system.template_type
-		}]
-	}
+		resource "sdwan_feature_device_template" "TF_device_template" {
+			name        = "TF_TEST"
+			description = "Terraform test."
+			device_type = "vedge-C8000V"
+			device_role = "sdwan-edge"
+			general_templates = [
+				{
+					id   = data.sdwan_cisco_system_feature_template.Factory_Default_Cisco_System_Template.id
+					type = data.sdwan_cisco_system_feature_template.Factory_Default_Cisco_System_Template.template_type
+				},
+				{
+					id   = data.sdwan_cisco_logging_feature_template.Factory_Default_Cisco_Logging_Template.id
+					type = data.sdwan_cisco_logging_feature_template.Factory_Default_Cisco_Logging_Template.template_type
+				},
+				{
+					id   = data.sdwan_cisco_omp_feature_template.Factory_Default_Cisco_OMP_ipv46_Template.id
+					type = data.sdwan_cisco_omp_feature_template.Factory_Default_Cisco_OMP_ipv46_Template.template_type
+				},
+				{
+					id   = data.sdwan_cisco_bfd_feature_template.Factory_Default_Cisco_BFD_Template.id
+					type = data.sdwan_cisco_bfd_feature_template.Factory_Default_Cisco_BFD_Template.template_type
+				},
+				{
+					id   = data.sdwan_cisco_security_feature_template.Factory_Default_Cisco_Security_Template.id
+					type = data.sdwan_cisco_security_feature_template.Factory_Default_Cisco_Security_Template.template_type
+				},
+				{
+					id   = data.sdwan_cisco_vpn_feature_template.Factory_Default_Cisco_VPN_0_Template.id
+					type = data.sdwan_cisco_vpn_feature_template.Factory_Default_Cisco_VPN_0_Template.template_type
+					sub_templates = [{
+						id   = data.sdwan_cisco_vpn_interface_feature_template.Factory_Default_Cisco_DHCP_Tunnel_Interface.id
+						type = data.sdwan_cisco_vpn_interface_feature_template.Factory_Default_Cisco_DHCP_Tunnel_Interface.template_type
+					}]
+				},
+				{
+					id   = data.sdwan_cisco_vpn_feature_template.Factory_Default_Cisco_VPN_512_Template.id
+					type = data.sdwan_cisco_vpn_feature_template.Factory_Default_Cisco_VPN_512_Template.template_type
+				},
+				{
+					id   = data.sdwan_cedge_global_feature_template.Factory_Default_Global_CISCO_Template.id
+					type = data.sdwan_cedge_global_feature_template.Factory_Default_Global_CISCO_Template.template_type
+				}
+			]
+		}
 
-	resource "sdwan_attach_feature_device_template" "test" {
-		id = sdwan_feature_device_template.test.id
-		devices = [{
-			id = "C8K-CC678D1C-8EDF-3966-4F51-ABFAB64F5ABE"
-			variables = {
-			  var_site_id                                     = "1001"
-			  var_system_ip                                   = "1.1.1.1"
-			  var_hostname                                    = "router1"
-			  vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface = "GigabitEthernet1"
-			}
-		}]
-	}
-	`
+		resource "sdwan_attach_feature_device_template" "test" {
+			id      = sdwan_feature_device_template.TF_device_template.id
+			devices = [{
+				id = "C8K-CC678D1C-8EDF-3966-4F51-ABFAB64F5ABE"
+				variables = {
+					system_system_ip                                = "%s"
+					system_site_id                                  = "1001"
+					system_host_name                                = "router1"
+					vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface = "GigabitEthernet1"
+				}
+			}]
+		}`, ip)
 }

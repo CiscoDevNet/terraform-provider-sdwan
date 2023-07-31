@@ -66,6 +66,16 @@ func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client
 							varName = varName[1 : len(varName)-1]
 						}
 						mappings[v.Get("property").String()] = varName
+					} else {
+						// handle factory default feature template variables
+						property := v.Get("property").String()
+						if property == "//system/host-name" {
+							mappings[property] = "system_host_name"
+						} else if property == "//system/system-ip" {
+							mappings[property] = "system_system_ip"
+						} else if property == "//system/site-id" {
+							mappings[property] = "system_site_id"
+						}
 					}
 				}
 				return true
@@ -176,6 +186,16 @@ func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, clie
 							varName = varName[1 : len(varName)-1]
 						}
 						mappings[v.Get("property").String()] = varName
+					} else {
+						// handle factory default feature template variables
+						property := v.Get("property").String()
+						if property == "//system/host-name" {
+							mappings[property] = "system_host_name"
+						} else if property == "//system/system-ip" {
+							mappings[property] = "system_system_ip"
+						} else if property == "//system/site-id" {
+							mappings[property] = "system_site_id"
+						}
 					}
 				}
 				return true
