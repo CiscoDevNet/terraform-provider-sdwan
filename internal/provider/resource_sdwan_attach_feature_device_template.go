@@ -153,7 +153,7 @@ func (r *AttachFeatureDeviceTemplateResource) Read(ctx context.Context, req reso
 }
 
 func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan AttachFeatureDeviceTemplate
+	var plan, state AttachFeatureDeviceTemplate
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -161,10 +161,21 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	// Read state
+	diags = req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Id.ValueString()))
 
-	body, err := plan.toBody(ctx, r.client, true)
+	edited := false
+	if !plan.Version.Equal(state.Version) {
+		edited = true
+	}
+
+	body, err := plan.toBody(ctx, r.client, edited)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to render body, got error: %s", err))
 		return

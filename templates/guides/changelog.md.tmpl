@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.2.6 (unreleased)
+
+- Fix deployment of attached device templates without feature template changes
+
 ## 0.2.5
 
 - Add `sdwan_local_application_list_policy_object` resource and data source
