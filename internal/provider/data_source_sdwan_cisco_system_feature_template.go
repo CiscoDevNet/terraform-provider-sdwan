@@ -24,11 +24,14 @@ import (
 	"fmt"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
+	"github.com/tidwall/gjson"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -57,7 +60,8 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the feature template",
-				Required:            true,
+				Optional:            true,
+				Computed:            true,
 			},
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "The version of the feature template",
@@ -69,6 +73,7 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the feature template",
+				Optional:            true,
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
@@ -572,6 +577,15 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 	}
 }
 
+func (d *CiscoSystemFeatureTemplateDataSource) ConfigValidators(ctx context.Context) []datasource.ConfigValidator {
+	return []datasource.ConfigValidator{
+		datasourcevalidator.ExactlyOneOf(
+			path.MatchRoot("id"),
+			path.MatchRoot("name"),
+		),
+	}
+}
+
 func (d *CiscoSystemFeatureTemplateDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
@@ -591,6 +605,28 @@ func (d *CiscoSystemFeatureTemplateDataSource) Read(ctx context.Context, req dat
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+
+	if config.Id.IsNull() && !config.Name.IsNull() {
+		res, err := d.client.Get("/template/feature")
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve existing templates, got error: %s", err))
+			return
+		}
+		if value := res.Get("data"); len(value.Array()) > 0 {
+			value.ForEach(func(k, v gjson.Result) bool {
+				if config.Name.ValueString() == v.Get("templateName").String() {
+					config.Id = types.StringValue(v.Get("templateId").String())
+					tflog.Debug(ctx, fmt.Sprintf("%s: Found feature template with name '%v', id: %v", config.Id.String(), config.Name.ValueString(), config.Id.String()))
+					return false
+				}
+				return true
+			})
+		}
+		if config.Id.IsNull() {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to find feature template with name: %s", config.Name.ValueString()))
+			return
+		}
+	}
 
 	res, err := d.client.Get("/template/feature/object/" + config.Id.ValueString())
 	if err != nil {

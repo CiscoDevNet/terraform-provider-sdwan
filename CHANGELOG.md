@@ -1,3 +1,7 @@
+## 0.2.7 (unreleased)
+
+- Add option to feature template data sources to identify templates by its name
+
 ## 0.2.6
 
 - Fix deployment of attached device templates without feature template changes
