@@ -11,7 +11,7 @@ attributes:
     type: String
     value: file
   - model_name: factoryDefault
-    Type: Bool
+    type: Bool
     value: false
   - model_name: templateName
     tf_name: name

@@ -271,7 +271,7 @@ attributes:
               name: type
               value: log
             type: Bool
-            bool_empty_value: true
+            bool_empty_string: true
             description: Enable logging
             example: true
             exclude_test: true

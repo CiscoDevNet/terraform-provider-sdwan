@@ -172,7 +172,7 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.CounterName.ValueString())
 					}
 					if !childItem.Log.IsNull() && childItem.Type.ValueString() == "log" {
-						if false && childItem.Log.ValueBool() {
+						if true && childItem.Log.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
 						} else {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueBool())
@@ -343,7 +343,7 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 						cItem.CounterName = types.StringNull()
 					}
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "log" {
-						if false && ccValue.String() == "" {
+						if true && ccValue.String() == "" {
 							cItem.Log = types.BoolValue(true)
 						} else {
 							cItem.Log = types.BoolValue(ccValue.Bool())

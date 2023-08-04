@@ -172,7 +172,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Counter.ValueString())
 					}
 					if !childItem.Log.IsNull() && childItem.Type.ValueString() == "log" {
-						if false && childItem.Log.ValueBool() {
+						if true && childItem.Log.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
 						} else {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueBool())
@@ -347,7 +347,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 						cItem.Counter = types.StringNull()
 					}
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "log" {
-						if false && ccValue.String() == "" {
+						if true && ccValue.String() == "" {
 							cItem.Log = types.BoolValue(true)
 						} else {
 							cItem.Log = types.BoolValue(ccValue.Bool())
