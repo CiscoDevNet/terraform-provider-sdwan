@@ -41,9 +41,9 @@ attributes:
         exclude_test: true
       - model_name: vpnList
         tf_name: vpn_list_ids
-        type: ListString
+        type: StringList
         description: VPN list IDs
-        example: '["04fcbb0b-efbf-43d2-a04b-847d3a7b104e"]'
+        example: 04fcbb0b-efbf-43d2-a04b-847d3a7b104e
         test_value: "[sdwan_vpn_list_policy_object.vpns1.id]"
       - tf_name: vpn_list_versions
         tf_only: true

@@ -43,7 +43,7 @@ type {{camelCase .Name}} struct {
 {{- range .Attributes}}
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if eq .Type "ListString"}}
+{{- else if eq .Type "StringList"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
@@ -65,7 +65,7 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if eq .Type "ListString"}}
+{{- else if eq .Type "StringList"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
@@ -92,7 +92,7 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if eq .Type "ListString"}}
+{{- else if eq .Type "StringList"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
@@ -121,7 +121,7 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 	Optional types.Bool `tfsdk:"optional"`
 {{- range .Attributes}}
-{{- if eq .Type "ListString"}}
+{{- if eq .Type "StringList"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
@@ -198,7 +198,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", strconv.FormatBool(data.{{toGoName .TfName}}.ValueBool()))
 	}
-	{{- else if eq .Type "ListString"}}
+	{{- else if eq .Type "StringList"}}
 	{{if .Variable}}
 	if !data.{{toGoName .TfName}}Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -276,7 +276,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", strconv.FormatBool(item.{{toGoName .TfName}}.ValueBool()))
 		}
-		{{- else if eq .Type "ListString"}}
+		{{- else if eq .Type "StringList"}}
 		{{if .Variable}}
 		if !item.{{toGoName .TfName}}Variable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -354,7 +354,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", strconv.FormatBool(childItem.{{toGoName .TfName}}.ValueBool()))
 			}
-			{{- else if eq .Type "ListString"}}
+			{{- else if eq .Type "StringList"}}
 			{{if .Variable}}
 			if !childItem.{{toGoName .TfName}}Variable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -432,7 +432,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "constant")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipValue", strconv.FormatBool(childChildItem.{{toGoName .TfName}}.ValueBool()))
 				}
-				{{- else if eq .Type "ListString"}}
+				{{- else if eq .Type "StringList"}}
 				{{if .Variable}}
 				if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -587,7 +587,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 		data.{{toGoName .TfName}} = types.BoolNull()
 		{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 	}
-	{{- else if eq .Type "ListString"}}
+	{{- else if eq .Type "StringList"}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
 			data.{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -699,7 +699,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 				item.{{toGoName .TfName}} = types.BoolNull()
 				{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 			}
-			{{- else if eq .Type "ListString"}}
+			{{- else if eq .Type "StringList"}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
 					item.{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -810,7 +810,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 						cItem.{{toGoName .TfName}} = types.BoolNull()
 						{{if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 					}
-					{{- else if eq .Type "ListString"}}
+					{{- else if eq .Type "StringList"}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(ccValue.Array()) > 0 {
 						if ccValue.String() == "variableName" {
 							cItem.{{toGoName .TfName}} = types.ListNull(types.StringType)
@@ -921,7 +921,7 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 								ccItem.{{toGoName .TfName}} = types.BoolNull()
 								{{if .Variable}}ccItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 							}
-							{{- else if eq .Type "ListString"}}
+							{{- else if eq .Type "StringList"}}
 							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(cccValue.Array()) > 0 {
 								if cccValue.String() == "variableName" {
 									ccItem.{{toGoName .TfName}} = types.ListNull(types.StringType)

@@ -48,9 +48,9 @@ attributes:
         example: Region1
       - model_name: siteLists
         tf_name: site_list_ids
-        type: ListString
+        type: StringList
         description: Site list IDs
-        example: '["e858e1c4-6aa8-4de7-99df-c3adbf80290d"]'
+        example: e858e1c4-6aa8-4de7-99df-c3adbf80290d
         test_value: "[sdwan_site_list_policy_object.sites1.id]"
       - tf_name: site_list_versions
         tf_only: true

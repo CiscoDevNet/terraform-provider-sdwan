@@ -50,21 +50,21 @@ func TestAccDataSourceSdwan{{camelCase .Name}}FeatureTemplate(t *testing.T) {
 					{{- if eq .Type "List"}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (ne .Type "ListString")}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (ne .Type "StringList")}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
-					{{- else if ne .Type "ListString"}}
+					{{- else if ne .Type "StringList"}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if ne .Type "ListString"}}
+					{{- else if ne .Type "StringList"}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if ne .Type "ListString"}}
+					{{- else if ne .Type "StringList"}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_feature_template.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}

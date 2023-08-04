@@ -123,9 +123,9 @@ attributes:
             conditional_attribute:
               name: type
               value: advancedCommunity
-            type: ListString
+            type: StringList
             description: Community list IDs
-            example: '["2081c2f4-3f9f-4fee-8078-dcc8904e368d"]'
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             exclude_test: true
           - tf_name: community_list_versions
             tf_only: true

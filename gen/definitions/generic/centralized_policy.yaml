@@ -63,11 +63,11 @@ attributes:
         attributes:
           - model_name: siteLists
             tf_name: site_list_ids
-            type: ListString
+            type: StringList
             id: true
             mandatory: true
             description: List of site list IDs
-            example: '["2081c2f4-3f9f-4fee-8078-dcc8904e368d"]'
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             test_value: "[sdwan_site_list_policy_object.sites1.id]"
           - tf_name: site_list_versions
             tf_only: true
@@ -76,9 +76,9 @@ attributes:
             exclude_test: true
           - model_name: vpnLists
             tf_name: vpn_list_ids
-            type: ListString
+            type: StringList
             description: List of VPN list IDs
-            example: '["7d0c2444-8743-4414-add0-866945ea9f70"]'
+            example: 7d0c2444-8743-4414-add0-866945ea9f70
             test_value: "[sdwan_vpn_list_policy_object.vpns1.id]"
           - tf_name: vpn_list_versions
             tf_only: true

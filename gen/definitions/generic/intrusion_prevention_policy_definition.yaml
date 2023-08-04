@@ -1,0 +1,68 @@
+---
+name: Intrusion Prevention Policy Definition
+rest_endpoint: /template/policy/definition/intrusionprevention/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: intrusionPrevention
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
+  - model_name: mode
+    tf_name: mode
+    type: String
+    enum_values: [security, unified]
+    default_value: 
+    description: The policy mode
+    example: security
+  - model_name: inspectionMode
+    data_path: [definition]
+    tf_name: inspection_mode
+    type: String
+    enum_values: [protection, detection]
+    description: The inspection mode
+    example: protection
+  - model_name: logLevel
+    data_path: [definition]
+    tf_name: log_level
+    type: String
+    enum_values: [emergency, alert, critical, error, warning, notice, info, debug]
+    description: Log level
+    example: alert
+  - model_name: signatureSet
+    data_path: [definition]
+    tf_name: signature_set
+    type: String
+    enum_values: [balanced, connectivity, security]
+    description: Signature set
+    example: connectivity
+  - model_name: ref
+    data_path: [definition, signatureWhiteList]
+    tf_name: ips_signature_list_id
+    type: String
+    description: IPS signature list ID
+    example: 7ab82a1f-a1c9-4793-b6fe-7996855ffb53
+    exclude_test: true
+  - tf_name: ips_signature_list_version
+    tf_only: true
+    type: Version
+    description: IPS signature list version
+    exclude_test: true
+  - model_name: targetVpns
+    data_path: [definition]
+    tf_name: target_vpns
+    type: StringList
+    description: List of VPN IDs
+    example: 1

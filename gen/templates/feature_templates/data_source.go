@@ -87,9 +87,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 				Computed:            true,
 			},
 			{{- range  .Attributes}}
-			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
-				{{- if eq .Type "ListString"}}
+				{{- if eq .Type "StringList"}}
 				ElementType:         types.StringType,
 				{{- end}}
 				Computed:            true,
@@ -97,9 +97,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
-						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: "{{.Description}}",
-							{{- if eq .Type "ListString"}}
+							{{- if eq .Type "StringList"}}
 							ElementType:         types.StringType,
 							{{- end}}
 							Computed:            true,
@@ -107,9 +107,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
-									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: "{{.Description}}",
-										{{- if eq .Type "ListString"}}
+										{{- if eq .Type "StringList"}}
 										ElementType:         types.StringType,
 										{{- end}}
 										Computed:            true,
@@ -117,9 +117,9 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
-												"{{.TfName}}": schema.{{if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: "{{.Description}}",
-													{{- if eq .Type "ListString"}}
+													{{- if eq .Type "StringList"}}
 													ElementType:         types.StringType,
 													{{- end}}
 													Computed:            true,

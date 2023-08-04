@@ -93,7 +93,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 				Required:            true,
 			},
 			{{- range  .Attributes}}
-			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 					{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -108,7 +108,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 					.AddDefaultValueDescription("{{.DefaultValue}}")
 					{{- end -}}
 					.String,
-				{{- if eq .Type "ListString"}}
+				{{- if eq .Type "StringList"}}
 				ElementType:         types.StringType,
 				{{- end}}
 				Optional:            true,
@@ -138,7 +138,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
-						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 								{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -153,7 +153,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 								.AddDefaultValueDescription("{{.DefaultValue}}")
 								{{- end -}}
 								.String,
-							{{- if eq .Type "ListString"}}
+							{{- if eq .Type "StringList"}}
 							ElementType:         types.StringType,
 							{{- end}}
 							Optional:            true,
@@ -183,7 +183,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
-									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 											{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -198,7 +198,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 											.AddDefaultValueDescription("{{.DefaultValue}}")
 											{{- end -}}
 											.String,
-										{{- if eq .Type "ListString"}}
+										{{- if eq .Type "StringList"}}
 										ElementType:         types.StringType,
 										{{- end}}
 										Optional:            true,
@@ -228,7 +228,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
-												"{{.TfName}}": schema.{{if eq .Type "ListString"}}List{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 														{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -243,7 +243,7 @@ func (r *{{camelCase .Name}}FeatureTemplateResource) Schema(ctx context.Context,
 														.AddDefaultValueDescription("{{.DefaultValue}}")
 														{{- end -}}
 														.String,
-													{{- if eq .Type "ListString"}}
+													{{- if eq .Type "StringList"}}
 													ElementType:         types.StringType,
 													{{- end}}
 													Optional:            true,

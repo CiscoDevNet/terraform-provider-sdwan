@@ -40,7 +40,7 @@ jobs:
           go-version-file: "go.mod"
           cache: true
       - run: pip install yamale
-      - run: yamale -s gen/schema/schema.yaml gen/definitions/feature_templates
+      - run: yamale -s gen/schema/schema.yaml gen/definitions/
       - run: go mod download
       - run: go build -v .
 

@@ -351,7 +351,7 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 				}
 			}
 		} else if t == "stringList" {
-			attr.Type = "ListString"
+			attr.Type = "StringList"
 		} else if t == "enum" || t == "enumList" {
 			attr.Type = "String"
 			for _, v := range r.Get("dataType.values").Array() {
@@ -382,7 +382,7 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 			attr.Type = "Bool"
 		}
 	} else if r.Get("objectType").String() == "list" {
-		attr.Type = "ListString"
+		attr.Type = "StringList"
 	}
 	if r.Get("dataType.default").Exists() {
 		attr.DefaultValue = r.Get("dataType.default").String()
