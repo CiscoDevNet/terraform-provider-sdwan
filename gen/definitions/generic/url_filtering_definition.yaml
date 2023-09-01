@@ -12,13 +12,13 @@ attributes:
     tf_name: name
     type: String
     mandatory: true
-    description: The name of the policy definition
+    description: The name of the policy definition.
     example: Example
   - model_name: description
     tf_name: description
     type: String
     mandatory: true
-    description: The description of the policy definition
+    description: The description of the policy definition.
     example: My description
   - model_name: mode
     tf_name: mode
@@ -31,27 +31,27 @@ attributes:
     data_path: [definition]
     tf_name: alerts
     type: StringList
-    description: List of alerts
+    description: List of alerts options that will be exported as syslog messages
     example: blacklist
   - model_name: webCategories
     data_path: [definition]
     tf_name: web_categories
     type: StringList
-    description: List of categories to block
+    description: List of categories to block or allow
     example: alcohol-and-tobacco
   - model_name: webCategoriesAction
     data_path: [definition]
     tf_name: web_categories_action
     type: String
     enum_values: [block, allow]
-    description: Web Categories Action
+    description: whether the selected web categories should be blocked or allowed.
     example: allow
   - model_name: webReputation
     data_path: [definition]
     tf_name: web_reputation
     type: String
     enum_values: [high-risk, suspicious, moderate-risk, low-risk, trustworthy]
-    description: Web Reputation
+    description: The web reputation of the policy definition
     example: moderate-risk
   - model_name: targetVpns
     data_path: [definition]
@@ -63,14 +63,14 @@ attributes:
     data_path: [definition, urlWhiteList]
     tf_name: url_white_list_id
     type: String
-    description: White list ID
+    description: A white list ID
     example: 84f10c9d-def7-45a3-8c64-6df26163c861
     exclude_test: true
   - model_name: ref
     data_path: [definition, urlBlackList]
     tf_name: url_black_list_id
     type: String
-    description: Black list ID
+    description: A black list ID
     example: 84f10c9d-def7-45a3-8c64-6df26163c861
     exclude_test: true
   - model_name: blockPageAction
@@ -78,11 +78,11 @@ attributes:
     tf_name: block_page_action
     type: String
     enum_values: [text, redirectUrl]
-    description: Lorem ipsum
+    description: Redirect to a URL or display a message when a blocked page is accessed.
     example: text
   - model_name: blockPageContents
     data_path: [definition]
     tf_name: block_page_contents
     type: String
-    description: Lorem ipsum
+    description: The message displayed or URL redirected to when a blocked page is accessed.
     example: Access to the requested page has been denied. Please contact your Network Administrator

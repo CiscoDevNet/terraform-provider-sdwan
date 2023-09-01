@@ -302,6 +302,7 @@ Optional:
 Optional:
 
 - `address` (String) DNS Address
+- `address_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `role` (String) Role
   - Choices: `primary`, `secondary`

@@ -69,10 +69,11 @@ type CiscoVPN struct {
 }
 
 type CiscoVPNDnsIpv4Servers struct {
-	Optional     types.Bool   `tfsdk:"optional"`
-	Address      types.String `tfsdk:"address"`
-	Role         types.String `tfsdk:"role"`
-	RoleVariable types.String `tfsdk:"role_variable"`
+	Optional        types.Bool   `tfsdk:"optional"`
+	Address         types.String `tfsdk:"address"`
+	AddressVariable types.String `tfsdk:"address_variable"`
+	Role            types.String `tfsdk:"role"`
+	RoleVariable    types.String `tfsdk:"role_variable"`
 }
 
 type CiscoVPNDnsIpv6Servers struct {
@@ -453,7 +454,12 @@ func (data CiscoVPN) toBody(ctx context.Context) string {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "dns-addr")
-		if item.Address.IsNull() {
+
+		if !item.AddressVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "dns-addr."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "dns-addr."+"vipType", "variableName")
+			itemBody, _ = sjson.Set(itemBody, "dns-addr."+"vipVariableName", item.AddressVariable.ValueString())
+		} else if item.Address.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dns-addr."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dns-addr."+"vipType", "constant")
@@ -2256,17 +2262,20 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 				if cValue.String() == "variableName" {
 					item.Address = types.StringNull()
 
+					cv := v.Get("dns-addr.vipVariableName")
+					item.AddressVariable = types.StringValue(cv.String())
+
 				} else if cValue.String() == "ignore" {
 					item.Address = types.StringNull()
-
+					item.AddressVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("dns-addr.vipValue")
 					item.Address = types.StringValue(cv.String())
-
+					item.AddressVariable = types.StringNull()
 				}
 			} else {
 				item.Address = types.StringNull()
-
+				item.AddressVariable = types.StringNull()
 			}
 			if cValue := v.Get("role.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {

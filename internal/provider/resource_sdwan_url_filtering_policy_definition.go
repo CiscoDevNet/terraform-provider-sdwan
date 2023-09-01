@@ -73,11 +73,11 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition.").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The description of the policy definition.").String,
 				Required:            true,
 			},
 			"mode": schema.StringAttribute{
@@ -88,24 +88,24 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 				},
 			},
 			"alerts": schema.ListAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of alerts").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of alerts options that will be exported as syslog messages").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"web_categories": schema.ListAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of categories to block").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of categories to block or allow").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"web_categories_action": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Web Categories Action").AddStringEnumDescription("block", "allow").String,
+				MarkdownDescription: helpers.NewAttributeDescription("whether the selected web categories should be blocked or allowed.").AddStringEnumDescription("block", "allow").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("block", "allow"),
 				},
 			},
 			"web_reputation": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Web Reputation").AddStringEnumDescription("high-risk", "suspicious", "moderate-risk", "low-risk", "trustworthy").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The web reputation of the policy definition").AddStringEnumDescription("high-risk", "suspicious", "moderate-risk", "low-risk", "trustworthy").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("high-risk", "suspicious", "moderate-risk", "low-risk", "trustworthy"),
@@ -117,22 +117,22 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 				Optional:            true,
 			},
 			"url_white_list_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("White list ID").String,
+				MarkdownDescription: helpers.NewAttributeDescription("A white list ID").String,
 				Optional:            true,
 			},
 			"url_black_list_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Black list ID").String,
+				MarkdownDescription: helpers.NewAttributeDescription("A black list ID").String,
 				Optional:            true,
 			},
 			"block_page_action": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Lorem ipsum").AddStringEnumDescription("text", "redirectUrl").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Redirect to a URL or display a message when a blocked page is accessed.").AddStringEnumDescription("text", "redirectUrl").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("text", "redirectUrl"),
 				},
 			},
 			"block_page_contents": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Lorem ipsum").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The message displayed or URL redirected to when a blocked page is accessed.").String,
 				Optional:            true,
 			},
 		},

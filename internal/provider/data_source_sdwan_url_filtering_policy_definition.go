@@ -63,11 +63,11 @@ func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the policy definition",
+				MarkdownDescription: "The name of the policy definition.",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the policy definition",
+				MarkdownDescription: "The description of the policy definition.",
 				Computed:            true,
 			},
 			"mode": schema.StringAttribute{
@@ -75,21 +75,21 @@ func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				Computed:            true,
 			},
 			"alerts": schema.ListAttribute{
-				MarkdownDescription: "List of alerts",
+				MarkdownDescription: "List of alerts options that will be exported as syslog messages",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"web_categories": schema.ListAttribute{
-				MarkdownDescription: "List of categories to block",
+				MarkdownDescription: "List of categories to block or allow",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"web_categories_action": schema.StringAttribute{
-				MarkdownDescription: "Web Categories Action",
+				MarkdownDescription: "whether the selected web categories should be blocked or allowed.",
 				Computed:            true,
 			},
 			"web_reputation": schema.StringAttribute{
-				MarkdownDescription: "Web Reputation",
+				MarkdownDescription: "The web reputation of the policy definition",
 				Computed:            true,
 			},
 			"target_vpns": schema.ListAttribute{
@@ -98,19 +98,19 @@ func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				Computed:            true,
 			},
 			"url_white_list_id": schema.StringAttribute{
-				MarkdownDescription: "White list ID",
+				MarkdownDescription: "A white list ID",
 				Computed:            true,
 			},
 			"url_black_list_id": schema.StringAttribute{
-				MarkdownDescription: "Black list ID",
+				MarkdownDescription: "A black list ID",
 				Computed:            true,
 			},
 			"block_page_action": schema.StringAttribute{
-				MarkdownDescription: "Lorem ipsum",
+				MarkdownDescription: "Redirect to a URL or display a message when a blocked page is accessed.",
 				Computed:            true,
 			},
 			"block_page_contents": schema.StringAttribute{
-				MarkdownDescription: "Lorem ipsum",
+				MarkdownDescription: "The message displayed or URL redirected to when a blocked page is accessed.",
 				Computed:            true,
 			},
 		},

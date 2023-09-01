@@ -27,16 +27,16 @@ data "sdwan_url_filtering_policy_definition" "example" {
 
 ### Read-Only
 
-- `alerts` (List of String) List of alerts
-- `block_page_action` (String) Lorem ipsum
-- `block_page_contents` (String) Lorem ipsum
-- `description` (String) The description of the policy definition
+- `alerts` (List of String) List of alerts options that will be exported as syslog messages
+- `block_page_action` (String) Redirect to a URL or display a message when a blocked page is accessed.
+- `block_page_contents` (String) The message displayed or URL redirected to when a blocked page is accessed.
+- `description` (String) The description of the policy definition.
 - `mode` (String) The policy mode
-- `name` (String) The name of the policy definition
+- `name` (String) The name of the policy definition.
 - `target_vpns` (List of String) List of VPN IDs
-- `url_black_list_id` (String) Black list ID
-- `url_white_list_id` (String) White list ID
+- `url_black_list_id` (String) A black list ID
+- `url_white_list_id` (String) A white list ID
 - `version` (Number) The version of the object
-- `web_categories` (List of String) List of categories to block
-- `web_categories_action` (String) Web Categories Action
-- `web_reputation` (String) Web Reputation
+- `web_categories` (List of String) List of categories to block or allow
+- `web_categories_action` (String) whether the selected web categories should be blocked or allowed.
+- `web_reputation` (String) The web reputation of the policy definition

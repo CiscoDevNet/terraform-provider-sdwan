@@ -138,6 +138,10 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "DNS Address",
 							Computed:            true,
 						},
+						"address_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"role": schema.StringAttribute{
 							MarkdownDescription: "Role",
 							Computed:            true,
