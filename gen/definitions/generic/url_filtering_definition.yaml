@@ -1,0 +1,88 @@
+---
+name: URL Filtering Policy Definition
+rest_endpoint: /template/policy/definition/urlfiltering/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: urlFiltering
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
+  - model_name: mode
+    tf_name: mode
+    type: String
+    enum_values: [security, unified]
+    default_value: 
+    description: The policy mode
+    example: security
+  - model_name: alerts
+    data_path: [definition]
+    tf_name: alerts
+    type: StringList
+    description: List of alerts
+    example: blacklist
+  - model_name: webCategories
+    data_path: [definition]
+    tf_name: web_categories
+    type: StringList
+    description: List of categories to block
+    example: alcohol-and-tobacco
+  - model_name: webCategoriesAction
+    data_path: [definition]
+    tf_name: web_categories_action
+    type: String
+    enum_values: [block, allow]
+    description: Web Categories Action
+    example: allow
+  - model_name: webReputation
+    data_path: [definition]
+    tf_name: web_reputation
+    type: String
+    enum_values: [high-risk, suspicious, moderate-risk, low-risk, trustworthy]
+    description: Web Reputation
+    example: moderate-risk
+  - model_name: targetVpns
+    data_path: [definition]
+    tf_name: target_vpns
+    type: StringList
+    description: List of VPN IDs
+    example: 1
+  - model_name: ref
+    data_path: [definition, urlWhiteList]
+    tf_name: url_white_list_id
+    type: String
+    description: White list ID
+    example: 84f10c9d-def7-45a3-8c64-6df26163c861
+    exclude_test: true
+  - model_name: ref
+    data_path: [definition, urlBlackList]
+    tf_name: url_black_list_id
+    type: String
+    description: Black list ID
+    example: 84f10c9d-def7-45a3-8c64-6df26163c861
+    exclude_test: true
+  - model_name: blockPageAction
+    data_path: [definition]
+    tf_name: block_page_action
+    type: String
+    enum_values: [text, redirectUrl]
+    description: Lorem ipsum
+    example: text
+  - model_name: blockPageContents
+    data_path: [definition]
+    tf_name: block_page_contents
+    type: String
+    description: Lorem ipsum
+    example: Access to the requested page has been denied. Please contact your Network Administrator

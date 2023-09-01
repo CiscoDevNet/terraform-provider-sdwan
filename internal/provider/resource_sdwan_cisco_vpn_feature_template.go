@@ -160,10 +160,6 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("DNS Address").String,
 							Optional:            true,
 						},
-						"address_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
 						"role": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Role").AddStringEnumDescription("primary", "secondary").AddDefaultValueDescription("primary").String,
 							Optional:            true,
