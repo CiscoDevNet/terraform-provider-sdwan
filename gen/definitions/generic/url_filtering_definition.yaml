@@ -61,18 +61,28 @@ attributes:
     example: 1
   - model_name: ref
     data_path: [definition, urlWhiteList]
-    tf_name: url_white_list_id
+    tf_name: allow_url_list_id
     type: String
-    description: A white list ID
+    description: Allow URL list ID
     example: 84f10c9d-def7-45a3-8c64-6df26163c861
     exclude_test: true
+  - tf_name: allow_url_list_version
+    tf_only: true
+    type: Version
+    description: Allow URL list version
+    exclude_test: true 
   - model_name: ref
     data_path: [definition, urlBlackList]
-    tf_name: url_black_list_id
+    tf_name: block_url_list_id
     type: String
-    description: A black list ID
+    description: Block URL list ID
     example: 84f10c9d-def7-45a3-8c64-6df26163c861
     exclude_test: true
+  - tf_name: block_url_list_version
+    tf_only: true
+    type: Version
+    description: Block URL list version
+    exclude_test: true 
   - model_name: blockPageAction
     data_path: [definition]
     tf_name: block_page_action
