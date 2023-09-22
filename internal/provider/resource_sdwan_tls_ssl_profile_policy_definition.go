@@ -39,26 +39,26 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &URLFilteringPolicyDefinitionResource{}
-var _ resource.ResourceWithImportState = &URLFilteringPolicyDefinitionResource{}
+var _ resource.Resource = &TLSSSLProfilePolicyDefinitionResource{}
+var _ resource.ResourceWithImportState = &TLSSSLProfilePolicyDefinitionResource{}
 
-func NewURLFilteringPolicyDefinitionResource() resource.Resource {
-	return &URLFilteringPolicyDefinitionResource{}
+func NewTLSSSLProfilePolicyDefinitionResource() resource.Resource {
+	return &TLSSSLProfilePolicyDefinitionResource{}
 }
 
-type URLFilteringPolicyDefinitionResource struct {
+type TLSSSLProfilePolicyDefinitionResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *URLFilteringPolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_url_filtering_policy_definition"
+func (r *TLSSSLProfilePolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_tls_ssl_profile_policy_definition"
 }
 
-func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *TLSSSLProfilePolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a URL Filtering Policy Definition .").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a TLS SSL Profile Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -87,33 +87,30 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 					stringvalidator.OneOf("security", "unified"),
 				},
 			},
-			"alerts": schema.ListAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of alerts options that will be exported as syslog messages").String,
+			"decrypt_categories": schema.ListAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Categories that should be decrypted").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"web_categories": schema.ListAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of categories to block or allow").String,
+			"never_decrypt_categories": schema.ListAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Categories that should never be decrypted").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"web_categories_action": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("whether the selected web categories should be blocked or allowed.").AddStringEnumDescription("block", "allow").String,
+			"skip_decrypt_categories": schema.ListAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Categories that should skipped").String,
+				ElementType:         types.StringType,
 				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("block", "allow"),
-				},
 			},
-			"web_reputation": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The web reputation of the policy definition").AddStringEnumDescription("high-risk", "suspicious", "moderate-risk", "low-risk", "trustworthy").String,
+			"decrypt_threshold": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Decrypt threshold").AddStringEnumDescription("high-risk", "suspicious", "moderate-risk", "low-risk", "trustworthy").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("high-risk", "suspicious", "moderate-risk", "low-risk", "trustworthy"),
 				},
 			},
-			"target_vpns": schema.ListAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of VPN IDs").String,
-				ElementType:         types.StringType,
+			"reputation": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Reputation enabled").String,
 				Optional:            true,
 			},
 			"allow_url_list_id": schema.StringAttribute{
@@ -132,22 +129,15 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 				MarkdownDescription: helpers.NewAttributeDescription("Block URL list version").String,
 				Optional:            true,
 			},
-			"block_page_action": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Redirect to a URL or display a message when a blocked page is accessed.").AddStringEnumDescription("text", "redirectUrl").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("text", "redirectUrl"),
-				},
-			},
-			"block_page_contents": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The message displayed or URL redirected to when a blocked page is accessed.").String,
+			"fail_decrypt": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Fail decrypt enabled").String,
 				Optional:            true,
 			},
 		},
 	}
 }
 
-func (r *URLFilteringPolicyDefinitionResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *TLSSSLProfilePolicyDefinitionResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -156,8 +146,8 @@ func (r *URLFilteringPolicyDefinitionResource) Configure(_ context.Context, req 
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
-func (r *URLFilteringPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan URLFilteringPolicyDefinition
+func (r *TLSSSLProfilePolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan TLSSSLProfilePolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -171,7 +161,7 @@ func (r *URLFilteringPolicyDefinitionResource) Create(ctx context.Context, req r
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/definition/urlfiltering/", body)
+	res, err := r.client.Post("/template/policy/definition/sslutdprofile/", body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -186,8 +176,8 @@ func (r *URLFilteringPolicyDefinitionResource) Create(ctx context.Context, req r
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *URLFilteringPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state URLFilteringPolicyDefinition
+func (r *TLSSSLProfilePolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state TLSSSLProfilePolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -198,7 +188,7 @@ func (r *URLFilteringPolicyDefinitionResource) Read(ctx context.Context, req res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/template/policy/definition/urlfiltering/" + state.Id.ValueString())
+	res, err := r.client.Get("/template/policy/definition/sslutdprofile/" + state.Id.ValueString())
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -215,8 +205,8 @@ func (r *URLFilteringPolicyDefinitionResource) Read(ctx context.Context, req res
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *URLFilteringPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state URLFilteringPolicyDefinition
+func (r *TLSSSLProfilePolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state TLSSSLProfilePolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -236,7 +226,7 @@ func (r *URLFilteringPolicyDefinitionResource) Update(ctx context.Context, req r
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/template/policy/definition/urlfiltering/"+plan.Id.ValueString(), body)
+		res, err := r.client.Put("/template/policy/definition/sslutdprofile/"+plan.Id.ValueString(), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -257,8 +247,8 @@ func (r *URLFilteringPolicyDefinitionResource) Update(ctx context.Context, req r
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *URLFilteringPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state URLFilteringPolicyDefinition
+func (r *TLSSSLProfilePolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state TLSSSLProfilePolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -269,7 +259,7 @@ func (r *URLFilteringPolicyDefinitionResource) Delete(ctx context.Context, req r
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/template/policy/definition/urlfiltering/" + state.Id.ValueString())
+	res, err := r.client.Delete("/template/policy/definition/sslutdprofile/" + state.Id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return
@@ -280,6 +270,6 @@ func (r *URLFilteringPolicyDefinitionResource) Delete(ctx context.Context, req r
 	resp.State.RemoveResource(ctx)
 }
 
-func (r *URLFilteringPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *TLSSSLProfilePolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }

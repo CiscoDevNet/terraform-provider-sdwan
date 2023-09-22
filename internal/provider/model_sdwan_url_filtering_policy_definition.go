@@ -39,8 +39,10 @@ type URLFilteringPolicyDefinition struct {
 	WebCategoriesAction types.String `tfsdk:"web_categories_action"`
 	WebReputation       types.String `tfsdk:"web_reputation"`
 	TargetVpns          types.List   `tfsdk:"target_vpns"`
-	UrlWhiteListId      types.String `tfsdk:"url_white_list_id"`
-	UrlBlackListId      types.String `tfsdk:"url_black_list_id"`
+	AllowUrlListId      types.String `tfsdk:"allow_url_list_id"`
+	AllowUrlListVersion types.Int64  `tfsdk:"allow_url_list_version"`
+	BlockUrlListId      types.String `tfsdk:"block_url_list_id"`
+	BlockUrlListVersion types.Int64  `tfsdk:"block_url_list_version"`
 	BlockPageAction     types.String `tfsdk:"block_page_action"`
 	BlockPageContents   types.String `tfsdk:"block_page_contents"`
 }
@@ -78,11 +80,11 @@ func (data URLFilteringPolicyDefinition) toBody(ctx context.Context) string {
 		data.TargetVpns.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, "definition.targetVpns", values)
 	}
-	if !data.UrlWhiteListId.IsNull() {
-		body, _ = sjson.Set(body, "definition.urlWhiteList.ref", data.UrlWhiteListId.ValueString())
+	if !data.AllowUrlListId.IsNull() {
+		body, _ = sjson.Set(body, "definition.urlWhiteList.ref", data.AllowUrlListId.ValueString())
 	}
-	if !data.UrlBlackListId.IsNull() {
-		body, _ = sjson.Set(body, "definition.urlBlackList.ref", data.UrlBlackListId.ValueString())
+	if !data.BlockUrlListId.IsNull() {
+		body, _ = sjson.Set(body, "definition.urlBlackList.ref", data.BlockUrlListId.ValueString())
 	}
 	if !data.BlockPageAction.IsNull() {
 		body, _ = sjson.Set(body, "definition.blockPageAction", data.BlockPageAction.ValueString())
@@ -94,6 +96,7 @@ func (data URLFilteringPolicyDefinition) toBody(ctx context.Context) string {
 }
 
 func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -135,14 +138,14 @@ func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjso
 		data.TargetVpns = types.ListNull(types.StringType)
 	}
 	if value := res.Get("definition.urlWhiteList.ref"); value.Exists() {
-		data.UrlWhiteListId = types.StringValue(value.String())
+		data.AllowUrlListId = types.StringValue(value.String())
 	} else {
-		data.UrlWhiteListId = types.StringNull()
+		data.AllowUrlListId = types.StringNull()
 	}
 	if value := res.Get("definition.urlBlackList.ref"); value.Exists() {
-		data.UrlBlackListId = types.StringValue(value.String())
+		data.BlockUrlListId = types.StringValue(value.String())
 	} else {
-		data.UrlBlackListId = types.StringNull()
+		data.BlockUrlListId = types.StringNull()
 	}
 	if value := res.Get("definition.blockPageAction"); value.Exists() {
 		data.BlockPageAction = types.StringValue(value.String())
@@ -154,6 +157,7 @@ func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjso
 	} else {
 		data.BlockPageContents = types.StringNull()
 	}
+	data.updateVersions(ctx, &state)
 }
 
 func (data *URLFilteringPolicyDefinition) hasChanges(ctx context.Context, state *URLFilteringPolicyDefinition) bool {
@@ -182,10 +186,10 @@ func (data *URLFilteringPolicyDefinition) hasChanges(ctx context.Context, state 
 	if !data.TargetVpns.Equal(state.TargetVpns) {
 		hasChanges = true
 	}
-	if !data.UrlWhiteListId.Equal(state.UrlWhiteListId) {
+	if !data.AllowUrlListId.Equal(state.AllowUrlListId) {
 		hasChanges = true
 	}
-	if !data.UrlBlackListId.Equal(state.UrlBlackListId) {
+	if !data.BlockUrlListId.Equal(state.BlockUrlListId) {
 		hasChanges = true
 	}
 	if !data.BlockPageAction.Equal(state.BlockPageAction) {
@@ -195,4 +199,9 @@ func (data *URLFilteringPolicyDefinition) hasChanges(ctx context.Context, state 
 		hasChanges = true
 	}
 	return hasChanges
+}
+
+func (data *URLFilteringPolicyDefinition) updateVersions(ctx context.Context, state *URLFilteringPolicyDefinition) {
+	data.AllowUrlListVersion = state.AllowUrlListVersion
+	data.BlockUrlListVersion = state.BlockUrlListVersion
 }

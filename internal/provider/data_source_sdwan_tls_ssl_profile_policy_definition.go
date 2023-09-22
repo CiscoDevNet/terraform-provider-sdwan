@@ -32,26 +32,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &URLFilteringPolicyDefinitionDataSource{}
-	_ datasource.DataSourceWithConfigure = &URLFilteringPolicyDefinitionDataSource{}
+	_ datasource.DataSource              = &TLSSSLProfilePolicyDefinitionDataSource{}
+	_ datasource.DataSourceWithConfigure = &TLSSSLProfilePolicyDefinitionDataSource{}
 )
 
-func NewURLFilteringPolicyDefinitionDataSource() datasource.DataSource {
-	return &URLFilteringPolicyDefinitionDataSource{}
+func NewTLSSSLProfilePolicyDefinitionDataSource() datasource.DataSource {
+	return &TLSSSLProfilePolicyDefinitionDataSource{}
 }
 
-type URLFilteringPolicyDefinitionDataSource struct {
+type TLSSSLProfilePolicyDefinitionDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *URLFilteringPolicyDefinitionDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_url_filtering_policy_definition"
+func (d *TLSSSLProfilePolicyDefinitionDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_tls_ssl_profile_policy_definition"
 }
 
-func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *TLSSSLProfilePolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the URL Filtering Policy Definition .",
+		MarkdownDescription: "This data source can read the TLS SSL Profile Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -74,27 +74,27 @@ func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: "The policy mode",
 				Computed:            true,
 			},
-			"alerts": schema.ListAttribute{
-				MarkdownDescription: "List of alerts options that will be exported as syslog messages",
+			"decrypt_categories": schema.ListAttribute{
+				MarkdownDescription: "Categories that should be decrypted",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"web_categories": schema.ListAttribute{
-				MarkdownDescription: "List of categories to block or allow",
+			"never_decrypt_categories": schema.ListAttribute{
+				MarkdownDescription: "Categories that should never be decrypted",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"web_categories_action": schema.StringAttribute{
-				MarkdownDescription: "whether the selected web categories should be blocked or allowed.",
-				Computed:            true,
-			},
-			"web_reputation": schema.StringAttribute{
-				MarkdownDescription: "The web reputation of the policy definition",
-				Computed:            true,
-			},
-			"target_vpns": schema.ListAttribute{
-				MarkdownDescription: "List of VPN IDs",
+			"skip_decrypt_categories": schema.ListAttribute{
+				MarkdownDescription: "Categories that should skipped",
 				ElementType:         types.StringType,
+				Computed:            true,
+			},
+			"decrypt_threshold": schema.StringAttribute{
+				MarkdownDescription: "Decrypt threshold",
+				Computed:            true,
+			},
+			"reputation": schema.BoolAttribute{
+				MarkdownDescription: "Reputation enabled",
 				Computed:            true,
 			},
 			"allow_url_list_id": schema.StringAttribute{
@@ -113,19 +113,15 @@ func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: "Block URL list version",
 				Computed:            true,
 			},
-			"block_page_action": schema.StringAttribute{
-				MarkdownDescription: "Redirect to a URL or display a message when a blocked page is accessed.",
-				Computed:            true,
-			},
-			"block_page_contents": schema.StringAttribute{
-				MarkdownDescription: "The message displayed or URL redirected to when a blocked page is accessed.",
+			"fail_decrypt": schema.BoolAttribute{
+				MarkdownDescription: "Fail decrypt enabled",
 				Computed:            true,
 			},
 		},
 	}
 }
 
-func (d *URLFilteringPolicyDefinitionDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *TLSSSLProfilePolicyDefinitionDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -133,8 +129,8 @@ func (d *URLFilteringPolicyDefinitionDataSource) Configure(_ context.Context, re
 	d.client = req.ProviderData.(*SdwanProviderData).Client
 }
 
-func (d *URLFilteringPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config URLFilteringPolicyDefinition
+func (d *TLSSSLProfilePolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config TLSSSLProfilePolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
@@ -145,7 +141,7 @@ func (d *URLFilteringPolicyDefinitionDataSource) Read(ctx context.Context, req d
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("/template/policy/definition/urlfiltering/" + config.Id.ValueString())
+	res, err := d.client.Get("/template/policy/definition/sslutdprofile/" + config.Id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
