@@ -116,12 +116,20 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"url_white_list_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("A white list ID").String,
+			"allow_url_list_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Allow URL list ID").String,
 				Optional:            true,
 			},
-			"url_black_list_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("A black list ID").String,
+			"allow_url_list_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Allow URL list version").String,
+				Optional:            true,
+			},
+			"block_url_list_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Block URL list ID").String,
+				Optional:            true,
+			},
+			"block_url_list_version": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Block URL list version").String,
 				Optional:            true,
 			},
 			"block_page_action": schema.StringAttribute{
