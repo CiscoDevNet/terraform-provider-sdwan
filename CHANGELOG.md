@@ -3,8 +3,8 @@
 
 - Correctly populate system-level variables when attaching existing (factory default) feature templates
 - Add `sdwan_intrusion_prevention_policy_definition` resource and data source
-- Add `url_filtering_policy_definition` resource and data source
-- Add `advanced_malware_protection_policy_definition` resource and data source
+- Add `sdwan_url_filtering_policy_definition` resource and data source
+- Add `sdwan_advanced_malware_protection_policy_definition` resource and data source
 
 ## 0.2.7
 
