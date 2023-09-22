@@ -1,0 +1,90 @@
+---
+name: TLS SSL Profile Policy Definition
+rest_endpoint: /template/policy/definition/sslutdprofile/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: sslUtdDecryptProfile
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition.
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition.
+    example: My description
+  - model_name: mode
+    tf_name: mode
+    type: String
+    enum_values: [security, unified]
+    default_value: 
+    description: The policy mode
+    example: security
+  - model_name: decryptCategories
+    data_path: [definition]
+    tf_name: decrypt_categories
+    type: StringList
+    description: Categories that should be decrypted
+    example: alcohol-and-tobacco
+  - model_name: never_decrypt_categories
+    data_path: [definition]
+    tf_name: never_decrypt_categories
+    type: StringList
+    description: Categories that should never be decrypted
+    example: auctions
+  - model_name: skipDecryptCategories
+    data_path: [definition]
+    tf_name: skip_decrypt_categories
+    type: StringList
+    description: Categories that should skipped
+    example: cdns
+  - model_name: decryptThreshold
+    data_path: [definition]
+    tf_name: decrypt_threshold
+    type: String
+    enum_values: [high-risk, suspicious, moderate-risk, low-risk, trustworthy]
+    description: Decrypt threshold
+    example: high-risk
+  - model_name: reputation
+    data_path: [definition]
+    tf_name: reputation
+    type: Bool
+    description: Reputation enabled
+    example: false
+  - model_name: ref
+    data_path: [definition, filteredUrlWhiteList]
+    tf_name: allow_url_list_id
+    type: String
+    description: Allow URL list ID
+    example: 84f10c9d-def7-45a3-8c64-6df26163c861
+    exclude_test: true
+  - tf_name: allow_url_list_version
+    tf_only: true
+    type: Version
+    description: Allow URL list version
+    exclude_test: true 
+  - model_name: ref
+    data_path: [definition, filteredUrlBlackList]
+    tf_name: block_url_list_id
+    type: String
+    description: Block URL list ID
+    example: 84f10c9d-def7-45a3-8c64-6df26163c861
+    exclude_test: true
+  - tf_name: block_url_list_version
+    tf_only: true
+    type: Version
+    description: Block URL list version
+    exclude_test: true 
+  - model_name: failDecrypt
+    data_path: [definition]
+    tf_name: fail_decrypt
+    type: Bool
+    description: Fail decrypt enabled
+    example: true
