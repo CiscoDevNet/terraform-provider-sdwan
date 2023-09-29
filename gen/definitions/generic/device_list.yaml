@@ -1,0 +1,40 @@
+---
+name: Devices
+rest_endpoint: /device
+get_rest_endpoint: /device
+has_version: true
+doc_category: Monitoring - Device Details
+res_description: NOT USED - please reference the data source for device list
+attributes:
+  - model_name: deviceId
+    type: String
+    tf_name: device_id
+  - model_name: uuid
+    type: String
+    description: Unique identifier for device
+  - model_name: site-id
+    tf_name: site_id
+    type: String
+    description: Site id for respective device
+    example: 400
+  - mode_name: board-serial
+    tf_name: serial_number
+    type: String
+    description: Serial number for device. Could be board or virtual identifier
+  - model_name: host-name
+    tf_name: hostname
+    type: String
+    description: Hostname for respective device
+  - model_name: reachability
+    type: String
+    description: Reachability of device
+    example: reachable
+  - model_name: status
+    type: String
+    description: Status for respective device
+    example: normal
+  - model_name: state
+    type: String
+    description: state for respective device
+    example: green
+
