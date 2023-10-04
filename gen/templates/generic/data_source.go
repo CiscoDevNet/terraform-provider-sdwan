@@ -58,10 +58,12 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "{{.DsDescription}}",
 
 		Attributes: map[string]schema.Attribute{
+			{{- if not .RemoveId }}
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
+			{{- end}}
 			{{- if .HasVersion}}
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "The version of the object",
@@ -75,7 +77,11 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 				{{- if or (eq .Type "StringList") (eq .Type "Versions")}}
 				ElementType:         types.StringType,
 				{{- end}}
+				{{- if .QueryParam}}
+				Optional: 			 true,
+				{{ else }}
 				Computed:            true,
+				{{- end}}
 				{{- if or (eq .Type "List") (eq .Type "Set")}}
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -152,9 +158,21 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + config.Id.ValueString())
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+	{{if .RemoveId}}
+		{{- range $i, $a := .Attributes}}
+		{{- if not .Value}}
+		{{- if .QueryParam}}
+			var params = "{{if (eq $i 0)}}?{{else}}&{{end}}{{.ModelName}}=" + config.{{.TfName}}.valueString()
+		{{- end}}
+		{{- end}}
+		{{- end}}
+		res, err := d.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + params)
+	{{- else}}
+		res, err := d.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + config.Id.ValueString())
+	{{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

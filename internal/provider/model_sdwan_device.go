@@ -28,7 +28,12 @@ import (
 )
 
 type Device struct {
-	Id           types.String `tfsdk:"id"`
+	Id           types.String    `tfsdk:"id"`
+	SerialNumber types.String    `tfsdk:"serial_number"`
+	Devices      []DeviceDevices `tfsdk:"devices"`
+}
+
+type DeviceDevices struct {
 	DeviceId     types.String `tfsdk:"device_id"`
 	Uuid         types.String `tfsdk:"uuid"`
 	SiteId       types.String `tfsdk:"site_id"`
@@ -41,101 +46,133 @@ type Device struct {
 
 func (data Device) toBody(ctx context.Context) string {
 	body := ""
-	if !data.DeviceId.IsNull() {
-		body, _ = sjson.Set(body, "deviceId", data.DeviceId.ValueString())
-	}
-	if !data.Uuid.IsNull() {
-		body, _ = sjson.Set(body, "uuid", data.Uuid.ValueString())
-	}
-	if !data.SiteId.IsNull() {
-		body, _ = sjson.Set(body, "site-id", data.SiteId.ValueString())
-	}
 	if !data.SerialNumber.IsNull() {
-		body, _ = sjson.Set(body, "", data.SerialNumber.ValueString())
+		body, _ = sjson.Set(body, "board-serial", data.SerialNumber.ValueString())
 	}
-	if !data.Hostname.IsNull() {
-		body, _ = sjson.Set(body, "host-name", data.Hostname.ValueString())
-	}
-	if !data.Reachability.IsNull() {
-		body, _ = sjson.Set(body, "reachability", data.Reachability.ValueString())
-	}
-	if !data.Status.IsNull() {
-		body, _ = sjson.Set(body, "status", data.Status.ValueString())
-	}
-	if !data.State.IsNull() {
-		body, _ = sjson.Set(body, "state", data.State.ValueString())
+	if len(data.Devices) > 0 {
+		body, _ = sjson.Set(body, "data", []interface{}{})
+		for _, item := range data.Devices {
+			itemBody := ""
+			if !item.DeviceId.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "deviceId", item.DeviceId.ValueString())
+			}
+			if !item.Uuid.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "uuid", item.Uuid.ValueString())
+			}
+			if !item.SiteId.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "site-id", item.SiteId.ValueString())
+			}
+			if !item.SerialNumber.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "board-serial", item.SerialNumber.ValueString())
+			}
+			if !item.Hostname.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "host-name", item.Hostname.ValueString())
+			}
+			if !item.Reachability.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "reachability", item.Reachability.ValueString())
+			}
+			if !item.Status.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "status", item.Status.ValueString())
+			}
+			if !item.State.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "state", item.State.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, "data.-1", itemBody)
+		}
 	}
 	return body
 }
 
 func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
-	if value := res.Get("deviceId"); value.Exists() {
-		data.DeviceId = types.StringValue(value.String())
-	} else {
-		data.DeviceId = types.StringNull()
-	}
-	if value := res.Get("uuid"); value.Exists() {
-		data.Uuid = types.StringValue(value.String())
-	} else {
-		data.Uuid = types.StringNull()
-	}
-	if value := res.Get("site-id"); value.Exists() {
-		data.SiteId = types.StringValue(value.String())
-	} else {
-		data.SiteId = types.StringNull()
-	}
-	if value := res.Get(""); value.Exists() {
+	if value := res.Get("board-serial"); value.Exists() {
 		data.SerialNumber = types.StringValue(value.String())
 	} else {
 		data.SerialNumber = types.StringNull()
 	}
-	if value := res.Get("host-name"); value.Exists() {
-		data.Hostname = types.StringValue(value.String())
-	} else {
-		data.Hostname = types.StringNull()
-	}
-	if value := res.Get("reachability"); value.Exists() {
-		data.Reachability = types.StringValue(value.String())
-	} else {
-		data.Reachability = types.StringNull()
-	}
-	if value := res.Get("status"); value.Exists() {
-		data.Status = types.StringValue(value.String())
-	} else {
-		data.Status = types.StringNull()
-	}
-	if value := res.Get("state"); value.Exists() {
-		data.State = types.StringValue(value.String())
-	} else {
-		data.State = types.StringNull()
+	if value := res.Get("data"); value.Exists() {
+		data.Devices = make([]DeviceDevices, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := DeviceDevices{}
+			if cValue := v.Get("deviceId"); cValue.Exists() {
+				item.DeviceId = types.StringValue(cValue.String())
+			} else {
+				item.DeviceId = types.StringNull()
+			}
+			if cValue := v.Get("uuid"); cValue.Exists() {
+				item.Uuid = types.StringValue(cValue.String())
+			} else {
+				item.Uuid = types.StringNull()
+			}
+			if cValue := v.Get("site-id"); cValue.Exists() {
+				item.SiteId = types.StringValue(cValue.String())
+			} else {
+				item.SiteId = types.StringNull()
+			}
+			if cValue := v.Get("board-serial"); cValue.Exists() {
+				item.SerialNumber = types.StringValue(cValue.String())
+			} else {
+				item.SerialNumber = types.StringNull()
+			}
+			if cValue := v.Get("host-name"); cValue.Exists() {
+				item.Hostname = types.StringValue(cValue.String())
+			} else {
+				item.Hostname = types.StringNull()
+			}
+			if cValue := v.Get("reachability"); cValue.Exists() {
+				item.Reachability = types.StringValue(cValue.String())
+			} else {
+				item.Reachability = types.StringNull()
+			}
+			if cValue := v.Get("status"); cValue.Exists() {
+				item.Status = types.StringValue(cValue.String())
+			} else {
+				item.Status = types.StringNull()
+			}
+			if cValue := v.Get("state"); cValue.Exists() {
+				item.State = types.StringValue(cValue.String())
+			} else {
+				item.State = types.StringNull()
+			}
+			data.Devices = append(data.Devices, item)
+			return true
+		})
 	}
 }
 
 func (data *Device) hasChanges(ctx context.Context, state *Device) bool {
 	hasChanges := false
-	if !data.DeviceId.Equal(state.DeviceId) {
-		hasChanges = true
-	}
-	if !data.Uuid.Equal(state.Uuid) {
-		hasChanges = true
-	}
-	if !data.SiteId.Equal(state.SiteId) {
-		hasChanges = true
-	}
 	if !data.SerialNumber.Equal(state.SerialNumber) {
 		hasChanges = true
 	}
-	if !data.Hostname.Equal(state.Hostname) {
+	if len(data.Devices) != len(state.Devices) {
 		hasChanges = true
-	}
-	if !data.Reachability.Equal(state.Reachability) {
-		hasChanges = true
-	}
-	if !data.Status.Equal(state.Status) {
-		hasChanges = true
-	}
-	if !data.State.Equal(state.State) {
-		hasChanges = true
+	} else {
+		for i := range data.Devices {
+			if !data.Devices[i].DeviceId.Equal(state.Devices[i].DeviceId) {
+				hasChanges = true
+			}
+			if !data.Devices[i].Uuid.Equal(state.Devices[i].Uuid) {
+				hasChanges = true
+			}
+			if !data.Devices[i].SiteId.Equal(state.Devices[i].SiteId) {
+				hasChanges = true
+			}
+			if !data.Devices[i].SerialNumber.Equal(state.Devices[i].SerialNumber) {
+				hasChanges = true
+			}
+			if !data.Devices[i].Hostname.Equal(state.Devices[i].Hostname) {
+				hasChanges = true
+			}
+			if !data.Devices[i].Reachability.Equal(state.Devices[i].Reachability) {
+				hasChanges = true
+			}
+			if !data.Devices[i].Status.Equal(state.Devices[i].Status) {
+				hasChanges = true
+			}
+			if !data.Devices[i].State.Equal(state.Devices[i].State) {
+				hasChanges = true
+			}
+		}
 	}
 	return hasChanges
 }

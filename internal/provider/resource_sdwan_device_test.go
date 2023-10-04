@@ -33,14 +33,15 @@ func TestAccSdwanDevice(t *testing.T) {
 			{
 				Config: testAccSdwanDeviceConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_device.test", "device_id", "2081c2f4-3f9f-4fee-8078-dcc8904e368d"),
-					resource.TestCheckResourceAttr("sdwan_device.test", "uuid", "2081c2f4-3f9f-4fee-8078-dcc8904e368d"),
-					resource.TestCheckResourceAttr("sdwan_device.test", "site_id", "400"),
 					resource.TestCheckResourceAttr("sdwan_device.test", "serial_number", "2AJC9DJ"),
-					resource.TestCheckResourceAttr("sdwan_device.test", "hostname", "vEdge-123"),
-					resource.TestCheckResourceAttr("sdwan_device.test", "reachability", "reachable"),
-					resource.TestCheckResourceAttr("sdwan_device.test", "status", "normal"),
-					resource.TestCheckResourceAttr("sdwan_device.test", "state", "green"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.device_id", "2081c2f4-3f9f-4fee-8078-dcc8904e368d"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.uuid", "2081c2f4-3f9f-4fee-8078-dcc8904e368d"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.site_id", "400"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.serial_number", "2AJC9DJ"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.hostname", "vEdge-123"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.reachability", "reachable"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.status", "normal"),
+					resource.TestCheckResourceAttr("sdwan_device.test", "devices.0.state", "green"),
 				),
 			},
 		},
@@ -51,13 +52,16 @@ const testAccSdwanDeviceConfig = `
 
 
 resource "sdwan_device" "test" {
-	device_id = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
-	uuid = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
-	site_id = "400"
 	serial_number = "2AJC9DJ"
-	hostname = "vEdge-123"
-	reachability = "reachable"
-	status = "normal"
-	state = "green"
+	devices = [{
+		device_id = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
+		uuid = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
+		site_id = "400"
+		serial_number = "2AJC9DJ"
+		hostname = "vEdge-123"
+		reachability = "reachable"
+		status = "normal"
+		state = "green"
+	}]
 }
 `

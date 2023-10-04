@@ -66,37 +66,49 @@ func (r *DeviceResource) Schema(ctx context.Context, req resource.SchemaRequest,
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"device_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Optional:            true,
-			},
-			"uuid": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Unique identifier for device").String,
-				Optional:            true,
-			},
-			"site_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Site id for respective device").String,
-				Optional:            true,
-			},
 			"serial_number": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Serial number for device. Could be board or virtual identifier").String,
 				Optional:            true,
 			},
-			"hostname": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Hostname for respective device").String,
-				Optional:            true,
-			},
-			"reachability": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Reachability of device").String,
-				Optional:            true,
-			},
-			"status": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Status for respective device").String,
-				Optional:            true,
-			},
-			"state": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("state for respective device").String,
-				Optional:            true,
+			"devices": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of returned devices").String,
+				Required:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"device_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").String,
+							Optional:            true,
+						},
+						"uuid": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Unique identifier for device").String,
+							Optional:            true,
+						},
+						"site_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Site id for respective device").String,
+							Optional:            true,
+						},
+						"serial_number": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Serial number for device. Could be board or virtual identifier").String,
+							Optional:            true,
+						},
+						"hostname": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Hostname for respective device").String,
+							Optional:            true,
+						},
+						"reachability": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Reachability of device").String,
+							Optional:            true,
+						},
+						"status": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Status for respective device").String,
+							Optional:            true,
+						},
+						"state": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("state for respective device").String,
+							Optional:            true,
+						},
+					},
+				},
 			},
 		},
 	}

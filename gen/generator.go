@@ -156,6 +156,7 @@ type YamlConfig struct {
 	SkipTemplates     []string              `yaml:"skip_templates"`
 	Attributes        []YamlConfigAttribute `yaml:"attributes"`
 	TestPrerequisites string                `yaml:"test_prerequisites"`
+	RemoveId          bool                  `yaml:"remove_id"`
 }
 
 type YamlConfigAttribute struct {
@@ -194,6 +195,7 @@ type YamlConfigAttribute struct {
 	AlwaysInclude        bool                           `yaml:"always_include"`
 	Attributes           []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
+	QueryParam           bool                           `yaml:"query_param"`
 }
 
 type YamlConfigConditionalAttribute struct {

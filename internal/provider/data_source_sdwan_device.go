@@ -53,41 +53,49 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 		MarkdownDescription: "This data source can read the Device .",
 
 		Attributes: map[string]schema.Attribute{
-			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the object",
-				Required:            true,
-			},
-			"device_id": schema.StringAttribute{
-				MarkdownDescription: "",
-				Computed:            true,
-			},
-			"uuid": schema.StringAttribute{
-				MarkdownDescription: "Unique identifier for device",
-				Computed:            true,
-			},
-			"site_id": schema.StringAttribute{
-				MarkdownDescription: "Site id for respective device",
-				Computed:            true,
-			},
 			"serial_number": schema.StringAttribute{
 				MarkdownDescription: "Serial number for device. Could be board or virtual identifier",
-				Computed:            true,
+				Optional:            true,
 			},
-			"hostname": schema.StringAttribute{
-				MarkdownDescription: "Hostname for respective device",
+			"devices": schema.ListNestedAttribute{
+				MarkdownDescription: "List of returned devices",
 				Computed:            true,
-			},
-			"reachability": schema.StringAttribute{
-				MarkdownDescription: "Reachability of device",
-				Computed:            true,
-			},
-			"status": schema.StringAttribute{
-				MarkdownDescription: "Status for respective device",
-				Computed:            true,
-			},
-			"state": schema.StringAttribute{
-				MarkdownDescription: "state for respective device",
-				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"device_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"uuid": schema.StringAttribute{
+							MarkdownDescription: "Unique identifier for device",
+							Computed:            true,
+						},
+						"site_id": schema.StringAttribute{
+							MarkdownDescription: "Site id for respective device",
+							Computed:            true,
+						},
+						"serial_number": schema.StringAttribute{
+							MarkdownDescription: "Serial number for device. Could be board or virtual identifier",
+							Computed:            true,
+						},
+						"hostname": schema.StringAttribute{
+							MarkdownDescription: "Hostname for respective device",
+							Computed:            true,
+						},
+						"reachability": schema.StringAttribute{
+							MarkdownDescription: "Reachability of device",
+							Computed:            true,
+						},
+						"status": schema.StringAttribute{
+							MarkdownDescription: "Status for respective device",
+							Computed:            true,
+						},
+						"state": schema.StringAttribute{
+							MarkdownDescription: "state for respective device",
+							Computed:            true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -113,7 +121,8 @@ func (d *DeviceDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("/device" + config.Id.ValueString())
+	var params = "?board-serial=" + config.serial_number.valueString()
+	res, err := d.client.Get("/device" + params)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
