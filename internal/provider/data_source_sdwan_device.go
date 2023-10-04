@@ -57,6 +57,10 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				MarkdownDescription: "Serial number for device. Could be board or virtual identifier",
 				Optional:            true,
 			},
+			"name": schema.StringAttribute{
+				MarkdownDescription: "TThe hostname of a device",
+				Optional:            true,
+			},
 			"devices": schema.ListNestedAttribute{
 				MarkdownDescription: "List of returned devices",
 				Computed:            true,
@@ -121,7 +125,14 @@ func (d *DeviceDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	var params = "?board-serial=" + config.serial_number.valueString()
+	var params = "?"
+
+	if !config.SerialNumber.IsNull() {
+		params = params + "board-serial=" + config.SerialNumber.ValueString() + "&"
+	}
+	if !config.Name.IsNull() {
+		params = params + "host-name=" + config.Name.ValueString() + "&"
+	}
 	res, err := d.client.Get("/device" + params)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))

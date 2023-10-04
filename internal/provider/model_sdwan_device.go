@@ -30,6 +30,7 @@ import (
 type Device struct {
 	Id           types.String    `tfsdk:"id"`
 	SerialNumber types.String    `tfsdk:"serial_number"`
+	Name         types.String    `tfsdk:"name"`
 	Devices      []DeviceDevices `tfsdk:"devices"`
 }
 
@@ -48,6 +49,9 @@ func (data Device) toBody(ctx context.Context) string {
 	body := ""
 	if !data.SerialNumber.IsNull() {
 		body, _ = sjson.Set(body, "board-serial", data.SerialNumber.ValueString())
+	}
+	if !data.Name.IsNull() {
+		body, _ = sjson.Set(body, "host-name", data.Name.ValueString())
 	}
 	if len(data.Devices) > 0 {
 		body, _ = sjson.Set(body, "data", []interface{}{})
@@ -88,6 +92,11 @@ func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
 		data.SerialNumber = types.StringValue(value.String())
 	} else {
 		data.SerialNumber = types.StringNull()
+	}
+	if value := res.Get("host-name"); value.Exists() {
+		data.Name = types.StringValue(value.String())
+	} else {
+		data.Name = types.StringNull()
 	}
 	if value := res.Get("data"); value.Exists() {
 		data.Devices = make([]DeviceDevices, 0)
@@ -142,6 +151,9 @@ func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
 func (data *Device) hasChanges(ctx context.Context, state *Device) bool {
 	hasChanges := false
 	if !data.SerialNumber.Equal(state.SerialNumber) {
+		hasChanges = true
+	}
+	if !data.Name.Equal(state.Name) {
 		hasChanges = true
 	}
 	if len(data.Devices) != len(state.Devices) {

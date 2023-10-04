@@ -11,6 +11,12 @@ attributes:
     description: Serial number for device. Could be board or virtual identifier
     example: 2AJC9DJ
     query_param: True
+  - model_name: host-name
+    tf_name: name
+    type: String
+    query_param: true
+    description: TThe hostname of a device
+    example: va-001
   - model_name: data
     tf_name: devices
     type: List

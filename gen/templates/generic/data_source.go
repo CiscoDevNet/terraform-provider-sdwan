@@ -162,10 +162,15 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 	{{if .RemoveId}}
-		{{- range $i, $a := .Attributes}}
+
+
+		var params = "?"
+		{{range $i, $a := .Attributes}}
 		{{- if not .Value}}
 		{{- if .QueryParam}}
-			var params = "{{if (eq $i 0)}}?{{else}}&{{end}}{{.ModelName}}=" + config.{{.TfName}}.valueString()
+		if(!config.{{toGoName .TfName}}.IsNull()) {
+			params = params + "{{.ModelName}}=" + config.{{toGoName .TfName}}.ValueString() + "&"
+		}
 		{{- end}}
 		{{- end}}
 		{{- end}}

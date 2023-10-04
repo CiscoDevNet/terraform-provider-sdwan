@@ -70,6 +70,10 @@ func (r *DeviceResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				MarkdownDescription: helpers.NewAttributeDescription("Serial number for device. Could be board or virtual identifier").String,
 				Optional:            true,
 			},
+			"name": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("TThe hostname of a device").String,
+				Optional:            true,
+			},
 			"devices": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of returned devices").String,
 				Required:            true,
