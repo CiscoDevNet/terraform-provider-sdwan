@@ -31,7 +31,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -148,8 +147,6 @@ func (r *DeviceResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	plan.Id = types.StringValue(res.Get("").String())
-
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)
@@ -168,7 +165,7 @@ func (r *DeviceResource) Read(ctx context.Context, req resource.ReadRequest, res
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/device" + state.Id.ValueString())
+	res, err := r.client.Get("/device")
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -206,7 +203,7 @@ func (r *DeviceResource) Update(ctx context.Context, req resource.UpdateRequest,
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/device"+plan.Id.ValueString(), body)
+		res, err := r.client.Put("/device", body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -238,7 +235,7 @@ func (r *DeviceResource) Delete(ctx context.Context, req resource.DeleteRequest,
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/device" + state.Id.ValueString())
+	res, err := r.client.Delete("/device")
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

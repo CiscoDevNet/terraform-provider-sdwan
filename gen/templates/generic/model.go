@@ -34,7 +34,9 @@ import (
 
 {{- $name := camelCase .Name}}
 type {{camelCase .Name}} struct {
+{{- if not .RemoveId }}
 	Id types.String `tfsdk:"id"`
+{{- end}}
 {{- if .HasVersion}}
 	Version types.Int64 `tfsdk:"version"`
 {{- end}}

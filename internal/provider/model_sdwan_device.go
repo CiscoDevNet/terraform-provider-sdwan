@@ -28,7 +28,6 @@ import (
 )
 
 type Device struct {
-	Id           types.String    `tfsdk:"id"`
 	SerialNumber types.String    `tfsdk:"serial_number"`
 	Name         types.String    `tfsdk:"name"`
 	Devices      []DeviceDevices `tfsdk:"devices"`

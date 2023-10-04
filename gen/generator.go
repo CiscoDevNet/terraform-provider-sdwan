@@ -469,6 +469,7 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 			}
 		}
 	}
+	if config.
 	file, err := os.Open(templatePath)
 	if err != nil {
 		log.Fatalf("Error opening template: %v", err)

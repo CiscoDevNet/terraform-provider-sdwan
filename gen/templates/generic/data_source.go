@@ -159,8 +159,9 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 	}
 
 
-
+	{{ if not .RemoveId}}
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+	{{- end}}
 	{{if .RemoveId}}
 
 
@@ -185,8 +186,9 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 
 	config.fromBody(ctx, res)
 
+	{{if not .RemoveId}}
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
-
+	{{end}}
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
