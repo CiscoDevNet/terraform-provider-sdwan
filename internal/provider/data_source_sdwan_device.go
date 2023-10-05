@@ -22,9 +22,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
 
@@ -52,6 +54,10 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 		MarkdownDescription: "This data source can read the Device .",
 
 		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The id of the object",
+				Required:            true,
+			},
 			"serial_number": schema.StringAttribute{
 				MarkdownDescription: "Serial number for device. Could be board or virtual identifier",
 				Optional:            true,
@@ -122,13 +128,15 @@ func (d *DeviceDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		return
 	}
 
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+
 	var params = "?"
 
 	if !config.SerialNumber.IsNull() {
-		params = params + "board-serial=" + config.SerialNumber.ValueString() + "&"
+		params = params + "board-serial=" + url.QueryEscape(config.SerialNumber.ValueString()) + "&"
 	}
 	if !config.Name.IsNull() {
-		params = params + "host-name=" + config.Name.ValueString() + "&"
+		params = params + "host-name=" + url.QueryEscape(config.Name.ValueString()) + "&"
 	}
 	res, err := d.client.Get("/device" + params)
 	if err != nil {
@@ -137,6 +145,8 @@ func (d *DeviceDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	}
 
 	config.fromBody(ctx, res)
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)

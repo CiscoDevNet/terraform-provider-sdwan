@@ -58,12 +58,10 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 		MarkdownDescription: "{{.DsDescription}}",
 
 		Attributes: map[string]schema.Attribute{
-			{{- if not .RemoveId }}
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
-			{{- end}}
 			{{- if .HasVersion}}
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "The version of the object",
@@ -159,9 +157,7 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 	}
 
 
-	{{ if not .RemoveId}}
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
-	{{- end}}
 	{{if .RemoveId}}
 
 
@@ -170,7 +166,7 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 		{{- if not .Value}}
 		{{- if .QueryParam}}
 		if(!config.{{toGoName .TfName}}.IsNull()) {
-			params = params + "{{.ModelName}}=" + config.{{toGoName .TfName}}.ValueString() + "&"
+			params = params + "{{.ModelName}}=" + url.QueryEscape(config.{{toGoName .TfName}}.ValueString() )+ "&"
 		}
 		{{- end}}
 		{{- end}}
@@ -186,9 +182,8 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 
 	config.fromBody(ctx, res)
 
-	{{if not .RemoveId}}
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
-	{{end}}
+
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
