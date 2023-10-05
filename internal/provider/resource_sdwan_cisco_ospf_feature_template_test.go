@@ -48,7 +48,7 @@ func TestAccSdwanCiscoOSPFFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "distance_inter_area", "111"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "distance_intra_area", "112"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "timers_spf_delay", "300"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "timers_spf_initial_holf", "2000"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "timers_spf_initial_hold", "2000"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "timers_spf_max_hold", "20000"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "redistribute.0.protocol", "static"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ospf_feature_template.test", "redistribute.0.route_policy", "RP1"),
@@ -107,7 +107,7 @@ func testAccSdwanCiscoOSPFFeatureTemplateConfig_all() string {
 		distance_inter_area = 111
 		distance_intra_area = 112
 		timers_spf_delay = 300
-		timers_spf_initial_holf = 2000
+		timers_spf_initial_hold = 2000
 		timers_spf_max_hold = 20000
 		redistribute = [{
 			protocol = "static"

@@ -57,8 +57,8 @@ type CiscoOSPF struct {
 	DistanceIntraAreaVariable                     types.String                  `tfsdk:"distance_intra_area_variable"`
 	TimersSpfDelay                                types.Int64                   `tfsdk:"timers_spf_delay"`
 	TimersSpfDelayVariable                        types.String                  `tfsdk:"timers_spf_delay_variable"`
-	TimersSpfInitialHolf                          types.Int64                   `tfsdk:"timers_spf_initial_holf"`
-	TimersSpfInitialHolfVariable                  types.String                  `tfsdk:"timers_spf_initial_holf_variable"`
+	TimersSpfInitialHold                          types.Int64                   `tfsdk:"timers_spf_initial_hold"`
+	TimersSpfInitialHoldVariable                  types.String                  `tfsdk:"timers_spf_initial_hold_variable"`
 	TimersSpfMaxHold                              types.Int64                   `tfsdk:"timers_spf_max_hold"`
 	TimersSpfMaxHoldVariable                      types.String                  `tfsdk:"timers_spf_max_hold_variable"`
 	Redistribute                                  []CiscoOSPFRedistribute       `tfsdk:"redistribute"`
@@ -296,17 +296,17 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospf.timers.spf.delay."+"vipValue", data.TimersSpfDelay.ValueInt64())
 	}
 
-	if !data.TimersSpfInitialHolfVariable.IsNull() {
+	if !data.TimersSpfInitialHoldVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipVariableName", data.TimersSpfInitialHolfVariable.ValueString())
-	} else if data.TimersSpfInitialHolf.IsNull() {
+		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipVariableName", data.TimersSpfInitialHoldVariable.ValueString())
+	} else if data.TimersSpfInitialHold.IsNull() {
 		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipValue", data.TimersSpfInitialHolf.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospf.timers.spf.initial-hold."+"vipValue", data.TimersSpfInitialHold.ValueInt64())
 	}
 
 	if !data.TimersSpfMaxHoldVariable.IsNull() {
@@ -992,22 +992,22 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "ospf.timers.spf.initial-hold.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TimersSpfInitialHolf = types.Int64Null()
+			data.TimersSpfInitialHold = types.Int64Null()
 
 			v := res.Get(path + "ospf.timers.spf.initial-hold.vipVariableName")
-			data.TimersSpfInitialHolfVariable = types.StringValue(v.String())
+			data.TimersSpfInitialHoldVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TimersSpfInitialHolf = types.Int64Null()
-			data.TimersSpfInitialHolfVariable = types.StringNull()
+			data.TimersSpfInitialHold = types.Int64Null()
+			data.TimersSpfInitialHoldVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospf.timers.spf.initial-hold.vipValue")
-			data.TimersSpfInitialHolf = types.Int64Value(v.Int())
-			data.TimersSpfInitialHolfVariable = types.StringNull()
+			data.TimersSpfInitialHold = types.Int64Value(v.Int())
+			data.TimersSpfInitialHoldVariable = types.StringNull()
 		}
 	} else {
-		data.TimersSpfInitialHolf = types.Int64Null()
-		data.TimersSpfInitialHolfVariable = types.StringNull()
+		data.TimersSpfInitialHold = types.Int64Null()
+		data.TimersSpfInitialHoldVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospf.timers.spf.max-hold.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1596,7 +1596,7 @@ func (data *CiscoOSPF) hasChanges(ctx context.Context, state *CiscoOSPF) bool {
 	if !data.TimersSpfDelay.Equal(state.TimersSpfDelay) {
 		hasChanges = true
 	}
-	if !data.TimersSpfInitialHolf.Equal(state.TimersSpfInitialHolf) {
+	if !data.TimersSpfInitialHold.Equal(state.TimersSpfInitialHold) {
 		hasChanges = true
 	}
 	if !data.TimersSpfMaxHold.Equal(state.TimersSpfMaxHold) {

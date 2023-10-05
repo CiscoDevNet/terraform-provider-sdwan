@@ -3,6 +3,7 @@
 - Correctly populate system-level variables when attaching existing (factory default) feature templates
 - Add `sdwan_intrusion_prevention_policy_definition` resource and data source
 - Add `sdwan_tls_ssl_profile_policy_definition` resource and data source
+- BREAKING CHANGE: Rename `timers_spf_initial_holf` attribute of `sdwan_cisco_ospf_feature_template` resource and data source to `timers_spf_initial_hold`
 
 ## 0.2.7
 

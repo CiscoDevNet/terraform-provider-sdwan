@@ -197,14 +197,14 @@ func (r *CiscoOSPFFeatureTemplateResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"timers_spf_initial_holf": schema.Int64Attribute{
+			"timers_spf_initial_hold": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set initial hold time between consecutive SPF calculations").AddIntegerRangeDescription(1, 600000).AddDefaultValueDescription("1000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600000),
 				},
 			},
-			"timers_spf_initial_holf_variable": schema.StringAttribute{
+			"timers_spf_initial_hold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

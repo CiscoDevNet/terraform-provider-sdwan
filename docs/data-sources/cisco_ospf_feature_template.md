@@ -56,8 +56,8 @@ data "sdwan_cisco_ospf_feature_template" "example" {
 - `template_type` (String) The template type
 - `timers_spf_delay` (Number) Set delay from first change received until performing SPF calculation
 - `timers_spf_delay_variable` (String) Variable name
-- `timers_spf_initial_holf` (Number) Set initial hold time between consecutive SPF calculations
-- `timers_spf_initial_holf_variable` (String) Variable name
+- `timers_spf_initial_hold` (Number) Set initial hold time between consecutive SPF calculations
+- `timers_spf_initial_hold_variable` (String) Variable name
 - `timers_spf_max_hold` (Number) Set maximum hold time between consecutive SPF calculations
 - `timers_spf_max_hold_variable` (String) Variable name
 - `version` (Number) The version of the feature template

@@ -13,7 +13,7 @@ resource "sdwan_cisco_ospf_feature_template" "example" {
   distance_inter_area                       = 111
   distance_intra_area                       = 112
   timers_spf_delay                          = 300
-  timers_spf_initial_holf                   = 2000
+  timers_spf_initial_hold                   = 2000
   timers_spf_max_hold                       = 20000
   redistribute = [
     {

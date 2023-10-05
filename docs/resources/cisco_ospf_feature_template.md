@@ -30,7 +30,7 @@ resource "sdwan_cisco_ospf_feature_template" "example" {
   distance_inter_area                       = 111
   distance_intra_area                       = 112
   timers_spf_delay                          = 300
-  timers_spf_initial_holf                   = 2000
+  timers_spf_initial_hold                   = 2000
   timers_spf_max_hold                       = 20000
   redistribute = [
     {
@@ -135,10 +135,10 @@ resource "sdwan_cisco_ospf_feature_template" "example" {
   - Range: `1`-`600000`
   - Default value: `200`
 - `timers_spf_delay_variable` (String) Variable name
-- `timers_spf_initial_holf` (Number) Set initial hold time between consecutive SPF calculations
+- `timers_spf_initial_hold` (Number) Set initial hold time between consecutive SPF calculations
   - Range: `1`-`600000`
   - Default value: `1000`
-- `timers_spf_initial_holf_variable` (String) Variable name
+- `timers_spf_initial_hold_variable` (String) Variable name
 - `timers_spf_max_hold` (Number) Set maximum hold time between consecutive SPF calculations
   - Range: `1`-`600000`
   - Default value: `10000`
