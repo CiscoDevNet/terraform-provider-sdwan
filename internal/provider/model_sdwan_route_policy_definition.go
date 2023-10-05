@@ -159,7 +159,7 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.Peer.IsNull() && childItem.Type.ValueString() == "peer" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Peer.ValueString())
 					}
-					if !childItem.OmpTag.IsNull() && childItem.Type.ValueString() == "omp_tag" {
+					if !childItem.OmpTag.IsNull() && childItem.Type.ValueString() == "ompTag" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.OmpTag.ValueInt64()))
 					}
 					if !childItem.OspfTag.IsNull() && childItem.Type.ValueString() == "ospfTag" {
@@ -346,7 +346,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					} else {
 						cItem.Peer = types.StringNull()
 					}
-					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "omp_tag" {
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "ompTag" {
 						cItem.OmpTag = types.Int64Value(ccValue.Int())
 					} else {
 						cItem.OmpTag = types.Int64Null()

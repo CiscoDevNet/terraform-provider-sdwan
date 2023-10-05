@@ -225,7 +225,7 @@ attributes:
             tf_name: omp_tag
             conditional_attribute:
               name: type
-              value: omp_tag
+              value: ompTag
             type: Int64
             model_type_string: true
             description: OMP tag

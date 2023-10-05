@@ -13,6 +13,7 @@ description: |-
 - Add `sdwan_intrusion_prevention_policy_definition` resource and data source
 - Add `sdwan_tls_ssl_profile_policy_definition` resource and data source
 - BREAKING CHANGE: Rename `timers_spf_initial_holf` attribute of `sdwan_cisco_ospf_feature_template` resource and data source to `timers_spf_initial_hold`
+- Fix issue with setting an `omp_tag` match condition using a `sdwan_route_policy_definition` resource
 
 ## 0.2.7
 
