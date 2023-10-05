@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.2.8 (unreleased)
+## 0.2.8
 
 - Correctly populate system-level variables when attaching existing (factory default) feature templates
 - Add `sdwan_intrusion_prevention_policy_definition` resource and data source
