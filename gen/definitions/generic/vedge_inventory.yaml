@@ -1,0 +1,50 @@
+---
+name: VEdge Inventory
+rest_endpoint: /device/vedgeinventory/detail
+doc_category: Inventory
+res_description: NOT USED - please reference the data source for device list
+remove_id: True
+attributes:
+  - model_name: host-name
+    tf_name: name
+    type: String
+    description: TThe hostname of a device
+    example: va-001
+  - model_name: data
+    tf_name: devices
+    type: List
+    mandatory: true
+    description: List of returned devices
+    attributes:
+      - model_name: chasisNumber
+        tf_name: chassis_number
+        type: String
+        description: Chassis Number
+        id: True
+        mandatory: False
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+      - model_name: site-id
+        tf_name: site_id
+        type: String
+        description: Site id for respective device
+        example: 400
+      - model_name: serialNumber
+        tf_name: serial_number
+        type: String
+        description: Serial number for device. Could be board or virtual identifier
+        example: 2AJC9DJ
+      - model_name: host-name
+        tf_name: hostname
+        type: String
+        description: Hostname for respective device
+        example: vEdge-123
+      - model_name: validity
+        type: String
+        description: Validity of device
+        example: valid
+      - model_name: deviceType
+        tf_name: device_type
+        type: String
+        description: Type of device
+        example: vedge
+
