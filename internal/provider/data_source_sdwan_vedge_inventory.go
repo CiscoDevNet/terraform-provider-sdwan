@@ -25,6 +25,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
 
@@ -52,6 +53,10 @@ func (d *VEdgeInventoryDataSource) Schema(ctx context.Context, req datasource.Sc
 		MarkdownDescription: "This data source can read the VEdge Inventory .",
 
 		Attributes: map[string]schema.Attribute{
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The id of the object",
+				Required:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "TThe hostname of a device",
 				Computed:            true,
@@ -110,6 +115,8 @@ func (d *VEdgeInventoryDataSource) Read(ctx context.Context, req datasource.Read
 		return
 	}
 
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+
 	var params = "?"
 
 	res, err := d.client.Get("/device/vedgeinventory/detail" + params)
@@ -119,6 +126,8 @@ func (d *VEdgeInventoryDataSource) Read(ctx context.Context, req datasource.Read
 	}
 
 	config.fromBody(ctx, res)
+
+	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)

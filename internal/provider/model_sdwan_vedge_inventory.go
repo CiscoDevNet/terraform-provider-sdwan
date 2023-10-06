@@ -28,6 +28,7 @@ import (
 )
 
 type VEdgeInventory struct {
+	Id      types.String            `tfsdk:"id"`
 	Name    types.String            `tfsdk:"name"`
 	Devices []VEdgeInventoryDevices `tfsdk:"devices"`
 }
