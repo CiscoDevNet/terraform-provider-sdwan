@@ -60,7 +60,11 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
-				Required:            true,
+				{{- if not .RemoveId}}
+					Required:            true,
+				{{- else}}
+					Computed:            true,
+				{{- end}}
 			},
 			{{- if .HasVersion}}
 			"version": schema.Int64Attribute{

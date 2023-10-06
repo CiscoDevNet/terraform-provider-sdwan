@@ -56,7 +56,7 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
-				Required:            true,
+				Computed:            true,
 			},
 			"serial_number": schema.StringAttribute{
 				MarkdownDescription: "Serial number for device. Could be board or virtual identifier",

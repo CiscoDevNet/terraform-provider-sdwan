@@ -55,7 +55,7 @@ func (d *VEdgeInventoryDataSource) Schema(ctx context.Context, req datasource.Sc
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
-				Required:            true,
+				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "TThe hostname of a device",
