@@ -2,7 +2,6 @@
 name: VEdge Inventory
 rest_endpoint: /device/vedgeinventory/detail
 doc_category: Inventory
-res_description: NOT USED - please reference the data source for device list
 remove_id: True
 skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
 attributes:
@@ -14,7 +13,6 @@ attributes:
   - model_name: data
     tf_name: devices
     type: List
-    mandatory: true
     description: List of returned devices
     attributes:
       - model_name: chasisNumber

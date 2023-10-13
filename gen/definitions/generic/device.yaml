@@ -2,7 +2,6 @@
 name: Device
 rest_endpoint: /device
 doc_category: Inventory
-res_description: NOT USED - please reference the data source for device list
 remove_id: True
 skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
 attributes:
@@ -16,18 +15,18 @@ attributes:
     tf_name: name
     type: String
     query_param: true
-    description: TThe hostname of a device
+    description: The hostname of a device
     example: va-001
   - model_name: data
     tf_name: devices
     type: List
-    mandatory: true
     description: List of returned devices
     attributes:
       - model_name: deviceId
         type: String
         tf_name: device_id
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        description: The deviceId as defined in VManage
       - model_name: uuid
         type: String
         description: Unique identifier for device
@@ -59,6 +58,6 @@ attributes:
         example: normal
       - model_name: state
         type: String
-        description: state for respective device
+        description: State for respective device
         example: green
 

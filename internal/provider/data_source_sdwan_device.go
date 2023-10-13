@@ -63,7 +63,7 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Optional:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "TThe hostname of a device",
+				MarkdownDescription: "The hostname of a device",
 				Optional:            true,
 			},
 			"devices": schema.ListNestedAttribute{
@@ -72,7 +72,7 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"device_id": schema.StringAttribute{
-							MarkdownDescription: "",
+							MarkdownDescription: "The deviceId as defined in VManage",
 							Computed:            true,
 						},
 						"uuid": schema.StringAttribute{
@@ -100,7 +100,7 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 							Computed:            true,
 						},
 						"state": schema.StringAttribute{
-							MarkdownDescription: "state for respective device",
+							MarkdownDescription: "State for respective device",
 							Computed:            true,
 						},
 					},

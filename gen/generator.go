@@ -512,9 +512,7 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 func main() {
 	featureTemplateFiles, _ := ioutil.ReadDir(featureTemplateDefinitionsPath)
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
-	providerConfig := make(map[string][]string)
-	providerConfig["FeatureTemplates"] = make([]string, 0)
-	providerConfig["Generic"] = make([]string, 0)
+	configs := make(map[string][]YamlConfig)
 
 	// Load feature template configs
 	for i, filename := range featureTemplateFiles {
@@ -539,8 +537,8 @@ func main() {
 		for _, t := range featureTemplateTemplates {
 			renderTemplate(t.path, t.prefix+SnakeCase(featureTemplateConfigs[i].Name)+t.suffix, featureTemplateConfigs[i])
 		}
-		providerConfig["FeatureTemplates"] = append(providerConfig["FeatureTemplates"], featureTemplateConfigs[i].Name)
 	}
+	configs["FeatureTemplates"] = featureTemplateConfigs
 
 	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
 	genericConfigs := make([]YamlConfig, len(genericFiles))
@@ -568,11 +566,7 @@ func main() {
 		for _, t := range genericTemplates {
 			renderTemplate(t.path, t.prefix+SnakeCase(genericConfigs[i].Name)+t.suffix, genericConfigs[i])
 		}
-		providerConfig["Generic"] = append(providerConfig["Generic"], genericConfigs[i].Name)
 	}
-
-	configs := make(map[string][]YamlConfig)
-	configs["FeatureTemplates"] = featureTemplateConfigs
 	configs["Generic"] = genericConfigs
 
 	// render provider.go

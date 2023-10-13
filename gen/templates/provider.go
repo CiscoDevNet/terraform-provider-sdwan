@@ -261,7 +261,9 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		New{{camelCase .Name}}FeatureTemplateDataSource,
 		{{- end}}
 		{{- range .Generic}}
+		{{- if not (contains .SkipTemplates "data_source.go")}}
 		New{{camelCase .Name}}DataSource,
+		{{- end}}
 		{{- end}}
 	}
 }

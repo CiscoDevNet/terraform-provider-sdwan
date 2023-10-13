@@ -111,9 +111,6 @@ func main() {
 	// Update generic doc category
 	for i := range genericConfigs {
 		for _, path := range docPaths {
-			//if genericConfigs[i].SkipTemplates {
-			//
-			//}
 			filename := path + SnakeCase(genericConfigs[i].Name) + ".md"
 			content, err := ioutil.ReadFile(filename)
 			if err != nil {

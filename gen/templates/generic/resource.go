@@ -499,11 +499,11 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 	{{if not .RemoveId}}
-		res, err := r.client.Delete("{{.RestEndpoint}}" + state.Id.ValueString())
+	res, err := r.client.Delete("{{.RestEndpoint}}" + state.Id.ValueString())
 	{{- else}}
-		res, err := r.client.Delete("{{.RestEndpoint}}")
+	res, err := r.client.Delete("{{.RestEndpoint}}")
 	{{- end}}
-if err != nil {
+	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return
 	}

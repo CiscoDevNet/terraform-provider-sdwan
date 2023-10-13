@@ -14,7 +14,8 @@ This data source can read the Device .
 
 ```terraform
 data "sdwan_device" "example" {
-  id = "f6b2c44c-693c-4763-b010-895aa3d236bd"
+  serial_number = "2AJC9DJ"
+  name          = "va-001"
 }
 ```
 
@@ -23,7 +24,7 @@ data "sdwan_device" "example" {
 
 ### Optional
 
-- `name` (String) TThe hostname of a device
+- `name` (String) The hostname of a device
 - `serial_number` (String) Serial number for device. Could be board or virtual identifier
 
 ### Read-Only
@@ -36,11 +37,11 @@ data "sdwan_device" "example" {
 
 Read-Only:
 
-- `device_id` (String)
+- `device_id` (String) The deviceId as defined in VManage
 - `hostname` (String) Hostname for respective device
 - `reachability` (String) Reachability of device
 - `serial_number` (String) Serial number for device. Could be board or virtual identifier
 - `site_id` (String) Site id for respective device
-- `state` (String) state for respective device
+- `state` (String) State for respective device
 - `status` (String) Status for respective device
 - `uuid` (String) Unique identifier for device
