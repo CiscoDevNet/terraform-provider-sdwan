@@ -4,7 +4,7 @@ rest_endpoint: /device/vedgeinventory/detail
 doc_category: Inventory
 res_description: NOT USED - please reference the data source for device list
 remove_id: True
-skip_templates: ["resource.go", "resource_test.go", "resource.tf"]
+skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
 attributes:
   - model_name: host-name
     tf_name: name
