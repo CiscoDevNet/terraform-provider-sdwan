@@ -279,6 +279,7 @@ var functions = template.FuncMap{
 	"toLower":             strings.ToLower,
 	"path":                BuildPath,
 	"hasVersionAttribute": HasVersionAttribute,
+	"contains":            contains,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -570,8 +571,12 @@ func main() {
 		providerConfig["Generic"] = append(providerConfig["Generic"], genericConfigs[i].Name)
 	}
 
+	configs := make(map[string][]YamlConfig)
+	configs["FeatureTemplates"] = featureTemplateConfigs
+	configs["Generic"] = genericConfigs
+
 	// render provider.go
-	renderTemplate(providerTemplate, providerLocation, providerConfig)
+	renderTemplate(providerTemplate, providerLocation, configs)
 
 	changelog, err := os.ReadFile(changelogOriginal)
 	if err != nil {
