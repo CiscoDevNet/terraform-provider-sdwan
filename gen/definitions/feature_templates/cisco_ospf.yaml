@@ -35,7 +35,7 @@ attributes:
     tf_name: timers_spf_delay
     example: 300
   - model_name: initial-hold
-    tf_name: timers_spf_initial_holf
+    tf_name: timers_spf_initial_hold
     example: 2000
   - model_name: max-hold
     tf_name: timers_spf_max_hold
