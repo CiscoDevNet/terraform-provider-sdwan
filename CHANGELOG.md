@@ -1,3 +1,7 @@
+## 0.2.9 (unreleased)
+
+- Add `sdwan_advanced_malware_protection_policy_definition` resource and data source
+
 ## 0.2.8
 
 - Correctly populate system-level variables when attaching existing (factory default) feature templates
