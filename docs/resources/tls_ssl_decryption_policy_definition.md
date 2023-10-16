@@ -110,9 +110,9 @@ Optional:
 
 Optional:
 
-- `option` (String) Rule type
+- `option` (String) source / destination option
   - Choices: `sourceIp`, `sourcePort`, `destinationVpn`, `destinationIp`, `destinationPort`
-- `value` (String) Rule type
+- `value` (String) source / destination option target
 
 
 

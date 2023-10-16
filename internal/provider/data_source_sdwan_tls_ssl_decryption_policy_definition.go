@@ -105,11 +105,11 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"option": schema.StringAttribute{
-										MarkdownDescription: "Rule type",
+										MarkdownDescription: "source / destination option",
 										Computed:            true,
 									},
 									"value": schema.StringAttribute{
-										MarkdownDescription: "Rule type",
+										MarkdownDescription: "source / destination option target",
 										Computed:            true,
 									},
 								},

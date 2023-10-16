@@ -124,14 +124,14 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"option": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Rule type").AddStringEnumDescription("sourceIp", "sourcePort", "destinationVpn", "destinationIp", "destinationPort").String,
+										MarkdownDescription: helpers.NewAttributeDescription("source / destination option").AddStringEnumDescription("sourceIp", "sourcePort", "destinationVpn", "destinationIp", "destinationPort").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("sourceIp", "sourcePort", "destinationVpn", "destinationIp", "destinationPort"),
 										},
 									},
 									"value": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Rule type").String,
+										MarkdownDescription: helpers.NewAttributeDescription("source / destination option target").String,
 										Optional:            true,
 									},
 								},

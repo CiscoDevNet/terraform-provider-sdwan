@@ -64,8 +64,8 @@ Read-Only:
 
 Read-Only:
 
-- `option` (String) Rule type
-- `value` (String) Rule type
+- `option` (String) source / destination option
+- `value` (String) source / destination option target
 
 
 

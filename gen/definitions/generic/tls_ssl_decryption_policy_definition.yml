@@ -68,13 +68,13 @@ attributes:
           - model_name: field
             type: String
             tf_name: option
-            description: Rule type
+            description: source / destination option
             enum_values: [sourceIp, sourcePort, destinationVpn, destinationIp, destinationPort]
             example: destinationIp
           - model_name: value
             type: String
             tf_name: value
-            description: Rule type
+            description: source / destination option target
             example: 10.0.0.0/12
   - model_name: profiles
     data_path: [definition] 
@@ -161,7 +161,7 @@ attributes:
     data_path: [definition, settings]
     tf_name: rsa_key_pair_modulus
     type: String
-    enum_values: [1024, 2048, 4096]
+    enum_values: ["1024", "2048", "4096"]
     description: RSA key pair modules
     example: "2048"
   - model_name: eckeyType
