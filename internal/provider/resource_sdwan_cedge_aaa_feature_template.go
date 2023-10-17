@@ -549,9 +549,8 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"group": schema.ListAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Use Server-group").String,
-							ElementType:         types.StringType,
+						"groups": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Comma separated list of groups").String,
 							Optional:            true,
 						},
 						"optional": schema.BoolAttribute{
@@ -603,9 +602,8 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 								stringvalidator.OneOf("1", "15"),
 							},
 						},
-						"group": schema.ListAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Use Server-group").String,
-							ElementType:         types.StringType,
+						"groups": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Comma separated list of groups").String,
 							Optional:            true,
 						},
 						"authenticated": schema.BoolAttribute{

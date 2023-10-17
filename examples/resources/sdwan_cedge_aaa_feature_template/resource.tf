@@ -79,7 +79,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       method          = "exec"
       privilege_level = "15"
       start_stop      = true
-      group           = ["GROUP1"]
+      groups          = "GROUP1"
     }
   ]
   authorization_console         = true
@@ -89,7 +89,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       name            = "RULE1"
       method          = "commands"
       privilege_level = "15"
-      group           = ["GROUP1"]
+      groups          = "GROUP1"
       authenticated   = true
     }
   ]

@@ -458,9 +458,8 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"group": schema.ListAttribute{
-							MarkdownDescription: "Use Server-group",
-							ElementType:         types.StringType,
+						"groups": schema.StringAttribute{
+							MarkdownDescription: "Comma separated list of groups",
 							Computed:            true,
 						},
 						"optional": schema.BoolAttribute{
@@ -503,9 +502,8 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Privilege level when method is commands",
 							Computed:            true,
 						},
-						"group": schema.ListAttribute{
-							MarkdownDescription: "Use Server-group",
-							ElementType:         types.StringType,
+						"groups": schema.StringAttribute{
+							MarkdownDescription: "Comma separated list of groups",
 							Computed:            true,
 						},
 						"authenticated": schema.BoolAttribute{

@@ -64,7 +64,7 @@ data "sdwan_cedge_aaa_feature_template" "example" {
 
 Read-Only:
 
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Configure Accounting Method
 - `name` (String) Configure Accounting Rule ID
 - `optional` (Boolean) Indicates if list item is considered optional.
@@ -79,7 +79,7 @@ Read-Only:
 Read-Only:
 
 - `authenticated` (Boolean) Succeed if user has authenticated
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Method
 - `name` (String) Configure Authorization Rule ID
 - `optional` (Boolean) Indicates if list item is considered optional.

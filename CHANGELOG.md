@@ -1,6 +1,7 @@
 ## 0.2.9 (unreleased)
 
 - Add `sdwan_advanced_malware_protection_policy_definition` resource and data source
+- BREAKING CHANGE: Rename `group` attribute of `sdwan_cedge_aaa_feature_template` resource and data source to `groups` and fix type
 
 ## 0.2.8
 

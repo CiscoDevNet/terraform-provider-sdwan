@@ -96,7 +96,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       method          = "exec"
       privilege_level = "15"
       start_stop      = true
-      group           = ["GROUP1"]
+      groups          = "GROUP1"
     }
   ]
   authorization_console         = true
@@ -106,7 +106,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       name            = "RULE1"
       method          = "commands"
       privilege_level = "15"
-      group           = ["GROUP1"]
+      groups          = "GROUP1"
       authenticated   = true
     }
   ]
@@ -174,7 +174,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
 
 Optional:
 
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Configure Accounting Method
   - Choices: `commands`, `exec`, `network`, `system`
 - `name` (String) Configure Accounting Rule ID
@@ -193,7 +193,7 @@ Optional:
 
 - `authenticated` (Boolean) Succeed if user has authenticated
   - Default value: `false`
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Method
   - Choices: `commands`
 - `name` (String) Configure Authorization Rule ID
