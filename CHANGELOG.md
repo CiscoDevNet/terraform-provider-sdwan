@@ -1,6 +1,7 @@
 ## 0.2.9 (unreleased)
 
 - Add `sdwan_advanced_malware_protection_policy_definition` resource and data source
+- Add `sdwan_advanced_inspection_profile_policy_definition` resource and data source
 
 ## 0.2.8
 
