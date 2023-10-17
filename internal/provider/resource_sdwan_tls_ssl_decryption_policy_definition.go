@@ -88,14 +88,14 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 				},
 			},
 			"default_action": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Default action").AddStringEnumDescription("noIntent", "doNotDecrypt", "decrypt").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Default action (applies when 'mode' set to 'security')").AddStringEnumDescription("noIntent", "doNotDecrypt", "decrypt").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("noIntent", "doNotDecrypt", "decrypt"),
 				},
 			},
 			"network_rules": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of network rules").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of network rules (applies when 'mode' set to 'security')").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -141,7 +141,7 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 				},
 			},
 			"url_rules": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of url rules").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of url rules (applies when 'mode' set to 'security')").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -154,7 +154,7 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 							ElementType:         types.StringType,
 							Optional:            true,
 						},
-						"tls_ssl_profile_id": schema.StringAttribute{
+						"tls_ssl_profile_policy_id": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("TLS SSL Profile Policy ID").String,
 							Optional:            true,
 						},
@@ -170,14 +170,14 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 				Optional:            true,
 			},
 			"expired_certificate": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Expired certificate").AddStringEnumDescription("drop", "decrypt").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Expired certificate action").AddStringEnumDescription("drop", "decrypt").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("drop", "decrypt"),
 				},
 			},
 			"untrusted_certificate": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Untrusted certificate").AddStringEnumDescription("drop", "decrypt").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Untrusted certificate action").AddStringEnumDescription("drop", "decrypt").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("drop", "decrypt"),
@@ -191,21 +191,21 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 				},
 			},
 			"unknown_revocation_status": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Unknown revocation status").AddStringEnumDescription("drop", "decrypt").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Unknown revocation status action").AddStringEnumDescription("drop", "decrypt").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("drop", "decrypt"),
 				},
 			},
 			"unsupported_protocol_versions": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Unsupported protocol versions").AddStringEnumDescription("drop", "no-decrypt").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Unsupported protocol versions action").AddStringEnumDescription("drop", "no-decrypt").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("drop", "no-decrypt"),
 				},
 			},
 			"unsupported_cipher_suites": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Unsupported cipher suites").AddStringEnumDescription("drop", "no-decrypt").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Unsupported cipher suites action").AddStringEnumDescription("drop", "no-decrypt").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("drop", "no-decrypt"),

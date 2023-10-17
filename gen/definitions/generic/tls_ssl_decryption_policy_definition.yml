@@ -30,13 +30,13 @@ attributes:
     tf_name: default_action
     type: String
     enum_values: [noIntent, doNotDecrypt, decrypt]
-    description: Default action
+    description: Default action (applies when 'mode' set to 'security')
     example: noIntent
   - model_name: sequences
     data_path: [definition] 
     type: List
     tf_name: network_rules
-    description: List of network rules
+    description: List of network rules (applies when 'mode' set to 'security')
     attributes:
       - model_name: baseAction
         type: String
@@ -80,7 +80,7 @@ attributes:
     data_path: [definition] 
     tf_name: url_rules
     type: List
-    description: List of url rules
+    description: List of url rules (applies when 'mode' set to 'security')
     exclude_test: true
     attributes:
       - model_name: name
@@ -94,7 +94,7 @@ attributes:
         description: List of VPN IDs
         example: 1
       - model_name: ref
-        tf_name: tls_ssl_profile_id
+        tf_name: tls_ssl_profile_policy_id
         type: String
         description: TLS SSL Profile Policy ID
         example: 2d8cbc1b-f969-4999-a0bd-f77a070ba5f7
@@ -113,14 +113,14 @@ attributes:
     tf_name: expired_certificate
     type: String
     enum_values: [drop, decrypt]
-    description: Expired certificate
+    description: Expired certificate action
     example: "drop"
   - model_name: untrustedCertificate
     data_path: [definition, settings]
     tf_name: untrusted_certificate
     type: String
     enum_values: [drop, decrypt]
-    description: Untrusted certificate
+    description: Untrusted certificate action
     example: "drop"
   - model_name: certificateRevocationStatus
     data_path: [definition, settings]
@@ -134,21 +134,21 @@ attributes:
     tf_name: unknown_revocation_status
     type: String
     enum_values: [drop, decrypt]
-    description: Unknown revocation status
+    description: Unknown revocation status action
     example: "drop"
   - model_name: unsupportedProtocolVersions
     data_path: [definition, settings]
     tf_name: unsupported_protocol_versions
     type: String
     enum_values: [drop, no-decrypt]
-    description: Unsupported protocol versions
+    description: Unsupported protocol versions action
     example: "drop"
   - model_name: unsupportedCipherSuites
     data_path: [definition, settings]
     tf_name: unsupported_cipher_suites
     type: String
     enum_values: [drop, no-decrypt]
-    description: Unsupported cipher suites
+    description: Unsupported cipher suites action
     example: "drop"
   - model_name: failureMode
     data_path: [definition, settings]

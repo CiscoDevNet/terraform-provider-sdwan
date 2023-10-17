@@ -75,11 +75,11 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 				Computed:            true,
 			},
 			"default_action": schema.StringAttribute{
-				MarkdownDescription: "Default action",
+				MarkdownDescription: "Default action (applies when 'mode' set to 'security')",
 				Computed:            true,
 			},
 			"network_rules": schema.ListNestedAttribute{
-				MarkdownDescription: "List of network rules",
+				MarkdownDescription: "List of network rules (applies when 'mode' set to 'security')",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -119,7 +119,7 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 				},
 			},
 			"url_rules": schema.ListNestedAttribute{
-				MarkdownDescription: "List of url rules",
+				MarkdownDescription: "List of url rules (applies when 'mode' set to 'security')",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -132,7 +132,7 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"tls_ssl_profile_id": schema.StringAttribute{
+						"tls_ssl_profile_policy_id": schema.StringAttribute{
 							MarkdownDescription: "TLS SSL Profile Policy ID",
 							Computed:            true,
 						},
@@ -148,11 +148,11 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 				Computed:            true,
 			},
 			"expired_certificate": schema.StringAttribute{
-				MarkdownDescription: "Expired certificate",
+				MarkdownDescription: "Expired certificate action",
 				Computed:            true,
 			},
 			"untrusted_certificate": schema.StringAttribute{
-				MarkdownDescription: "Untrusted certificate",
+				MarkdownDescription: "Untrusted certificate action",
 				Computed:            true,
 			},
 			"certificate_revocation_status": schema.StringAttribute{
@@ -160,15 +160,15 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 				Computed:            true,
 			},
 			"unknown_revocation_status": schema.StringAttribute{
-				MarkdownDescription: "Unknown revocation status",
+				MarkdownDescription: "Unknown revocation status action",
 				Computed:            true,
 			},
 			"unsupported_protocol_versions": schema.StringAttribute{
-				MarkdownDescription: "Unsupported protocol versions",
+				MarkdownDescription: "Unsupported protocol versions action",
 				Computed:            true,
 			},
 			"unsupported_cipher_suites": schema.StringAttribute{
-				MarkdownDescription: "Unsupported cipher suites",
+				MarkdownDescription: "Unsupported cipher suites action",
 				Computed:            true,
 			},
 			"failure_mode": schema.StringAttribute{

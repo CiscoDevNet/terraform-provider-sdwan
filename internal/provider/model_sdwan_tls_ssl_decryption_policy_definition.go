@@ -61,10 +61,10 @@ type TLSSSLDecryptionPolicyDefinitionNetworkRules struct {
 }
 
 type TLSSSLDecryptionPolicyDefinitionUrlRules struct {
-	RuleName             types.String `tfsdk:"rule_name"`
-	TargetVpns           types.List   `tfsdk:"target_vpns"`
-	TlsSslProfileId      types.String `tfsdk:"tls_ssl_profile_id"`
-	TlsSslProfileVersion types.Int64  `tfsdk:"tls_ssl_profile_version"`
+	RuleName              types.String `tfsdk:"rule_name"`
+	TargetVpns            types.List   `tfsdk:"target_vpns"`
+	TlsSslProfilePolicyId types.String `tfsdk:"tls_ssl_profile_policy_id"`
+	TlsSslProfileVersion  types.Int64  `tfsdk:"tls_ssl_profile_version"`
 }
 
 type TLSSSLDecryptionPolicyDefinitionNetworkRulesSourceAndDestinationConfiguration struct {
@@ -131,8 +131,8 @@ func (data TLSSSLDecryptionPolicyDefinition) toBody(ctx context.Context) string 
 				item.TargetVpns.ElementsAs(ctx, &values, false)
 				itemBody, _ = sjson.Set(itemBody, "vpn", values)
 			}
-			if !item.TlsSslProfileId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "ref", item.TlsSslProfileId.ValueString())
+			if !item.TlsSslProfilePolicyId.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "ref", item.TlsSslProfilePolicyId.ValueString())
 			}
 			body, _ = sjson.SetRaw(body, "definition.profiles.-1", itemBody)
 		}
@@ -266,9 +266,9 @@ func (data *TLSSSLDecryptionPolicyDefinition) fromBody(ctx context.Context, res 
 				item.TargetVpns = types.ListNull(types.StringType)
 			}
 			if cValue := v.Get("ref"); cValue.Exists() {
-				item.TlsSslProfileId = types.StringValue(cValue.String())
+				item.TlsSslProfilePolicyId = types.StringValue(cValue.String())
 			} else {
-				item.TlsSslProfileId = types.StringNull()
+				item.TlsSslProfilePolicyId = types.StringNull()
 			}
 			data.UrlRules = append(data.UrlRules, item)
 			return true
@@ -400,7 +400,7 @@ func (data *TLSSSLDecryptionPolicyDefinition) hasChanges(ctx context.Context, st
 			if !data.UrlRules[i].TargetVpns.Equal(state.UrlRules[i].TargetVpns) {
 				hasChanges = true
 			}
-			if !data.UrlRules[i].TlsSslProfileId.Equal(state.UrlRules[i].TlsSslProfileId) {
+			if !data.UrlRules[i].TlsSslProfilePolicyId.Equal(state.UrlRules[i].TlsSslProfilePolicyId) {
 				hasChanges = true
 			}
 		}
