@@ -5,11 +5,6 @@ doc_category: Inventory
 remove_id: true
 skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
 attributes:
-  - model_name: host-name
-    tf_name: name
-    type: String
-    description: The hostname of a device
-    example: va-001
   - model_name: data
     tf_name: devices
     type: List
@@ -20,26 +15,29 @@ attributes:
         type: String
         description: Chassis Number
         id: true
-        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        example: ISR-7C260167-7A6C-628A-00A6-A30214119017
       - model_name: site-id
         tf_name: site_id
         type: String
         description: Site id for respective device
-        example: 400
+        example: 1
+        exclude_test: true
       - model_name: serialNumber
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: 2AJC9DJ
+        example: d4da6eb56aca4a5a884688ed25abcaed
       - model_name: host-name
         tf_name: hostname
         type: String
         description: Hostname for respective device
-        example: vEdge-123
+        example: router1
+        exclude_test: true
       - model_name: validity
         type: String
         description: Validity of device
         example: valid
+        exclude_test: true
       - model_name: deviceType
         tf_name: device_type
         type: String

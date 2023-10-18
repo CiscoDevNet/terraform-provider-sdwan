@@ -38,7 +38,7 @@ func TestAccDataSourceSdwan{{camelCase .Name}}(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue) (not .QueryParam)}}
 					{{- if or (eq .Type "List") (eq .Type "Set")}}
 					{{- $list := .TfName }}
 					{{- range  .Attributes}}
@@ -78,6 +78,7 @@ func TestAccDataSourceSdwan{{camelCase .Name}}(t *testing.T) {
 const testAccDataSourceSdwan{{camelCase .Name}}Config = `
 {{if .TestPrerequisites}}{{.TestPrerequisites}}{{end}}
 
+{{- if not (contains .SkipTemplates "resource.go")}}
 resource "sdwan_{{snakeCase $name}}" "test" {
 {{- range  .Attributes}}
 {{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
@@ -115,8 +116,16 @@ resource "sdwan_{{snakeCase $name}}" "test" {
 {{- end}}
 {{- end}}
 }
+{{- end}}
 
 data "sdwan_{{snakeCase .Name}}" "test" {
+{{- range  .Attributes}}
+{{- if .QueryParam}}
+  {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}
+{{- end}}
+{{- end}}
+{{- if not .RemoveId}}
   id = sdwan_{{snakeCase $name}}.test.id
+{{- end}}
 }
 `

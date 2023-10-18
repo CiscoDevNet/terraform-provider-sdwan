@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanDataFQDNPrefixListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanDataFQDNPrefixListPolicyObjectConfig = `
 
-
 resource "sdwan_data_fqdn_prefix_list_policy_object" "test" {
   name = "Example"
   entries = [{

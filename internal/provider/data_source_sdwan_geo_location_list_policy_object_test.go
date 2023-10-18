@@ -44,7 +44,6 @@ func TestAccDataSourceSdwanGeoLocationListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanGeoLocationListPolicyObjectConfig = `
 
-
 resource "sdwan_geo_location_list_policy_object" "test" {
   name = "Example"
   entries = [{

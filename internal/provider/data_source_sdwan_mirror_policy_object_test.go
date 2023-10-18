@@ -44,7 +44,6 @@ func TestAccDataSourceSdwanMirrorPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanMirrorPolicyObjectConfig = `
 
-
 resource "sdwan_mirror_policy_object" "test" {
   name = "Example"
   remote_destination_ip = "10.1.1.1"

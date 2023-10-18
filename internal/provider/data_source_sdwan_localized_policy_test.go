@@ -84,7 +84,6 @@ resource "sdwan_acl_policy_definition" "test" {
   ]
 }
 
-
 resource "sdwan_localized_policy" "test" {
   name = "Example"
   description = "My description"

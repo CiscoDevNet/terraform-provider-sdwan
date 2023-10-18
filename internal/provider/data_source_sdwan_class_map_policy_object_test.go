@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanClassMapPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanClassMapPolicyObjectConfig = `
 
-
 resource "sdwan_class_map_policy_object" "test" {
   name = "Example"
   queue = 2

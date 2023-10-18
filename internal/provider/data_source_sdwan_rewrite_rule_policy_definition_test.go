@@ -50,7 +50,6 @@ resource "sdwan_class_map_policy_object" "test" {
   queue = 6
 }
 
-
 resource "sdwan_rewrite_rule_policy_definition" "test" {
   name = "Example"
   description = "My description"

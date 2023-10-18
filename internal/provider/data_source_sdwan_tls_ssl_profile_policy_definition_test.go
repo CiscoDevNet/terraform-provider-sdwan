@@ -50,7 +50,6 @@ func TestAccDataSourceSdwanTLSSSLProfilePolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanTLSSSLProfilePolicyDefinitionConfig = `
 
-
 resource "sdwan_tls_ssl_profile_policy_definition" "test" {
   name = "Example"
   description = "My description"

@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanProtocolListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanProtocolListPolicyObjectConfig = `
 
-
 resource "sdwan_protocol_list_policy_object" "test" {
   name = "Example"
   entries = [{

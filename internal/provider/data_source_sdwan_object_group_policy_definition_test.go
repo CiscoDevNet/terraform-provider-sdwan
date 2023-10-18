@@ -47,7 +47,6 @@ func TestAccDataSourceSdwanObjectGroupPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanObjectGroupPolicyDefinitionConfig = `
 
-
 resource "sdwan_object_group_policy_definition" "test" {
   name = "Example"
   description = "My description"

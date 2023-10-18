@@ -44,7 +44,6 @@ func TestAccDataSourceSdwanIPSSignatureListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanIPSSignatureListPolicyObjectConfig = `
 
-
 resource "sdwan_ips_signature_list_policy_object" "test" {
   name = "Example"
   entries = [{

@@ -48,7 +48,6 @@ func TestAccDataSourceSdwanIntrusionPreventionPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig = `
 
-
 resource "sdwan_intrusion_prevention_policy_definition" "test" {
   name = "Example"
   description = "My description"

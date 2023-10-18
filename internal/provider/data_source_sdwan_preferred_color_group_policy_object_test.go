@@ -48,7 +48,6 @@ func TestAccDataSourceSdwanPreferredColorGroupPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanPreferredColorGroupPolicyObjectConfig = `
 
-
 resource "sdwan_preferred_color_group_policy_object" "test" {
   name = "Example"
   primary_color_preference = "blue bronze"

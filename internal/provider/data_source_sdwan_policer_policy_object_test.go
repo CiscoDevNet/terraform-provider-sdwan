@@ -45,7 +45,6 @@ func TestAccDataSourceSdwanPolicerPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanPolicerPolicyObjectConfig = `
 
-
 resource "sdwan_policer_policy_object" "test" {
   name = "Example"
   burst = 100000

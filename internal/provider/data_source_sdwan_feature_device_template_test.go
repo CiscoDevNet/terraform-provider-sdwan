@@ -55,7 +55,6 @@ resource "sdwan_cisco_system_feature_template" "system" {
   multi_tenant = true
 }
 
-
 resource "sdwan_feature_device_template" "test" {
   name = "Example"
   description = "My description"

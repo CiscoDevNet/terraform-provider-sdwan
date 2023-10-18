@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanColorListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanColorListPolicyObjectConfig = `
 
-
 resource "sdwan_color_list_policy_object" "test" {
   name = "Example"
   entries = [{

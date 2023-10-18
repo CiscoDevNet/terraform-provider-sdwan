@@ -56,7 +56,6 @@ func TestAccDataSourceSdwanCflowdPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanCflowdPolicyDefinitionConfig = `
 
-
 resource "sdwan_cflowd_policy_definition" "test" {
   name = "Example"
   description = "My description"

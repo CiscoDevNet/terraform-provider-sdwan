@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanBlockURLListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanBlockURLListPolicyObjectConfig = `
 
-
 resource "sdwan_block_url_list_policy_object" "test" {
   name = "Example"
   entries = [{

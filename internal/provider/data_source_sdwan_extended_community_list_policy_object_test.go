@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanExtendedCommunityListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanExtendedCommunityListPolicyObjectConfig = `
 
-
 resource "sdwan_extended_community_list_policy_object" "test" {
   name = "Example"
   entries = [{

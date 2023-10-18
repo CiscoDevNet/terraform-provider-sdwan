@@ -51,7 +51,6 @@ func TestAccDataSourceSdwanURLFilteringPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanURLFilteringPolicyDefinitionConfig = `
 
-
 resource "sdwan_url_filtering_policy_definition" "test" {
   name = "Example"
   description = "My description"

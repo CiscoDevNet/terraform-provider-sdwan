@@ -45,7 +45,6 @@ func TestAccDataSourceSdwanAppProbeClassPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanAppProbeClassPolicyObjectConfig = `
 
-
 resource "sdwan_app_probe_class_policy_object" "test" {
   name = "Example"
   forwarding_class = "FC1"

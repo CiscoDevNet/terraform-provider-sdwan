@@ -46,7 +46,6 @@ func TestAccDataSourceSdwanTLOCListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanTLOCListPolicyObjectConfig = `
 
-
 resource "sdwan_tloc_list_policy_object" "test" {
   name = "Example"
   entries = [{

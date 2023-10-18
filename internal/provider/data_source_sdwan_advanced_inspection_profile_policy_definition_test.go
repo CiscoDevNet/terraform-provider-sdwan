@@ -56,7 +56,6 @@ resource "sdwan_url_filtering_policy_definition" "test" {
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
 }
 
-
 resource "sdwan_advanced_inspection_profile_policy_definition" "test" {
   name = "Example"
   description = "My description"

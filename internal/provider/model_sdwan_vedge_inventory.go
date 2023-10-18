@@ -29,7 +29,6 @@ import (
 
 type VEdgeInventory struct {
 	Id      types.String            `tfsdk:"id"`
-	Name    types.String            `tfsdk:"name"`
 	Devices []VEdgeInventoryDevices `tfsdk:"devices"`
 }
 
@@ -44,9 +43,6 @@ type VEdgeInventoryDevices struct {
 
 func (data VEdgeInventory) toBody(ctx context.Context) string {
 	body := ""
-	if !data.Name.IsNull() {
-		body, _ = sjson.Set(body, "host-name", data.Name.ValueString())
-	}
 	if len(data.Devices) > 0 {
 		body, _ = sjson.Set(body, "data", []interface{}{})
 		for _, item := range data.Devices {
@@ -76,11 +72,6 @@ func (data VEdgeInventory) toBody(ctx context.Context) string {
 }
 
 func (data *VEdgeInventory) fromBody(ctx context.Context, res gjson.Result) {
-	if value := res.Get("host-name"); value.Exists() {
-		data.Name = types.StringValue(value.String())
-	} else {
-		data.Name = types.StringNull()
-	}
 	if value := res.Get("data"); value.Exists() {
 		data.Devices = make([]VEdgeInventoryDevices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -123,9 +114,6 @@ func (data *VEdgeInventory) fromBody(ctx context.Context, res gjson.Result) {
 
 func (data *VEdgeInventory) hasChanges(ctx context.Context, state *VEdgeInventory) bool {
 	hasChanges := false
-	if !data.Name.Equal(state.Name) {
-		hasChanges = true
-	}
 	if len(data.Devices) != len(state.Devices) {
 		hasChanges = true
 	} else {

@@ -33,12 +33,8 @@ func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanVEdgeInventoryConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "name", "va-001"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "2081c2f4-3f9f-4fee-8078-dcc8904e368d"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.site_id", "400"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "2AJC9DJ"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.hostname", "vEdge-123"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.validity", "valid"),
+					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "ISR-7C260167-7A6C-628A-00A6-A30214119017"),
+					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "d4da6eb56aca4a5a884688ed25abcaed"),
 					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.device_type", "vedge"),
 				),
 			},
@@ -49,19 +45,6 @@ func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
 const testAccDataSourceSdwanVEdgeInventoryConfig = `
 
 
-resource "sdwan_vedge_inventory" "test" {
-  name = "va-001"
-  devices = [{
-    chassis_number = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
-    site_id = "400"
-    serial_number = "2AJC9DJ"
-    hostname = "vEdge-123"
-    validity = "valid"
-    device_type = "vedge"
-  }]
-}
-
 data "sdwan_vedge_inventory" "test" {
-  id = sdwan_vedge_inventory.test.id
 }
 `

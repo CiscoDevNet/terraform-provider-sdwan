@@ -52,7 +52,6 @@ func TestAccDataSourceSdwanTrafficDataPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanTrafficDataPolicyDefinitionConfig = `
 
-
 resource "sdwan_traffic_data_policy_definition" "test" {
   name = "Example"
   description = "My description"

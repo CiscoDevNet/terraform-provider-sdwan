@@ -82,7 +82,6 @@ resource "sdwan_traffic_data_policy_definition" "data1" {
   ]
 }
 
-
 resource "sdwan_centralized_policy" "test" {
   name = "Example"
   description = "My description"

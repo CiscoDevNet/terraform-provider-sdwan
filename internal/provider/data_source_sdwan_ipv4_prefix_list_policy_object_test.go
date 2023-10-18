@@ -45,7 +45,6 @@ func TestAccDataSourceSdwanIPv4PrefixListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanIPv4PrefixListPolicyObjectConfig = `
 
-
 resource "sdwan_ipv4_prefix_list_policy_object" "test" {
   name = "Example"
   entries = [{

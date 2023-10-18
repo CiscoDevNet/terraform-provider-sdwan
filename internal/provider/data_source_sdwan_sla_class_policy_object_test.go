@@ -49,7 +49,6 @@ func TestAccDataSourceSdwanSLAClassPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanSLAClassPolicyObjectConfig = `
 
-
 resource "sdwan_sla_class_policy_object" "test" {
   name = "Example"
   jitter = 100

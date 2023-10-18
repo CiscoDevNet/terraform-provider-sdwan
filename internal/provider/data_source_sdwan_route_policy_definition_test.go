@@ -53,7 +53,6 @@ func TestAccDataSourceSdwanRoutePolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanRoutePolicyDefinitionConfig = `
 
-
 resource "sdwan_route_policy_definition" "test" {
   name = "Example"
   description = "My description"

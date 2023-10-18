@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanVPNListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanVPNListPolicyObjectConfig = `
 
-
 resource "sdwan_vpn_list_policy_object" "test" {
   name = "Example"
   entries = [{

@@ -64,7 +64,6 @@ func TestAccDataSourceSdwanTLSSSLDecryptionPolicyDefinition(t *testing.T) {
 
 const testAccDataSourceSdwanTLSSSLDecryptionPolicyDefinitionConfig = `
 
-
 resource "sdwan_tls_ssl_decryption_policy_definition" "test" {
   name = "Example"
   description = "My description"

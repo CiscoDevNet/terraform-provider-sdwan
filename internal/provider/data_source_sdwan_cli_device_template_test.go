@@ -46,7 +46,6 @@ func TestAccDataSourceSdwanCLIDeviceTemplate(t *testing.T) {
 
 const testAccDataSourceSdwanCLIDeviceTemplateConfig = `
 
-
 resource "sdwan_cli_device_template" "test" {
   name = "Example"
   description = "My description"

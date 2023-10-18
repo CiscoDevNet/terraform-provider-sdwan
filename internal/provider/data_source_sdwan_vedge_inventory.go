@@ -57,10 +57,6 @@ func (d *VEdgeInventoryDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "The id of the object",
 				Computed:            true,
 			},
-			"name": schema.StringAttribute{
-				MarkdownDescription: "The hostname of a device",
-				Computed:            true,
-			},
 			"devices": schema.ListNestedAttribute{
 				MarkdownDescription: "List of returned devices",
 				Computed:            true,

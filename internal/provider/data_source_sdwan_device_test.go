@@ -33,13 +33,11 @@ func TestAccDataSourceSdwanDevice(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanDeviceConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "serial_number", "2AJC9DJ"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "name", "va-001"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.device_id", "2081c2f4-3f9f-4fee-8078-dcc8904e368d"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "2081c2f4-3f9f-4fee-8078-dcc8904e368d"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.site_id", "400"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "2AJC9DJ"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.hostname", "vEdge-123"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.device_id", "10.0.0.14"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "cd4aa06a-dee3-43c5-bb95-2a1b29cb86e2"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.site_id", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "EE16A1C0BAD74974AF666E446F15605F"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.hostname", "vsmart"),
 					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.reachability", "reachable"),
 					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.status", "normal"),
 					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.state", "green"),
@@ -52,22 +50,8 @@ func TestAccDataSourceSdwanDevice(t *testing.T) {
 const testAccDataSourceSdwanDeviceConfig = `
 
 
-resource "sdwan_device" "test" {
-  serial_number = "2AJC9DJ"
-  name = "va-001"
-  devices = [{
-    device_id = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
-    uuid = "2081c2f4-3f9f-4fee-8078-dcc8904e368d"
-    site_id = "400"
-    serial_number = "2AJC9DJ"
-    hostname = "vEdge-123"
-    reachability = "reachable"
-    status = "normal"
-    state = "green"
-  }]
-}
-
 data "sdwan_device" "test" {
-  id = sdwan_device.test.id
+  serial_number = "EE16A1C0BAD74974AF666E446F15605F"
+  name = "vsmart"
 }
 `

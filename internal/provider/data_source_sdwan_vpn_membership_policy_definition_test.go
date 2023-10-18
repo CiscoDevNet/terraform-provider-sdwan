@@ -60,7 +60,6 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
   ]
 }
 
-
 resource "sdwan_vpn_membership_policy_definition" "test" {
   name = "Example"
   description = "My description"

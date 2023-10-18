@@ -43,7 +43,6 @@ func TestAccDataSourceSdwanASPathListPolicyObject(t *testing.T) {
 
 const testAccDataSourceSdwanASPathListPolicyObjectConfig = `
 
-
 resource "sdwan_as_path_list_policy_object" "test" {
   name = "Example"
   entries = [{
