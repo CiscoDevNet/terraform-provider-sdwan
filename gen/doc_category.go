@@ -20,8 +20,8 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -57,14 +57,14 @@ func SnakeCase(s string) string {
 }
 
 func main() {
-	featureTemplateFiles, _ := ioutil.ReadDir(featureTemplateDefinitionsPath)
+	featureTemplateFiles, _ := os.ReadDir(featureTemplateDefinitionsPath)
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
-	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
+	genericFiles, _ := os.ReadDir(genericDefinitionsPath)
 	genericConfigs := make([]YamlConfig, len(genericFiles))
 
 	// Load feature template configs
 	for i, filename := range featureTemplateFiles {
-		yamlFile, err := ioutil.ReadFile(filepath.Join(featureTemplateDefinitionsPath, filename.Name()))
+		yamlFile, err := os.ReadFile(filepath.Join(featureTemplateDefinitionsPath, filename.Name()))
 		if err != nil {
 			log.Fatalf("Error reading file: %v", err)
 		}
@@ -81,7 +81,7 @@ func main() {
 	for i := range featureTemplateConfigs {
 		for _, path := range docPaths {
 			filename := path + SnakeCase(featureTemplateConfigs[i].Name) + "_feature_template.md"
-			content, err := ioutil.ReadFile(filename)
+			content, err := os.ReadFile(filename)
 			if err != nil {
 				log.Fatalf("Error opening documentation: %v", err)
 			}
@@ -89,13 +89,13 @@ func main() {
 			s := string(content)
 			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Feature Templates"`)
 
-			ioutil.WriteFile(filename, []byte(s), 0644)
+			os.WriteFile(filename, []byte(s), 0644)
 		}
 	}
 
 	// Load generic configs
 	for i, filename := range genericFiles {
-		yamlFile, err := ioutil.ReadFile(filepath.Join(genericDefinitionsPath, filename.Name()))
+		yamlFile, err := os.ReadFile(filepath.Join(genericDefinitionsPath, filename.Name()))
 		if err != nil {
 			log.Fatalf("Error reading file: %v", err)
 		}
@@ -112,15 +112,13 @@ func main() {
 	for i := range genericConfigs {
 		for _, path := range docPaths {
 			filename := path + SnakeCase(genericConfigs[i].Name) + ".md"
-			content, err := ioutil.ReadFile(filename)
-			if err != nil {
-				log.Printf("Error opening documentation: %v", err)
-			} else {
+			content, err := os.ReadFile(filename)
+			if err == nil {
 				cat := genericConfigs[i].DocCategory
 				s := string(content)
 				s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
 
-				ioutil.WriteFile(filename, []byte(s), 0644)
+				os.WriteFile(filename, []byte(s), 0644)
 			}
 		}
 	}
@@ -129,12 +127,12 @@ func main() {
 	for doc, cat := range extraDocs {
 		for _, path := range docPaths {
 			filename := path + doc + ".md"
-			content, err := ioutil.ReadFile(filename)
+			content, err := os.ReadFile(filename)
 			if err == nil {
 				s := string(content)
 				s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
 
-				ioutil.WriteFile(filename, []byte(s), 0644)
+				os.WriteFile(filename, []byte(s), 0644)
 			}
 		}
 	}
