@@ -24,7 +24,7 @@ data "sdwan_vedge_inventory" "example" {
 
 - `devices` (Attributes List) List of returned devices (see [below for nested schema](#nestedatt--devices))
 - `id` (String) The id of the object
-- `name` (String) TThe hostname of a device
+- `name` (String) The hostname of a device
 
 <a id="nestedatt--devices"></a>
 ### Nested Schema for `devices`

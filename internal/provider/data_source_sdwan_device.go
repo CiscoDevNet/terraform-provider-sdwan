@@ -72,7 +72,7 @@ func (d *DeviceDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"device_id": schema.StringAttribute{
-							MarkdownDescription: "The deviceId as defined in VManage",
+							MarkdownDescription: "The device ID as defined in vManage",
 							Computed:            true,
 						},
 						"uuid": schema.StringAttribute{

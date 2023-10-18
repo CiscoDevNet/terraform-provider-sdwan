@@ -2,7 +2,7 @@
 name: Device
 rest_endpoint: /device
 doc_category: Inventory
-remove_id: True
+remove_id: true
 skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
 attributes:
   - model_name: board-serial
@@ -10,7 +10,7 @@ attributes:
     type: String
     description: Serial number for device. Could be board or virtual identifier
     example: 2AJC9DJ
-    query_param: True
+    query_param: true
   - model_name: host-name
     tf_name: name
     type: String
@@ -26,12 +26,11 @@ attributes:
         type: String
         tf_name: device_id
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
-        description: The deviceId as defined in VManage
+        description: The device ID as defined in vManage
       - model_name: uuid
         type: String
         description: Unique identifier for device
-        id: True
-        mandatory: False
+        id: true
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
       - model_name: site-id
         tf_name: site_id

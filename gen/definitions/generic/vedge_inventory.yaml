@@ -2,13 +2,13 @@
 name: VEdge Inventory
 rest_endpoint: /device/vedgeinventory/detail
 doc_category: Inventory
-remove_id: True
+remove_id: true
 skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
 attributes:
   - model_name: host-name
     tf_name: name
     type: String
-    description: TThe hostname of a device
+    description: The hostname of a device
     example: va-001
   - model_name: data
     tf_name: devices
@@ -19,8 +19,7 @@ attributes:
         tf_name: chassis_number
         type: String
         description: Chassis Number
-        id: True
-        mandatory: False
+        id: true
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
       - model_name: site-id
         tf_name: site_id

@@ -401,7 +401,7 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 		return
 	}
 	{{ if not .RemoveId}}
-		plan.Id = types.StringValue(res.Get("{{.IdAttribute}}").String())
+	plan.Id = types.StringValue(res.Get("{{.IdAttribute}}").String())
 	{{- end}}
 	{{- if .HasVersion}}
 	plan.Version = types.Int64Value(0)
