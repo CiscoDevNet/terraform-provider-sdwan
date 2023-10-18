@@ -35,7 +35,7 @@ data "sdwan_cedge_aaa_feature_template" "example" {
 - `authorization_console_variable` (String) Variable name
 - `authorization_rules` (Attributes List) Configure the Authorization Rules (see [below for nested schema](#nestedatt--authorization_rules))
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `dot1x_accounting` (Boolean) Accounting configurations parameters
 - `dot1x_accounting_variable` (String) Variable name
 - `dot1x_authentication` (Boolean) Authentication configurations parameters
@@ -64,7 +64,7 @@ data "sdwan_cedge_aaa_feature_template" "example" {
 
 Read-Only:
 
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Configure Accounting Method
 - `name` (String) Configure Accounting Rule ID
 - `optional` (Boolean) Indicates if list item is considered optional.
@@ -79,7 +79,7 @@ Read-Only:
 Read-Only:
 
 - `authenticated` (Boolean) Succeed if user has authenticated
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Method
 - `name` (String) Configure Authorization Rule ID
 - `optional` (Boolean) Indicates if list item is considered optional.

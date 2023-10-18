@@ -37,7 +37,7 @@ data "sdwan_cedge_global_feature_template" "example" {
 - `console_logging` (Boolean) Configure Console Logging
 - `console_logging_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `domain_lookup` (Boolean) Configure Domain-Lookup
 - `domain_lookup_variable` (String) Variable name
 - `ftp_passive` (Boolean) Set Passive FTP

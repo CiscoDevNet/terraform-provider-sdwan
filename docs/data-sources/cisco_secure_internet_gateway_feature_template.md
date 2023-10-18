@@ -29,7 +29,7 @@ data "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
 ### Read-Only
 
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `interfaces` (Attributes List) Interface name: IPsec when present (see [below for nested schema](#nestedatt--interfaces))
 - `services` (Attributes List) Configure services (see [below for nested schema](#nestedatt--services))
 - `template_type` (String) The template type

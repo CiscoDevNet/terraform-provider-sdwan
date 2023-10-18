@@ -76,11 +76,13 @@ func TestAccDataSourceSdwanCEdgeAAAFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "accounting_rules.0.method", "exec"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "accounting_rules.0.privilege_level", "15"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "accounting_rules.0.start_stop", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "accounting_rules.0.groups", "GROUP1"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "authorization_console", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "authorization_config_commands", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "authorization_rules.0.name", "RULE1"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "authorization_rules.0.method", "commands"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "authorization_rules.0.privilege_level", "15"),
+					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "authorization_rules.0.groups", "GROUP1"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "authorization_rules.0.authenticated", "true"),
 				),
 			},
@@ -154,7 +156,7 @@ resource "sdwan_cedge_aaa_feature_template" "test" {
     method = "exec"
     privilege_level = "15"
     start_stop = true
-    group = ["GROUP1"]
+    groups = "GROUP1"
   }]
   authorization_console = true
   authorization_config_commands = true
@@ -162,7 +164,7 @@ resource "sdwan_cedge_aaa_feature_template" "test" {
     name = "RULE1"
     method = "commands"
     privilege_level = "15"
-    group = ["GROUP1"]
+    groups = "GROUP1"
     authenticated = true
   }]
 }

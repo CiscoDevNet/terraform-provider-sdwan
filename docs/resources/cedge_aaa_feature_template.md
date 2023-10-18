@@ -96,7 +96,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       method          = "exec"
       privilege_level = "15"
       start_stop      = true
-      group           = ["GROUP1"]
+      groups          = "GROUP1"
     }
   ]
   authorization_console         = true
@@ -106,7 +106,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       name            = "RULE1"
       method          = "commands"
       privilege_level = "15"
-      group           = ["GROUP1"]
+      groups          = "GROUP1"
       authenticated   = true
     }
   ]
@@ -119,7 +119,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
 ### Required
 
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
   - Choices: `vedge-C8000V`, `vedge-C8300-1N1S-4T2X`, `vedge-C8300-1N1S-6T`, `vedge-C8300-2N2S-6T`, `vedge-C8300-2N2S-4T2X`, `vedge-C8500-12X4QC`, `vedge-C8500-12X`, `vedge-C8500-20X6C`, `vedge-C8500L-8S4X`, `vedge-C8200-1N-4T`, `vedge-C8200L-1N-4T`
 - `name` (String) The name of the feature template
 
@@ -174,7 +174,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
 
 Optional:
 
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Configure Accounting Method
   - Choices: `commands`, `exec`, `network`, `system`
 - `name` (String) Configure Accounting Rule ID
@@ -193,7 +193,7 @@ Optional:
 
 - `authenticated` (Boolean) Succeed if user has authenticated
   - Default value: `false`
-- `group` (List of String) Use Server-group
+- `groups` (String) Comma separated list of groups
 - `method` (String) Method
   - Choices: `commands`
 - `name` (String) Configure Authorization Rule ID

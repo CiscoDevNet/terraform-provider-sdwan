@@ -33,7 +33,7 @@ data "sdwan_cisco_dhcp_server_feature_template" "example" {
 - `default_gateway` (String) Set IP address of default gateway
 - `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `dns_servers` (List of String) Configure one or more DNS server IP addresses
 - `dns_servers_variable` (String) Variable name
 - `domain_name` (String) Set domain name client uses to resolve hostnames

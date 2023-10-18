@@ -80,7 +80,7 @@ func (d *CiscoNTPFeatureTemplateDataSource) Schema(ctx context.Context, req data
 				MarkdownDescription: "The description of the feature template",
 				Computed:            true,
 			},
-			"device_types": schema.ListAttribute{
+			"device_types": schema.SetAttribute{
 				MarkdownDescription: "List of supported device types",
 				ElementType:         types.StringType,
 				Computed:            true,

@@ -29,7 +29,7 @@ data "sdwan_cisco_vpn_feature_template" "example" {
 ### Read-Only
 
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `dns_hosts` (Attributes List) Static DNS mapping (see [below for nested schema](#nestedatt--dns_hosts))
 - `dns_ipv4_servers` (Attributes List) DNS (see [below for nested schema](#nestedatt--dns_ipv4_servers))
 - `dns_ipv6_servers` (Attributes List) DNS (see [below for nested schema](#nestedatt--dns_ipv6_servers))

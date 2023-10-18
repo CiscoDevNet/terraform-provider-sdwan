@@ -35,7 +35,7 @@ type CEdgeGlobal struct {
 	TemplateType               types.String `tfsdk:"template_type"`
 	Name                       types.String `tfsdk:"name"`
 	Description                types.String `tfsdk:"description"`
-	DeviceTypes                types.List   `tfsdk:"device_types"`
+	DeviceTypes                types.Set    `tfsdk:"device_types"`
 	Nat64UdpTimeout            types.Int64  `tfsdk:"nat64_udp_timeout"`
 	Nat64UdpTimeoutVariable    types.String `tfsdk:"nat64_udp_timeout_variable"`
 	Nat64TcpTimeout            types.Int64  `tfsdk:"nat64_tcp_timeout"`
@@ -406,9 +406,9 @@ func (data CEdgeGlobal) toBody(ctx context.Context) string {
 
 func (data *CEdgeGlobal) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("deviceType"); value.Exists() {
-		data.DeviceTypes = helpers.GetStringList(value.Array())
+		data.DeviceTypes = helpers.GetStringSet(value.Array())
 	} else {
-		data.DeviceTypes = types.ListNull(types.StringType)
+		data.DeviceTypes = types.SetNull(types.StringType)
 	}
 	if value := res.Get("templateDescription"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())

@@ -81,7 +81,7 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: "The description of the feature template",
 				Computed:            true,
 			},
-			"device_types": schema.ListAttribute{
+			"device_types": schema.SetAttribute{
 				MarkdownDescription: "List of supported device types",
 				ElementType:         types.StringType,
 				Computed:            true,

@@ -35,7 +35,7 @@ type CiscoLogging struct {
 	TemplateType         types.String              `tfsdk:"template_type"`
 	Name                 types.String              `tfsdk:"name"`
 	Description          types.String              `tfsdk:"description"`
-	DeviceTypes          types.List                `tfsdk:"device_types"`
+	DeviceTypes          types.Set                 `tfsdk:"device_types"`
 	DiskLogging          types.Bool                `tfsdk:"disk_logging"`
 	DiskLoggingVariable  types.String              `tfsdk:"disk_logging_variable"`
 	MaxSize              types.Int64               `tfsdk:"max_size"`
@@ -457,9 +457,9 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 
 func (data *CiscoLogging) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("deviceType"); value.Exists() {
-		data.DeviceTypes = helpers.GetStringList(value.Array())
+		data.DeviceTypes = helpers.GetStringSet(value.Array())
 	} else {
-		data.DeviceTypes = types.ListNull(types.StringType)
+		data.DeviceTypes = types.SetNull(types.StringType)
 	}
 	if value := res.Get("templateDescription"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())

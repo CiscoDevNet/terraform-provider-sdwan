@@ -29,7 +29,7 @@ data "sdwan_cisco_sig_credentials_feature_template" "example" {
 ### Read-Only
 
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `template_type` (String) The template type
 - `umbrella_api_key` (String) API Key
 - `umbrella_api_key_variable` (String) Variable name

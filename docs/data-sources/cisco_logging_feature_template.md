@@ -29,7 +29,7 @@ data "sdwan_cisco_logging_feature_template" "example" {
 ### Read-Only
 
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `disk_logging` (Boolean) Enable logging to local disk
 - `disk_logging_variable` (String) Variable name
 - `ipv4_servers` (Attributes List) Enable logging to remote server (see [below for nested schema](#nestedatt--ipv4_servers))

@@ -135,7 +135,9 @@ attributes:
       - model_name: start-stop
         example: true
       - model_name: group
-        example: '["GROUP1"]'
+        tf_name: groups
+        description: Comma separated list of groups
+        example: GROUP1
   - model_name: authorization-console
     example: true
   - model_name: authorization-config-commands
@@ -152,7 +154,9 @@ attributes:
         tf_name: privilege_level
         example: 15
       - model_name: group
-        example: '["GROUP1"]'
+        tf_name: groups
+        description: Comma separated list of groups
+        example: GROUP1
       - model_name: if-authenticated
         tf_name: authenticated
         example: true

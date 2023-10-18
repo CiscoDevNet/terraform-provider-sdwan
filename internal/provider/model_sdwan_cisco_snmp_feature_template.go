@@ -35,7 +35,7 @@ type CiscoSNMP struct {
 	TemplateType     types.String           `tfsdk:"template_type"`
 	Name             types.String           `tfsdk:"name"`
 	Description      types.String           `tfsdk:"description"`
-	DeviceTypes      types.List             `tfsdk:"device_types"`
+	DeviceTypes      types.Set              `tfsdk:"device_types"`
 	Shutdown         types.Bool             `tfsdk:"shutdown"`
 	ShutdownVariable types.String           `tfsdk:"shutdown_variable"`
 	Contact          types.String           `tfsdk:"contact"`
@@ -531,9 +531,9 @@ func (data CiscoSNMP) toBody(ctx context.Context) string {
 
 func (data *CiscoSNMP) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("deviceType"); value.Exists() {
-		data.DeviceTypes = helpers.GetStringList(value.Array())
+		data.DeviceTypes = helpers.GetStringSet(value.Array())
 	} else {
-		data.DeviceTypes = types.ListNull(types.StringType)
+		data.DeviceTypes = types.SetNull(types.StringType)
 	}
 	if value := res.Get("templateDescription"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())

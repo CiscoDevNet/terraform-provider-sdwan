@@ -32,7 +32,7 @@ data "sdwan_cisco_bfd_feature_template" "example" {
 - `default_dscp` (Number) Set default DSCP value for BFD packets
 - `default_dscp_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `multiplier` (Number) Set the number of polling intervals used to determine tunnel SLA class
 - `multiplier_variable` (String) Variable name
 - `poll_interval` (Number) Set how often BFD polls tunnels to collect packet latency, loss, and statistics

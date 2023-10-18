@@ -30,7 +30,7 @@ data "sdwan_cisco_ntp_feature_template" "example" {
 
 - `authentication_keys` (Attributes List) Set MD5 authentication key (see [below for nested schema](#nestedatt--authentication_keys))
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `master` (Boolean) Configure device as NTP master
 - `master_source_interface` (String) Set interface for NTP Master
 - `master_source_interface_variable` (String) Variable name

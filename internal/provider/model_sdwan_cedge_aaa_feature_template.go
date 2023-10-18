@@ -35,7 +35,7 @@ type CEdgeAAA struct {
 	TemplateType                                    types.String                 `tfsdk:"template_type"`
 	Name                                            types.String                 `tfsdk:"name"`
 	Description                                     types.String                 `tfsdk:"description"`
-	DeviceTypes                                     types.List                   `tfsdk:"device_types"`
+	DeviceTypes                                     types.Set                    `tfsdk:"device_types"`
 	Dot1xAuthentication                             types.Bool                   `tfsdk:"dot1x_authentication"`
 	Dot1xAuthenticationVariable                     types.String                 `tfsdk:"dot1x_authentication_variable"`
 	Dot1xAccounting                                 types.Bool                   `tfsdk:"dot1x_accounting"`
@@ -107,7 +107,7 @@ type CEdgeAAAAccountingRules struct {
 	PrivilegeLevel    types.String `tfsdk:"privilege_level"`
 	StartStop         types.Bool   `tfsdk:"start_stop"`
 	StartStopVariable types.String `tfsdk:"start_stop_variable"`
-	Group             types.List   `tfsdk:"group"`
+	Groups            types.String `tfsdk:"groups"`
 }
 
 type CEdgeAAAAuthorizationRules struct {
@@ -115,7 +115,7 @@ type CEdgeAAAAuthorizationRules struct {
 	Name           types.String `tfsdk:"name"`
 	Method         types.String `tfsdk:"method"`
 	PrivilegeLevel types.String `tfsdk:"privilege_level"`
-	Group          types.List   `tfsdk:"group"`
+	Groups         types.String `tfsdk:"groups"`
 	Authenticated  types.Bool   `tfsdk:"authenticated"`
 }
 
@@ -832,13 +832,11 @@ func (data CEdgeAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "start-stop."+"vipValue", strconv.FormatBool(item.StartStop.ValueBool()))
 		}
 		itemAttributes = append(itemAttributes, "group")
-		if item.Group.IsNull() {
+		if item.Groups.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "group."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "group."+"vipType", "constant")
-			var values []string
-			item.Group.ElementsAs(ctx, &values, false)
-			itemBody, _ = sjson.Set(itemBody, "group."+"vipValue", values)
+			itemBody, _ = sjson.Set(itemBody, "group."+"vipValue", item.Groups.ValueString())
 		}
 		if !item.Optional.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
@@ -908,13 +906,11 @@ func (data CEdgeAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "level."+"vipValue", item.PrivilegeLevel.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "group")
-		if item.Group.IsNull() {
+		if item.Groups.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "group."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "group."+"vipType", "constant")
-			var values []string
-			item.Group.ElementsAs(ctx, &values, false)
-			itemBody, _ = sjson.Set(itemBody, "group."+"vipValue", values)
+			itemBody, _ = sjson.Set(itemBody, "group."+"vipValue", item.Groups.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "if-authenticated")
 		if item.Authenticated.IsNull() {
@@ -934,9 +930,9 @@ func (data CEdgeAAA) toBody(ctx context.Context) string {
 
 func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("deviceType"); value.Exists() {
-		data.DeviceTypes = helpers.GetStringList(value.Array())
+		data.DeviceTypes = helpers.GetStringSet(value.Array())
 	} else {
-		data.DeviceTypes = types.ListNull(types.StringType)
+		data.DeviceTypes = types.SetNull(types.StringType)
 	}
 	if value := res.Get("templateDescription"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -1831,20 +1827,20 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 				item.StartStop = types.BoolNull()
 				item.StartStopVariable = types.StringNull()
 			}
-			if cValue := v.Get("group.vipType"); len(cValue.Array()) > 0 {
+			if cValue := v.Get("group.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.Group = types.ListNull(types.StringType)
+					item.Groups = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.Group = types.ListNull(types.StringType)
+					item.Groups = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("group.vipValue")
-					item.Group = helpers.GetStringList(cv.Array())
+					item.Groups = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.Group = types.ListNull(types.StringType)
+				item.Groups = types.StringNull()
 
 			}
 			data.AccountingRules = append(data.AccountingRules, item)
@@ -1946,20 +1942,20 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 				item.PrivilegeLevel = types.StringNull()
 
 			}
-			if cValue := v.Get("group.vipType"); len(cValue.Array()) > 0 {
+			if cValue := v.Get("group.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.Group = types.ListNull(types.StringType)
+					item.Groups = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.Group = types.ListNull(types.StringType)
+					item.Groups = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("group.vipValue")
-					item.Group = helpers.GetStringList(cv.Array())
+					item.Groups = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.Group = types.ListNull(types.StringType)
+				item.Groups = types.StringNull()
 
 			}
 			if cValue := v.Get("if-authenticated.vipType"); cValue.Exists() {
@@ -2167,7 +2163,7 @@ func (data *CEdgeAAA) hasChanges(ctx context.Context, state *CEdgeAAA) bool {
 			if !data.AccountingRules[i].StartStop.Equal(state.AccountingRules[i].StartStop) {
 				hasChanges = true
 			}
-			if !data.AccountingRules[i].Group.Equal(state.AccountingRules[i].Group) {
+			if !data.AccountingRules[i].Groups.Equal(state.AccountingRules[i].Groups) {
 				hasChanges = true
 			}
 		}
@@ -2191,7 +2187,7 @@ func (data *CEdgeAAA) hasChanges(ctx context.Context, state *CEdgeAAA) bool {
 			if !data.AuthorizationRules[i].PrivilegeLevel.Equal(state.AuthorizationRules[i].PrivilegeLevel) {
 				hasChanges = true
 			}
-			if !data.AuthorizationRules[i].Group.Equal(state.AuthorizationRules[i].Group) {
+			if !data.AuthorizationRules[i].Groups.Equal(state.AuthorizationRules[i].Groups) {
 				hasChanges = true
 			}
 			if !data.AuthorizationRules[i].Authenticated.Equal(state.AuthorizationRules[i].Authenticated) {

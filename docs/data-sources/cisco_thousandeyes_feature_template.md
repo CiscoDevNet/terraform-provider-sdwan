@@ -29,7 +29,7 @@ data "sdwan_cisco_thousandeyes_feature_template" "example" {
 ### Read-Only
 
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 - `virtual_applications` (Attributes List) Virtual application Instance (see [below for nested schema](#nestedatt--virtual_applications))
