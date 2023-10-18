@@ -1,0 +1,63 @@
+---
+name: Device
+rest_endpoint: /device
+doc_category: Inventory
+remove_id: True
+skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
+attributes:
+  - model_name: board-serial
+    tf_name: serial_number
+    type: String
+    description: Serial number for device. Could be board or virtual identifier
+    example: 2AJC9DJ
+    query_param: True
+  - model_name: host-name
+    tf_name: name
+    type: String
+    query_param: true
+    description: The hostname of a device
+    example: va-001
+  - model_name: data
+    tf_name: devices
+    type: List
+    description: List of returned devices
+    attributes:
+      - model_name: deviceId
+        type: String
+        tf_name: device_id
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+        description: The deviceId as defined in VManage
+      - model_name: uuid
+        type: String
+        description: Unique identifier for device
+        id: True
+        mandatory: False
+        example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+      - model_name: site-id
+        tf_name: site_id
+        type: String
+        description: Site id for respective device
+        example: 400
+      - model_name: board-serial
+        tf_name: serial_number
+        type: String
+        description: Serial number for device. Could be board or virtual identifier
+        example: 2AJC9DJ
+      - model_name: host-name
+        tf_name: hostname
+        type: String
+        description: Hostname for respective device
+        example: vEdge-123
+      - model_name: reachability
+        type: String
+        description: Reachability of device
+        example: reachable
+      - model_name: status
+        type: String
+        description: Status for respective device
+        example: normal
+      - model_name: state
+        type: String
+        description: State for respective device
+        example: green
+

@@ -16,6 +16,7 @@ id_attribute: str(required=False)
 skip_templates: list(str(), required=False)
 attributes: list(include('attribute'), required=False)
 test_prerequisites: str(required=False)
+remove_id: bool(required=False)
 ---
 attribute:
   model_name: str(required=False)
@@ -53,6 +54,7 @@ attribute:
   always_include: bool(required=False)
   attributes: list(include('attribute'), required=False)
   conditional_attribute: include('conditional_attribute', required=False)
+  query_param: bool(required=False)
 
 conditional_attribute:
   name: str()

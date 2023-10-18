@@ -156,6 +156,7 @@ type YamlConfig struct {
 	SkipTemplates     []string              `yaml:"skip_templates"`
 	Attributes        []YamlConfigAttribute `yaml:"attributes"`
 	TestPrerequisites string                `yaml:"test_prerequisites"`
+	RemoveId          bool                  `yaml:"remove_id"`
 }
 
 type YamlConfigAttribute struct {
@@ -194,6 +195,7 @@ type YamlConfigAttribute struct {
 	AlwaysInclude        bool                           `yaml:"always_include"`
 	Attributes           []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
+	QueryParam           bool                           `yaml:"query_param"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -277,6 +279,7 @@ var functions = template.FuncMap{
 	"toLower":             strings.ToLower,
 	"path":                BuildPath,
 	"hasVersionAttribute": HasVersionAttribute,
+	"contains":            contains,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -465,6 +468,7 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 			}
 		}
 	}
+
 	file, err := os.Open(templatePath)
 	if err != nil {
 		log.Fatalf("Error opening template: %v", err)
@@ -506,9 +510,7 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 func main() {
 	featureTemplateFiles, _ := ioutil.ReadDir(featureTemplateDefinitionsPath)
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
-	providerConfig := make(map[string][]string)
-	providerConfig["FeatureTemplates"] = make([]string, 0)
-	providerConfig["Generic"] = make([]string, 0)
+	configs := make(map[string][]YamlConfig)
 
 	// Load feature template configs
 	for i, filename := range featureTemplateFiles {
@@ -533,8 +535,8 @@ func main() {
 		for _, t := range featureTemplateTemplates {
 			renderTemplate(t.path, t.prefix+SnakeCase(featureTemplateConfigs[i].Name)+t.suffix, featureTemplateConfigs[i])
 		}
-		providerConfig["FeatureTemplates"] = append(providerConfig["FeatureTemplates"], featureTemplateConfigs[i].Name)
 	}
+	configs["FeatureTemplates"] = featureTemplateConfigs
 
 	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
 	genericConfigs := make([]YamlConfig, len(genericFiles))
@@ -562,11 +564,11 @@ func main() {
 		for _, t := range genericTemplates {
 			renderTemplate(t.path, t.prefix+SnakeCase(genericConfigs[i].Name)+t.suffix, genericConfigs[i])
 		}
-		providerConfig["Generic"] = append(providerConfig["Generic"], genericConfigs[i].Name)
 	}
+	configs["Generic"] = genericConfigs
 
 	// render provider.go
-	renderTemplate(providerTemplate, providerLocation, providerConfig)
+	renderTemplate(providerTemplate, providerLocation, configs)
 
 	changelog, err := os.ReadFile(changelogOriginal)
 	if err != nil {

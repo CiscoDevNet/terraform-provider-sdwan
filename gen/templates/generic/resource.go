@@ -400,8 +400,9 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-
-	plan.Id = types.StringValue(res.Get("{{.IdAttribute}}").String())
+	{{ if not .RemoveId}}
+		plan.Id = types.StringValue(res.Get("{{.IdAttribute}}").String())
+	{{- end}}
 	{{- if .HasVersion}}
 	plan.Version = types.Int64Value(0)
 	{{- end}}
@@ -424,7 +425,7 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + state.Id.ValueString())
+	res, err := r.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" {{if not .RemoveId}} + state.Id.ValueString() {{end}})
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -462,7 +463,7 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("{{.RestEndpoint}}" + plan.Id.ValueString(), body)
+		res, err := r.client.Put("{{.RestEndpoint}}" {{if not .RemoveId}} + plan.Id.ValueString(){{end}}, body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -497,8 +498,11 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
-
+	{{if not .RemoveId}}
 	res, err := r.client.Delete("{{.RestEndpoint}}" + state.Id.ValueString())
+	{{- else}}
+	res, err := r.client.Delete("{{.RestEndpoint}}")
+	{{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

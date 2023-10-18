@@ -114,14 +114,14 @@ func main() {
 			filename := path + SnakeCase(genericConfigs[i].Name) + ".md"
 			content, err := ioutil.ReadFile(filename)
 			if err != nil {
-				log.Fatalf("Error opening documentation: %v", err)
+				log.Printf("Error opening documentation: %v", err)
+			} else {
+				cat := genericConfigs[i].DocCategory
+				s := string(content)
+				s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
+
+				ioutil.WriteFile(filename, []byte(s), 0644)
 			}
-
-			cat := genericConfigs[i].DocCategory
-			s := string(content)
-			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "`+cat+`"`)
-
-			ioutil.WriteFile(filename, []byte(s), 0644)
 		}
 	}
 
