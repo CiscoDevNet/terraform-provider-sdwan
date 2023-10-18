@@ -61,7 +61,7 @@ resource "sdwan_tls_ssl_decryption_policy_definition" "example" {
 - `certificate_lifetime_in_days` (Number) Certificate Lifetime(in Days)
 - `certificate_revocation_status` (String) Certificate revocation status
   - Choices: `ocsp`, `none`
-- `default_action` (String) Default action (applies when 'mode' set to 'security')
+- `default_action` (String) Default action (applies when `mode` set to `security`)
   - Choices: `noIntent`, `doNotDecrypt`, `decrypt`
 - `ec_key_type` (String) EC Key Type
   - Choices: `P256`, `P384`, `P521`
@@ -73,7 +73,7 @@ resource "sdwan_tls_ssl_decryption_policy_definition" "example" {
   - Choices: `TLSv1.0`, `TLSv1.1`, `TLSv1.2`
 - `mode` (String) The policy mode
   - Choices: `security`, `unified`
-- `network_rules` (Attributes List) List of network rules (applies when 'mode' set to 'security') (see [below for nested schema](#nestedatt--network_rules))
+- `network_rules` (Attributes List) List of network rules (applies when `mode` set to `security`) (see [below for nested schema](#nestedatt--network_rules))
 - `rsa_key_pair_modulus` (String) RSA key pair modules
   - Choices: `1024`, `2048`, `4096`
 - `ssl_decryption_enabled` (String) SSL decryption enabled
@@ -85,7 +85,7 @@ resource "sdwan_tls_ssl_decryption_policy_definition" "example" {
   - Choices: `drop`, `no-decrypt`
 - `untrusted_certificate` (String) Untrusted certificate action
   - Choices: `drop`, `decrypt`
-- `url_rules` (Attributes List) List of url rules (applies when 'mode' set to 'security') (see [below for nested schema](#nestedatt--url_rules))
+- `url_rules` (Attributes List) List of url rules (applies when `mode` set to `security`) (see [below for nested schema](#nestedatt--url_rules))
 - `use_default_ca_cert_bundle` (Boolean) Use default CA certificate bundle
 
 ### Read-Only

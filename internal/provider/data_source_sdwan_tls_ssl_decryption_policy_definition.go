@@ -75,11 +75,11 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 				Computed:            true,
 			},
 			"default_action": schema.StringAttribute{
-				MarkdownDescription: "Default action (applies when 'mode' set to 'security')",
+				MarkdownDescription: "Default action (applies when `mode` set to `security`)",
 				Computed:            true,
 			},
 			"network_rules": schema.ListNestedAttribute{
-				MarkdownDescription: "List of network rules (applies when 'mode' set to 'security')",
+				MarkdownDescription: "List of network rules (applies when `mode` set to `security`)",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -119,7 +119,7 @@ func (d *TLSSSLDecryptionPolicyDefinitionDataSource) Schema(ctx context.Context,
 				},
 			},
 			"url_rules": schema.ListNestedAttribute{
-				MarkdownDescription: "List of url rules (applies when 'mode' set to 'security')",
+				MarkdownDescription: "List of url rules (applies when `mode` set to `security`)",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

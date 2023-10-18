@@ -29,7 +29,7 @@ data "sdwan_tls_ssl_decryption_policy_definition" "example" {
 
 - `certificate_lifetime_in_days` (Number) Certificate Lifetime(in Days)
 - `certificate_revocation_status` (String) Certificate revocation status
-- `default_action` (String) Default action (applies when 'mode' set to 'security')
+- `default_action` (String) Default action (applies when `mode` set to `security`)
 - `description` (String) The description of the policy definition.
 - `ec_key_type` (String) EC Key Type
 - `expired_certificate` (String) Expired certificate action
@@ -37,14 +37,14 @@ data "sdwan_tls_ssl_decryption_policy_definition" "example" {
 - `minimal_tls_version` (String) Minimal TLS Version
 - `mode` (String) The policy mode
 - `name` (String) The name of the policy definition.
-- `network_rules` (Attributes List) List of network rules (applies when 'mode' set to 'security') (see [below for nested schema](#nestedatt--network_rules))
+- `network_rules` (Attributes List) List of network rules (applies when `mode` set to `security`) (see [below for nested schema](#nestedatt--network_rules))
 - `rsa_key_pair_modulus` (String) RSA key pair modules
 - `ssl_decryption_enabled` (String) SSL decryption enabled
 - `unknown_revocation_status` (String) Unknown revocation status action
 - `unsupported_cipher_suites` (String) Unsupported cipher suites action
 - `unsupported_protocol_versions` (String) Unsupported protocol versions action
 - `untrusted_certificate` (String) Untrusted certificate action
-- `url_rules` (Attributes List) List of url rules (applies when 'mode' set to 'security') (see [below for nested schema](#nestedatt--url_rules))
+- `url_rules` (Attributes List) List of url rules (applies when `mode` set to `security`) (see [below for nested schema](#nestedatt--url_rules))
 - `use_default_ca_cert_bundle` (Boolean) Use default CA certificate bundle
 - `version` (Number) The version of the object
 

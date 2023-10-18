@@ -88,14 +88,14 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 				},
 			},
 			"default_action": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Default action (applies when 'mode' set to 'security')").AddStringEnumDescription("noIntent", "doNotDecrypt", "decrypt").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Default action (applies when `mode` set to `security`)").AddStringEnumDescription("noIntent", "doNotDecrypt", "decrypt").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("noIntent", "doNotDecrypt", "decrypt"),
 				},
 			},
 			"network_rules": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of network rules (applies when 'mode' set to 'security')").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of network rules (applies when `mode` set to `security`)").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -141,7 +141,7 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 				},
 			},
 			"url_rules": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("List of url rules (applies when 'mode' set to 'security')").String,
+				MarkdownDescription: helpers.NewAttributeDescription("List of url rules (applies when `mode` set to `security`)").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{

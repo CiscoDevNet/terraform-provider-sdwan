@@ -30,13 +30,13 @@ attributes:
     tf_name: default_action
     type: String
     enum_values: [noIntent, doNotDecrypt, decrypt]
-    description: Default action (applies when 'mode' set to 'security')
+    description: Default action (applies when `mode` set to `security`)
     example: noIntent
   - model_name: sequences
     data_path: [definition] 
     type: List
     tf_name: network_rules
-    description: List of network rules (applies when 'mode' set to 'security')
+    description: List of network rules (applies when `mode` set to `security`)
     attributes:
       - model_name: baseAction
         type: String
@@ -80,7 +80,7 @@ attributes:
     data_path: [definition] 
     tf_name: url_rules
     type: List
-    description: List of url rules (applies when 'mode' set to 'security')
+    description: List of url rules (applies when `mode` set to `security`)
     exclude_test: true
     attributes:
       - model_name: name
