@@ -2,6 +2,8 @@
 
 - Fix issue with `sdwan_cisco_ospf_feature_template` resource when not configuring route policies
 - Fix issue with `sdwan_cisco_snmp_feature_template` resource when configuring SNMPv2
+- Add `sdwan_device` data source
+- Add `sdwan_vedge_inventory` data source
 
 ## 0.2.9
 
