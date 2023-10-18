@@ -10,6 +10,7 @@ description: |-
 ## 0.2.10 (unreleased)
 
 - Fix issue with `sdwan_cisco_ospf_feature_template` resource when not configuring route policies
+- Fix issue with `sdwan_cisco_snmp_feature_template` resource when configuring SNMPv2
 
 ## 0.2.9
 

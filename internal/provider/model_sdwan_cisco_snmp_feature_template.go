@@ -299,10 +299,6 @@ func (data CiscoSNMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"group."+"vipPrimaryKey", []string{"name", "security-level"})
 		body, _ = sjson.Set(body, path+"group."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"group."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"group."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"group."+"vipPrimaryKey", []string{"name", "security-level"})
-		body, _ = sjson.Set(body, path+"group."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.Groups {
 		itemBody := ""
@@ -345,10 +341,6 @@ func (data CiscoSNMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"user."+"vipPrimaryKey", []string{"name"})
 		body, _ = sjson.Set(body, path+"user."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"user."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"user."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"user."+"vipPrimaryKey", []string{"name"})
-		body, _ = sjson.Set(body, path+"user."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.Users {
 		itemBody := ""

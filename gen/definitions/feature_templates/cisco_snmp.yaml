@@ -31,6 +31,7 @@ attributes:
         example: read-only
   - model_name: group
     tf_name: groups
+    exclude_ignore: true
     attributes:
       - model_name: name
         example: GROUP1
@@ -40,6 +41,7 @@ attributes:
         example: VIEW1
   - model_name: user
     tf_name: users
+    exclude_ignore: true
     attributes:
       - model_name: name
         example: user1
