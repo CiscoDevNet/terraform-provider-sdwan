@@ -849,6 +849,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			data.DefaultInformationOriginate = types.BoolValue(v.Bool())
 
 		}
+	} else if value := res.Get(path + "ospf.default-information.originate"); value.Exists() {
+		data.DefaultInformationOriginate = types.BoolValue(true)
+
 	} else {
 		data.DefaultInformationOriginate = types.BoolNull()
 
@@ -868,6 +871,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			data.DefaultInformationOriginateAlways = types.BoolValue(v.Bool())
 			data.DefaultInformationOriginateAlwaysVariable = types.StringNull()
 		}
+	} else if value := res.Get(path + "ospf.default-information.originate.always"); value.Exists() {
+		data.DefaultInformationOriginateAlways = types.BoolValue(true)
+		data.DefaultInformationOriginateAlwaysVariable = types.StringNull()
 	} else {
 		data.DefaultInformationOriginateAlways = types.BoolNull()
 		data.DefaultInformationOriginateAlwaysVariable = types.StringNull()
@@ -1236,6 +1242,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 					item.StubNoSummary = types.BoolValue(cv.Bool())
 					item.StubNoSummaryVariable = types.StringNull()
 				}
+			} else if cValue := v.Get("stub.no-summary"); cValue.Exists() {
+				item.StubNoSummary = types.BoolValue(true)
+				item.StubNoSummaryVariable = types.StringNull()
 			} else {
 				item.StubNoSummary = types.BoolNull()
 				item.StubNoSummaryVariable = types.StringNull()
@@ -1255,6 +1264,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 					item.NssaNoSummary = types.BoolValue(cv.Bool())
 					item.NssaNoSummaryVariable = types.StringNull()
 				}
+			} else if cValue := v.Get("nssa.no-summary"); cValue.Exists() {
+				item.NssaNoSummary = types.BoolValue(true)
+				item.NssaNoSummaryVariable = types.StringNull()
 			} else {
 				item.NssaNoSummary = types.BoolNull()
 				item.NssaNoSummaryVariable = types.StringNull()
@@ -1416,6 +1428,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.PassiveInterface = types.BoolValue(ccv.Bool())
 							cItem.PassiveInterfaceVariable = types.StringNull()
 						}
+					} else if ccValue := cv.Get("passive-interface"); ccValue.Exists() {
+						cItem.PassiveInterface = types.BoolValue(true)
+						cItem.PassiveInterfaceVariable = types.StringNull()
 					} else {
 						cItem.PassiveInterface = types.BoolNull()
 						cItem.PassiveInterfaceVariable = types.StringNull()
@@ -1543,6 +1558,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.NoAdvertise = types.BoolValue(ccv.Bool())
 							cItem.NoAdvertiseVariable = types.StringNull()
 						}
+					} else if ccValue := cv.Get("no-advertise"); ccValue.Exists() {
+						cItem.NoAdvertise = types.BoolValue(true)
+						cItem.NoAdvertiseVariable = types.StringNull()
 					} else {
 						cItem.NoAdvertise = types.BoolNull()
 						cItem.NoAdvertiseVariable = types.StringNull()

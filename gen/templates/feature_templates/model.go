@@ -583,6 +583,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			data.{{toGoName .TfName}} = types.BoolValue(v.Bool())
 			{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 		}
+	{{- if eq .ObjectType "node-only"}}
+	} else if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists() {
+		data.{{toGoName .TfName}} = types.BoolValue(true)
+		{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
+	{{- end}}
 	} else {
 		data.{{toGoName .TfName}} = types.BoolNull()
 		{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
@@ -695,6 +700,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					item.{{toGoName .TfName}} = types.BoolValue(cv.Bool())
 					{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 				}
+			{{- if eq .ObjectType "node-only"}}
+			} else if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists() {
+				item.{{toGoName .TfName}} = types.BoolValue(true)
+				{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
+			{{- end}}
 			} else {
 				item.{{toGoName .TfName}} = types.BoolNull()
 				{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
@@ -806,6 +816,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							cItem.{{toGoName .TfName}} = types.BoolValue(ccv.Bool())
 							{{if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 						}
+					{{- if eq .ObjectType "node-only"}}
+					} else if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists() {
+						cItem.{{toGoName .TfName}} = types.BoolValue(true)
+						{{if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
+					{{- end}}
 					} else {
 						cItem.{{toGoName .TfName}} = types.BoolNull()
 						{{if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}

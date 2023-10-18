@@ -13,6 +13,7 @@ description: |-
 - Fix issue with `sdwan_cisco_snmp_feature_template` resource when configuring SNMPv2
 - Add `sdwan_device` data source
 - Add `sdwan_vedge_inventory` data source
+- Fix idempotency issue with `sdwan_cisco_ospf_feature_template` resource when enabling `default_information_originate`
 
 ## 0.2.9
 

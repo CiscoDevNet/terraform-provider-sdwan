@@ -2918,6 +2918,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.Nat = types.BoolValue(v.Bool())
 			data.NatVariable = types.StringNull()
 		}
+	} else if value := res.Get(path + "nat"); value.Exists() {
+		data.Nat = types.BoolValue(true)
+		data.NatVariable = types.StringNull()
 	} else {
 		data.Nat = types.BoolNull()
 		data.NatVariable = types.StringNull()
@@ -3089,6 +3092,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6Nat = types.BoolValue(v.Bool())
 			data.Ipv6NatVariable = types.StringNull()
 		}
+	} else if value := res.Get(path + "nat64.enable"); value.Exists() {
+		data.Ipv6Nat = types.BoolValue(true)
+		data.Ipv6NatVariable = types.StringNull()
 	} else {
 		data.Ipv6Nat = types.BoolNull()
 		data.Ipv6NatVariable = types.StringNull()
@@ -3108,6 +3114,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.Nat64Interface = types.BoolValue(v.Bool())
 			data.Nat64InterfaceVariable = types.StringNull()
 		}
+	} else if value := res.Get(path + "nat64"); value.Exists() {
+		data.Nat64Interface = types.BoolValue(true)
+		data.Nat64InterfaceVariable = types.StringNull()
 	} else {
 		data.Nat64Interface = types.BoolNull()
 		data.Nat64InterfaceVariable = types.StringNull()
@@ -3124,6 +3133,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.Nat66Interface = types.BoolValue(v.Bool())
 
 		}
+	} else if value := res.Get(path + "nat66"); value.Exists() {
+		data.Nat66Interface = types.BoolValue(true)
+
 	} else {
 		data.Nat66Interface = types.BoolNull()
 
@@ -3816,6 +3828,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.TunnelInterfaceColorRestrict = types.BoolValue(v.Bool())
 			data.TunnelInterfaceColorRestrictVariable = types.StringNull()
 		}
+	} else if value := res.Get(path + "tunnel-interface.color.restrict"); value.Exists() {
+		data.TunnelInterfaceColorRestrict = types.BoolValue(true)
+		data.TunnelInterfaceColorRestrictVariable = types.StringNull()
 	} else {
 		data.TunnelInterfaceColorRestrict = types.BoolNull()
 		data.TunnelInterfaceColorRestrictVariable = types.StringNull()
@@ -5039,6 +5054,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 					item.TrackOmp = types.BoolValue(cv.Bool())
 
 				}
+			} else if cValue := v.Get("track-omp"); cValue.Exists() {
+				item.TrackOmp = types.BoolValue(true)
+
 			} else {
 				item.TrackOmp = types.BoolNull()
 
@@ -5303,6 +5321,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 					item.TrackOmp = types.BoolValue(cv.Bool())
 					item.TrackOmpVariable = types.StringNull()
 				}
+			} else if cValue := v.Get("track-omp"); cValue.Exists() {
+				item.TrackOmp = types.BoolValue(true)
+				item.TrackOmpVariable = types.StringNull()
 			} else {
 				item.TrackOmp = types.BoolNull()
 				item.TrackOmpVariable = types.StringNull()
@@ -5428,6 +5449,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticSgtTrusted = types.BoolValue(v.Bool())
 
 		}
+	} else if value := res.Get(path + "trustsec.static.trusted"); value.Exists() {
+		data.StaticSgtTrusted = types.BoolValue(true)
+
 	} else {
 		data.StaticSgtTrusted = types.BoolNull()
 

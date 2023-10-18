@@ -2379,6 +2379,9 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.AsSetPath = types.BoolValue(ccv.Bool())
 							cItem.AsSetPathVariable = types.StringNull()
 						}
+					} else if ccValue := cv.Get("as-set"); ccValue.Exists() {
+						cItem.AsSetPath = types.BoolValue(true)
+						cItem.AsSetPathVariable = types.StringNull()
 					} else {
 						cItem.AsSetPath = types.BoolNull()
 						cItem.AsSetPathVariable = types.StringNull()
@@ -2398,6 +2401,9 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.SummaryOnly = types.BoolValue(ccv.Bool())
 							cItem.SummaryOnlyVariable = types.StringNull()
 						}
+					} else if ccValue := cv.Get("summary-only"); ccValue.Exists() {
+						cItem.SummaryOnly = types.BoolValue(true)
+						cItem.SummaryOnlyVariable = types.StringNull()
 					} else {
 						cItem.SummaryOnly = types.BoolNull()
 						cItem.SummaryOnlyVariable = types.StringNull()
@@ -2449,6 +2455,9 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.AsSetPath = types.BoolValue(ccv.Bool())
 							cItem.AsSetPathVariable = types.StringNull()
 						}
+					} else if ccValue := cv.Get("as-set"); ccValue.Exists() {
+						cItem.AsSetPath = types.BoolValue(true)
+						cItem.AsSetPathVariable = types.StringNull()
 					} else {
 						cItem.AsSetPath = types.BoolNull()
 						cItem.AsSetPathVariable = types.StringNull()
@@ -2468,6 +2477,9 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.SummaryOnly = types.BoolValue(ccv.Bool())
 							cItem.SummaryOnlyVariable = types.StringNull()
 						}
+					} else if ccValue := cv.Get("summary-only"); ccValue.Exists() {
+						cItem.SummaryOnly = types.BoolValue(true)
+						cItem.SummaryOnlyVariable = types.StringNull()
 					} else {
 						cItem.SummaryOnly = types.BoolNull()
 						cItem.SummaryOnlyVariable = types.StringNull()
@@ -2574,6 +2586,9 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.DefaultInformationOriginate = types.BoolValue(cv.Bool())
 					item.DefaultInformationOriginateVariable = types.StringNull()
 				}
+			} else if cValue := v.Get("default-information.originate"); cValue.Exists() {
+				item.DefaultInformationOriginate = types.BoolValue(true)
+				item.DefaultInformationOriginateVariable = types.StringNull()
 			} else {
 				item.DefaultInformationOriginate = types.BoolNull()
 				item.DefaultInformationOriginateVariable = types.StringNull()
@@ -2612,6 +2627,9 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.TableMapFilter = types.BoolValue(cv.Bool())
 					item.TableMapFilterVariable = types.StringNull()
 				}
+			} else if cValue := v.Get("table-map.filter"); cValue.Exists() {
+				item.TableMapFilter = types.BoolValue(true)
+				item.TableMapFilterVariable = types.StringNull()
 			} else {
 				item.TableMapFilter = types.BoolNull()
 				item.TableMapFilterVariable = types.StringNull()

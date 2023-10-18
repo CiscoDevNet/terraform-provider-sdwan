@@ -1439,6 +1439,9 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 			data.MultiTenant = types.BoolValue(v.Bool())
 			data.MultiTenantVariable = types.StringNull()
 		}
+	} else if value := res.Get(path + "multi-tenant"); value.Exists() {
+		data.MultiTenant = types.BoolValue(true)
+		data.MultiTenantVariable = types.StringNull()
 	} else {
 		data.MultiTenant = types.BoolNull()
 		data.MultiTenantVariable = types.StringNull()

@@ -669,6 +669,9 @@ func (data *CiscoSNMP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.Exclude = types.BoolValue(ccv.Bool())
 							cItem.ExcludeVariable = types.StringNull()
 						}
+					} else if ccValue := cv.Get("exclude"); ccValue.Exists() {
+						cItem.Exclude = types.BoolValue(true)
+						cItem.ExcludeVariable = types.StringNull()
 					} else {
 						cItem.Exclude = types.BoolNull()
 						cItem.ExcludeVariable = types.StringNull()
