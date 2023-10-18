@@ -35,7 +35,7 @@ type CiscoBGP struct {
 	TemplateType               types.String               `tfsdk:"template_type"`
 	Name                       types.String               `tfsdk:"name"`
 	Description                types.String               `tfsdk:"description"`
-	DeviceTypes                types.List                 `tfsdk:"device_types"`
+	DeviceTypes                types.Set                  `tfsdk:"device_types"`
 	AsNumber                   types.String               `tfsdk:"as_number"`
 	AsNumberVariable           types.String               `tfsdk:"as_number_variable"`
 	Shutdown                   types.Bool                 `tfsdk:"shutdown"`
@@ -1781,9 +1781,9 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 
 func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("deviceType"); value.Exists() {
-		data.DeviceTypes = helpers.GetStringList(value.Array())
+		data.DeviceTypes = helpers.GetStringSet(value.Array())
 	} else {
-		data.DeviceTypes = types.ListNull(types.StringType)
+		data.DeviceTypes = types.SetNull(types.StringType)
 	}
 	if value := res.Get("templateDescription"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())

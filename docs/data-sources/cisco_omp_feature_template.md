@@ -33,7 +33,7 @@ data "sdwan_cisco_omp_feature_template" "example" {
 - `advertisement_interval` (Number) Set the time between OMP Update packets
 - `advertisement_interval_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `ecmp_limit` (Number) Set maximum number of OMP paths to install in vEdge route table
 - `ecmp_limit_variable` (String) Variable name
 - `eor_timer` (Number) End of RIB timer <1..604800> seconds

@@ -43,7 +43,7 @@ data "sdwan_cisco_system_feature_template" "example" {
 - `description` (String) The description of the feature template
 - `device_groups` (List of String) Device groups (Use comma(,) for multiple groups)
 - `device_groups_variable` (String) Variable name
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `enable_mrf_migration` (String) Enable migration mode to Multi-Region Fabric
 - `geo_fencing` (Boolean) Enable Geo fencing
 - `geo_fencing_range` (Number) Set the device’s geo fencing range

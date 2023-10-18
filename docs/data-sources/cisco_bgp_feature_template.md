@@ -38,7 +38,7 @@ data "sdwan_cisco_bgp_feature_template" "example" {
 - `description` (String) The description of the feature template
 - `deterministic_med` (Boolean) Compare MEDs from all routes from same AS when selecting active BGP paths
 - `deterministic_med_variable` (String) Variable name
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `distance_external` (Number) Set administrative distance for external BGP routes
 - `distance_external_variable` (String) Variable name
 - `distance_internal` (Number) Set administrative distance for internal BGP routes

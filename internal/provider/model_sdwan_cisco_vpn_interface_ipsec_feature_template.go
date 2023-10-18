@@ -35,7 +35,7 @@ type CiscoVPNInterfaceIPSec struct {
 	TemplateType                       types.String `tfsdk:"template_type"`
 	Name                               types.String `tfsdk:"name"`
 	Description                        types.String `tfsdk:"description"`
-	DeviceTypes                        types.List   `tfsdk:"device_types"`
+	DeviceTypes                        types.Set    `tfsdk:"device_types"`
 	InterfaceName                      types.String `tfsdk:"interface_name"`
 	InterfaceNameVariable              types.String `tfsdk:"interface_name_variable"`
 	Shutdown                           types.Bool   `tfsdk:"shutdown"`
@@ -450,9 +450,9 @@ func (data CiscoVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 func (data *CiscoVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("deviceType"); value.Exists() {
-		data.DeviceTypes = helpers.GetStringList(value.Array())
+		data.DeviceTypes = helpers.GetStringSet(value.Array())
 	} else {
-		data.DeviceTypes = types.ListNull(types.StringType)
+		data.DeviceTypes = types.SetNull(types.StringType)
 	}
 	if value := res.Get("templateDescription"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())

@@ -46,7 +46,7 @@ data "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `core_region` (String) Enable core region
 - `core_region_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `dhcp` (Boolean) Enable DHCP
 - `dhcp_distance` (Number) Set administrative distance for DHCP default route
 - `dhcp_distance_variable` (String) Variable name

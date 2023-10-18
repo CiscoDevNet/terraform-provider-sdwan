@@ -29,7 +29,7 @@ data "sdwan_cisco_banner_feature_template" "example" {
 ### Read-Only
 
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `login` (String) Set message to display before login prompt
 - `login_variable` (String) Variable name
 - `motd` (String) Set message to display after a user logs in

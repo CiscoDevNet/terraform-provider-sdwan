@@ -32,7 +32,7 @@ data "sdwan_cisco_snmp_feature_template" "example" {
 - `contact` (String) Set the contact for this managed node
 - `contact_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `groups` (Attributes List) Configure an SNMP group (see [below for nested schema](#nestedatt--groups))
 - `location` (String) Set the physical location of this managed node
 - `location_variable` (String) Variable name

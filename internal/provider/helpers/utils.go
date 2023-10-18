@@ -50,6 +50,14 @@ func GetStringList(result []gjson.Result) types.List {
 	return types.ListValueMust(types.StringType, v)
 }
 
+func GetStringSet(result []gjson.Result) types.Set {
+	v := make([]attr.Value, len(result))
+	for r := range result {
+		v[r] = types.StringValue(result[r].String())
+	}
+	return types.SetValueMust(types.StringType, v)
+}
+
 func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string) error {
 	for attempts := 0; ; attempts++ {
 		time.Sleep(5 * time.Second)

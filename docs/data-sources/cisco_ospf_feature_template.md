@@ -41,7 +41,7 @@ data "sdwan_cisco_ospf_feature_template" "example" {
 - `default_information_originate_metric_type_variable` (String) Variable name
 - `default_information_originate_metric_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `distance_external` (Number) Set distance for external routes
 - `distance_external_variable` (String) Variable name
 - `distance_inter_area` (Number) Set distance for inter-area routes

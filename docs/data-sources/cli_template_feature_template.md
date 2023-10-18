@@ -30,6 +30,6 @@ data "sdwan_cli_template_feature_template" "example" {
 
 - `cli_config` (String) Cli config
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template

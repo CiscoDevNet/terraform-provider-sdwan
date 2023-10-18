@@ -37,7 +37,7 @@ data "sdwan_cisco_vpn_interface_ipsec_feature_template" "example" {
 - `dead_peer_detection_retries` (Number) IKE keepalive retries
 - `dead_peer_detection_retries_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `ike_ciphersuite` (String) IKE identity the IKE preshared secret belongs to
 - `ike_ciphersuite_variable` (String) Variable name
 - `ike_group` (String) IKE Diffie Hellman Groups

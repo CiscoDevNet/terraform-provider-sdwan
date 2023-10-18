@@ -31,7 +31,7 @@ data "sdwan_cisco_security_feature_template" "example" {
 - `authentication_type` (List of String) Set the authentication type for DTLS connections
 - `authentication_type_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_types` (List of String) List of supported device types
+- `device_types` (Set of String) List of supported device types
 - `extended_ar_window` (Number) Extended Anti-Replay Window
 - `extended_ar_window_variable` (String) Variable name
 - `integrity_type` (List of String) Set the authentication type for DTLS connections

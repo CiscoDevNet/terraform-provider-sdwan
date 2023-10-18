@@ -87,7 +87,7 @@ func (r *CEdgeGlobalFeatureTemplateResource) Schema(ctx context.Context, req res
 				MarkdownDescription: "The description of the feature template",
 				Required:            true,
 			},
-			"device_types": schema.ListAttribute{
+			"device_types": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of supported device types").AddStringEnumDescription("vedge-C8000V", "vedge-C8300-1N1S-4T2X", "vedge-C8300-1N1S-6T", "vedge-C8300-2N2S-6T", "vedge-C8300-2N2S-4T2X", "vedge-C8500-12X4QC", "vedge-C8500-12X", "vedge-C8500-20X6C", "vedge-C8500L-8S4X", "vedge-C8200-1N-4T", "vedge-C8200L-1N-4T").String,
 				ElementType:         types.StringType,
 				Required:            true,

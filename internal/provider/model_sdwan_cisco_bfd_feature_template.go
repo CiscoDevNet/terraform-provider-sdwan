@@ -35,7 +35,7 @@ type CiscoBFD struct {
 	TemplateType         types.String     `tfsdk:"template_type"`
 	Name                 types.String     `tfsdk:"name"`
 	Description          types.String     `tfsdk:"description"`
-	DeviceTypes          types.List       `tfsdk:"device_types"`
+	DeviceTypes          types.Set        `tfsdk:"device_types"`
 	Multiplier           types.Int64      `tfsdk:"multiplier"`
 	MultiplierVariable   types.String     `tfsdk:"multiplier_variable"`
 	PollInterval         types.Int64      `tfsdk:"poll_interval"`
@@ -209,9 +209,9 @@ func (data CiscoBFD) toBody(ctx context.Context) string {
 
 func (data *CiscoBFD) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("deviceType"); value.Exists() {
-		data.DeviceTypes = helpers.GetStringList(value.Array())
+		data.DeviceTypes = helpers.GetStringSet(value.Array())
 	} else {
-		data.DeviceTypes = types.ListNull(types.StringType)
+		data.DeviceTypes = types.SetNull(types.StringType)
 	}
 	if value := res.Get("templateDescription"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
