@@ -13,6 +13,7 @@ description: |-
 - BREAKING CHANGE: Rename `group` attribute of `sdwan_cedge_aaa_feature_template` resource and data source to `groups` and fix type
 - Use type `Set` for `device_types` attributes of feature template resources and data sources
 - Add `sdwan_tls_ssl_decryption_policy_definition` resource and data source
+- Add `sdwan_advanced_inspection_profile_policy_definition` resource and data source
 
 ## 0.2.8
 

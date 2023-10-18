@@ -1,0 +1,90 @@
+name: Advanced Inspection Profile Policy Definition
+rest_endpoint: /template/policy/definition/advancedinspectionprofile/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: advancedInspectionProfile
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition.
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition.
+    example: My description
+  - model_name: tlsDecryptionAction
+    data_path: [definition]
+    tf_name: tls_action
+    type: String
+    enum_values: [decrypt, skipDecrypt, doNotDecrypt]
+    description: TLS Action
+    example: decrypt
+  - model_name: ref
+    data_path: [definition, intrusionPrevention]
+    tf_name: intrusion_prevention_id
+    type: String
+    description: Intrusion prevention ID (unified mode)
+    example: b80ed541-3950-45c7-ab35-d8f11e180599
+    exclude_test: true
+  - tf_name: intrusion_prevention_version
+    tf_only: true
+    type: Version
+    description: Intrusion prevention version
+    exclude_test: true
+  - model_name: ref
+    data_path: [definition, urlFiltering]
+    tf_name: url_filtering_id
+    type: String
+    description: URL filtering ID (unified mode)
+    example: 914670a3-9726-4a51-847f-b3db70819dc2
+    test_value: sdwan_url_filtering_policy_definition.test.id
+  - tf_name: url_filtering_version
+    tf_only: true
+    type: Version
+    description: URL filtering version
+    exclude_test: true 
+  - model_name: ref
+    data_path: [definition, advancedMalwareProtection]
+    tf_name: advanced_malware_protection_id
+    type: String
+    description: Advanced malware protection ID
+    example: c3590312-7f67-41d7-b9a5-42ec97c7a73d
+    exclude_test: true
+  - tf_name: advanced_malware_protection_version
+    tf_only: true
+    type: Version
+    description: Advanced malware protection version
+    exclude_test: true 
+  - model_name: ref
+    data_path: [definition, sslDecryption]
+    tf_name: tls_ssl_decryption_id
+    type: String
+    description: TLS/SSL decryption ID
+    example: 84f10c9d-def7-45a3-8c64-6df26163c861
+    exclude_test: true
+  - tf_name: tls_ssl_decryption_version
+    tf_only: true
+    type: Version
+    description: TLS/SSL decryption version
+    exclude_test: true 
+
+test_prerequisites: |
+  resource "sdwan_url_filtering_policy_definition" "test" {
+    name                  = "TF_TEST"
+    description           = "Terraform test"
+    mode                  = "security"
+    alerts                = ["blacklist"]
+    web_categories        = ["alcohol-and-tobacco"]
+    web_categories_action = "allow"
+    web_reputation        = "moderate-risk"
+    target_vpns           = ["1"]
+    block_page_action     = "text"
+    block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
+  }
