@@ -58,6 +58,7 @@ attributes:
         example: 100
   - model_name: route-policy
     tf_name: route_policies
+    exclude_ignore: true
     attributes:
       - model_name: direction
         example: in

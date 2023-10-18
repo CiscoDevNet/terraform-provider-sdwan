@@ -426,10 +426,6 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospf.route-policy."+"vipPrimaryKey", []string{"direction"})
 		body, _ = sjson.Set(body, path+"ospf.route-policy."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"ospf.route-policy."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"ospf.route-policy."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"ospf.route-policy."+"vipPrimaryKey", []string{"direction"})
-		body, _ = sjson.Set(body, path+"ospf.route-policy."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.RoutePolicies {
 		itemBody := ""

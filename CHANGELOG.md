@@ -1,3 +1,7 @@
+## 0.2.10 (unreleased)
+
+- Fix issue with `sdwan_cisco_ospf_feature_template` resource when not configuring route policies
+
 ## 0.2.9
 
 - Add `sdwan_advanced_malware_protection_policy_definition` resource and data source

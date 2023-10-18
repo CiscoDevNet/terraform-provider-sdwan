@@ -33,7 +33,7 @@ attribute:
   tf_only: bool(required=False)
   exclude_test: bool(required=False)
   exclude_example: bool(required=False)
-  exclude_ignore: bool(required=False)
+  exclude_ignore: bool(required=False) # If true the object will not be included in the payload if vipType="ignore"
   description: str(required=False)
   example: any(str(), int(), bool(), required=False)
   enum_values: list(str(), required=False)
