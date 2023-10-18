@@ -1,0 +1,192 @@
+name: TLS SSL Decryption Policy Definition
+rest_endpoint: /template/policy/definition/ssldecryption/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: sslDecryption
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition.
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition.
+    example: My description
+  - model_name: mode
+    tf_name: mode
+    type: String
+    enum_values: [security, unified]
+    description: The policy mode
+    example: security
+  - model_name: type
+    data_path: [definition, defaultAction]
+    tf_name: default_action
+    type: String
+    enum_values: [noIntent, doNotDecrypt, decrypt]
+    description: Default action (applies when 'mode' set to 'security')
+    example: noIntent
+  - model_name: sequences
+    data_path: [definition] 
+    type: List
+    tf_name: network_rules
+    description: List of network rules (applies when 'mode' set to 'security')
+    attributes:
+      - model_name: baseAction
+        type: String
+        tf_name: base_action
+        description: Rule base action
+        enum_values: [noIntent, doNotDecrypt, decrypt]
+        example: doNotDecrypt
+      - model_name: sequenceId
+        type: Int64
+        tf_name: rule_id
+        description: Rule ID
+        example: 4
+      - model_name: sequenceName
+        type: String
+        tf_name: rule_name
+        description: Rule name
+        example: Example
+      - model_name: sequenceType
+        type: String
+        tf_name: rule_type
+        description: Rule type
+        example: sslDecryption
+      - model_name: entries
+        data_path: [match]
+        type: List
+        tf_name: source_and_destination_configuration
+        description: List of network source / destination configuration
+        attributes:
+          - model_name: field
+            type: String
+            tf_name: option
+            description: source / destination option
+            enum_values: [sourceIp, sourcePort, destinationVpn, destinationIp, destinationPort]
+            example: destinationIp
+          - model_name: value
+            type: String
+            tf_name: value
+            description: source / destination option target
+            example: 10.0.0.0/12
+  - model_name: profiles
+    data_path: [definition] 
+    tf_name: url_rules
+    type: List
+    description: List of url rules (applies when 'mode' set to 'security')
+    exclude_test: true
+    attributes:
+      - model_name: name
+        tf_name: rule_name
+        type: String
+        description: Country
+        example: Example
+      - model_name: vpn
+        tf_name: target_vpns
+        type: StringList
+        description: List of VPN IDs
+        example: 1
+      - model_name: ref
+        tf_name: tls_ssl_profile_policy_id
+        type: String
+        description: TLS SSL Profile Policy ID
+        example: 2d8cbc1b-f969-4999-a0bd-f77a070ba5f7
+      - tf_name: tls_ssl_profile_version
+        tf_only: true
+        type: Version
+        description: TLS SSL Profile Policy version
+  - model_name: sslEnable
+    data_path: [definition, settings]
+    tf_name: ssl_decryption_enabled
+    type: String
+    description: SSL decryption enabled
+    example: "true"
+  - model_name: expiredCertificate
+    data_path: [definition, settings]
+    tf_name: expired_certificate
+    type: String
+    enum_values: [drop, decrypt]
+    description: Expired certificate action
+    example: "drop"
+  - model_name: untrustedCertificate
+    data_path: [definition, settings]
+    tf_name: untrusted_certificate
+    type: String
+    enum_values: [drop, decrypt]
+    description: Untrusted certificate action
+    example: "drop"
+  - model_name: certificateRevocationStatus
+    data_path: [definition, settings]
+    tf_name: certificate_revocation_status
+    type: String
+    enum_values: [ocsp, none]
+    description: Certificate revocation status
+    example: "none"
+  - model_name: unknownStatus
+    data_path: [definition, settings]
+    tf_name: unknown_revocation_status
+    type: String
+    enum_values: [drop, decrypt]
+    description: Unknown revocation status action
+    example: "drop"
+  - model_name: unsupportedProtocolVersions
+    data_path: [definition, settings]
+    tf_name: unsupported_protocol_versions
+    type: String
+    enum_values: [drop, no-decrypt]
+    description: Unsupported protocol versions action
+    example: "drop"
+  - model_name: unsupportedCipherSuites
+    data_path: [definition, settings]
+    tf_name: unsupported_cipher_suites
+    type: String
+    enum_values: [drop, no-decrypt]
+    description: Unsupported cipher suites action
+    example: "drop"
+  - model_name: failureMode
+    data_path: [definition, settings]
+    tf_name: failure_mode
+    type: String
+    enum_values: [open, close]
+    description: Failure mode
+    example: "close"
+  - model_name: keyModulus
+    data_path: [definition, settings]
+    tf_name: rsa_key_pair_modulus
+    type: String
+    enum_values: ["1024", "2048", "4096"]
+    description: RSA key pair modules
+    example: "2048"
+  - model_name: eckeyType
+    data_path: [definition, settings]
+    tf_name: ec_key_type
+    type: String
+    enum_values: [P256, P384, P521]
+    description: EC Key Type
+    example: "P384"
+  - model_name: certificateLifetime
+    data_path: [definition, settings]
+    tf_name: certificate_lifetime_in_days
+    type: Int64
+    description: Certificate Lifetime(in Days)
+    example: 1
+  - model_name: minTlsVer
+    data_path: [definition, settings]
+    tf_name: minimal_tls_version
+    type: String
+    enum_values: [TLSv1.0, TLSv1.1, TLSv1.2]
+    description: Minimal TLS Version
+    example: "TLSv1.2"
+  - model_name: default
+    data_path: [definition, settings, caCertBundle]
+    tf_name: use_default_ca_cert_bundle
+    type: Bool
+    description: Use default CA certificate bundle
+    example: true
