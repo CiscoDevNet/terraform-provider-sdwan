@@ -49,7 +49,7 @@ func (data AppProbeClassPolicyObject) toBody(ctx context.Context) string {
 	if !data.ForwardingClass.IsNull() {
 		body, _ = sjson.Set(body, "entries.0.forwardingClass", data.ForwardingClass.ValueString())
 	}
-	if len(data.Mappings) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "entries.0.map", []interface{}{})
 		for _, item := range data.Mappings {
 			itemBody := ""
@@ -76,7 +76,7 @@ func (data *AppProbeClassPolicyObject) fromBody(ctx context.Context, res gjson.R
 	} else {
 		data.ForwardingClass = types.StringNull()
 	}
-	if value := res.Get("entries.0.map"); value.Exists() {
+	if value := res.Get("entries.0.map"); value.Exists() && len(value.Array()) > 0 {
 		data.Mappings = make([]AppProbeClassPolicyObjectMappings, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := AppProbeClassPolicyObjectMappings{}

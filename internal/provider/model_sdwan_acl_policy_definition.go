@@ -95,7 +95,7 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 	if !data.DefaultAction.IsNull() {
 		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
-	if len(data.Sequences) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
@@ -112,7 +112,7 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 			if !item.BaseAction.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "baseAction", item.BaseAction.ValueString())
 			}
-			if len(item.MatchEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
 				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
@@ -158,7 +158,7 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
-			if len(item.ActionEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "actions", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
@@ -184,7 +184,7 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.PolicerId.IsNull() && childItem.Type.ValueString() == "policer" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.ref", childItem.PolicerId.ValueString())
 					}
-					if len(childItem.SetParameters) > 0 && childItem.Type.ValueString() == "set" {
+					if true && childItem.Type.ValueString() == "set" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
 						for _, childChildItem := range childItem.SetParameters {
 							itemChildChildBody := ""
@@ -226,7 +226,7 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get("sequences"); value.Exists() {
+	if value := res.Get("sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ACLPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ACLPolicyDefinitionSequences{}
@@ -250,7 +250,7 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 			} else {
 				item.BaseAction = types.StringNull()
 			}
-			if cValue := v.Get("match.entries"); cValue.Exists() {
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]ACLPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ACLPolicyDefinitionSequencesMatchEntries{}
@@ -323,7 +323,7 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]ACLPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ACLPolicyDefinitionSequencesActionEntries{}
@@ -361,7 +361,7 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 					} else {
 						cItem.PolicerId = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "set" {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "set" {
 						cItem.SetParameters = make([]ACLPolicyDefinitionSequencesActionEntriesSetParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ACLPolicyDefinitionSequencesActionEntriesSetParameters{}

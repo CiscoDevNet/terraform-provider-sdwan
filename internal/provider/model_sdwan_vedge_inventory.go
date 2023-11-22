@@ -43,7 +43,7 @@ type VEdgeInventoryDevices struct {
 
 func (data VEdgeInventory) toBody(ctx context.Context) string {
 	body := ""
-	if len(data.Devices) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "data", []interface{}{})
 		for _, item := range data.Devices {
 			itemBody := ""
@@ -72,7 +72,7 @@ func (data VEdgeInventory) toBody(ctx context.Context) string {
 }
 
 func (data *VEdgeInventory) fromBody(ctx context.Context, res gjson.Result) {
-	if value := res.Get("data"); value.Exists() {
+	if value := res.Get("data"); value.Exists() && len(value.Array()) > 0 {
 		data.Devices = make([]VEdgeInventoryDevices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := VEdgeInventoryDevices{}

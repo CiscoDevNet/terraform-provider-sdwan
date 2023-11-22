@@ -137,7 +137,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 	if !data.DefaultAction.IsNull() {
 		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
-	if len(data.Sequences) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
@@ -156,7 +156,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 			if !item.BaseAction.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "baseAction", item.BaseAction.ValueString())
 			}
-			if len(item.MatchEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
 				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
@@ -214,7 +214,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
-			if len(item.ActionEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "actions", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
@@ -293,7 +293,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.TcpOptimization.ValueBool())
 						}
 					}
-					if len(childItem.SetParameters) > 0 && childItem.Type.ValueString() == "set" {
+					if true && childItem.Type.ValueString() == "set" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
 						for _, childChildItem := range childItem.SetParameters {
 							itemChildChildBody := ""
@@ -371,7 +371,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "parameter.-1", itemChildChildBody)
 						}
 					}
-					if len(childItem.NatParameters) > 0 && childItem.Type.ValueString() == "nat" {
+					if true && childItem.Type.ValueString() == "nat" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
 						for _, childChildItem := range childItem.NatParameters {
 							itemChildChildBody := ""
@@ -417,7 +417,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get("sequences"); value.Exists() {
+	if value := res.Get("sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]TrafficDataPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TrafficDataPolicyDefinitionSequences{}
@@ -446,7 +446,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 			} else {
 				item.BaseAction = types.StringNull()
 			}
-			if cValue := v.Get("match.entries"); cValue.Exists() {
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]TrafficDataPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TrafficDataPolicyDefinitionSequencesMatchEntries{}
@@ -539,7 +539,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]TrafficDataPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TrafficDataPolicyDefinitionSequencesActionEntries{}
@@ -652,7 +652,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					} else {
 						cItem.TcpOptimization = types.BoolNull()
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "set" {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "set" {
 						cItem.SetParameters = make([]TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters{}
@@ -773,7 +773,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							return true
 						})
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "nat" {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "nat" {
 						cItem.NatParameters = make([]TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters{}

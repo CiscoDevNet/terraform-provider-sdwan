@@ -53,7 +53,7 @@ func (data Device) toBody(ctx context.Context) string {
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "host-name", data.Name.ValueString())
 	}
-	if len(data.Devices) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "data", []interface{}{})
 		for _, item := range data.Devices {
 			itemBody := ""
@@ -98,7 +98,7 @@ func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("data"); value.Exists() {
+	if value := res.Get("data"); value.Exists() && len(value.Array()) > 0 {
 		data.Devices = make([]DeviceDevices, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := DeviceDevices{}

@@ -53,7 +53,7 @@ func (data VPNMembershipPolicyDefinition) toBody(ctx context.Context) string {
 	if !data.Description.IsNull() {
 		body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	}
-	if len(data.Sites) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.sites", []interface{}{})
 		for _, item := range data.Sites {
 			itemBody := ""
@@ -83,7 +83,7 @@ func (data *VPNMembershipPolicyDefinition) fromBody(ctx context.Context, res gjs
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("definition.sites"); value.Exists() {
+	if value := res.Get("definition.sites"); value.Exists() && len(value.Array()) > 0 {
 		data.Sites = make([]VPNMembershipPolicyDefinitionSites, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := VPNMembershipPolicyDefinitionSites{}

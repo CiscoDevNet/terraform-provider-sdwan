@@ -90,7 +90,7 @@ func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, "definition.customizedIpv4RecordFields.collectDscpOutput", data.RemarkedDscp.ValueBool())
 		}
 	}
-	if len(data.Collectors) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.collectors", []interface{}{})
 		for _, item := range data.Collectors {
 			itemBody := ""
@@ -172,7 +172,7 @@ func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.RemarkedDscp = types.BoolNull()
 	}
-	if value := res.Get("definition.collectors"); value.Exists() {
+	if value := res.Get("definition.collectors"); value.Exists() && len(value.Array()) > 0 {
 		data.Collectors = make([]CflowdPolicyDefinitionCollectors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := CflowdPolicyDefinitionCollectors{}

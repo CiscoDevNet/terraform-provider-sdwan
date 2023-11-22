@@ -84,7 +84,7 @@ func (data RuleSetPolicyDefinition) toBody(ctx context.Context) string {
 	if !data.Description.IsNull() {
 		body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	}
-	if len(data.Rules) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.rules", []interface{}{})
 		for _, item := range data.Rules {
 			itemBody := ""
@@ -182,7 +182,7 @@ func (data *RuleSetPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("definition.rules"); value.Exists() {
+	if value := res.Get("definition.rules"); value.Exists() && len(value.Array()) > 0 {
 		data.Rules = make([]RuleSetPolicyDefinitionRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := RuleSetPolicyDefinitionRules{}

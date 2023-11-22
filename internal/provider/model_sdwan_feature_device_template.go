@@ -85,7 +85,7 @@ func (data FeatureDeviceTemplate) toBody(ctx context.Context) string {
 	if !data.SecurityPolicyId.IsNull() {
 		body, _ = sjson.Set(body, "securityPolicyId", data.SecurityPolicyId.ValueString())
 	}
-	if len(data.GeneralTemplates) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "generalTemplates", []interface{}{})
 		for _, item := range data.GeneralTemplates {
 			itemBody := ""
@@ -95,7 +95,7 @@ func (data FeatureDeviceTemplate) toBody(ctx context.Context) string {
 			if !item.Type.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "templateType", item.Type.ValueString())
 			}
-			if len(item.SubTemplates) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "subTemplates", []interface{}{})
 				for _, childItem := range item.SubTemplates {
 					itemChildBody := ""
@@ -105,7 +105,7 @@ func (data FeatureDeviceTemplate) toBody(ctx context.Context) string {
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "templateType", childItem.Type.ValueString())
 					}
-					if len(childItem.SubTemplates) > 0 {
+					if true {
 						itemChildBody, _ = sjson.Set(itemChildBody, "subTemplates", []interface{}{})
 						for _, childChildItem := range childItem.SubTemplates {
 							itemChildChildBody := ""
@@ -159,7 +159,7 @@ func (data *FeatureDeviceTemplate) fromBody(ctx context.Context, res gjson.Resul
 	} else {
 		data.SecurityPolicyId = types.StringNull()
 	}
-	if value := res.Get("generalTemplates"); value.Exists() {
+	if value := res.Get("generalTemplates"); value.Exists() && len(value.Array()) > 0 {
 		data.GeneralTemplates = make([]FeatureDeviceTemplateGeneralTemplates, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := FeatureDeviceTemplateGeneralTemplates{}
@@ -173,7 +173,7 @@ func (data *FeatureDeviceTemplate) fromBody(ctx context.Context, res gjson.Resul
 			} else {
 				item.Type = types.StringNull()
 			}
-			if cValue := v.Get("subTemplates"); cValue.Exists() {
+			if cValue := v.Get("subTemplates"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.SubTemplates = make([]FeatureDeviceTemplateGeneralTemplatesSubTemplates, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := FeatureDeviceTemplateGeneralTemplatesSubTemplates{}
@@ -187,7 +187,7 @@ func (data *FeatureDeviceTemplate) fromBody(ctx context.Context, res gjson.Resul
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("subTemplates"); ccValue.Exists() {
+					if ccValue := cv.Get("subTemplates"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.SubTemplates = make([]FeatureDeviceTemplateGeneralTemplatesSubTemplatesSubTemplates, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := FeatureDeviceTemplateGeneralTemplatesSubTemplatesSubTemplates{}

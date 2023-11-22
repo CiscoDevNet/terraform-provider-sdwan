@@ -87,7 +87,7 @@ func (data TLSSSLDecryptionPolicyDefinition) toBody(ctx context.Context) string 
 	if !data.DefaultAction.IsNull() {
 		body, _ = sjson.Set(body, "definition.defaultAction.type", data.DefaultAction.ValueString())
 	}
-	if len(data.NetworkRules) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.sequences", []interface{}{})
 		for _, item := range data.NetworkRules {
 			itemBody := ""
@@ -103,7 +103,7 @@ func (data TLSSSLDecryptionPolicyDefinition) toBody(ctx context.Context) string 
 			if !item.RuleType.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceType", item.RuleType.ValueString())
 			}
-			if len(item.SourceAndDestinationConfiguration) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
 				for _, childItem := range item.SourceAndDestinationConfiguration {
 					itemChildBody := ""
@@ -119,7 +119,7 @@ func (data TLSSSLDecryptionPolicyDefinition) toBody(ctx context.Context) string 
 			body, _ = sjson.SetRaw(body, "definition.sequences.-1", itemBody)
 		}
 	}
-	if len(data.UrlRules) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.profiles", []interface{}{})
 		for _, item := range data.UrlRules {
 			itemBody := ""
@@ -205,7 +205,7 @@ func (data *TLSSSLDecryptionPolicyDefinition) fromBody(ctx context.Context, res 
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get("definition.sequences"); value.Exists() {
+	if value := res.Get("definition.sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.NetworkRules = make([]TLSSSLDecryptionPolicyDefinitionNetworkRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TLSSSLDecryptionPolicyDefinitionNetworkRules{}
@@ -229,7 +229,7 @@ func (data *TLSSSLDecryptionPolicyDefinition) fromBody(ctx context.Context, res 
 			} else {
 				item.RuleType = types.StringNull()
 			}
-			if cValue := v.Get("match.entries"); cValue.Exists() {
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.SourceAndDestinationConfiguration = make([]TLSSSLDecryptionPolicyDefinitionNetworkRulesSourceAndDestinationConfiguration, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := TLSSSLDecryptionPolicyDefinitionNetworkRulesSourceAndDestinationConfiguration{}
@@ -251,7 +251,7 @@ func (data *TLSSSLDecryptionPolicyDefinition) fromBody(ctx context.Context, res 
 			return true
 		})
 	}
-	if value := res.Get("definition.profiles"); value.Exists() {
+	if value := res.Get("definition.profiles"); value.Exists() && len(value.Array()) > 0 {
 		data.UrlRules = make([]TLSSSLDecryptionPolicyDefinitionUrlRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := TLSSSLDecryptionPolicyDefinitionUrlRules{}

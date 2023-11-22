@@ -45,7 +45,7 @@ func (data ApplicationListPolicyObject) toBody(ctx context.Context) string {
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
-	if len(data.Entries) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "entries", []interface{}{})
 		for _, item := range data.Entries {
 			itemBody := ""
@@ -67,7 +67,7 @@ func (data *ApplicationListPolicyObject) fromBody(ctx context.Context, res gjson
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("entries"); value.Exists() {
+	if value := res.Get("entries"); value.Exists() && len(value.Array()) > 0 {
 		data.Entries = make([]ApplicationListPolicyObjectEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ApplicationListPolicyObjectEntries{}

@@ -57,7 +57,7 @@ func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	if !data.VpnListId.IsNull() {
 		body, _ = sjson.Set(body, "definition.vpnList", data.VpnListId.ValueString())
 	}
-	if len(data.Regions) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.regions", []interface{}{})
 		for _, item := range data.Regions {
 			itemBody := ""
@@ -92,7 +92,7 @@ func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjso
 	} else {
 		data.VpnListId = types.StringNull()
 	}
-	if value := res.Get("definition.regions"); value.Exists() {
+	if value := res.Get("definition.regions"); value.Exists() && len(value.Array()) > 0 {
 		data.Regions = make([]MeshTopologyPolicyDefinitionRegions, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := MeshTopologyPolicyDefinitionRegions{}

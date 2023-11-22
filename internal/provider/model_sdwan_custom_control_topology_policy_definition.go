@@ -117,7 +117,7 @@ func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) st
 	if !data.DefaultAction.IsNull() {
 		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
-	if len(data.Sequences) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
@@ -136,7 +136,7 @@ func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) st
 			if !item.BaseAction.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "baseAction", item.BaseAction.ValueString())
 			}
-			if len(item.MatchEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
 				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
@@ -206,14 +206,14 @@ func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) st
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
-			if len(item.ActionEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "actions", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "type", childItem.Type.ValueString())
 					}
-					if len(childItem.SetParameters) > 0 && childItem.Type.ValueString() == "set" {
+					if true && childItem.Type.ValueString() == "set" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
 						for _, childChildItem := range childItem.SetParameters {
 							itemChildChildBody := ""
@@ -301,7 +301,7 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get("sequences"); value.Exists() {
+	if value := res.Get("sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]CustomControlTopologyPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := CustomControlTopologyPolicyDefinitionSequences{}
@@ -330,7 +330,7 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 			} else {
 				item.BaseAction = types.StringNull()
 			}
-			if cValue := v.Get("match.entries"); cValue.Exists() {
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]CustomControlTopologyPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := CustomControlTopologyPolicyDefinitionSequencesMatchEntries{}
@@ -443,7 +443,7 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]CustomControlTopologyPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := CustomControlTopologyPolicyDefinitionSequencesActionEntries{}
@@ -452,7 +452,7 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "set" {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "set" {
 						cItem.SetParameters = make([]CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters{}

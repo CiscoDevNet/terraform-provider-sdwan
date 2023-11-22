@@ -66,21 +66,21 @@ func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) stri
 	if !data.VpnListId.IsNull() {
 		body, _ = sjson.Set(body, "definition.vpnList", data.VpnListId.ValueString())
 	}
-	if len(data.Topologies) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.subDefinitions", []interface{}{})
 		for _, item := range data.Topologies {
 			itemBody := ""
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "name", item.Name.ValueString())
 			}
-			if len(item.Spokes) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "spokes", []interface{}{})
 				for _, childItem := range item.Spokes {
 					itemChildBody := ""
 					if !childItem.SiteListId.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "siteList", childItem.SiteListId.ValueString())
 					}
-					if len(childItem.Hubs) > 0 {
+					if true {
 						itemChildBody, _ = sjson.Set(itemChildBody, "hubs", []interface{}{})
 						for _, childChildItem := range childItem.Hubs {
 							itemChildChildBody := ""
@@ -116,7 +116,7 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 	} else {
 		data.VpnListId = types.StringNull()
 	}
-	if value := res.Get("definition.subDefinitions"); value.Exists() {
+	if value := res.Get("definition.subDefinitions"); value.Exists() && len(value.Array()) > 0 {
 		data.Topologies = make([]HubAndSpokeTopologyPolicyDefinitionTopologies, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := HubAndSpokeTopologyPolicyDefinitionTopologies{}
@@ -125,7 +125,7 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 			} else {
 				item.Name = types.StringNull()
 			}
-			if cValue := v.Get("spokes"); cValue.Exists() {
+			if cValue := v.Get("spokes"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Spokes = make([]HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes{}
@@ -134,7 +134,7 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 					} else {
 						cItem.SiteListId = types.StringNull()
 					}
-					if ccValue := cv.Get("hubs"); ccValue.Exists() {
+					if ccValue := cv.Get("hubs"); ccValue.Exists() && len(ccValue.Array()) > 0 {
 						cItem.Hubs = make([]HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs{}

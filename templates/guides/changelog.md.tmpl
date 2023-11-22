@@ -14,6 +14,7 @@ description: |-
 - Add `base_action` attribute to `sdwan_custom_control_topology_policy_definition` resource and data source
 - Add `base_action` attribute to `sdwan_traffic_data_policy_definition` resource and data source
 - Allow full path variables in `sdwan_attach_feature_device_template` resource `variables` section
+- Always include empty lists in payloads to fix various GUI compatibility issues
 
 ## 0.2.10
 

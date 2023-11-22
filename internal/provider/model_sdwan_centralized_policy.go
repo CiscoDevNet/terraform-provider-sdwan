@@ -61,7 +61,7 @@ func (data CentralizedPolicy) toBody(ctx context.Context) string {
 	if !data.Description.IsNull() {
 		body, _ = sjson.Set(body, "policyDescription", data.Description.ValueString())
 	}
-	if len(data.Definitions) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "policyDefinition.assembly", []interface{}{})
 		for _, item := range data.Definitions {
 			itemBody := ""
@@ -71,7 +71,7 @@ func (data CentralizedPolicy) toBody(ctx context.Context) string {
 			if !item.Type.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "type", item.Type.ValueString())
 			}
-			if len(item.Entries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "entries", []interface{}{})
 				for _, childItem := range item.Entries {
 					itemChildBody := ""
@@ -109,7 +109,7 @@ func (data *CentralizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("policyDefinition.assembly"); value.Exists() {
+	if value := res.Get("policyDefinition.assembly"); value.Exists() && len(value.Array()) > 0 {
 		data.Definitions = make([]CentralizedPolicyDefinitions, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := CentralizedPolicyDefinitions{}
@@ -123,7 +123,7 @@ func (data *CentralizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 			} else {
 				item.Type = types.StringNull()
 			}
-			if cValue := v.Get("entries"); cValue.Exists() {
+			if cValue := v.Get("entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Entries = make([]CentralizedPolicyDefinitionsEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := CentralizedPolicyDefinitionsEntries{}

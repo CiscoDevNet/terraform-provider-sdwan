@@ -100,7 +100,7 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 	if !data.DefaultAction.IsNull() {
 		body, _ = sjson.Set(body, "defaultAction.type", data.DefaultAction.ValueString())
 	}
-	if len(data.Sequences) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
@@ -117,7 +117,7 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 			if !item.BaseAction.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "baseAction", item.BaseAction.ValueString())
 			}
-			if len(item.MatchEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
 				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
@@ -169,7 +169,7 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 				}
 			}
 			itemBody, _ = sjson.Set(itemBody, "actions.0.type", "set")
-			if len(item.ActionEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "actions.0.parameter", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
@@ -258,7 +258,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 	} else {
 		data.DefaultAction = types.StringNull()
 	}
-	if value := res.Get("sequences"); value.Exists() {
+	if value := res.Get("sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]RoutePolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := RoutePolicyDefinitionSequences{}
@@ -282,7 +282,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 			} else {
 				item.BaseAction = types.StringNull()
 			}
-			if cValue := v.Get("match.entries"); cValue.Exists() {
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]RoutePolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := RoutePolicyDefinitionSequencesMatchEntries{}
@@ -360,7 +360,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					return true
 				})
 			}
-			if cValue := v.Get("actions.0.parameter"); cValue.Exists() {
+			if cValue := v.Get("actions.0.parameter"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]RoutePolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := RoutePolicyDefinitionSequencesActionEntries{}

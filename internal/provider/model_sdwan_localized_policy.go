@@ -119,7 +119,7 @@ func (data LocalizedPolicy) toBody(ctx context.Context) string {
 	if !data.Ipv6VisibilityCacheEntries.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.ipV6VisibilityCacheEntries", data.Ipv6VisibilityCacheEntries.ValueInt64())
 	}
-	if len(data.Definitions) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "policyDefinition.assembly", []interface{}{})
 		for _, item := range data.Definitions {
 			itemBody := ""
@@ -225,7 +225,7 @@ func (data *LocalizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.Ipv6VisibilityCacheEntries = types.Int64Null()
 	}
-	if value := res.Get("policyDefinition.assembly"); value.Exists() {
+	if value := res.Get("policyDefinition.assembly"); value.Exists() && len(value.Array()) > 0 {
 		data.Definitions = make([]LocalizedPolicyDefinitions, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := LocalizedPolicyDefinitions{}

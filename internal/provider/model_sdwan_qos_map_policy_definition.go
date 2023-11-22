@@ -56,7 +56,7 @@ func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	if !data.Description.IsNull() {
 		body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	}
-	if len(data.QosSchedulers) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "definition.qosSchedulers", []interface{}{})
 		for _, item := range data.QosSchedulers {
 			itemBody := ""
@@ -99,7 +99,7 @@ func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("definition.qosSchedulers"); value.Exists() {
+	if value := res.Get("definition.qosSchedulers"); value.Exists() && len(value.Array()) > 0 {
 		data.QosSchedulers = make([]QoSMapPolicyDefinitionQosSchedulers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := QoSMapPolicyDefinitionQosSchedulers{}

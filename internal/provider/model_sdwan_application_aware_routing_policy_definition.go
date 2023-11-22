@@ -92,7 +92,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 	if !data.Description.IsNull() {
 		body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	}
-	if len(data.Sequences) > 0 {
+	if true {
 		body, _ = sjson.Set(body, "sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
@@ -106,7 +106,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 			if !item.IpType.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceIpType", item.IpType.ValueString())
 			}
-			if len(item.MatchEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
 				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
@@ -158,7 +158,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
-			if len(item.ActionEntries) > 0 {
+			if true {
 				itemBody, _ = sjson.Set(itemBody, "actions", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
@@ -185,7 +185,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.CloudSla.ValueBool())
 						}
 					}
-					if len(childItem.SlaClassParameters) > 0 && childItem.Type.ValueString() == "slaClass" {
+					if true && childItem.Type.ValueString() == "slaClass" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", []interface{}{})
 						for _, childChildItem := range childItem.SlaClassParameters {
 							itemChildChildBody := ""
@@ -225,7 +225,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("sequences"); value.Exists() {
+	if value := res.Get("sequences"); value.Exists() && len(value.Array()) > 0 {
 		data.Sequences = make([]ApplicationAwareRoutingPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ApplicationAwareRoutingPolicyDefinitionSequences{}
@@ -244,7 +244,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 			} else {
 				item.IpType = types.StringNull()
 			}
-			if cValue := v.Get("match.entries"); cValue.Exists() {
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.MatchEntries = make([]ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries{}
@@ -327,7 +327,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 					return true
 				})
 			}
-			if cValue := v.Get("actions"); cValue.Exists() {
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries{}
@@ -364,7 +364,7 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 					} else {
 						cItem.CloudSla = types.BoolNull()
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "slaClass" {
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "slaClass" {
 						cItem.SlaClassParameters = make([]ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters{}
