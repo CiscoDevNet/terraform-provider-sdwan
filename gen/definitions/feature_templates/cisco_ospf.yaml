@@ -12,6 +12,7 @@ attributes:
     example: true
   - model_name: originate
     tf_name: default_information_originate
+    node_only_container: true
     example: true
   - model_name: always
     tf_name: default_information_originate_always

@@ -109,7 +109,6 @@ data "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `nat_pool_range_start_variable` (String) Variable name
 - `nat_type` (String) NAT type
 - `nat_type_variable` (String) Variable name
-- `nat_variable` (String) Variable name
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
 - `per_tunnel_qos_aggregator` (Boolean) Per-tunnel QoS Aggregator
 - `per_tunnel_qos_aggregator_variable` (String) Variable name

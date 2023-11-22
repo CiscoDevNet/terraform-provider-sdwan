@@ -2592,9 +2592,6 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Null0 = types.BoolValue(cv.Bool())
 					item.Null0Variable = types.StringNull()
 				}
-			} else if cValue := v.Get("null0"); cValue.Exists() {
-				item.Null0 = types.BoolValue(true)
-				item.Null0Variable = types.StringNull()
 			} else {
 				item.Null0 = types.BoolNull()
 				item.Null0Variable = types.StringNull()
@@ -2652,9 +2649,6 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Dhcp = types.BoolValue(cv.Bool())
 					item.DhcpVariable = types.StringNull()
 				}
-			} else if cValue := v.Get("dhcp"); cValue.Exists() {
-				item.Dhcp = types.BoolValue(true)
-				item.DhcpVariable = types.StringNull()
 			} else {
 				item.Dhcp = types.BoolNull()
 				item.DhcpVariable = types.StringNull()
@@ -2827,9 +2821,6 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Null0 = types.BoolValue(cv.Bool())
 					item.Null0Variable = types.StringNull()
 				}
-			} else if cValue := v.Get("null0"); cValue.Exists() {
-				item.Null0 = types.BoolValue(true)
-				item.Null0Variable = types.StringNull()
 			} else {
 				item.Null0 = types.BoolNull()
 				item.Null0Variable = types.StringNull()
@@ -3381,9 +3372,6 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Overload = types.BoolValue(cv.Bool())
 					item.OverloadVariable = types.StringNull()
 				}
-			} else if cValue := v.Get("overload"); cValue.Exists() {
-				item.Overload = types.BoolValue(true)
-				item.OverloadVariable = types.StringNull()
 			} else {
 				item.Overload = types.BoolNull()
 				item.OverloadVariable = types.StringNull()

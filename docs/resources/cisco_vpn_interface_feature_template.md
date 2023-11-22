@@ -352,7 +352,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
   - Choices: `interface`, `pool`, `loopback`
   - Default value: `interface`
 - `nat_type_variable` (String) Variable name
-- `nat_variable` (String) Variable name
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
   - Default value: `false`
 - `per_tunnel_qos_aggregator` (Boolean) Per-tunnel QoS Aggregator

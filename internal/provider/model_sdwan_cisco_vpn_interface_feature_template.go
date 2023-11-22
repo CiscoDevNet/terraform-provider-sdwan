@@ -65,7 +65,6 @@ type CiscoVPNInterface struct {
 	IperfServer                                        types.String                                     `tfsdk:"iperf_server"`
 	IperfServerVariable                                types.String                                     `tfsdk:"iperf_server_variable"`
 	Nat                                                types.Bool                                       `tfsdk:"nat"`
-	NatVariable                                        types.String                                     `tfsdk:"nat_variable"`
 	NatType                                            types.String                                     `tfsdk:"nat_type"`
 	NatTypeVariable                                    types.String                                     `tfsdk:"nat_type_variable"`
 	UdpTimeout                                         types.Int64                                      `tfsdk:"udp_timeout"`
@@ -723,18 +722,13 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"iperf-server."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"iperf-server."+"vipValue", data.IperfServer.ValueString())
 	}
-
-	if !data.NatVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat."+"vipVariableName", data.NatVariable.ValueString())
-	} else if data.Nat.IsNull() {
-		body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat."+"vipValue", strconv.FormatBool(data.Nat.ValueBool()))
+	if !data.Nat.IsNull() {
+		if data.Nat.ValueBool() {
+			body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+		} else {
+			body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
+			body, _ = sjson.Set(body, path+"nat."+"vipType", "ignore")
+		}
 	}
 
 	if !data.NatTypeVariable.IsNull() {
@@ -742,7 +736,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.nat-choice."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.nat-choice."+"vipVariableName", data.NatTypeVariable.ValueString())
 	} else if data.NatType.IsNull() {
-		body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
 	} else {
 		body, _ = sjson.Set(body, path+"nat.nat-choice."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.nat-choice."+"vipType", "constant")
@@ -754,8 +747,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipVariableName", data.UdpTimeoutVariable.ValueString())
 	} else if data.UdpTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipType", "constant")
@@ -767,8 +758,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipVariableName", data.TcpTimeoutVariable.ValueString())
 	} else if data.TcpTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipType", "constant")
@@ -780,7 +769,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.natpool.range-start."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.natpool.range-start."+"vipVariableName", data.NatPoolRangeStartVariable.ValueString())
 	} else if data.NatPoolRangeStart.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.natpool", map[string]interface{}{})
 	} else {
 		body, _ = sjson.Set(body, path+"nat.natpool.range-start."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.natpool.range-start."+"vipType", "constant")
@@ -792,7 +780,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.natpool.range-end."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.natpool.range-end."+"vipVariableName", data.NatPoolRangeEndVariable.ValueString())
 	} else if data.NatPoolRangeEnd.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.natpool", map[string]interface{}{})
 	} else {
 		body, _ = sjson.Set(body, path+"nat.natpool.range-end."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.natpool.range-end."+"vipType", "constant")
@@ -804,8 +791,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.overload."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.overload."+"vipVariableName", data.NatOverloadVariable.ValueString())
 	} else if data.NatOverload.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.overload."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.overload."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"nat.overload."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.overload."+"vipType", "constant")
@@ -817,8 +802,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.interface.loopback-interface."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.interface.loopback-interface."+"vipVariableName", data.NatInsideSourceLoopbackInterfaceVariable.ValueString())
 	} else if data.NatInsideSourceLoopbackInterface.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.interface.loopback-interface."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.interface.loopback-interface."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"nat.interface.loopback-interface."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.interface.loopback-interface."+"vipType", "constant")
@@ -830,7 +813,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.natpool.prefix-length."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat.natpool.prefix-length."+"vipVariableName", data.NatPoolPrefixLengthVariable.ValueString())
 	} else if data.NatPoolPrefixLength.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.natpool", map[string]interface{}{})
 	} else {
 		body, _ = sjson.Set(body, path+"nat.natpool.prefix-length."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.natpool.prefix-length."+"vipType", "constant")
@@ -876,10 +858,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat66.static-nat66."+"vipPrimaryKey", []string{"source-prefix", "translated-source-prefix", "source-vpn-id"})
 		body, _ = sjson.Set(body, path+"nat66.static-nat66."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"nat66.static-nat66."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"nat66.static-nat66."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"nat66.static-nat66."+"vipPrimaryKey", []string{"source-prefix", "translated-source-prefix", "source-vpn-id"})
-		body, _ = sjson.Set(body, path+"nat66.static-nat66."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.StaticNat66Entries {
 		itemBody := ""
@@ -938,10 +916,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.static."+"vipPrimaryKey", []string{"source-ip", "translate-ip"})
 		body, _ = sjson.Set(body, path+"nat.static."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"nat.static."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"nat.static."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"nat.static."+"vipPrimaryKey", []string{"source-ip", "translate-ip"})
-		body, _ = sjson.Set(body, path+"nat.static."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.StaticNatEntries {
 		itemBody := ""
@@ -1008,10 +982,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat.static-port-forward."+"vipPrimaryKey", []string{"source-ip", "translate-ip", "proto", "source-port", "translate-port"})
 		body, _ = sjson.Set(body, path+"nat.static-port-forward."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"nat.static-port-forward."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"nat.static-port-forward."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"nat.static-port-forward."+"vipPrimaryKey", []string{"source-ip", "translate-ip", "proto", "source-port", "translate-port"})
-		body, _ = sjson.Set(body, path+"nat.static-port-forward."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.StaticPortForwardEntries {
 		itemBody := ""
@@ -2907,23 +2877,20 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		if value.String() == "variableName" {
 			data.Nat = types.BoolNull()
 
-			v := res.Get(path + "nat.vipVariableName")
-			data.NatVariable = types.StringValue(v.String())
-
 		} else if value.String() == "ignore" {
-			data.Nat = types.BoolNull()
-			data.NatVariable = types.StringNull()
+			data.Nat = types.BoolValue(false)
+
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat.vipValue")
 			data.Nat = types.BoolValue(v.Bool())
-			data.NatVariable = types.StringNull()
+
 		}
 	} else if value := res.Get(path + "nat"); value.Exists() {
 		data.Nat = types.BoolValue(true)
-		data.NatVariable = types.StringNull()
+
 	} else {
 		data.Nat = types.BoolNull()
-		data.NatVariable = types.StringNull()
+
 	}
 	if value := res.Get(path + "nat.nat-choice.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3092,9 +3059,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6Nat = types.BoolValue(v.Bool())
 			data.Ipv6NatVariable = types.StringNull()
 		}
-	} else if value := res.Get(path + "nat64.enable"); value.Exists() {
-		data.Ipv6Nat = types.BoolValue(true)
-		data.Ipv6NatVariable = types.StringNull()
 	} else {
 		data.Ipv6Nat = types.BoolNull()
 		data.Ipv6NatVariable = types.StringNull()
@@ -3114,9 +3078,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.Nat64Interface = types.BoolValue(v.Bool())
 			data.Nat64InterfaceVariable = types.StringNull()
 		}
-	} else if value := res.Get(path + "nat64"); value.Exists() {
-		data.Nat64Interface = types.BoolValue(true)
-		data.Nat64InterfaceVariable = types.StringNull()
 	} else {
 		data.Nat64Interface = types.BoolNull()
 		data.Nat64InterfaceVariable = types.StringNull()
@@ -3133,9 +3094,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.Nat66Interface = types.BoolValue(v.Bool())
 
 		}
-	} else if value := res.Get(path + "nat66"); value.Exists() {
-		data.Nat66Interface = types.BoolValue(true)
-
 	} else {
 		data.Nat66Interface = types.BoolNull()
 
@@ -3828,9 +3786,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.TunnelInterfaceColorRestrict = types.BoolValue(v.Bool())
 			data.TunnelInterfaceColorRestrictVariable = types.StringNull()
 		}
-	} else if value := res.Get(path + "tunnel-interface.color.restrict"); value.Exists() {
-		data.TunnelInterfaceColorRestrict = types.BoolValue(true)
-		data.TunnelInterfaceColorRestrictVariable = types.StringNull()
 	} else {
 		data.TunnelInterfaceColorRestrict = types.BoolNull()
 		data.TunnelInterfaceColorRestrictVariable = types.StringNull()
@@ -5054,9 +5009,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 					item.TrackOmp = types.BoolValue(cv.Bool())
 
 				}
-			} else if cValue := v.Get("track-omp"); cValue.Exists() {
-				item.TrackOmp = types.BoolValue(true)
-
 			} else {
 				item.TrackOmp = types.BoolNull()
 
@@ -5321,9 +5273,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 					item.TrackOmp = types.BoolValue(cv.Bool())
 					item.TrackOmpVariable = types.StringNull()
 				}
-			} else if cValue := v.Get("track-omp"); cValue.Exists() {
-				item.TrackOmp = types.BoolValue(true)
-				item.TrackOmpVariable = types.StringNull()
 			} else {
 				item.TrackOmp = types.BoolNull()
 				item.TrackOmpVariable = types.StringNull()
@@ -5449,9 +5398,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticSgtTrusted = types.BoolValue(v.Bool())
 
 		}
-	} else if value := res.Get(path + "trustsec.static.trusted"); value.Exists() {
-		data.StaticSgtTrusted = types.BoolValue(true)
-
 	} else {
 		data.StaticSgtTrusted = types.BoolNull()
 

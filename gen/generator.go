@@ -176,6 +176,7 @@ type YamlConfigAttribute struct {
 	ExcludeTest          bool                           `yaml:"exclude_test"`
 	ExcludeExample       bool                           `yaml:"exclude_example"`
 	ExcludeIgnore        bool                           `yaml:"exclude_ignore"`
+	NodeOnlyContainer    bool                           `yaml:"node_only_container"`
 	Description          string                         `yaml:"description"`
 	Example              string                         `yaml:"example"`
 	EnumValues           []string                       `yaml:"enum_values"`
@@ -401,7 +402,7 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 	if !ignore && r.Get("objectType").String() != "tree" {
 		attr.Mandatory = true
 	}
-	if variable && r.Get("objectType").String() != "tree" {
+	if variable && r.Get("objectType").String() != "tree" && !attr.NodeOnlyContainer {
 		attr.Variable = true
 	}
 	if r.Get("objectType").String() == "tree" && len(attr.Attributes) > 0 {

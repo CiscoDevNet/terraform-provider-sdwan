@@ -1,3 +1,7 @@
+## 0.2.11 (unreleased)
+
+- Fix idempotency issue with various resource and boolean values
+
 ## 0.2.10
 
 - Fix issue with `sdwan_cisco_ospf_feature_template` resource when not configuring route policies

@@ -66,28 +66,37 @@ attributes:
   - model_name: iperf-server
     example: 8.8.8.8
   - model_name: nat
+    node_only_container: true
     example: true
   - model_name: nat-choice
     tf_name: nat_type
+    exclude_ignore: true
     example: interface
   - model_name: udp-timeout
+    exclude_ignore: true
     example: 1
   - model_name: tcp-timeout
+    exclude_ignore: true
     example: 60
   - model_name: range-start
     tf_name: nat_pool_range_start
+    exclude_ignore: true
     example: 10.1.1.1
   - model_name: range-end
     tf_name: nat_pool_range_end
+    exclude_ignore: true
     example: 10.1.1.255
   - model_name: overload
     tf_name: nat_overload
+    exclude_ignore: true
     example: false
   - model_name: loopback-interface
     tf_name: nat_inside_source_loopback_interface
+    exclude_ignore: true
     example: lo1
   - model_name: prefix-length
     tf_name: nat_pool_prefix_length
+    exclude_ignore: true
     example: 24
   - model_name: enable
     data_path: [nat64]
@@ -101,6 +110,7 @@ attributes:
     example: false
   - model_name: static-nat66
     tf_name: static_nat66_entries
+    exclude_ignore: true
     attributes:
       - model_name: source-prefix
         example: 2001:7::/48
@@ -110,6 +120,7 @@ attributes:
         example: 1
   - model_name: static
     tf_name: static_nat_entries
+    exclude_ignore: true
     attributes:
       - model_name: source-ip
         example: 10.1.1.1
@@ -122,6 +133,7 @@ attributes:
         example: 1
   - model_name: static-port-forward
     tf_name: static_port_forward_entries
+    exclude_ignore: true
     attributes:
       - model_name: source-ip
         example: 10.1.1.1

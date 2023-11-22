@@ -35,6 +35,7 @@ attribute:
   exclude_test: bool(required=False)
   exclude_example: bool(required=False)
   exclude_ignore: bool(required=False) # If true the object will not be included in the payload if vipType="ignore"
+  node_only_container: bool(required=False) # Some node-only attributes are at the same time a container for other attributes, in this case set to "true"
   description: str(required=False)
   example: any(str(), int(), bool(), required=False)
   enum_values: list(str(), required=False)

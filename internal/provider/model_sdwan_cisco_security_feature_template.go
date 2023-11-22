@@ -779,9 +779,6 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 					item.SendLifetime = types.BoolValue(cv.Bool())
 					item.SendLifetimeVariable = types.StringNull()
 				}
-			} else if cValue := v.Get("send-lifetime.lifetime-group-v1.local"); cValue.Exists() {
-				item.SendLifetime = types.BoolValue(true)
-				item.SendLifetimeVariable = types.StringNull()
 			} else {
 				item.SendLifetime = types.BoolNull()
 				item.SendLifetimeVariable = types.StringNull()
@@ -868,9 +865,6 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 					item.SendLifetimeInfinite = types.BoolValue(cv.Bool())
 					item.SendLifetimeInfiniteVariable = types.StringNull()
 				}
-			} else if cValue := v.Get("send-lifetime.lifetime-group-v1.infinite"); cValue.Exists() {
-				item.SendLifetimeInfinite = types.BoolValue(true)
-				item.SendLifetimeInfiniteVariable = types.StringNull()
 			} else {
 				item.SendLifetimeInfinite = types.BoolNull()
 				item.SendLifetimeInfiniteVariable = types.StringNull()
@@ -890,9 +884,6 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 					item.AcceptLifetime = types.BoolValue(cv.Bool())
 					item.AcceptLifetimeVariable = types.StringNull()
 				}
-			} else if cValue := v.Get("accept-lifetime.lifetime-group-v1.local"); cValue.Exists() {
-				item.AcceptLifetime = types.BoolValue(true)
-				item.AcceptLifetimeVariable = types.StringNull()
 			} else {
 				item.AcceptLifetime = types.BoolNull()
 				item.AcceptLifetimeVariable = types.StringNull()
@@ -979,9 +970,6 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 					item.AcceptLifetimeInfinite = types.BoolValue(cv.Bool())
 					item.AcceptLifetimeInfiniteVariable = types.StringNull()
 				}
-			} else if cValue := v.Get("accept-lifetime.lifetime-group-v1.infinite"); cValue.Exists() {
-				item.AcceptLifetimeInfinite = types.BoolValue(true)
-				item.AcceptLifetimeInfiniteVariable = types.StringNull()
 			} else {
 				item.AcceptLifetimeInfinite = types.BoolNull()
 				item.AcceptLifetimeInfiniteVariable = types.StringNull()

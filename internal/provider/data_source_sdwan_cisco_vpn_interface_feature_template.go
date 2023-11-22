@@ -279,10 +279,6 @@ func (d *CiscoVPNInterfaceFeatureTemplateDataSource) Schema(ctx context.Context,
 				MarkdownDescription: "Network Address Translation on this interface",
 				Computed:            true,
 			},
-			"nat_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"nat_type": schema.StringAttribute{
 				MarkdownDescription: "NAT type",
 				Computed:            true,

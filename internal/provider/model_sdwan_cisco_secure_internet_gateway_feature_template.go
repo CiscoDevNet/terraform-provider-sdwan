@@ -1059,9 +1059,6 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 					item.IpUnnumbered = types.BoolValue(cv.Bool())
 
 				}
-			} else if cValue := v.Get("ip.unnumbered"); cValue.Exists() {
-				item.IpUnnumbered = types.BoolValue(true)
-
 			} else {
 				item.IpUnnumbered = types.BoolNull()
 
@@ -1392,9 +1389,6 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 					item.IkePreSharedKeyDynamic = types.BoolValue(cv.Bool())
 
 				}
-			} else if cValue := v.Get("ike.authentication-type.pre-shared-key-dynamic"); cValue.Exists() {
-				item.IkePreSharedKeyDynamic = types.BoolValue(true)
-
 			} else {
 				item.IkePreSharedKeyDynamic = types.BoolNull()
 
