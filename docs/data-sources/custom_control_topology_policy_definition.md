@@ -39,6 +39,7 @@ data "sdwan_custom_control_topology_policy_definition" "example" {
 Read-Only:
 
 - `action_entries` (Attributes List) List of action entries (see [below for nested schema](#nestedatt--sequences--action_entries))
+- `base_action` (String) Base action, either `accept` or `reject`
 - `id` (Number) Sequence ID
 - `ip_type` (String) Sequence IP type, either `ipv4`, `ipv6` or `all`
 - `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))

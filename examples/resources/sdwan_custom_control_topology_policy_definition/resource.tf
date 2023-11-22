@@ -4,10 +4,11 @@ resource "sdwan_custom_control_topology_policy_definition" "example" {
   default_action = "reject"
   sequences = [
     {
-      id      = 1
-      name    = "Region1"
-      type    = "route"
-      ip_type = "ipv4"
+      id          = 1
+      name        = "Region1"
+      type        = "route"
+      ip_type     = "ipv4"
+      base_action = "accept"
       match_entries = [
         {
           type    = "ompTag"

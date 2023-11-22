@@ -40,6 +40,7 @@ func TestAccDataSourceSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.name", "Region1"),
 					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.type", "route"),
 					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.ip_type", "ipv4"),
+					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.base_action", "accept"),
 					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.match_entries.0.type", "ompTag"),
 					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.match_entries.0.omp_tag", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.action_entries.0.type", "set"),
@@ -62,6 +63,7 @@ resource "sdwan_custom_control_topology_policy_definition" "test" {
     name = "Region1"
     type = "route"
     ip_type = "ipv4"
+    base_action = "accept"
 	match_entries = [{
 		type = "ompTag"
 		omp_tag = 100

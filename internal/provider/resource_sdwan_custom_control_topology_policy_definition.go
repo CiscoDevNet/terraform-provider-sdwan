@@ -115,6 +115,13 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 								stringvalidator.OneOf("ipv4", "ipv6", "all"),
 							},
 						},
+						"base_action": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Base action, either `accept` or `reject`").AddStringEnumDescription("accept", "reject").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("accept", "reject"),
+							},
+						},
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,

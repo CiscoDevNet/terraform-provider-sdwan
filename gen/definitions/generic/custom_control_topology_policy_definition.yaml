@@ -59,6 +59,12 @@ attributes:
         enum_values: [ipv4, ipv6, all]
         description: Sequence IP type, either `ipv4`, `ipv6` or `all`
         example: ipv4
+      - model_name: baseAction
+        tf_name: base_action
+        type: String
+        enum_values: [accept, reject]
+        description: Base action, either `accept` or `reject`
+        example: accept
       - model_name: entries
         data_path: [match]
         tf_name: match_entries

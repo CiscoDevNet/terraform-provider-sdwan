@@ -19,10 +19,11 @@ resource "sdwan_custom_control_topology_policy_definition" "example" {
   default_action = "reject"
   sequences = [
     {
-      id      = 1
-      name    = "Region1"
-      type    = "route"
-      ip_type = "ipv4"
+      id          = 1
+      name        = "Region1"
+      type        = "route"
+      ip_type     = "ipv4"
+      base_action = "accept"
       match_entries = [
         {
           type    = "ompTag"
@@ -75,6 +76,8 @@ Required:
 Optional:
 
 - `action_entries` (Attributes List) List of action entries (see [below for nested schema](#nestedatt--sequences--action_entries))
+- `base_action` (String) Base action, either `accept` or `reject`
+  - Choices: `accept`, `reject`
 - `ip_type` (String) Sequence IP type, either `ipv4`, `ipv6` or `all`
   - Choices: `ipv4`, `ipv6`, `all`
 - `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))
