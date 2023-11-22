@@ -175,12 +175,9 @@ attributes:
     tf_name: tunnel_interface_border
     exclude_ignore: true
     example: false
-  - model_name: per-tunnel-qos
-    example: false
-  - model_name: per-tunnel-qos-aggregator
-    example: false
   - model_name: mode
     tf_name: tunnel_qos_mode
+    exclude_ignore: true
     example: spoke
   - model_name: tunnels-bandwidth
     tf_name: tunnel_bandwidth
@@ -358,24 +355,31 @@ attributes:
     example: false
   - model_name: period
     tf_name: qos_adaptive_period
+    exclude_ignore: true
     example: 15
   - model_name: bandwidth-down
     tf_name: qos_adaptive_bandwidth_downstream
+    exclude_ignore: true
     example: 10000
   - model_name: dmin
     tf_name: qos_adaptive_min_downstream
+    exclude_ignore: true
     example: 100
   - model_name: dmax
     tf_name: qos_adaptive_max_downstream
+    exclude_ignore: true
     example: 100000
   - model_name: bandwidth-up
     tf_name: qos_adaptive_bandwidth_upstream
+    exclude_ignore: true
     example: 10000
   - model_name: umin
     tf_name: qos_adaptive_min_upstream
+    exclude_ignore: true
     example: 100
   - model_name: umax
     tf_name: qos_adaptive_max_upstream
+    exclude_ignore: true
     example: 100000
   - model_name: shaping-rate
     example: 1000

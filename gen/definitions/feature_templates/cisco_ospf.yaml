@@ -16,12 +16,15 @@ attributes:
     example: true
   - model_name: always
     tf_name: default_information_originate_always
+    exclude_ignore: true
     example: true
   - model_name: metric
     tf_name: default_information_originate_metric
+    exclude_ignore: true
     example: 100
   - model_name: metric-type
     tf_name: default_information_originate_metric_type
+    exclude_ignore: true
     example: type1
   - model_name: external
     tf_name: distance_external

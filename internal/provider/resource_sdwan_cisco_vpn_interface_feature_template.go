@@ -647,22 +647,6 @@ func (r *CiscoVPNInterfaceFeatureTemplateResource) Schema(ctx context.Context, r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"per_tunnel_qos": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Per-tunnel Qos").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"per_tunnel_qos_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"per_tunnel_qos_aggregator": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Per-tunnel QoS Aggregator").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"per_tunnel_qos_aggregator_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
 			"tunnel_qos_mode": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("hub", "spoke").String,
 				Optional:            true,

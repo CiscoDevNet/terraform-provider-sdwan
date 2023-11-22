@@ -34,20 +34,6 @@ func TestAccSdwanCiscoVPNInterfaceFeatureTemplate(t *testing.T) {
 				Config: testAccSdwanCiscoVPNInterfaceFeatureTemplateConfig_minimum(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "interface_name", "ge0/0"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "nat_type", "interface"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "nat_pool_range_start", "10.1.1.1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "nat_pool_range_end", "10.1.1.255"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "nat_pool_prefix_length", "24"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "per_tunnel_qos", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "per_tunnel_qos_aggregator", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_qos_mode", "spoke"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_bandwidth", "50"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_bandwidth_downstream", "10000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_min_downstream", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_max_downstream", "100000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_bandwidth_upstream", "10000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_min_upstream", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_max_upstream", "100000"),
 				),
 			},
 			{
@@ -102,8 +88,6 @@ func TestAccSdwanCiscoVPNInterfaceFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_encapsulations.0.preference", "10"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_encapsulations.0.weight", "100"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_border", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "per_tunnel_qos", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "per_tunnel_qos_aggregator", "false"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_qos_mode", "spoke"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_bandwidth", "50"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_color", "gold"),
@@ -210,20 +194,6 @@ func testAccSdwanCiscoVPNInterfaceFeatureTemplateConfig_minimum() string {
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
 		interface_name = "ge0/0"
-		nat_type = "interface"
-		nat_pool_range_start = "10.1.1.1"
-		nat_pool_range_end = "10.1.1.255"
-		nat_pool_prefix_length = 24
-		per_tunnel_qos = false
-		per_tunnel_qos_aggregator = false
-		tunnel_qos_mode = "spoke"
-		tunnel_bandwidth = 50
-		qos_adaptive_bandwidth_downstream = 10000
-		qos_adaptive_min_downstream = 100
-		qos_adaptive_max_downstream = 100000
-		qos_adaptive_bandwidth_upstream = 10000
-		qos_adaptive_min_upstream = 100
-		qos_adaptive_max_upstream = 100000
 	}
 	`
 }
@@ -301,8 +271,6 @@ func testAccSdwanCiscoVPNInterfaceFeatureTemplateConfig_all() string {
 			weight = 100
 		}]
 		tunnel_interface_border = false
-		per_tunnel_qos = false
-		per_tunnel_qos_aggregator = false
 		tunnel_qos_mode = "spoke"
 		tunnel_bandwidth = 50
 		tunnel_interface_groups = [5]

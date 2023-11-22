@@ -102,8 +102,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
     }
   ]
   tunnel_interface_border                        = false
-  per_tunnel_qos                                 = false
-  per_tunnel_qos_aggregator                      = false
   tunnel_qos_mode                                = "spoke"
   tunnel_bandwidth                               = 50
   tunnel_interface_groups                        = [5]
@@ -352,12 +350,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
   - Choices: `interface`, `pool`, `loopback`
   - Default value: `interface`
 - `nat_type_variable` (String) Variable name
-- `per_tunnel_qos` (Boolean) Per-tunnel Qos
-  - Default value: `false`
-- `per_tunnel_qos_aggregator` (Boolean) Per-tunnel QoS Aggregator
-  - Default value: `false`
-- `per_tunnel_qos_aggregator_variable` (String) Variable name
-- `per_tunnel_qos_variable` (String) Variable name
 - `poe` (Boolean) Configure interface as Power-over-Ethernet source
   - Default value: `false`
 - `poe_variable` (String) Variable name

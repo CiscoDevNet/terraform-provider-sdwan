@@ -210,8 +210,6 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.always."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.always."+"vipVariableName", data.DefaultInformationOriginateAlwaysVariable.ValueString())
 	} else if data.DefaultInformationOriginateAlways.IsNull() {
-		body, _ = sjson.Set(body, path+"ospf.default-information.originate.always."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"ospf.default-information.originate.always."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.always."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.always."+"vipType", "constant")
@@ -223,8 +221,6 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric."+"vipVariableName", data.DefaultInformationOriginateMetricVariable.ValueString())
 	} else if data.DefaultInformationOriginateMetric.IsNull() {
-		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric."+"vipType", "constant")
@@ -236,8 +232,6 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric-type."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric-type."+"vipVariableName", data.DefaultInformationOriginateMetricTypeVariable.ValueString())
 	} else if data.DefaultInformationOriginateMetricType.IsNull() {
-		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric-type."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric-type."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric-type."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospf.default-information.originate.metric-type."+"vipType", "constant")

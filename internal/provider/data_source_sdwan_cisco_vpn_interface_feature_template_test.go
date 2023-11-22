@@ -82,8 +82,6 @@ func TestAccDataSourceSdwanCiscoVPNInterfaceFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_encapsulations.0.preference", "10"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_encapsulations.0.weight", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_border", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "per_tunnel_qos", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "per_tunnel_qos_aggregator", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "tunnel_qos_mode", "spoke"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "tunnel_bandwidth", "50"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "tunnel_interface_color", "gold"),
@@ -256,8 +254,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "test" {
     weight = 100
   }]
   tunnel_interface_border = false
-  per_tunnel_qos = false
-  per_tunnel_qos_aggregator = false
   tunnel_qos_mode = "spoke"
   tunnel_bandwidth = 50
   tunnel_interface_groups = [5]

@@ -85,8 +85,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
     }
   ]
   tunnel_interface_border                        = false
-  per_tunnel_qos                                 = false
-  per_tunnel_qos_aggregator                      = false
   tunnel_qos_mode                                = "spoke"
   tunnel_bandwidth                               = 50
   tunnel_interface_groups                        = [5]

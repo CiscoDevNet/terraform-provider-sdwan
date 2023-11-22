@@ -7,6 +7,11 @@ description: |-
 
 # Changelog
 
+## 0.2.11 (unreleased)
+
+- Fix idempotency issue with various resource and boolean values
+- Remove redundant `per_tunnel_qos` and `per_tunnel_qos_aggregator` attributes from `sdwan_cisco_vpn_interface_feature_template` resource and data source
+
 ## 0.2.10
 
 - Fix issue with `sdwan_cisco_ospf_feature_template` resource when not configuring route policies

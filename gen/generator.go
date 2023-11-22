@@ -399,7 +399,7 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 			variable = true
 		}
 	}
-	if !ignore && r.Get("objectType").String() != "tree" {
+	if !ignore && r.Get("objectType").String() != "tree" && !attr.ExcludeIgnore {
 		attr.Mandatory = true
 	}
 	if variable && r.Get("objectType").String() != "tree" && !attr.NodeOnlyContainer {
