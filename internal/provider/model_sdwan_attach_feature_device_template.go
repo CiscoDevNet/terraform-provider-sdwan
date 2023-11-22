@@ -92,7 +92,12 @@ func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client
 		// Resolve variable names and insert template variable values
 		var templateVariables map[string]string
 		item.Variables.ElementsAs(ctx, &templateVariables, false)
-		for k, _ := range variables {
+		for k := range variables {
+			_, ok := templateVariables[k]
+			if ok {
+				variables[k] = templateVariables[k]
+				continue
+			}
 			templateVariableName, ok := mappings[k]
 			if ok {
 				variables[k] = templateVariables[templateVariableName]
@@ -185,16 +190,16 @@ func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, clie
 						if len(varName) > 0 {
 							varName = varName[1 : len(varName)-1]
 						}
-						mappings[v.Get("property").String()] = varName
+						mappings[varName] = v.Get("property").String()
 					} else {
 						// handle factory default feature template variables
 						property := v.Get("property").String()
 						if property == "//system/host-name" {
-							mappings[property] = "system_host_name"
+							mappings["system_host_name"] = property
 						} else if property == "//system/system-ip" {
-							mappings[property] = "system_system_ip"
+							mappings["system_system_ip"] = property
 						} else if property == "//system/site-id" {
-							mappings[property] = "system_site_id"
+							mappings["system_site_id"] = property
 						}
 					}
 				}
@@ -209,15 +214,23 @@ func (data *AttachFeatureDeviceTemplate) readVariables(ctx context.Context, clie
 				return true
 			})
 		}
+
 		// Resolve variable names and insert template variable values
-		templateVariables := make(map[string]attr.Value)
-		for k, _ := range variables {
+		var templateVariables map[string]string
+		newTemplateVariables := make(map[string]attr.Value)
+		data.Devices[i].Variables.ElementsAs(ctx, &templateVariables, false)
+		for k := range templateVariables {
+			_, ok := variables[k]
+			if ok {
+				newTemplateVariables[k] = types.StringValue(variables[k])
+				continue
+			}
 			templateVariableName, ok := mappings[k]
 			if ok {
-				templateVariables[templateVariableName] = types.StringValue(variables[k])
+				newTemplateVariables[k] = types.StringValue(variables[templateVariableName])
 			}
 		}
-		data.Devices[i].Variables = types.MapValueMust(types.StringType, templateVariables)
+		data.Devices[i].Variables = types.MapValueMust(types.StringType, newTemplateVariables)
 	}
 
 	return nil

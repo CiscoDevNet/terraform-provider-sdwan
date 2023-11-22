@@ -4,6 +4,7 @@
 - Remove redundant `per_tunnel_qos` and `per_tunnel_qos_aggregator` attributes from `sdwan_cisco_vpn_interface_feature_template` resource and data source
 - Add `base_action` attribute to `sdwan_custom_control_topology_policy_definition` resource and data source
 - Add `base_action` attribute to `sdwan_traffic_data_policy_definition` resource and data source
+- Allow full path variables in `sdwan_attach_feature_device_template` resource `variables` section
 
 ## 0.2.10
 
