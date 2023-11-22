@@ -115,6 +115,13 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 								stringvalidator.OneOf("ipv4", "ipv6", "all"),
 							},
 						},
+						"base_action": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Base action, either `accept` or `drop`").AddStringEnumDescription("accept", "drop").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("accept", "drop"),
+							},
+						},
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
 							Optional:            true,

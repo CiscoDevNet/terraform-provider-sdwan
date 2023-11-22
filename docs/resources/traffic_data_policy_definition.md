@@ -19,10 +19,11 @@ resource "sdwan_traffic_data_policy_definition" "example" {
   default_action = "drop"
   sequences = [
     {
-      id      = 1
-      name    = "Seq1"
-      type    = "applicationFirewall"
-      ip_type = "ipv4"
+      id          = 1
+      name        = "Seq1"
+      type        = "applicationFirewall"
+      ip_type     = "ipv4"
+      base_action = "accept"
       match_entries = [
         {
           type                = "appList"
@@ -72,6 +73,8 @@ Required:
 Optional:
 
 - `action_entries` (Attributes List) List of action entries (see [below for nested schema](#nestedatt--sequences--action_entries))
+- `base_action` (String) Base action, either `accept` or `drop`
+  - Choices: `accept`, `drop`
 - `ip_type` (String) Sequence IP type, either `ipv4`, `ipv6` or `all`
   - Choices: `ipv4`, `ipv6`, `all`
 - `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--sequences--match_entries))

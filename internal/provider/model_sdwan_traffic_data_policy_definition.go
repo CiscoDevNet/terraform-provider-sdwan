@@ -42,6 +42,7 @@ type TrafficDataPolicyDefinitionSequences struct {
 	Name          types.String                                        `tfsdk:"name"`
 	Type          types.String                                        `tfsdk:"type"`
 	IpType        types.String                                        `tfsdk:"ip_type"`
+	BaseAction    types.String                                        `tfsdk:"base_action"`
 	MatchEntries  []TrafficDataPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
 	ActionEntries []TrafficDataPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
@@ -151,6 +152,9 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 			}
 			if !item.IpType.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceIpType", item.IpType.ValueString())
+			}
+			if !item.BaseAction.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "baseAction", item.BaseAction.ValueString())
 			}
 			if len(item.MatchEntries) > 0 {
 				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
@@ -436,6 +440,11 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 				item.IpType = types.StringValue(cValue.String())
 			} else {
 				item.IpType = types.StringNull()
+			}
+			if cValue := v.Get("baseAction"); cValue.Exists() {
+				item.BaseAction = types.StringValue(cValue.String())
+			} else {
+				item.BaseAction = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() {
 				item.MatchEntries = make([]TrafficDataPolicyDefinitionSequencesMatchEntries, 0)
@@ -827,6 +836,9 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 				hasChanges = true
 			}
 			if !data.Sequences[i].IpType.Equal(state.Sequences[i].IpType) {
+				hasChanges = true
+			}
+			if !data.Sequences[i].BaseAction.Equal(state.Sequences[i].BaseAction) {
 				hasChanges = true
 			}
 			if len(data.Sequences[i].MatchEntries) != len(state.Sequences[i].MatchEntries) {

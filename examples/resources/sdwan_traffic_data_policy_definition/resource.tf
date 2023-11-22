@@ -4,10 +4,11 @@ resource "sdwan_traffic_data_policy_definition" "example" {
   default_action = "drop"
   sequences = [
     {
-      id      = 1
-      name    = "Seq1"
-      type    = "applicationFirewall"
-      ip_type = "ipv4"
+      id          = 1
+      name        = "Seq1"
+      type        = "applicationFirewall"
+      ip_type     = "ipv4"
+      base_action = "accept"
       match_entries = [
         {
           type                = "appList"

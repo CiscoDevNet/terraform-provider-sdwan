@@ -12,6 +12,7 @@ description: |-
 - Fix idempotency issue with various resource and boolean values
 - Remove redundant `per_tunnel_qos` and `per_tunnel_qos_aggregator` attributes from `sdwan_cisco_vpn_interface_feature_template` resource and data source
 - Add `base_action` attribute to `sdwan_custom_control_topology_policy_definition` resource and data source
+- Add `base_action` attribute to `sdwan_traffic_data_policy_definition` resource and data source
 
 ## 0.2.10
 

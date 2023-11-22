@@ -94,6 +94,10 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "Sequence IP type, either `ipv4`, `ipv6` or `all`",
 							Computed:            true,
 						},
+						"base_action": schema.StringAttribute{
+							MarkdownDescription: "Base action, either `accept` or `drop`",
+							Computed:            true,
+						},
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: "List of match entries",
 							Computed:            true,
