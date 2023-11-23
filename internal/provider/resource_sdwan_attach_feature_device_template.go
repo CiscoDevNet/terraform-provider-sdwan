@@ -215,11 +215,12 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve currently attached devices, got error: %s", err))
 		return
 	}
-	actionId := res.Get("id").String()
-	err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to detach device template, got error: %s", err))
-		return
+	if res.Get("id").Exists() {
+		err = helpers.WaitForActionToComplete(ctx, r.client, res.Get("id").String())
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to detach device template, got error: %s", err))
+			return
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Id.ValueString()))

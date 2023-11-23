@@ -6,6 +6,7 @@
 - Add `base_action` attribute to `sdwan_traffic_data_policy_definition` resource and data source
 - Allow full path variables in `sdwan_attach_feature_device_template` resource `variables` section
 - Always include empty lists in payloads to fix various GUI compatibility issues
+- Skip `sdwan_attach_feature_device_template` template detachment when device template is no longer attached
 
 ## 0.2.10
 
