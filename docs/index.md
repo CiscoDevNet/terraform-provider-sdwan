@@ -3,12 +3,18 @@
 layout: ""
 page_title: "Provider: SDWAN"
 description: |-
-  The SDWAN provider provides resources to interact with a Cisco SD-WAN environment.
+  The SDWAN provider provides resources to interact with a Cisco Catalyst SD-WAN environment.
 ---
 
 # SDWAN Provider
 
-The SDWAN provider provides resources to interact with a Cisco SD-WAN environment. It communicates with vManage via the REST API.
+The SDWAN provider provides resources to interact with a Cisco Catalyst SD-WAN environment. It communicates with the SD-WAN Manager via the REST API.
+
+All resources and data sources have been tested with the following releases.
+
+| Platform        | Version |
+| --------------- | ------- |
+| Catalyst SD-WAN | 20.9    |
 
 ## Example Usage
 
