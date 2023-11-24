@@ -1,0 +1,16 @@
+---
+name: Transport Feature Profile
+rest_endpoint: /v1/feature-profile/sdwan/transport/
+id_attribute: id
+doc_category: Feature Profiles
+attributes:
+  - model_name: name
+    response_model_name: profileName
+    type: String
+    mandatory: true
+    description: The name of the transport feature profile
+    example: TRANSPORT_FP_1
+  - model_name: description
+    type: String
+    description: Description
+    example: My transport feature profile 1
