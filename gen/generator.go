@@ -161,6 +161,7 @@ type YamlConfig struct {
 
 type YamlConfigAttribute struct {
 	ModelName            string                         `yaml:"model_name"`
+	ResponseModelName    string                         `yaml:"response_model_name"`
 	TfName               string                         `yaml:"tf_name"`
 	Type                 string                         `yaml:"type"`
 	ObjectType           string                         `yaml:"object_type"`
@@ -262,6 +263,15 @@ func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return ResponseModelName if set, otherwise ModelName
+func GetResponseModelName(attribute YamlConfigAttribute) string {
+	if attribute.ResponseModelName != "" {
+		return attribute.ResponseModelName
+	} else {
+		return attribute.ModelName
+	}
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -273,14 +283,15 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":            ToGoName,
-	"camelCase":           CamelCase,
-	"snakeCase":           SnakeCase,
-	"sprintf":             fmt.Sprintf,
-	"toLower":             strings.ToLower,
-	"path":                BuildPath,
-	"hasVersionAttribute": HasVersionAttribute,
-	"contains":            contains,
+	"toGoName":             ToGoName,
+	"camelCase":            CamelCase,
+	"snakeCase":            SnakeCase,
+	"sprintf":              fmt.Sprintf,
+	"toLower":              strings.ToLower,
+	"path":                 BuildPath,
+	"hasVersionAttribute":  HasVersionAttribute,
+	"getResponseModelName": GetResponseModelName,
+	"contains":             contains,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {

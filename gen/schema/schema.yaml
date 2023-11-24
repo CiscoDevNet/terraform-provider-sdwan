@@ -20,6 +20,7 @@ remove_id: bool(required=False)
 ---
 attribute:
   model_name: str(required=False)
+  response_model_name: str(required=False)
   tf_name: str(required=False)
   type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', 'StringList', required=False)
   object_type: enum('object', 'tree', 'list', required=False)

@@ -1,3 +1,7 @@
+## 0.2.12 (unreleased)
+
+- Add `sdwan_system_feature_profile` resource and data source
+
 ## 0.2.11
 
 - Fix idempotency issue with various resource and boolean values
