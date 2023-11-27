@@ -1,0 +1,2453 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 0, 
+                "max": 65527, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "VPN", 
+            "details": "List of VPN instances", 
+            "key": "vpn-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Name", 
+            "details": "Name", 
+            "key": "name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 0, 
+                "max": 65527, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Tenant VPN", 
+            "details": "Tenant VPN", 
+            "key": "tenant-vpn-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Select Tenant", 
+            "details": "Org Name selected", 
+            "key": "org-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "OMP Admin Distance IPv4", 
+            "details": "omp-admin-distance-ipv4", 
+            "key": "omp-admin-distance-ipv4", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "OMP Admin Distance IPv6", 
+            "details": "omp-admin-distance-ipv6", 
+            "key": "omp-admin-distance-ipv6", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ip"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "DNS Address", 
+                    "details": "DNS Address", 
+                    "key": "dns-addr", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant",
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "primary", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "primary", 
+                                "value": "Primary"
+                            }, 
+                            {
+                                "key": "secondary", 
+                                "value": "Secondary"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Role", 
+                    "details": "Role", 
+                    "key": "role", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "DNS", 
+            "details": "DNS", 
+            "key": "dns", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "dns-addr"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv6"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "DNS Address", 
+                    "details": "DNS Address", 
+                    "key": "dns-addr", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "primary", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "primary", 
+                                "value": "Primary"
+                            }, 
+                            {
+                                "key": "secondary", 
+                                "value": "Secondary"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Role", 
+                    "details": "Role", 
+                    "key": "role", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "DNS", 
+            "details": "DNS", 
+            "key": "dns-ipv6", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "dns-addr"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ecmp-hash-key"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Enhance ECMP Keying", 
+            "details": "Optional packet fields for ECMP keying", 
+            "key": "layer4", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "dnsHostName"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Hostname", 
+                    "details": "Hostname", 
+                    "key": "hostname", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 8, 
+                        "type": "ip"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "List of IP", 
+                    "details": "List of IP", 
+                    "key": "ip", 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Static DNS Mapping", 
+            "details": "Static DNS mapping", 
+            "key": "host", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "hostname"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "FW", 
+                                "value": "FW"
+                            }, 
+                            {
+                                "key": "IDS", 
+                                "value": "IDS"
+                            }, 
+                            {
+                                "key": "IDP", 
+                                "value": "IDP"
+                            }, 
+                            {
+                                "key": "netsvc1", 
+                                "value": "netsvc1"
+                            }, 
+                            {
+                                "key": "netsvc2", 
+                                "value": "netsvc2"
+                            }, 
+                            {
+                                "key": "netsvc3", 
+                                "value": "netsvc3"
+                            }, 
+                            {
+                                "key": "netsvc4", 
+                                "value": "netsvc4"
+                            }, 
+                            {
+                                "key": "TE", 
+                                "value": "TE"
+                            }, 
+                            {
+                                "key": "appqoe", 
+                                "value": "appqoe"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Service Type", 
+                    "details": "Service Type", 
+                    "key": "svc-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "IPv4 address", 
+                    "details": "List of IPv4 address", 
+                    "key": "address", 
+                    "maxChildren": "4", 
+                    "minChildren": "0", 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": "string", 
+                    "defaultOption": "constant", 
+                    "description": "Interface", 
+                    "details": "Tracking Service", 
+                    "key": "interface", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Tracking", 
+                    "details": "Tracking Service", 
+                    "key": "track-enable", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Service", 
+            "details": "Configure services", 
+            "key": "service", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "svc-type"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 0, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN", 
+                    "details": "Destination VPN to resolve the prefix", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "sig", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "sig", 
+                                "value": "SIG"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Service", 
+                    "details": "Service", 
+                    "key": "service", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "notIgnore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ip"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv4 Static Service Route", 
+            "details": "Configure IPv4 Static Service Routes", 
+            "key": "service-route", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "prefix"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address", 
+                            "details": "IP Address", 
+                            "key": "address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 1, 
+                                "max": 255, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Distance", 
+                            "details": "Administrative distance", 
+                            "key": "distance", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "IP Gateway", 
+                    "details": "IP gateway address", 
+                    "key": "next-hop", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address", 
+                            "details": "IP Address", 
+                            "key": "address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 1, 
+                                "max": 255, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Distance", 
+                            "details": "Administrative distance", 
+                            "key": "distance", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Tracker", 
+                            "details": "Static route tracker", 
+                            "key": "tracker", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "IP Gateway", 
+                    "details": "IP gateway address", 
+                    "key": "next-hop-with-track", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "null0", 
+                    "details": "null0", 
+                    "key": "null0", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Distance", 
+                    "details": "Administrative distance", 
+                    "key": "distance", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "range": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "VPN", 
+                    "details": "Destination VPN(!=0 or !=512) to resolve the prefix", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "DHCP", 
+                    "details": "Default Gateway obtained from DHCP", 
+                    "key": "dhcp", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ip"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv4 Static Route", 
+            "details": "Configure IPv4 Static Routes", 
+            "key": "route", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "prefix"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv6-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv6"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address", 
+                            "details": "IP Address", 
+                            "key": "address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 1, 
+                                "max": 255, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Distance", 
+                            "details": "Administrative distance", 
+                            "key": "distance", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "IP Gateway", 
+                    "details": "IP gateway address", 
+                    "key": "next-hop", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "null0", 
+                    "details": "null0", 
+                    "key": "null0", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "range": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "VPN", 
+                    "details": "Destination VPN(!=0 or !=512) to resolve the prefix", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "NAT64", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "NAT64", 
+                                "value": "NAT64"
+                            }, 
+                            {
+                                "label": "NAT66", 
+                                "value": "NAT66"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT", 
+                    "details": "NAT", 
+                    "key": "nat", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ipv6"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv6 Static Route", 
+            "details": "Configure IPv6 Static Routes", 
+            "key": "route", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "prefix"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 0, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN", 
+                    "details": "Destination VPN to resolve the prefix", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "GRE Interface (Maximum entries allowed: 2)", 
+                    "details": "List of GRE Interfaces", 
+                    "key": "interface", 
+                    "maxChildren": "2", 
+                    "minChildren": "0", 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ip"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv4 Static GRE Route", 
+            "details": "Configure routes pointing to a GRE tunnel", 
+            "key": "gre-route", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "prefix"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 0, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN", 
+                    "details": "Destination VPN to resolve the prefix", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "interfaceList"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "IPSEC Interface (Maximum entries allowed: 2)", 
+                    "details": "List of IPSEC Interfaces (Separated by commas)", 
+                    "key": "interface", 
+                    "maxChildren": "2", 
+                    "minChildren": "0", 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ip"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv4 Static IPSEC Route", 
+            "details": "Configure routes pointing to a IPSEC tunnel", 
+            "key": "ipsec-route", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "prefix"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "bgp", 
+                                "value": "BGP"
+                            }, 
+                            {
+                                "key": "ospf", 
+                                "value": "OSPF"
+                            }, 
+                            {
+                                "key": "ospfv3", 
+                                "value": "OSPFV3"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "Connected"
+                            }, 
+                            {
+                                "key": "static", 
+                                "value": "Static"
+                            }, 
+                            {
+                                "key": "network", 
+                                "value": "Network"
+                            }, 
+                            {
+                                "key": "aggregate", 
+                                "value": "Aggregate"
+                            }, 
+                            {
+                                "key": "eigrp", 
+                                "value": "EIGRP"
+                            }, 
+                            {
+                                "key": "lisp", 
+                                "value": "LISP"
+                            }, 
+                            {
+                                "key": "isis", 
+                                "value": "ISIS"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Advertised routes protocol", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 127, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Route Policy", 
+                    "details": "Set Route Policy to OMP", 
+                    "key": "route-policy", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "external", 
+                                "value": "External"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "key": "protocol-sub-type", 
+                    "minElements": 1, 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Prefix", 
+                            "details": "Prefix", 
+                            "key": "prefix-entry", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Aggregate Only", 
+                            "details": "Aggregate Only", 
+                            "key": "aggregate-only", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "key": "prefix-list", 
+                    "minElements": 1, 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "prefix-entry"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "omp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Advertise", 
+            "details": "Advertise routes to OMP", 
+            "key": "advertise", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "bgp", 
+                                "value": "BGP"
+                            }, 
+                            {
+                                "key": "ospf", 
+                                "value": "Ospf"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "Connected"
+                            }, 
+                            {
+                                "key": "static", 
+                                "value": "Static"
+                            }, 
+                            {
+                                "key": "network", 
+                                "value": "Network"
+                            }, 
+                            {
+                                "key": "aggregate", 
+                                "value": "Aggregate"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Advertised routes protocol", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 127, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Route Policy", 
+                    "key": "route-policy", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "external", 
+                                "value": "External"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "key": "protocol-sub-type", 
+                    "minElements": 1, 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv6-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Prefix", 
+                            "details": "Prefix", 
+                            "key": "prefix-entry", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Aggregate Only", 
+                            "details": "Aggregate Only", 
+                            "key": "aggregate-only", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "key": "prefix-list", 
+                    "minElements": 1, 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "prefix-entry"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "omp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Advertise", 
+            "details": "Advertise routes to OMP", 
+            "key": "ipv6-advertise", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT64 Pool name", 
+                    "details": "NAT64 Pool name", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT 64 v4 Pool Range Start", 
+                    "details": "Starting IP address of NAT pool range", 
+                    "key": "start-address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT 64 v4 Pool Range End", 
+                    "details": "Ending IP address of NAT pool range", 
+                    "key": "end-address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "NAT 64 Overload", 
+                    "details": "NAT 64 Overload Option", 
+                    "key": "overload", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Enable Route Leaking from Global VPN", 
+                    "details": "Enable Route Leaking from Global VPN to this Service VPN", 
+                    "key": "leak_from_global", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "all", 
+                                "value": "All"
+                            }, 
+                            {
+                                "key": "static", 
+                                "value": "Static"
+                            }, 
+                            {
+                                "key": "mobile", 
+                                "value": "Mobile"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "Connected"
+                            }, 
+                            {
+                                "key": "rip", 
+                                "value": "Rip"
+                            }, 
+                            {
+                                "key": "odr", 
+                                "value": "Odr"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Select protocol for route leaking", 
+                    "key": "leak_from_global_protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Enable Route Leaking to Global VPN", 
+                    "details": "Enable Route Leaking from this Service VPN to Global VPN", 
+                    "key": "leak_to_global", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat64", 
+                "v4"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "NAT64 V4 Pool", 
+            "details": "Set NAT64 v4 pool range", 
+            "key": "pool", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 31, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT Pool Name", 
+                    "details": "NAT Pool Name, natpool1..31", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 32, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT Pool Prefix Length", 
+                    "details": "Ending IP address of NAT Pool Prefix Length", 
+                    "key": "prefix-length", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT Pool Range Start", 
+                    "details": "Starting IP address of NAT pool range", 
+                    "key": "range-start", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT Pool Range End", 
+                    "details": "Ending IP address of NAT pool range", 
+                    "key": "range-end", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "NAT Overload", 
+                    "details": "Enable port translation(PAT)", 
+                    "key": "overload", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "inside", 
+                                "value": "Inside"
+                            }, 
+                            {
+                                "key": "outside", 
+                                "value": "Outside"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "NAT Direction", 
+                    "details": "Direction of NAT translation", 
+                    "key": "direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 1000, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Add Object/Object Group Tracker", 
+                    "details": "Add Object/Object Group Tracker", 
+                    "key": "tracker-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "NAT Pool", 
+            "details": "Configure NAT Pool entries", 
+            "key": "natpool", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": []
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "NAT Pool Name", 
+                    "details": "NAT Pool Name, natpool1..31", 
+                    "key": "pool-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source IP Address", 
+                    "details": "Source IP address to be translated", 
+                    "key": "source-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Translated Source IP Address", 
+                    "details": "Statically translated source IP address", 
+                    "key": "translate-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "inside", 
+                                "value": "Inside"
+                            }, 
+                            {
+                                "key": "outside", 
+                                "value": "Outside"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Static NAT Direction", 
+                    "details": "Direction of static NAT translation", 
+                    "key": "static-nat-direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 1000, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Add Object/Object Group Tracker", 
+                    "details": "Add Object/Object Group Tracker", 
+                    "key": "tracker-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Static NAT Rules", 
+            "details": "Configure static NAT entries", 
+            "key": "static", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "source-ip", 
+                "translate-ip"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source IP Subnet", 
+                    "details": "Source IP Subnet to be translated", 
+                    "key": "source-ip-subnet", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Translated Source IP Subnet", 
+                    "details": "Statically translated source IP Subnet", 
+                    "key": "translate-ip-subnet", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 32, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Network Prefix Length", 
+                    "details": "Network Prefix Length", 
+                    "key": "prefix-length", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "inside", 
+                                "value": "Inside"
+                            }, 
+                            {
+                                "key": "outside", 
+                                "value": "Outside"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Static NAT Direction", 
+                    "details": "Direction of static NAT translation", 
+                    "key": "static-nat-direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 1000, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Add Object/Object Group Tracker", 
+                    "details": "Add Object/Object Group Tracker", 
+                    "key": "tracker-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Static NAT Subnet Rules", 
+            "details": "Configure static NAT Subnet entries", 
+            "key": "subnet-static", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "source-ip-subnet", 
+                "translate-ip-subnet"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": []
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "NAT Pool Name", 
+                    "details": "NAT Pool Name, natpool1..31", 
+                    "key": "pool-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source Port", 
+                    "details": "Source Port", 
+                    "key": "source-port", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Translate Port", 
+                    "details": "Translate Port", 
+                    "key": "translate-port", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source IP Address", 
+                    "details": "Source IP address to be translated", 
+                    "key": "source-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Translated Source IP Address", 
+                    "details": "Statically translated source IP address", 
+                    "key": "translate-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "tcp", 
+                                "value": "TCP"
+                            }, 
+                            {
+                                "key": "udp", 
+                                "value": "UDP"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Protocol", 
+                    "key": "proto", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Port Forward", 
+            "details": "Configure Port Forward entries", 
+            "key": "port-forward", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "source-port", 
+                "translate-port", 
+                "source-ip", 
+                "translate-ip", 
+                "proto"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "static", 
+                                "value": "static"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "connected"
+                            }, 
+                            {
+                                "key": "bgp", 
+                                "value": "bgp"
+                            }, 
+                            {
+                                "key": "ospf", 
+                                "value": "ospf"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Route Protocol Leak from Global to Service", 
+                    "details": "Select a Route Protocol to enable route leaking from Global VPN to this Service VPN", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "external", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "external", 
+                                "value": "external"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "key": "protocol-sub-type", 
+                    "minElements": 1, 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "", 
+                        "type": "enum", 
+                        "values": []
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Route Policy Leak from Global to Service", 
+                    "details": "Select a Route Policy to enable route leaking from Global VPN to this Service VPN", 
+                    "key": "route-policy", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "bgp", 
+                                        "value": "bgp"
+                                    }, 
+                                    {
+                                        "key": "eigrp", 
+                                        "value": "eigrp"
+                                    }, 
+                                    {
+                                        "key": "ospf", 
+                                        "value": "ospf"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Protocol", 
+                            "details": "Select a Route Protocol to enable redistribution", 
+                            "key": "protocol", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "", 
+                                "type": "enum", 
+                                "values": []
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Redistribution Policy", 
+                            "details": "Select a Route Policy to enable redistribution", 
+                            "key": "route-policy", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Redistribute To Protocol", 
+                    "details": "Enable redistribution of replicated route protocol", 
+                    "key": "redistribute", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "protocol"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Enable route leaking from Global VPN", 
+            "details": "Enable route leaking from Global VPN to this Service VPN", 
+            "key": "route-import", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 65530, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source VPN", 
+                    "details": "Select a Source VPN where route leaks from", 
+                    "key": "source-vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "static", 
+                                "value": "static"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "connected"
+                            }, 
+                            {
+                                "key": "bgp", 
+                                "value": "bgp"
+                            }, 
+                            {
+                                "key": "ospf", 
+                                "value": "ospf"
+                            }, 
+                            {
+                                "key": "eigrp", 
+                                "value": "eigrp"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Route Protocol Leak to Current VPN", 
+                    "details": "Select a Route Protocol to enable route leaking to current VPN", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "external", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "external", 
+                                "value": "external"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "key": "protocol-sub-type", 
+                    "minElements": 1, 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "", 
+                        "type": "enum", 
+                        "values": []
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Route Policy Leak to Current VPN", 
+                    "details": "Select a Route Policy to enable route leaking to current VPN", 
+                    "key": "route-policy", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "bgp", 
+                                        "value": "bgp"
+                                    }, 
+                                    {
+                                        "key": "eigrp", 
+                                        "value": "eigrp"
+                                    }, 
+                                    {
+                                        "key": "ospf", 
+                                        "value": "ospf"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Protocol", 
+                            "details": "Select a Route Protocol to enable redistribution", 
+                            "key": "protocol", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "", 
+                                "type": "enum", 
+                                "values": []
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Redistribution Policy", 
+                            "details": "Select a Route Policy to enable redistribution", 
+                            "key": "route-policy", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "ignore", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Redistribute To Protocol", 
+                    "details": "Enable redistribution of replicated route protocol", 
+                    "key": "redistribute", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "protocol"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Enable inter-service VPN route leak", 
+            "details": "Enable route leak from Service VPN to current VPN", 
+            "key": "route-import-from", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "source-vpn", 
+                "protocol"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "static", 
+                                "value": "static"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "connected"
+                            }, 
+                            {
+                                "key": "bgp", 
+                                "value": "bgp"
+                            }, 
+                            {
+                                "key": "eigrp", 
+                                "value": "eigrp"
+                            }, 
+                            {
+                                "key": "ospf", 
+                                "value": "ospf"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Route Protocol Leak from Service to Global", 
+                    "details": "Select a Route Protocol to enable route leaking from this Service VPN to Global VPN", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "external", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "external", 
+                                "value": "external"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "key": "protocol-sub-type", 
+                    "minElements": 1, 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "", 
+                        "type": "enum", 
+                        "values": []
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Route Policy Leak from Service to Global", 
+                    "details": "Select a Route Policy to enable route leaking from this Service VPN to Global VPN", 
+                    "key": "route-policy", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "bgp", 
+                                        "value": "bgp"
+                                    }, 
+                                    {
+                                        "key": "ospf", 
+                                        "value": "ospf"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Protocol", 
+                            "details": "Select a Route Protocol to enable redistribution", 
+                            "key": "protocol", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "", 
+                                "type": "enum", 
+                                "values": []
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Redistribution Policy", 
+                            "details": "Select a Route Policy to enable redistribution", 
+                            "key": "route-policy", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Redistribute To Protocol", 
+                    "details": "Enable redistribution of replicated route protocol", 
+                    "key": "redistribute", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "protocol"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Enable route leaking to Global VPN", 
+            "details": "Enable route leaking to Global VPN from this Service VPN", 
+            "key": "route-export", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }
+    ], 
+    "name": "cisco_vpn", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "uniqueKey": "vpn-id", 
+    "xmlPath": [
+        "vpn"
+    ], 
+    "xmlRootTag": "vpn-instance"
+}

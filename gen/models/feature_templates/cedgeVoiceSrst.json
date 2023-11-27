@@ -1,0 +1,179 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "register", 
+                "global"
+            ], 
+            "dataType": {
+                "max": "1500", 
+                "min": "1", 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Max Phones", 
+            "details": "Max number of phones supported", 
+            "key": "max-pool", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "register", 
+                "global"
+            ], 
+            "dataType": {
+                "maxLength": "32", 
+                "minLength": "1", 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "System Message", 
+            "details": "System Message", 
+            "key": "system-message", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "register", 
+                "global"
+            ], 
+            "dataType": {
+                "max": "3500", 
+                "min": "1", 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Max Directory Numbers", 
+            "details": "Maximum directory numbers supported", 
+            "key": "max-dn", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "register", 
+                "global", 
+                "call-manager-fallback"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Music on Hold", 
+            "details": "Music on Hold", 
+            "key": "moh", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "register", 
+                "global", 
+                "call-manager-fallback"
+            ], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Music on Hold file", 
+            "details": "Music on Hold file", 
+            "key": "filename", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Voice Register Pool Tag", 
+                    "details": "Voice Register Pool Tag", 
+                    "key": "pool-tag", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "id", 
+                        "network"
+                    ], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Device Network IPv4 Prefix", 
+                    "details": "Device Network IPv4 Prefix (format: ADDRESS / MASK  e.g., 1.1.1.1/32 or 1.1.1.0/24)", 
+                    "key": "ipv4prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "id", 
+                        "network"
+                    ], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Device Network IPv6 Prefix", 
+                    "details": "Device Network IPv6 Prefix (format: ADDRESS // MASK e.g., 2001:db8::1234//ffff:ffff::ffff)", 
+                    "key": "ipv6prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "register"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Voice register pool", 
+            "details": "Voice register pool", 
+            "key": "pool", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "pool-tag"
+            ]
+        }
+    ], 
+    "name": "cedgeVoiceSrst", 
+    "nameSpace": "http://viptela.com/voice", 
+    "xmlPath": [], 
+    "xmlRootTag": "uc-voice"
+}

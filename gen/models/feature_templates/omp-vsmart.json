@@ -1,0 +1,202 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Graceful Restart for OMP", 
+            "details": "Enable or disable OMP graceful restart", 
+            "key": "graceful-restart", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 4, 
+                "max": 32, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Number of Paths Advertised per Prefix", 
+            "details": "Set number of equal-cost routes advertised by vSmart to vEdge", 
+            "key": "send-path-limit", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Send Backup Paths", 
+            "details": "Enable or disable advertisement of backup routes to vEdges", 
+            "key": "send-backup-paths", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Discard Rejected Routes", 
+            "details": "Enable or disable discarding of routes rejected by policy", 
+            "key": "discard-rejected", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Enable or disable OMP", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 1, 
+                "max": 65535, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Advertisement Interval (seconds)", 
+            "details": "Set the time between OMP Update packets", 
+            "key": "advertisement-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 43200, 
+                "max": 604800, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Graceful Restart Timer (seconds)", 
+            "details": "Set the OMP graceful restart timer", 
+            "key": "graceful-restart-timer", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 300, 
+                "max": 3600, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "EOR Timer", 
+            "details": "End of RIB timer <1..604800> seconds", 
+            "key": "eor-timer", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 60, 
+                "range": "0,3-65535", 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Hold Time (seconds)", 
+            "details": "Set how long to wait before closing OMP peer connection", 
+            "key": "holdtime", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "filter-route", 
+                "outbound"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Enable Filtering Route Updates Based on Affinity", 
+            "details": "Filter routes based on affinity preference list", 
+            "key": "affinity-group-preference", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "OMP", 
+    "nameSpace": "http://viptela.com/omp", 
+    "xmlPath": [], 
+    "xmlRootTag": "omp"
+}

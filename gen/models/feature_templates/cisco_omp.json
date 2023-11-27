@@ -1,0 +1,414 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Graceful Restart for OMP", 
+            "details": "Enable or disable OMP graceful restart", 
+            "key": "graceful-restart", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 4294967295, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Overlay AS Number", 
+            "details": "Set Overlay AS number <1..4294967295> or <XX.YY>", 
+            "key": "overlay-as", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 4, 
+                "max": 16, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Number of Paths Advertised per Prefix", 
+            "details": "Set number of TLOC routes advertised between vSmart and vEdge", 
+            "key": "send-path-limit", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 4, 
+                "max": 16, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "ECMP Limit", 
+            "details": "Set maximum number of OMP paths to install in vEdge route table", 
+            "key": "ecmp-limit", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Enable or disable OMP", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "OMP Admin Distance IPv4", 
+            "details": "omp-admin-distance-ipv4", 
+            "key": "omp-admin-distance-ipv4", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "OMP Admin Distance IPv6", 
+            "details": "omp-admin-distance-ipv6", 
+            "key": "omp-admin-distance-ipv6", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 1, 
+                "max": 65535, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Advertisement Interval (seconds)", 
+            "details": "Set the time between OMP Update packets", 
+            "key": "advertisement-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 43200, 
+                "max": 604800, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Graceful Restart Timer (seconds)", 
+            "details": "Set the OMP graceful restart timer", 
+            "key": "graceful-restart-timer", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 300, 
+                "max": 3600, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "EOR Timer", 
+            "details": "End of RIB timer <1..604800> seconds", 
+            "key": "eor-timer", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "timers"
+            ], 
+            "dataType": {
+                "default": 60, 
+                "range": "0,3-65535", 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Hold Time (seconds)", 
+            "details": "Set how long to wait before closing OMP peer connection", 
+            "key": "holdtime", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "bgp", 
+                                "value": "BGP"
+                            }, 
+                            {
+                                "key": "ospf", 
+                                "value": "OSPF"
+                            }, 
+                            {
+                                "key": "ospfv3", 
+                                "value": "OSPFV3"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "Connected"
+                            }, 
+                            {
+                                "key": "static", 
+                                "value": "Static"
+                            }, 
+                            {
+                                "key": "eigrp", 
+                                "value": "EIGRP"
+                            }, 
+                            {
+                                "key": "lisp", 
+                                "value": "LISP"
+                            }, 
+                            {
+                                "key": "isis", 
+                                "value": "ISIS"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Set routes to advertise", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "external", 
+                                "value": "External"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Route", 
+                    "details": "Advertise OSPF external routes", 
+                    "key": "route", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Advertise Routes", 
+            "details": "Advertise locally learned routes to OMP", 
+            "key": "advertise", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "bgp", 
+                                "value": "BGP"
+                            }, 
+                            {
+                                "key": "ospf", 
+                                "value": "OSPF"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "Connected"
+                            }, 
+                            {
+                                "key": "static", 
+                                "value": "Static"
+                            }, 
+                            {
+                                "key": "eigrp", 
+                                "value": "EIGRP"
+                            }, 
+                            {
+                                "key": "lisp", 
+                                "value": "LISP"
+                            }, 
+                            {
+                                "key": "isis", 
+                                "value": "ISIS"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Set routes to advertise", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Advertise Routes", 
+            "details": "Advertise locally learned routes to OMP", 
+            "key": "ipv6-advertise", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Ignore Region-Path Length During Best-Path Algorithm", 
+            "details": "Ignore Region-Path Length During Best-Path Algorithm", 
+            "key": "ignore-region-path-length", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "prefer", 
+                        "value": "Prefer Transport Gateway Path"
+                    }, 
+                    {
+                        "key": "ecmp-with-direct-path", 
+                        "value": "Do ECMP Between Direct and Transport Gateway Paths"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Transport Gateway Path Behavior", 
+            "details": "Transport gateway path computation", 
+            "key": "transport-gateway", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "cisco_omp", 
+    "nameSpace": "http://viptela.com/omp", 
+    "xmlPath": [], 
+    "xmlRootTag": "omp"
+}

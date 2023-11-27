@@ -1,0 +1,188 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 5, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Cellular ID", 
+            "details": "Cellular interface name", 
+            "key": "id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 1, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Slot", 
+                    "details": "Set slot number", 
+                    "key": "slot", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 16, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "variable", 
+                    "description": "Data Profile", 
+                    "details": "Set data profile", 
+                    "key": "data-profile", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 16, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "variable", 
+                    "description": "Attach Profile", 
+                    "details": "Set attach profile", 
+                    "key": "attach-profile", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "lte", 
+                "sim"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Data Profile List", 
+            "details": "Data Profile List", 
+            "key": "data-profile-list", 
+            "maxElements": 2, 
+            "minElements": 0, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "slot"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "lte", 
+                "sim", 
+                "primary"
+            ], 
+            "dataType": {
+                "max": 255, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Primary SIM slot", 
+            "details": "Set primary SIM slot", 
+            "key": "slot", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "lte", 
+                "sim"
+            ], 
+            "dataType": {
+                "max": 65535, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SIM Failover Retries", 
+            "details": "Set SIM failover retries", 
+            "key": "max-retry", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "lte"
+            ], 
+            "dataType": {
+                "max": 7, 
+                "min": 3, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SIM Failover Timeout", 
+            "details": "Set SIM failover timeout in minutes", 
+            "key": "failovertimer", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "lte", 
+                "firmware"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "label": {
+                    "off": "Disable", 
+                    "on": "Enable"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Firmware Auto SIM", 
+            "details": "Enable/Disable Firmware Auto Sim", 
+            "key": "auto-sim", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "Cellular Cedge Controller", 
+    "nameSpace": "http://viptela.com/wwan", 
+    "uniqueKey": "id", 
+    "xmlPath": [
+        "controller"
+    ], 
+    "xmlRootTag": "cellular"
+}

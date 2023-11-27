@@ -1,0 +1,577 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 255, 
+                "maxLength": 8, 
+                "min": 1, 
+                "minLength": 6, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Interface Name (1..255)", 
+            "details": "Interface name: IPsec when present", 
+            "key": "if-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Administrative state", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 128, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Description", 
+            "details": "Interface description", 
+            "key": "description", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ip"
+            ], 
+            "dataType": {
+                "type": "ipv4-prefix"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IPv4 address", 
+            "details": "Assign IPv4 address", 
+            "key": "address", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "constant", 
+            "description": "IPsec Source IP Address", 
+            "details": "Tunnel source IP Address", 
+            "key": "tunnel-source", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "IPsec Source Interface", 
+            "details": "<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid", 
+            "key": "tunnel-source-interface", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "IPsec Destination IP Address/FQDN", 
+            "details": "Tunnel destination IP address", 
+            "key": "tunnel-destination", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 1960, 
+                "min": 552, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP MSS", 
+            "details": "TCP MSS on SYN packets, in bytes", 
+            "key": "tcp-mss-adjust", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 1500, 
+                "max": 2000, 
+                "min": 576, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IP MTU", 
+            "details": "Interface MTU <576..2000>, in bytes", 
+            "key": "mtu", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "dead-peer-detection"
+            ], 
+            "dataType": {
+                "max": 3600, 
+                "min": 10, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DPD Interval", 
+            "details": "IKE keepalive interval (seconds)", 
+            "key": "dpd-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "dead-peer-detection"
+            ], 
+            "dataType": {
+                "max": 60, 
+                "min": 2, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DPD Retries", 
+            "details": "IKE keepalive retries", 
+            "key": "dpd-retries", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike"
+            ], 
+            "dataType": {
+                "default": 1, 
+                "max": 2, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IKE Version", 
+            "details": "IKE Version <1..2>", 
+            "key": "ike-version", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike"
+            ], 
+            "dataType": {
+                "default": "main", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "main", 
+                        "value": "Enable IKE phase 1 main mode negotiation"
+                    }, 
+                    {
+                        "key": "aggressive", 
+                        "value": "Enable IKE phase 1 aggressive mode negotiation"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IKE Mode", 
+            "details": "IKE integrity protocol", 
+            "key": "ike-mode", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike"
+            ], 
+            "dataType": {
+                "default": 14400, 
+                "max": 1209600, 
+                "min": 300, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IKE Rekey Interval (seconds)", 
+            "details": "IKE rekey interval <300..1209600> seconds", 
+            "key": "ike-rekey-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike"
+            ], 
+            "dataType": {
+                "default": "aes256-cbc-sha1", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "aes256-cbc-sha1", 
+                        "value": "AES 256 CBC SHA1"
+                    }, 
+                    {
+                        "key": "aes256-cbc-sha2", 
+                        "value": "AES 256 CBC SHA2"
+                    }, 
+                    {
+                        "key": "aes128-cbc-sha1", 
+                        "value": "AES 128 CBC SHA1"
+                    }, 
+                    {
+                        "key": "aes128-cbc-sha2", 
+                        "value": "AES 128 CBC SHA2"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IKE Cipher Suite", 
+            "details": "IKE identity the IKE preshared secret belongs to", 
+            "key": "ike-ciphersuite", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike"
+            ], 
+            "dataType": {
+                "default": "16", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "2", 
+                        "value": "2 1024-bit modulus"
+                    }, 
+                    {
+                        "key": "14", 
+                        "value": "14 2048-bit modulus"
+                    }, 
+                    {
+                        "key": "15", 
+                        "value": "15 3072-bit modulus"
+                    }, 
+                    {
+                        "key": "16", 
+                        "value": "16 4096-bit modulus"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IKE Diffie-Hellman Group", 
+            "details": "IKE Diffie Hellman Groups", 
+            "key": "ike-group", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike", 
+                "authentication-type", 
+                "pre-shared-key"
+            ], 
+            "dataType": {
+                "maxLength": 127, 
+                "minLength": 1, 
+                "type": "restrictedPassphrase"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Preshared Key", 
+            "details": "Use preshared key to authenticate IKE peer", 
+            "key": "pre-shared-secret", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike", 
+                "authentication-type", 
+                "pre-shared-key"
+            ], 
+            "dataType": {
+                "maxLength": 63, 
+                "minLength": 1, 
+                "type": "ike"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IKE ID for local End point", 
+            "details": "IKE ID for the local endpoint. Input IPv4 address, domain name, or email address", 
+            "key": "ike-local-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ike", 
+                "authentication-type", 
+                "pre-shared-key"
+            ], 
+            "dataType": {
+                "maxLength": 63, 
+                "minLength": 1, 
+                "type": "ike"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IKE ID for Remote End point", 
+            "details": "IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address", 
+            "key": "ike-remote-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "default": 3600, 
+                "max": 1209600, 
+                "min": 300, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IPsec Rekey Interval (seconds)", 
+            "details": "IPsec rekey interval <300..1209600> seconds", 
+            "key": "ipsec-rekey-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "default": 512, 
+                "max": 4096, 
+                "min": 64, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IPsec Replay Window", 
+            "details": "Replay window size 32..8192 (must be a power of 2)", 
+            "key": "ipsec-replay-window", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "default": "aes256-gcm", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "aes256-cbc-sha1", 
+                        "value": "AES 256 CBC SHA1"
+                    }, 
+                    {
+                        "key": "aes256-cbc-sha384", 
+                        "value": "AES 256 CBC SHA 384"
+                    }, 
+                    {
+                        "key": "aes256-cbc-sha256", 
+                        "value": "AES 256 CBC SHA 256"
+                    }, 
+                    {
+                        "key": "aes256-cbc-sha512", 
+                        "value": "AES 256 CBC SHA 512"
+                    }, 
+                    {
+                        "key": "aes256-gcm", 
+                        "value": "AES 256 GCM"
+                    }, 
+                    {
+                        "key": "null-sha1", 
+                        "value": "Nul SHA1"
+                    }, 
+                    {
+                        "key": "null-sha384", 
+                        "value": "Nul SHA 384"
+                    }, 
+                    {
+                        "key": "null-sha256", 
+                        "value": "Nul SHA 256"
+                    }, 
+                    {
+                        "key": "null-sha512", 
+                        "value": "Nul SHA 512"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IPsec Cipher Suite", 
+            "details": "IPsec(ESP) encryption and integrity protocol", 
+            "key": "ipsec-ciphersuite", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "default": "group-16", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "group-2", 
+                        "value": "Group-2 1024-bit modulus"
+                    }, 
+                    {
+                        "key": "group-14", 
+                        "value": "Group-14 2048-bit modulus"
+                    }, 
+                    {
+                        "key": "group-15", 
+                        "value": "Group-15 3072-bit modulus"
+                    }, 
+                    {
+                        "key": "group-16", 
+                        "value": "Group-16 4096-bit modulus"
+                    }, 
+                    {
+                        "key": "none", 
+                        "value": "None"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Perfect Forward Secrecy", 
+            "details": "IPsec perfect forward secrecy settings", 
+            "key": "perfect-forward-secrecy", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Tracker", 
+            "details": "Enable tracker for this interface", 
+            "key": "tracker", 
+            "maxElements": 1, 
+            "minElements": 1, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "IPsec Interface", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "uniqueKey": "if-name", 
+    "xmlPath": [], 
+    "xmlRootTag": "interface"
+}

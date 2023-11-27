@@ -1,0 +1,211 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "1", 
+                        "maxLength": 36, 
+                        "minLength": 0, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Virtual Application Instance", 
+                    "details": "List of Virtual applications", 
+                    "key": "instance-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "utd", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "utd", 
+                                "value": "utd"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Virtual Application Type", 
+                    "details": "List of Virtual applications", 
+                    "key": "application-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "utd"
+                    ], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "NAT", 
+                    "details": "Is Nat enabled", 
+                    "key": "nat", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "utd"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Download URL Database on Device", 
+                    "details": "Download URL Database on Device", 
+                    "key": "database-url", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "utd"
+                    ], 
+                    "dataType": {
+                        "default": "low", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "low", 
+                                "value": "Low"
+                            }, 
+                            {
+                                "key": "medium", 
+                                "value": "Medium"
+                            }, 
+                            {
+                                "key": "high", 
+                                "value": "High"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Resource Profile", 
+                    "details": "Resource Profile", 
+                    "key": "resource-profile", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "utd"
+                    ], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Service Gateway IP", 
+                    "details": "Service Gateway IP (Management interface)", 
+                    "key": "service-gateway-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "utd"
+                    ], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Service IP", 
+                    "details": "Service IP", 
+                    "key": "service-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "utd"
+                    ], 
+                    "dataType": {
+                        "default": "192.0.2.1/24", 
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Data Gateway IP", 
+                    "details": "Data Gateway IP ", 
+                    "key": "data-gateway-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "utd"
+                    ], 
+                    "dataType": {
+                        "default": "192.0.2.2/24", 
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Data Service IP", 
+                    "details": "Data Service IP", 
+                    "key": "data-service-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Virtual Application", 
+            "details": "Virtual application Instance", 
+            "key": "virtual-application", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "instance-id"
+            ]
+        }
+    ], 
+    "name": "UTD", 
+    "nameSpace": "http://cisco.com/ns/yang/Cisco-IOS-XE-utd", 
+    "xmlPath": [], 
+    "xmlRootTag": "virtual-applications"
+}

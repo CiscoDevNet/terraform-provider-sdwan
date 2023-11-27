@@ -1,0 +1,95 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 63, 
+                        "min": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Unified Communications voice subpolicy name", 
+                    "details": "Unified Communications voice subpolicy name", 
+                    "key": "subpolicy-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 63, 
+                                "min": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Endpoint name", 
+                            "details": "Endpoint name", 
+                            "key": "endpoint-name", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 63, 
+                                "min": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "endpoint type", 
+                            "key": "type", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [
+                        "subpolicies"
+                    ], 
+                    "defaultOption": "constant", 
+                    "description": "list of endpoints", 
+                    "details": "Configure endpoints", 
+                    "key": "endpoints", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "endpoint-name"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "subpolicy list", 
+            "details": "subpolicy list", 
+            "key": "subpolicies", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ], 
+            "primaryKeys": [
+                "subpolicy-name"
+            ]
+        }
+    ], 
+    "name": "uc-voice-endpoint-map", 
+    "nameSpace": "http://viptela.com/voice", 
+    "xmlPath": [], 
+    "xmlRootTag": "uc-voice-endpoint-map"
+}

@@ -1,0 +1,76 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name", 
+                    "details": "Set the username", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "passphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Password", 
+                    "details": "Set the user password", 
+                    "key": "password", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Role", 
+                    "details": "Set the role", 
+                    "key": "role", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "rbac", 
+                "users"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "User Configuration", 
+            "details": "Create local login account", 
+            "key": "user", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }
+    ], 
+    "name": "clouddock_ccm_aaa", 
+    "nameSpace": "http://www.cisco.com/ns/colo/colo", 
+    "xmlPath": [], 
+    "xmlRootTag": "system"
+}

@@ -1,0 +1,108 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "server", 
+                    "details": "server ip", 
+                    "key": "server", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "tacacs-server", 
+                        "secret"
+                    ], 
+                    "dataType": {
+                        "default": 7, 
+                        "max": 31, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Key", 
+                    "details": "Set the TACACS server shared key", 
+                    "key": "key", 
+                    "objectStatus": "deprecated", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "tacacs-server", 
+                        "secret"
+                    ], 
+                    "dataType": {
+                        "maxLength": 150, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": " Encrypted Secret", 
+                    "details": "Set the TACACS server, type 7 & Type 8 encryption", 
+                    "key": "encrypted-shared-secret", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "tacacs-server", 
+                        "secret"
+                    ], 
+                    "dataType": {
+                        "maxLength": 150, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": " hashed shared Secret", 
+                    "details": "Hashed encryption", 
+                    "key": "hashed-shared-secret", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "security_servers", 
+                "tacacs-server"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "server Configuration", 
+            "details": "Create local login account", 
+            "key": "host", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "server"
+            ]
+        }
+    ], 
+    "name": "clouddock_ccm_tacacs", 
+    "nameSpace": "http://www.cisco.com/ns/colo/colo", 
+    "xmlPath": [], 
+    "xmlRootTag": "system"
+}

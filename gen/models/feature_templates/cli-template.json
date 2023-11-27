@@ -1,0 +1,22 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "cli config", 
+            "details": "Cli config", 
+            "key": "config", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }
+    ], 
+    "name": "cli-template", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "xmlPath": [], 
+    "xmlRootTag": "interface"
+}

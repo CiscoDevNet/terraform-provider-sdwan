@@ -1,0 +1,105 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "host", 
+                            "details": "Set the host", 
+                            "key": "host", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Hostname/IP Address", 
+                    "details": "Set hostname or IP address of server", 
+                    "key": "host", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "settings", 
+                "logging"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Remote host", 
+            "details": "Enable logging to remote server", 
+            "key": "host", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "settings", 
+                "logging"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "emergency", 
+                        "value": "Emergency: System is unusable (severity=0)"
+                    }, 
+                    {
+                        "key": "alert", 
+                        "value": "Alert: Immediate action needed (severity=1)"
+                    }, 
+                    {
+                        "key": "critical", 
+                        "value": "Critical: Critical conditions (severity=2)"
+                    }, 
+                    {
+                        "key": "error", 
+                        "value": "Error: Error conditions (severity=3)"
+                    }, 
+                    {
+                        "key": "warning", 
+                        "value": "Warn: Warning conditions (severity=4)"
+                    }, 
+                    {
+                        "key": "notice", 
+                        "value": "Notice: Normal but significant conditions (severity=5)"
+                    }, 
+                    {
+                        "key": "informational", 
+                        "value": "Information: Informational messages (severity=6)"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Severity", 
+            "details": "Set logging level for messages logged to server", 
+            "key": "severity", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }
+    ], 
+    "name": "clouddock_logging", 
+    "nameSpace": "http://www.cisco.com/nfv", 
+    "primaryKeys": [
+        "host"
+    ], 
+    "xmlPath": [], 
+    "xmlRootTag": "system"
+}

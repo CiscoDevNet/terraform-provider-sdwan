@@ -1,0 +1,262 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "1", 
+                        "maxLength": 36, 
+                        "minLength": 0, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Virtual Application Instance", 
+                    "details": "List of Virtual applications", 
+                    "key": "instance-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "te", 
+                        "maxLength": 32, 
+                        "minLength": 0, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Virtual Application Type", 
+                    "details": "List of Virtual applications", 
+                    "key": "application-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te"
+                    ], 
+                    "dataType": {
+                        "maxLength": 210, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Account Group Token", 
+                    "details": "Set the Account Group Token", 
+                    "key": "token", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ], 
+                    "vipNeedsEncryption": "true"
+                }, 
+                {
+                    "dataPath": [
+                        "te"
+                    ], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "VPN", 
+                    "details": "VPN number", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te"
+                    ], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Agent IP Address", 
+                    "details": "Set the Agent IP Address", 
+                    "key": "te-mgmt-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te"
+                    ], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Agent default gateway", 
+                    "details": "Set the Agent default gateway", 
+                    "key": "te-vpg-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te"
+                    ], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Name Server", 
+                    "details": "Set the name server", 
+                    "key": "name-server", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te"
+                    ], 
+                    "dataType": {
+                        "maxLength": 235, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Hostname", 
+                    "details": "Set the host name", 
+                    "key": "hostname", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te"
+                    ], 
+                    "dataType": {
+                        "default": "none", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "None", 
+                                "value": "none"
+                            }, 
+                            {
+                                "label": "Static", 
+                                "value": "static"
+                            }, 
+                            {
+                                "label": "PAC", 
+                                "value": "pac"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Web Proxy Type", 
+                    "details": "Web Proxy Type", 
+                    "key": "proxy_type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te", 
+                        "proxy_static"
+                    ], 
+                    "dataType": {
+                        "maxLength": 174, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Proxy Host", 
+                    "details": "Set the proxy host", 
+                    "key": "proxy_host", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te", 
+                        "proxy_static"
+                    ], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Proxy Port", 
+                    "details": "Set the proxy port", 
+                    "key": "proxy_port", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "te", 
+                        "proxy_pac"
+                    ], 
+                    "dataType": {
+                        "maxLength": 183, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "PAC URL", 
+                    "details": "PAC URL", 
+                    "key": "pac_url", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Virtual Application", 
+            "details": "Virtual application Instance", 
+            "key": "virtual-application", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "application-type"
+            ]
+        }
+    ], 
+    "name": "cisco_thousandeyes", 
+    "nameSpace": "http://cisco.com/ns/yang/Cisco-IOS-XE-app-hosting", 
+    "xmlPath": [], 
+    "xmlRootTag": "virtual-applications"
+}

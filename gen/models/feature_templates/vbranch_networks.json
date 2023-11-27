@@ -1,0 +1,122 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Network Name", 
+                    "details": "name of network", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Network Vlan", 
+                    "details": "name of Vbranch vlan", 
+                    "key": "vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Trunk Mode", 
+                    "details": "trunk mode", 
+                    "key": "trunk", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Sriov", 
+                    "details": "Sriov", 
+                    "key": "sriov", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Bridge Name", 
+                    "details": "name of bridge", 
+                    "key": "bridge", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Bridge Port", 
+                    "details": "bridge port", 
+                    "key": "bridgePort", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Vbranch bridge name", 
+            "details": "name of bridge", 
+            "key": "network", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }
+    ], 
+    "name": "vbranch_networks", 
+    "nameSpace": "http://www.cisco.com/nfv/network", 
+    "xmlPath": [], 
+    "xmlRootTag": "networks"
+}

@@ -1,0 +1,356 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "service", 
+                "ip", 
+                "address", 
+                "trusted", 
+                "list"
+            ], 
+            "dataType": {
+                "type": "ipv4-prefix"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Trusted IPv4 Prefix List", 
+            "details": "Trusted IPv4 Prefix - comma-separated list", 
+            "key": "ipv4", 
+            "maxElements": 100, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "service", 
+                "ip", 
+                "address", 
+                "trusted", 
+                "list"
+            ], 
+            "dataType": {
+                "type": "ipv6-prefix"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Trusted IPv6 Prefix List", 
+            "details": "Trusted IPv6 Prefix - comma-separated list", 
+            "key": "ipv6", 
+            "maxElements": 100, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Source Interface", 
+            "details": "Source interface for SIP registration", 
+            "key": "source-interface", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "pots", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "POTS", 
+                                "value": "pots"
+                            }, 
+                            {
+                                "label": "SIP", 
+                                "value": "voip"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Dial Peer Type", 
+                    "details": "Select the type of Dial Peer", 
+                    "key": "type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 1073741823, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Voice Dial Peer Tag", 
+                    "details": "Voice dial peer tag", 
+                    "key": "dialpeertag", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 64, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Description", 
+                    "details": "Dial peer description", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Numbering Pattern", 
+                    "details": "Dial plan number pattern", 
+                    "key": "number-pattern", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "Incoming", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "Incoming", 
+                                "value": "Incoming"
+                            }, 
+                            {
+                                "label": "Outgoing", 
+                                "value": "Outgoing"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Direction", 
+                    "details": "Dial Plan Direction", 
+                    "key": "call-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "forward-digits"
+                    ], 
+                    "dataType": {
+                        "default": "none", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "All", 
+                                "value": "all"
+                            }, 
+                            {
+                                "label": "None", 
+                                "value": "none"
+                            }, 
+                            {
+                                "label": "Some", 
+                                "value": "some"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Forward Digits Type", 
+                    "details": "Dial plan forward digitse", 
+                    "key": "fwd-digit-choice", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "forward-digits"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Forward all destination digits", 
+                    "details": "Forward all destination digits", 
+                    "key": "all", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "forward-digits"
+                    ], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": "32", 
+                        "min": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Forward Digits", 
+                    "details": "No. of right-adjusted dial digits to be forwarded", 
+                    "key": "num-digits", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "sip", 
+                        "session", 
+                        "transport"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "tcp", 
+                                "value": "TCP"
+                            }, 
+                            {
+                                "key": "udp", 
+                                "value": "UDP"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Transport Protocol", 
+                    "details": "Transport Protocol", 
+                    "key": "transport-choice", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": "10", 
+                        "min": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Preference", 
+                    "details": "Preference order of this dial-peer", 
+                    "key": "preference", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Voice Port", 
+                    "details": "Voice port associated with this peer", 
+                    "key": "port", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "sip", 
+                        "session", 
+                        "target"
+                    ], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Destination Address", 
+                    "details": "Target address in formats 'ipv4: <ipv4 address>' or 'ipv6: <ipv6 address>'", 
+                    "key": "address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "dial-peer"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "POTS/Voip voice type", 
+            "details": "POTS/Voip voice type", 
+            "key": "voice", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ], 
+            "primaryKeys": [
+                "dialpeertag"
+            ]
+        }
+    ], 
+    "name": "cedgeVoiceSIP", 
+    "nameSpace": "http://viptela.com/uc-voice", 
+    "xmlPath": [], 
+    "xmlRootTag": "uc-voice"
+}

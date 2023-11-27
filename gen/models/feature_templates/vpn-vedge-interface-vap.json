@@ -1,0 +1,229 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "vap0", 
+                        "value": "Vap 0"
+                    }, 
+                    {
+                        "key": "vap1", 
+                        "value": "Vap 1"
+                    }, 
+                    {
+                        "key": "vap2", 
+                        "value": "Vap 2"
+                    }, 
+                    {
+                        "key": "vap3", 
+                        "value": "Vap 3"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Interface Name", 
+            "details": "VAP interface name: vap<0-7>", 
+            "key": "if-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Administrative state", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 4, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Description", 
+            "details": "Interface description", 
+            "key": "description", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 4, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "SSID", 
+            "details": "Service set identifier (SSID)", 
+            "key": "ssid", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "none", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "none", 
+                        "value": "None"
+                    }, 
+                    {
+                        "key": "wpa-personal", 
+                        "value": "WPA Personal"
+                    }, 
+                    {
+                        "key": "wpa2-personal", 
+                        "value": "WPA2 Personal"
+                    }, 
+                    {
+                        "key": "wpa/wpa2-personal", 
+                        "value": "WPA / WPA2-personal"
+                    }, 
+                    {
+                        "key": "wpa-enterprise", 
+                        "value": "WPA Enterprise"
+                    }, 
+                    {
+                        "key": "wpa2-enterprise", 
+                        "value": "WPA2 Enterprise"
+                    }, 
+                    {
+                        "key": "wpa/wpa2-enterprise", 
+                        "value": "WPA / WPA2 Enterprise"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Data Security", 
+            "details": "Data frame encryption", 
+            "key": "data-security", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "none", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "none", 
+                        "value": "None"
+                    }, 
+                    {
+                        "key": "optional", 
+                        "value": "Optional"
+                    }, 
+                    {
+                        "key": "required", 
+                        "value": "Required"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Management Security", 
+            "details": "Management frame encryption", 
+            "key": "mgmt-security", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "restrictedPassphrase"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "WPA Personal Key", 
+            "details": "WPA/WPA2 personal key", 
+            "key": "wpa-personal-key", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Radius Servers", 
+            "details": "RADIUS servers", 
+            "key": "radius-servers", 
+            "maxElements": 3, 
+            "minElements": 1, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 20, 
+                "max": 50, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Maximum Clients", 
+            "details": "Number of supported clients", 
+            "key": "max-clients", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "VAP Interface", 
+    "nameSpace": "http://viptela.com/wlan", 
+    "parentPath": "</wlan-instance>", 
+    "uniqueKey": "if-name", 
+    "xmlPath": [], 
+    "xmlRootTag": "interface"
+}

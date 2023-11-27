@@ -1,0 +1,481 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "nat64-global", 
+                "nat64-timeout"
+            ], 
+            "dataType": {
+                "default": 300, 
+                "max": 536870, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "UDP Timeout", 
+            "details": "Set NAT64 UDP session timeout, in seconds", 
+            "key": "udp-timeout", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat64-global", 
+                "nat64-timeout"
+            ], 
+            "dataType": {
+                "default": 3600, 
+                "max": 536870, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP Timeout", 
+            "details": "Set NAT64 TCP session timeout, in seconds", 
+            "key": "tcp-timeout", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "http-global"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "local", 
+                        "value": "local"
+                    }, 
+                    {
+                        "key": "aaa", 
+                        "value": "aaa"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "HTTP Authentication", 
+            "details": "Set preference for HTTP Authentication", 
+            "key": "http-authentication", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ssh"
+            ], 
+            "dataType": {
+                "max": 2, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SSH version", 
+            "details": "Set SSH version", 
+            "key": "version", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "HTTP Server", 
+            "details": "Set HTTP Server", 
+            "key": "http-server", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "HTTPS Server", 
+            "details": "Set HTTPS Server", 
+            "key": "https-server", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "maxLength": 256, 
+                "minLength": 0, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Source Interface", 
+            "details": "Specify interface for source address in all HTTP(S) client connections", 
+            "key": "source-intrf", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IP Source Routing", 
+            "details": "Set Source Route", 
+            "key": "source-route", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "ARP Proxy", 
+            "details": "Set ARP Proxy", 
+            "key": "arp-proxy", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Passive FTP", 
+            "details": "Set Passive FTP", 
+            "key": "ftp-passive", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "RSH/RCP", 
+            "details": "Set RSH/RCP", 
+            "key": "rcmd", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Ignore BOOTP", 
+            "details": "Configure Ignore BOOTP", 
+            "key": "bootp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IP Domain-Lookup", 
+            "details": "Configure Domain-Lookup", 
+            "key": "domain-lookup", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP Keepalives (Out)", 
+            "details": "Configure tcp-keepalives-out", 
+            "key": "tcp-keepalives-out", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP Keepalives (In)", 
+            "details": "Configure tcp-keepalives-in", 
+            "key": "tcp-keepalives-in", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP Small Servers", 
+            "details": "Configure tcp-small-servers", 
+            "key": "tcp-small-servers", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "UDP Small Servers", 
+            "details": "Configure udp-small-servers", 
+            "key": "udp-small-servers", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "LLDP", 
+            "details": "Configure LLDP", 
+            "key": "lldp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "CDP", 
+            "details": "Configure CDP", 
+            "key": "cdp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SNMP IFINDEX Persist", 
+            "details": "Configure SNMP Ifindex Persist", 
+            "key": "snmp-ifindex-persist", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Console Logging", 
+            "details": "Configure Console Logging", 
+            "key": "console-logging", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-other"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "VTY Line Logging", 
+            "details": "Configure VTY Line Logging", 
+            "key": "vty-logging", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "services-global", 
+                "services-ip"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Telnet (Outbound)", 
+            "details": "Configure Telnet (Outbound)", 
+            "key": "line-vty", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "cedge_global", 
+    "nameSpace": "http://viptela.com/cedge_global", 
+    "xmlPath": [], 
+    "xmlRootTag": "global"
+}

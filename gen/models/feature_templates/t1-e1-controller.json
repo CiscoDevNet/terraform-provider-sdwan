@@ -1,0 +1,392 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "card"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "e1", 
+                        "value": "e1"
+                    }, 
+                    {
+                        "key": "t1", 
+                        "value": "t1"
+                    }
+                ]
+            }, 
+            "defaultOption": "variable", 
+            "description": "Card Type", 
+            "details": "Card Type", 
+            "key": "type", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "card"
+            ], 
+            "dataType": {
+                "max": 4294967295, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Slot", 
+            "details": "Slot number", 
+            "key": "slot", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "card"
+            ], 
+            "dataType": {
+                "max": 4294967295, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Sub Slot", 
+            "details": "SubSlot number", 
+            "key": "bay", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "E1", 
+                                "value": "E1"
+                            }, 
+                            {
+                                "key": "T1", 
+                                "value": "T1"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Card Type", 
+                    "details": "Card Type", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Slot", 
+                    "details": "Slot number", 
+                    "key": "number", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Framing", 
+                    "details": "Framing", 
+                    "key": "framing", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "clock", 
+                        "source", 
+                        "line"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "secondary", 
+                                "value": "secondary"
+                            }, 
+                            {
+                                "key": "primary", 
+                                "value": "primary"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Line Mode", 
+                    "details": "Line Mode", 
+                    "key": "line-mode", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "clock", 
+                        "source"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Internal", 
+                    "details": "Internal", 
+                    "key": "internal", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "clock", 
+                        "source"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Loop-Timed", 
+                    "details": "Loop-Timed", 
+                    "key": "loop-timed", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 240, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Description", 
+                    "details": "Description", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "ami", 
+                                "value": "ami"
+                            }, 
+                            {
+                                "key": "b8zs", 
+                                "value": "b8zs"
+                            }, 
+                            {
+                                "key": "hdb3", 
+                                "value": "hdb3"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "variable", 
+                    "description": "Line Code", 
+                    "details": "LineCode", 
+                    "key": "linecode", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "cablelength"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "-15db", 
+                                "value": "-15db"
+                            }, 
+                            {
+                                "key": "-22.5db", 
+                                "value": "-22.5db"
+                            }, 
+                            {
+                                "key": "-7.5db", 
+                                "value": "-7.5db"
+                            }, 
+                            {
+                                "key": "0db", 
+                                "value": "0db"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Length", 
+                    "details": "Set length for long", 
+                    "key": "long", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "cablelength"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "110ft", 
+                                "value": "110ft"
+                            }, 
+                            {
+                                "key": "220ft", 
+                                "value": "220ft"
+                            }, 
+                            {
+                                "key": "330ft", 
+                                "value": "330ft"
+                            }, 
+                            {
+                                "key": "440ft", 
+                                "value": "440ft"
+                            }, 
+                            {
+                                "key": "550ft", 
+                                "value": "550ft"
+                            }, 
+                            {
+                                "key": "660ft", 
+                                "value": "660ft"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Length", 
+                    "details": "Set Length for short", 
+                    "key": "short", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 23, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Channel Group", 
+                            "details": "Number", 
+                            "key": "number", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 24, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Time Slot", 
+                            "details": "Time slots", 
+                            "key": "timeslots", 
+                            "objectType": "list", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Channel Group", 
+                    "details": "Channel Group List", 
+                    "key": "channel-group", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "number"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Controller tx-ex List", 
+            "details": "Controller tx-ex List", 
+            "key": "controller-tx-ex-list", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name", 
+                "number"
+            ]
+        }
+    ], 
+    "name": "T1-E1 Controller", 
+    "nameSpace": "http://viptela.com/wwan", 
+    "xmlPath": [], 
+    "xmlRootTag": "controller"
+}

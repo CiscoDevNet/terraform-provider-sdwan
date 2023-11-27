@@ -1,0 +1,142 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "gps"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "GPS", 
+            "details": "Enable/disable GPS", 
+            "key": "enable", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "gps"
+            ], 
+            "dataType": {
+                "default": "ms-based", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "ms-based", 
+                        "value": "MS based"
+                    }, 
+                    {
+                        "key": "standalone", 
+                        "value": "Standalone"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "GPS Mode", 
+            "details": "Select GPS mode", 
+            "key": "mode", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "gps", 
+                "nmea-conf"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "NMEA", 
+            "details": "Enable/disable NMEA data", 
+            "key": "nmea", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "gps", 
+                "nmea", 
+                "ip", 
+                "udp"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Source Address", 
+            "details": "Source address", 
+            "key": "source-address", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "gps", 
+                "nmea", 
+                "ip", 
+                "udp"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Destination Address", 
+            "details": "Destination address", 
+            "key": "destination-address", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "gps", 
+                "nmea", 
+                "ip", 
+                "udp"
+            ], 
+            "dataType": {
+                "max": 65535, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Destination Port", 
+            "details": "Destination port", 
+            "key": "destination-port", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "Cellular GPS", 
+    "nameSpace": "http://viptela.com/wwan", 
+    "parentPath": "</cellular>", 
+    "xmlPath": [], 
+    "xmlRootTag": "lte"
+}

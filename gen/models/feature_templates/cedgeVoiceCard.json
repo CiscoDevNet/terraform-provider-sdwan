@@ -1,0 +1,1151 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Slot/sub-slot ID", 
+                    "details": "Slot/sub-slot ID", 
+                    "key": "port-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Module Slot/Sub-slot", 
+                    "details": "Module Slot/Sub-slot", 
+                    "key": "id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Enable TDM hair pin", 
+                    "details": "Enable TDM hair pin", 
+                    "key": "local-bypass", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "NIM-2FXO", 
+                                "value": "NIM-2FXO"
+                            }, 
+                            {
+                                "key": "NIM-4FXO", 
+                                "value": "NIM-4FXO"
+                            }, 
+                            {
+                                "key": "NIM-2FXSP", 
+                                "value": "NIM-2FXSP"
+                            }, 
+                            {
+                                "key": "NIM-4FXSP", 
+                                "value": "NIM-4FXSP"
+                            }, 
+                            {
+                                "key": "NIM-2FXS/4FXOP", 
+                                "value": "NIM-2FXS/4FXOP"
+                            }, 
+                            {
+                                "key": "SM-X-8FXS/12FXO", 
+                                "value": "SM-X-8FXS/12FXO"
+                            }, 
+                            {
+                                "key": "SM-X-16FXS/2FXO", 
+                                "value": "SM-X-16FXS/2FXO"
+                            }, 
+                            {
+                                "key": "SM-X-24FXS/4FXO", 
+                                "value": "SM-X-24FXS/4FXO"
+                            }, 
+                            {
+                                "key": "SM-X-72FXS", 
+                                "value": "SM-X-72FXS"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Module", 
+                    "details": "Voice module type", 
+                    "key": "module-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "FXS", 
+                                "value": "FXS"
+                            }, 
+                            {
+                                "key": "FXO", 
+                                "value": "FXO"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Port Type", 
+                    "details": "Port Type", 
+                    "key": "port-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Port range", 
+                    "details": "Port range", 
+                    "key": "port-range", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 64, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Description", 
+                    "details": "Voice port description", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "secondary"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Secondary Dialtone", 
+                    "details": "Secondary Dialtone", 
+                    "key": "dialtone", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "connection", 
+                        "plar"
+                    ], 
+                    "dataType": {
+                        "maxLength": 64, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Connection Plar", 
+                    "details": "Private Line Auto Ring number", 
+                    "key": "plar-num", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "connection", 
+                        "plar"
+                    ], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "OPX", 
+                    "details": "Off-Premises eXtension number", 
+                    "key": "opx-num-only", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "caller-id"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Caller-ID Enable", 
+                    "details": "CallerID", 
+                    "key": "enable", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Shutdown", 
+                    "details": "Shutdown", 
+                    "key": "shutdown", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "signal"
+                    ], 
+                    "dataType": {
+                        "default": "loopStart", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "LoopStart", 
+                                "value": "loopStart"
+                            }, 
+                            {
+                                "key": "GroundStart", 
+                                "value": "groundStart"
+                            }, 
+                            {
+                                "key": "DID", 
+                                "value": "did"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Signal Type", 
+                    "details": "Signal type", 
+                    "key": "signal-choice", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "signal"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "Delay dial", 
+                                "value": "delay-dial"
+                            }, 
+                            {
+                                "key": "Immediate", 
+                                "value": "immediate"
+                            }, 
+                            {
+                                "key": "Wink start", 
+                                "value": "wink-start"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "DID Signal Mode", 
+                    "details": "DID Signal Mode", 
+                    "key": "did-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Voice card", 
+            "details": "Configure of voice card", 
+            "key": "voice-card", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "port-id"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Slot / Sub-Slot/Port range", 
+                    "details": "Slot / Sub-Slot/Port range", 
+                    "key": "dig-port-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Slot / Sub-Slot", 
+                    "details": "Slot/sub-slot ID", 
+                    "key": "id-dig", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "NIM-1MFT-T1/E1", 
+                                "value": "NIM-1MFT-T1/E1"
+                            }, 
+                            {
+                                "key": "NIM-2MFT-T1/E1", 
+                                "value": "NIM-2MFT-T1/E1"
+                            }, 
+                            {
+                                "key": "NIM-4MFT-T1/E1", 
+                                "value": "NIM-4MFT-T1/E1"
+                            }, 
+                            {
+                                "key": "NIM-8MFT-T1/E1", 
+                                "value": "NIM-8MFT-T1/E1"
+                            }, 
+                            {
+                                "key": "NIM-1CE1T1-PRI-T1/E1", 
+                                "value": "NIM-1CE1T1-PRI"
+                            }, 
+                            {
+                                "key": "NIM-2CE1T1-PRI-T1/E1", 
+                                "value": "NIM-2CE1T1-PRI"
+                            }, 
+                            {
+                                "key": "NIM-8CE1T1-PRI-T1/E1", 
+                                "value": "NIM-8CE1T1-PRI"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Module", 
+                    "details": "Voice module type", 
+                    "key": "module-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "T1 PRI", 
+                                "value": "T1 PRI"
+                            }, 
+                            {
+                                "key": "E1 PRI", 
+                                "value": "E1 PRI"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interface Type", 
+                    "details": "Voice Module Interface Type", 
+                    "key": "interface-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "DSP Hairpin", 
+                    "details": "Configure DSP Hairpin", 
+                    "key": "dsp-hairpin", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Network Participation", 
+                    "details": "Configure network participation", 
+                    "key": "network-participation", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Port", 
+                            "details": "Port ID", 
+                            "key": "port-id", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "line", 
+                                        "value": "line"
+                                    }, 
+                                    {
+                                        "key": "network", 
+                                        "value": "network"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Line/Network", 
+                            "details": "Clock Type", 
+                            "key": "clock-type", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "primary", 
+                                        "value": "primary"
+                                    }, 
+                                    {
+                                        "key": "secondary", 
+                                        "value": "secondary"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Primary Clock/Secondary Clock", 
+                            "details": "Clock Position", 
+                            "key": "clock-position", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 6, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Priority", 
+                            "details": "Configure clock priority", 
+                            "key": "clock-priority", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Shutdown", 
+                            "details": "Configure controller shutdown", 
+                            "key": "controller-shutdown", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Serial", 
+                            "details": "Configure serial interface shutdown", 
+                            "key": "serial-intf-shutdown", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Voice Port", 
+                            "details": "Configure voice port shutdown", 
+                            "key": "voiceport-shutdown", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Interface", 
+                    "details": "Configure Digital voice card interface", 
+                    "key": "interface", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "port-id"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "range": "1-24", 
+                        "type": "numberListRangeByComma"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Time Slots", 
+                    "details": "Time Slots", 
+                    "key": "timeslots", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "crc4", 
+                                "value": "crc4"
+                            }, 
+                            {
+                                "key": "no-crc4", 
+                                "value": "no-crc4"
+                            }, 
+                            {
+                                "key": "esf", 
+                                "value": "esf"
+                            }, 
+                            {
+                                "key": "sf", 
+                                "value": "sf"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Framing", 
+                    "details": "Framing", 
+                    "key": "framing", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Australia", 
+                    "details": "Framing Australia", 
+                    "key": "framing-australia", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "ami", 
+                                "value": "ami"
+                            }, 
+                            {
+                                "key": "hdb3", 
+                                "value": "hdb3"
+                            }, 
+                            {
+                                "key": "b8zs", 
+                                "value": "b8zs"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Linecode", 
+                    "details": "Line code", 
+                    "key": "linecode", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "120-ohm", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "75-ohm", 
+                                "value": "75-ohm"
+                            }, 
+                            {
+                                "key": "120-ohm", 
+                                "value": "120-ohm"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Line Termination", 
+                    "details": "Line termination", 
+                    "key": "line-termination", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "long", 
+                                "value": "long"
+                            }, 
+                            {
+                                "key": "short", 
+                                "value": "short"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Cable Length", 
+                    "details": "Cable length type", 
+                    "key": "cablelength-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "-7.5", 
+                                "value": "-7.5"
+                            }, 
+                            {
+                                "key": "-15", 
+                                "value": "-15"
+                            }, 
+                            {
+                                "key": "-22.5", 
+                                "value": "-22.5"
+                            }, 
+                            {
+                                "key": "0", 
+                                "value": "0"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Cable Length", 
+                    "details": "Cable Length Long", 
+                    "key": "cablelength-long", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "110", 
+                                "value": "110"
+                            }, 
+                            {
+                                "key": "220", 
+                                "value": "220"
+                            }, 
+                            {
+                                "key": "330", 
+                                "value": "330"
+                            }, 
+                            {
+                                "key": "440", 
+                                "value": "440"
+                            }, 
+                            {
+                                "key": "550", 
+                                "value": "550"
+                            }, 
+                            {
+                                "key": "660", 
+                                "value": "660"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Cable Length", 
+                    "details": "Cable Length Short", 
+                    "key": "cablelength-short", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Network Side", 
+                    "details": "Network side", 
+                    "key": "network-side", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "primary-4ess", 
+                                "value": "primary-4ess"
+                            }, 
+                            {
+                                "key": "primary-5ess", 
+                                "value": "primary-5ess"
+                            }, 
+                            {
+                                "key": "primary-dms100", 
+                                "value": "primary-dms100"
+                            }, 
+                            {
+                                "key": "primary-net5", 
+                                "value": "primary-net5"
+                            }, 
+                            {
+                                "key": "primary-ni", 
+                                "value": "primary-ni"
+                            }, 
+                            {
+                                "key": "primary-ntt", 
+                                "value": "primary-ntt"
+                            }, 
+                            {
+                                "key": "primary-qsig", 
+                                "value": "primary-qsig"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Switch Type", 
+                    "details": "Switch type", 
+                    "key": "switch-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "default": 1000, 
+                        "max": "400000", 
+                        "min": "400", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T200", 
+                    "details": "Specify Timer T-Activate in milliseconds", 
+                    "key": "isdn-timer-T200", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "default": 10000, 
+                        "max": "400000", 
+                        "min": "400", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T203", 
+                    "details": "Specify Timer T203 in milliseconds", 
+                    "key": "isdn-timer-T203", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "max": "86400000", 
+                        "min": "180000", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T301", 
+                    "details": "Specify Timer T301 in milliseconds", 
+                    "key": "isdn-timer-T301", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "max": "86400000", 
+                        "min": "400", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T303", 
+                    "details": "Specify Timer T303 in milliseconds", 
+                    "key": "isdn-timer-T303", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "default": 30000, 
+                        "max": "86400000", 
+                        "min": "400", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T306", 
+                    "details": "Specify Timer T306 in milliseconds", 
+                    "key": "isdn-timer-T306", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "max": "86400000", 
+                        "min": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T309", 
+                    "details": "Specify Timer T307 in milliseconds", 
+                    "key": "isdn-timer-T309", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "max": "400000", 
+                        "min": "400", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T310", 
+                    "details": "Specify Timer T310 in milliseconds", 
+                    "key": "isdn-timer-T310", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "isdn-timer"
+                    ], 
+                    "dataType": {
+                        "max": "86400000", 
+                        "min": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "T321", 
+                    "details": "Specify Timer T321 in milliseconds", 
+                    "key": "isdn-timer-T321", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 20, 
+                        "max": "200", 
+                        "min": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Delay Connect Timer", 
+                    "details": "Configure Delay Connect Timer", 
+                    "key": "delay-connect-timer", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Digital Voice Card", 
+            "details": "Configure Digital Voice Card", 
+            "key": "voice-card-dig", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "dig-port-id"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "clock-dig"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Automatically Sync", 
+            "details": "Configure clock synchronization", 
+            "key": "sync", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "clock-dig"
+            ], 
+            "dataType": {
+                "default": 300, 
+                "max": "86400", 
+                "min": "0", 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Wait to restore clock", 
+            "details": "Wait to restore clock time range", 
+            "key": "wait-to-restore", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "cedgeVoiceCard", 
+    "nameSpace": "http://viptela.com/uc-voice", 
+    "xmlPath": [], 
+    "xmlRootTag": "uc-voice"
+}

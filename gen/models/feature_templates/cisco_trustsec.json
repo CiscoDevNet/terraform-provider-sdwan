@@ -1,0 +1,515 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 65519, 
+                "min": 2, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Device SGT", 
+            "details": "Configure Local device security group <2..65519>", 
+            "key": "device-sgt", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Credentials ID", 
+            "details": "Specify the TrustSec Network Access Device ID, should be same as mentioned in the Identity Services Engine (upto 32 char)", 
+            "key": "credentials-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "minLength": 1, 
+                "type": "restrictedPassphrase"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Credentials Password", 
+            "details": "Set the password for the device", 
+            "key": "credentials-password", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "vipNeedsEncryption": "true"
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Enable Enforcement", 
+            "details": "Enable Role-based Access Control enforcement", 
+            "key": "enable-enforcement", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Enable SXP", 
+            "details": "Enable CTS SXP support", 
+            "key": "enable-sxp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Source IP", 
+            "details": "SXP Source IP", 
+            "key": "sxp-source-ip", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "minLength": 1, 
+                "type": "restrictedPassphrase"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Password", 
+            "details": "Configure SXP default password", 
+            "key": "sxp-default-password", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "vipNeedsEncryption": "true"
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "maxLength": 256, 
+                "minLength": 0, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Key Chain Name", 
+            "details": "Configure SXP key-chain", 
+            "key": "sxp-key-chain", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Log Binding Changes", 
+            "details": "Enables logging for IP-to-SGT binding changes", 
+            "key": "sxp-log-binding-changes", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": 120, 
+                "max": 64000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Reconciliation Period (seconds)", 
+            "details": "Configure the SXP reconciliation period in seconds <0..64000>", 
+            "key": "sxp-reconciliation-period", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": 120, 
+                "max": 64000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Retry Period (seconds)", 
+            "details": "Configure Retry period for SXP connection in seconds <0..64000>", 
+            "key": "sxp-retry-period", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": 120, 
+                "max": 65534, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Speaker Hold Time (seconds)", 
+            "details": "Configure Speaker hold-time in seconds <1..65534>", 
+            "key": "speaker-hold-time", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": 90, 
+                "max": 65534, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Minimum Listener Hold Time (seconds)", 
+            "details": "Configure Minimum allowed hold-time for listener in seconds <1..65534>", 
+            "key": "listener-hold-time-min", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": 180, 
+                "max": 65534, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Maximum Listener Hold Time (seconds)", 
+            "details": "Configure Maximum allowed hold-time for listener in seconds <1..65534>", 
+            "key": "listener-hold-time-max", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "default": "ip", 
+                "type": "radioButtonList", 
+                "values": [
+                    {
+                        "label": "IP", 
+                        "value": "ip"
+                    }, 
+                    {
+                        "label": "Interface Name", 
+                        "value": "interface-name"
+                    }, 
+                    {
+                        "label": "8 Char Hex String", 
+                        "value": "8-char-hex-string"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Node ID Type", 
+            "details": "Define SXP Node ID type <IP, 8 char string or interface name>", 
+            "key": "sxp-node-id-type", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sxp-default"
+            ], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Node ID", 
+            "details": "Configure SXP Node ID <IP, 8 char string or interface name>", 
+            "key": "sxp-node-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Peer IP", 
+                    "details": "Configure SXP Peer IP address (IPv4)", 
+                    "key": "connection-peer-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Source IP", 
+                    "details": "Configure SXP Source IP address (IPv4)", 
+                    "key": "connection-source-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "none", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "Password", 
+                                "value": "default"
+                            }, 
+                            {
+                                "label": "Key Chain", 
+                                "value": "key-chain"
+                            }, 
+                            {
+                                "label": "None", 
+                                "value": "none"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Preshared Key", 
+                    "details": "Define Preshared Key type", 
+                    "key": "connection-preshared-key", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "local", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "Local", 
+                                "value": "local"
+                            }, 
+                            {
+                                "label": "Peer", 
+                                "value": "peer"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Mode", 
+                    "details": "Define Mode of connection", 
+                    "key": "connection-mode", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "speaker", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "Listener", 
+                                "value": "listener"
+                            }, 
+                            {
+                                "label": "Speaker", 
+                                "value": "speaker"
+                            }, 
+                            {
+                                "label": "Both", 
+                                "value": "both"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Mode Type", 
+                    "details": "Define Role of a device <speaker/listener/both>", 
+                    "key": "connection-mode-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Minimum Hold Time", 
+                    "details": "Configure Connection Minimum hold time <0..65535>", 
+                    "key": "connection-min-hold-time", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Maximum Hold Time", 
+                    "details": "Configure Connection Maximum hold time <0..65535>", 
+                    "key": "connection-max-hold-time", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 65527, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "VPN ID", 
+                    "details": "Configure Connection VPN (VRF) ID", 
+                    "key": "connection-vpn-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "SXP Connection List", 
+            "details": "Configure SXP Connections", 
+            "key": "sxp-connection-list", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "connection-peer-ip"
+            ]
+        }
+    ], 
+    "name": "cisco_trustsec", 
+    "nameSpace": "http://viptela.com/trustsec-root", 
+    "xmlPath": [], 
+    "xmlRootTag": "trustsec-root"
+}

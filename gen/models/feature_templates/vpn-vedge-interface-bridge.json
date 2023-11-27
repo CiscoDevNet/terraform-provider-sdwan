@@ -1,0 +1,607 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Interface Name", 
+            "details": "Interface name: ge0/<0-..> or ge0/<0-..>.vlanid or irb<bridgeid:1-63> or loopback<string> or natpool-<1..31> when present", 
+            "key": "if-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 128, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Description", 
+            "details": "Interface description", 
+            "key": "description", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Power Over Ethernet", 
+            "details": "Configure interface as Power-over-Ethernet source", 
+            "deviceModels": [
+                "vedge-100", 
+                "vedge-ISR1100-4GLTE", 
+                "vedge-100-W2", 
+                "vedge-100-WM", 
+                "vedge-100-M2", 
+                "vedge-100-M", 
+                "vedge-ISR1100-4G", 
+                "vedge-ISR1100X-4G"
+            ], 
+            "key": "poe", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ip"
+            ], 
+            "dataType": {
+                "type": "ipv4-prefix"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IPv4 Address", 
+            "details": "Assign IPv4 address", 
+            "key": "address", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "IP Address", 
+                    "details": "IP Address", 
+                    "key": "address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ip"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Secondary IP Address", 
+            "details": "Assign secondary IP addresses", 
+            "key": "secondary-address", 
+            "maxElements": 4, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "address"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DHCP Helper", 
+            "details": "List of DHCP server addresses", 
+            "key": "dhcp-helper", 
+            "maxElements": 8, 
+            "minElements": 1, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Clear-Dont-Fragment", 
+            "details": "Clear don't fragment bit", 
+            "key": "clear-dont-fragment", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "mac"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "MAC Address", 
+            "details": "Set MAC-layer address", 
+            "key": "mac-address", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 1500, 
+                "max": 2000, 
+                "min": 576, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IP MTU", 
+            "details": "Interface MTU <576..2000>, in bytes", 
+            "key": "mtu", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 1960, 
+                "min": 552, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP MSS", 
+            "details": "TCP MSS on SYN packets, in bytes", 
+            "key": "tcp-mss-adjust", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Administrative state", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 1200, 
+                "max": 2678400, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "ARP Timeout", 
+            "details": "Timeout value for dynamically learned ARP entries, <0..2678400> seconds", 
+            "key": "arp-timeout", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "Disable", 
+                    "on": "Enable"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "ICMP Redirect", 
+            "details": "Set this option to disable the icmp redirect packets", 
+            "key": "icmp-redirect-disable", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Block Non Source IP", 
+            "details": "Block packets originating from IP address that is not from this source", 
+            "key": "block-non-source-ip", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "in", 
+                                "value": "in"
+                            }, 
+                            {
+                                "key": "out", 
+                                "value": "out"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Direction", 
+                    "details": "Direction", 
+                    "key": "direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Access List", 
+                    "details": "Name of access list", 
+                    "key": "acl-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "ACL", 
+            "details": "Apply ACL", 
+            "key": "access-list", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "direction"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "IP Address", 
+                    "details": "IP Address", 
+                    "key": "addr", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "mac"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "MAC Address", 
+                    "details": "MAC address", 
+                    "key": "mac", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "arp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Static ARP", 
+            "details": "Configure static ARP entries", 
+            "key": "ip", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "addr"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Group ID", 
+                    "details": "Group ID", 
+                    "key": "grp-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 100, 
+                        "max": 254, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Priority", 
+                    "details": "Set priority", 
+                    "key": "priority", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 3600, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Timer (seconds)", 
+                    "details": "Timer interval for successive advertisements, in seconds", 
+                    "key": "timer", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Track OMP", 
+                    "details": "Track OMP status", 
+                    "key": "track-omp", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Track Prefix List", 
+                    "details": "Track Prefix List", 
+                    "key": "track-prefix-list", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "ipv4"
+                    ], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "IP Address", 
+                    "details": "Assign IP Address", 
+                    "key": "address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "TLOC Preference Change", 
+                    "details": "change TLOC preference", 
+                    "key": "tloc-change-pref", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 1, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "TLOC Preference Change Value", 
+                    "details": "Set tloc preference change value(only value 1 allowed)", 
+                    "key": "value", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Tracker Name", 
+                            "details": "Interface or Container List name", 
+                            "key": "name", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 255, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Decrement Value", 
+                            "details": "Decrement value for priority", 
+                            "key": "decrement", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Object Tracker", 
+                    "details": "Interface or Container list Tracking", 
+                    "key": "track", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "name"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "VRRP", 
+            "details": "Enable VRRP", 
+            "key": "vrrp", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "grp-id"
+            ]
+        }
+    ], 
+    "name": "Bridge Interface", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "uniqueKey": "if-name", 
+    "xmlPath": [], 
+    "xmlRootTag": "interface"
+}

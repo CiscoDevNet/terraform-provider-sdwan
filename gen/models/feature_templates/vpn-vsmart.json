@@ -1,0 +1,445 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "0", 
+                        "value": "VPN 0"
+                    }, 
+                    {
+                        "key": "512", 
+                        "value": "VPN 512"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "VPN", 
+            "details": "Only 0 and 512 are allowed on vsmart", 
+            "key": "vpn-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Name", 
+            "details": "Name", 
+            "key": "name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "DNS Address", 
+                    "details": "DNS Address", 
+                    "key": "dns-addr", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "primary", 
+                                "value": "Primary"
+                            }, 
+                            {
+                                "key": "secondary", 
+                                "value": "Secondary"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Role", 
+                    "details": "Role", 
+                    "key": "role", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "DNS", 
+            "details": "DNS", 
+            "key": "dns", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "dns-addr"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Hostname", 
+                    "details": "Hostname", 
+                    "key": "hostname", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 8, 
+                        "type": "ip"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "List of IP", 
+                    "details": "Role", 
+                    "key": "ip", 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Static DNS mapping", 
+            "details": "Static DNS mapping", 
+            "key": "host", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "hostname"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address", 
+                            "details": "IP Address", 
+                            "key": "address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 1, 
+                                "max": 255, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Distance", 
+                            "details": "Administrative distance", 
+                            "key": "distance", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "IP Gateway", 
+                    "details": "IP gateway address", 
+                    "key": "next-hop", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "null0", 
+                    "details": "null0", 
+                    "key": "null0", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Distance", 
+                    "details": "Administrative distance", 
+                    "key": "distance", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "range": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "VPN", 
+                    "details": "Destination VPN(!=0 or !=512) to resolve the prefix", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ip"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv4 Static Route", 
+            "details": "Configure IPv4 Static Routes", 
+            "key": "route", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "prefix"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv6-prefix"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Prefix", 
+                    "details": "Prefix", 
+                    "key": "prefix", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv6"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address", 
+                            "details": "IP Address", 
+                            "key": "address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 1, 
+                                "max": 255, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Distance", 
+                            "details": "Administrative distance", 
+                            "key": "distance", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "IP Gateway", 
+                    "details": "IP gateway address", 
+                    "key": "next-hop", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "null0", 
+                    "details": "null0", 
+                    "key": "null0", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Distance", 
+                    "details": "Administrative distance", 
+                    "key": "distance", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "range": "0", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "VPN", 
+                    "details": "Destination VPN(!=0 or !=512) to resolve the prefix", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ipv6"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv6 Static Route", 
+            "details": "Configure IPv6 Static Routes", 
+            "key": "route", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "prefix"
+            ]
+        }
+    ], 
+    "name": "VPN", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "uniqueKey": "vpn-id", 
+    "xmlPath": [
+        "vpn"
+    ], 
+    "xmlRootTag": "vpn-instance"
+}

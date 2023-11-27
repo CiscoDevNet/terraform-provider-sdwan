@@ -1,0 +1,100 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "igmp"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Enable or disable IGMP", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interface Name", 
+                    "details": "Set interface name", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Group Address", 
+                            "details": "Set group address", 
+                            "key": "group-address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Static Joins", 
+                    "details": "Configure static joins", 
+                    "key": "join-group", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "group-address"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "igmp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Interface", 
+            "details": "Set IGMP interface parameters", 
+            "key": "interface", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }
+    ], 
+    "name": "IGMP", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "xmlPath": [], 
+    "xmlRootTag": "router"
+}

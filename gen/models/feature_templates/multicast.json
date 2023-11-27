@@ -1,0 +1,48 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "multicast-replicator"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Local", 
+            "details": "Replicator is local to this device", 
+            "key": "local", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "multicast-replicator"
+            ], 
+            "dataType": {
+                "default": 0, 
+                "max": 1000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Threshold", 
+            "details": "Set number of joins per group the router supports", 
+            "key": "threshold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "multicast", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "xmlPath": [], 
+    "xmlRootTag": "router"
+}

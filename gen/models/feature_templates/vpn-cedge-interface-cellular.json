@@ -1,0 +1,1979 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Interface Name", 
+            "details": "Cellular Interface Name <0-1>", 
+            "key": "if-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 128, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Description", 
+            "details": "Interface description", 
+            "key": "description", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "in", 
+                                "value": "in"
+                            }, 
+                            {
+                                "key": "out", 
+                                "value": "out"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Direction", 
+                    "details": "Direction", 
+                    "key": "direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Access list", 
+                    "details": "Name of access list", 
+                    "key": "acl-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ipv6"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "ACL IPv6", 
+            "details": "Apply IPv6 access list", 
+            "key": "access-list", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "direction"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DHCP Helper", 
+            "details": "List of DHCP server addresses", 
+            "key": "dhcp-helper", 
+            "maxElements": 8, 
+            "minElements": 1, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Tracker", 
+            "details": "Enable tracker for this interface", 
+            "key": "tracker", 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "NAT", 
+            "details": "Network Address Translation on this interface", 
+            "key": "nat", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": "outbound", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "outbound", 
+                        "value": "outbound"
+                    }, 
+                    {
+                        "key": "bi-directional", 
+                        "value": "bi-directional"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Refresh Mode", 
+            "details": "Set NAT refresh mode", 
+            "key": "refresh", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": 1, 
+                "max": 8947, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "UDP Timeout", 
+            "details": "Set NAT UDP session timeout, in minutes", 
+            "key": "udp-timeout", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": 60, 
+                "max": 8947, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP Timeout", 
+            "details": "Set NAT TCP session timeout, in minutes", 
+            "key": "tcp-timeout", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Block ICMP", 
+            "details": "Block inbound ICMP error messages", 
+            "key": "block-icmp-error", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Respond To Ping", 
+            "details": "Respond to ping requests to NAT interface ip address from the public side", 
+            "key": "respond-to-ping", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Port start range", 
+                    "details": "Starting port of port range", 
+                    "key": "port-start", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Port end range", 
+                    "details": "Ending port of port range", 
+                    "key": "port-end", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "tcp", 
+                                "value": "tcp"
+                            }, 
+                            {
+                                "key": "udp", 
+                                "value": "udp"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Layer 4 protocol to apply port forwarding to", 
+                    "key": "proto", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN", 
+                    "details": "VPN in which private IP Address resides", 
+                    "key": "private-vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Private IP", 
+                    "details": "Private IP Address to translate to", 
+                    "key": "private-ip-address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Port-forward Rules", 
+            "details": "Set port-forwarding rules for NAT on this interface", 
+            "key": "port-forward", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "port-start", 
+                "port-end", 
+                "proto"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "Off", 
+                    "on": "On"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Enable Core Region", 
+            "details": "Enable core region", 
+            "key": "enable-core-region", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "core", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "core", 
+                        "value": "Only in Core Region"
+                    }, 
+                    {
+                        "key": "core-shared", 
+                        "value": "Shared Between Core and Primary Regions"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Core Region", 
+            "details": "Enable core region", 
+            "key": "core-region", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "off", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "off", 
+                        "value": "Off"
+                    }, 
+                    {
+                        "key": "secondary-only", 
+                        "value": "Only in Secondary Region"
+                    }, 
+                    {
+                        "key": "secondary-shared", 
+                        "value": "Shared Between Primary and Secondary Regions"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Enable Secondary Region", 
+            "details": "Enable secondary region", 
+            "key": "secondary-region", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "gre", 
+                                "value": "gre"
+                            }, 
+                            {
+                                "key": "ipsec", 
+                                "value": "ipsec"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Encapsulation", 
+                    "details": "Encapsulation", 
+                    "key": "encap", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 4294967295, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Preference", 
+                    "details": "Set preference for TLOC", 
+                    "key": "preference", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Weight", 
+                    "details": "Set weight for TLOC", 
+                    "key": "weight", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Encapsulation", 
+            "details": "Encapsulation for TLOC", 
+            "key": "encapsulation", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ], 
+            "primaryKeys": [
+                "encap"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "max": 4294967295, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Groups", 
+            "details": "List of groups", 
+            "key": "group", 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Border", 
+            "details": "Set TLOC as border TLOC", 
+            "key": "border", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "notIgnore", 
+            "description": "Per-tunnel Qos", 
+            "details": "Per-tunnel Qos", 
+            "key": "per-tunnel-qos", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "notIgnore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "notIgnore", 
+            "description": "Per-tunnel QoS Aggregator", 
+            "details": "Per-tunnel QoS Aggregator", 
+            "key": "per-tunnel-qos-aggregator", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "notIgnore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "tunnel-qos"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "spoke", 
+                        "value": "spoke"
+                    }
+                ]
+            }, 
+            "defaultOption": "notIgnore", 
+            "description": "Set tunnel QoS mode", 
+            "details": "Set tunnel QoS mode", 
+            "key": "mode", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "notIgnore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "color"
+            ], 
+            "dataType": {
+                "default": "default", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "default", 
+                        "value": "default"
+                    }, 
+                    {
+                        "key": "mpls", 
+                        "value": "mpls"
+                    }, 
+                    {
+                        "key": "metro-ethernet", 
+                        "value": "metro-ethernet"
+                    }, 
+                    {
+                        "key": "biz-internet", 
+                        "value": "biz-internet"
+                    }, 
+                    {
+                        "key": "public-internet", 
+                        "value": "public-internet"
+                    }, 
+                    {
+                        "key": "lte", 
+                        "value": "lte"
+                    }, 
+                    {
+                        "key": "3g", 
+                        "value": "3g"
+                    }, 
+                    {
+                        "key": "red", 
+                        "value": "red"
+                    }, 
+                    {
+                        "key": "green", 
+                        "value": "green"
+                    }, 
+                    {
+                        "key": "blue", 
+                        "value": "blue"
+                    }, 
+                    {
+                        "key": "gold", 
+                        "value": "gold"
+                    }, 
+                    {
+                        "key": "silver", 
+                        "value": "silver"
+                    }, 
+                    {
+                        "key": "bronze", 
+                        "value": "bronze"
+                    }, 
+                    {
+                        "key": "custom1", 
+                        "value": "custom1"
+                    }, 
+                    {
+                        "key": "custom2", 
+                        "value": "custom2"
+                    }, 
+                    {
+                        "key": "custom3", 
+                        "value": "custom3"
+                    }, 
+                    {
+                        "key": "private1", 
+                        "value": "private1"
+                    }, 
+                    {
+                        "key": "private2", 
+                        "value": "private2"
+                    }, 
+                    {
+                        "key": "private3", 
+                        "value": "private3"
+                    }, 
+                    {
+                        "key": "private4", 
+                        "value": "private4"
+                    }, 
+                    {
+                        "key": "private5", 
+                        "value": "private5"
+                    }, 
+                    {
+                        "key": "private6", 
+                        "value": "private6"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Color", 
+            "details": "Set color for TLOC", 
+            "key": "value", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Last-Resort Circuit", 
+            "details": "Set TLOC as last resort", 
+            "key": "last-resort-circuit", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Low-Bandwidth Link", 
+            "details": "Set the interface as a low-bandwidth circuit", 
+            "key": "low-bandwidth-link", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "max": 1460, 
+                "min": 500, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Tunnel TCP MSS", 
+            "details": "Tunnel TCP MSS on SYN packets, in bytes", 
+            "key": "tunnel-tcp-mss-adjust", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Clear-Dont-Fragment", 
+            "details": "Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)", 
+            "key": "clear-dont-fragment", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Network Broadcast", 
+            "details": "Accept and respond to network-prefix-directed broadcasts)", 
+            "key": "network-broadcast", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "max": 8, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Maximum Control Connections", 
+            "details": "Set the maximum number of control connections for this TLOC", 
+            "key": "max-control-connections", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Control Connection", 
+            "details": "Allow Control Connection", 
+            "key": "control-connections", 
+            "objectStatus": "deprecated", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "vBond As Stun Server", 
+            "details": "Put this wan interface in STUN mode only", 
+            "key": "vbond-as-stun-server", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "max": 100, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Exclude Controller Group List", 
+            "details": "Exclude the following controller groups defined in this list", 
+            "key": "exclude-controller-group-list", 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": 5, 
+                "max": 8, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "vManage Connection Preference", 
+            "details": "Set interface preference for control connection to vManage <0..8>", 
+            "key": "vmanage-connection-preference", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Port Hop", 
+            "details": "Disallow port hopping on the tunnel interface", 
+            "key": "port-hop", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "color"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Restrict", 
+            "details": "Restrict this TLOC behavior", 
+            "key": "restrict", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "default", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "default", 
+                        "value": "default"
+                    }, 
+                    {
+                        "key": "carrier1", 
+                        "value": "carrier1"
+                    }, 
+                    {
+                        "key": "carrier2", 
+                        "value": "carrier2"
+                    }, 
+                    {
+                        "key": "carrier3", 
+                        "value": "carrier3"
+                    }, 
+                    {
+                        "key": "carrier4", 
+                        "value": "carrier4"
+                    }, 
+                    {
+                        "key": "carrier5", 
+                        "value": "carrier5"
+                    }, 
+                    {
+                        "key": "carrier6", 
+                        "value": "carrier6"
+                    }, 
+                    {
+                        "key": "carrier7", 
+                        "value": "carrier7"
+                    }, 
+                    {
+                        "key": "carrier8", 
+                        "value": "carrier8"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Carrier", 
+            "details": "Set carrier for TLOC", 
+            "key": "carrier", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": 5, 
+                "max": 60, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "NAT Refresh Interval", 
+            "details": "Set time period of nat refresh packets <1...60> seconds", 
+            "key": "nat-refresh-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": 1000, 
+                "max": 600000, 
+                "min": 100, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Hello Interval", 
+            "details": "Set time period of control hello packets <100..600000> milli seconds", 
+            "key": "hello-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": 12, 
+                "max": 6000, 
+                "min": 12, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Hello Tolerance", 
+            "details": "Set tolerance of control hello packets <12..6000> seconds", 
+            "key": "hello-tolerance", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Bind Loopback Tunnel", 
+            "details": "Bind loopback tunnel interface to a physical interface", 
+            "key": "bind", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "All", 
+            "details": "Allow all traffic. Overrides all other allow-service options if allow-service all is set", 
+            "key": "all", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Network Broadcast", 
+            "details": "Accept and respond to network-prefix-directed broadcasts)", 
+            "key": "network-broadcast", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "BGP", 
+            "details": "Allow/deny BGP", 
+            "key": "bgp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DHCP", 
+            "details": "Allow/Deny DHCP", 
+            "key": "dhcp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DNS", 
+            "details": "Allow/Deny DNS", 
+            "key": "dns", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "ICMP", 
+            "details": "Allow/Deny ICMP", 
+            "key": "icmp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SSH", 
+            "details": "Allow/Deny SSH", 
+            "key": "sshd", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "NETCONF", 
+            "details": "Allow/Deny NETCONF", 
+            "key": "netconf", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "NTP", 
+            "details": "Allow/Deny NTP", 
+            "key": "ntp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "OSPF", 
+            "details": "Allow/Deny OSPF", 
+            "key": "ospf", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "STUN", 
+            "details": "Allow/Deny STUN", 
+            "key": "stun", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SNMP", 
+            "details": "Allow/Deny SNMP", 
+            "key": "snmp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "tunnel-interface", 
+                "allow-service"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "HTTPS", 
+            "details": "Allow/Deny Https", 
+            "key": "https", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Clear-Dont-Fragment", 
+            "details": "Clear don't fragment bit", 
+            "key": "clear-dont-fragment", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "PMTU Discovery", 
+            "details": "Path MTU Discovery", 
+            "key": "pmtu", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 1428, 
+                "max": 1500, 
+                "min": 68, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IP MTU", 
+            "details": "Interface MTU <68...1500>, in bytes", 
+            "key": "mtu", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 7, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Static Ingress QoS", 
+            "details": "Static ingress QoS for the port", 
+            "key": "static-ingress-qos", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 1960, 
+                "min": 552, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP MSS", 
+            "details": "TCP MSS on SYN packets, in bytes", 
+            "key": "tcp-mss-adjust", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TLOC Extension", 
+            "details": "Extends a local TLOC to a remote node only for vpn 0", 
+            "key": "tloc-extension", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Administrative state", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Autonegotiation", 
+            "details": "Link autonegotiation", 
+            "key": "autonegotiate", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IP Directed-Broadcast", 
+            "details": "IP Directed-Broadcast", 
+            "key": "ip-directed-broadcast", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Adaptive QoS", 
+            "details": "Adaptive QoS", 
+            "key": "qos-adaptive", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "qos-adaptive"
+            ], 
+            "dataType": {
+                "default": 15, 
+                "max": 720, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Adapt Period(Minutes)", 
+            "details": "Periodic timer for adaptive QoS in minutes", 
+            "key": "period", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "qos-adaptive", 
+                "downstream"
+            ], 
+            "dataType": {
+                "max": 100000000, 
+                "min": 8, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Default(Kbps)", 
+            "details": "Adaptive QoS default downstream bandwidth", 
+            "key": "bandwidth-down", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "qos-adaptive", 
+                "downstream", 
+                "range"
+            ], 
+            "dataType": {
+                "max": 100000000, 
+                "min": 8, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Min(Kbps)", 
+            "details": "Downstream min bandwidth limit", 
+            "key": "dmin", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "qos-adaptive", 
+                "downstream", 
+                "range"
+            ], 
+            "dataType": {
+                "max": 100000000, 
+                "min": 8, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Max(Kbps)", 
+            "details": "Downstream max bandwidth limit", 
+            "key": "dmax", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "qos-adaptive", 
+                "upstream"
+            ], 
+            "dataType": {
+                "max": 100000000, 
+                "min": 8, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Default(Kbps)", 
+            "details": "Adaptive QoS default upstream bandwidth", 
+            "key": "bandwidth-up", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "qos-adaptive", 
+                "upstream", 
+                "range"
+            ], 
+            "dataType": {
+                "max": 100000000, 
+                "min": 8, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Min(Kbps)", 
+            "details": "Upstream min bandwidth limit", 
+            "key": "umin", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "qos-adaptive", 
+                "upstream", 
+                "range"
+            ], 
+            "dataType": {
+                "max": 100000000, 
+                "min": 8, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Max(Kbps)", 
+            "details": "Upstream max bandwidth limit", 
+            "key": "umax", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 100000000, 
+                "min": 8, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shaping Rate (Kbps)", 
+            "details": "1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps", 
+            "key": "shaping-rate", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 128, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "QoS Map", 
+            "details": "Name of QoS map", 
+            "key": "qos-map", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 128, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "VPN QoS Map", 
+            "details": "Name of VPN QoS map", 
+            "key": "qos-map-vpn", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 2147483647, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Bandwidth Upstream", 
+            "details": "Interface upstream bandwidth capacity, in kbps", 
+            "key": "bandwidth-upstream", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 2147483647, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Bandwidth Downstream", 
+            "details": "Interface downstream bandwidth capacity, in kbps", 
+            "key": "bandwidth-downstream", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "rewrite-rule"
+            ], 
+            "dataType": {
+                "maxLength": 128, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Rewrite Rule", 
+            "details": "Name of rewrite rule", 
+            "key": "rule-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "in", 
+                                "value": "in"
+                            }, 
+                            {
+                                "key": "out", 
+                                "value": "out"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Direction", 
+                    "details": "Direction", 
+                    "key": "direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Access list", 
+                    "details": "Name of access list", 
+                    "key": "acl-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "ACL", 
+            "details": "Apply ACL", 
+            "key": "access-list", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "direction"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "in", 
+                                "value": "in"
+                            }, 
+                            {
+                                "key": "out", 
+                                "value": "out"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Direction", 
+                    "details": "Direction", 
+                    "key": "direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Policer name", 
+                    "details": "Name of policer", 
+                    "key": "policer-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Policer", 
+            "details": "Enable policer", 
+            "key": "policer", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "policer-name", 
+                "direction"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "IP Address", 
+                    "details": "IP Address", 
+                    "key": "addr", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "mac"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "MAC address", 
+                    "details": "MAC address", 
+                    "key": "mac", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "arp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Static ARP", 
+            "details": "Configure static ARP entries", 
+            "key": "ip", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "addr"
+            ]
+        }
+    ], 
+    "name": "LTE(wwan)", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "uniqueKey": "if-name", 
+    "xmlPath": [], 
+    "xmlRootTag": "interface"
+}

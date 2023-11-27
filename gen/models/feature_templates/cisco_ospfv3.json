@@ -1,0 +1,1925 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Router ID", 
+            "details": "Set OSPF router ID to override system IP address", 
+            "key": "router-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "auto-cost"
+            ], 
+            "dataType": {
+                "default": 100, 
+                "max": 4294967, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Reference Bandwidth (Mbps)", 
+            "details": "Set reference bandwidth method to assign OSPF cost", 
+            "key": "reference-bandwidth", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "compatible"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "RFC 1583 Compatible", 
+            "details": "Calculate summary route cost based on RFC 1583", 
+            "key": "rfc1583", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "default-information"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Originate Default", 
+            "details": "Distribute default external route into OSPF", 
+            "key": "originate", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "default-information", 
+                "originate"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Always", 
+            "details": "Always advertise default route", 
+            "key": "always", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "default-information", 
+                "originate"
+            ], 
+            "dataType": {
+                "max": 16777214, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Default Metric", 
+            "details": "Set metric used to generate default route <0..16777214>", 
+            "key": "metric", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "default-information", 
+                "originate"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "type1", 
+                        "value": "type1"
+                    }, 
+                    {
+                        "key": "type2", 
+                        "value": "type2"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Metric Type", 
+            "details": "Set default route type", 
+            "key": "metric-type", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "distance-ipv4", 
+                "ospf"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 254, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "External Routes", 
+            "details": "Set distance for external routes", 
+            "key": "external", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "distance-ipv4", 
+                "ospf"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 254, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Inter-Area Routes", 
+            "details": "Set distance for inter-area routes", 
+            "key": "inter-area", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "distance-ipv4", 
+                "ospf"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 254, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Intra-Area Routes", 
+            "details": "Set distance for intra-area routes", 
+            "key": "intra-area", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "timers", 
+                "throttle", 
+                "spf"
+            ], 
+            "dataType": {
+                "default": 200, 
+                "max": 600000, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SPF Calculation Delay (milliseconds)", 
+            "details": "Set delay from first change received until performing SPF calculation", 
+            "key": "delay", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "timers", 
+                "throttle", 
+                "spf"
+            ], 
+            "dataType": {
+                "default": 1000, 
+                "max": 600000, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Initial Hold Time (milliseconds)", 
+            "details": "Set initial hold time between consecutive SPF calculations", 
+            "key": "initial-hold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "timers", 
+                "throttle", 
+                "spf"
+            ], 
+            "dataType": {
+                "default": 10000, 
+                "max": 600000, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Maximum Hold Time (milliseconds)", 
+            "details": "Set maximum hold time between consecutive SPF calculations", 
+            "key": "max-hold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "distance-ipv4"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Distance", 
+            "details": "Distance", 
+            "key": "distance", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "table-map"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Policy Name", 
+            "details": "Policy Name", 
+            "key": "name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "table-map"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Filter", 
+            "details": "Filter", 
+            "key": "filter", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "bgp", 
+                                "value": "bgp"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "connected"
+                            }, 
+                            {
+                                "key": "eigrp", 
+                                "value": "eigrp"
+                            }, 
+                            {
+                                "key": "isis", 
+                                "value": "isis"
+                            }, 
+                            {
+                                "key": "lisp", 
+                                "value": "lisp"
+                            }, 
+                            {
+                                "key": "nat-route", 
+                                "value": "nat-route"
+                            }, 
+                            {
+                                "key": "omp", 
+                                "value": "omp"
+                            }, 
+                            {
+                                "key": "static", 
+                                "value": "static"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Set the protocol", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Route Policy", 
+                    "details": "Set route policy to apply to redistributed routes", 
+                    "key": "route-policy", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Enable NAT DIA", 
+                    "details": "Enable NAT DIA for redistributed routes", 
+                    "key": "dia", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Redistribute Routes", 
+            "details": "Redistribute routes", 
+            "key": "redistribute", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "on-startup", 
+                                "value": "on-startup"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Type", 
+                    "details": "Set the router LSA advertisement type", 
+                    "key": "ad-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 86400, 
+                        "min": 5, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Advertisement Time (seconds)", 
+                    "details": "Set how long to advertise maximum metric after router starts up", 
+                    "key": "time", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4", 
+                "max-metric"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Router LSA", 
+            "details": "Advertise own router LSA with infinite distance", 
+            "key": "router-lsa", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "ad-type"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 4294967295, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Area Number", 
+                    "details": "Set OSPF area number", 
+                    "key": "a-num", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "stub"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "No summary", 
+                    "details": "Do not inject interarea routes into stub", 
+                    "key": "no-summary", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "nssa"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "No-summary", 
+                    "details": "Do not inject interarea routes into NSSA", 
+                    "key": "no-summary", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "nssa"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "always", 
+                                "value": "always"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Translate", 
+                    "details": "Always Translate LSAs on this ABR", 
+                    "key": "translate", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Normal", 
+                    "details": "Area Type Normal", 
+                    "key": "normal", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 32, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Interface Name", 
+                            "details": "Set interface name", 
+                            "key": "name", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 10, 
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Hello Interval (seconds)", 
+                            "details": "Set interval between OSPF hello packets", 
+                            "key": "hello-interval", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 40, 
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Dead Interval (seconds)", 
+                            "details": "Set interval after which neighbor is declared to be down", 
+                            "key": "dead-interval", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 5, 
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "LSA Retransmission Interval (seconds)", 
+                            "details": "Set time between retransmitting LSAs", 
+                            "key": "retransmit-interval", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Interface Cost", 
+                            "details": "Set cost of OSPF interface", 
+                            "key": "cost", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "broadcast", 
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "broadcast", 
+                                        "value": "broadcast"
+                                    }, 
+                                    {
+                                        "key": "point-to-point", 
+                                        "value": "point-to-point"
+                                    }, 
+                                    {
+                                        "key": "non-broadcast", 
+                                        "value": "non-broadcast"
+                                    }, 
+                                    {
+                                        "key": "point-to-multipoint", 
+                                        "value": "point-to-multipoint"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "OSPF Network Type", 
+                            "details": "Set the OSPF network type", 
+                            "key": "network", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Passive Interface", 
+                            "details": "Set the interface to advertise its address, but not to actively run OSPF", 
+                            "key": "passive-interface", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "authentication"
+                            ], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "md5", 
+                                        "value": "md5"
+                                    }, 
+                                    {
+                                        "key": "sha1", 
+                                        "value": "sha1"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Authentication Type", 
+                            "details": "Set OSPF interface authentication type", 
+                            "key": "type", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "authentication"
+                            ], 
+                            "dataType": {
+                                "type": "passphrase"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Authentication Key", 
+                            "details": "Set OSPF interface authentication key", 
+                            "key": "authentication-key", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "authentication", 
+                                "ipsec"
+                            ], 
+                            "dataType": {
+                                "max": 4294967295, 
+                                "min": 256, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "IPSec SPI", 
+                            "details": "Set OSPF interface authentication IPSec SPI, range 256..4294967295", 
+                            "key": "spi", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "OSPF Interface", 
+                    "details": "Set OSPF interface parameters", 
+                    "key": "interface", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "name"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address", 
+                            "details": "Set Matching Prefix", 
+                            "key": "address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 16777214, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Cost", 
+                            "details": "Set cost for this range", 
+                            "key": "cost", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "No-advertise", 
+                            "details": "Do not advertise this range", 
+                            "key": "no-advertise", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Summarize Routes", 
+                    "details": "Summarize OSPF routes at an area boundary", 
+                    "key": "range", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv4"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "OSPF Area", 
+            "details": "Configure OSPF area", 
+            "key": "area", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "a-num"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Router ID", 
+            "details": "Set OSPF router ID to override system IP address", 
+            "key": "router-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "auto-cost"
+            ], 
+            "dataType": {
+                "default": 100, 
+                "max": 4294967, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Reference Bandwidth (Mbps)", 
+            "details": "Set reference bandwidth method to assign OSPF cost", 
+            "key": "reference-bandwidth", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "compatible"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "RFC 1583 Compatible", 
+            "details": "Calculate summary route cost based on RFC 1583", 
+            "key": "rfc1583", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "default-information"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Originate Default", 
+            "details": "Distribute default external route into OSPF", 
+            "key": "originate", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "default-information", 
+                "originate"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Always", 
+            "details": "Always advertise default route", 
+            "key": "always", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "default-information", 
+                "originate"
+            ], 
+            "dataType": {
+                "max": 16777214, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Default Metric", 
+            "details": "Set metric used to generate default route <0..16777214>", 
+            "key": "metric", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "default-information", 
+                "originate"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "type1", 
+                        "value": "type1"
+                    }, 
+                    {
+                        "key": "type2", 
+                        "value": "type2"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Metric Type", 
+            "details": "Set default route type", 
+            "key": "metric-type", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "distance-ipv6", 
+                "ospf"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 254, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "External Routes", 
+            "details": "Set distance for external routes", 
+            "key": "external", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "distance-ipv6", 
+                "ospf"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 254, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Inter-Area Routes", 
+            "details": "Set distance for inter-area routes", 
+            "key": "inter-area", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "distance-ipv6", 
+                "ospf"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 254, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Intra-Area Routes", 
+            "details": "Set distance for intra-area routes", 
+            "key": "intra-area", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "timers", 
+                "throttle", 
+                "spf"
+            ], 
+            "dataType": {
+                "default": 200, 
+                "max": 600000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SPF Calculation Delay (milliseconds)", 
+            "details": "Set delay from first change received until performing SPF calculation", 
+            "key": "delay", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "timers", 
+                "throttle", 
+                "spf"
+            ], 
+            "dataType": {
+                "default": 1000, 
+                "max": 600000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Initial Hold Time (milliseconds)", 
+            "details": "Set initial hold time between consecutive SPF calculations", 
+            "key": "initial-hold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "timers", 
+                "throttle", 
+                "spf"
+            ], 
+            "dataType": {
+                "default": 10000, 
+                "max": 600000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Maximum Hold Time (milliseconds)", 
+            "details": "Set maximum hold time between consecutive SPF calculations", 
+            "key": "max-hold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "distance-ipv6"
+            ], 
+            "dataType": {
+                "default": 110, 
+                "max": 254, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Distance", 
+            "details": "Distance", 
+            "key": "distance", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "table-map"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Policy Name", 
+            "details": "Name", 
+            "key": "name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "table-map"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Filter", 
+            "details": "Filter", 
+            "key": "filter", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "bgp", 
+                                "value": "bgp"
+                            }, 
+                            {
+                                "key": "connected", 
+                                "value": "connected"
+                            }, 
+                            {
+                                "key": "eigrp", 
+                                "value": "eigrp"
+                            }, 
+                            {
+                                "key": "isis", 
+                                "value": "isis"
+                            }, 
+                            {
+                                "key": "lisp", 
+                                "value": "lisp"
+                            }, 
+                            {
+                                "key": "nat-route", 
+                                "value": "nat-route"
+                            }, 
+                            {
+                                "key": "omp", 
+                                "value": "omp"
+                            }, 
+                            {
+                                "key": "static", 
+                                "value": "static"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Set the protocol", 
+                    "key": "protocol", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Route Policy", 
+                    "details": "Set route policy to apply to redistributed routes", 
+                    "key": "route-policy", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Redistribute Routes", 
+            "details": "Redistribute routes", 
+            "key": "redistribute", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "protocol"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "on-startup", 
+                                "value": "on-startup"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Type", 
+                    "details": "Set the router LSA advertisement type", 
+                    "key": "ad-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "range": "5-86400", 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Advertisement Time (seconds)", 
+                    "details": "Set how long to advertise maximum metric after router starts up", 
+                    "key": "time", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6", 
+                "max-metric"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Router LSA", 
+            "details": "Advertise own router LSA with infinite distance", 
+            "key": "router-lsa", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "ad-type"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 4294967295, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Area Number", 
+                    "details": "Set OSPF area number", 
+                    "key": "a-num", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "stub"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "No summary", 
+                    "details": "Do not inject interarea routes into stub", 
+                    "key": "no-summary", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "nssa"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "No-summary", 
+                    "details": "Do not inject interarea routes into NSSA", 
+                    "key": "no-summary", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "nssa"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "always", 
+                                "value": "always"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Translate", 
+                    "details": "Always translate LSAs on this ABR", 
+                    "key": "translate", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Normal", 
+                    "details": "Area Type Normal", 
+                    "key": "normal", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 32, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Interface Name", 
+                            "details": "Set interface name", 
+                            "key": "name", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 10, 
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Hello Interval (seconds)", 
+                            "details": "Set interval between OSPF hello packets", 
+                            "key": "hello-interval", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 40, 
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Dead Interval (seconds)", 
+                            "details": "Set interval after which neighbor is declared to be down", 
+                            "key": "dead-interval", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 5, 
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "LSA Retransmission Interval (seconds)", 
+                            "details": "Set time between retransmitting LSAs", 
+                            "key": "retransmit-interval", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 65535, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Interface Cost", 
+                            "details": "Set cost of OSPF interface", 
+                            "key": "cost", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "broadcast", 
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "broadcast", 
+                                        "value": "broadcast"
+                                    }, 
+                                    {
+                                        "key": "point-to-point", 
+                                        "value": "point-to-point"
+                                    }, 
+                                    {
+                                        "key": "non-broadcast", 
+                                        "value": "non-broadcast"
+                                    }, 
+                                    {
+                                        "key": "point-to-multipoint", 
+                                        "value": "point-to-multipoint"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "OSPF Network Type", 
+                            "details": "Set the OSPF network type", 
+                            "key": "network", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Passive Interface", 
+                            "details": "Set the interface to advertise its address, but not to actively run OSPF", 
+                            "key": "passive-interface", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "authentication"
+                            ], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "md5", 
+                                        "value": "md5"
+                                    }, 
+                                    {
+                                        "key": "sha1", 
+                                        "value": "sha1"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Authentication Type", 
+                            "details": "Set OSPF interface authentication type", 
+                            "key": "type", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "authentication"
+                            ], 
+                            "dataType": {
+                                "type": "passphrase"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Authentication Key", 
+                            "details": "Set OSPF interface authentication key", 
+                            "key": "authentication-key", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "authentication", 
+                                "ipsec"
+                            ], 
+                            "dataType": {
+                                "max": 4294967295, 
+                                "min": 256, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "IPSec SPI", 
+                            "details": "Set OSPF interface authentication IPSec SPI, range 256..4294967295", 
+                            "key": "spi", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "OSPF Interface", 
+                    "details": "Set OSPF interface parameters", 
+                    "key": "interface", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "name"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv6-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address", 
+                            "details": "Set Matching Prefix", 
+                            "key": "address", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "max": 16777214, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Cost", 
+                            "details": "Set cost for this range", 
+                            "key": "cost", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "No-advertise", 
+                            "details": "Do not advertise this range", 
+                            "key": "no-advertise", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Summarize Routes", 
+                    "details": "Summarize OSPF routes at an area boundary", 
+                    "key": "range", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "ospfv3", 
+                "address-family", 
+                "ipv6"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "OSPF Area", 
+            "details": "Configure OSPF area", 
+            "key": "area", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "a-num"
+            ]
+        }
+    ], 
+    "name": "cisco_ospfv3", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "xmlPath": [], 
+    "xmlRootTag": "router"
+}

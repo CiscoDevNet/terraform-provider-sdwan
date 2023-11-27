@@ -1,0 +1,174 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "default": 86400, 
+                "max": 1209600, 
+                "min": 10, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Rekey Time (seconds)", 
+            "details": "Set how often to change the AES key for DTLS connections", 
+            "key": "rekey", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "default": "512", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "64", 
+                        "value": 64
+                    }, 
+                    {
+                        "key": "128", 
+                        "value": 128
+                    }, 
+                    {
+                        "key": "256", 
+                        "value": 256
+                    }, 
+                    {
+                        "key": "512", 
+                        "value": 512
+                    }, 
+                    {
+                        "key": "1024", 
+                        "value": 1024
+                    }, 
+                    {
+                        "key": "2048", 
+                        "value": 2048
+                    }, 
+                    {
+                        "key": "4096", 
+                        "value": 4096
+                    }, 
+                    {
+                        "key": "8192", 
+                        "value": 8192
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Replay Window", 
+            "details": "Set the sliding replay window size", 
+            "key": "replay-window", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "none", 
+                        "value": "none"
+                    }, 
+                    {
+                        "key": "sha1-hmac", 
+                        "value": "sha1-hmac"
+                    }, 
+                    {
+                        "key": "ah-sha1-hmac", 
+                        "value": "ah-sha1-hmac"
+                    }, 
+                    {
+                        "key": "ah-no-id", 
+                        "value": "ah-no-id"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Authentication Type", 
+            "details": "Set the authentication type for DTLS connections", 
+            "key": "authentication-type", 
+            "objectStatus": "deprecated", 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "none", 
+                        "value": "none"
+                    }, 
+                    {
+                        "key": "esp", 
+                        "value": "esp"
+                    }, 
+                    {
+                        "key": "ip-udp-esp", 
+                        "value": "ip-udp-esp"
+                    }, 
+                    {
+                        "key": "ip-udp-esp-no-id", 
+                        "value": "ip-udp-esp-no-id"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Integrity Type", 
+            "details": "Set the authentication type for DTLS connections", 
+            "key": "integrity-type", 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ipsec"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IPsec pairwise-keying", 
+            "details": "Enable or disable IPsec pairwise-keying", 
+            "key": "pairwise-keying", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "Security", 
+    "nameSpace": "http://viptela.com/security", 
+    "xmlPath": [], 
+    "xmlRootTag": "security"
+}

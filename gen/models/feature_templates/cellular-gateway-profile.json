@@ -1,0 +1,228 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "0", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "0", 
+                        "value": "SIM1"
+                    }, 
+                    {
+                        "key": "1", 
+                        "value": "SIM2"
+                    }
+                ]
+            }, 
+            "defaultOption": "notIgnore", 
+            "description": "SIM", 
+            "details": "SIM slot #", 
+            "key": "sim-slot-number", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "notIgnore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 16, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Profile ID", 
+                    "details": "Set Profile ID", 
+                    "key": "id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Access Point Name", 
+                    "details": "Set access point name", 
+                    "key": "apn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "ipv4", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "IPv4", 
+                                "value": "IPv4"
+                            }, 
+                            {
+                                "key": "IPv4v6", 
+                                "value": "IPv4v6"
+                            }, 
+                            {
+                                "key": "IPv6", 
+                                "value": "IPv6"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Packet Data Network Type", 
+                    "details": "Set packet data network type", 
+                    "key": "pdn-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "none", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "none", 
+                                "value": "none"
+                            }, 
+                            {
+                                "key": "pap", 
+                                "value": "pap"
+                            }, 
+                            {
+                                "key": "chap", 
+                                "value": "chap"
+                            }, 
+                            {
+                                "key": "pap_or_chap", 
+                                "value": "pap_or_chap"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Authentication", 
+                    "details": "Set authentication type", 
+                    "key": "authentication", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Profile Username", 
+                    "details": "Set the profile username", 
+                    "key": "username", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Profile password", 
+                    "details": "Set the profile password", 
+                    "key": "password", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Profile", 
+            "details": "Profile", 
+            "key": "profile", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "id"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "_blank", 
+                        "value": "-- Choose --"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Attach Profile", 
+            "details": "Profile to be associated", 
+            "key": "attach-profile", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "_blank", 
+                        "value": "-- Choose --"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Cellular 1/1 Profile", 
+            "details": "Profile to be associated", 
+            "key": "cellular-profile", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "Cellular Gateway Profile", 
+    "nameSpace": "http://cisco.com/ns/yang/cwan-gw-cellular-controller-config", 
+    "uniqueKey": "sim-slot-number", 
+    "xmlPath": [
+        "controller", 
+        "cellular", 
+        "sim"
+    ], 
+    "xmlRootTag": "slot"
+}

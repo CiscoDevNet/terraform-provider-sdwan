@@ -1,0 +1,374 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "ipv4-prefix"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Address Pool", 
+            "details": "Configure IPv4 prefix range of the DHCP address pool", 
+            "key": "address-pool", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "ipv4Range"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Exclude Addresses", 
+            "details": "Configure IPv4 address to exclude from DHCP address pool", 
+            "key": "exclude", 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 4294967295, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Maximum Leases", 
+            "details": "Set the maximum number of dynamic leases the DHCP server can offer", 
+            "key": "max-leases", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 600, 
+                "max": 4294967295, 
+                "min": 10, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Offer Time (seconds)", 
+            "details": "Configure how long a DHCP server address is reserved", 
+            "key": "offer-time", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 86400, 
+                "max": 31536000, 
+                "min": 60, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Lease Time (seconds)", 
+            "details": "Configure how long a DHCP-assigned IP address is valid", 
+            "key": "lease-time", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "up", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "up", 
+                        "value": "up"
+                    }, 
+                    {
+                        "key": "down", 
+                        "value": "down"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Administrative State", 
+            "details": "Set whether interface can act as DHCP server", 
+            "key": "admin-state", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "options"
+            ], 
+            "dataType": {
+                "max": 65535, 
+                "min": 68, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Interface MTU", 
+            "details": "Set MTU on interface to DHCP client", 
+            "key": "interface-mtu", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "options"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Domain Name", 
+            "details": "Set domain name client uses to resolve hostnames", 
+            "key": "domain-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "options"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Default Gateway", 
+            "details": "Set IP address of default gateway", 
+            "key": "default-gateway", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "options"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DNS Servers", 
+            "details": "Configure one or more DNS server IP addresses", 
+            "key": "dns-servers", 
+            "maxElements": 8, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "options"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TFTP Servers", 
+            "details": "Configure TFTP server IP addresses", 
+            "key": "tftp-servers", 
+            "maxElements": 2, 
+            "objectType": "list", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "mac"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "MAC Address", 
+                    "details": "Set MAC address of client", 
+                    "key": "mac-address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "IP Address", 
+                    "details": "Set client\u2019s static IP address", 
+                    "key": "ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Hostname", 
+                    "details": "Set client\u2019s hostname", 
+                    "key": "host-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Static Leases", 
+            "details": "Configure static IP addresses", 
+            "key": "static-lease", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "mac-address"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 254, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Option Code", 
+                    "details": "Set Option Code", 
+                    "key": "code", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 255, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "ASCII", 
+                    "details": "Set ASCII value", 
+                    "key": "ascii", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 254, 
+                        "minLength": 2, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "HEX", 
+                    "details": "Set HEX value", 
+                    "key": "hex", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "IP Address", 
+                    "details": "Set IP Address List (comma separated)", 
+                    "key": "ip", 
+                    "maxChildren": "8", 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "options"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Options Code", 
+            "details": "Configure Options Code", 
+            "key": "option-code", 
+            "maxElements": 254, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "code"
+            ]
+        }
+    ], 
+    "name": "dhcp-server", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</interface>", 
+    "xmlPath": [], 
+    "xmlRootTag": "dhcp-server"
+}

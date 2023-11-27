@@ -1,0 +1,1935 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "bgp"
+            ], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "variable", 
+            "description": "AS Number", 
+            "details": "Set autonomous system number <1..4294967295> or <XX.YY>", 
+            "key": "as-num", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Enable or disable BGP", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Router ID", 
+            "details": "Configure BGP router identifier", 
+            "key": "router-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Propagate AS Path", 
+            "details": "Propagate AS Path ", 
+            "key": "propagate-aspath", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Propagate Community", 
+            "details": "Propagate Community", 
+            "key": "propagate-community", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65527, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN ID for IPv4", 
+                    "details": "VPN ID for IPv4", 
+                    "key": "vpn-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "asn-ip", 
+                            "details": "asn-ip", 
+                            "key": "asn-ip", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Export Target-VPN community for IPV4", 
+                    "details": "Export Target-VPN community for IPV4", 
+                    "key": "export", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "asn-ip"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "asn-ip", 
+                            "details": "asn-ip", 
+                            "key": "asn-ip", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Import Target-VPN community for IPV4", 
+                    "details": "Import Target-VPN community for IPV4", 
+                    "key": "import", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "asn-ip"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "bgp", 
+                "target"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Router Target for IPV4", 
+            "details": "Router Target for IPV4", 
+            "key": "route-target-ipv4", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "vpn-id"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65527, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN ID for IPv6", 
+                    "details": "VPN ID for IPv6", 
+                    "key": "vpn-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "asn-ip", 
+                            "details": "asn-ip", 
+                            "key": "asn-ip", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Export Target-VPN community for IPV6", 
+                    "details": "Export Target-VPN community for IPV6", 
+                    "key": "export", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "asn-ip"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "asn-ip", 
+                            "details": "asn-ip", 
+                            "key": "asn-ip", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Import Target-VPN community for IPV6", 
+                    "details": "Import Target-VPN community for IPV6", 
+                    "key": "import", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "asn-ip"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "bgp", 
+                "target"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Router Target for IPV6", 
+            "details": "Router Target for IPV6", 
+            "key": "route-target-ipv6", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "vpn-id"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Interface Name", 
+                    "details": "Interface Name", 
+                    "key": "if-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "bgp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "MPLS BGP Interface", 
+            "details": "MPLS BGP Interface", 
+            "key": "mpls-interface", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "if-name"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "distance"
+            ], 
+            "dataType": {
+                "default": 20, 
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "External Routes Distance", 
+            "details": "Set administrative distance for external BGP routes", 
+            "key": "external", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "distance"
+            ], 
+            "dataType": {
+                "default": 200, 
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Internal Routes Distance", 
+            "details": "Set administrative distance for internal BGP routes", 
+            "key": "internal", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "distance"
+            ], 
+            "dataType": {
+                "default": 20, 
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Local Routes Distance", 
+            "details": "Set administrative distance for local BGP routes", 
+            "key": "local", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "timers"
+            ], 
+            "dataType": {
+                "default": 60, 
+                "max": 65535, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Keepalive (seconds)", 
+            "details": "Set how often keepalive messages are sent to BGP peer", 
+            "key": "keepalive", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "timers"
+            ], 
+            "dataType": {
+                "default": 180, 
+                "max": 65535, 
+                "min": 0, 
+                "type": "holdTime"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Hold Time (seconds)", 
+            "details": "Set the interval when BGP considers a neighbor to be down", 
+            "key": "holdtime", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "best-path", 
+                "med"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Compare MED", 
+            "details": "Compare MEDs from all ASs when selecting active BGP paths", 
+            "key": "always-compare", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "best-path", 
+                "med"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Deterministic MED", 
+            "details": "Compare MEDs from all routes from same AS when selecting active BGP paths", 
+            "key": "deterministic", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "best-path", 
+                "med"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Missing MED as Worst", 
+            "details": "If path has no MED, consider it to be worst path when selecting active BGP paths", 
+            "key": "missing-as-worst", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "best-path"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Compare Router ID", 
+            "details": "Compare router IDs when selecting active BGP paths", 
+            "key": "compare-router-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "bgp", 
+                "best-path", 
+                "as-path"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Multipath Relax", 
+            "details": "Ignore AS for multipath selection", 
+            "key": "multipath-relax", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "ipv4-unicast", 
+                                "value": "ipv4-unicast"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Address Family", 
+                    "details": "Set BGP address family", 
+                    "key": "family-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Aggregate Prefix", 
+                            "details": "Configure the prefixes to aggregate", 
+                            "key": "prefix", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "AS Set Path", 
+                            "details": "Set AS set path information", 
+                            "key": "as-set", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Summary Only", 
+                            "details": "Filter out more specific routes from updates", 
+                            "key": "summary-only", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Aggregate Prefixes   ", 
+                    "details": "Aggregate prefixes in specific range", 
+                    "key": "aggregate-address", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "prefix"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv6-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "IPv6 Aggregate Prefix", 
+                            "details": "Configure the IPv6 prefixes to aggregate", 
+                            "key": "prefix", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "AS Set Path", 
+                            "details": "Set AS set path information", 
+                            "key": "as-set", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Summary Only", 
+                            "details": "Filter out more specific routes from updates", 
+                            "key": "summary-only", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "IPv6 Aggregate Prefixes   ", 
+                    "details": "IPv6 Aggregate prefixes in specific range", 
+                    "key": "ipv6-aggregate-address", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "prefix"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Network Prefix", 
+                            "details": "Configure the prefixes for BGP to announce", 
+                            "key": "prefix", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Network", 
+                    "details": "Configure the networks for BGP to advertise", 
+                    "key": "network", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "prefix"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv6-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Network Prefix", 
+                            "details": "Configure the prefixes for BGP to announce", 
+                            "key": "prefix", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Network", 
+                    "details": "Configure the networks for BGP to advertise", 
+                    "key": "ipv6-network", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "prefix"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "maximum-paths"
+                    ], 
+                    "dataType": {
+                        "max": 32, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Maximum Paths", 
+                    "details": "Set maximum number of parallel IBGP paths for multipath load sharing", 
+                    "key": "paths", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "default-information"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Originate", 
+                    "details": "BGP Default Information Originate", 
+                    "key": "originate", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "table-map"
+                    ], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Policy Name", 
+                    "details": "Map external entry attributes into routing table", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "table-map"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Filter", 
+                    "details": "Filter", 
+                    "key": "filter", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "static", 
+                                        "value": "static"
+                                    }, 
+                                    {
+                                        "key": "connected", 
+                                        "value": "connected"
+                                    }, 
+                                    {
+                                        "key": "ospf", 
+                                        "value": "ospf"
+                                    }, 
+                                    {
+                                        "key": "ospfv3", 
+                                        "value": "ospfv3"
+                                    }, 
+                                    {
+                                        "key": "omp", 
+                                        "value": "omp"
+                                    }, 
+                                    {
+                                        "key": "eigrp", 
+                                        "value": "eigrp"
+                                    }, 
+                                    {
+                                        "key": "nat", 
+                                        "value": "nat"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Protocol", 
+                            "details": "Set the protocol to redistribute routes from", 
+                            "key": "protocol", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 32, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Route Policy", 
+                            "details": "Configure policy to apply to prefixes received from BGP neighbor", 
+                            "key": "route-policy", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Redistribute Routes", 
+                    "details": "Redistribute routes into BGP", 
+                    "key": "redistribute", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "protocol"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "bgp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Address Family", 
+            "details": "Set BGP address family", 
+            "key": "address-family", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "family-type"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Address", 
+                    "details": "Set neighbor address", 
+                    "key": "address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Description", 
+                    "details": "Set description", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Shutdown", 
+                    "details": "Enable or disable a BGP neighbor", 
+                    "key": "shutdown", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "remoteAS"
+                    }, 
+                    "defaultOption": "variable", 
+                    "description": "Remote AS", 
+                    "details": "Set remote autonomous system number", 
+                    "key": "remote-as", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "timers"
+                    ], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Keepalive Time (seconds)", 
+                    "details": "Set how often to advertise keepalive messages to BGP peer", 
+                    "key": "keepalive", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "timers"
+                    ], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "holdTime"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Hold Time (seconds)", 
+                    "details": "Set how long to wait since receiving a keepalive message to consider BGP peer unavailable", 
+                    "key": "holdtime", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "update-source"
+                    ], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Source Interface Name", 
+                    "details": "Set IP address of interface for TCP connection to BGP neighbor", 
+                    "key": "if-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Next-Hop Self", 
+                    "details": "Set router to be next hop for routes advertised to neighbor", 
+                    "key": "next-hop-self", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Send Community", 
+                    "details": "Send community attribute", 
+                    "key": "send-community", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Send Extended Community", 
+                    "details": "Send extended community attribute", 
+                    "key": "send-ext-community", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "EBGP Multihop", 
+                    "details": "Set TTL value for peers that are not directly connected", 
+                    "key": "ebgp-multihop", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Password", 
+                    "details": "Set MD5 password on TCP connection with BGP peer", 
+                    "key": "password", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "vipNeedsEncryption": "true"
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Send Label", 
+                    "details": "Send label", 
+                    "key": "send-label", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Explicit NULL", 
+                    "details": "Send label", 
+                    "key": "send-label-explicit", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "As Override", 
+                    "details": "As Override", 
+                    "key": "as-override", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "allowas-in"
+                    ], 
+                    "dataType": {
+                        "max": 10, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "As Number", 
+                    "details": "As Number", 
+                    "key": "as-number", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "ipv4-unicast", 
+                                        "value": "ipv4-unicast"
+                                    }, 
+                                    {
+                                        "key": "vpnv4-unicast", 
+                                        "value": "vpnv4-unicast"
+                                    }, 
+                                    {
+                                        "key": "vpnv6-unicast", 
+                                        "value": "vpnv6-unicast"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address Family", 
+                            "details": "Set BGP address family", 
+                            "key": "family-type", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "max": 4294967295, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Maximum Number of Prefixes", 
+                            "details": "Set maximum number of prefixes accepted from BGP peer", 
+                            "key": "prefix-num", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "max": 100, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Threshold (percentage)", 
+                            "details": "Set threshold at which to generate a warning message", 
+                            "key": "threshold", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "max": 65535, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Restart Interval (minutes)", 
+                            "details": "Set when to restart BGP connection if threshold is exceeded", 
+                            "key": "restart", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Warning Only", 
+                            "details": "Display only a warning message when threshold is exceeded", 
+                            "key": "warning-only", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "children": [
+                                {
+                                    "dataPath": [], 
+                                    "dataType": {
+                                        "type": "enum", 
+                                        "values": [
+                                            {
+                                                "key": "in", 
+                                                "value": "in"
+                                            }, 
+                                            {
+                                                "key": "out", 
+                                                "value": "out"
+                                            }
+                                        ]
+                                    }, 
+                                    "defaultOption": "constant", 
+                                    "description": "Direction", 
+                                    "details": "Set direction for applying route policy", 
+                                    "key": "direction", 
+                                    "objectType": "object", 
+                                    "optionType": [
+                                        "constant"
+                                    ]
+                                }, 
+                                {
+                                    "dataPath": [], 
+                                    "dataType": {
+                                        "maxLength": 32, 
+                                        "minLength": 1, 
+                                        "type": "string"
+                                    }, 
+                                    "defaultOption": "constant", 
+                                    "description": "Policy Name", 
+                                    "details": "Configure name of route policy", 
+                                    "key": "pol-name", 
+                                    "objectType": "object", 
+                                    "optionType": [
+                                        "constant", 
+                                        "variable"
+                                    ]
+                                }
+                            ], 
+                            "dataPath": [], 
+                            "defaultOption": "ignore", 
+                            "description": "Route Policy", 
+                            "details": "Select route policy to apply to prefixes received from BGP neighbor", 
+                            "key": "route-policy", 
+                            "objectType": "tree", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ], 
+                            "primaryKeys": [
+                                "direction"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Address Family", 
+                    "details": "Set BGP address family", 
+                    "key": "address-family", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "family-type"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "bgp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Neighbor", 
+            "details": "Set BGP neighbors", 
+            "key": "neighbor", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "address"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv6"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "IPv6 Address", 
+                    "details": "Set neighbor address", 
+                    "key": "address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Description", 
+                    "details": "Set description", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Shutdown", 
+                    "details": "Enable or disable a BGP neighbor", 
+                    "key": "shutdown", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "remoteAS"
+                    }, 
+                    "defaultOption": "variable", 
+                    "description": "Remote AS", 
+                    "details": "Set remote autonomous system number", 
+                    "key": "remote-as", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "timers"
+                    ], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Keepalive Time (seconds)", 
+                    "details": "Set how often to advertise keepalive messages to BGP peer", 
+                    "key": "keepalive", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "timers"
+                    ], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "holdTime"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Hold Time (seconds)", 
+                    "details": "Set how long to wait since receiving a keepalive message to consider BGP peer unavailable", 
+                    "key": "holdtime", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "update-source"
+                    ], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Source Interface Name", 
+                    "details": "Set IP address of interface for TCP connection to BGP neighbor", 
+                    "key": "if-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Next-Hop Self", 
+                    "details": "Set router to be next hop for routes advertised to neighbor", 
+                    "key": "next-hop-self", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Send Community", 
+                    "details": "Send community attribute", 
+                    "key": "send-community", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Send Extended Community", 
+                    "details": "Send extended community attribute", 
+                    "key": "send-ext-community", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1, 
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "EBGP Multihop", 
+                    "details": "Set TTL value for peers that are not directly connected", 
+                    "key": "ebgp-multihop", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Password", 
+                    "details": "Set MD5 password on TCP connection with BGP peer", 
+                    "key": "password", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "vipNeedsEncryption": "true"
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Send Label", 
+                    "details": "Send label", 
+                    "key": "send-label", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Explicit NULL", 
+                    "details": "Send label Explicit", 
+                    "key": "send-label-explicit", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "As Override", 
+                    "details": "As Override", 
+                    "key": "as-override", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "allowas-in"
+                    ], 
+                    "dataType": {
+                        "max": 10, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "as-number", 
+                    "details": " As Number", 
+                    "key": "as-number", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "ipv6-unicast", 
+                                        "value": "ipv6-unicast"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Address Family", 
+                            "details": "Set BGP address family", 
+                            "key": "family-type", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "default": 0, 
+                                "max": 4294967295, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Maximum Number of Prefixes", 
+                            "details": "Set maximum number of prefixes accepted from BGP peer", 
+                            "key": "prefix-num", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "default": 0, 
+                                "max": 100, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Threshold (percentage)", 
+                            "details": "Set threshold at which to generate a warning message", 
+                            "key": "threshold", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "max": 65535, 
+                                "min": 0, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Restart Interval (minutes)", 
+                            "details": "Set when to restart BGP connection if threshold is exceeded", 
+                            "key": "restart", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [
+                                "maximum-prefixes"
+                            ], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Warning Only", 
+                            "details": "Display only a warning message when threshold is exceeded", 
+                            "key": "warning-only", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "children": [
+                                {
+                                    "dataPath": [], 
+                                    "dataType": {
+                                        "type": "enum", 
+                                        "values": [
+                                            {
+                                                "key": "in", 
+                                                "value": "in"
+                                            }, 
+                                            {
+                                                "key": "out", 
+                                                "value": "out"
+                                            }
+                                        ]
+                                    }, 
+                                    "defaultOption": "constant", 
+                                    "description": "Direction", 
+                                    "details": "Set direction for applying route policy", 
+                                    "key": "direction", 
+                                    "objectType": "object", 
+                                    "optionType": [
+                                        "constant"
+                                    ]
+                                }, 
+                                {
+                                    "dataPath": [], 
+                                    "dataType": {
+                                        "maxLength": 32, 
+                                        "minLength": 1, 
+                                        "type": "string"
+                                    }, 
+                                    "defaultOption": "constant", 
+                                    "description": "Policy Name", 
+                                    "details": "Configure name of route policy", 
+                                    "key": "pol-name", 
+                                    "objectType": "object", 
+                                    "optionType": [
+                                        "constant", 
+                                        "variable"
+                                    ]
+                                }
+                            ], 
+                            "dataPath": [], 
+                            "defaultOption": "ignore", 
+                            "description": "Route Policy", 
+                            "details": "Select route policy to apply to prefixes received from BGP neighbor", 
+                            "key": "route-policy", 
+                            "objectType": "tree", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ], 
+                            "primaryKeys": [
+                                "direction"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Address Family", 
+                    "details": "Set BGP address family", 
+                    "key": "address-family", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "family-type"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "bgp"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "IPv6 Neighbor", 
+            "details": "Set BGP IPv6 neighbors", 
+            "key": "ipv6-neighbor", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "address"
+            ]
+        }
+    ], 
+    "name": "cisco_bgp", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "xmlPath": [], 
+    "xmlRootTag": "router"
+}

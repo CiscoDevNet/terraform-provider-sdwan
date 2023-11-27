@@ -1,0 +1,176 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "pim"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Enable or disable PIM", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Auto-RP", 
+            "details": "Enable or disable auto-RP", 
+            "key": "auto-rp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim"
+            ], 
+            "dataType": {
+                "default": 0, 
+                "max": 100, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SPT Threshold", 
+            "details": "Set when PIM router joins the SPT (kbps)", 
+            "key": "spt-threshold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim"
+            ], 
+            "dataType": {
+                "default": "sticky", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "random", 
+                        "value": "random"
+                    }, 
+                    {
+                        "key": "sticky", 
+                        "value": "sticky"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Replicator", 
+            "details": "Set how replicator is selected", 
+            "key": "replicator-selection", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interface Name", 
+                    "details": "Set interface name", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 30, 
+                        "max": 3600, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Hello Interval (seconds)", 
+                    "details": "Set interval between PIM hello packets", 
+                    "key": "hello-interval", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 60, 
+                        "max": 600, 
+                        "min": 10, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Join/Prune Interval (seconds)", 
+                    "details": "Set interval at which PIM multicast traffic can join or be removed from RPT or SPT", 
+                    "key": "join-prune-interval", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "pim"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Interface", 
+            "details": "Set PIM interface parameters", 
+            "key": "interface", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }
+    ], 
+    "name": "pim", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "xmlPath": [], 
+    "xmlRootTag": "router"
+}

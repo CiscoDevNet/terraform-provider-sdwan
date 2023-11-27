@@ -1,0 +1,734 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Enable or disable SNMP", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 255, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Contact Person", 
+            "details": "Set the contact for this managed node", 
+            "key": "contact", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 255, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Name of Device for SNMP", 
+            "details": "Set the assigned name for this managed node", 
+            "key": "name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 255, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Location of Device", 
+            "details": "Set the physical location of this managed node", 
+            "key": "location", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name", 
+                    "details": "Set the name of the SNMP view", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Object Identifier", 
+                            "details": "Configure identifier of subtree of MIB objects", 
+                            "key": "id", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "false", 
+                                "type": "boolean"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Exclude OID", 
+                            "details": "Exclude the OID", 
+                            "key": "exclude", 
+                            "objectType": "node-only", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Object Identifier", 
+                    "details": "Configure SNMP object identifier", 
+                    "key": "oid", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "id"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "View", 
+            "details": "Configure a view record", 
+            "key": "view", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name", 
+                    "details": "Set name of the SNMP community", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "vipNeedsEncryption": "true"
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "View", 
+                    "details": "Set name of the SNMP view", 
+                    "key": "view", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "read-only", 
+                                "value": "read-only"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Authorization", 
+                    "details": "Configure access permissions", 
+                    "key": "authorization", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Community", 
+            "details": "Configure SNMP community", 
+            "key": "community", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name", 
+                    "details": "Name of the SNMP group", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "no-auth-no-priv", 
+                                "value": "NoAuthNoPriv"
+                            }, 
+                            {
+                                "key": "auth-no-priv", 
+                                "value": "AuthNoPriv"
+                            }, 
+                            {
+                                "key": "auth-priv", 
+                                "value": "AuthPriv"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Security Level", 
+                    "details": "Configure security level", 
+                    "key": "security-level", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "View", 
+                    "details": "Name of the SNMP view", 
+                    "key": "view", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Group", 
+            "details": "Configure an SNMP group", 
+            "key": "group", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name", 
+                "security-level"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "User", 
+                    "details": "Name of the SNMP user", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "md5", 
+                                "value": "MD5"
+                            }, 
+                            {
+                                "key": "sha-256", 
+                                "value": "SHA-256"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Authentication Protocol", 
+                    "details": "Configure authentication protocol", 
+                    "key": "auth", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Authentication Password", 
+                    "details": "Specify authentication protocol password", 
+                    "key": "auth-password", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "aes-cfb-128", 
+                                "value": "AES-CFB-128"
+                            }, 
+                            {
+                                "key": "aes-256-cfb-128", 
+                                "value": "AES-256-CFB-128"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Privacy Protocol", 
+                    "details": "Configure privacy protocol", 
+                    "key": "priv", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Privacy Password", 
+                    "details": "Specify privacy protocol password", 
+                    "key": "priv-password", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Group", 
+                    "details": "Name of the SNMP group", 
+                    "key": "group", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "User", 
+            "details": "Configure an SNMP user", 
+            "key": "user", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65530, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN ID", 
+                    "details": "Set VPN in which SNMP server is located", 
+                    "key": "vpn-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ip"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "IP Address", 
+                    "details": "Set IPv4/IPv6 address of SNMP server", 
+                    "key": "ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "UDP Port", 
+                    "details": "Set UDP port number to connect to SNMP server", 
+                    "key": "port", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Trap Group Name", 
+                    "details": "Set name of the trap group", 
+                    "key": "group-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Community Name", 
+                    "details": "Set name of the SNMP community", 
+                    "key": "community-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ], 
+                    "vipNeedsEncryption": "true"
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "User Name", 
+                    "details": "Set name of the SNMP user", 
+                    "key": "user", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source Interface", 
+                    "details": "Source interface for outgoing SNMP traps", 
+                    "key": "source-interface", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "trap"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Trap Target", 
+            "details": "Configure SNMP server to receive SNMP traps", 
+            "key": "target", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "vpn-id", 
+                "ip", 
+                "port"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Group Name", 
+                    "details": "Set name of trap group", 
+                    "key": "group-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "all", 
+                                        "value": "all"
+                                    }, 
+                                    {
+                                        "key": "app-route", 
+                                        "value": "app-route"
+                                    }, 
+                                    {
+                                        "key": "bfd", 
+                                        "value": "bfd"
+                                    }, 
+                                    {
+                                        "key": "control", 
+                                        "value": "control"
+                                    }, 
+                                    {
+                                        "key": "dhcp", 
+                                        "value": "dhcp"
+                                    }, 
+                                    {
+                                        "key": "hardware", 
+                                        "value": "hardware"
+                                    }, 
+                                    {
+                                        "key": "omp", 
+                                        "value": "omp"
+                                    }, 
+                                    {
+                                        "key": "routing", 
+                                        "value": "routing"
+                                    }, 
+                                    {
+                                        "key": "security", 
+                                        "value": "security"
+                                    }, 
+                                    {
+                                        "key": "system", 
+                                        "value": "system"
+                                    }, 
+                                    {
+                                        "key": "vpn", 
+                                        "value": "vpn"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Module Name", 
+                            "details": "Module name", 
+                            "key": "module", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": [
+                                    {
+                                        "key": "critical", 
+                                        "value": "critical"
+                                    }, 
+                                    {
+                                        "key": "major", 
+                                        "value": "major"
+                                    }, 
+                                    {
+                                        "key": "minor", 
+                                        "value": "minor"
+                                    }
+                                ]
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Severity Levels", 
+                            "details": "Set the severity level", 
+                            "key": "level", 
+                            "objectType": "list", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "ignore", 
+                    "description": "Module", 
+                    "details": "Configure group modules", 
+                    "key": "enable", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ], 
+                    "primaryKeys": [
+                        "module"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "trap"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Trap Group", 
+            "details": "Configure SNMP trap group", 
+            "key": "group", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "group-name"
+            ]
+        }
+    ], 
+    "name": "SNMP", 
+    "nameSpace": "http://viptela.com/snmp", 
+    "xmlRootTag": "snmp"
+}

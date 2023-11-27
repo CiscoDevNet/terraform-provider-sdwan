@@ -1,0 +1,65 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "multicast"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "constant", 
+            "description": "SPT Only", 
+            "details": "Shortest Path Tree (SPT) Only Mode", 
+            "key": "spt-only", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "multicast-replicator"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Local Replicator", 
+            "details": "Replicator is local to this device", 
+            "key": "local", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "multicast-replicator"
+            ], 
+            "dataType": {
+                "max": 1000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Threshold", 
+            "details": "Set number of joins per group the router supports", 
+            "key": "threshold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "cedge_multicast", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "xmlPath": [], 
+    "xmlRootTag": "router"
+}

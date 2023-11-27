@@ -1,0 +1,506 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "pim"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Auto-RP", 
+            "details": "Enable or disable auto-RP", 
+            "key": "auto-rp", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 32, 
+                        "min": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interface Name", 
+                    "details": "Set RP Announce Interface Name", 
+                    "key": "if-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 255, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "RP Announce Scope", 
+                    "details": "Set RP Announce Scope", 
+                    "key": "scope", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "pim", 
+                "send-rp-announce"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "RP Announce", 
+            "details": "Enable or disable RP Announce", 
+            "key": "send-rp-announce-list", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "if-name"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "send-rp-discovery"
+            ], 
+            "dataType": {
+                "max": 32, 
+                "min": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Interface Name", 
+            "details": "Set RP Discovery Interface Name", 
+            "key": "if-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": []
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interface", 
+                    "details": "Set Autonomic-Networking virtual interface", 
+                    "key": "pim-interface-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Access List", 
+                    "details": "Set IP Access List for PIM RP Candidate", 
+                    "key": "group-list", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 16383, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Interval", 
+                    "details": "Set RP candidate advertisement interval", 
+                    "key": "interval", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 255, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Priority", 
+                    "details": "Set RP candidate priority", 
+                    "key": "priority", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "pim"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "RP Candidate", 
+            "details": "Set RP Discovery Scope", 
+            "key": "rp-candidate", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "pim-interface-name"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "bsr-candidate"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": []
+            }, 
+            "defaultOption": "ignore", 
+            "description": "BSR Candidate", 
+            "details": "Set Autonomic-Networking virtual interface", 
+            "key": "bsr-interface-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "bsr-candidate"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Hash Mask Length", 
+            "details": "Hash Mask length for RP selection", 
+            "key": "mask", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "bsr-candidate"
+            ], 
+            "dataType": {
+                "max": 255, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Priority", 
+            "details": "Set RP candidate priority", 
+            "key": "priority", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "bsr-candidate"
+            ], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "RP Candidate Access List", 
+            "details": "Set BSR RP candidate filter", 
+            "key": "accept-rp-candidate", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "send-rp-discovery"
+            ], 
+            "dataType": {
+                "max": 255, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Scope", 
+            "details": "Set RP Discovery Scope", 
+            "key": "scope", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "ssm"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Access List", 
+            "details": "Set Access List for PIM SSM", 
+            "key": "range", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim", 
+                "ssm"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SSM", 
+            "details": "Turn SSM On / Off", 
+            "key": "default", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "IP Address", 
+                    "details": "Set Static RP IP Address", 
+                    "key": "address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Access List", 
+                    "details": "Set Static RP Access List", 
+                    "key": "access-list", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Override", 
+                    "details": "Set override flag", 
+                    "key": "override", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "pim"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Static-RP", 
+            "details": "Set Static RP Address(es)", 
+            "key": "rp-addr", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "address"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "pim"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "0", 
+                        "value": "0"
+                    }, 
+                    {
+                        "key": "infinity", 
+                        "value": "infinity"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "SPT Threshold", 
+            "details": "Set when PIM router joins the SPT (kbps)", 
+            "key": "spt-threshold", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interface Name", 
+                    "details": "Set interface name", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 30, 
+                        "max": 18725, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Query Interval (seconds)", 
+                    "details": "Set PIM query interval", 
+                    "key": "query-interval", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 60, 
+                        "max": 600, 
+                        "min": 10, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Join/Prune Interval (seconds)", 
+                    "details": "Set interval at which PIM multicast traffic can join or be removed from RPT or SPT", 
+                    "key": "join-prune-interval", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "pim"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Interface", 
+            "details": "Set PIM interface parameters", 
+            "key": "interface", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }
+    ], 
+    "name": "cedge_pim", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "xmlPath": [], 
+    "xmlRootTag": "router"
+}

@@ -1,0 +1,70 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "subslot", 
+                "bay1"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "10", 
+                        "value": "4*10G"
+                    }, 
+                    {
+                        "key": "40", 
+                        "value": "1*40G"
+                    }, 
+                    {
+                        "key": "100", 
+                        "value": "1*100G"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Bay 1", 
+            "details": "Bay 1", 
+            "key": "mode", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "subslot", 
+                "bay2"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "40", 
+                        "value": "3*40G"
+                    }, 
+                    {
+                        "key": "100", 
+                        "value": "1*100G"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Bay 2", 
+            "details": "Bay 2", 
+            "key": "mode", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "mode", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "xmlPath": [], 
+    "xmlRootTag": "vpn"
+}

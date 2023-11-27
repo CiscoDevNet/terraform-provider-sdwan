@@ -1,0 +1,768 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "0/1", 
+                                "value": "0/1"
+                            }, 
+                            {
+                                "key": "0/2", 
+                                "value": "0/2"
+                            }, 
+                            {
+                                "key": "0/3", 
+                                "value": "0/3"
+                            }, 
+                            {
+                                "key": "0/4", 
+                                "value": "0/4"
+                            }, 
+                            {
+                                "key": "1/0", 
+                                "value": "1/0"
+                            }, 
+                            {
+                                "key": "2/0", 
+                                "value": "2/0"
+                            }, 
+                            {
+                                "key": "3/0", 
+                                "value": "3/0"
+                            }, 
+                            {
+                                "key": "4/0", 
+                                "value": "4/0"
+                            }, 
+                            {
+                                "key": "1/1", 
+                                "value": "1/1"
+                            }, 
+                            {
+                                "key": "2/1", 
+                                "value": "2/1"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Slot/sub-slot ID", 
+                    "details": "Slot/sub-slot ID", 
+                    "key": "slot-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "SM-X-PVDM-500", 
+                                "value": "SM-X-PVDM-500"
+                            }, 
+                            {
+                                "key": "SM-X-PVDM-1000", 
+                                "value": "SM-X-PVDM-1000"
+                            }, 
+                            {
+                                "key": "SM-X-PVDM-2000", 
+                                "value": "SM-X-PVDM-2000"
+                            }, 
+                            {
+                                "key": "SM-X-PVDM-3000", 
+                                "value": "SM-X-PVDM-3000"
+                            }, 
+                            {
+                                "key": "NIM-PVDM-32", 
+                                "value": "NIM-PVDM-32"
+                            }, 
+                            {
+                                "key": "NIM-PVDM-64", 
+                                "value": "NIM-PVDM-64"
+                            }, 
+                            {
+                                "key": "NIM-PVDM-128", 
+                                "value": "NIM-PVDM-128"
+                            }, 
+                            {
+                                "key": "NIM-PVDM-256", 
+                                "value": "NIM-PVDM-256"
+                            }, 
+                            {
+                                "key": "PVDM4-32", 
+                                "value": "PVDM4-32"
+                            }, 
+                            {
+                                "key": "PVDM4-64", 
+                                "value": "PVDM4-64"
+                            }, 
+                            {
+                                "key": "PVDM4-128", 
+                                "value": "PVDM4-128"
+                            }, 
+                            {
+                                "key": "PVDM4-256", 
+                                "value": "PVDM4-256"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Module", 
+                    "details": "Voice module type", 
+                    "key": "module-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Media Resource", 
+            "details": "Configure Media Resource", 
+            "key": "media-resource", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "slot-id"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "sccp-config"
+            ], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Local Interface", 
+            "details": "Configure Local Interface", 
+            "key": "local-interface", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ip"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Server IP", 
+                    "details": "Server IP", 
+                    "key": "ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Server Identifier", 
+                    "details": "Server Identifier", 
+                    "key": "identifier", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "sccp-config"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Server List", 
+            "details": "Configure Server List", 
+            "key": "server-list", 
+            "maxElements": 4, 
+            "minElements": 1, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "ip"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "CUCM Group ID", 
+                    "details": "CUCM Group ID", 
+                    "key": "cucm-group-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "number"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "CUCM Server Identifier", 
+                            "details": "CUCM Server Identifier", 
+                            "key": "cucm-server-identifier", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ip"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "CUCM Server IP", 
+                            "details": "CUCM Server IP", 
+                            "key": "cucm-server-ip", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "number"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "CUCM Server Priority", 
+                            "details": "CUCM Server Priority", 
+                            "key": "cucm-server-priority", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "CUCM Server List Priority", 
+                    "details": "CUCM Server List Priority", 
+                    "key": "cucm-server-list-priority", 
+                    "maxElements": 4, 
+                    "minElements": 1, 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "cucm-server-identifier"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "CUCM Media Resource Name", 
+                            "details": "CUCM Media Resource Name", 
+                            "key": "media-resource-group-name", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "enum", 
+                                "values": []
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Profile to be associated", 
+                            "details": "Profile to be associated", 
+                            "key": "profile-id", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "CUCM Media Resource Group List", 
+                    "details": "CUCM Media Resource Group List", 
+                    "key": "cucm-media-resource-group-list", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "media-resource-group-name"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "graceful", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "graceful", 
+                                "value": "graceful"
+                            }, 
+                            {
+                                "key": "immediate", 
+                                "value": "immediate"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "CUCM Switchover", 
+                    "details": "CUCM Switchover", 
+                    "key": "cucm-switchover", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "guard", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "guard", 
+                                "value": "guard"
+                            }, 
+                            {
+                                "key": "graceful", 
+                                "value": "graceful"
+                            }, 
+                            {
+                                "key": "immediate", 
+                                "value": "immediate"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "CUCM Switchback", 
+                    "details": "CUCM switchback", 
+                    "key": "cucm-switchback", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "sccp-config"
+            ], 
+            "defaultOption": "constant", 
+            "description": "CUCM Group", 
+            "details": "Configure CUCM Group", 
+            "key": "cucm-group", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "cucm-group-id"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Profile ID", 
+                    "details": "Profile ID", 
+                    "key": "profile-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "transcode", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "transcode", 
+                                "value": "transcode"
+                            }, 
+                            {
+                                "key": "conference", 
+                                "value": "conference"
+                            }, 
+                            {
+                                "key": "mtp", 
+                                "value": "mtp"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Profile Type", 
+                    "details": "Profile Type", 
+                    "key": "profile-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Universal", 
+                    "details": "Transcode universal profile type", 
+                    "key": "universal", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "g722-64", 
+                    "details": "Add the codec g722-64", 
+                    "key": "g722-64", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "isac", 
+                    "details": "Add the codec isac", 
+                    "key": "isac", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "g729abr8", 
+                    "details": "Add the codec g729abr8", 
+                    "key": "g729abr8", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "g729ar8", 
+                    "details": "Add the codec g729ar8", 
+                    "key": "g729ar8", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "g729br8", 
+                    "details": "Add the codec g729br8", 
+                    "key": "g729br8", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "g729r8", 
+                    "details": "Add the codec g729r8", 
+                    "key": "g729r8", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "ilbc", 
+                    "details": "Add the codec ilbc", 
+                    "key": "ilbc", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "g711alaw", 
+                    "details": "Add the codec g711alaw", 
+                    "key": "g711alaw", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "g711ulaw", 
+                    "details": "Add the codec g711ulaw", 
+                    "key": "g711ulaw", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "codec"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "pass-through", 
+                    "details": "Add the codec pass-through", 
+                    "key": "pass-through", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 4000, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Maximum Sessions", 
+                    "details": "Maximum Sessions", 
+                    "key": "max-session", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "sccp", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "sccp", 
+                                "value": "sccp"
+                            }, 
+                            {
+                                "key": "cube", 
+                                "value": "cube"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Application", 
+                    "details": "Application", 
+                    "key": "application", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Shutdown", 
+                    "details": "Shutdown", 
+                    "key": "shutdown", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": 8, 
+                                "value": 8
+                            }, 
+                            {
+                                "key": 16, 
+                                "value": 16
+                            }, 
+                            {
+                                "key": 32, 
+                                "value": 32
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Conference Maximum Participants", 
+                    "details": "Conference Maximum Participants", 
+                    "key": "conference-max-participants", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 4000, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "MTP Maximum Hardware Sessions", 
+                    "details": "MTP Maximum Hardware Sessions", 
+                    "key": "mtp-max-sessions-hardware", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 6000, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "MTP Maximum Software Sessions", 
+                    "details": "MTP Maximum Software Sessions", 
+                    "key": "mtp-max-sessions-software", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Profile", 
+            "details": "Configure Profile", 
+            "key": "profile", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "profile-id"
+            ]
+        }
+    ], 
+    "name": "cisco_dsp_farm", 
+    "nameSpace": "http://viptela.com/uc-voice", 
+    "xmlPath": [], 
+    "xmlRootTag": "uc-dspfarm"
+}

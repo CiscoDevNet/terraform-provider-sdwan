@@ -1,0 +1,497 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "DRE Optimization", 
+            "details": "Enable/Disable DRE optimization", 
+            "key": "dreopt", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "1", 
+                        "maxLength": 36, 
+                        "minLength": 0, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Virtual Application Instance", 
+                    "details": "List of Virtual applications", 
+                    "key": "instance-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "dreopt", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "dreopt", 
+                                "value": "dreopt"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Virtual Application Type", 
+                    "details": "List of Virtual applications", 
+                    "key": "application-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dreopt"
+                    ], 
+                    "dataType": {
+                        "default": "default", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "small", 
+                                "value": "small"
+                            }, 
+                            {
+                                "key": "medium", 
+                                "value": "medium"
+                            }, 
+                            {
+                                "key": "large", 
+                                "value": "large"
+                            }, 
+                            {
+                                "key": "extra-large", 
+                                "value": "extra-large"
+                            }, 
+                            {
+                                "key": "default", 
+                                "value": "default"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Resource Profile", 
+                    "details": "Resource Profile", 
+                    "key": "resource-profile", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "virtual-applications"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Virtual Application", 
+            "details": "Virtual application Instance", 
+            "key": "virtual-application", 
+            "maxElements": 1, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "instance-id"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SSL Decryption", 
+            "details": "Enable/Disable SSL decryption for DRE", 
+            "key": "ssl", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name", 
+                    "details": "List of controller group", 
+                    "key": "group-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "description", 
+                    "details": "appnav controller group description", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Controller IP", 
+                    "details": "List of controllers", 
+                    "key": "appnav-controller", 
+                    "maxElements": 1, 
+                    "minElements": 1, 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Controller IP address", 
+                            "details": "Controller IP Address", 
+                            "key": "address", 
+                            "maxElements": 1, 
+                            "minElements": 1, 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": 1, 
+                                "max": 65530, 
+                                "min": 1, 
+                                "type": "number"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Service VPN", 
+                            "details": "vpn id", 
+                            "key": "vpn", 
+                            "maxElements": 1, 
+                            "minElements": 1, 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Controller IP", 
+                    "details": "List of controllers", 
+                    "key": "appnav-controllers", 
+                    "maxElements": 1, 
+                    "minElements": 1, 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Appnav Controller Group", 
+            "details": "Appnav controller group name", 
+            "key": "appnav-controller-group", 
+            "maxElements": 1, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "group-name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name", 
+                    "details": "List of service node group", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "description", 
+                    "details": "Service node group description", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Integrated Service Node", 
+                    "details": "Integrated Service Node", 
+                    "key": "internal", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "External Service Node", 
+                    "details": "External Service Node", 
+                    "key": "external-node", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Service Node IP", 
+                            "details": "IP Address", 
+                            "key": "address", 
+                            "maxElements": 1, 
+                            "minElements": 1, 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "ipv4-prefix"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Virtual Port Group IP", 
+                            "details": "ip and prefix", 
+                            "key": "vpg-ip", 
+                            "maxElements": 1, 
+                            "minElements": 1, 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Service Node", 
+                    "details": "Service Node Information", 
+                    "key": "service-node", 
+                    "maxElements": 64, 
+                    "minElements": 1, 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "address"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Service Node Group", 
+            "details": "Name", 
+            "key": "service-node-group", 
+            "maxElements": 32, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name", 
+                    "details": "List of services", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Appnav Controller Group", 
+                    "details": "Appnav controller group", 
+                    "key": "appnav-controller-group", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Service Node Group", 
+                    "details": "Service node group", 
+                    "key": "service-node-group", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Service Node Group", 
+                    "details": "Service node group", 
+                    "key": "service-node-groups", 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Enable", 
+                    "details": "enable service context", 
+                    "key": "enable", 
+                    "objectType": "node-only", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 65530, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Vpn", 
+                    "details": "Vpn", 
+                    "key": "vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "service-context"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Service Context", 
+            "details": "Service Context", 
+            "key": "appqoe", 
+            "maxElements": 1, 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }
+    ], 
+    "name": "appqoe", 
+    "nameSpace": "http://viptela.com/service-insertion", 
+    "xmlPath": [], 
+    "xmlRootTag": "service-insertion"
+}

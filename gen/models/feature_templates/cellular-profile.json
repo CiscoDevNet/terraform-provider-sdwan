@@ -1,0 +1,250 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Interface Name", 
+            "details": "Set interface name", 
+            "key": "if-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "max": 16, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Profile ID", 
+            "details": "Set Profile ID", 
+            "key": "profile-id", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Access Point Name", 
+            "details": "Set access point name", 
+            "key": "apn", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "default": "None", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "None", 
+                        "value": "None"
+                    }, 
+                    {
+                        "key": "PAP", 
+                        "value": "PAP"
+                    }, 
+                    {
+                        "key": "CHAP", 
+                        "value": "CHAP"
+                    }, 
+                    {
+                        "key": "PAP/CHAP", 
+                        "value": "PAP/CHAP"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Authentication", 
+            "details": "Set authentication type", 
+            "key": "auth", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IP Address", 
+            "details": "Set IP address", 
+            "key": "ip-addr", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "maxLength": 14, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Profile Name", 
+            "details": "Set profile name", 
+            "key": "name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "ipv4", 
+                        "value": "ipv4"
+                    }, 
+                    {
+                        "key": "ipv6", 
+                        "value": "IPv6"
+                    }, 
+                    {
+                        "key": "ipv46", 
+                        "value": "IPv46"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Packet Data Network Type", 
+            "details": "Set packet data network type", 
+            "key": "pdn-type", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "maxLength": 129, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Profile Username", 
+            "details": "Set the profile username", 
+            "key": "user-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "restrictedPassphrase"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Profile Password", 
+            "details": "Set the profile password", 
+            "key": "user-pass", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Primary DNS Address", 
+            "details": "Set the address of the primary DNS server", 
+            "key": "primary-dns", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "profile"
+            ], 
+            "dataType": {
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Secondary DNS Address", 
+            "details": "Set the address of the secondary DNS server", 
+            "key": "secondary-dns", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "Cellular Profile", 
+    "nameSpace": "http://viptela.com/wwan", 
+    "uniqueKey": "if-name", 
+    "xmlPath": [
+        "cellular"
+    ], 
+    "xmlRootTag": "cellular-instance"
+}

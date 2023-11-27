@@ -1,0 +1,78 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Path to Archive File Directory", 
+            "details": "Set the path to the archive file directory (ftp://file-path, scp://user@host:file-path, /)", 
+            "key": "path", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 10080, 
+                "max": 525600, 
+                "min": 5, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Archival Interval (minutes)", 
+            "details": "Set how often to archive full running configuration", 
+            "key": "interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "SSH Key File", 
+            "details": "Set name of SSH private key file on local device", 
+            "key": "ssh-id-file", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 65530, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "VPN ID", 
+            "details": "Set VPN in which archiver server is located", 
+            "key": "vpn", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "Archive", 
+    "nameSpace": "http://viptela.com/system", 
+    "xmlPath": [
+        "system"
+    ], 
+    "xmlRootTag": "archive"
+}

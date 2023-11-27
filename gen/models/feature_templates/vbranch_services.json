@@ -1,0 +1,595 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Service Name", 
+                    "details": "Name of the VM to be deployed", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name of the Image", 
+                    "details": "Name of the Image to be used for VM deployment", 
+                    "key": "image", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Flavor of the VM", 
+                    "details": "Flavor of the VM to be deployed", 
+                    "key": "flavor", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name of the deployed VM", 
+                    "details": "Name of the deployed VM", 
+                    "key": "vim_vm_name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "-1", 
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name of the deployed VM", 
+                    "details": "Name of the deployed VM", 
+                    "key": "bootup_time", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "5", 
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name of the deployed VM", 
+                    "details": "Name of the deployed VM", 
+                    "key": "recovery_wait_time", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "zone_host", 
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Type of placement", 
+                    "details": "Type of the placement of the vm_group", 
+                    "key": "type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "datastore1", 
+                        "type": "enumTextList", 
+                        "values": [
+                            {
+                                "key": "datastore1", 
+                                "value": "Datastore 1(Internal)"
+                            }, 
+                            {
+                                "key": "datastore2", 
+                                "value": "Datastore 2(External)"
+                            }, 
+                            {
+                                "key": "datastore3", 
+                                "value": "Datastore 3(External)"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Datastore of the placement", 
+                    "details": "Datastore where the vm_group placement", 
+                    "key": "host", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 32, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "NIC ID", 
+                            "details": "ID of the NIC Interface", 
+                            "key": "nicid", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "default": "virtio", 
+                                "maxLength": 32, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Model of virtual Nic", 
+                            "details": "Model of the virtual Nic", 
+                            "key": "model", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 128, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Virtual Network Name", 
+                            "details": "Name of the virtual network to be assigned to the nic", 
+                            "key": "network", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Interface of the VM", 
+                    "details": "Interface ID and network name", 
+                    "key": "interface", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "nicid"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Destination for Day zero config file", 
+                    "details": "Destination for Day zero config file", 
+                    "key": "dst", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Day zero config file", 
+                    "details": "Day zero config file", 
+                    "key": "data", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 256, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Name of the property", 
+                            "details": "Name of the property", 
+                            "key": "name", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 256, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Custom VNF Property", 
+                            "details": "Custom VNF Property Value", 
+                            "key": "val", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "type": "string"
+                            }, 
+                            "defaultOption": "ignore", 
+                            "description": "Custom VNF Property", 
+                            "details": "Custom VNF Property Value for Password", 
+                            "key": "encrypted_val", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant", 
+                                "variable", 
+                                "ignore"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "variable of name and val pair from image properties", 
+                    "details": "Contains config variables from image properties", 
+                    "key": "variable", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "name"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "deployments"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Deployment", 
+            "details": "Deployment", 
+            "key": "deployment", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 256, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Id of the image", 
+                    "details": "Id of the image", 
+                    "key": "imageId", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name of the image", 
+                    "details": "Name of the image", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 256, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source of the image", 
+                    "details": "Source of the image to be downloaded from", 
+                    "key": "src", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 256, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Image", 
+                    "details": "uuid of the image", 
+                    "key": "imageUuid", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 256, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Checksum of the file", 
+                    "details": "Checksum of the file", 
+                    "key": "checksum", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "children": [
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 256, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Id of the scaffold file", 
+                            "details": "Id of the scaffold file", 
+                            "key": "imageId", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 256, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Source filename of the scaffold file", 
+                            "details": "Source filename of the scaffold file", 
+                            "key": "src", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }, 
+                        {
+                            "dataPath": [], 
+                            "dataType": {
+                                "maxLength": 256, 
+                                "minLength": 1, 
+                                "type": "string"
+                            }, 
+                            "defaultOption": "constant", 
+                            "description": "Checksum of the scaffold file", 
+                            "details": "Checksum of the scaffold file", 
+                            "key": "checksum", 
+                            "objectType": "object", 
+                            "optionType": [
+                                "constant"
+                            ]
+                        }
+                    ], 
+                    "dataPath": [], 
+                    "defaultOption": "constant", 
+                    "description": "Image metadata", 
+                    "details": "Image metadata (scaffold)", 
+                    "key": "metadata", 
+                    "objectType": "tree", 
+                    "optionType": [
+                        "constant"
+                    ], 
+                    "primaryKeys": [
+                        "imageId"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "images"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Image", 
+            "details": "Image properties", 
+            "key": "image", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "imageId"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Name of the flavor", 
+                    "details": "Name of the flavor", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "Flavor of the Service Deployment", 
+                        "maxLength": 128, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Description of the flavor", 
+                    "details": "Description of the flavor", 
+                    "key": "description", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Virtual cores", 
+                    "details": "Number of virtual cores for the Flavor", 
+                    "key": "vcpus", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Memory", 
+                    "details": "Memory in MB for the Flavor", 
+                    "key": "memory_mb", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Root disk size", 
+                    "details": "Root disk size in MB", 
+                    "key": "root_disk_mb", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "flavors"
+            ], 
+            "defaultOption": "constant", 
+            "description": "Flavor of the deployment", 
+            "details": "Specs of the deployment", 
+            "key": "flavor", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }
+    ], 
+    "name": "vbranch_services", 
+    "nameSpace": "http://www.cisco.com/nfvis/vm_lifecycle", 
+    "xmlPath": [], 
+    "xmlRootTag": "vm_lifecycle"
+}

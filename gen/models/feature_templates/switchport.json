@@ -1,0 +1,744 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 0, 
+                "max": 31, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Slot", 
+            "details": "Number of Slots", 
+            "key": "slot", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 0, 
+                "max": 31, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Sub-Slot", 
+            "details": "Number of Sub-Slots", 
+            "key": "subslot", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "4", 
+                        "value": "4 Port"
+                    }, 
+                    {
+                        "key": "8", 
+                        "value": "8 Port"
+                    }, 
+                    {
+                        "key": "22", 
+                        "value": "22 Port"
+                    }, 
+                    {
+                        "key": "50", 
+                        "value": "50 Port"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Module", 
+            "details": "Module type", 
+            "key": "module", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 32, 
+                        "min": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interface Name", 
+                    "details": "Set Interface name", 
+                    "key": "if-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "switchport"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "access", 
+                                "value": "access"
+                            }, 
+                            {
+                                "key": "trunk", 
+                                "value": "trunk"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Switch port type", 
+                    "details": "Set type of switch port: access/trunk", 
+                    "key": "mode", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Shutdown", 
+                    "details": "Administrative state", 
+                    "key": "shutdown", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "10", 
+                                "value": "10"
+                            }, 
+                            {
+                                "key": "100", 
+                                "value": "100"
+                            }, 
+                            {
+                                "key": "1000", 
+                                "value": "1000"
+                            }, 
+                            {
+                                "key": "2500", 
+                                "value": "2500"
+                            }, 
+                            {
+                                "key": "10000", 
+                                "value": "10000"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Speed", 
+                    "details": "Set interface speed", 
+                    "key": "speed", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "full", 
+                                "value": "full"
+                            }, 
+                            {
+                                "key": "half", 
+                                "value": "half"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Duplex", 
+                    "details": "Duplex mode", 
+                    "key": "duplex", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "switchport", 
+                        "access", 
+                        "vlan"
+                    ], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "VLAN ID", 
+                    "details": "Set VLAN identifier associated with bridging domain", 
+                    "key": "vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "switchport", 
+                        "trunk", 
+                        "allowed", 
+                        "vlan"
+                    ], 
+                    "dataType": {
+                        "range": "1-4094", 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Allowed VLANS", 
+                    "details": "Configure VLAN IDs used with the trunk", 
+                    "key": "vlans", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "switchport", 
+                        "trunk", 
+                        "native"
+                    ], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Native VLAN ID", 
+                    "details": "Configure VLAN ID used for native VLAN", 
+                    "key": "vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x"
+                    ], 
+                    "dataType": {
+                        "default": "true", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "dot1x on off", 
+                    "details": "Set 802.1x on off", 
+                    "key": "dot1x-enable", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x"
+                    ], 
+                    "dataType": {
+                        "default": "auto", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "auto", 
+                                "value": "auto"
+                            }, 
+                            {
+                                "key": "force-unauthorized", 
+                                "value": "force-unauthorized"
+                            }, 
+                            {
+                                "key": "force-authorized", 
+                                "value": "force-authorized"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Port Control Mode", 
+                    "details": "Set Port-Control Mode", 
+                    "key": "port-control", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x"
+                    ], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "dot1x", 
+                                "value": "dot1x"
+                            }, 
+                            {
+                                "key": "mab", 
+                                "value": "MAB"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Authentication Order", 
+                    "details": "Specify authentication methods in the order of preference", 
+                    "key": "auth-order", 
+                    "maxElements": 2, 
+                    "objectType": "list", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x"
+                    ], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Voice VLAN ID", 
+                    "details": "Configure Voice Vlan", 
+                    "key": "voice-vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x"
+                    ], 
+                    "dataType": {
+                        "default": "true", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Interface PAE Type", 
+                    "details": "Set 802.1x Interface Pae Type", 
+                    "key": "pae-enable", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "label": {
+                            "off": "No", 
+                            "on": "Yes"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "MAC Authentication Bypass", 
+                    "details": "MAC Authentication Bypass", 
+                    "key": "mac-authentication-bypass", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication"
+                    ], 
+                    "dataType": {
+                        "default": "single-host", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "single-host", 
+                                "value": "Single Host"
+                            }, 
+                            {
+                                "key": "multi-auth", 
+                                "value": "Multi Auth"
+                            }, 
+                            {
+                                "key": "multi-host", 
+                                "value": "Multi Host"
+                            }, 
+                            {
+                                "key": "multi-domain", 
+                                "value": "Multi Domain"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Host Mode", 
+                    "details": "Set host mode", 
+                    "key": "host-mode", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Periodic Reauthentication", 
+                    "details": "Enable Periodic Reauthentication", 
+                    "key": "enable-periodic-reauth", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication", 
+                        "periodic-reauthentication"
+                    ], 
+                    "dataType": {
+                        "default": 60, 
+                        "max": 1440, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Periodic Reauthentication Inactivity Timeout (seconds)", 
+                    "details": "Periodic Reauthentication Inactivity Timeout (in seconds)", 
+                    "key": "inactivity", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication", 
+                        "periodic-reauthentication"
+                    ], 
+                    "dataType": {
+                        "default": 0, 
+                        "max": 1440, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Periodic Reauthentication Interval (seconds)", 
+                    "details": "Periodic Reauthentication Interval (in seconds)", 
+                    "key": "reauthentication", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication"
+                    ], 
+                    "dataType": {
+                        "default": "both", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "both", 
+                                "value": "both"
+                            }, 
+                            {
+                                "key": "in", 
+                                "value": "in"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "notIgnore", 
+                    "description": "Control Direction", 
+                    "details": "Set uni or bi directional authorization mode", 
+                    "key": "control-direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "notIgnore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication", 
+                        "event"
+                    ], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Restricted VLAN", 
+                    "details": "Set Restricted VLAN ID", 
+                    "key": "restricted-vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication", 
+                        "event"
+                    ], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Guest VLAN", 
+                    "details": "Set vlan to drop non-802.1x enabled clients into if client is not in MAB list", 
+                    "key": "guest-vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication", 
+                        "event"
+                    ], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Critical VLAN", 
+                    "details": "Set Critical VLAN", 
+                    "key": "critical-vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "dot1x", 
+                        "authentication", 
+                        "event"
+                    ], 
+                    "dataType": {
+                        "default": "false", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Critical Voice VLAN", 
+                    "details": "Enable Critical Voice VLAN", 
+                    "key": "enable-voice", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Interface name", 
+            "details": "Interface name: GigabitEthernet0/<>/<> when present", 
+            "key": "interface", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "if-name"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": 300, 
+                "max": 1000000, 
+                "min": 0, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Age-Out Time (seconds)", 
+            "details": "Set when a MAC table entry ages out (0 to disable, 10-1000000 otherwise)", 
+            "key": "age-time", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "mac"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "MAC Address", 
+                    "details": "Set MAC address in xxxx.xxxx.xxxx format", 
+                    "key": "macaddr", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Switch Port Interface Name", 
+                    "details": "Interface name: GigabitEthernet0/<>/<>", 
+                    "key": "if-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "variable", 
+                    "description": "VLAN ID", 
+                    "details": "Configure VLAN ID used with the mac and interface", 
+                    "key": "vlan", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "constant", 
+            "description": "Static MAC Address", 
+            "details": "Add static MAC address entries for interface", 
+            "key": "static-mac-address", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "macaddr", 
+                "vlan"
+            ]
+        }
+    ], 
+    "name": "switchport", 
+    "nameSpace": "http://viptela.com/bridge", 
+    "xmlPath": [], 
+    "xmlRootTag": "switchport"
+}

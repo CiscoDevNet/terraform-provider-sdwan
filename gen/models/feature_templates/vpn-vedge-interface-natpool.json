@@ -1,0 +1,643 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "max": 31, 
+                "maxLength": 9, 
+                "min": 1, 
+                "minLength": 8, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Interface Name (1..31)", 
+            "details": "Interface name: natpool-<1..31> when present", 
+            "key": "if-name", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "true", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Shutdown", 
+            "details": "Administrative state", 
+            "key": "shutdown", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 128, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Description", 
+            "details": "Interface description", 
+            "key": "description", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "ip"
+            ], 
+            "dataType": {
+                "type": "ipv4-prefix"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "IPv4 Address", 
+            "details": "Assign IPv4 address", 
+            "key": "address", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "false", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "NAT", 
+            "details": "Network Address Translation on this interface", 
+            "key": "nat", 
+            "objectType": "node-only", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Block ICMP", 
+            "details": "Block inbound ICMP error messages", 
+            "key": "block-icmp-error", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": "outbound", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "outbound", 
+                        "value": "outbound"
+                    }, 
+                    {
+                        "key": "bi-directional", 
+                        "value": "bi-directional"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Refresh Mode", 
+            "details": "Set NAT refresh mode", 
+            "key": "refresh", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": 1, 
+                "max": 65536, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "UDP Timeout", 
+            "details": "Set NAT UDP session timeout, in minutes", 
+            "key": "udp-timeout", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": 60, 
+                "max": 65536, 
+                "min": 1, 
+                "type": "number"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "TCP Timeout", 
+            "details": "Set NAT TCP session timeout, in minutes", 
+            "key": "tcp-timeout", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": "inside", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "inside", 
+                        "value": "inside"
+                    }, 
+                    {
+                        "key": "outside", 
+                        "value": "outside"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Direction", 
+            "details": "Direction of NAT translation", 
+            "key": "direction", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "nat"
+            ], 
+            "dataType": {
+                "default": "true", 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Overload", 
+            "details": "Enable port translation(PAT)", 
+            "key": "overload", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Port Start Range", 
+                    "details": "Starting port of port range", 
+                    "key": "port-start", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Port End Range", 
+                    "details": "Ending port of port range", 
+                    "key": "port-end", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "tcp", 
+                                "value": "tcp"
+                            }, 
+                            {
+                                "key": "udp", 
+                                "value": "udp"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Protocol", 
+                    "details": "Layer 4 protocol to apply port forwarding to", 
+                    "key": "proto", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 65535, 
+                        "min": 0, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VPN", 
+                    "details": "VPN in which private IP Address resides", 
+                    "key": "private-vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Private IP", 
+                    "details": "Private IP address to translate to", 
+                    "key": "private-ip-address", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Port-Forwarding Rules", 
+            "details": "Set port-forwarding rules for NAT on this interface", 
+            "key": "port-forward", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "port-start", 
+                "port-end", 
+                "proto"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Source IP", 
+                    "details": "Source IP address to be translated", 
+                    "key": "source-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Translate IP", 
+                    "details": "Statically translated source IP address", 
+                    "key": "translate-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "inside", 
+                                "value": "inside"
+                            }, 
+                            {
+                                "key": "outside", 
+                                "value": "outside"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Static NAT Direction", 
+                    "details": "Direction of static NAT translation", 
+                    "key": "static-nat-direction", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "Static NAT", 
+            "details": "Configure static NAT entries", 
+            "key": "static", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "source-ip", 
+                "translate-ip"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "enumList", 
+                        "values": [
+                            {
+                                "key": "ge0/0", 
+                                "value": "ge0/0"
+                            }, 
+                            {
+                                "key": "ge0/1", 
+                                "value": "ge0/1"
+                            }, 
+                            {
+                                "key": "ge0/2", 
+                                "value": "ge0/2"
+                            }, 
+                            {
+                                "key": "ge0/3", 
+                                "value": "ge0/3"
+                            }, 
+                            {
+                                "key": "ge0/4", 
+                                "value": "ge0/4"
+                            }, 
+                            {
+                                "key": "ge0/5", 
+                                "value": "ge0/5"
+                            }, 
+                            {
+                                "key": "ge0/6", 
+                                "value": "ge0/6"
+                            }, 
+                            {
+                                "key": "ge0/7", 
+                                "value": "ge0/7"
+                            }, 
+                            {
+                                "key": "ge0/8", 
+                                "value": "ge0/8"
+                            }, 
+                            {
+                                "key": "ge0/9", 
+                                "value": "ge0/9"
+                            }, 
+                            {
+                                "key": "ge0/10", 
+                                "value": "ge0/10"
+                            }, 
+                            {
+                                "key": "ge1/0", 
+                                "value": "ge1/0"
+                            }, 
+                            {
+                                "key": "ge1/1", 
+                                "value": "ge1/1"
+                            }, 
+                            {
+                                "key": "ge1/2", 
+                                "value": "ge1/2"
+                            }, 
+                            {
+                                "key": "ge1/3", 
+                                "value": "ge1/3"
+                            }, 
+                            {
+                                "key": "ge1/4", 
+                                "value": "ge1/4"
+                            }, 
+                            {
+                                "key": "ge1/5", 
+                                "value": "ge1/5"
+                            }, 
+                            {
+                                "key": "ge1/6", 
+                                "value": "ge1/6"
+                            }, 
+                            {
+                                "key": "ge1/7", 
+                                "value": "ge1/7"
+                            }, 
+                            {
+                                "key": "ge1/8", 
+                                "value": "ge1/8"
+                            }, 
+                            {
+                                "key": "ge1/9", 
+                                "value": "ge1/9"
+                            }, 
+                            {
+                                "key": "ge1/10", 
+                                "value": "ge1/10"
+                            }, 
+                            {
+                                "key": "ge2/0", 
+                                "value": "ge2/0"
+                            }, 
+                            {
+                                "key": "ge2/1", 
+                                "value": "ge2/1"
+                            }, 
+                            {
+                                "key": "ge2/2", 
+                                "value": "ge2/2"
+                            }, 
+                            {
+                                "key": "ge2/3", 
+                                "value": "ge2/3"
+                            }, 
+                            {
+                                "key": "ge2/4", 
+                                "value": "ge2/4"
+                            }, 
+                            {
+                                "key": "ge2/5", 
+                                "value": "ge2/5"
+                            }, 
+                            {
+                                "key": "ge2/6", 
+                                "value": "ge2/6"
+                            }, 
+                            {
+                                "key": "ge2/7", 
+                                "value": "ge2/7"
+                            }, 
+                            {
+                                "key": "ge2/8", 
+                                "value": "ge2/8"
+                            }, 
+                            {
+                                "key": "ge2/9", 
+                                "value": "ge2/9"
+                            }, 
+                            {
+                                "key": "ge2/10", 
+                                "value": "ge2/10"
+                            }, 
+                            {
+                                "key": "ge3/0", 
+                                "value": "ge3/0"
+                            }, 
+                            {
+                                "key": "ge3/1", 
+                                "value": "ge3/1"
+                            }, 
+                            {
+                                "key": "ge3/2", 
+                                "value": "ge3/2"
+                            }, 
+                            {
+                                "key": "ge3/3", 
+                                "value": "ge3/3"
+                            }, 
+                            {
+                                "key": "ge3/4", 
+                                "value": "ge3/4"
+                            }, 
+                            {
+                                "key": "ge3/5", 
+                                "value": "ge3/5"
+                            }, 
+                            {
+                                "key": "ge3/6", 
+                                "value": "ge3/6"
+                            }, 
+                            {
+                                "key": "ge3/7", 
+                                "value": "ge3/7"
+                            }, 
+                            {
+                                "key": "ge3/8", 
+                                "value": "ge3/8"
+                            }, 
+                            {
+                                "key": "ge3/9", 
+                                "value": "ge3/9"
+                            }, 
+                            {
+                                "key": "ge3/10", 
+                                "value": "ge3/10"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Interfaces", 
+                    "details": "Interface to track", 
+                    "key": "interface", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }
+            ], 
+            "dataPath": [
+                "nat"
+            ], 
+            "defaultOption": "ignore", 
+            "description": "NAT Tracker", 
+            "details": "Track the reachability of pre-NAT IP", 
+            "key": "tracker", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "interface"
+            ]
+        }
+    ], 
+    "name": "Natpool Interface", 
+    "nameSpace": "http://viptela.com/vpn", 
+    "parentPath": "</vpn-instance>", 
+    "uniqueKey": "if-name", 
+    "xmlPath": [], 
+    "xmlRootTag": "interface"
+}

@@ -1,0 +1,841 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "radio"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "2.4GHz Shutdown", 
+            "details": "2.4GHz Shutdown", 
+            "key": "shutdown-2.4ghz", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "radio"
+            ], 
+            "dataType": {
+                "default": "false", 
+                "label": {
+                    "off": "No", 
+                    "on": "Yes"
+                }, 
+                "type": "boolean"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "5GHz Shutdown", 
+            "details": "5GHz Shutdown", 
+            "key": "shutdown-5ghz", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 64, 
+                        "minLength": 1, 
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Wireless Network Name (SSID)", 
+                    "details": "Configure wlan SSID", 
+                    "key": "name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "label": {
+                            "off": "Disabled", 
+                            "on": "Enabled"
+                        }, 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Admin State", 
+                    "details": "Set admin state", 
+                    "key": "admin-state", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "true", 
+                        "type": "boolean"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Broadcast SSID", 
+                    "details": "Enable broadcast SSID", 
+                    "key": "broadcast-ssid", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "max": 4094, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "VLAN (Range 1-4094)", 
+                    "details": "Set VLAN ID", 
+                    "key": "vlan-id", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "all", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "2.4GHz", 
+                                "value": "24ghz"
+                            }, 
+                            {
+                                "label": "5GHz", 
+                                "value": "5ghz"
+                            }, 
+                            {
+                                "label": "All", 
+                                "value": "all"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Radio Type", 
+                    "details": "Select radio type", 
+                    "key": "radio-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "personal", 
+                        "type": "radioButtonList", 
+                        "values": [
+                            {
+                                "label": "WPA2 Enterprise", 
+                                "value": "enterprise"
+                            }, 
+                            {
+                                "label": "WPA2 Personal", 
+                                "value": "personal"
+                            }, 
+                            {
+                                "label": "Open", 
+                                "value": "open"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Security Type", 
+                    "details": "Select security type", 
+                    "key": "security-type", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "ipv4"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "RADIUS Server IP", 
+                    "details": "Set RADIUS server IP", 
+                    "key": "radius-server-ip", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": 1812, 
+                        "max": 65535, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Authentication Port", 
+                    "details": "Set RADIUS server authentication port", 
+                    "key": "radius-server-port", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 32, 
+                        "minLength": 1, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Shared Secret", 
+                    "details": "Set RADIUS server shared secret", 
+                    "key": "radius-server-secret", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "maxLength": 63, 
+                        "minLength": 8, 
+                        "type": "restrictedPassphrase"
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "Passphrase", 
+                    "details": "Set passphrase", 
+                    "key": "passphrase", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }, 
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "default": "silver", 
+                        "type": "enum", 
+                        "values": [
+                            {
+                                "key": "platinum", 
+                                "value": "Platinum (Voice)"
+                            }, 
+                            {
+                                "key": "gold", 
+                                "value": "Gold (Video)"
+                            }, 
+                            {
+                                "key": "silver", 
+                                "value": "Silver (Best Effort)"
+                            }, 
+                            {
+                                "key": "bronze", 
+                                "value": "Bronze (Background)"
+                            }
+                        ]
+                    }, 
+                    "defaultOption": "ignore", 
+                    "description": "QoS Profile", 
+                    "details": "Select QoS profile", 
+                    "key": "qos-profile", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable", 
+                        "ignore"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Wi-Fi SSID", 
+            "details": "Configure Wi-Fi SSID", 
+            "key": "ssid", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "name"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "AE", 
+                        "value": "United Arab Emirates"
+                    }, 
+                    {
+                        "key": "AR", 
+                        "value": "Argentina"
+                    }, 
+                    {
+                        "key": "AT", 
+                        "value": "Austria"
+                    }, 
+                    {
+                        "key": "AU", 
+                        "value": "Australia"
+                    }, 
+                    {
+                        "key": "BA", 
+                        "value": "Bosnia"
+                    }, 
+                    {
+                        "key": "BB", 
+                        "value": "Barbados"
+                    }, 
+                    {
+                        "key": "BE", 
+                        "value": "Belgium"
+                    }, 
+                    {
+                        "key": "BG", 
+                        "value": "Bulgaria"
+                    }, 
+                    {
+                        "key": "BH", 
+                        "value": "Bahrain"
+                    }, 
+                    {
+                        "key": "BN", 
+                        "value": "Brunei"
+                    }, 
+                    {
+                        "key": "BO", 
+                        "value": "Bolivia"
+                    }, 
+                    {
+                        "key": "BR", 
+                        "value": "Brazil"
+                    }, 
+                    {
+                        "key": "BY", 
+                        "value": "Belarus"
+                    }, 
+                    {
+                        "key": "CA", 
+                        "value": "Canada"
+                    }, 
+                    {
+                        "key": "CA2", 
+                        "value": "Canada (DCA excludes UNII-2)"
+                    }, 
+                    {
+                        "key": "CH", 
+                        "value": "Switzerland"
+                    }, 
+                    {
+                        "key": "CL", 
+                        "value": "Chile"
+                    }, 
+                    {
+                        "key": "CM", 
+                        "value": "Cameroon"
+                    }, 
+                    {
+                        "key": "CN", 
+                        "value": "China"
+                    }, 
+                    {
+                        "key": "CO", 
+                        "value": "Colombia"
+                    }, 
+                    {
+                        "key": "CR", 
+                        "value": "Costa Rica"
+                    }, 
+                    {
+                        "key": "CY", 
+                        "value": "Cyprus"
+                    }, 
+                    {
+                        "key": "CZ", 
+                        "value": "Czech Republic"
+                    }, 
+                    {
+                        "key": "DE", 
+                        "value": "Germany"
+                    }, 
+                    {
+                        "key": "DK", 
+                        "value": "Denmark"
+                    }, 
+                    {
+                        "key": "DO", 
+                        "value": "Dominican Republic"
+                    }, 
+                    {
+                        "key": "DZ", 
+                        "value": "Algeria"
+                    }, 
+                    {
+                        "key": "EC", 
+                        "value": "Ecuador"
+                    }, 
+                    {
+                        "key": "EE", 
+                        "value": "Estonia"
+                    }, 
+                    {
+                        "key": "EG", 
+                        "value": "Egypt"
+                    }, 
+                    {
+                        "key": "ES", 
+                        "value": "Spain"
+                    }, 
+                    {
+                        "key": "FI", 
+                        "value": "Finland"
+                    }, 
+                    {
+                        "key": "FJ", 
+                        "value": "Fiji"
+                    }, 
+                    {
+                        "key": "FR", 
+                        "value": "France"
+                    }, 
+                    {
+                        "key": "GB", 
+                        "value": "United Kingdom"
+                    }, 
+                    {
+                        "key": "GH", 
+                        "value": "Ghana"
+                    }, 
+                    {
+                        "key": "GI", 
+                        "value": "Gibraltar"
+                    }, 
+                    {
+                        "key": "GR", 
+                        "value": "Greece"
+                    }, 
+                    {
+                        "key": "HK", 
+                        "value": "Hong Kong"
+                    }, 
+                    {
+                        "key": "HR", 
+                        "value": "Croatia"
+                    }, 
+                    {
+                        "key": "HU", 
+                        "value": "Hungary"
+                    }, 
+                    {
+                        "key": "ID", 
+                        "value": "Indonesia"
+                    }, 
+                    {
+                        "key": "IE", 
+                        "value": "Ireland"
+                    }, 
+                    {
+                        "key": "IL", 
+                        "value": "Israel"
+                    }, 
+                    {
+                        "key": "IO", 
+                        "value": "Israel (Outdoor)"
+                    }, 
+                    {
+                        "key": "IN", 
+                        "value": "India"
+                    }, 
+                    {
+                        "key": "IQ", 
+                        "value": "Iraq"
+                    }, 
+                    {
+                        "key": "IS", 
+                        "value": "Iceland"
+                    }, 
+                    {
+                        "key": "IT", 
+                        "value": "Italy"
+                    }, 
+                    {
+                        "key": "J2", 
+                        "value": "Japan 2(P)"
+                    }, 
+                    {
+                        "key": "J4", 
+                        "value": "Japan 4(Q)"
+                    }, 
+                    {
+                        "key": "JM", 
+                        "value": "Jamaica"
+                    }, 
+                    {
+                        "key": "JO", 
+                        "value": "Jordan"
+                    }, 
+                    {
+                        "key": "KE", 
+                        "value": "Kenya"
+                    }, 
+                    {
+                        "key": "KN", 
+                        "value": "Kenya"
+                    }, 
+                    {
+                        "key": "KW", 
+                        "value": "Kuwait"
+                    }, 
+                    {
+                        "key": "KZ", 
+                        "value": "Kazakhstan"
+                    }, 
+                    {
+                        "key": "LB", 
+                        "value": "Lebanon"
+                    }, 
+                    {
+                        "key": "LI", 
+                        "value": "Liechtenstein"
+                    }, 
+                    {
+                        "key": "LK", 
+                        "value": "Sri Lanka"
+                    }, 
+                    {
+                        "key": "LT", 
+                        "value": "Lithuania"
+                    }, 
+                    {
+                        "key": "LU", 
+                        "value": "Luxembourg"
+                    }, 
+                    {
+                        "key": "LV", 
+                        "value": "Latvia"
+                    }, 
+                    {
+                        "key": "LY", 
+                        "value": "Libya"
+                    }, 
+                    {
+                        "key": "MA", 
+                        "value": "Morocco"
+                    }, 
+                    {
+                        "key": "MC", 
+                        "value": "Monaco"
+                    }, 
+                    {
+                        "key": "ME", 
+                        "value": "Montenegro"
+                    }, 
+                    {
+                        "key": "MK", 
+                        "value": "Macedonia"
+                    }, 
+                    {
+                        "key": "MN", 
+                        "value": "Mongolia"
+                    }, 
+                    {
+                        "key": "MO", 
+                        "value": "Macao"
+                    }, 
+                    {
+                        "key": "MT", 
+                        "value": "Malta"
+                    }, 
+                    {
+                        "key": "MX", 
+                        "value": "Mexico"
+                    }, 
+                    {
+                        "key": "MY", 
+                        "value": "Malaysia"
+                    }, 
+                    {
+                        "key": "NL", 
+                        "value": "Netherlands"
+                    }, 
+                    {
+                        "key": "NO", 
+                        "value": "Norway"
+                    }, 
+                    {
+                        "key": "NZ", 
+                        "value": "New Zealand"
+                    }, 
+                    {
+                        "key": "OM", 
+                        "value": "Oman"
+                    }, 
+                    {
+                        "key": "PA", 
+                        "value": "Panama"
+                    }, 
+                    {
+                        "key": "PE", 
+                        "value": "Peru"
+                    }, 
+                    {
+                        "key": "PH", 
+                        "value": "Philippines"
+                    }, 
+                    {
+                        "key": "PH2", 
+                        "value": "Philippines (DCA excludes UNII-2)"
+                    }, 
+                    {
+                        "key": "PK", 
+                        "value": "Pakistan"
+                    }, 
+                    {
+                        "key": "PL", 
+                        "value": "Poland"
+                    }, 
+                    {
+                        "key": "PR", 
+                        "value": "Puerto Rico"
+                    }, 
+                    {
+                        "key": "PT", 
+                        "value": "Portugal"
+                    }, 
+                    {
+                        "key": "PY", 
+                        "value": "Paraguay"
+                    }, 
+                    {
+                        "key": "QA", 
+                        "value": "Qatar"
+                    }, 
+                    {
+                        "key": "RO", 
+                        "value": "Romania"
+                    }, 
+                    {
+                        "key": "RS", 
+                        "value": "Serbia"
+                    }, 
+                    {
+                        "key": "RU", 
+                        "value": "Russian Federation"
+                    }, 
+                    {
+                        "key": "SA", 
+                        "value": "Saudi Arabia"
+                    }, 
+                    {
+                        "key": "SE", 
+                        "value": "Sweden"
+                    }, 
+                    {
+                        "key": "SG", 
+                        "value": "Singapore"
+                    }, 
+                    {
+                        "key": "SI", 
+                        "value": "Slovenia"
+                    }, 
+                    {
+                        "key": "SK", 
+                        "value": "Slovak Republic"
+                    }, 
+                    {
+                        "key": "TH", 
+                        "value": "Thailand"
+                    }, 
+                    {
+                        "key": "TN", 
+                        "value": "Tunisia"
+                    }, 
+                    {
+                        "key": "TR", 
+                        "value": "Turkey"
+                    }, 
+                    {
+                        "key": "TW", 
+                        "value": "Taiwan"
+                    }, 
+                    {
+                        "key": "UA", 
+                        "value": "Ukraine"
+                    }, 
+                    {
+                        "key": "US", 
+                        "value": "United States"
+                    }, 
+                    {
+                        "key": "UY", 
+                        "value": "Uruguay"
+                    }, 
+                    {
+                        "key": "VE", 
+                        "value": "Venezuela"
+                    }, 
+                    {
+                        "key": "VN", 
+                        "value": "Viet Nam"
+                    }, 
+                    {
+                        "key": "ZA", 
+                        "value": "South Africa"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Country", 
+            "details": "Select country", 
+            "key": "country", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "mgmt"
+            ], 
+            "dataType": {
+                "maxLength": 32, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Username", 
+            "details": "Set management username", 
+            "key": "username", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "mgmt"
+            ], 
+            "dataType": {
+                "maxLength": 64, 
+                "minLength": 8, 
+                "type": "restrictedPassphrase"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Password", 
+            "details": "Set management password", 
+            "key": "password", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "mgmt"
+            ], 
+            "dataType": {
+                "default": "0.0.0.0", 
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Controller IP Address", 
+            "details": "Set mobile express controller address", 
+            "key": "address", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "mgmt"
+            ], 
+            "dataType": {
+                "default": "0.0.0.0", 
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Subnet Mask", 
+            "details": "Set mobile express controller subnet mask", 
+            "key": "netmask", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "mgmt"
+            ], 
+            "dataType": {
+                "default": "0.0.0.0", 
+                "type": "ipv4"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Default Gateway", 
+            "details": "Set mobile express default gateway", 
+            "key": "default-gateway", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "cisco_wireless_lan", 
+    "nameSpace": "http://viptela.com/wireless-lan", 
+    "xmlPath": [], 
+    "xmlRootTag": "wireless-lan"
+}

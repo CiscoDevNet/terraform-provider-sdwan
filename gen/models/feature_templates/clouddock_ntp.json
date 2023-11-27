@@ -1,0 +1,100 @@
+{
+    "fields": [
+        {
+            "dataPath": [
+                "time", 
+                "ntp"
+            ], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Backup server", 
+            "details": "Backup this NTP server", 
+            "key": "backup_server", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "time", 
+                "ntp"
+            ], 
+            "dataType": {
+                "default": "ipv4", 
+                "type": "radioButtonList", 
+                "values": [
+                    {
+                        "label": "IP", 
+                        "value": "ipv4"
+                    }, 
+                    {
+                        "label": "Hostname", 
+                        "value": "domain-name"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Backup server type", 
+            "details": "Backup server type", 
+            "key": "backup_server_type", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "time", 
+                "ntp"
+            ], 
+            "dataType": {
+                "type": "string"
+            }, 
+            "defaultOption": "constant", 
+            "description": "Preferred server", 
+            "details": "Prefer this NTP server", 
+            "key": "preferred_server", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [
+                "time", 
+                "ntp"
+            ], 
+            "dataType": {
+                "default": "ipv4", 
+                "type": "radioButtonList", 
+                "values": [
+                    {
+                        "label": "IP", 
+                        "value": "ipv4"
+                    }, 
+                    {
+                        "label": "Hostname", 
+                        "value": "domain-name"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Preferred server type", 
+            "details": "Preferred server type", 
+            "key": "preferred_server_type", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }
+    ], 
+    "name": "clouddock_ntp", 
+    "nameSpace": "http://www.cisco.com/nfv", 
+    "xmlPath": [], 
+    "xmlRootTag": "system"
+}

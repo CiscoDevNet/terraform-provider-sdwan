@@ -1,0 +1,571 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "boolean", 
+                "values": [
+                    {
+                        "key": "2.4GHz", 
+                        "value": "2.4 GHz"
+                    }, 
+                    {
+                        "key": "5GHz", 
+                        "value": "5 Hz"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Select Radio", 
+            "details": "Radio band", 
+            "key": "radio", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "type": "enum", 
+                "values": [
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Australia", 
+                        "value": "Australia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Austria", 
+                        "value": "Austria"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Belgium", 
+                        "value": "Belgium"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Brazil", 
+                        "value": "Brazil"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Bulgaria", 
+                        "value": "Bulgaria"
+                    }, 
+                    {
+                        "group": "FCC3_FCCA", 
+                        "key": "Canada", 
+                        "value": "Canada"
+                    }, 
+                    {
+                        "group": "FCC2_WORLD", 
+                        "key": "China", 
+                        "value": "China"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Costa Rica", 
+                        "value": "Costa Rica"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Croatia", 
+                        "value": "Croatia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Cyprus", 
+                        "value": "Cyprus"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Czech Republic", 
+                        "value": "Czech Republic"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Denmark", 
+                        "value": "Denmark"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Estonia", 
+                        "value": "Estonia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Finland", 
+                        "value": "Finland"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "France", 
+                        "value": "France"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Germany", 
+                        "value": "Germany"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Greece", 
+                        "value": "Greece"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Hong Kong", 
+                        "value": "Hong Kong"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Hungary", 
+                        "value": "Hungary"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Iceland", 
+                        "value": "Iceland"
+                    }, 
+                    {
+                        "group": "APL6_WORLD", 
+                        "key": "India", 
+                        "value": "India"
+                    }, 
+                    {
+                        "group": "APL2_WORLD", 
+                        "key": "Indonesia", 
+                        "value": "Indonesia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Ireland", 
+                        "value": "Ireland"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Italy", 
+                        "value": "Italy"
+                    }, 
+                    {
+                        "group": "MKK1_MKKA", 
+                        "key": "Japan", 
+                        "value": "Japan"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Latvia", 
+                        "value": "Latvia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Liechtenstein", 
+                        "value": "Liechtenstein"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Lithuania", 
+                        "value": "Lithuania"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Luxembourg", 
+                        "value": "Luxembourg"
+                    }, 
+                    {
+                        "group": "FCC1_WORLD", 
+                        "key": "Malaysia", 
+                        "value": "Malaysia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Malta", 
+                        "value": "Malta"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Mexico", 
+                        "value": "Mexico"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Netherlands", 
+                        "value": "Netherlands"
+                    }, 
+                    {
+                        "group": "FCC3_ETSIC", 
+                        "key": "New Zealand", 
+                        "value": "New Zealand"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Norway", 
+                        "value": "Norway"
+                    }, 
+                    {
+                        "group": "APL1_WORLD", 
+                        "key": "Pakistan", 
+                        "value": "Pakistan"
+                    }, 
+                    {
+                        "group": "FCC1_FCCA", 
+                        "key": "Panama", 
+                        "value": "Panama"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Philippines", 
+                        "value": "Philippines"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Poland", 
+                        "value": "Poland"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Portugal", 
+                        "value": "Portugal"
+                    }, 
+                    {
+                        "group": "FCC3_FCCA", 
+                        "key": "Puerto Rico", 
+                        "value": "Puerto Rico"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Romania", 
+                        "value": "Romania"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Saudi Arabia", 
+                        "value": "Saudi Arabia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Slovakia", 
+                        "value": "Slovakia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Slovenia", 
+                        "value": "Slovenia"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "South Africa", 
+                        "value": "South Africa"
+                    }, 
+                    {
+                        "group": "APL9_WORLD", 
+                        "key": "South Korea", 
+                        "value": "South Korea"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Spain", 
+                        "value": "Spain"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Sri Lanka", 
+                        "value": "Sri Lanka"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Sweden", 
+                        "value": "Sweden"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Switzerland", 
+                        "value": "Switzerland"
+                    }, 
+                    {
+                        "group": "APL7_FCCA", 
+                        "key": "Taiwan", 
+                        "value": "Taiwan"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Thailand", 
+                        "value": "Thailand"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "Turkey", 
+                        "value": "Turkey"
+                    }, 
+                    {
+                        "group": "ETSI1_WORLD", 
+                        "key": "United Kingdom", 
+                        "value": "United Kingdom"
+                    }, 
+                    {
+                        "group": "FCC8_FCCA", 
+                        "key": "United States", 
+                        "value": "United States"
+                    }, 
+                    {
+                        "group": "FCC3_WORLD", 
+                        "key": "Vietnam", 
+                        "value": "Vietnam"
+                    }
+                ]
+            }, 
+            "defaultOption": "constant", 
+            "description": "Country", 
+            "details": "Country of installation", 
+            "key": "country", 
+            "objectType": "object", 
+            "optionType": [
+                "constant"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "20", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "20", 
+                        "value": "20 MHz"
+                    }, 
+                    {
+                        "key": "40", 
+                        "value": "40 MHz"
+                    }, 
+                    {
+                        "key": "80", 
+                        "value": "80 MHz"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Channel Bandwidth", 
+            "details": "Channel Bandwidth", 
+            "key": "channel-bandwidth", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "800", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "400", 
+                        "value": "400 ns"
+                    }, 
+                    {
+                        "key": "800", 
+                        "value": "800 ns"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Guard Interval", 
+            "details": "Guard Interval", 
+            "key": "guard-interval", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "default": "auto", 
+                "type": "enum", 
+                "values": [
+                    {
+                        "key": "auto", 
+                        "value": "Auto"
+                    }, 
+                    {
+                        "key": "auto-no-dfs", 
+                        "value": "Auto-No-Dfs"
+                    }, 
+                    {
+                        "key": "1", 
+                        "value": "1"
+                    }, 
+                    {
+                        "key": "2", 
+                        "value": "2"
+                    }, 
+                    {
+                        "key": "3", 
+                        "value": "3"
+                    }, 
+                    {
+                        "key": "4", 
+                        "value": "4"
+                    }, 
+                    {
+                        "key": "5", 
+                        "value": "5"
+                    }, 
+                    {
+                        "key": "6", 
+                        "value": "6"
+                    }, 
+                    {
+                        "key": "7", 
+                        "value": "7"
+                    }, 
+                    {
+                        "key": "8", 
+                        "value": "8"
+                    }, 
+                    {
+                        "key": "9", 
+                        "value": "9"
+                    }, 
+                    {
+                        "key": "10", 
+                        "value": "10"
+                    }, 
+                    {
+                        "key": "11", 
+                        "value": "11"
+                    }, 
+                    {
+                        "key": "12", 
+                        "value": "12"
+                    }, 
+                    {
+                        "key": "13", 
+                        "value": "13"
+                    }, 
+                    {
+                        "key": "36", 
+                        "value": "36"
+                    }, 
+                    {
+                        "key": "40", 
+                        "value": "40"
+                    }, 
+                    {
+                        "key": "44", 
+                        "value": "44"
+                    }, 
+                    {
+                        "key": "48", 
+                        "value": "48"
+                    }, 
+                    {
+                        "key": "52", 
+                        "value": "52"
+                    }, 
+                    {
+                        "key": "56", 
+                        "value": "56"
+                    }, 
+                    {
+                        "key": "60", 
+                        "value": "60"
+                    }, 
+                    {
+                        "key": "64", 
+                        "value": "64"
+                    }, 
+                    {
+                        "key": "100", 
+                        "value": "100"
+                    }, 
+                    {
+                        "key": "104", 
+                        "value": "104"
+                    }, 
+                    {
+                        "key": "108", 
+                        "value": "108"
+                    }, 
+                    {
+                        "key": "112", 
+                        "value": "112"
+                    }, 
+                    {
+                        "key": "116", 
+                        "value": "116"
+                    }, 
+                    {
+                        "key": "120", 
+                        "value": "120"
+                    }, 
+                    {
+                        "key": "124", 
+                        "value": "124"
+                    }, 
+                    {
+                        "key": "128", 
+                        "value": "128"
+                    }, 
+                    {
+                        "key": "132", 
+                        "value": "132"
+                    }, 
+                    {
+                        "key": "136", 
+                        "value": "136"
+                    }, 
+                    {
+                        "key": "140", 
+                        "value": "140"
+                    }, 
+                    {
+                        "key": "144", 
+                        "value": "144"
+                    }, 
+                    {
+                        "key": "149", 
+                        "value": "149"
+                    }, 
+                    {
+                        "key": "153", 
+                        "value": "153"
+                    }, 
+                    {
+                        "key": "157", 
+                        "value": "157"
+                    }, 
+                    {
+                        "key": "161", 
+                        "value": "161"
+                    }, 
+                    {
+                        "key": "165", 
+                        "value": "165"
+                    }
+                ]
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Channel", 
+            "details": "Radio Channel", 
+            "key": "channel", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "WLAN", 
+    "nameSpace": "http://viptela.com/wlan", 
+    "xmlPath": [
+        "wlan"
+    ], 
+    "xmlRootTag": "wlan-instance"
+}

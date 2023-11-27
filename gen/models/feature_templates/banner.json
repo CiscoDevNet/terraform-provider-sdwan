@@ -1,0 +1,44 @@
+{
+    "fields": [
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 2048, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "Login Banner", 
+            "details": "Set message to display before login prompt", 
+            "key": "login", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }, 
+        {
+            "dataPath": [], 
+            "dataType": {
+                "maxLength": 2048, 
+                "minLength": 1, 
+                "type": "string"
+            }, 
+            "defaultOption": "ignore", 
+            "description": "MOTD Banner", 
+            "details": "Set message to display after a user logs in", 
+            "key": "motd", 
+            "objectType": "object", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ]
+        }
+    ], 
+    "name": "Banner", 
+    "nameSpace": "http://viptela.com/system", 
+    "xmlPath": [], 
+    "xmlRootTag": "banner"
+}

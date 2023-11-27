@@ -1,0 +1,75 @@
+{
+    "fields": [
+        {
+            "children": [
+                {
+                    "dataPath": [], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Org Name", 
+                    "details": "Organization Name", 
+                    "key": "org-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant", 
+                        "variable"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "tier"
+                    ], 
+                    "dataType": {
+                        "type": "string"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Tier name", 
+                    "details": "Tier name", 
+                    "key": "tier-name", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }, 
+                {
+                    "dataPath": [
+                        "tier"
+                    ], 
+                    "dataType": {
+                        "max": 336, 
+                        "min": 1, 
+                        "type": "number"
+                    }, 
+                    "defaultOption": "constant", 
+                    "description": "Maximum VPNs allowed", 
+                    "details": "Maximum VPNs allowed", 
+                    "key": "max-vpn", 
+                    "objectType": "object", 
+                    "optionType": [
+                        "constant"
+                    ]
+                }
+            ], 
+            "dataPath": [], 
+            "defaultOption": "ignore", 
+            "description": "Tenant Organization Name", 
+            "details": "Onboards the tenant on the device", 
+            "key": "tenant", 
+            "objectType": "tree", 
+            "optionType": [
+                "constant", 
+                "variable", 
+                "ignore"
+            ], 
+            "primaryKeys": [
+                "org-name"
+            ]
+        }
+    ], 
+    "name": "tenant", 
+    "nameSpace": "http://viptela.com/tenant", 
+    "xmlPath": [], 
+    "xmlRootTag": "tenants"
+}
