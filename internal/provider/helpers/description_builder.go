@@ -31,7 +31,7 @@ func NewAttributeDescription(s string) *AttributeDescription {
 }
 
 func (d *AttributeDescription) AddMinimumVersionDescription(minimumVersion string) *AttributeDescription {
-	d.String = fmt.Sprintf("%s\n  - Minimum vManage version: `%s`", d.String, minimumVersion)
+	d.String = fmt.Sprintf("%s\n  - Minimum SD-WAN Manager version: `%s`", d.String, minimumVersion)
 	return d
 }
 

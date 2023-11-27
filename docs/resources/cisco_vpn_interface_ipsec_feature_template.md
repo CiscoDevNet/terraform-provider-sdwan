@@ -4,13 +4,13 @@ page_title: "sdwan_cisco_vpn_interface_ipsec_feature_template Resource - terrafo
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cisco VPN Interface IPSec feature template.
-    - Minimum vManage version: 15.0.0
+    - Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cisco_vpn_interface_ipsec_feature_template (Resource)
 
 This resource can manage a Cisco VPN Interface IPSec feature template.
-  - Minimum vManage version: `15.0.0`
+  - Minimum SD-WAN Manager version: `15.0.0`
 
 ## Example Usage
 

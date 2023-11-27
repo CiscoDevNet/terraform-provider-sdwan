@@ -4,13 +4,13 @@ page_title: "sdwan_cedge_aaa_feature_template Resource - terraform-provider-sdwa
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a cEdge AAA feature template.
-    - Minimum vManage version: 15.0.0
+    - Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cedge_aaa_feature_template (Resource)
 
 This resource can manage a cEdge AAA feature template.
-  - Minimum vManage version: `15.0.0`
+  - Minimum SD-WAN Manager version: `15.0.0`
 
 ## Example Usage
 

@@ -4,13 +4,13 @@ page_title: "sdwan_cisco_dhcp_server_feature_template Resource - terraform-provi
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cisco DHCP Server feature template.
-    - Minimum vManage version: 15.0.0
+    - Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cisco_dhcp_server_feature_template (Resource)
 
 This resource can manage a Cisco DHCP Server feature template.
-  - Minimum vManage version: `15.0.0`
+  - Minimum SD-WAN Manager version: `15.0.0`
 
 ## Example Usage
 

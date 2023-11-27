@@ -4,13 +4,13 @@ page_title: "sdwan_cisco_sig_credentials_feature_template Resource - terraform-p
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cisco SIG Credentials feature template.
-    - Minimum vManage version: 15.0.0
+    - Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cisco_sig_credentials_feature_template (Resource)
 
 This resource can manage a Cisco SIG Credentials feature template.
-  - Minimum vManage version: `15.0.0`
+  - Minimum SD-WAN Manager version: `15.0.0`
 
 ## Example Usage
 

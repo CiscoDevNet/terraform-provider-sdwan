@@ -69,16 +69,16 @@ func (p *SdwanProvider) Schema(ctx context.Context, req provider.SchemaRequest, 
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"username": schema.StringAttribute{
-				MarkdownDescription: "Username for the SD-WAN vManage account. This can also be set as the SDWAN_USERNAME environment variable.",
+				MarkdownDescription: "Username for the SD-WAN Manager account. This can also be set as the SDWAN_USERNAME environment variable.",
 				Optional:            true,
 			},
 			"password": schema.StringAttribute{
-				MarkdownDescription: "Password for the SD-WAN vManage account. This can also be set as the SDWAN_PASSWORD environment variable.",
+				MarkdownDescription: "Password for the SD-WAN Manager account. This can also be set as the SDWAN_PASSWORD environment variable.",
 				Optional:            true,
 				Sensitive:           true,
 			},
 			"url": schema.StringAttribute{
-				MarkdownDescription: "URL of the Cisco SD-WAN vManage device. This can also be set as the SDWAN_URL environment variable.",
+				MarkdownDescription: "URL of the Cisco SD-WAN Manager device. This can also be set as the SDWAN_URL environment variable.",
 				Optional:            true,
 			},
 			"insecure": schema.BoolAttribute{

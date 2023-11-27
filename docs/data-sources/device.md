@@ -37,7 +37,7 @@ data "sdwan_device" "example" {
 
 Read-Only:
 
-- `device_id` (String) The device ID as defined in vManage
+- `device_id` (String) The device ID as defined in SD-WAN Manager
 - `hostname` (String) Hostname for respective device
 - `reachability` (String) Reachability of device
 - `serial_number` (String) Serial number for device. Could be board or virtual identifier

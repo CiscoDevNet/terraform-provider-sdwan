@@ -26,7 +26,7 @@ attributes:
         type: String
         tf_name: device_id
         example: 10.0.0.14
-        description: The device ID as defined in vManage
+        description: The device ID as defined in SD-WAN Manager
       - model_name: uuid
         type: String
         description: Unique identifier for device
