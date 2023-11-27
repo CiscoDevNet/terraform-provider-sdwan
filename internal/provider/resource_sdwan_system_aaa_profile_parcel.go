@@ -182,7 +182,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							},
 						},
 						"vpn": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set VPN in which Radius server is located").AddIntegerRangeDescription(0, 65530).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set VPN in which Radius server is located").AddIntegerRangeDescription(0, 65530).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtMost(65530),
@@ -209,7 +209,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"auth_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set Authentication port to use to connect to Radius server").AddIntegerRangeDescription(1, 65534).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set Authentication port to use to connect to Radius server").AddIntegerRangeDescription(1, 65534).AddDefaultValueDescription("1812").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65534),
@@ -220,7 +220,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"acct_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set Accounting port to use to connect to Radius server").AddIntegerRangeDescription(1, 65534).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set Accounting port to use to connect to Radius server").AddIntegerRangeDescription(1, 65534).AddDefaultValueDescription("1813").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65534),
@@ -231,7 +231,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"timeout": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Configure how long to wait for replies from the Radius server").AddIntegerRangeDescription(1, 1000).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Configure how long to wait for replies from the Radius server").AddIntegerRangeDescription(1, 1000).AddDefaultValueDescription("5").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 1000),
@@ -242,7 +242,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"retransmit": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Configure how many times to contact this Radius server").AddIntegerRangeDescription(1, 100).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Configure how many times to contact this Radius server").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("3").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 100),
@@ -307,7 +307,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							},
 						},
 						"vpn": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set VPN in which TACACS server is located").AddIntegerRangeDescription(0, 65530).String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set VPN in which TACACS server is located").AddIntegerRangeDescription(0, 65530).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtMost(65530),
@@ -334,7 +334,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("TACACS Port").AddIntegerRangeDescription(1, 65535).String,
+										MarkdownDescription: helpers.NewAttributeDescription("TACACS Port").AddIntegerRangeDescription(1, 65535).AddDefaultValueDescription("49").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65535),
@@ -345,7 +345,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 										Optional:            true,
 									},
 									"timeout": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Configure how long to wait for replies from the TACACS server").AddIntegerRangeDescription(1, 1000).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Configure how long to wait for replies from the TACACS server").AddIntegerRangeDescription(1, 1000).AddDefaultValueDescription("5").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 1000),

@@ -159,7 +159,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	if !data.{{toGoName .TfName}}Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}Variable.ValueString())
-	} else {{end}}{{if .DefaultValue}}if data.{{toGoName .TfName}}.IsNull() {
+	} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if data.{{toGoName .TfName}}.IsNull() {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
 	} else{{else}}if true{{end}} {
@@ -181,7 +181,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		if !item.{{toGoName .TfName}}Variable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", item.{{toGoName .TfName}}Variable.ValueString())
-		} else {{end}}{{if .DefaultValue}}if item.{{toGoName .TfName}}.IsNull() {
+		} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if item.{{toGoName .TfName}}.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
 		} else{{else}}if true{{end}} {
@@ -203,7 +203,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			if !childItem.{{toGoName .TfName}}Variable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childItem.{{toGoName .TfName}}Variable.ValueString())
-			} else {{end}}{{if .DefaultValue}}if childItem.{{toGoName .TfName}}.IsNull() {
+			} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if childItem.{{toGoName .TfName}}.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
 			} else{{else}}if true{{end}} {
@@ -225,7 +225,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childChildItem.{{toGoName .TfName}}Variable.ValueString())
-				} else {{end}}{{if .DefaultValue}}if childChildItem.{{toGoName .TfName}}.IsNull() {
+				} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if childChildItem.{{toGoName .TfName}}.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
 				} else{{else}}if true{{end}} {

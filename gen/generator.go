@@ -218,6 +218,7 @@ type YamlConfigAttribute struct {
 	Reference            bool                           `yaml:"reference"`
 	Variable             bool                           `yaml:"variable"`
 	Mandatory            bool                           `yaml:"mandatory"`
+	ParcelMandatory      bool                           `yaml:"parcel_mandatory"`
 	WriteOnly            bool                           `yaml:"write_only"`
 	TfOnly               bool                           `yaml:"tf_only"`
 	ExcludeTest          bool                           `yaml:"exclude_test"`
@@ -601,9 +602,22 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		}
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
 		if d.Exists() {
-			attr.DefaultValue = d.Get("properties.value.enum.0").String()
-		} else if !attr.Variable {
-			attr.Mandatory = true
+			if value := d.Get("properties.value.enum.0"); value.Exists() {
+				attr.DefaultValue = value.String()
+			} else if value := d.Get("properties.value.default"); value.Exists() {
+				attr.DefaultValue = value.String()
+			} else if value := d.Get("properties.value.default"); value.Exists() {
+				attr.DefaultValue = value.String()
+			} else if value := d.Get("properties.value.minimum"); value.Exists() {
+				attr.DefaultValue = value.String()
+			} else {
+				attr.DefaultValue = ""
+			}
+		} else {
+			attr.ParcelMandatory = true
+			if !attr.Variable {
+				attr.Mandatory = true
+			}
 		}
 	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" && len(attr.Attributes) > 0 {
 		attr.Type = "List"

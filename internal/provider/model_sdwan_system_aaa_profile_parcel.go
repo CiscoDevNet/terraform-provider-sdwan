@@ -210,7 +210,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.KeyTypeVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyTypeVariable.ValueString())
-			} else if true {
+			} else if childItem.KeyType.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", "")
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
 			}
@@ -224,7 +227,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
 		}
-		if true {
+		if item.Vpn.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
+			itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
 		}
@@ -232,7 +238,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-		} else if true {
+		} else if item.SourceInterface.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
+			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", "")
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
@@ -246,7 +255,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.AuthPortVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authPort.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authPort.value", childItem.AuthPortVariable.ValueString())
-			} else if true {
+			} else if childItem.AuthPort.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "authPort.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "authPort.value", 1812)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authPort.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authPort.value", childItem.AuthPort.ValueInt64())
 			}
@@ -254,7 +266,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.AcctPortVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.value", childItem.AcctPortVariable.ValueString())
-			} else if true {
+			} else if childItem.AcctPort.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.value", 1813)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.value", childItem.AcctPort.ValueInt64())
 			}
@@ -262,7 +277,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.TimeoutVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.TimeoutVariable.ValueString())
-			} else if true {
+			} else if childItem.Timeout.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", 5)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.Timeout.ValueInt64())
 			}
@@ -270,7 +288,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.RetransmitVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.value", childItem.RetransmitVariable.ValueString())
-			} else if true {
+			} else if childItem.Retransmit.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.value", 3)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.value", childItem.Retransmit.ValueInt64())
 			}
@@ -282,11 +303,17 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.SecretKeyVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyVariable.ValueString())
-			} else if true {
+			} else if childItem.SecretKey.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", "")
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
 			}
-			if true {
+			if childItem.KeyEnum.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", "")
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
 			}
@@ -311,7 +338,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
 		}
-		if true {
+		if item.Vpn.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
+			itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
 		}
@@ -319,7 +349,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-		} else if true {
+		} else if item.SourceInterface.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
+			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", "")
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
@@ -333,7 +366,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.PortVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "port.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "port.value", childItem.PortVariable.ValueString())
-			} else if true {
+			} else if childItem.Port.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "port.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "port.value", 49)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "port.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "port.value", childItem.Port.ValueInt64())
 			}
@@ -341,7 +377,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.TimeoutVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.TimeoutVariable.ValueString())
-			} else if true {
+			} else if childItem.Timeout.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", 5)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.Timeout.ValueInt64())
 			}
@@ -357,7 +396,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
 			}
-			if true {
+			if childItem.KeyEnum.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", "")
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
 			}
@@ -375,7 +417,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "method.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "method.value", item.Method.ValueString())
 		}
-		if true {
+		if item.Level.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "level.optionType", "default")
+			itemBody, _ = sjson.Set(itemBody, "level.value", "")
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "level.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "level.value", item.Level.ValueString())
 		}

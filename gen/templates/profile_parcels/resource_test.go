@@ -94,7 +94,7 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum() string {
 		name = "TF_TEST_MIN"
 		description = "Terraform integration test"
 		{{- range .Attributes}}
-		{{- if and (or (.Mandatory) (.Reference)) (ne .Type "List")}}
+		{{- if and (or (.ParcelMandatory) (.Reference)) (ne .Type "List")}}
 		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}{{end}}
 		{{- end}}
 		{{- end}}

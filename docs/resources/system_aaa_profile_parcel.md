@@ -172,6 +172,7 @@ Optional:
 - `source_interface_variable` (String) Variable name
 - `vpn` (Number) Set VPN in which Radius server is located
   - Range: `0`-`65530`
+  - Default value: `0`
 
 <a id="nestedatt--radius_groups--servers"></a>
 ### Nested Schema for `radius_groups.servers`
@@ -180,10 +181,12 @@ Optional:
 
 - `acct_port` (Number) Set Accounting port to use to connect to Radius server
   - Range: `1`-`65534`
+  - Default value: `1813`
 - `acct_port_variable` (String) Variable name
 - `address` (String) Set IP address of Radius server
 - `auth_port` (Number) Set Authentication port to use to connect to Radius server
   - Range: `1`-`65534`
+  - Default value: `1812`
 - `auth_port_variable` (String) Variable name
 - `key` (String) Set the Radius server shared key
 - `key_enum` (String) Type of encyption. To be used for type 6
@@ -194,11 +197,13 @@ Optional:
 - `key_type_variable` (String) Variable name
 - `retransmit` (Number) Configure how many times to contact this Radius server
   - Range: `1`-`100`
+  - Default value: `3`
 - `retransmit_variable` (String) Variable name
 - `secret_key` (String) Set the Radius server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the Radius server
   - Range: `1`-`1000`
+  - Default value: `5`
 - `timeout_variable` (String) Variable name
 
 
@@ -214,6 +219,7 @@ Optional:
 - `source_interface_variable` (String) Variable name
 - `vpn` (Number) Set VPN in which TACACS server is located
   - Range: `0`-`65530`
+  - Default value: `0`
 
 <a id="nestedatt--tacacs_groups--servers"></a>
 ### Nested Schema for `tacacs_groups.servers`
@@ -226,11 +232,13 @@ Optional:
   - Choices: `6`, `7`
 - `port` (Number) TACACS Port
   - Range: `1`-`65535`
+  - Default value: `49`
 - `port_variable` (String) Variable name
 - `secret_key` (String) Set the TACACS server shared type 7 encrypted key
 - `secret_key_variable` (String) Variable name
 - `timeout` (Number) Configure how long to wait for replies from the TACACS server
   - Range: `1`-`1000`
+  - Default value: `5`
 - `timeout_variable` (String) Variable name
 
 

@@ -81,7 +81,7 @@ resource "sdwan_system_feature_profile" "test" {
 }
 
 resource "sdwan_system_aaa_profile_parcel" "test" {
-  name = "TF_TEST_MIN"
+  name = "TF_TEST"
   description = "Terraform integration test"
   feature_profile_id = sdwan_system_feature_profile.test.id
   authentication_group = true

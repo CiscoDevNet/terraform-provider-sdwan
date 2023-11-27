@@ -1,0 +1,236 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/system/banner/post/request_schema.json",
+        "title": "Banner Parcel Schema",
+        "description": "Banner profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "login": {
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 2048
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "enum": [
+                                            ""
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "motd": {
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 2048
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "enum": [
+                                            ""
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "login",
+                    "motd"
+                ],
+                "additionalProperties": false
+            },
+            "metadata": {
+                "supportedDeviceTypes": [
+                    "asr",
+                    "c1100",
+                    "c8000be",
+                    "csr1000v",
+                    "ir8100",
+                    "ir8340",
+                    "isr",
+                    "ISRv",
+                    "ir1101"
+                ]
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for Banner profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "login": {
+                                "optionType": "global",
+                                "value": "Global Login Message"
+                            },
+                            "motd": {
+                                "optionType": "default",
+                                "value": ""
+                            }
+                        },
+                        "name": "SystemBannerParcelGlobalDefault"
+                    },
+                    {
+                        "data": {
+                            "login": {
+                                "optionType": "variable",
+                                "variableName": "{{var_login_parcel_cg1_ny}}"
+                            },
+                            "motd": {
+                                "optionType": "variable",
+                                "variableName": "{{var_motd_parcel_cg1_ny}}"
+                            }
+                        },
+                        "name": "SystemBannerParcelVariable"
+                    },
+                    {
+                        "data": {
+                            "login": {
+                                "optionType": "default",
+                                "value": ""
+                            },
+                            "motd": {
+                                "optionType": "global",
+                                "value": "Global Message of the Day"
+                            }
+                        },
+                        "name": "SystemBannerParcelDefaultGlobal"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "name",
+            "data"
+        ],
+        "not": {
+            "required": [
+                "metadata",
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

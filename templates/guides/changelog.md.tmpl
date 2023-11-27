@@ -14,6 +14,7 @@ description: |-
 - Add `sdwan_transport_feature_profile` resource and data source
 - Add `sdwan_cli_feature_profile` resource and data source
 - Add `sdwan_system_aaa_profile_parcel` resource and data source
+- Add `sdwan_system_banner_profile_parcel` resource and data source
 
 ## 0.2.11
 

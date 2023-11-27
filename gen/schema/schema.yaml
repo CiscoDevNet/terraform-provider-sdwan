@@ -32,6 +32,7 @@ attribute:
   reference: bool(required=False) # Indicates that the attribute is being used in the url path
   variable: bool(required=False)
   mandatory: bool(required=False)
+  parcel_mandatory: bool(required=False) # Set to true if profile parcel attribute requires either a "global" or "variable" value
   write_only: bool(required=False)
   tf_only: bool(required=False)
   exclude_test: bool(required=False)

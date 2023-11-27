@@ -79,7 +79,7 @@ const testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelConfig = `
 {{if .TestPrerequisites}}{{.TestPrerequisites}}{{end}}
 
 resource "sdwan_{{snakeCase $name}}_profile_parcel" "test" {
-  name = "TF_TEST_MIN"
+  name = "TF_TEST"
   description = "Terraform integration test"
 {{- range  .Attributes}}
 {{- if not .ExcludeTest}}
