@@ -245,6 +245,9 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		{{- range .FeatureTemplates}}
 		New{{camelCase .Name}}FeatureTemplateResource,
 		{{- end}}
+		{{- range .ProfileParcels}}
+		New{{camelCase .Name}}ProfileParcelResource,
+		{{- end}}
 		{{- range .Generic}}
 		{{- if not (contains .SkipTemplates "resource.go")}}
 		New{{camelCase .Name}}Resource,
@@ -259,6 +262,9 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 	return []func() datasource.DataSource{
 		{{- range .FeatureTemplates}}
 		New{{camelCase .Name}}FeatureTemplateDataSource,
+		{{- end}}
+		{{- range .ProfileParcels}}
+		New{{camelCase .Name}}ProfileParcelDataSource,
 		{{- end}}
 		{{- range .Generic}}
 		{{- if not (contains .SkipTemplates "data_source.go")}}

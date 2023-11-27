@@ -30,6 +30,7 @@ import (
 
 const (
 	featureTemplateDefinitionsPath = "./gen/definitions/feature_templates/"
+	profileParcelDefinitionsPath   = "./gen/definitions/profile_parcels/"
 	genericDefinitionsPath         = "./gen/definitions/generic/"
 )
 
@@ -59,6 +60,8 @@ func SnakeCase(s string) string {
 func main() {
 	featureTemplateFiles, _ := os.ReadDir(featureTemplateDefinitionsPath)
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
+	profileParcelFiles, _ := os.ReadDir(profileParcelDefinitionsPath)
+	profileParcelConfigs := make([]YamlConfig, len(profileParcelFiles))
 	genericFiles, _ := os.ReadDir(genericDefinitionsPath)
 	genericConfigs := make([]YamlConfig, len(genericFiles))
 
@@ -88,6 +91,37 @@ func main() {
 
 			s := string(content)
 			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Feature Templates"`)
+
+			os.WriteFile(filename, []byte(s), 0644)
+		}
+	}
+
+	// Load profile parcel configs
+	for i, filename := range profileParcelFiles {
+		yamlFile, err := os.ReadFile(filepath.Join(profileParcelDefinitionsPath, filename.Name()))
+		if err != nil {
+			log.Fatalf("Error reading file: %v", err)
+		}
+
+		config := YamlConfig{}
+		err = yaml.Unmarshal(yamlFile, &config)
+		if err != nil {
+			log.Fatalf("Error parsing yaml: %v", err)
+		}
+		profileParcelConfigs[i] = config
+	}
+
+	// Update profile parcel doc category
+	for i := range profileParcelConfigs {
+		for _, path := range docPaths {
+			filename := path + SnakeCase(profileParcelConfigs[i].Name) + "_profile_parcel.md"
+			content, err := os.ReadFile(filename)
+			if err != nil {
+				log.Fatalf("Error opening documentation: %v", err)
+			}
+
+			s := string(content)
+			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Profile Parcels"`)
 
 			os.WriteFile(filename, []byte(s), 0644)
 		}
@@ -123,7 +157,7 @@ func main() {
 		}
 	}
 
-	// Update extra (non-feature templates) doc categories
+	// Update extra doc categories
 	for doc, cat := range extraDocs {
 		for _, path := range docPaths {
 			filename := path + doc + ".md"

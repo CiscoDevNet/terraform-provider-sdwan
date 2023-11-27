@@ -1,0 +1,134 @@
+---
+name: System AAA
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/aaa
+minimum_version: 20.12.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: authenticationGroup
+    example: true
+  - model_name: accountingGroup
+    example: true
+  - model_name: serverAuthOrder
+    example: local
+  - model_name: user
+    tf_name: users
+    attributes:
+      - model_name: name
+        id: true
+        example: User1
+      - model_name: password
+        write_only: true
+        example: cisco123
+      - model_name: privilege
+        example: 15
+      - model_name: pubkeyChain
+        tf_name: public_keys
+        attributes:
+          - model_name: keyString
+            id: true
+            example: AAAAB3NzaC1yc2
+          - model_name: keyType
+            example: ssh-rsa
+  - model_name: radius
+    tf_name: radius_groups
+    attributes:
+      - model_name: groupName
+        id: true
+        example: RGROUP1
+      - model_name: vpn
+        example: 10
+      - model_name: sourceInterface
+        example: GigabitEthernet0
+      - model_name: server
+        tf_name: servers
+        attributes:
+          - model_name: address
+            id: true
+            example: 1.2.3.4
+          - model_name: authPort
+            example: 1812
+          - model_name: acctPort
+            example: 1813
+          - model_name: timeout
+            example: 5
+          - model_name: retransmit
+            example: 3
+          - model_name: key
+            write_only: true
+            example: cisco123
+          - model_name: secretKey
+            example: cisco123
+          - model_name: keyEnum
+            example: "7"
+          - model_name: keyType
+            example: key
+  - model_name: tacacs
+    tf_name: tacacs_groups
+    attributes:
+      - model_name: groupName
+        id: true
+        example: TGROUP1
+      - model_name: vpn
+        example: 10
+      - model_name: sourceInterface
+        example: GigabitEthernet0
+      - model_name: server
+        tf_name: servers
+        attributes:
+          - model_name: address
+            id: true
+            example: 1.2.3.4
+          - model_name: port
+            example: 49
+          - model_name: timeout
+            example: 5
+          - model_name: key
+            write_only: true
+            example: cisco123
+          - model_name: secretKey
+            example: cisco123
+          - model_name: keyEnum
+            example: "7"
+  - model_name: accountingRule
+    tf_name: accounting_rules
+    attributes:
+      - model_name: ruleId
+        id: true
+        example: 1
+      - model_name: method
+        example: commands
+      - model_name: level
+        example: 15
+      - model_name: startStop
+        example: true
+      - model_name: group
+        example: RGROUP1
+  - model_name: authorizationConsole
+    example: true
+  - model_name: authorizationConfigCommands
+    example: true
+  - model_name: authorizationRule
+    tf_name: authorization_rules
+    attributes:
+      - model_name: ruleId
+        id: true
+        example: 1
+      - model_name: method
+        example: commands
+      - model_name: level
+        example: 15
+      - model_name: group
+        example: RGROUP1
+      - model_name: ifAuthenticated
+        example: true
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

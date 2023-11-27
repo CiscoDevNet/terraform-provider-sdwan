@@ -29,6 +29,7 @@ attribute:
   data_path: list(str(), required=False)
   keys: list(str(), required=False)
   id: bool(required=False)
+  reference: bool(required=False) # Indicates that the attribute is being used in the url path
   variable: bool(required=False)
   mandatory: bool(required=False)
   write_only: bool(required=False)

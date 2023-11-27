@@ -23,13 +23,13 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
 	"text/template"
+	"unicode"
 
 	"github.com/tidwall/gjson"
 	"gopkg.in/yaml.v3"
@@ -38,6 +38,8 @@ import (
 const (
 	featureTemplateDefinitionsPath = "./gen/definitions/feature_templates/"
 	featureTemplateModelsPath      = "./gen/models/feature_templates/"
+	profileParcelDefinitionsPath   = "./gen/definitions/profile_parcels/"
+	profileParcelModelsPath        = "./gen/models/profile_parcels/"
 	genericDefinitionsPath         = "./gen/definitions/generic/"
 	providerTemplate               = "./gen/templates/provider.go"
 	providerLocation               = "./internal/provider/provider.go"
@@ -92,6 +94,49 @@ var featureTemplateTemplates = []t{
 		path:   "./gen/templates/feature_templates/import.sh",
 		prefix: "./examples/resources/sdwan_",
 		suffix: "_feature_template/import.sh",
+	},
+}
+
+var profileParcelTemplates = []t{
+	{
+		path:   "./gen/templates/profile_parcels/model.go",
+		prefix: "./internal/provider/model_sdwan_",
+		suffix: "_profile_parcel.go",
+	},
+	{
+		path:   "./gen/templates/profile_parcels/data_source.go",
+		prefix: "./internal/provider/data_source_sdwan_",
+		suffix: "_profile_parcel.go",
+	},
+	{
+		path:   "./gen/templates/profile_parcels/data_source_test.go",
+		prefix: "./internal/provider/data_source_sdwan_",
+		suffix: "_profile_parcel_test.go",
+	},
+	{
+		path:   "./gen/templates/profile_parcels/resource.go",
+		prefix: "./internal/provider/resource_sdwan_",
+		suffix: "_profile_parcel.go",
+	},
+	{
+		path:   "./gen/templates/profile_parcels/resource_test.go",
+		prefix: "./internal/provider/resource_sdwan_",
+		suffix: "_profile_parcel_test.go",
+	},
+	{
+		path:   "./gen/templates/profile_parcels/data-source.tf",
+		prefix: "./examples/data-sources/sdwan_",
+		suffix: "_profile_parcel/data-source.tf",
+	},
+	{
+		path:   "./gen/templates/profile_parcels/resource.tf",
+		prefix: "./examples/resources/sdwan_",
+		suffix: "_profile_parcel/resource.tf",
+	},
+	{
+		path:   "./gen/templates/profile_parcels/import.sh",
+		prefix: "./examples/resources/sdwan_",
+		suffix: "_profile_parcel/import.sh",
 	},
 }
 
@@ -170,6 +215,7 @@ type YamlConfigAttribute struct {
 	DataPath             []string                       `yaml:"data_path"`
 	Keys                 []string                       `yaml:"keys"`
 	Id                   bool                           `yaml:"id"`
+	Reference            bool                           `yaml:"reference"`
 	Variable             bool                           `yaml:"variable"`
 	Mandatory            bool                           `yaml:"mandatory"`
 	WriteOnly            bool                           `yaml:"write_only"`
@@ -235,6 +281,19 @@ func CamelCase(s string) string {
 func SnakeCase(s string) string {
 	var g []string
 
+	if !strings.Contains(s, " ") && !strings.Contains(s, "-") {
+		var words []string
+		l := 0
+		for w := s; w != ""; w = w[l:] {
+			l = strings.IndexFunc(w[1:], unicode.IsUpper) + 1
+			if l <= 0 {
+				l = len(w)
+			}
+			words = append(words, strings.ToLower(w[:l]))
+		}
+		return strings.Join(words, "_")
+	}
+
 	s = strings.ReplaceAll(s, "-", " ")
 	p := strings.Fields(s)
 
@@ -272,6 +331,31 @@ func GetResponseModelName(attribute YamlConfigAttribute) string {
 	}
 }
 
+// Templating helper function to return true if reference included in attributes
+func HasReference(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Reference {
+			return true
+		}
+	}
+	return false
+}
+
+// Templating helper function to return GJSON type
+func GetGjsonType(t string) string {
+	if t == "String" {
+		return "String"
+	} else if t == "Int64" {
+		return "Int"
+	} else if t == "Float64" {
+		return "Float"
+	} else if t == "Bool" {
+		return "Bool"
+	} else {
+		return ""
+	}
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -291,6 +375,8 @@ var functions = template.FuncMap{
 	"path":                 BuildPath,
 	"hasVersionAttribute":  HasVersionAttribute,
 	"getResponseModelName": GetResponseModelName,
+	"hasReference":         HasReference,
+	"getGjsonType":         GetGjsonType,
 	"contains":             contains,
 }
 
@@ -449,6 +535,109 @@ func augmentFeatureTemplateConfig(config *YamlConfig) {
 	}
 }
 
+func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) {
+	if attr.ModelName == "" {
+		return
+	}
+	path := ""
+	for _, e := range attr.DataPath {
+		path += e + ".properties."
+	}
+	path += attr.ModelName
+	r := model.Get("properties." + path)
+
+	if !r.Exists() {
+		panic(fmt.Sprintf("Could not find element in schema: %v\n%v\n\n", attr.ModelName, model))
+	}
+
+	attr.Description = r.Get("description").String()
+	if attr.TfName == "" {
+		attr.TfName = SnakeCase(attr.ModelName)
+	}
+
+	if r.Get("type").String() == "object" {
+		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+		if t.Exists() {
+			if t.Get("properties.value.type").String() == "string" {
+				attr.Type = "String"
+				if value := t.Get("properties.value.minLength"); value.Exists() {
+					attr.StringMinLength = value.Int()
+				}
+				if value := t.Get("properties.value.maxLength"); value.Exists() {
+					attr.StringMaxLength = value.Int()
+				}
+				if value := t.Get("properties.value.pattern"); value.Exists() {
+					attr.StringPatterns = append(attr.StringPatterns, value.String())
+				}
+				if value := t.Get("properties.value.enum"); value.Exists() {
+					for _, v := range value.Array() {
+						attr.EnumValues = append(attr.EnumValues, v.String())
+					}
+				}
+			} else if t.Get("properties.value.type").String() == "boolean" {
+				attr.Type = "Bool"
+			} else if t.Get("properties.value.type").String() == "integer" {
+				attr.Type = "Int64"
+				if value := t.Get("properties.value.minimum"); value.Exists() {
+					attr.MinInt = value.Int()
+				}
+				if value := t.Get("properties.value.maximum"); value.Exists() {
+					attr.MaxInt = value.Int()
+				}
+			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
+				attr.Type = "StringList"
+				if value := t.Get("properties.value.minItems"); value.Exists() {
+					attr.MinList = value.Int()
+				}
+				if value := t.Get("properties.value.maxItems"); value.Exists() {
+					attr.MaxList = value.Int()
+				}
+			} else {
+				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
+			}
+		}
+		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
+			attr.Variable = true
+		}
+		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
+		if d.Exists() {
+			attr.DefaultValue = d.Get("properties.value.enum.0").String()
+		} else if !attr.Variable {
+			attr.Mandatory = true
+		}
+	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" && len(attr.Attributes) > 0 {
+		attr.Type = "List"
+		for a := range attr.Attributes {
+			parseProfileParcelAttribute(&attr.Attributes[a], r.Get("items"))
+		}
+	}
+}
+
+func augmentProfileParcelConfig(config *YamlConfig) {
+	if config.Model == "" {
+		config.Model = SnakeCase(config.Name)
+	}
+	modelPath := profileParcelModelsPath + config.Model + ".json"
+
+	modelBytes, err := os.ReadFile(modelPath)
+	if err != nil {
+		log.Fatalf("Error reading model '%s': %v", modelPath, err)
+	}
+
+	model := gjson.ParseBytes(modelBytes)
+
+	for ia := range config.Attributes {
+		parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"))
+	}
+
+	if config.DsDescription == "" {
+		config.DsDescription = fmt.Sprintf("This data source can read the %s profile parcel.", config.Name)
+	}
+	if config.ResDescription == "" {
+		config.ResDescription = fmt.Sprintf("This resource can manage a %s profile parcel.", config.Name)
+	}
+}
+
 func augmentGenericAttribute(attr *YamlConfigAttribute) {
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
@@ -520,7 +709,7 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 }
 
 func main() {
-	featureTemplateFiles, _ := ioutil.ReadDir(featureTemplateDefinitionsPath)
+	featureTemplateFiles, _ := os.ReadDir(featureTemplateDefinitionsPath)
 	featureTemplateConfigs := make([]YamlConfig, len(featureTemplateFiles))
 	configs := make(map[string][]YamlConfig)
 
@@ -550,7 +739,36 @@ func main() {
 	}
 	configs["FeatureTemplates"] = featureTemplateConfigs
 
-	genericFiles, _ := ioutil.ReadDir(genericDefinitionsPath)
+	profileParcelFiles, _ := os.ReadDir(profileParcelDefinitionsPath)
+	profileParcelConfigs := make([]YamlConfig, len(profileParcelFiles))
+
+	// Load profile parcel configs
+	for i, filename := range profileParcelFiles {
+		yamlFile, err := os.ReadFile(filepath.Join(profileParcelDefinitionsPath, filename.Name()))
+		if err != nil {
+			log.Fatalf("Error reading file: %v", err)
+		}
+
+		config := YamlConfig{}
+		err = yaml.Unmarshal(yamlFile, &config)
+		if err != nil {
+			log.Fatalf("Error parsing yaml: %v", err)
+		}
+		profileParcelConfigs[i] = config
+	}
+
+	for i := range profileParcelConfigs {
+		// Augment profile parcel config by model data
+		augmentProfileParcelConfig(&profileParcelConfigs[i])
+
+		// Iterate over templates and render files
+		for _, t := range profileParcelTemplates {
+			renderTemplate(t.path, t.prefix+SnakeCase(profileParcelConfigs[i].Name)+t.suffix, profileParcelConfigs[i])
+		}
+	}
+	configs["ProfileParcels"] = profileParcelConfigs
+
+	genericFiles, _ := os.ReadDir(genericDefinitionsPath)
 	genericConfigs := make([]YamlConfig, len(genericFiles))
 
 	// Load generic configs
