@@ -24,11 +24,8 @@ resource "sdwan_service_feature_profile" "example" {
 
 ### Required
 
-- `name` (String) The name of the service feature profile
-
-### Optional
-
 - `description` (String) Description
+- `name` (String) The name of the service feature profile
 
 ### Read-Only
 

@@ -72,7 +72,7 @@ func (r *TransportFeatureProfileResource) Schema(ctx context.Context, req resour
 			},
 			"description": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Description").String,
-				Optional:            true,
+				Required:            true,
 			},
 		},
 	}

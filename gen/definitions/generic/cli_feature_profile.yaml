@@ -12,5 +12,6 @@ attributes:
     example: CLI_FP_1
   - model_name: description
     type: String
+    mandatory: true
     description: Description
     example: My cli feature profile 1
