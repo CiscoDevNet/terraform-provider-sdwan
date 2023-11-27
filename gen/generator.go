@@ -577,7 +577,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				}
 			} else if t.Get("properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if t.Get("properties.value.type").String() == "integer" {
+			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" {
 				attr.Type = "Int64"
 				if value := t.Get("properties.value.minimum"); value.Exists() {
 					attr.MinInt = value.Int()
