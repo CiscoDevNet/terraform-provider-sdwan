@@ -1,0 +1,969 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/system/ntp/post/request_schema.json",
+        "title": "NTP Parcel Schema",
+        "description": "NTP profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "description": "Set the parcel name",
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "description": "Set the parcel description",
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "server": {
+                        "description": "Configure NTP servers",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "additionalProperties": false,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Set hostname or IP address of server",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "string",
+                                                            "format": "ipv6"
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "format": "hostname"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "key": {
+                                    "description": "Set authentication key for the server",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 65535
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "vpn": {
+                                    "description": "Set VPN in which NTP server is located",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "integer",
+                                                    "default": 0,
+                                                    "minimum": 0,
+                                                    "maximum": 65530
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "integer",
+                                                    "minimum": 0,
+                                                    "maximum": 0
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "version": {
+                                    "description": "Set NTP version",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "integer",
+                                                    "default": 4,
+                                                    "minimum": 1,
+                                                    "maximum": 4
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "integer",
+                                                    "minimum": 4,
+                                                    "maximum": 4
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "sourceInterface": {
+                                    "description": "Set interface to use to reach NTP server",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                    "minLength": 3,
+                                                    "maxLength": 32
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "prefer": {
+                                    "description": "Prefer this NTP server",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "boolean",
+                                                    "enum": [
+                                                        false
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "vpn",
+                                "version",
+                                "prefer"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "authentication": {
+                        "type": "object",
+                        "properties": {
+                            "authenticationKeys": {
+                                "description": "Set MD5 authentication key",
+                                "type": "array",
+                                "uniqueItems": true,
+                                "additionalProperties": false,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "keyId": {
+                                            "description": "MD5 authentication key ID",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "variable"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                            "minLength": 1,
+                                                            "maxLength": 64
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "integer",
+                                                            "minimum": 1,
+                                                            "maximum": 65535
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "md5Value": {
+                                            "description": "Enter cleartext or AES-encrypted MD5 authentication key",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "variable"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                            "minLength": 1,
+                                                            "maxLength": 64
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "minLength": 1
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "keyId",
+                                        "md5Value"
+                                    ]
+                                }
+                            },
+                            "trustedKeys": {
+                                "description": "Designate authentication key as trustworthy",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "array",
+                                                "uniqueItems": true,
+                                                "additionalProperties": false,
+                                                "items": {
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 65535
+                                                }
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "authenticationKeys"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "leader": {
+                        "type": "object",
+                        "properties": {
+                            "enable": {
+                                "description": "Enable device as NTP Leader",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "stratum": {
+                                "description": "Enable device as NTP Leader",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "integer",
+                                                "maximum": 15,
+                                                "minimum": 1
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "source": {
+                                "description": "Enable device as NTP Leader",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                                                "minLength": 3,
+                                                "maxLength": 32
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "server"
+                ],
+                "additionalProperties": false
+            },
+            "metadata": {
+                "supportedDeviceTypes": [
+                    "asr",
+                    "c1100",
+                    "c8000be",
+                    "csr1000v",
+                    "ir8100",
+                    "ir8340",
+                    "isr",
+                    "ISRv",
+                    "ir1101"
+                ]
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for NTP profile parcel",
+                "examples": [
+                    {
+                        "data": {
+                            "server": [
+                                {
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "et aute voluptate aliqua proident"
+                                    },
+                                    "key": {
+                                        "optionType": "global",
+                                        "value": 41673
+                                    },
+                                    "vpn": {
+                                        "optionType": "global",
+                                        "value": 39484
+                                    },
+                                    "version": {
+                                        "optionType": "variable",
+                                        "value": "{{Fr_2h94SBW}}"
+                                    },
+                                    "sourceInterface": {
+                                        "optionType": "default"
+                                    },
+                                    "prefer": {
+                                        "optionType": "default",
+                                        "value": false
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "optionType": "variable",
+                                        "value": "{{ntp-server-name}}"
+                                    },
+                                    "key": {
+                                        "optionType": "global",
+                                        "value": 41673
+                                    },
+                                    "vpn": {
+                                        "optionType": "global",
+                                        "value": 39484
+                                    },
+                                    "version": {
+                                        "optionType": "variable",
+                                        "value": "{{Fr_2h94SBW}}"
+                                    },
+                                    "sourceInterface": {
+                                        "optionType": "global",
+                                        "value": "aliqua ut dolore ullamco"
+                                    },
+                                    "prefer": {
+                                        "optionType": "default",
+                                        "value": false
+                                    }
+                                }
+                            ],
+                            "authentication": {
+                                "authenticationKeys": [
+                                    {
+                                        "keyId": {
+                                            "optionType": "variable",
+                                            "value": "{{vHy1bqA}}"
+                                        },
+                                        "md5Value": {
+                                            "optionType": "global",
+                                            "value": "{&BH{vHy1bqA#$%$"
+                                        }
+                                    },
+                                    {
+                                        "keyId": {
+                                            "optionType": "global",
+                                            "value": 49737
+                                        },
+                                        "md5Value": {
+                                            "optionType": "global",
+                                            "value": "Ut ulla"
+                                        }
+                                    }
+                                ],
+                                "trustedKeys": {
+                                    "optionType": "global",
+                                    "value": [
+                                        49737
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "server": [
+                                {
+                                    "name": {
+                                        "optionType": "variable",
+                                        "value": "{{m95__MEIdt}}"
+                                    },
+                                    "vpn": {
+                                        "optionType": "default",
+                                        "value": 0
+                                    },
+                                    "version": {
+                                        "optionType": "global",
+                                        "value": 4
+                                    },
+                                    "prefer": {
+                                        "optionType": "default",
+                                        "value": false
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "optionType": "variable",
+                                        "value": "{{btb66B}}"
+                                    },
+                                    "vpn": {
+                                        "optionType": "default",
+                                        "value": 0
+                                    },
+                                    "version": {
+                                        "optionType": "default",
+                                        "value": 4
+                                    },
+                                    "prefer": {
+                                        "optionType": "global",
+                                        "value": false
+                                    },
+                                    "sourceInterface": {
+                                        "optionType": "default"
+                                    }
+                                }
+                            ]
+                        },
+                        "description": "ntp parcel post payload",
+                        "name": "ntp_parcel_post1"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "name",
+            "data"
+        ],
+        "not": {
+            "required": [
+                "metadata",
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

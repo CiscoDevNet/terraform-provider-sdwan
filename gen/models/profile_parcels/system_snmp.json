@@ -1,0 +1,1504 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/system/snmp/post/request_schema.json",
+        "title": "SNMP Parcel Schema",
+        "description": "SNMP profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "shutdown": {
+                        "description": "Enable or disable SNMP",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean",
+                                        "enum": [
+                                            false
+                                        ]
+                                    },
+                                    "required": [
+                                        "optionType",
+                                        "value"
+                                    ]
+                                },
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "contact": {
+                        "description": "Set the contact for this managed node",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 255
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "location": {
+                        "description": "Set the physical location of this managed node",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "minLength": 1,
+                                        "type": "string",
+                                        "maxLength": 255
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "view": {
+                        "description": "Configure a view record",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Set the name of the SNMP view",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 32
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "oid": {
+                                    "description": "Configure SNMP object identifier",
+                                    "type": "array",
+                                    "uniqueItems": true,
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "description": "Configure identifier of subtree of MIB objects",
+                                                "type": "object",
+                                                "oneOf": [
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "minLength": 1,
+                                                                "type": "string",
+                                                                "pattern": "^(([0-1](\\.[1-3]?[0-9]))|(2\\.(0|([1-9]\\d*))))(\\.(0|\\*|([1-9]\\d*))){0,126}$"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "variable"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                "minLength": 1,
+                                                                "maxLength": 64
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                ]
+                                            },
+                                            "exclude": {
+                                                "description": "Exclude the OID",
+                                                "type": "object",
+                                                "oneOf": [
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "variable"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                "minLength": 1,
+                                                                "maxLength": 64
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    },
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "default"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "boolean",
+                                                                "enum": [
+                                                                    false
+                                                                ]
+                                                            },
+                                                            "required": [
+                                                                "optionType",
+                                                                "value"
+                                                            ]
+                                                        },
+                                                        "additionalProperties": false
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "id"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                }
+                            },
+                            "required": [
+                                "name"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "community": {
+                        "description": "Configure SNMP community",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Set name of the SNMP community",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "pattern": "^[\\S]+$",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "userLabel": {
+                                    "description": "Set user label of the SNMP community",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "view": {
+                                    "description": "Set name of the SNMP view",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "authorization": {
+                                    "description": "Configure access permissions",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "enum": [
+                                                        "read-only",
+                                                        "read-write"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "view"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "group": {
+                        "description": "Configure an SNMP group",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the SNMP group",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 32
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "securityLevel": {
+                                    "description": "Configure security level",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "enum": [
+                                                        "no-auth-no-priv",
+                                                        "auth-no-priv",
+                                                        "auth-priv"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "view": {
+                                    "description": "Name of the SNMP view",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 32
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "securityLevel",
+                                "view"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "user": {
+                        "description": "Configure an SNMP user",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the SNMP user",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 32
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "auth": {
+                                    "description": "Configure authentication protocol",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "enum": [
+                                                        "sha"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "authPassword": {
+                                    "description": "Specify authentication protocol password",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "priv": {
+                                    "description": "Configure privacy protocol",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "enum": [
+                                                        "aes-cfb-128",
+                                                        "aes-256-cfb-128"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "privPassword": {
+                                    "description": "Specify privacy protocol password",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 128
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "group": {
+                                    "description": "Name of the SNMP group",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 32
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "group"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "target": {
+                        "description": "Configure SNMP server to receive SNMP traps",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "vpnId": {
+                                    "description": "Set VPN in which SNMP server is located",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minimum": 0,
+                                                    "maximum": 65530,
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "ip": {
+                                    "description": "Set IPv4/IPv6 address of SNMP server",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "oneOf": [
+                                                        {
+                                                            "format": "ipv4"
+                                                        },
+                                                        {
+                                                            "format": "ipv6"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "port": {
+                                    "description": "Set UDP port number to connect to SNMP server",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minimum": 1,
+                                                    "maximum": 65535,
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "userLabel": {
+                                    "description": "Set user label of the SNMP community",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "communityName": {
+                                    "description": "Set name of the SNMP community. DEPRECATED. Use userLabel field instead",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "user": {
+                                    "description": "Set name of the SNMP user",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 32
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "sourceInterface": {
+                                    "description": "Source interface for outgoing SNMP traps",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string",
+                                                    "maxLength": 32,
+                                                    "pattern": "(^GigabitEthernet|Loopback|TenGigabitEthernet|TwoGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan)(([1-9]\\d|\\d)/){0,2}(0|[1-9]\\d*)([:|\\.][1-9]\\d*)?"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "vpnId",
+                                "ip",
+                                "port"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            },
+            "metadata": {
+                "supportedDeviceTypes": [
+                    "asr",
+                    "c1100",
+                    "c8000be",
+                    "csr1000v",
+                    "ir8100",
+                    "ir8340",
+                    "isr",
+                    "ISRv",
+                    "ir1101"
+                ]
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for SNMP profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "shutdown": {
+                                "optionType": "global",
+                                "value": "false"
+                            },
+                            "contact": {
+                                "optionType": "global",
+                                "value": "wixie.cisco"
+                            },
+                            "location": {
+                                "optionType": "global",
+                                "value": "SHANGHAI"
+                            },
+                            "view": [
+                                {
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "view1"
+                                    }
+                                }
+                            ],
+                            "group": [
+                                {
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "group1"
+                                    },
+                                    "securityLevel": {
+                                        "optionType": "global",
+                                        "value": "auth-priv"
+                                    },
+                                    "view": {
+                                        "optionType": "global",
+                                        "value": "view1"
+                                    }
+                                }
+                            ],
+                            "user": [
+                                {
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "user1"
+                                    },
+                                    "auth": {
+                                        "optionType": "global",
+                                        "value": "sha"
+                                    },
+                                    "authPassword": {
+                                        "optionType": "global",
+                                        "value": "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
+                                    },
+                                    "priv": {
+                                        "optionType": "global",
+                                        "value": "aes-256-cfb-128"
+                                    },
+                                    "privPassword": {
+                                        "optionType": "global",
+                                        "value": "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="
+                                    },
+                                    "group": {
+                                        "optionType": "global",
+                                        "value": "group1"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "user88"
+                                    },
+                                    "auth": {
+                                        "optionType": "global",
+                                        "value": "sha"
+                                    },
+                                    "authPassword": {
+                                        "optionType": "global",
+                                        "value": "$CRYPT_CLUSTER$mZc9N6lykLdGejfoLe2FnA==$VD/lwvFTPc8vHBdu7J6ESA=="
+                                    },
+                                    "priv": {
+                                        "optionType": "global",
+                                        "value": "aes-256-cfb-128"
+                                    },
+                                    "privPassword": {
+                                        "optionType": "global",
+                                        "value": "$CRYPT_CLUSTER$mZc9N6lykLdGejfoLe2FnA==$VD/lwvFTPc8vHBdu7J6ESA=="
+                                    },
+                                    "group": {
+                                        "optionType": "global",
+                                        "value": "group1"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "user-trap"
+                                    },
+                                    "auth": {
+                                        "optionType": "global",
+                                        "value": "sha"
+                                    },
+                                    "authPassword": {
+                                        "optionType": "global",
+                                        "value": "$CRYPT_CLUSTER$pZUhscesCS/2nxog2d1Qkg==$Vs91dCNL5YwlKY8s+mZIyw=="
+                                    },
+                                    "priv": {
+                                        "optionType": "global",
+                                        "value": "aes-cfb-128"
+                                    },
+                                    "privPassword": {
+                                        "optionType": "global",
+                                        "value": "$CRYPT_CLUSTER$pZUhscesCS/2nxog2d1Qkg==$Vs91dCNL5YwlKY8s+mZIyw=="
+                                    },
+                                    "group": {
+                                        "optionType": "global",
+                                        "value": "group1"
+                                    }
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "vpnId": {
+                                        "optionType": "global",
+                                        "value": 0
+                                    },
+                                    "ip": {
+                                        "optionType": "global",
+                                        "value": "10.75.221.156"
+                                    },
+                                    "port": {
+                                        "optionType": "global",
+                                        "value": 161
+                                    },
+                                    "communityName": {
+                                        "optionType": "global",
+                                        "value": "$CRYPT_CLUSTER$1CUTGzvVqJQB8c60K6/+JA==$YP4wAuMRXSuz0h1WKe7TWg=="
+                                    },
+                                    "user": {
+                                        "optionType": "global",
+                                        "value": "user-trap"
+                                    },
+                                    "source-interface": {
+                                        "optionType": "global",
+                                        "value": "GigabitEthernet1"
+                                    }
+                                }
+                            ]
+                        },
+                        "name": "SNMPParcelGlobalDefault"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "data"
+        ],
+        "not": {
+            "required": [
+                "metadata",
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

@@ -1,0 +1,1468 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/system/security/common/request_schema.json",
+        "title": "System Security Feature Schema",
+        "description": "System profile Security feature schema for request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "rekey": {
+                        "description": "Set how often to change the AES key for DTLS connections",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "default": 86400,
+                                        "minimum": 10,
+                                        "maximum": 1209600,
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "integer",
+                                        "minimum": 86400,
+                                        "maximum": 86400
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "replayWindow": {
+                        "description": "Set the sliding replay window size",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "default": "512",
+                                        "enum": [
+                                            "64",
+                                            "128",
+                                            "256",
+                                            "512",
+                                            "1024",
+                                            "2048",
+                                            "4096",
+                                            "8192"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "enum": [
+                                            "512"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "extendedArWindow": {
+                        "description": "Extended Anti-Replay Window",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "default": 256,
+                                        "minimum": 10,
+                                        "maximum": 2048,
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "integer",
+                                        "minimum": 256,
+                                        "maximum": 256
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "integrityType": {
+                        "description": "Set the authentication type for DTLS connections",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "array",
+                                        "uniqueItems": true,
+                                        "minItems": 1,
+                                        "maxItems": 4,
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "esp",
+                                                "ip-udp-esp",
+                                                "none",
+                                                "ip-udp-esp-no-id"
+                                            ]
+                                        },
+                                        "default": [
+                                            "ip-udp-esp",
+                                            "esp"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "pairwiseKeying": {
+                        "description": "Enable or disable IPsec pairwise-keying",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean",
+                                        "enum": [
+                                            false
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "keychain": {
+                        "description": "Configure a Keychain",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Specify the name of the Keychain",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "maxLength": 236
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "id": {
+                                    "description": "Specify the Key ID",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minimum": 0,
+                                                    "maximum": 2147483647,
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "id"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "key": {
+                        "description": "Configure a Key",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "description": "Select the Key ID",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "name": {
+                                    "description": "Select the chain name",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "sendId": {
+                                    "description": "Specify the Send ID",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "default": 0,
+                                                    "minimum": 0,
+                                                    "maximum": 255,
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "recvId": {
+                                    "description": "Specify the Receiver ID",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "default": 0,
+                                                    "minimum": 0,
+                                                    "maximum": 255,
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "includeTcpOptions": {
+                                    "description": "Configure Include TCP Options",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "boolean",
+                                                    "enum": [
+                                                        false
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "acceptAoMismatch": {
+                                    "description": "Configure Accept AO Mismatch",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "boolean",
+                                                    "enum": [
+                                                        false
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "tcp": {
+                                    "description": "Crypto Algorithm",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "enum": [
+                                                        "aes-128-cmac",
+                                                        "hmac-sha-1",
+                                                        "hmac-sha-256"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "keyString": {
+                                    "description": "Specify the Key String",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minLength": 1,
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "variable"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "sendLifetime": {
+                                    "description": "Send Lifetime Settings",
+                                    "type": "object",
+                                    "properties": {
+                                        "local": {
+                                            "description": "Configure Send lifetime Local",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "variable"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                            "minLength": 1,
+                                                            "maxLength": 64
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "boolean",
+                                                            "enum": [
+                                                                false
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "startEpoch": {
+                                            "description": "Configure Key lifetime start time",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "oneOfendChoice": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "infinite": {
+                                                            "description": "Infinite lifetime",
+                                                            "type": "object",
+                                                            "oneOf": [
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "variable"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                            "minLength": 1,
+                                                                            "maxLength": 64
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                },
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "boolean"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                },
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "default"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "boolean",
+                                                                            "enum": [
+                                                                                true
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "infinite"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "duration": {
+                                                            "description": "Send lifetime Duration (seconds)",
+                                                            "type": "object",
+                                                            "oneOf": [
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "minimum": 1,
+                                                                            "maximum": 2147483646,
+                                                                            "type": "integer"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                },
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "variable"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                            "minLength": 1,
+                                                                            "maxLength": 64
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "duration"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "exact": {
+                                                            "description": "Configure Key lifetime end time",
+                                                            "type": "object",
+                                                            "oneOf": [
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "exact"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "startEpoch"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                "acceptLifetime": {
+                                    "description": "Accept Lifetime Settings",
+                                    "type": "object",
+                                    "properties": {
+                                        "local": {
+                                            "description": "Configure Send lifetime Local",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "variable"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "string",
+                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                            "minLength": 1,
+                                                            "maxLength": 64
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "default"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "boolean",
+                                                            "enum": [
+                                                                false
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "startEpoch": {
+                                            "description": "Configure Key lifetime start time",
+                                            "type": "object",
+                                            "oneOf": [
+                                                {
+                                                    "properties": {
+                                                        "optionType": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "global"
+                                                            ]
+                                                        },
+                                                        "value": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "optionType",
+                                                        "value"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        },
+                                        "oneOfendChoice": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "infinite": {
+                                                            "description": "Infinite lifetime",
+                                                            "type": "object",
+                                                            "oneOf": [
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "variable"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                            "minLength": 1,
+                                                                            "maxLength": 64
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                },
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "boolean"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                },
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "default"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "boolean",
+                                                                            "enum": [
+                                                                                true
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "infinite"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "duration": {
+                                                            "description": "Send lifetime Duration (seconds)",
+                                                            "type": "object",
+                                                            "oneOf": [
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "minimum": 1,
+                                                                            "maximum": 2147483646,
+                                                                            "type": "integer"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                },
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "variable"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "string",
+                                                                            "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                            "minLength": 1,
+                                                                            "maxLength": 64
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "duration"
+                                                    ],
+                                                    "additionalProperties": false
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "exact": {
+                                                            "description": "Configure Key lifetime end time",
+                                                            "type": "object",
+                                                            "oneOf": [
+                                                                {
+                                                                    "properties": {
+                                                                        "optionType": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "global"
+                                                                            ]
+                                                                        },
+                                                                        "value": {
+                                                                            "type": "number"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "optionType",
+                                                                        "value"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "exact"
+                                                    ],
+                                                    "additionalProperties": false
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "startEpoch"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "name",
+                                "keyString",
+                                "sendId",
+                                "recvId",
+                                "tcp"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for request schema for System profile Security feature",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "rekey": {
+                                "optionType": "default",
+                                "value": 86400
+                            },
+                            "replayWindow": {
+                                "optionType": "default",
+                                "value": "512"
+                            },
+                            "extendedArWindow": {
+                                "optionType": "default",
+                                "value": 256
+                            },
+                            "integrityType": {
+                                "optionType": "global",
+                                "value": [
+                                    "esp",
+                                    "ip-udp-esp",
+                                    "ip-udp-esp-no-id"
+                                ]
+                            },
+                            "pairwiseKeying": {
+                                "optionType": "default",
+                                "value": false
+                            },
+                            "keychain": [
+                                {
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "aaa"
+                                    },
+                                    "keyid": {
+                                        "optionType": "global",
+                                        "value": 1
+                                    }
+                                }
+                            ],
+                            "key": [
+                                {
+                                    "id": {
+                                        "optionType": "global",
+                                        "value": 0
+                                    },
+                                    "name": {
+                                        "optionType": "global",
+                                        "value": "aaa"
+                                    },
+                                    "sendId": {
+                                        "optionType": "global",
+                                        "value": 1
+                                    },
+                                    "recvId": {
+                                        "optionType": "global",
+                                        "value": 2
+                                    },
+                                    "includeTcpOptions": {
+                                        "optionType": "global",
+                                        "value": false
+                                    },
+                                    "acceptAoMismatch": {
+                                        "optionType": "global",
+                                        "value": false
+                                    },
+                                    "tcp": {
+                                        "optionType": "global",
+                                        "value": "aes-128-cmac"
+                                    },
+                                    "keyString": {
+                                        "optionType": "global",
+                                        "value": "abcabc"
+                                    },
+                                    "sendLifetime": {
+                                        "local": {
+                                            "optionType": "global",
+                                            "value": true
+                                        },
+                                        "startEpoch": {
+                                            "optionType": "global",
+                                            "value": 1659284400
+                                        },
+                                        "oneOfendChoice": {
+                                            "infinite": {
+                                                "optionType": "global",
+                                                "value": true
+                                            }
+                                        }
+                                    },
+                                    "acceptLifetime": {
+                                        "local": {
+                                            "optionType": "global",
+                                            "value": false
+                                        },
+                                        "startEpoch": {
+                                            "optionType": "global",
+                                            "value": 1659284401
+                                        },
+                                        "oneOfendChoice": {
+                                            "duration": {
+                                                "optionType": "global",
+                                                "value": 100000
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "name": "Security"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "data",
+            "name"
+        ],
+        "not": {
+            "required": [
+                "metadata",
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

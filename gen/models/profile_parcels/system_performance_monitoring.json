@@ -1,0 +1,1002 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/system/perfmonitor/post/request_schema.json",
+        "title": "Performance monitoring for application and UMTS(Underlay Measurement & Tracing Service) parcel Schema",
+        "description": "Performance monitoring profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string",
+                "maxLength": 128
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "appPerfMonitorConfig": {
+                        "description": "Application performance Monitoring configuration",
+                        "type": "object",
+                        "properties": {
+                            "enabled": {
+                                "description": "Application performance monitoring enable or disable",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "policyFilters": {
+                                "description": "Application performance Monitoring policy filters, such as application group name.",
+                                "type": "object",
+                                "properties": {
+                                    "appGroups": {
+                                        "description": "Application groups to be monitored",
+                                        "type": "object",
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "array",
+                                                        "uniqueItems": true,
+                                                        "minItems": 1,
+                                                        "maxItems": 71,
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "adp-group",
+                                                                "amazon-group",
+                                                                "aol-group",
+                                                                "apple-group",
+                                                                "apple-talk-group",
+                                                                "atlassian-group",
+                                                                "banyan-group",
+                                                                "bittorrent-group",
+                                                                "box-group",
+                                                                "capwap-group",
+                                                                "cisco-jabber-group",
+                                                                "cisco-phone-group",
+                                                                "concur-group",
+                                                                "corba-group",
+                                                                "dameware-group",
+                                                                "demandware-group",
+                                                                "dropbox-group",
+                                                                "edonkey-emule-group",
+                                                                "espn-group",
+                                                                "fasttrack-group",
+                                                                "flash-group",
+                                                                "fring-group",
+                                                                "ftp-group",
+                                                                "gnutella-group",
+                                                                "google-group",
+                                                                "gotomeeting-group",
+                                                                "hubspot-group",
+                                                                "icq-group",
+                                                                "imap-group",
+                                                                "intuit-group",
+                                                                "ipsec-group",
+                                                                "irc-group",
+                                                                "jive-group",
+                                                                "kakao-group",
+                                                                "kerberos-group",
+                                                                "ldap-group",
+                                                                "marketo-group",
+                                                                "ms-cloud-group",
+                                                                "msn-messenger-group",
+                                                                "netbios-group",
+                                                                "netsuite-group",
+                                                                "nntp-group",
+                                                                "npmp-group",
+                                                                "oracle-group",
+                                                                "pop3-group",
+                                                                "prm-group",
+                                                                "qq-group",
+                                                                "ringcentral-group",
+                                                                "salesforce-group",
+                                                                "sap-group",
+                                                                "servicenow-group",
+                                                                "smtp-group",
+                                                                "snmp-group",
+                                                                "sqlsvr-group",
+                                                                "stun-group",
+                                                                "sugar-crm-group",
+                                                                "telepresence-group",
+                                                                "tftp-group",
+                                                                "tiktok-group",
+                                                                "vmware-group",
+                                                                "vnc-group",
+                                                                "wap-group",
+                                                                "webex-group",
+                                                                "workday-group",
+                                                                "xns-xerox-group",
+                                                                "xunlei-group",
+                                                                "yahoo-group",
+                                                                "yahoo-messenger-group",
+                                                                "zendesk-group",
+                                                                "zoho-crm-group",
+                                                                "other"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "default"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "array",
+                                                        "uniqueItems": true,
+                                                        "minItems": 14,
+                                                        "maxItems": 14,
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "adp-group",
+                                                                "amazon-group",
+                                                                "aol-group",
+                                                                "apple-group",
+                                                                "apple-talk-group",
+                                                                "atlassian-group",
+                                                                "banyan-group",
+                                                                "bittorrent-group",
+                                                                "box-group",
+                                                                "capwap-group",
+                                                                "cisco-jabber-group",
+                                                                "cisco-phone-group",
+                                                                "concur-group",
+                                                                "corba-group",
+                                                                "dameware-group",
+                                                                "demandware-group",
+                                                                "dropbox-group",
+                                                                "edonkey-emule-group",
+                                                                "espn-group",
+                                                                "fasttrack-group",
+                                                                "flash-group",
+                                                                "fring-group",
+                                                                "ftp-group",
+                                                                "gnutella-group",
+                                                                "google-group",
+                                                                "gotomeeting-group",
+                                                                "hubspot-group",
+                                                                "icq-group",
+                                                                "imap-group",
+                                                                "intuit-group",
+                                                                "ipsec-group",
+                                                                "irc-group",
+                                                                "jive-group",
+                                                                "kakao-group",
+                                                                "kerberos-group",
+                                                                "ldap-group",
+                                                                "marketo-group",
+                                                                "ms-cloud-group",
+                                                                "msn-messenger-group",
+                                                                "netbios-group",
+                                                                "netsuite-group",
+                                                                "nntp-group",
+                                                                "npmp-group",
+                                                                "oracle-group",
+                                                                "pop3-group",
+                                                                "prm-group",
+                                                                "qq-group",
+                                                                "ringcentral-group",
+                                                                "salesforce-group",
+                                                                "sap-group",
+                                                                "servicenow-group",
+                                                                "smtp-group",
+                                                                "snmp-group",
+                                                                "sqlsvr-group",
+                                                                "stun-group",
+                                                                "sugar-crm-group",
+                                                                "telepresence-group",
+                                                                "tftp-group",
+                                                                "tiktok-group",
+                                                                "vmware-group",
+                                                                "vnc-group",
+                                                                "wap-group",
+                                                                "webex-group",
+                                                                "workday-group",
+                                                                "xns-xerox-group",
+                                                                "xunlei-group",
+                                                                "yahoo-group",
+                                                                "yahoo-messenger-group",
+                                                                "zendesk-group",
+                                                                "zoho-crm-group",
+                                                                "other"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "appGroups"
+                                ],
+                                "additionalProperties": false
+                            }
+                        },
+                        "required": [
+                            "enabled"
+                        ],
+                        "additionalProperties": false,
+                        "dependencies": {
+                            "policyFilters": {
+                                "properties": {
+                                    "enabled": {
+                                        "type": "object",
+                                        "properties": {
+                                            "optionType": {
+                                                "const": "global"
+                                            },
+                                            "value": {
+                                                "const": true
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "umtsConfig": {
+                        "description": "Underlay Measurement and Tracing Service (UMTS) configuration",
+                        "type": "object",
+                        "properties": {
+                            "monitoringConfig": {
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "description": "UMTS monitoring enable or disable",
+                                        "type": "object",
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "default"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "boolean",
+                                                        "enum": [
+                                                            false
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    },
+                                    "interval": {
+                                        "description": "UMTS monitoring interval(Minutes)",
+                                        "type": "object",
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "description": "Monitoring interval(Minutes)",
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "30",
+                                                            "60"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "default"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "const": "30"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "enabled"
+                                ],
+                                "additionalProperties": false,
+                                "dependencies": {
+                                    "interval": {
+                                        "properties": {
+                                            "enabled": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "optionType": {
+                                                        "const": "global"
+                                                    },
+                                                    "value": {
+                                                        "const": true
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "eventDrivenConfig": {
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "description": "UMTS event driven monitoring enable or disable",
+                                        "type": "object",
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "default"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "boolean",
+                                                        "enum": [
+                                                            false
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    },
+                                    "events": {
+                                        "description": "UMTS events",
+                                        "type": "object",
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "array",
+                                                        "uniqueItems": true,
+                                                        "minItems": 1,
+                                                        "maxItems": 2,
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "SLA_CHANGE",
+                                                                "PMTU_CHANGE"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "default"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "array",
+                                                        "uniqueItems": true,
+                                                        "minItems": 2,
+                                                        "maxItems": 2,
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "SLA_CHANGE",
+                                                                "PMTU_CHANGE"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "enabled"
+                                ],
+                                "additionalProperties": false,
+                                "dependencies": {
+                                    "events": {
+                                        "properties": {
+                                            "enabled": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "optionType": {
+                                                        "const": "global"
+                                                    },
+                                                    "value": {
+                                                        "const": true
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "monitoringConfig",
+                            "eventDrivenConfig"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "required": [
+                    "appPerfMonitorConfig",
+                    "umtsConfig"
+                ],
+                "additionalProperties": false
+            },
+            "metadata": {
+                "supportedDeviceTypes": [
+                    "asr",
+                    "c1100",
+                    "c8000be",
+                    "csr1000v",
+                    "ir8100",
+                    "ir8340",
+                    "isr",
+                    "ISRv",
+                    "ir1101"
+                ],
+                "supportedAppGroups": [
+                    {
+                        "appGroupType": "intuit-group",
+                        "longName": "Intuit"
+                    },
+                    {
+                        "appGroupType": "concur-group",
+                        "longName": "Concur"
+                    },
+                    {
+                        "appGroupType": "oracle-group",
+                        "longName": "Oracle"
+                    },
+                    {
+                        "appGroupType": "amazon-group",
+                        "longName": "Amazon AWS"
+                    },
+                    {
+                        "appGroupType": "salesforce-group",
+                        "longName": "Salesforce"
+                    },
+                    {
+                        "appGroupType": "zendesk-group",
+                        "longName": "Zendesk"
+                    },
+                    {
+                        "appGroupType": "dropbox-group",
+                        "longName": "Dropbox"
+                    },
+                    {
+                        "appGroupType": "sugar-crm-group",
+                        "longName": "Sugar CRM"
+                    },
+                    {
+                        "appGroupType": "ms-cloud-group",
+                        "longName": "Microsoft Cloud"
+                    },
+                    {
+                        "appGroupType": "zoho-crm-group",
+                        "longName": "Zoho CRM"
+                    },
+                    {
+                        "appGroupType": "webex-group",
+                        "longName": "Webex"
+                    },
+                    {
+                        "appGroupType": "google-group",
+                        "longName": "Google Apps"
+                    },
+                    {
+                        "appGroupType": "box-group",
+                        "longName": "Box"
+                    },
+                    {
+                        "appGroupType": "gotomeeting-group",
+                        "longName": "Goto Meeting"
+                    },
+                    {
+                        "appGroupType": "adp-group",
+                        "longName": "ADP"
+                    },
+                    {
+                        "appGroupType": "aol-group",
+                        "longName": "AOL"
+                    },
+                    {
+                        "appGroupType": "apple-group",
+                        "longName": "Apple"
+                    },
+                    {
+                        "appGroupType": "apple-talk-group",
+                        "longName": "Apple talk"
+                    },
+                    {
+                        "appGroupType": "atlassian-group",
+                        "longName": "Atlassian"
+                    },
+                    {
+                        "appGroupType": "banyan-group",
+                        "longName": "Banyan"
+                    },
+                    {
+                        "appGroupType": "bittorrent-group",
+                        "longName": "Bittorrent"
+                    },
+                    {
+                        "appGroupType": "capwap-group",
+                        "longName": "CAPWAP"
+                    },
+                    {
+                        "appGroupType": "cisco-jabber-group",
+                        "longName": "Cisco Jabber"
+                    },
+                    {
+                        "appGroupType": "cisco-phone-group",
+                        "longName": "Cisco Phone"
+                    },
+                    {
+                        "appGroupType": "corba-group",
+                        "longName": "CORBA"
+                    },
+                    {
+                        "appGroupType": "dameware-group",
+                        "longName": "Dameware"
+                    },
+                    {
+                        "appGroupType": "demandware-group",
+                        "longName": "Demandware"
+                    },
+                    {
+                        "appGroupType": "edonkey-emule-group",
+                        "longName": "eDonkey and eMule"
+                    },
+                    {
+                        "appGroupType": "espn-group",
+                        "longName": "ESPN"
+                    },
+                    {
+                        "appGroupType": "fasttrack-group",
+                        "longName": "Fast Track"
+                    },
+                    {
+                        "appGroupType": "flash-group",
+                        "longName": "Flash"
+                    },
+                    {
+                        "appGroupType": "fring-group",
+                        "longName": "Fring"
+                    },
+                    {
+                        "appGroupType": "ftp-group",
+                        "longName": "FTP"
+                    },
+                    {
+                        "appGroupType": "gnutella-group",
+                        "longName": "Gnutella"
+                    },
+                    {
+                        "appGroupType": "hubspot-group",
+                        "longName": "Hubspot"
+                    },
+                    {
+                        "appGroupType": "icq-group",
+                        "longName": "ICQ"
+                    },
+                    {
+                        "appGroupType": "imap-group",
+                        "longName": "IMAP"
+                    },
+                    {
+                        "appGroupType": "ipsec-group",
+                        "longName": "IPSEC"
+                    },
+                    {
+                        "appGroupType": "irc-group",
+                        "longName": "IRC"
+                    },
+                    {
+                        "appGroupType": "jive-group",
+                        "longName": "Jive"
+                    },
+                    {
+                        "appGroupType": "kakao-group",
+                        "longName": "Kakao"
+                    },
+                    {
+                        "appGroupType": "kerberos-group",
+                        "longName": "Kerberos"
+                    },
+                    {
+                        "appGroupType": "ldap-group",
+                        "longName": "LDAP"
+                    },
+                    {
+                        "appGroupType": "marketo-group",
+                        "longName": "Marketo"
+                    },
+                    {
+                        "appGroupType": "msn-messenger-group",
+                        "longName": "MSN Messenger"
+                    },
+                    {
+                        "appGroupType": "netbios-group",
+                        "longName": "NetBIOS"
+                    },
+                    {
+                        "appGroupType": "netsuite-group",
+                        "longName": "NetSuite"
+                    },
+                    {
+                        "appGroupType": "nntp-group",
+                        "longName": "NNTP"
+                    },
+                    {
+                        "appGroupType": "npmp-group",
+                        "longName": "NPMP"
+                    },
+                    {
+                        "appGroupType": "pop3-group",
+                        "longName": "POP3"
+                    },
+                    {
+                        "appGroupType": "prm-group",
+                        "longName": "PRM"
+                    },
+                    {
+                        "appGroupType": "qq-group",
+                        "longName": "Tencent QQ"
+                    },
+                    {
+                        "appGroupType": "ringcentral-group",
+                        "longName": "RingCentral"
+                    },
+                    {
+                        "appGroupType": "sap-group",
+                        "longName": "SAP"
+                    },
+                    {
+                        "appGroupType": "servicenow-group",
+                        "longName": "ServiceNow"
+                    },
+                    {
+                        "appGroupType": "smtp-group",
+                        "longName": "SMTP"
+                    },
+                    {
+                        "appGroupType": "snmp-group",
+                        "longName": "SNMP"
+                    },
+                    {
+                        "appGroupType": "sqlsvr-group",
+                        "longName": "Microsoft SQL Server"
+                    },
+                    {
+                        "appGroupType": "stun-group",
+                        "longName": "STUN"
+                    },
+                    {
+                        "appGroupType": "telepresence-group",
+                        "longName": "Telepresence"
+                    },
+                    {
+                        "appGroupType": "tftp-group",
+                        "longName": "TFTP"
+                    },
+                    {
+                        "appGroupType": "tiktok-group",
+                        "longName": "TikTok"
+                    },
+                    {
+                        "appGroupType": "vmware-group",
+                        "longName": "VMWARE"
+                    },
+                    {
+                        "appGroupType": "vnc-group",
+                        "longName": "VNC"
+                    },
+                    {
+                        "appGroupType": "wap-group",
+                        "longName": "WAP"
+                    },
+                    {
+                        "appGroupType": "workday-group",
+                        "longName": "Workday"
+                    },
+                    {
+                        "appGroupType": "xns-xerox-group",
+                        "longName": "Xerox Network Systems"
+                    },
+                    {
+                        "appGroupType": "xunlei-group",
+                        "longName": "Xunlei"
+                    },
+                    {
+                        "appGroupType": "yahoo-group",
+                        "longName": "Yahoo"
+                    },
+                    {
+                        "appGroupType": "yahoo-messenger-group",
+                        "longName": "Yahoo Messenger"
+                    },
+                    {
+                        "appGroupType": "other",
+                        "longName": "Other Applications"
+                    }
+                ],
+                "defaultEnabledAppGroups": [
+                    "intuit-group",
+                    "concur-group",
+                    "oracle-group",
+                    "amazon-group",
+                    "salesforce-group",
+                    "zendesk-group",
+                    "dropbox-group",
+                    "sugar-crm-group",
+                    "ms-cloud-group",
+                    "zoho-crm-group",
+                    "webex-group",
+                    "google-group",
+                    "box-group",
+                    "gotomeeting-group"
+                ]
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for application and underlay tunnel performance monitoring profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "appPerfMonitorConfig": {
+                                "enabled": {
+                                    "optionType": "global",
+                                    "value": true
+                                },
+                                "policyFilters": {
+                                    "appGroups": {
+                                        "optionType": "global",
+                                        "value": [
+                                            "adp-group",
+                                            "amazon-group",
+                                            "aol-group",
+                                            "apple-group",
+                                            "apple-talk-group",
+                                            "atlassian-group",
+                                            "banyan-group"
+                                        ]
+                                    }
+                                }
+                            },
+                            "umtsConfig": {
+                                "monitoringConfig": {
+                                    "enabled": {
+                                        "optionType": "global",
+                                        "value": true
+                                    },
+                                    "interval": {
+                                        "optionType": "global",
+                                        "value": "30"
+                                    }
+                                },
+                                "eventDrivenConfig": {
+                                    "enabled": {
+                                        "optionType": "global",
+                                        "value": true
+                                    },
+                                    "events": {
+                                        "optionType": "global",
+                                        "value": [
+                                            "SLA_CHANGE",
+                                            "PMTU_CHANGE"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "description": "App Performance and UMTS Monitoring enabled example",
+                        "name": "perfMonitoring"
+                    },
+                    {
+                        "data": {
+                            "appPerfMonitorConfig": {
+                                "enabled": {
+                                    "optionType": "default",
+                                    "value": false
+                                }
+                            },
+                            "umtsConfig": {
+                                "monitoringConfig": {
+                                    "enabled": {
+                                        "optionType": "default",
+                                        "value": false
+                                    }
+                                },
+                                "eventDrivenConfig": {
+                                    "enabled": {
+                                        "optionType": "default",
+                                        "value": false
+                                    }
+                                }
+                            }
+                        },
+                        "description": "App Performance and UMTS Monitoring disabled example(default)",
+                        "name": "perfMonitoring"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "name",
+            "data"
+        ],
+        "not": {
+            "required": [
+                "metadata",
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

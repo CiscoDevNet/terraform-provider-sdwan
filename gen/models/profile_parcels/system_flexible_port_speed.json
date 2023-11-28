@@ -1,0 +1,135 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/system/flexible-port-speed/common/request_schema.json",
+        "title": "Flexible Port Speed Feature Schema",
+        "description": "Flexible Port Speed profile feature schema for request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "portType": {
+                        "description": "port Type",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "default": "12 ports of 1/10GE + 3 ports 40GE",
+                                        "enum": [
+                                            "12 ports of 1/10GE + 3 ports 40GE",
+                                            "8 ports of 1/10GE + 4 ports of 40GE",
+                                            "2 ports of 100 GE",
+                                            "12 ports of 1/10GE + 1 port of 100GE",
+                                            "8 ports of 1/10GE + 1 port of 40GE + 1 port of 100GE",
+                                            "3 ports of 40GE + 1port of 100GE"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "enum": [
+                                            "12 ports of 1/10GE + 3 ports 40GE"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    }
+                },
+                "additionalProperties": false
+            },
+            "metadata": {
+                "supportedDeviceTypes": [
+                    "vedge-C8500-20X6C",
+                    "vedge-C8500-12X4QC"
+                ]
+            },
+            "documentation": {
+                "description": "This is the documentation for request schema for  Flexible Port Speed profile feature",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "portType": {
+                                "optionType": "global",
+                                "value": "12 ports of 1/10GE + 3 ports 40GE"
+                            }
+                        },
+                        "name": "portConfigFeatureGlobalDefault"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "data"
+        ],
+        "not": {
+            "required": [
+                "documentation",
+                "metadata"
+            ]
+        },
+        "additionalProperties": false
+    }
+}
