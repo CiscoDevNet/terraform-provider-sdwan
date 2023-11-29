@@ -1,7 +1,7 @@
 ---
 name: System Banner
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/banner
-minimum_version: 20.12.0
+minimum_version: 20.9.0
 attributes:
   - tf_name: feature_profile_id
     reference: true
