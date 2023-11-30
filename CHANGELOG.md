@@ -7,6 +7,7 @@
 - Add `sdwan_system_aaa_profile_parcel` resource and data source
 - Add `sdwan_system_banner_profile_parcel` resource and data source
 - Add `sdwan_system_bfd_profile_parcel` resource and data source
+- Add `sdwan_dns_security_policy_definition` resource and data source
 
 ## 0.2.11
 

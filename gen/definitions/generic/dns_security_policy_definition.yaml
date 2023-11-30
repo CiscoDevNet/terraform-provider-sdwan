@@ -1,0 +1,119 @@
+---
+name: DNS Security Policy Definition
+rest_endpoint: /template/policy/definition/dnssecurity/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: DNSSecurity
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition.
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition.
+    example: Example
+  - model_name: ref
+    data_path: [definition, localDomainBypassList]
+    tf_name: domain_list_id
+    type: String
+    id: true
+    description: Local domain bypass list ID
+    example: 84f10c9d-def7-45a3-8c64-6df26163c861
+    test_value: sdwan_domain_list_policy_object.test.id
+  - tf_name: domain_list_version
+    tf_only: true
+    type: Version
+    description: Local domain bypass list version
+    exclude_test: true 
+  - model_name: localDomainBypassEnabled
+    data_path: [definition]
+    tf_name: local_domain_bypass_enabled
+    type: Bool
+    description: Should the local domain bypass list be enabled
+    example: false
+  - model_name: matchAllVpn
+    data_path: [definition]
+    tf_name: match_all_vpn
+    type: Bool
+    mandatory: true
+    description: Should use match all VPN
+    example: true
+  - model_name: targetVpns
+    data_path: [definition]
+    tf_name: target_vpns
+    type: StringList
+    description: Only relevant when `match_all_vpn` is `false` 
+    example: 1
+    exclude_test: true
+    attributes:
+      - model_name: vpns
+        tf_name: vpn_ids
+        type: StringList
+        description: VPN ID's separated by Comma 
+        example: 1
+      - model_name: umbrellaDefault
+        tf_name: umbrella_dns_default
+        type: Bool
+        description: Should use umbrella as DNS Server
+        example: true
+      - model_name: dnsServerIP
+        tf_name: custom_dns_server_ip
+        type: String
+        description: Only relevant when `umbrella_dns_default` is `false`
+        example: 1.1.1.1
+      - model_name: localDomainBypassEnabled
+        tf_name: local_domain_bypass_enabled
+        type: Bool
+        description: Should the local domain bypass list be enabled
+        example: false
+  - model_name: dnsCrypt
+    data_path: [definition]
+    tf_name: dnscrypt
+    type: Bool
+    description: Should DNSCrypt be enabled
+    example: true
+  - model_name: umbrellaDefault
+    data_path: [definition]
+    tf_name: umbrella_dns_default
+    type: Bool
+    mandatory: true
+    description: Should use umbrella as DNS Server
+    example: true
+  - model_name: dnsServerIP
+    data_path: [definition]
+    tf_name: custom_dns_server_ip
+    type: String
+    description: Only relevant when `umbrella_dns_default` is `false`
+    example: 1.1.1.1
+    exclude_test: true
+  - model_name: ref
+    data_path: [definition, umbrellaData]
+    tf_name: cisco_sig_credentials_feature_template_id
+    type: String
+    id: true
+    mandatory: true
+    description: Credentials feature template ID
+    example: "841d700a-c5a3-4d49-9de1-4f5fd1478932"
+  - tf_name: cisco_sig_credentials_feature_template_version
+    tf_only: true
+    type: Version
+    description: Credentials feature template version
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_domain_list_policy_object" "test" {
+    name = "TEST_TF"
+    entries = [
+      {
+        domain = ".*.cisco.com"
+      }
+    ]
+  }
