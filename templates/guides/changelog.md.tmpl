@@ -16,6 +16,8 @@ description: |-
 - Add `sdwan_system_aaa_profile_parcel` resource and data source
 - Add `sdwan_system_banner_profile_parcel` resource and data source
 - Add `sdwan_system_bfd_profile_parcel` resource and data source
+- Fix issue with `sdwan_centralized_policy` not accepting all valid parameters
+- Fix issue with `sdwan_custom_control_topology_policy_definition` not accepting all possible values
 
 ## 0.2.11
 
