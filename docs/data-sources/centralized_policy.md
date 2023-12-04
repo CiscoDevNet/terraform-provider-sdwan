@@ -48,6 +48,9 @@ Read-Only:
 Read-Only:
 
 - `direction` (String) Direction
+- `region_ids` (List of String) List of region IDs
+- `region_list_ids` (List of String) List of region list IDs
+- `region_list_version` (List of String) List of region list versions
 - `site_list_ids` (List of String) List of site list IDs
 - `site_list_versions` (List of String) List of site list versions
 - `vpn_list_ids` (List of String) List of VPN list IDs

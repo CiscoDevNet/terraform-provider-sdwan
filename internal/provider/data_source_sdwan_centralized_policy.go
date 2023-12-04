@@ -116,6 +116,21 @@ func (d *CentralizedPolicyDataSource) Schema(ctx context.Context, req datasource
 										MarkdownDescription: "Direction",
 										Computed:            true,
 									},
+									"region_list_ids": schema.ListAttribute{
+										MarkdownDescription: "List of region list IDs",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"region_list_version": schema.ListAttribute{
+										MarkdownDescription: "List of region list versions",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"region_ids": schema.ListAttribute{
+										MarkdownDescription: "List of region IDs",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 								},
 							},
 						},

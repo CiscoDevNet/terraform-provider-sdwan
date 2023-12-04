@@ -65,7 +65,6 @@ attributes:
             tf_name: site_list_ids
             type: StringList
             id: true
-            mandatory: true
             description: List of site list IDs
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
             test_value: "[sdwan_site_list_policy_object.sites1.id]"
@@ -77,6 +76,7 @@ attributes:
           - model_name: vpnLists
             tf_name: vpn_list_ids
             type: StringList
+            id: true
             description: List of VPN list IDs
             example: 7d0c2444-8743-4414-add0-866945ea9f70
             test_value: "[sdwan_vpn_list_policy_object.vpns1.id]"
@@ -88,9 +88,27 @@ attributes:
           - model_name: direction
             tf_name: direction
             type: String
-            enum_values: [service, tunnel, all]
+            enum_values: [service, tunnel, all, in, out]
             description: Direction
             example: service
+          - model_name: regionLists
+            tf_name: region_list_ids
+            type: StringList
+            id: true
+            description: List of region list IDs
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: region_list_version
+            tf_only: true
+            type: Versions
+            description: List of region list versions
+            exclude_test: true
+          - model_name: regionIds
+            tf_name: region_ids
+            type: StringList
+            description: List of region IDs
+            example: 1
+            exclude_test: true
 
 test_prerequisites: |
   resource "sdwan_site_list_policy_object" "sites1" {

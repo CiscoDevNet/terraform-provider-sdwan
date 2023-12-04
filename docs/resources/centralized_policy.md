@@ -66,14 +66,14 @@ Optional:
 <a id="nestedatt--definitions--entries"></a>
 ### Nested Schema for `definitions.entries`
 
-Required:
-
-- `site_list_ids` (List of String) List of site list IDs
-
 Optional:
 
 - `direction` (String) Direction
-  - Choices: `service`, `tunnel`, `all`
+  - Choices: `service`, `tunnel`, `all`, `in`, `out`
+- `region_ids` (List of String) List of region IDs
+- `region_list_ids` (List of String) List of region list IDs
+- `region_list_version` (List of String) List of region list versions
+- `site_list_ids` (List of String) List of site list IDs
 - `site_list_versions` (List of String) List of site list versions
 - `vpn_list_ids` (List of String) List of VPN list IDs
 - `vpn_list_versions` (List of String) List of VPN list versions

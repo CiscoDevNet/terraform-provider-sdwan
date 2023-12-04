@@ -45,11 +45,14 @@ type CentralizedPolicyDefinitions struct {
 }
 
 type CentralizedPolicyDefinitionsEntries struct {
-	SiteListIds      types.List   `tfsdk:"site_list_ids"`
-	SiteListVersions types.List   `tfsdk:"site_list_versions"`
-	VpnListIds       types.List   `tfsdk:"vpn_list_ids"`
-	VpnListVersions  types.List   `tfsdk:"vpn_list_versions"`
-	Direction        types.String `tfsdk:"direction"`
+	SiteListIds       types.List   `tfsdk:"site_list_ids"`
+	SiteListVersions  types.List   `tfsdk:"site_list_versions"`
+	VpnListIds        types.List   `tfsdk:"vpn_list_ids"`
+	VpnListVersions   types.List   `tfsdk:"vpn_list_versions"`
+	Direction         types.String `tfsdk:"direction"`
+	RegionListIds     types.List   `tfsdk:"region_list_ids"`
+	RegionListVersion types.List   `tfsdk:"region_list_version"`
+	RegionIds         types.List   `tfsdk:"region_ids"`
 }
 
 func (data CentralizedPolicy) toBody(ctx context.Context) string {
@@ -87,6 +90,16 @@ func (data CentralizedPolicy) toBody(ctx context.Context) string {
 					}
 					if !childItem.Direction.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "direction", childItem.Direction.ValueString())
+					}
+					if !childItem.RegionListIds.IsNull() {
+						var values []string
+						childItem.RegionListIds.ElementsAs(ctx, &values, false)
+						itemChildBody, _ = sjson.Set(itemChildBody, "regionLists", values)
+					}
+					if !childItem.RegionIds.IsNull() {
+						var values []string
+						childItem.RegionIds.ElementsAs(ctx, &values, false)
+						itemChildBody, _ = sjson.Set(itemChildBody, "regionIds", values)
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "entries.-1", itemChildBody)
 				}
@@ -142,6 +155,16 @@ func (data *CentralizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 					} else {
 						cItem.Direction = types.StringNull()
 					}
+					if ccValue := cv.Get("regionLists"); ccValue.Exists() {
+						cItem.RegionListIds = helpers.GetStringList(ccValue.Array())
+					} else {
+						cItem.RegionListIds = types.ListNull(types.StringType)
+					}
+					if ccValue := cv.Get("regionIds"); ccValue.Exists() {
+						cItem.RegionIds = helpers.GetStringList(ccValue.Array())
+					} else {
+						cItem.RegionIds = types.ListNull(types.StringType)
+					}
 					item.Entries = append(item.Entries, cItem)
 					return true
 				})
@@ -184,6 +207,12 @@ func (data *CentralizedPolicy) hasChanges(ctx context.Context, state *Centralize
 					if !data.Definitions[i].Entries[ii].Direction.Equal(state.Definitions[i].Entries[ii].Direction) {
 						hasChanges = true
 					}
+					if !data.Definitions[i].Entries[ii].RegionListIds.Equal(state.Definitions[i].Entries[ii].RegionListIds) {
+						hasChanges = true
+					}
+					if !data.Definitions[i].Entries[ii].RegionIds.Equal(state.Definitions[i].Entries[ii].RegionIds) {
+						hasChanges = true
+					}
 				}
 			}
 		}
@@ -208,11 +237,11 @@ func (data *CentralizedPolicy) updateVersions(ctx context.Context, state *Centra
 			data.Definitions[i].Version = types.Int64Null()
 		}
 		for ii := range data.Definitions[i].Entries {
-			cDataKeys := [...]string{fmt.Sprintf("%v", data.Definitions[i].Entries[ii].SiteListIds.String())}
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Definitions[i].Entries[ii].SiteListIds.String()), fmt.Sprintf("%v", data.Definitions[i].Entries[ii].VpnListIds.String()), fmt.Sprintf("%v", data.Definitions[i].Entries[ii].RegionListIds.String())}
 			cStateIndex := -1
 			if stateIndex > -1 {
 				for jj := range state.Definitions[stateIndex].Entries {
-					cStateKeys := [...]string{fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].SiteListIds.String())}
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].SiteListIds.String()), fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].VpnListIds.String()), fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].RegionListIds.String())}
 					if cDataKeys == cStateKeys {
 						cStateIndex = jj
 						break
@@ -228,6 +257,11 @@ func (data *CentralizedPolicy) updateVersions(ctx context.Context, state *Centra
 				data.Definitions[i].Entries[ii].VpnListVersions = state.Definitions[stateIndex].Entries[cStateIndex].VpnListVersions
 			} else {
 				data.Definitions[i].Entries[ii].VpnListVersions = types.ListNull(types.StringType)
+			}
+			if cStateIndex > -1 && !state.Definitions[stateIndex].Entries[cStateIndex].RegionListVersion.IsNull() {
+				data.Definitions[i].Entries[ii].RegionListVersion = state.Definitions[stateIndex].Entries[cStateIndex].RegionListVersion
+			} else {
+				data.Definitions[i].Entries[ii].RegionListVersion = types.ListNull(types.StringType)
 			}
 		}
 	}
