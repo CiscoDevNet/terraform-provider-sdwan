@@ -212,7 +212,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyTypeVariable.ValueString())
 			} else if childItem.KeyType.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", "")
+
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
@@ -240,7 +240,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
 		} else if item.SourceInterface.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", "")
+
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
@@ -305,14 +305,14 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyVariable.ValueString())
 			} else if childItem.SecretKey.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", "")
+
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
 			}
 			if childItem.KeyEnum.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", "")
+
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
@@ -351,7 +351,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
 		} else if item.SourceInterface.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", "")
+
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
@@ -398,7 +398,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			}
 			if childItem.KeyEnum.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", "")
+
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
@@ -419,7 +419,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		}
 		if item.Level.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "level.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "level.value", "")
+
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "level.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "level.value", item.Level.ValueString())
