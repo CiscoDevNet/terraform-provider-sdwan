@@ -1,0 +1,86 @@
+---
+name: System Global
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/global
+minimum_version: 20.9.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: servicesGlobalServicesIpHttpServer
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: servicesGlobalServicesIpHttpsServer
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: servicesGlobalServicesIpFtpPassive
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: servicesGlobalServicesIpDomainLookup
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: servicesGlobalServicesIpArpProxy
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: servicesGlobalServicesIpRcmd
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: servicesGlobalServicesIpLineVty
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: servicesGlobalServicesIpCdp
+    data_path: [services_global, services_ip]
+    example: true
+  - model_name: servicesGlobalServicesIpLldp
+    data_path: [services_global, services_ip]
+    example: true
+  - model_name: servicesGlobalServicesIpSourceIntrf
+    data_path: [services_global, services_ip]
+    example: GigabitEthernet0/0/1
+  - model_name: globalOtherSettingsTcpKeepalivesIn
+    data_path: [services_global, services_ip]
+    example: true
+  - model_name: globalOtherSettingsTcpKeepalivesOut
+    data_path: [services_global, services_ip]
+    example: true
+  - model_name: globalOtherSettingsTcpSmallServers
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: globalOtherSettingsUdpSmallServers
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: globalOtherSettingsConsoleLogging
+    data_path: [services_global, services_ip]
+    example: true
+  - model_name: globalOtherSettingsIPSourceRoute
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: globalOtherSettingsVtyLineLogging
+    data_path: [services_global, services_ip]
+    example: false
+  - model_name: globalOtherSettingsSnmpIfindexPersist
+    data_path: [services_global, services_ip]
+    example: true
+  - model_name: globalOtherSettingsIgnoreBootp
+    data_path: [services_global, services_ip]
+    example: true
+  - model_name: globalSettingsNat64UdpTimeout
+    data_path: [services_global, services_ip]
+    example: 300
+  - model_name: globalSettingsNat64TcpTimeout
+    data_path: [services_global, services_ip]
+    example: 3600
+  - model_name: globalSettingsHttpAuthentication
+    data_path: [services_global, services_ip]
+    example: "aaa"
+  - model_name: globalSettingsSSHVersion
+    data_path: [services_global, services_ip]
+    example: "2"
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
