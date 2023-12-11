@@ -690,6 +690,26 @@ attributes:
                 description: Service TLOC IP address
                 example: 1.2.3.4
                 exclude_test: true
+              - model_name: local
+                data_path: [value]
+                tf_name: service_tloc_local
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                description: Service TLOC Local, Any value (including an empty string) will enable this feature
+                example: ""
+                exclude_test: true
+              - model_name: restrict
+                data_path: [value]
+                tf_name: service_tloc_restrict
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                description: Service TLOC Restrict, Any value (including an empty string) will enable this feature
+                example: ""
+                exclude_test: true
               - model_name: color
                 data_path: [value, tloc]
                 tf_name: service_tloc_color

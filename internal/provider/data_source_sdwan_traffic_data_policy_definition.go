@@ -356,6 +356,14 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 													MarkdownDescription: "Service TLOC IP address",
 													Computed:            true,
 												},
+												"service_tloc_local": schema.StringAttribute{
+													MarkdownDescription: "Service TLOC Local, Any value (including an empty string) will enable this feature",
+													Computed:            true,
+												},
+												"service_tloc_restrict": schema.StringAttribute{
+													MarkdownDescription: "Service TLOC Restrict, Any value (including an empty string) will enable this feature",
+													Computed:            true,
+												},
 												"service_tloc_color": schema.StringAttribute{
 													MarkdownDescription: "Service TLOC color",
 													Computed:            true,

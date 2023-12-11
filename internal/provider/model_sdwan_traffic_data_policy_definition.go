@@ -115,6 +115,8 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	ServiceTlocListId              types.String `tfsdk:"service_tloc_list_id"`
 	ServiceTlocListVersion         types.Int64  `tfsdk:"service_tloc_list_version"`
 	ServiceTlocIp                  types.String `tfsdk:"service_tloc_ip"`
+	ServiceTlocLocal               types.String `tfsdk:"service_tloc_local"`
+	ServiceTlocRestrict            types.String `tfsdk:"service_tloc_restrict"`
 	ServiceTlocColor               types.String `tfsdk:"service_tloc_color"`
 	ServiceTlocEncapsulation       types.String `tfsdk:"service_tloc_encapsulation"`
 	VpnId                          types.Int64  `tfsdk:"vpn_id"`
@@ -358,6 +360,12 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							}
 							if !childChildItem.ServiceTlocIp.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.ip", childChildItem.ServiceTlocIp.ValueString())
+							}
+							if !childChildItem.ServiceTlocLocal.IsNull() && childChildItem.Type.ValueString() == "service" {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", childChildItem.ServiceTlocLocal.ValueString())
+							}
+							if !childChildItem.ServiceTlocRestrict.IsNull() && childChildItem.Type.ValueString() == "service" {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", childChildItem.ServiceTlocRestrict.ValueString())
 							}
 							if !childChildItem.ServiceTlocColor.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.color", childChildItem.ServiceTlocColor.ValueString())
@@ -754,6 +762,16 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							} else {
 								ccItem.ServiceTlocIp = types.StringNull()
 							}
+							if cccValue := ccv.Get("value.local"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
+								ccItem.ServiceTlocLocal = types.StringValue(cccValue.String())
+							} else {
+								ccItem.ServiceTlocLocal = types.StringNull()
+							}
+							if cccValue := ccv.Get("value.restrict"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
+								ccItem.ServiceTlocRestrict = types.StringValue(cccValue.String())
+							} else {
+								ccItem.ServiceTlocRestrict = types.StringNull()
+							}
 							if cccValue := ccv.Get("value.tloc.color"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocColor = types.StringValue(cccValue.String())
 							} else {
@@ -1009,6 +1027,12 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 								hasChanges = true
 							}
 							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocIp.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocIp) {
+								hasChanges = true
+							}
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocLocal.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocLocal) {
+								hasChanges = true
+							}
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocRestrict.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocRestrict) {
 								hasChanges = true
 							}
 							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocColor.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocColor) {
