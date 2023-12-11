@@ -137,7 +137,7 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"region_list_version": schema.ListAttribute{
+									"region_list_versions": schema.ListAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of region list versions").String,
 										ElementType:         types.StringType,
 										Optional:            true,

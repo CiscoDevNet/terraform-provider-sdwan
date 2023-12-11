@@ -121,7 +121,7 @@ func (d *CentralizedPolicyDataSource) Schema(ctx context.Context, req datasource
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"region_list_version": schema.ListAttribute{
+									"region_list_versions": schema.ListAttribute{
 										MarkdownDescription: "List of region list versions",
 										ElementType:         types.StringType,
 										Computed:            true,

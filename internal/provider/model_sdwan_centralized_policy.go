@@ -45,14 +45,14 @@ type CentralizedPolicyDefinitions struct {
 }
 
 type CentralizedPolicyDefinitionsEntries struct {
-	SiteListIds       types.List   `tfsdk:"site_list_ids"`
-	SiteListVersions  types.List   `tfsdk:"site_list_versions"`
-	VpnListIds        types.List   `tfsdk:"vpn_list_ids"`
-	VpnListVersions   types.List   `tfsdk:"vpn_list_versions"`
-	Direction         types.String `tfsdk:"direction"`
-	RegionListIds     types.List   `tfsdk:"region_list_ids"`
-	RegionListVersion types.List   `tfsdk:"region_list_version"`
-	RegionIds         types.List   `tfsdk:"region_ids"`
+	SiteListIds        types.List   `tfsdk:"site_list_ids"`
+	SiteListVersions   types.List   `tfsdk:"site_list_versions"`
+	VpnListIds         types.List   `tfsdk:"vpn_list_ids"`
+	VpnListVersions    types.List   `tfsdk:"vpn_list_versions"`
+	Direction          types.String `tfsdk:"direction"`
+	RegionListIds      types.List   `tfsdk:"region_list_ids"`
+	RegionListVersions types.List   `tfsdk:"region_list_versions"`
+	RegionIds          types.List   `tfsdk:"region_ids"`
 }
 
 func (data CentralizedPolicy) toBody(ctx context.Context) string {
@@ -258,10 +258,10 @@ func (data *CentralizedPolicy) updateVersions(ctx context.Context, state *Centra
 			} else {
 				data.Definitions[i].Entries[ii].VpnListVersions = types.ListNull(types.StringType)
 			}
-			if cStateIndex > -1 && !state.Definitions[stateIndex].Entries[cStateIndex].RegionListVersion.IsNull() {
-				data.Definitions[i].Entries[ii].RegionListVersion = state.Definitions[stateIndex].Entries[cStateIndex].RegionListVersion
+			if cStateIndex > -1 && !state.Definitions[stateIndex].Entries[cStateIndex].RegionListVersions.IsNull() {
+				data.Definitions[i].Entries[ii].RegionListVersions = state.Definitions[stateIndex].Entries[cStateIndex].RegionListVersions
 			} else {
-				data.Definitions[i].Entries[ii].RegionListVersion = types.ListNull(types.StringType)
+				data.Definitions[i].Entries[ii].RegionListVersions = types.ListNull(types.StringType)
 			}
 		}
 	}
