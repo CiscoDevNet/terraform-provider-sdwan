@@ -178,12 +178,9 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 											stringvalidator.OneOf("low", "high"),
 										},
 									},
-									"protocol": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("IP Protocol").AddIntegerRangeDescription(0, 255).String,
+									"protocol": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("IP Protocol, 0-255 (Single value or multiple values separated by spaces)").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 255),
-										},
 									},
 									"source_data_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source Data Prefix list ID").String,
@@ -197,12 +194,9 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("Source IP").String,
 										Optional:            true,
 									},
-									"source_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source port").AddIntegerRangeDescription(0, 65535).String,
+									"source_port": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source port, 0-65535 (Single value, range or multiple values separated by spaces)").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 65535),
-										},
 									},
 									"destination_data_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Data Prefix list ID").String,
@@ -216,12 +210,9 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("Destination IP").String,
 										Optional:            true,
 									},
-									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination port").AddIntegerRangeDescription(0, 65535).String,
+									"destination_port": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination port, 0-65535 (Single value, range or multiple values separated by spaces)").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 65535),
-										},
 									},
 									"destination_region": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination region").AddStringEnumDescription("primary-region", "secondary-region", "other-region").String,

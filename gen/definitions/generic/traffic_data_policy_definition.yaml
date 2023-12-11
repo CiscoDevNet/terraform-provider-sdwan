@@ -175,11 +175,8 @@ attributes:
             conditional_attribute:
               name: type
               value: protocol
-            type: Int64
-            model_type_string: true
-            description: IP Protocol
-            min_int: 0
-            max_int: 255
+            type: String
+            description: IP Protocol, 0-255 (Single value or multiple values separated by spaces)
             example: 10
             exclude_test: true
           - model_name: ref
@@ -210,11 +207,8 @@ attributes:
             conditional_attribute:
               name: type
               value: sourcePort
-            type: Int64
-            model_type_string: true
-            description: Source port
-            min_int: 0
-            max_int: 65535
+            type: String
+            description: Source port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 10
             exclude_test: true
           - model_name: ref
@@ -245,11 +239,8 @@ attributes:
             conditional_attribute:
               name: type
               value: destinationPort
-            type: Int64
-            model_type_string: true
-            description: Destination port
-            min_int: 0
-            max_int: 65535
+            type: String
+            description: Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 100
             exclude_test: true
           - model_name: value
