@@ -12,7 +12,7 @@ require (
 	github.com/netascode/go-sdwan v0.1.4
 	github.com/tidwall/gjson v1.17.0
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/tools v0.16.0
+	golang.org/x/tools v0.16.1
 	gopkg.in/yaml.v3 v3.0.1
 )
 
