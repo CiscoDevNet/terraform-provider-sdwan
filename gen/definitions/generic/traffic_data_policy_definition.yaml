@@ -107,6 +107,7 @@ attributes:
             type: String
             description: Application list ID
             example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
+            test_value: sdwan_application_list_policy_object.test.id
           - tf_name: application_list_version
             tf_only: true
             type: Version
@@ -783,3 +784,13 @@ attributes:
                 description: Fallback
                 example: true
                 exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_application_list_policy_object" "test" {
+    name = "TF_TEST"
+    entries = [
+      {
+        application = "netflix"
+      }
+    ]
+  }
