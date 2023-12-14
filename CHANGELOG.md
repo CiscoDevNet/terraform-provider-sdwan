@@ -8,6 +8,7 @@
 - Add `sdwan_system_banner_profile_parcel` resource and data source
 - Add `sdwan_system_bfd_profile_parcel` resource and data source
 - BREAKING CHANGE: convert `protocol`, `source_port`, `destination_port` attribute of `sdwan_traffic_data_policy_definition` to Strings to support multiple values
+- Fix issue with `sdwan_traffic_data_policy_definition` not supporting local and restrict options
 
 ## 0.2.11
 
