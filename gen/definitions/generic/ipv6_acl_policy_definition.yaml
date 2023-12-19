@@ -1,0 +1,329 @@
+---
+name: IPv6 ACL Policy Definition
+rest_endpoint: /template/policy/definition/aclv6/
+has_version: true
+id_attribute: definitionId
+doc_category: Localized Policies
+attributes:
+  - model_name: type
+    type: String
+    value: aclv6
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
+  - model_name: type
+    tf_name: default_action
+    data_path: [defaultAction]
+    type: String
+    enum_values: [accept, drop]
+    description: Default action, either `accept` or `drop`
+    example: drop
+  - model_name: sequences
+    type: List
+    mandatory: true
+    description: List of ACL sequences
+    attributes:
+      - model_name: sequenceId
+        tf_name: id
+        type: Int64
+        id: true
+        mandatory: true
+        description: Sequence ID
+        min_int: 1
+        max_int: 65534
+        example: 10
+      - model_name: sequenceName
+        tf_name: name
+        id: true
+        mandatory: true
+        type: String
+        description: Sequence name
+        example: Sequence 10
+      - model_name: sequenceType
+        type: String
+        value: aclv6
+      - model_name: sequenceIpType
+        type: String
+        value: ipv6
+      - model_name: baseAction
+        tf_name: base_action
+        type: String
+        enum_values: [accept, drop]
+        description: Base action, either `accept` or `drop`
+        example: accept
+      - model_name: entries
+        data_path: [match]
+        tf_name: match_entries
+        type: List
+        description: List of match entries
+        attributes:
+          - model_name: field
+            tf_name: type
+            type: String
+            id: true
+            mandatory: true
+            enum_values:
+              [
+                nextHeader,
+                sourceIpv6,
+                destinationIpv6,
+                class,
+                packetLength,
+                plp,
+                sourcePort,
+                destinationPort,
+                sourceDataIpv6PrefixList,
+                destinationDataIpv6PrefixList,
+                tcp,
+              ]
+            description: Type of match entry
+            example: nextHeader
+          - model_name: value
+            tf_name: next_header
+            conditional_attribute:
+              name: type
+              value: nextHeader
+            type: Int64
+            model_type_string: true
+            min_int: 0
+            max_int: 255
+            description: Next header
+            example: 1
+          - model_name: value
+            tf_name: source_ip
+            conditional_attribute:
+              name: type
+              value: sourceIpv6
+            type: String
+            description: Source IPv6 prefix
+            exclude_test: true
+            example: 2001::/8
+          - model_name: value
+            tf_name: destination_ip
+            conditional_attribute:
+              name: type
+              value: destinationIpv6
+            type: String
+            description: Destination IPv6 prefix
+            exclude_test: true
+            example: 2001::/8
+          - model_name: ref
+            tf_name: class_map_id
+            conditional_attribute:
+              name: type
+              value: class
+            type: String
+            description: Class map ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: class_map_version
+            tf_only: true
+            type: Version
+            description: Class map version
+            exclude_test: true
+          - model_name: value
+            tf_name: packet_length
+            conditional_attribute:
+              name: type
+              value: packetLength
+            type: Int64
+            model_type_string: true
+            description: Packet length
+            exclude_test: true
+            min_int: 0
+            max_int: 65535
+            example: 1500
+          - model_name: value
+            tf_name: priority
+            conditional_attribute:
+              name: type
+              value: plp
+            type: String
+            enum_values: [high, low]
+            description: PLP - priority
+            exclude_test: true
+            example: high
+          - model_name: value
+            tf_name: source_port
+            conditional_attribute:
+              name: type
+              value: sourcePort
+            type: Int64
+            model_type_string: true
+            description: Source port
+            exclude_test: true
+            min_int: 0
+            max_int: 65535
+            example: 8000
+          - model_name: value
+            tf_name: destination_port
+            conditional_attribute:
+              name: type
+              value: destinationPort
+            type: Int64
+            model_type_string: true
+            description: Destination port
+            exclude_test: true
+            min_int: 0
+            max_int: 65535
+            example: 9000
+          - model_name: ref
+            tf_name: source_data_ipv6_prefix_list_id
+            conditional_attribute:
+              name: type
+              value: sourceDataIpv6PrefixList
+            type: String
+            description: Source data IPv6 prefix list ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: source_data_ipv6_prefix_list_version
+            tf_only: true
+            type: Version
+            description: Source data IPv6 prefix list version
+            exclude_test: true
+          - model_name: ref
+            tf_name: destination_data_ipv6_prefix_list_id
+            conditional_attribute:
+              name: type
+              value: destinationDataIpv6PrefixList
+            type: String
+            description: Destination dataIPv6 prefix list ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: destination_data_ipv6_prefix_list_version
+            tf_only: true
+            type: Version
+            description: Destination data prefix list version
+            exclude_test: true
+          - model_name: value
+            tf_name: tcp
+            conditional_attribute:
+              name: type
+              value: tcp
+            type: String
+            enum_values: [syn]
+            description: TCP parameters
+            exclude_test: true
+            example: syn
+      - model_name: actions
+        tf_name: action_entries
+        type: List
+        description: List of action entries
+        attributes:
+          - model_name: type
+            tf_name: type
+            type: String
+            id: true
+            mandatory: true
+            enum_values: [class, count, set, log, mirror, policer]
+            description: Type of action entry
+            example: set
+          - model_name: ref
+            data_path: [parameter]
+            tf_name: class_map_id
+            conditional_attribute:
+              name: type
+              value: class
+            type: String
+            description: Class map ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: class_map_version
+            tf_only: true
+            type: Version
+            description: Class map version
+            exclude_test: true
+          - model_name: parameter
+            tf_name: counter_name
+            conditional_attribute:
+              name: type
+              value: count
+            type: String
+            description: Counter name
+            exclude_test: true
+            example: count1
+          - model_name: parameter
+            tf_name: log
+            conditional_attribute:
+              name: type
+              value: log
+            type: Bool
+            bool_empty_string: true
+            description: Enable logging
+            example: true
+            exclude_test: true
+          - model_name: ref
+            data_path: [parameter]
+            tf_name: mirror_id
+            conditional_attribute:
+              name: type
+              value: mirror
+            type: String
+            description: Mirror ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: mirror_version
+            tf_only: true
+            type: Version
+            description: Mirror version
+            exclude_test: true
+          - model_name: ref
+            data_path: [parameter]
+            tf_name: policer_id
+            conditional_attribute:
+              name: type
+              value: policer
+            type: String
+            description: Policer ID
+            exclude_test: true
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+          - tf_name: policer_version
+            tf_only: true
+            type: Version
+            description: Policer version
+            exclude_test: true
+          - model_name: parameter
+            tf_name: set_parameters
+            conditional_attribute:
+              name: type
+              value: set
+            type: List
+            description: List of set parameters
+            attributes:
+              - model_name: field
+                tf_name: type
+                type: String
+                id: true
+                mandatory: true
+                enum_values: [trafficClass, nextHop]
+                description: Type of set parameter
+                example: trafficClass
+              - model_name: value
+                tf_name: traffic_class
+                conditional_attribute:
+                  name: type
+                  value: trafficClass
+                type: Int64
+                model_type_string: true
+                description: Traffic class
+                min_int: 0
+                max_int: 63
+                example: 16
+              - model_name: value
+                tf_name: next_hop
+                conditional_attribute:
+                  name: type
+                  value: nextHop
+                type: String
+                description: Next hop IP
+                example: 2001::1
+                exclude_test: true
