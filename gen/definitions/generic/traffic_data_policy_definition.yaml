@@ -697,9 +697,10 @@ attributes:
                 conditional_attribute:
                   name: type
                   value: service
-                type: String
-                description: Service TLOC Local, Any value (including an empty string) will enable this feature
-                example: ""
+                type: Bool
+                bool_empty_string: true
+                description: Service TLOC Local
+                example: true
                 exclude_test: true
               - model_name: restrict
                 data_path: [value]
@@ -707,9 +708,10 @@ attributes:
                 conditional_attribute:
                   name: type
                   value: service
-                type: String
-                description: Service TLOC Restrict, Any value (including an empty string) will enable this feature
-                example: ""
+                type: Bool
+                bool_empty_string: true
+                description: Service TLOC Restrict
+                example: true
                 exclude_test: true
               - model_name: color
                 data_path: [value, tloc]

@@ -115,8 +115,8 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	ServiceTlocListId              types.String `tfsdk:"service_tloc_list_id"`
 	ServiceTlocListVersion         types.Int64  `tfsdk:"service_tloc_list_version"`
 	ServiceTlocIp                  types.String `tfsdk:"service_tloc_ip"`
-	ServiceTlocLocal               types.String `tfsdk:"service_tloc_local"`
-	ServiceTlocRestrict            types.String `tfsdk:"service_tloc_restrict"`
+	ServiceTlocLocal               types.Bool   `tfsdk:"service_tloc_local"`
+	ServiceTlocRestrict            types.Bool   `tfsdk:"service_tloc_restrict"`
 	ServiceTlocColor               types.String `tfsdk:"service_tloc_color"`
 	ServiceTlocEncapsulation       types.String `tfsdk:"service_tloc_encapsulation"`
 	VpnId                          types.Int64  `tfsdk:"vpn_id"`
@@ -362,10 +362,18 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.ip", childChildItem.ServiceTlocIp.ValueString())
 							}
 							if !childChildItem.ServiceTlocLocal.IsNull() && childChildItem.Type.ValueString() == "service" {
-								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", childChildItem.ServiceTlocLocal.ValueString())
+								if true && childChildItem.ServiceTlocLocal.ValueBool() {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", "")
+								} else {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", childChildItem.ServiceTlocLocal.ValueBool())
+								}
 							}
 							if !childChildItem.ServiceTlocRestrict.IsNull() && childChildItem.Type.ValueString() == "service" {
-								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", childChildItem.ServiceTlocRestrict.ValueString())
+								if true && childChildItem.ServiceTlocRestrict.ValueBool() {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", "")
+								} else {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", childChildItem.ServiceTlocRestrict.ValueBool())
+								}
 							}
 							if !childChildItem.ServiceTlocColor.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.color", childChildItem.ServiceTlocColor.ValueString())
@@ -763,14 +771,22 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 								ccItem.ServiceTlocIp = types.StringNull()
 							}
 							if cccValue := ccv.Get("value.local"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
-								ccItem.ServiceTlocLocal = types.StringValue(cccValue.String())
+								if true && cccValue.String() == "" {
+									ccItem.ServiceTlocLocal = types.BoolValue(true)
+								} else {
+									ccItem.ServiceTlocLocal = types.BoolValue(cccValue.Bool())
+								}
 							} else {
-								ccItem.ServiceTlocLocal = types.StringNull()
+								ccItem.ServiceTlocLocal = types.BoolNull()
 							}
 							if cccValue := ccv.Get("value.restrict"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
-								ccItem.ServiceTlocRestrict = types.StringValue(cccValue.String())
+								if true && cccValue.String() == "" {
+									ccItem.ServiceTlocRestrict = types.BoolValue(true)
+								} else {
+									ccItem.ServiceTlocRestrict = types.BoolValue(cccValue.Bool())
+								}
 							} else {
-								ccItem.ServiceTlocRestrict = types.StringNull()
+								ccItem.ServiceTlocRestrict = types.BoolNull()
 							}
 							if cccValue := ccv.Get("value.tloc.color"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocColor = types.StringValue(cccValue.String())

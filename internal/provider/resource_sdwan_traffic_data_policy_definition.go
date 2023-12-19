@@ -446,12 +446,12 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC IP address").String,
 													Optional:            true,
 												},
-												"service_tloc_local": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Local, Any value (including an empty string) will enable this feature").String,
+												"service_tloc_local": schema.BoolAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Local").String,
 													Optional:            true,
 												},
-												"service_tloc_restrict": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Restrict, Any value (including an empty string) will enable this feature").String,
+												"service_tloc_restrict": schema.BoolAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC Restrict").String,
 													Optional:            true,
 												},
 												"service_tloc_color": schema.StringAttribute{

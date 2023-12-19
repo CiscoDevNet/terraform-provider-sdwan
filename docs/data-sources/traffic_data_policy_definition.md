@@ -102,8 +102,8 @@ Read-Only:
 - `service_tloc_ip` (String) Service TLOC IP address
 - `service_tloc_list_id` (String) Service TLOC list ID
 - `service_tloc_list_version` (Number) Service TLOC list version
-- `service_tloc_local` (String) Service TLOC Local, Any value (including an empty string) will enable this feature
-- `service_tloc_restrict` (String) Service TLOC Restrict, Any value (including an empty string) will enable this feature
+- `service_tloc_local` (Boolean) Service TLOC Local
+- `service_tloc_restrict` (Boolean) Service TLOC Restrict
 - `service_type` (String) Service type
 - `service_vpn_id` (Number) Service VPN ID
 - `tloc_color` (String) TLOC color
