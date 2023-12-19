@@ -53,7 +53,7 @@ func TestAccDataSourceSdwanLocalizedPolicy(t *testing.T) {
 }
 
 const testAccDataSourceSdwanLocalizedPolicyConfig = `
-resource "sdwan_acl_policy_definition" "test" {
+resource "sdwan_ipv4_acl_policy_definition" "test" {
   name           = "TF_TEST"
   description    = "Terraform test"
   default_action = "drop"
@@ -98,7 +98,7 @@ resource "sdwan_localized_policy" "test" {
   ipv4_visibility_cache_entries = 1000
   ipv6_visibility_cache_entries = 1000
   definitions = [{
-    id = sdwan_acl_policy_definition.test.id
+    id = sdwan_ipv4_acl_policy_definition.test.id
     type = "acl"
   }]
 }

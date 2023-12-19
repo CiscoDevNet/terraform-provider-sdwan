@@ -107,7 +107,7 @@ attributes:
         mandatory: true
         description: Policy definition ID
         example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
-        test_value: sdwan_acl_policy_definition.test.id
+        test_value: sdwan_ipv4_acl_policy_definition.test.id
       - tf_name: version
         tf_only: true
         type: Version
@@ -121,7 +121,7 @@ attributes:
         example: acl
 
 test_prerequisites: |
-  resource "sdwan_acl_policy_definition" "test" {
+  resource "sdwan_ipv4_acl_policy_definition" "test" {
     name           = "TF_TEST"
     description    = "Terraform test"
     default_action = "drop"
