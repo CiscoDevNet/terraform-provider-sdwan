@@ -42,7 +42,6 @@ func TestAccDataSourceSdwanTrafficDataPolicyDefinition(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.ip_type", "ipv4"),
 					resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.base_action", "accept"),
 					resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.match_entries.0.type", "appList"),
-					resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.match_entries.0.application_list_id", "e3aad846-abb9-425f-aaa8-9ed17b9c8d7c"),
 					resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.action_entries.0.type", "log"),
 					resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.action_entries.0.log", "true"),
 				),
@@ -52,6 +51,14 @@ func TestAccDataSourceSdwanTrafficDataPolicyDefinition(t *testing.T) {
 }
 
 const testAccDataSourceSdwanTrafficDataPolicyDefinitionConfig = `
+resource "sdwan_application_list_policy_object" "test" {
+  name = "TF_TEST"
+  entries = [
+    {
+      application = "netflix"
+    }
+  ]
+}
 
 resource "sdwan_traffic_data_policy_definition" "test" {
   name = "Example"
@@ -65,7 +72,7 @@ resource "sdwan_traffic_data_policy_definition" "test" {
     base_action = "accept"
 	match_entries = [{
 		type = "appList"
-		application_list_id = "e3aad846-abb9-425f-aaa8-9ed17b9c8d7c"
+		application_list_id = sdwan_application_list_policy_object.test.id
 	}]
 	action_entries = [{
 		type = "log"

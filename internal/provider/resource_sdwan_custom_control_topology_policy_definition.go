@@ -166,10 +166,10 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 										},
 									},
 									"origin": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Origin").AddStringEnumDescription("igp", "egp", "incomplete").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Origin").AddStringEnumDescription("igp", "egp", "incomplete", "aggregrate", "bgp", "bgp-external", "bgp-internal", "connected", "eigrp", "ospf", "ospf-inter-area", "ospf-intra-area", "ospf-external1", "ospf-external2", "rip", "static", "eigrp-summary", "eigrp-internal", "eigrp-external", "lisp", "nat-dia", "natpool", "isis", "isis-level1", "isis-level2").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("igp", "egp", "incomplete"),
+											stringvalidator.OneOf("igp", "egp", "incomplete", "aggregrate", "bgp", "bgp-external", "bgp-internal", "connected", "eigrp", "ospf", "ospf-inter-area", "ospf-intra-area", "ospf-external1", "ospf-external2", "rip", "static", "eigrp-summary", "eigrp-internal", "eigrp-external", "lisp", "nat-dia", "natpool", "isis", "isis-level1", "isis-level2"),
 										},
 									},
 									"originator": schema.StringAttribute{

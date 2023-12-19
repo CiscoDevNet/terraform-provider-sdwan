@@ -57,15 +57,15 @@ type TrafficDataPolicyDefinitionSequencesMatchEntries struct {
 	Dscp                             types.Int64  `tfsdk:"dscp"`
 	PacketLength                     types.Int64  `tfsdk:"packet_length"`
 	Plp                              types.String `tfsdk:"plp"`
-	Protocol                         types.Int64  `tfsdk:"protocol"`
+	Protocol                         types.String `tfsdk:"protocol"`
 	SourceDataPrefixListId           types.String `tfsdk:"source_data_prefix_list_id"`
 	SourceDataPrefixListVersion      types.Int64  `tfsdk:"source_data_prefix_list_version"`
 	SourceIp                         types.String `tfsdk:"source_ip"`
-	SourcePort                       types.Int64  `tfsdk:"source_port"`
+	SourcePort                       types.String `tfsdk:"source_port"`
 	DestinationDataPrefixListId      types.String `tfsdk:"destination_data_prefix_list_id"`
 	DestinationDataPrefixListVersion types.Int64  `tfsdk:"destination_data_prefix_list_version"`
 	DestinationIp                    types.String `tfsdk:"destination_ip"`
-	DestinationPort                  types.Int64  `tfsdk:"destination_port"`
+	DestinationPort                  types.String `tfsdk:"destination_port"`
 	DestinationRegion                types.String `tfsdk:"destination_region"`
 	Tcp                              types.String `tfsdk:"tcp"`
 	TrafficTo                        types.String `tfsdk:"traffic_to"`
@@ -115,6 +115,8 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	ServiceTlocListId              types.String `tfsdk:"service_tloc_list_id"`
 	ServiceTlocListVersion         types.Int64  `tfsdk:"service_tloc_list_version"`
 	ServiceTlocIp                  types.String `tfsdk:"service_tloc_ip"`
+	ServiceTlocLocal               types.Bool   `tfsdk:"service_tloc_local"`
+	ServiceTlocRestrict            types.Bool   `tfsdk:"service_tloc_restrict"`
 	ServiceTlocColor               types.String `tfsdk:"service_tloc_color"`
 	ServiceTlocEncapsulation       types.String `tfsdk:"service_tloc_encapsulation"`
 	VpnId                          types.Int64  `tfsdk:"vpn_id"`
@@ -182,7 +184,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Plp.ValueString())
 					}
 					if !childItem.Protocol.IsNull() && childItem.Type.ValueString() == "protocol" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Protocol.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Protocol.ValueString())
 					}
 					if !childItem.SourceDataPrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataPrefixListId.ValueString())
@@ -191,7 +193,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
 					}
 					if !childItem.SourcePort.IsNull() && childItem.Type.ValueString() == "sourcePort" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SourcePort.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourcePort.ValueString())
 					}
 					if !childItem.DestinationDataPrefixListId.IsNull() && childItem.Type.ValueString() == "destinationDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DestinationDataPrefixListId.ValueString())
@@ -200,7 +202,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
 					}
 					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationPort.ValueString())
 					}
 					if !childItem.DestinationRegion.IsNull() && childItem.Type.ValueString() == "destinationRegion" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationRegion.ValueString())
@@ -359,6 +361,20 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							if !childChildItem.ServiceTlocIp.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.ip", childChildItem.ServiceTlocIp.ValueString())
 							}
+							if !childChildItem.ServiceTlocLocal.IsNull() && childChildItem.Type.ValueString() == "service" {
+								if true && childChildItem.ServiceTlocLocal.ValueBool() {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", "")
+								} else {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", childChildItem.ServiceTlocLocal.ValueBool())
+								}
+							}
+							if !childChildItem.ServiceTlocRestrict.IsNull() && childChildItem.Type.ValueString() == "service" {
+								if true && childChildItem.ServiceTlocRestrict.ValueBool() {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", "")
+								} else {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", childChildItem.ServiceTlocRestrict.ValueBool())
+								}
+							}
 							if !childChildItem.ServiceTlocColor.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.color", childChildItem.ServiceTlocColor.ValueString())
 							}
@@ -486,9 +502,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.Plp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "protocol" {
-						cItem.Protocol = types.Int64Value(ccValue.Int())
+						cItem.Protocol = types.StringValue(ccValue.String())
 					} else {
-						cItem.Protocol = types.Int64Null()
+						cItem.Protocol = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "sourceDataPrefixList" {
 						cItem.SourceDataPrefixListId = types.StringValue(ccValue.String())
@@ -501,9 +517,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.SourceIp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
-						cItem.SourcePort = types.Int64Value(ccValue.Int())
+						cItem.SourcePort = types.StringValue(ccValue.String())
 					} else {
-						cItem.SourcePort = types.Int64Null()
+						cItem.SourcePort = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "destinationDataPrefixList" {
 						cItem.DestinationDataPrefixListId = types.StringValue(ccValue.String())
@@ -516,9 +532,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.DestinationIp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationPort" {
-						cItem.DestinationPort = types.Int64Value(ccValue.Int())
+						cItem.DestinationPort = types.StringValue(ccValue.String())
 					} else {
-						cItem.DestinationPort = types.Int64Null()
+						cItem.DestinationPort = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationRegion" {
 						cItem.DestinationRegion = types.StringValue(ccValue.String())
@@ -753,6 +769,24 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 								ccItem.ServiceTlocIp = types.StringValue(cccValue.String())
 							} else {
 								ccItem.ServiceTlocIp = types.StringNull()
+							}
+							if cccValue := ccv.Get("value.local"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
+								if true && cccValue.String() == "" {
+									ccItem.ServiceTlocLocal = types.BoolValue(true)
+								} else {
+									ccItem.ServiceTlocLocal = types.BoolValue(cccValue.Bool())
+								}
+							} else {
+								ccItem.ServiceTlocLocal = types.BoolNull()
+							}
+							if cccValue := ccv.Get("value.restrict"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
+								if true && cccValue.String() == "" {
+									ccItem.ServiceTlocRestrict = types.BoolValue(true)
+								} else {
+									ccItem.ServiceTlocRestrict = types.BoolValue(cccValue.Bool())
+								}
+							} else {
+								ccItem.ServiceTlocRestrict = types.BoolNull()
 							}
 							if cccValue := ccv.Get("value.tloc.color"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocColor = types.StringValue(cccValue.String())
@@ -1009,6 +1043,12 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 								hasChanges = true
 							}
 							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocIp.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocIp) {
+								hasChanges = true
+							}
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocLocal.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocLocal) {
+								hasChanges = true
+							}
+							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocRestrict.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocRestrict) {
 								hasChanges = true
 							}
 							if !data.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocColor.Equal(state.Sequences[i].ActionEntries[ii].SetParameters[iii].ServiceTlocColor) {
