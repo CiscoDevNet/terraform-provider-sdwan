@@ -9,6 +9,8 @@
 - Add `sdwan_system_bfd_profile_parcel` resource and data source
 - Fix issue with `sdwan_centralized_policy` not accepting all valid parameters
 - Fix issue with `sdwan_custom_control_topology_policy_definition` not accepting all possible values
+- BREAKING CHANGE: convert `protocol`, `source_port`, `destination_port` attribute of `sdwan_traffic_data_policy_definition` to Strings to support multiple values
+- Fix issue with `sdwan_traffic_data_policy_definition` not supporting local and restrict options
 
 ## 0.2.11
 

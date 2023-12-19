@@ -102,6 +102,8 @@ Read-Only:
 - `service_tloc_ip` (String) Service TLOC IP address
 - `service_tloc_list_id` (String) Service TLOC list ID
 - `service_tloc_list_version` (Number) Service TLOC list version
+- `service_tloc_local` (String) Service TLOC Local, Any value (including an empty string) will enable this feature
+- `service_tloc_restrict` (String) Service TLOC Restrict, Any value (including an empty string) will enable this feature
 - `service_type` (String) Service type
 - `service_vpn_id` (Number) Service VPN ID
 - `tloc_color` (String) TLOC color
@@ -124,7 +126,7 @@ Read-Only:
 - `destination_data_prefix_list_id` (String) Destination Data Prefix list ID
 - `destination_data_prefix_list_version` (Number) Destination Data Prefix list version
 - `destination_ip` (String) Destination IP
-- `destination_port` (Number) Destination port
+- `destination_port` (String) Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
 - `destination_region` (String) Destination region
 - `dns` (String) DNS request or response
 - `dns_application_list_id` (String) DNS Application list ID
@@ -132,11 +134,11 @@ Read-Only:
 - `dscp` (Number) DSCP value
 - `packet_length` (Number) Packet length
 - `plp` (String) PLP
-- `protocol` (Number) IP Protocol
+- `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)
 - `source_data_prefix_list_id` (String) Source Data Prefix list ID
 - `source_data_prefix_list_version` (Number) Source Data Prefix list version
 - `source_ip` (String) Source IP
-- `source_port` (Number) Source port
+- `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces)
 - `tcp` (String) TCP flags
 - `traffic_to` (String) Traffic to
 - `type` (String) Type of match entry

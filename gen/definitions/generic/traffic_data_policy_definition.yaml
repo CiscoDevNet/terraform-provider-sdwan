@@ -107,6 +107,7 @@ attributes:
             type: String
             description: Application list ID
             example: e3aad846-abb9-425f-aaa8-9ed17b9c8d7c
+            test_value: sdwan_application_list_policy_object.test.id
           - tf_name: application_list_version
             tf_only: true
             type: Version
@@ -175,11 +176,8 @@ attributes:
             conditional_attribute:
               name: type
               value: protocol
-            type: Int64
-            model_type_string: true
-            description: IP Protocol
-            min_int: 0
-            max_int: 255
+            type: String
+            description: IP Protocol, 0-255 (Single value or multiple values separated by spaces)
             example: 10
             exclude_test: true
           - model_name: ref
@@ -210,11 +208,8 @@ attributes:
             conditional_attribute:
               name: type
               value: sourcePort
-            type: Int64
-            model_type_string: true
-            description: Source port
-            min_int: 0
-            max_int: 65535
+            type: String
+            description: Source port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 10
             exclude_test: true
           - model_name: ref
@@ -245,11 +240,8 @@ attributes:
             conditional_attribute:
               name: type
               value: destinationPort
-            type: Int64
-            model_type_string: true
-            description: Destination port
-            min_int: 0
-            max_int: 65535
+            type: String
+            description: Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
             example: 100
             exclude_test: true
           - model_name: value
@@ -699,6 +691,26 @@ attributes:
                 description: Service TLOC IP address
                 example: 1.2.3.4
                 exclude_test: true
+              - model_name: local
+                data_path: [value]
+                tf_name: service_tloc_local
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                description: Service TLOC Local, Any value (including an empty string) will enable this feature
+                example: ""
+                exclude_test: true
+              - model_name: restrict
+                data_path: [value]
+                tf_name: service_tloc_restrict
+                conditional_attribute:
+                  name: type
+                  value: service
+                type: String
+                description: Service TLOC Restrict, Any value (including an empty string) will enable this feature
+                example: ""
+                exclude_test: true
               - model_name: color
                 data_path: [value, tloc]
                 tf_name: service_tloc_color
@@ -772,3 +784,13 @@ attributes:
                 description: Fallback
                 example: true
                 exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_application_list_policy_object" "test" {
+    name = "TF_TEST"
+    entries = [
+      {
+        application = "netflix"
+      }
+    ]
+  }
