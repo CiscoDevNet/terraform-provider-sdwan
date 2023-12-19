@@ -90,7 +90,7 @@ attributes:
             type: String
             enum_values: [in, out]
             description: Direction
-            example: service
+            example: in
           - model_name: regionLists
             tf_name: region_list_ids
             type: StringList
