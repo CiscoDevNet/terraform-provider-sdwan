@@ -88,9 +88,9 @@ attributes:
           - model_name: direction
             tf_name: direction
             type: String
-            enum_values: [in, out]
+            enum_values: [service, tunnel, all, in, out]
             description: Direction
-            example: in
+            example: service
           - model_name: regionLists
             tf_name: region_list_ids
             type: StringList

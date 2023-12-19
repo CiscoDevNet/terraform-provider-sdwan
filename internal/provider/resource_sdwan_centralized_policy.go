@@ -126,10 +126,10 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 										Optional:            true,
 									},
 									"direction": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Direction").AddStringEnumDescription("in", "out").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Direction").AddStringEnumDescription("service", "tunnel", "all", "in", "out").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("in", "out"),
+											stringvalidator.OneOf("service", "tunnel", "all", "in", "out"),
 										},
 									},
 									"region_list_ids": schema.ListAttribute{
