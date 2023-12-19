@@ -25,6 +25,7 @@ description: |-
 - BREAKING CHANGE: Rename `sdwan_acl_policy_definition` resource and data source to `sdwan_ipv4_acl_policy_definition`
 - BREAKING CHANGE: Rename `sdwan_device_acl_policy_definition` resource and data source to `sdwan_ipv4_device_acl_policy_definition`
 - Add `sdwan_ipv6_acl_policy_definition` resource and data source
+- Add `sdwan_ipv6_device_acl_policy_definition` resource and data source
 
 ## 0.2.11
 
