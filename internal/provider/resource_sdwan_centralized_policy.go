@@ -108,7 +108,7 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 									"site_list_ids": schema.ListAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of site list IDs").String,
 										ElementType:         types.StringType,
-										Required:            true,
+										Optional:            true,
 									},
 									"site_list_versions": schema.ListAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of site list versions").String,
@@ -126,11 +126,26 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 										Optional:            true,
 									},
 									"direction": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Direction").AddStringEnumDescription("service", "tunnel", "all").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Direction").AddStringEnumDescription("service", "tunnel", "all", "in", "out").String,
 										Optional:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("service", "tunnel", "all"),
+											stringvalidator.OneOf("service", "tunnel", "all", "in", "out"),
 										},
+									},
+									"region_list_ids": schema.ListAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("List of region list IDs").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
+									"region_list_versions": schema.ListAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("List of region list versions").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
+									"region_ids": schema.ListAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("List of region IDs").String,
+										ElementType:         types.StringType,
+										Optional:            true,
 									},
 								},
 							},
