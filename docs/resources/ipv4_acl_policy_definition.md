@@ -127,8 +127,8 @@ Optional:
 
 - `class_map_id` (String) Class map ID
 - `class_map_version` (Number) Class map version
-- `destination_data_prefix_list_id` (String) Destination data prefix list ID
-- `destination_data_prefix_list_version` (Number) Destination data prefix list version
+- `destination_data_ipv4_prefix_list_id` (String) Destination data IPv4 prefix list ID
+- `destination_data_ipv4_prefix_list_version` (Number) Destination data IPv4 prefix list version
 - `destination_ip` (String) Destination IP prefix
 - `destination_port` (Number) Destination port
   - Range: `0`-`65535`
@@ -139,8 +139,8 @@ Optional:
 - `priority` (String) PLP - priority
   - Choices: `high`, `low`
 - `protocol` (String) Single value (0-255) or multiple values separated by spaces
-- `source_data_prefix_list_id` (String) Source data prefix list ID
-- `source_data_prefix_list_version` (Number) Source data prefix list version
+- `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID
+- `source_data_ipv4_prefix_list_version` (Number) Source data IPv4 prefix list version
 - `source_ip` (String) Source IP prefix
 - `source_port` (Number) Source port
   - Range: `0`-`65535`

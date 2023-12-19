@@ -135,20 +135,20 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 										MarkdownDescription: "Destination port",
 										Computed:            true,
 									},
-									"source_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: "Source data prefix list ID",
+									"source_data_ipv4_prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: "Source data IPv4 prefix list ID",
 										Computed:            true,
 									},
-									"source_data_prefix_list_version": schema.Int64Attribute{
-										MarkdownDescription: "Source data prefix list version",
+									"source_data_ipv4_prefix_list_version": schema.Int64Attribute{
+										MarkdownDescription: "Source data IPv4 prefix list version",
 										Computed:            true,
 									},
-									"destination_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: "Destination data prefix list ID",
+									"destination_data_ipv4_prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: "Destination data IPv4 prefix list ID",
 										Computed:            true,
 									},
-									"destination_data_prefix_list_version": schema.Int64Attribute{
-										MarkdownDescription: "Destination data prefix list version",
+									"destination_data_ipv4_prefix_list_version": schema.Int64Attribute{
+										MarkdownDescription: "Destination data IPv4 prefix list version",
 										Computed:            true,
 									},
 									"protocol": schema.StringAttribute{

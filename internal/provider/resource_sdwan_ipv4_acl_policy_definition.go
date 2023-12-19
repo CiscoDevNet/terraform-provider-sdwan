@@ -174,20 +174,20 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 											int64validator.Between(0, 65535),
 										},
 									},
-									"source_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source data prefix list ID").String,
+									"source_data_ipv4_prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv4 prefix list ID").String,
 										Optional:            true,
 									},
-									"source_data_prefix_list_version": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source data prefix list version").String,
+									"source_data_ipv4_prefix_list_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv4 prefix list version").String,
 										Optional:            true,
 									},
-									"destination_data_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination data prefix list ID").String,
+									"destination_data_ipv4_prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv4 prefix list ID").String,
 										Optional:            true,
 									},
-									"destination_data_prefix_list_version": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination data prefix list version").String,
+									"destination_data_ipv4_prefix_list_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination data IPv4 prefix list version").String,
 										Optional:            true,
 									},
 									"protocol": schema.StringAttribute{

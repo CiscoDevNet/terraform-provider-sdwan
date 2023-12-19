@@ -46,22 +46,22 @@ type IPv4ACLPolicyDefinitionSequences struct {
 }
 
 type IPv4ACLPolicyDefinitionSequencesMatchEntries struct {
-	Type                             types.String `tfsdk:"type"`
-	Dscp                             types.Int64  `tfsdk:"dscp"`
-	SourceIp                         types.String `tfsdk:"source_ip"`
-	DestinationIp                    types.String `tfsdk:"destination_ip"`
-	ClassMapId                       types.String `tfsdk:"class_map_id"`
-	ClassMapVersion                  types.Int64  `tfsdk:"class_map_version"`
-	PacketLength                     types.Int64  `tfsdk:"packet_length"`
-	Priority                         types.String `tfsdk:"priority"`
-	SourcePort                       types.Int64  `tfsdk:"source_port"`
-	DestinationPort                  types.Int64  `tfsdk:"destination_port"`
-	SourceDataPrefixListId           types.String `tfsdk:"source_data_prefix_list_id"`
-	SourceDataPrefixListVersion      types.Int64  `tfsdk:"source_data_prefix_list_version"`
-	DestinationDataPrefixListId      types.String `tfsdk:"destination_data_prefix_list_id"`
-	DestinationDataPrefixListVersion types.Int64  `tfsdk:"destination_data_prefix_list_version"`
-	Protocol                         types.String `tfsdk:"protocol"`
-	Tcp                              types.String `tfsdk:"tcp"`
+	Type                                 types.String `tfsdk:"type"`
+	Dscp                                 types.Int64  `tfsdk:"dscp"`
+	SourceIp                             types.String `tfsdk:"source_ip"`
+	DestinationIp                        types.String `tfsdk:"destination_ip"`
+	ClassMapId                           types.String `tfsdk:"class_map_id"`
+	ClassMapVersion                      types.Int64  `tfsdk:"class_map_version"`
+	PacketLength                         types.Int64  `tfsdk:"packet_length"`
+	Priority                             types.String `tfsdk:"priority"`
+	SourcePort                           types.Int64  `tfsdk:"source_port"`
+	DestinationPort                      types.Int64  `tfsdk:"destination_port"`
+	SourceDataIpv4PrefixListId           types.String `tfsdk:"source_data_ipv4_prefix_list_id"`
+	SourceDataIpv4PrefixListVersion      types.Int64  `tfsdk:"source_data_ipv4_prefix_list_version"`
+	DestinationDataIpv4PrefixListId      types.String `tfsdk:"destination_data_ipv4_prefix_list_id"`
+	DestinationDataIpv4PrefixListVersion types.Int64  `tfsdk:"destination_data_ipv4_prefix_list_version"`
+	Protocol                             types.String `tfsdk:"protocol"`
+	Tcp                                  types.String `tfsdk:"tcp"`
 }
 type IPv4ACLPolicyDefinitionSequencesActionEntries struct {
 	Type            types.String                                                 `tfsdk:"type"`
@@ -139,11 +139,11 @@ func (data IPv4ACLPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
 					}
-					if !childItem.SourceDataPrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataPrefixList" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataPrefixListId.ValueString())
+					if !childItem.SourceDataIpv4PrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataPrefixList" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataIpv4PrefixListId.ValueString())
 					}
-					if !childItem.DestinationDataPrefixListId.IsNull() && childItem.Type.ValueString() == "destinationDataPrefixList" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DestinationDataPrefixListId.ValueString())
+					if !childItem.DestinationDataIpv4PrefixListId.IsNull() && childItem.Type.ValueString() == "destinationDataPrefixList" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DestinationDataIpv4PrefixListId.ValueString())
 					}
 					if !childItem.Protocol.IsNull() && childItem.Type.ValueString() == "protocol" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Protocol.ValueString()))
@@ -291,14 +291,14 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 						cItem.DestinationPort = types.Int64Null()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "sourceDataPrefixList" {
-						cItem.SourceDataPrefixListId = types.StringValue(ccValue.String())
+						cItem.SourceDataIpv4PrefixListId = types.StringValue(ccValue.String())
 					} else {
-						cItem.SourceDataPrefixListId = types.StringNull()
+						cItem.SourceDataIpv4PrefixListId = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "destinationDataPrefixList" {
-						cItem.DestinationDataPrefixListId = types.StringValue(ccValue.String())
+						cItem.DestinationDataIpv4PrefixListId = types.StringValue(ccValue.String())
 					} else {
-						cItem.DestinationDataPrefixListId = types.StringNull()
+						cItem.DestinationDataIpv4PrefixListId = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "protocol" {
 						cItem.Protocol = types.StringValue(ccValue.String())
@@ -441,10 +441,10 @@ func (data *IPv4ACLPolicyDefinition) hasChanges(ctx context.Context, state *IPv4
 					if !data.Sequences[i].MatchEntries[ii].DestinationPort.Equal(state.Sequences[i].MatchEntries[ii].DestinationPort) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].MatchEntries[ii].SourceDataPrefixListId.Equal(state.Sequences[i].MatchEntries[ii].SourceDataPrefixListId) {
+					if !data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListId.Equal(state.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListId) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListId.Equal(state.Sequences[i].MatchEntries[ii].DestinationDataPrefixListId) {
+					if !data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListId.Equal(state.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListId) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].Protocol.Equal(state.Sequences[i].MatchEntries[ii].Protocol) {
@@ -528,14 +528,14 @@ func (data *IPv4ACLPolicyDefinition) updateVersions(ctx context.Context, state *
 				data.Sequences[i].MatchEntries[ii].ClassMapVersion = types.Int64Null()
 			}
 			if cStateIndex > -1 {
-				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataPrefixListVersion
+				data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].SourceDataIpv4PrefixListVersion
 			} else {
-				data.Sequences[i].MatchEntries[ii].SourceDataPrefixListVersion = types.Int64Null()
+				data.Sequences[i].MatchEntries[ii].SourceDataIpv4PrefixListVersion = types.Int64Null()
 			}
 			if cStateIndex > -1 {
-				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataPrefixListVersion
+				data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].DestinationDataIpv4PrefixListVersion
 			} else {
-				data.Sequences[i].MatchEntries[ii].DestinationDataPrefixListVersion = types.Int64Null()
+				data.Sequences[i].MatchEntries[ii].DestinationDataIpv4PrefixListVersion = types.Int64Null()
 			}
 		}
 		for ii := range data.Sequences[i].ActionEntries {

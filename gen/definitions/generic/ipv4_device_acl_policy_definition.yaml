@@ -121,32 +121,32 @@ attributes:
             max_int: 65535
             example: 22
           - model_name: ref
-            tf_name: source_data_prefix_list_id
+            tf_name: source_data_ipv4_prefix_list_id
             conditional_attribute:
               name: type
               value: sourceDataPrefixList
             type: String
-            description: Source data prefix list ID
+            description: Source data IPv4 prefix list ID
             exclude_test: true
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
-          - tf_name: source_data_prefix_list_version
+          - tf_name: source_data_ipv4_prefix_list_version
             tf_only: true
             type: Version
-            description: Source data prefix list version
+            description: Source data IPv4 prefix list version
             exclude_test: true
           - model_name: ref
-            tf_name: destination_data_prefix_list_id
+            tf_name: destination_data_ipv4_prefix_list_id
             conditional_attribute:
               name: type
               value: destinationDataPrefixList
             type: String
-            description: Destination data prefix list ID
+            description: Destination data IPv4 prefix list ID
             exclude_test: true
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
-          - tf_name: destination_data_prefix_list_version
+          - tf_name: destination_data_ipv4_prefix_list_version
             tf_only: true
             type: Version
-            description: Destination data prefix list version
+            description: Destination data IPv4 prefix list version
             exclude_test: true
       - model_name: actions
         tf_name: action_entries
