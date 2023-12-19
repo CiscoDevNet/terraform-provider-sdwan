@@ -37,29 +37,29 @@ func TestAccSdwanSystemGlobalProfileParcel(t *testing.T) {
 			{
 				Config: testAccSdwanSystemGlobalProfileParcelConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_http_server", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_https_server", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_ftp_passive", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_domain_lookup", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_arp_proxy", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_rcmd", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_line_vty", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_cdp", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_lldp", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "services_global_services_ip_source_intrf", "GigabitEthernet0/0/1"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_tcp_keepalives_in", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_tcp_keepalives_out", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_tcp_small_servers", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_udp_small_servers", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_console_logging", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_i_p_source_route", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_vty_line_logging", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_snmp_ifindex_persist", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_other_settings_ignore_bootp", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_settings_nat64_udp_timeout", "300"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_settings_nat64_tcp_timeout", "3600"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_settings_http_authentication", "aaa"),
-					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "global_settings_s_s_h_version", "2"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "http_server", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "https_server", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "ftp_passive", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "domain_lookup", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "arp_proxy", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "rsh_rcp", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "line_vty", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "cdp", "true"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "lldp", "true"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "source_interface", "GigabitEthernet0/0/1"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "tcp_keepalives_in", "true"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "tcp_keepalives_out", "true"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "tcp_small_servers", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "udp_small_servers", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "console_logging", "true"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "ip_source_routing", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "vty_line_logging", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "snmp_ifindex_persist", "true"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "ignore_bootp", "true"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "nat64_udp_timeout", "300"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "nat64_tcp_timeout", "3600"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "http_authentication", "aaa"),
+					resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "ssh_version", "2"),
 				),
 			},
 		},
@@ -92,29 +92,29 @@ func testAccSdwanSystemGlobalProfileParcelConfig_all() string {
 		name = "TF_TEST_ALL"
 		description = "Terraform integration test"
 		feature_profile_id = sdwan_system_feature_profile.test.id
-		services_global_services_ip_http_server = false
-		services_global_services_ip_https_server = false
-		services_global_services_ip_ftp_passive = false
-		services_global_services_ip_domain_lookup = false
-		services_global_services_ip_arp_proxy = false
-		services_global_services_ip_rcmd = false
-		services_global_services_ip_line_vty = false
-		services_global_services_ip_cdp = true
-		services_global_services_ip_lldp = true
-		services_global_services_ip_source_intrf = "GigabitEthernet0/0/1"
-		global_other_settings_tcp_keepalives_in = true
-		global_other_settings_tcp_keepalives_out = true
-		global_other_settings_tcp_small_servers = false
-		global_other_settings_udp_small_servers = false
-		global_other_settings_console_logging = true
-		global_other_settings_i_p_source_route = false
-		global_other_settings_vty_line_logging = false
-		global_other_settings_snmp_ifindex_persist = true
-		global_other_settings_ignore_bootp = true
-		global_settings_nat64_udp_timeout = 300
-		global_settings_nat64_tcp_timeout = 3600
-		global_settings_http_authentication = "aaa"
-		global_settings_s_s_h_version = "2"
+		http_server = false
+		https_server = false
+		ftp_passive = false
+		domain_lookup = false
+		arp_proxy = false
+		rsh_rcp = false
+		line_vty = false
+		cdp = true
+		lldp = true
+		source_interface = "GigabitEthernet0/0/1"
+		tcp_keepalives_in = true
+		tcp_keepalives_out = true
+		tcp_small_servers = false
+		udp_small_servers = false
+		console_logging = true
+		ip_source_routing = false
+		vty_line_logging = false
+		snmp_ifindex_persist = true
+		ignore_bootp = true
+		nat64_udp_timeout = 300
+		nat64_tcp_timeout = 3600
+		http_authentication = "aaa"
+		ssh_version = "2"
 	}
 	`
 }

@@ -11,72 +11,95 @@ attributes:
     test_value: sdwan_system_feature_profile.test.id
   - model_name: servicesGlobalServicesIpHttpServer
     data_path: [services_global, services_ip]
+    tf_name: http_server
     example: false
   - model_name: servicesGlobalServicesIpHttpsServer
     data_path: [services_global, services_ip]
+    tf_name: https_server
     example: false
   - model_name: servicesGlobalServicesIpFtpPassive
     data_path: [services_global, services_ip]
+    tf_name: ftp_passive
     example: false
   - model_name: servicesGlobalServicesIpDomainLookup
     data_path: [services_global, services_ip]
+    tf_name: domain_lookup
     example: false
   - model_name: servicesGlobalServicesIpArpProxy
     data_path: [services_global, services_ip]
+    tf_name: arp_proxy
     example: false
   - model_name: servicesGlobalServicesIpRcmd
     data_path: [services_global, services_ip]
+    tf_name: rsh_rcp
     example: false
   - model_name: servicesGlobalServicesIpLineVty
     data_path: [services_global, services_ip]
+    tf_name: line_vty
     example: false
   - model_name: servicesGlobalServicesIpCdp
     data_path: [services_global, services_ip]
+    tf_name: cdp
     example: true
   - model_name: servicesGlobalServicesIpLldp
     data_path: [services_global, services_ip]
+    tf_name: lldp
     example: true
   - model_name: servicesGlobalServicesIpSourceIntrf
     data_path: [services_global, services_ip]
+    tf_name: source_interface
     example: GigabitEthernet0/0/1
   - model_name: globalOtherSettingsTcpKeepalivesIn
     data_path: [services_global, services_ip]
+    tf_name: tcp_keepalives_in
     example: true
   - model_name: globalOtherSettingsTcpKeepalivesOut
     data_path: [services_global, services_ip]
+    tf_name: tcp_keepalives_out
     example: true
   - model_name: globalOtherSettingsTcpSmallServers
     data_path: [services_global, services_ip]
+    tf_name: tcp_small_servers
     example: false
   - model_name: globalOtherSettingsUdpSmallServers
     data_path: [services_global, services_ip]
+    tf_name: udp_small_servers
     example: false
   - model_name: globalOtherSettingsConsoleLogging
     data_path: [services_global, services_ip]
+    tf_name: console_logging
     example: true
   - model_name: globalOtherSettingsIPSourceRoute
     data_path: [services_global, services_ip]
+    tf_name: ip_source_routing
     example: false
   - model_name: globalOtherSettingsVtyLineLogging
     data_path: [services_global, services_ip]
+    tf_name: vty_line_logging
     example: false
   - model_name: globalOtherSettingsSnmpIfindexPersist
     data_path: [services_global, services_ip]
+    tf_name: snmp_ifindex_persist
     example: true
   - model_name: globalOtherSettingsIgnoreBootp
     data_path: [services_global, services_ip]
+    tf_name: ignore_bootp
     example: true
   - model_name: globalSettingsNat64UdpTimeout
     data_path: [services_global, services_ip]
+    tf_name: nat64_udp_timeout
     example: 300
   - model_name: globalSettingsNat64TcpTimeout
     data_path: [services_global, services_ip]
+    tf_name: nat64_tcp_timeout
     example: 3600
   - model_name: globalSettingsHttpAuthentication
     data_path: [services_global, services_ip]
+    tf_name: http_authentication
     example: "aaa"
   - model_name: globalSettingsSSHVersion
     data_path: [services_global, services_ip]
+    tf_name: ssh_version
     example: "2"
 
 test_prerequisites: |

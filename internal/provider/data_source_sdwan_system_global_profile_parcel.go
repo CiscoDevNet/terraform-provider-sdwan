@@ -74,187 +74,187 @@ func (d *SystemGlobalProfileParcelDataSource) Schema(ctx context.Context, req da
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"services_global_services_ip_http_server": schema.BoolAttribute{
+			"http_server": schema.BoolAttribute{
 				MarkdownDescription: "Set a HTTP Server",
 				Computed:            true,
 			},
-			"services_global_services_ip_http_server_variable": schema.StringAttribute{
+			"http_server_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_https_server": schema.BoolAttribute{
+			"https_server": schema.BoolAttribute{
 				MarkdownDescription: "Set a HTTPS Server",
 				Computed:            true,
 			},
-			"services_global_services_ip_https_server_variable": schema.StringAttribute{
+			"https_server_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_ftp_passive": schema.BoolAttribute{
+			"ftp_passive": schema.BoolAttribute{
 				MarkdownDescription: "Set Passive FTP",
 				Computed:            true,
 			},
-			"services_global_services_ip_ftp_passive_variable": schema.StringAttribute{
+			"ftp_passive_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_domain_lookup": schema.BoolAttribute{
+			"domain_lookup": schema.BoolAttribute{
 				MarkdownDescription: "Configure Domain-Lookup",
 				Computed:            true,
 			},
-			"services_global_services_ip_domain_lookup_variable": schema.StringAttribute{
+			"domain_lookup_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_arp_proxy": schema.BoolAttribute{
+			"arp_proxy": schema.BoolAttribute{
 				MarkdownDescription: "Set ARP Proxy",
 				Computed:            true,
 			},
-			"services_global_services_ip_arp_proxy_variable": schema.StringAttribute{
+			"arp_proxy_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_rcmd": schema.BoolAttribute{
+			"rsh_rcp": schema.BoolAttribute{
 				MarkdownDescription: "Set RSH/RCP",
 				Computed:            true,
 			},
-			"services_global_services_ip_rcmd_variable": schema.StringAttribute{
+			"rsh_rcp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_line_vty": schema.BoolAttribute{
+			"line_vty": schema.BoolAttribute{
 				MarkdownDescription: "Configure Telnet (Outbound)",
 				Computed:            true,
 			},
-			"services_global_services_ip_line_vty_variable": schema.StringAttribute{
+			"line_vty_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_cdp": schema.BoolAttribute{
+			"cdp": schema.BoolAttribute{
 				MarkdownDescription: "Configure CDP",
 				Computed:            true,
 			},
-			"services_global_services_ip_cdp_variable": schema.StringAttribute{
+			"cdp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_lldp": schema.BoolAttribute{
+			"lldp": schema.BoolAttribute{
 				MarkdownDescription: "Configure LLDP",
 				Computed:            true,
 			},
-			"services_global_services_ip_lldp_variable": schema.StringAttribute{
+			"lldp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"services_global_services_ip_source_intrf": schema.StringAttribute{
+			"source_interface": schema.StringAttribute{
 				MarkdownDescription: "Specify interface for source address in all HTTP(S) client connections",
 				Computed:            true,
 			},
-			"services_global_services_ip_source_intrf_variable": schema.StringAttribute{
+			"source_interface_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_tcp_keepalives_in": schema.BoolAttribute{
+			"tcp_keepalives_in": schema.BoolAttribute{
 				MarkdownDescription: "Configure tcp-keepalives-in",
 				Computed:            true,
 			},
-			"global_other_settings_tcp_keepalives_in_variable": schema.StringAttribute{
+			"tcp_keepalives_in_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_tcp_keepalives_out": schema.BoolAttribute{
+			"tcp_keepalives_out": schema.BoolAttribute{
 				MarkdownDescription: "Configure tcp-keepalives-out",
 				Computed:            true,
 			},
-			"global_other_settings_tcp_keepalives_out_variable": schema.StringAttribute{
+			"tcp_keepalives_out_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_tcp_small_servers": schema.BoolAttribute{
+			"tcp_small_servers": schema.BoolAttribute{
 				MarkdownDescription: "Configure tcp-small-servers",
 				Computed:            true,
 			},
-			"global_other_settings_tcp_small_servers_variable": schema.StringAttribute{
+			"tcp_small_servers_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_udp_small_servers": schema.BoolAttribute{
+			"udp_small_servers": schema.BoolAttribute{
 				MarkdownDescription: "Configure udp-small-servers",
 				Computed:            true,
 			},
-			"global_other_settings_udp_small_servers_variable": schema.StringAttribute{
+			"udp_small_servers_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_console_logging": schema.BoolAttribute{
+			"console_logging": schema.BoolAttribute{
 				MarkdownDescription: "Configure Console Logging",
 				Computed:            true,
 			},
-			"global_other_settings_console_logging_variable": schema.StringAttribute{
+			"console_logging_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_i_p_source_route": schema.BoolAttribute{
+			"ip_source_routing": schema.BoolAttribute{
 				MarkdownDescription: "Set Source Route",
 				Computed:            true,
 			},
-			"global_other_settings_i_p_source_route_variable": schema.StringAttribute{
+			"ip_source_routing_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_vty_line_logging": schema.BoolAttribute{
+			"vty_line_logging": schema.BoolAttribute{
 				MarkdownDescription: "Configure VTY Line Logging",
 				Computed:            true,
 			},
-			"global_other_settings_vty_line_logging_variable": schema.StringAttribute{
+			"vty_line_logging_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_snmp_ifindex_persist": schema.BoolAttribute{
+			"snmp_ifindex_persist": schema.BoolAttribute{
 				MarkdownDescription: "Configure SNMP Ifindex Persist",
 				Computed:            true,
 			},
-			"global_other_settings_snmp_ifindex_persist_variable": schema.StringAttribute{
+			"snmp_ifindex_persist_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_other_settings_ignore_bootp": schema.BoolAttribute{
+			"ignore_bootp": schema.BoolAttribute{
 				MarkdownDescription: "Configure Ignore BOOTP",
 				Computed:            true,
 			},
-			"global_other_settings_ignore_bootp_variable": schema.StringAttribute{
+			"ignore_bootp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_settings_nat64_udp_timeout": schema.Int64Attribute{
+			"nat64_udp_timeout": schema.Int64Attribute{
 				MarkdownDescription: "Set NAT64 UDP session timeout, in seconds",
 				Computed:            true,
 			},
-			"global_settings_nat64_udp_timeout_variable": schema.StringAttribute{
+			"nat64_udp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_settings_nat64_tcp_timeout": schema.Int64Attribute{
+			"nat64_tcp_timeout": schema.Int64Attribute{
 				MarkdownDescription: "Set NAT64 TCP session timeout, in seconds",
 				Computed:            true,
 			},
-			"global_settings_nat64_tcp_timeout_variable": schema.StringAttribute{
+			"nat64_tcp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_settings_http_authentication": schema.StringAttribute{
+			"http_authentication": schema.StringAttribute{
 				MarkdownDescription: "Set preference for HTTP Authentication",
 				Computed:            true,
 			},
-			"global_settings_http_authentication_variable": schema.StringAttribute{
+			"http_authentication_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"global_settings_s_s_h_version": schema.StringAttribute{
+			"ssh_version": schema.StringAttribute{
 				MarkdownDescription: "Set SSH version",
 				Computed:            true,
 			},
-			"global_settings_s_s_h_version_variable": schema.StringAttribute{
+			"ssh_version_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

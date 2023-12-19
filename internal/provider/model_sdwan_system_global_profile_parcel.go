@@ -29,57 +29,57 @@ import (
 )
 
 type SystemGlobal struct {
-	Id                                            types.String `tfsdk:"id"`
-	Version                                       types.Int64  `tfsdk:"version"`
-	Name                                          types.String `tfsdk:"name"`
-	Description                                   types.String `tfsdk:"description"`
-	FeatureProfileId                              types.String `tfsdk:"feature_profile_id"`
-	ServicesGlobalServicesIpHttpServer            types.Bool   `tfsdk:"services_global_services_ip_http_server"`
-	ServicesGlobalServicesIpHttpServerVariable    types.String `tfsdk:"services_global_services_ip_http_server_variable"`
-	ServicesGlobalServicesIpHttpsServer           types.Bool   `tfsdk:"services_global_services_ip_https_server"`
-	ServicesGlobalServicesIpHttpsServerVariable   types.String `tfsdk:"services_global_services_ip_https_server_variable"`
-	ServicesGlobalServicesIpFtpPassive            types.Bool   `tfsdk:"services_global_services_ip_ftp_passive"`
-	ServicesGlobalServicesIpFtpPassiveVariable    types.String `tfsdk:"services_global_services_ip_ftp_passive_variable"`
-	ServicesGlobalServicesIpDomainLookup          types.Bool   `tfsdk:"services_global_services_ip_domain_lookup"`
-	ServicesGlobalServicesIpDomainLookupVariable  types.String `tfsdk:"services_global_services_ip_domain_lookup_variable"`
-	ServicesGlobalServicesIpArpProxy              types.Bool   `tfsdk:"services_global_services_ip_arp_proxy"`
-	ServicesGlobalServicesIpArpProxyVariable      types.String `tfsdk:"services_global_services_ip_arp_proxy_variable"`
-	ServicesGlobalServicesIpRcmd                  types.Bool   `tfsdk:"services_global_services_ip_rcmd"`
-	ServicesGlobalServicesIpRcmdVariable          types.String `tfsdk:"services_global_services_ip_rcmd_variable"`
-	ServicesGlobalServicesIpLineVty               types.Bool   `tfsdk:"services_global_services_ip_line_vty"`
-	ServicesGlobalServicesIpLineVtyVariable       types.String `tfsdk:"services_global_services_ip_line_vty_variable"`
-	ServicesGlobalServicesIpCdp                   types.Bool   `tfsdk:"services_global_services_ip_cdp"`
-	ServicesGlobalServicesIpCdpVariable           types.String `tfsdk:"services_global_services_ip_cdp_variable"`
-	ServicesGlobalServicesIpLldp                  types.Bool   `tfsdk:"services_global_services_ip_lldp"`
-	ServicesGlobalServicesIpLldpVariable          types.String `tfsdk:"services_global_services_ip_lldp_variable"`
-	ServicesGlobalServicesIpSourceIntrf           types.String `tfsdk:"services_global_services_ip_source_intrf"`
-	ServicesGlobalServicesIpSourceIntrfVariable   types.String `tfsdk:"services_global_services_ip_source_intrf_variable"`
-	GlobalOtherSettingsTcpKeepalivesIn            types.Bool   `tfsdk:"global_other_settings_tcp_keepalives_in"`
-	GlobalOtherSettingsTcpKeepalivesInVariable    types.String `tfsdk:"global_other_settings_tcp_keepalives_in_variable"`
-	GlobalOtherSettingsTcpKeepalivesOut           types.Bool   `tfsdk:"global_other_settings_tcp_keepalives_out"`
-	GlobalOtherSettingsTcpKeepalivesOutVariable   types.String `tfsdk:"global_other_settings_tcp_keepalives_out_variable"`
-	GlobalOtherSettingsTcpSmallServers            types.Bool   `tfsdk:"global_other_settings_tcp_small_servers"`
-	GlobalOtherSettingsTcpSmallServersVariable    types.String `tfsdk:"global_other_settings_tcp_small_servers_variable"`
-	GlobalOtherSettingsUdpSmallServers            types.Bool   `tfsdk:"global_other_settings_udp_small_servers"`
-	GlobalOtherSettingsUdpSmallServersVariable    types.String `tfsdk:"global_other_settings_udp_small_servers_variable"`
-	GlobalOtherSettingsConsoleLogging             types.Bool   `tfsdk:"global_other_settings_console_logging"`
-	GlobalOtherSettingsConsoleLoggingVariable     types.String `tfsdk:"global_other_settings_console_logging_variable"`
-	GlobalOtherSettingsIPSourceRoute              types.Bool   `tfsdk:"global_other_settings_i_p_source_route"`
-	GlobalOtherSettingsIPSourceRouteVariable      types.String `tfsdk:"global_other_settings_i_p_source_route_variable"`
-	GlobalOtherSettingsVtyLineLogging             types.Bool   `tfsdk:"global_other_settings_vty_line_logging"`
-	GlobalOtherSettingsVtyLineLoggingVariable     types.String `tfsdk:"global_other_settings_vty_line_logging_variable"`
-	GlobalOtherSettingsSnmpIfindexPersist         types.Bool   `tfsdk:"global_other_settings_snmp_ifindex_persist"`
-	GlobalOtherSettingsSnmpIfindexPersistVariable types.String `tfsdk:"global_other_settings_snmp_ifindex_persist_variable"`
-	GlobalOtherSettingsIgnoreBootp                types.Bool   `tfsdk:"global_other_settings_ignore_bootp"`
-	GlobalOtherSettingsIgnoreBootpVariable        types.String `tfsdk:"global_other_settings_ignore_bootp_variable"`
-	GlobalSettingsNat64UdpTimeout                 types.Int64  `tfsdk:"global_settings_nat64_udp_timeout"`
-	GlobalSettingsNat64UdpTimeoutVariable         types.String `tfsdk:"global_settings_nat64_udp_timeout_variable"`
-	GlobalSettingsNat64TcpTimeout                 types.Int64  `tfsdk:"global_settings_nat64_tcp_timeout"`
-	GlobalSettingsNat64TcpTimeoutVariable         types.String `tfsdk:"global_settings_nat64_tcp_timeout_variable"`
-	GlobalSettingsHttpAuthentication              types.String `tfsdk:"global_settings_http_authentication"`
-	GlobalSettingsHttpAuthenticationVariable      types.String `tfsdk:"global_settings_http_authentication_variable"`
-	GlobalSettingsSSHVersion                      types.String `tfsdk:"global_settings_s_s_h_version"`
-	GlobalSettingsSSHVersionVariable              types.String `tfsdk:"global_settings_s_s_h_version_variable"`
+	Id                         types.String `tfsdk:"id"`
+	Version                    types.Int64  `tfsdk:"version"`
+	Name                       types.String `tfsdk:"name"`
+	Description                types.String `tfsdk:"description"`
+	FeatureProfileId           types.String `tfsdk:"feature_profile_id"`
+	HttpServer                 types.Bool   `tfsdk:"http_server"`
+	HttpServerVariable         types.String `tfsdk:"http_server_variable"`
+	HttpsServer                types.Bool   `tfsdk:"https_server"`
+	HttpsServerVariable        types.String `tfsdk:"https_server_variable"`
+	FtpPassive                 types.Bool   `tfsdk:"ftp_passive"`
+	FtpPassiveVariable         types.String `tfsdk:"ftp_passive_variable"`
+	DomainLookup               types.Bool   `tfsdk:"domain_lookup"`
+	DomainLookupVariable       types.String `tfsdk:"domain_lookup_variable"`
+	ArpProxy                   types.Bool   `tfsdk:"arp_proxy"`
+	ArpProxyVariable           types.String `tfsdk:"arp_proxy_variable"`
+	RshRcp                     types.Bool   `tfsdk:"rsh_rcp"`
+	RshRcpVariable             types.String `tfsdk:"rsh_rcp_variable"`
+	LineVty                    types.Bool   `tfsdk:"line_vty"`
+	LineVtyVariable            types.String `tfsdk:"line_vty_variable"`
+	Cdp                        types.Bool   `tfsdk:"cdp"`
+	CdpVariable                types.String `tfsdk:"cdp_variable"`
+	Lldp                       types.Bool   `tfsdk:"lldp"`
+	LldpVariable               types.String `tfsdk:"lldp_variable"`
+	SourceInterface            types.String `tfsdk:"source_interface"`
+	SourceInterfaceVariable    types.String `tfsdk:"source_interface_variable"`
+	TcpKeepalivesIn            types.Bool   `tfsdk:"tcp_keepalives_in"`
+	TcpKeepalivesInVariable    types.String `tfsdk:"tcp_keepalives_in_variable"`
+	TcpKeepalivesOut           types.Bool   `tfsdk:"tcp_keepalives_out"`
+	TcpKeepalivesOutVariable   types.String `tfsdk:"tcp_keepalives_out_variable"`
+	TcpSmallServers            types.Bool   `tfsdk:"tcp_small_servers"`
+	TcpSmallServersVariable    types.String `tfsdk:"tcp_small_servers_variable"`
+	UdpSmallServers            types.Bool   `tfsdk:"udp_small_servers"`
+	UdpSmallServersVariable    types.String `tfsdk:"udp_small_servers_variable"`
+	ConsoleLogging             types.Bool   `tfsdk:"console_logging"`
+	ConsoleLoggingVariable     types.String `tfsdk:"console_logging_variable"`
+	IpSourceRouting            types.Bool   `tfsdk:"ip_source_routing"`
+	IpSourceRoutingVariable    types.String `tfsdk:"ip_source_routing_variable"`
+	VtyLineLogging             types.Bool   `tfsdk:"vty_line_logging"`
+	VtyLineLoggingVariable     types.String `tfsdk:"vty_line_logging_variable"`
+	SnmpIfindexPersist         types.Bool   `tfsdk:"snmp_ifindex_persist"`
+	SnmpIfindexPersistVariable types.String `tfsdk:"snmp_ifindex_persist_variable"`
+	IgnoreBootp                types.Bool   `tfsdk:"ignore_bootp"`
+	IgnoreBootpVariable        types.String `tfsdk:"ignore_bootp_variable"`
+	Nat64UdpTimeout            types.Int64  `tfsdk:"nat64_udp_timeout"`
+	Nat64UdpTimeoutVariable    types.String `tfsdk:"nat64_udp_timeout_variable"`
+	Nat64TcpTimeout            types.Int64  `tfsdk:"nat64_tcp_timeout"`
+	Nat64TcpTimeoutVariable    types.String `tfsdk:"nat64_tcp_timeout_variable"`
+	HttpAuthentication         types.String `tfsdk:"http_authentication"`
+	HttpAuthenticationVariable types.String `tfsdk:"http_authentication_variable"`
+	SshVersion                 types.String `tfsdk:"ssh_version"`
+	SshVersionVariable         types.String `tfsdk:"ssh_version_variable"`
 }
 
 func (data SystemGlobal) getModel() string {
@@ -96,257 +96,257 @@ func (data SystemGlobal) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 
-	if !data.ServicesGlobalServicesIpHttpServerVariable.IsNull() {
+	if !data.HttpServerVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.ServicesGlobalServicesIpHttpServerVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpHttpServer.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.HttpServerVariable.ValueString())
+	} else if data.HttpServer.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.ServicesGlobalServicesIpHttpServer.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.HttpServer.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpHttpsServerVariable.IsNull() {
+	if !data.HttpsServerVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.ServicesGlobalServicesIpHttpsServerVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpHttpsServer.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.HttpsServerVariable.ValueString())
+	} else if data.HttpsServer.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.ServicesGlobalServicesIpHttpsServer.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.HttpsServer.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpFtpPassiveVariable.IsNull() {
+	if !data.FtpPassiveVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.ServicesGlobalServicesIpFtpPassiveVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpFtpPassive.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.FtpPassiveVariable.ValueString())
+	} else if data.FtpPassive.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.ServicesGlobalServicesIpFtpPassive.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.FtpPassive.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpDomainLookupVariable.IsNull() {
+	if !data.DomainLookupVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.ServicesGlobalServicesIpDomainLookupVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpDomainLookup.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.DomainLookupVariable.ValueString())
+	} else if data.DomainLookup.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.ServicesGlobalServicesIpDomainLookup.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.DomainLookup.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpArpProxyVariable.IsNull() {
+	if !data.ArpProxyVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ServicesGlobalServicesIpArpProxyVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpArpProxy.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ArpProxyVariable.ValueString())
+	} else if data.ArpProxy.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ServicesGlobalServicesIpArpProxy.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ArpProxy.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpRcmdVariable.IsNull() {
+	if !data.RshRcpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.ServicesGlobalServicesIpRcmdVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpRcmd.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.RshRcpVariable.ValueString())
+	} else if data.RshRcp.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.ServicesGlobalServicesIpRcmd.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.RshRcp.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpLineVtyVariable.IsNull() {
+	if !data.LineVtyVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.ServicesGlobalServicesIpLineVtyVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpLineVty.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.LineVtyVariable.ValueString())
+	} else if data.LineVty.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.ServicesGlobalServicesIpLineVty.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.LineVty.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpCdpVariable.IsNull() {
+	if !data.CdpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.ServicesGlobalServicesIpCdpVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpCdp.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.CdpVariable.ValueString())
+	} else if data.Cdp.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.ServicesGlobalServicesIpCdp.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.Cdp.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpLldpVariable.IsNull() {
+	if !data.LldpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.ServicesGlobalServicesIpLldpVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpLldp.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.LldpVariable.ValueString())
+	} else if data.Lldp.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.ServicesGlobalServicesIpLldp.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.Lldp.ValueBool())
 	}
 
-	if !data.ServicesGlobalServicesIpSourceIntrfVariable.IsNull() {
+	if !data.SourceInterfaceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.ServicesGlobalServicesIpSourceIntrfVariable.ValueString())
-	} else if data.ServicesGlobalServicesIpSourceIntrf.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterfaceVariable.ValueString())
+	} else if data.SourceInterface.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.ServicesGlobalServicesIpSourceIntrf.ValueString())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterface.ValueString())
 	}
 
-	if !data.GlobalOtherSettingsTcpKeepalivesInVariable.IsNull() {
+	if !data.TcpKeepalivesInVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.GlobalOtherSettingsTcpKeepalivesInVariable.ValueString())
-	} else if data.GlobalOtherSettingsTcpKeepalivesIn.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.TcpKeepalivesInVariable.ValueString())
+	} else if data.TcpKeepalivesIn.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.GlobalOtherSettingsTcpKeepalivesIn.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.TcpKeepalivesIn.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsTcpKeepalivesOutVariable.IsNull() {
+	if !data.TcpKeepalivesOutVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.GlobalOtherSettingsTcpKeepalivesOutVariable.ValueString())
-	} else if data.GlobalOtherSettingsTcpKeepalivesOut.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.TcpKeepalivesOutVariable.ValueString())
+	} else if data.TcpKeepalivesOut.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.GlobalOtherSettingsTcpKeepalivesOut.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.TcpKeepalivesOut.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsTcpSmallServersVariable.IsNull() {
+	if !data.TcpSmallServersVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.GlobalOtherSettingsTcpSmallServersVariable.ValueString())
-	} else if data.GlobalOtherSettingsTcpSmallServers.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.TcpSmallServersVariable.ValueString())
+	} else if data.TcpSmallServers.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.GlobalOtherSettingsTcpSmallServers.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.TcpSmallServers.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsUdpSmallServersVariable.IsNull() {
+	if !data.UdpSmallServersVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.GlobalOtherSettingsUdpSmallServersVariable.ValueString())
-	} else if data.GlobalOtherSettingsUdpSmallServers.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.UdpSmallServersVariable.ValueString())
+	} else if data.UdpSmallServers.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.GlobalOtherSettingsUdpSmallServers.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.UdpSmallServers.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsConsoleLoggingVariable.IsNull() {
+	if !data.ConsoleLoggingVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.GlobalOtherSettingsConsoleLoggingVariable.ValueString())
-	} else if data.GlobalOtherSettingsConsoleLogging.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.ConsoleLoggingVariable.ValueString())
+	} else if data.ConsoleLogging.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.GlobalOtherSettingsConsoleLogging.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.ConsoleLogging.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsIPSourceRouteVariable.IsNull() {
+	if !data.IpSourceRoutingVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.GlobalOtherSettingsIPSourceRouteVariable.ValueString())
-	} else if data.GlobalOtherSettingsIPSourceRoute.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.IpSourceRoutingVariable.ValueString())
+	} else if data.IpSourceRouting.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.GlobalOtherSettingsIPSourceRoute.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.IpSourceRouting.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsVtyLineLoggingVariable.IsNull() {
+	if !data.VtyLineLoggingVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.GlobalOtherSettingsVtyLineLoggingVariable.ValueString())
-	} else if data.GlobalOtherSettingsVtyLineLogging.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.VtyLineLoggingVariable.ValueString())
+	} else if data.VtyLineLogging.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.GlobalOtherSettingsVtyLineLogging.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.VtyLineLogging.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsSnmpIfindexPersistVariable.IsNull() {
+	if !data.SnmpIfindexPersistVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.GlobalOtherSettingsSnmpIfindexPersistVariable.ValueString())
-	} else if data.GlobalOtherSettingsSnmpIfindexPersist.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.SnmpIfindexPersistVariable.ValueString())
+	} else if data.SnmpIfindexPersist.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.GlobalOtherSettingsSnmpIfindexPersist.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.SnmpIfindexPersist.ValueBool())
 	}
 
-	if !data.GlobalOtherSettingsIgnoreBootpVariable.IsNull() {
+	if !data.IgnoreBootpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.GlobalOtherSettingsIgnoreBootpVariable.ValueString())
-	} else if data.GlobalOtherSettingsIgnoreBootp.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.IgnoreBootpVariable.ValueString())
+	} else if data.IgnoreBootp.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.GlobalOtherSettingsIgnoreBootp.ValueBool())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.IgnoreBootp.ValueBool())
 	}
 
-	if !data.GlobalSettingsNat64UdpTimeoutVariable.IsNull() {
+	if !data.Nat64UdpTimeoutVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.GlobalSettingsNat64UdpTimeoutVariable.ValueString())
-	} else if data.GlobalSettingsNat64UdpTimeout.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.Nat64UdpTimeoutVariable.ValueString())
+	} else if data.Nat64UdpTimeout.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", 300)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.GlobalSettingsNat64UdpTimeout.ValueInt64())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.Nat64UdpTimeout.ValueInt64())
 	}
 
-	if !data.GlobalSettingsNat64TcpTimeoutVariable.IsNull() {
+	if !data.Nat64TcpTimeoutVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.GlobalSettingsNat64TcpTimeoutVariable.ValueString())
-	} else if data.GlobalSettingsNat64TcpTimeout.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.Nat64TcpTimeoutVariable.ValueString())
+	} else if data.Nat64TcpTimeout.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "default")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", 3600)
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.GlobalSettingsNat64TcpTimeout.ValueInt64())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.Nat64TcpTimeout.ValueInt64())
 	}
 
-	if !data.GlobalSettingsHttpAuthenticationVariable.IsNull() {
+	if !data.HttpAuthenticationVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.GlobalSettingsHttpAuthenticationVariable.ValueString())
-	} else if data.GlobalSettingsHttpAuthentication.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthenticationVariable.ValueString())
+	} else if data.HttpAuthentication.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.GlobalSettingsHttpAuthentication.ValueString())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthentication.ValueString())
 	}
 
-	if !data.GlobalSettingsSSHVersionVariable.IsNull() {
+	if !data.SshVersionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.GlobalSettingsSSHVersionVariable.ValueString())
-	} else if data.GlobalSettingsSSHVersion.IsNull() {
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersionVariable.ValueString())
+	} else if data.SshVersion.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.GlobalSettingsSSHVersion.ValueString())
+		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersion.ValueString())
 	}
 	return body
 }
@@ -359,234 +359,234 @@ func (data *SystemGlobal) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.ServicesGlobalServicesIpHttpServer = types.BoolNull()
-	data.ServicesGlobalServicesIpHttpServerVariable = types.StringNull()
+	data.HttpServer = types.BoolNull()
+	data.HttpServerVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpServer.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpHttpServerVariable = types.StringValue(va.String())
+			data.HttpServerVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpHttpServer = types.BoolValue(va.Bool())
+			data.HttpServer = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpHttpsServer = types.BoolNull()
-	data.ServicesGlobalServicesIpHttpsServerVariable = types.StringNull()
+	data.HttpsServer = types.BoolNull()
+	data.HttpsServerVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpsServer.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpHttpsServerVariable = types.StringValue(va.String())
+			data.HttpsServerVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpHttpsServer = types.BoolValue(va.Bool())
+			data.HttpsServer = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpFtpPassive = types.BoolNull()
-	data.ServicesGlobalServicesIpFtpPassiveVariable = types.StringNull()
+	data.FtpPassive = types.BoolNull()
+	data.FtpPassiveVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpFtpPassive.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpFtpPassiveVariable = types.StringValue(va.String())
+			data.FtpPassiveVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpFtpPassive = types.BoolValue(va.Bool())
+			data.FtpPassive = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpDomainLookup = types.BoolNull()
-	data.ServicesGlobalServicesIpDomainLookupVariable = types.StringNull()
+	data.DomainLookup = types.BoolNull()
+	data.DomainLookupVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpDomainLookup.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpDomainLookupVariable = types.StringValue(va.String())
+			data.DomainLookupVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpDomainLookup = types.BoolValue(va.Bool())
+			data.DomainLookup = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpArpProxy = types.BoolNull()
-	data.ServicesGlobalServicesIpArpProxyVariable = types.StringNull()
+	data.ArpProxy = types.BoolNull()
+	data.ArpProxyVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpArpProxy.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpArpProxyVariable = types.StringValue(va.String())
+			data.ArpProxyVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpArpProxy = types.BoolValue(va.Bool())
+			data.ArpProxy = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpRcmd = types.BoolNull()
-	data.ServicesGlobalServicesIpRcmdVariable = types.StringNull()
+	data.RshRcp = types.BoolNull()
+	data.RshRcpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpRcmd.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpRcmd.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpRcmdVariable = types.StringValue(va.String())
+			data.RshRcpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpRcmd = types.BoolValue(va.Bool())
+			data.RshRcp = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpLineVty = types.BoolNull()
-	data.ServicesGlobalServicesIpLineVtyVariable = types.StringNull()
+	data.LineVty = types.BoolNull()
+	data.LineVtyVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLineVty.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLineVty.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpLineVtyVariable = types.StringValue(va.String())
+			data.LineVtyVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpLineVty = types.BoolValue(va.Bool())
+			data.LineVty = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpCdp = types.BoolNull()
-	data.ServicesGlobalServicesIpCdpVariable = types.StringNull()
+	data.Cdp = types.BoolNull()
+	data.CdpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpCdp.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpCdp.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpCdpVariable = types.StringValue(va.String())
+			data.CdpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpCdp = types.BoolValue(va.Bool())
+			data.Cdp = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpLldp = types.BoolNull()
-	data.ServicesGlobalServicesIpLldpVariable = types.StringNull()
+	data.Lldp = types.BoolNull()
+	data.LldpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLldp.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLldp.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpLldpVariable = types.StringValue(va.String())
+			data.LldpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpLldp = types.BoolValue(va.Bool())
+			data.Lldp = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpSourceIntrf = types.StringNull()
-	data.ServicesGlobalServicesIpSourceIntrfVariable = types.StringNull()
+	data.SourceInterface = types.StringNull()
+	data.SourceInterfaceVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpSourceIntrfVariable = types.StringValue(va.String())
+			data.SourceInterfaceVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpSourceIntrf = types.StringValue(va.String())
+			data.SourceInterface = types.StringValue(va.String())
 		}
 	}
-	data.GlobalOtherSettingsTcpKeepalivesIn = types.BoolNull()
-	data.GlobalOtherSettingsTcpKeepalivesInVariable = types.StringNull()
+	data.TcpKeepalivesIn = types.BoolNull()
+	data.TcpKeepalivesInVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsTcpKeepalivesInVariable = types.StringValue(va.String())
+			data.TcpKeepalivesInVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsTcpKeepalivesIn = types.BoolValue(va.Bool())
+			data.TcpKeepalivesIn = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsTcpKeepalivesOut = types.BoolNull()
-	data.GlobalOtherSettingsTcpKeepalivesOutVariable = types.StringNull()
+	data.TcpKeepalivesOut = types.BoolNull()
+	data.TcpKeepalivesOutVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsTcpKeepalivesOutVariable = types.StringValue(va.String())
+			data.TcpKeepalivesOutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsTcpKeepalivesOut = types.BoolValue(va.Bool())
+			data.TcpKeepalivesOut = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsTcpSmallServers = types.BoolNull()
-	data.GlobalOtherSettingsTcpSmallServersVariable = types.StringNull()
+	data.TcpSmallServers = types.BoolNull()
+	data.TcpSmallServersVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpSmallServers.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsTcpSmallServersVariable = types.StringValue(va.String())
+			data.TcpSmallServersVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsTcpSmallServers = types.BoolValue(va.Bool())
+			data.TcpSmallServers = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsUdpSmallServers = types.BoolNull()
-	data.GlobalOtherSettingsUdpSmallServersVariable = types.StringNull()
+	data.UdpSmallServers = types.BoolNull()
+	data.UdpSmallServersVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsUdpSmallServers.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsUdpSmallServersVariable = types.StringValue(va.String())
+			data.UdpSmallServersVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsUdpSmallServers = types.BoolValue(va.Bool())
+			data.UdpSmallServers = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsConsoleLogging = types.BoolNull()
-	data.GlobalOtherSettingsConsoleLoggingVariable = types.StringNull()
+	data.ConsoleLogging = types.BoolNull()
+	data.ConsoleLoggingVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsConsoleLogging.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsConsoleLogging.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsConsoleLoggingVariable = types.StringValue(va.String())
+			data.ConsoleLoggingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsConsoleLogging = types.BoolValue(va.Bool())
+			data.ConsoleLogging = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsIPSourceRoute = types.BoolNull()
-	data.GlobalOtherSettingsIPSourceRouteVariable = types.StringNull()
+	data.IpSourceRouting = types.BoolNull()
+	data.IpSourceRoutingVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsIPSourceRoute.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsIPSourceRouteVariable = types.StringValue(va.String())
+			data.IpSourceRoutingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsIPSourceRoute = types.BoolValue(va.Bool())
+			data.IpSourceRouting = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsVtyLineLogging = types.BoolNull()
-	data.GlobalOtherSettingsVtyLineLoggingVariable = types.StringNull()
+	data.VtyLineLogging = types.BoolNull()
+	data.VtyLineLoggingVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsVtyLineLogging.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsVtyLineLoggingVariable = types.StringValue(va.String())
+			data.VtyLineLoggingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsVtyLineLogging = types.BoolValue(va.Bool())
+			data.VtyLineLogging = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsSnmpIfindexPersist = types.BoolNull()
-	data.GlobalOtherSettingsSnmpIfindexPersistVariable = types.StringNull()
+	data.SnmpIfindexPersist = types.BoolNull()
+	data.SnmpIfindexPersistVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsSnmpIfindexPersistVariable = types.StringValue(va.String())
+			data.SnmpIfindexPersistVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsSnmpIfindexPersist = types.BoolValue(va.Bool())
+			data.SnmpIfindexPersist = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsIgnoreBootp = types.BoolNull()
-	data.GlobalOtherSettingsIgnoreBootpVariable = types.StringNull()
+	data.IgnoreBootp = types.BoolNull()
+	data.IgnoreBootpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsIgnoreBootp.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsIgnoreBootpVariable = types.StringValue(va.String())
+			data.IgnoreBootpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsIgnoreBootp = types.BoolValue(va.Bool())
+			data.IgnoreBootp = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalSettingsNat64UdpTimeout = types.Int64Null()
-	data.GlobalSettingsNat64UdpTimeoutVariable = types.StringNull()
+	data.Nat64UdpTimeout = types.Int64Null()
+	data.Nat64UdpTimeoutVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsNat64UdpTimeout.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsNat64UdpTimeout.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsNat64UdpTimeoutVariable = types.StringValue(va.String())
+			data.Nat64UdpTimeoutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsNat64UdpTimeout = types.Int64Value(va.Int())
+			data.Nat64UdpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.GlobalSettingsNat64TcpTimeout = types.Int64Null()
-	data.GlobalSettingsNat64TcpTimeoutVariable = types.StringNull()
+	data.Nat64TcpTimeout = types.Int64Null()
+	data.Nat64TcpTimeoutVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsNat64TcpTimeout.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsNat64TcpTimeout.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsNat64TcpTimeoutVariable = types.StringValue(va.String())
+			data.Nat64TcpTimeoutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsNat64TcpTimeout = types.Int64Value(va.Int())
+			data.Nat64TcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.GlobalSettingsHttpAuthentication = types.StringNull()
-	data.GlobalSettingsHttpAuthenticationVariable = types.StringNull()
+	data.HttpAuthentication = types.StringNull()
+	data.HttpAuthenticationVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsHttpAuthentication.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsHttpAuthentication.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsHttpAuthenticationVariable = types.StringValue(va.String())
+			data.HttpAuthenticationVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsHttpAuthentication = types.StringValue(va.String())
+			data.HttpAuthentication = types.StringValue(va.String())
 		}
 	}
-	data.GlobalSettingsSSHVersion = types.StringNull()
-	data.GlobalSettingsSSHVersionVariable = types.StringNull()
+	data.SshVersion = types.StringNull()
+	data.SshVersionVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsSSHVersion.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsSSHVersion.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsSSHVersionVariable = types.StringValue(va.String())
+			data.SshVersionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsSSHVersion = types.StringValue(va.String())
+			data.SshVersion = types.StringValue(va.String())
 		}
 	}
 }
@@ -599,234 +599,234 @@ func (data *SystemGlobal) updateFromBody(ctx context.Context, res gjson.Result) 
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.ServicesGlobalServicesIpHttpServer = types.BoolNull()
-	data.ServicesGlobalServicesIpHttpServerVariable = types.StringNull()
+	data.HttpServer = types.BoolNull()
+	data.HttpServerVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpServer.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpHttpServerVariable = types.StringValue(va.String())
+			data.HttpServerVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpHttpServer = types.BoolValue(va.Bool())
+			data.HttpServer = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpHttpsServer = types.BoolNull()
-	data.ServicesGlobalServicesIpHttpsServerVariable = types.StringNull()
+	data.HttpsServer = types.BoolNull()
+	data.HttpsServerVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpHttpsServer.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpHttpsServerVariable = types.StringValue(va.String())
+			data.HttpsServerVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpHttpsServer = types.BoolValue(va.Bool())
+			data.HttpsServer = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpFtpPassive = types.BoolNull()
-	data.ServicesGlobalServicesIpFtpPassiveVariable = types.StringNull()
+	data.FtpPassive = types.BoolNull()
+	data.FtpPassiveVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpFtpPassive.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpFtpPassiveVariable = types.StringValue(va.String())
+			data.FtpPassiveVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpFtpPassive = types.BoolValue(va.Bool())
+			data.FtpPassive = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpDomainLookup = types.BoolNull()
-	data.ServicesGlobalServicesIpDomainLookupVariable = types.StringNull()
+	data.DomainLookup = types.BoolNull()
+	data.DomainLookupVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpDomainLookup.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpDomainLookupVariable = types.StringValue(va.String())
+			data.DomainLookupVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpDomainLookup = types.BoolValue(va.Bool())
+			data.DomainLookup = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpArpProxy = types.BoolNull()
-	data.ServicesGlobalServicesIpArpProxyVariable = types.StringNull()
+	data.ArpProxy = types.BoolNull()
+	data.ArpProxyVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpArpProxy.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpArpProxyVariable = types.StringValue(va.String())
+			data.ArpProxyVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpArpProxy = types.BoolValue(va.Bool())
+			data.ArpProxy = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpRcmd = types.BoolNull()
-	data.ServicesGlobalServicesIpRcmdVariable = types.StringNull()
+	data.RshRcp = types.BoolNull()
+	data.RshRcpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpRcmd.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpRcmd.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpRcmdVariable = types.StringValue(va.String())
+			data.RshRcpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpRcmd = types.BoolValue(va.Bool())
+			data.RshRcp = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpLineVty = types.BoolNull()
-	data.ServicesGlobalServicesIpLineVtyVariable = types.StringNull()
+	data.LineVty = types.BoolNull()
+	data.LineVtyVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLineVty.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLineVty.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpLineVtyVariable = types.StringValue(va.String())
+			data.LineVtyVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpLineVty = types.BoolValue(va.Bool())
+			data.LineVty = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpCdp = types.BoolNull()
-	data.ServicesGlobalServicesIpCdpVariable = types.StringNull()
+	data.Cdp = types.BoolNull()
+	data.CdpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpCdp.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpCdp.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpCdpVariable = types.StringValue(va.String())
+			data.CdpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpCdp = types.BoolValue(va.Bool())
+			data.Cdp = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpLldp = types.BoolNull()
-	data.ServicesGlobalServicesIpLldpVariable = types.StringNull()
+	data.Lldp = types.BoolNull()
+	data.LldpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLldp.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpLldp.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpLldpVariable = types.StringValue(va.String())
+			data.LldpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpLldp = types.BoolValue(va.Bool())
+			data.Lldp = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServicesGlobalServicesIpSourceIntrf = types.StringNull()
-	data.ServicesGlobalServicesIpSourceIntrfVariable = types.StringNull()
+	data.SourceInterface = types.StringNull()
+	data.SourceInterfaceVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value")
 		if t.String() == "variable" {
-			data.ServicesGlobalServicesIpSourceIntrfVariable = types.StringValue(va.String())
+			data.SourceInterfaceVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ServicesGlobalServicesIpSourceIntrf = types.StringValue(va.String())
+			data.SourceInterface = types.StringValue(va.String())
 		}
 	}
-	data.GlobalOtherSettingsTcpKeepalivesIn = types.BoolNull()
-	data.GlobalOtherSettingsTcpKeepalivesInVariable = types.StringNull()
+	data.TcpKeepalivesIn = types.BoolNull()
+	data.TcpKeepalivesInVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsTcpKeepalivesInVariable = types.StringValue(va.String())
+			data.TcpKeepalivesInVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsTcpKeepalivesIn = types.BoolValue(va.Bool())
+			data.TcpKeepalivesIn = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsTcpKeepalivesOut = types.BoolNull()
-	data.GlobalOtherSettingsTcpKeepalivesOutVariable = types.StringNull()
+	data.TcpKeepalivesOut = types.BoolNull()
+	data.TcpKeepalivesOutVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsTcpKeepalivesOutVariable = types.StringValue(va.String())
+			data.TcpKeepalivesOutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsTcpKeepalivesOut = types.BoolValue(va.Bool())
+			data.TcpKeepalivesOut = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsTcpSmallServers = types.BoolNull()
-	data.GlobalOtherSettingsTcpSmallServersVariable = types.StringNull()
+	data.TcpSmallServers = types.BoolNull()
+	data.TcpSmallServersVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsTcpSmallServers.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsTcpSmallServersVariable = types.StringValue(va.String())
+			data.TcpSmallServersVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsTcpSmallServers = types.BoolValue(va.Bool())
+			data.TcpSmallServers = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsUdpSmallServers = types.BoolNull()
-	data.GlobalOtherSettingsUdpSmallServersVariable = types.StringNull()
+	data.UdpSmallServers = types.BoolNull()
+	data.UdpSmallServersVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsUdpSmallServers.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsUdpSmallServersVariable = types.StringValue(va.String())
+			data.UdpSmallServersVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsUdpSmallServers = types.BoolValue(va.Bool())
+			data.UdpSmallServers = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsConsoleLogging = types.BoolNull()
-	data.GlobalOtherSettingsConsoleLoggingVariable = types.StringNull()
+	data.ConsoleLogging = types.BoolNull()
+	data.ConsoleLoggingVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsConsoleLogging.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsConsoleLogging.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsConsoleLoggingVariable = types.StringValue(va.String())
+			data.ConsoleLoggingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsConsoleLogging = types.BoolValue(va.Bool())
+			data.ConsoleLogging = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsIPSourceRoute = types.BoolNull()
-	data.GlobalOtherSettingsIPSourceRouteVariable = types.StringNull()
+	data.IpSourceRouting = types.BoolNull()
+	data.IpSourceRoutingVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsIPSourceRoute.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsIPSourceRouteVariable = types.StringValue(va.String())
+			data.IpSourceRoutingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsIPSourceRoute = types.BoolValue(va.Bool())
+			data.IpSourceRouting = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsVtyLineLogging = types.BoolNull()
-	data.GlobalOtherSettingsVtyLineLoggingVariable = types.StringNull()
+	data.VtyLineLogging = types.BoolNull()
+	data.VtyLineLoggingVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsVtyLineLogging.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsVtyLineLoggingVariable = types.StringValue(va.String())
+			data.VtyLineLoggingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsVtyLineLogging = types.BoolValue(va.Bool())
+			data.VtyLineLogging = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsSnmpIfindexPersist = types.BoolNull()
-	data.GlobalOtherSettingsSnmpIfindexPersistVariable = types.StringNull()
+	data.SnmpIfindexPersist = types.BoolNull()
+	data.SnmpIfindexPersistVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsSnmpIfindexPersistVariable = types.StringValue(va.String())
+			data.SnmpIfindexPersistVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsSnmpIfindexPersist = types.BoolValue(va.Bool())
+			data.SnmpIfindexPersist = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalOtherSettingsIgnoreBootp = types.BoolNull()
-	data.GlobalOtherSettingsIgnoreBootpVariable = types.StringNull()
+	data.IgnoreBootp = types.BoolNull()
+	data.IgnoreBootpVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalOtherSettingsIgnoreBootp.value")
 		if t.String() == "variable" {
-			data.GlobalOtherSettingsIgnoreBootpVariable = types.StringValue(va.String())
+			data.IgnoreBootpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalOtherSettingsIgnoreBootp = types.BoolValue(va.Bool())
+			data.IgnoreBootp = types.BoolValue(va.Bool())
 		}
 	}
-	data.GlobalSettingsNat64UdpTimeout = types.Int64Null()
-	data.GlobalSettingsNat64UdpTimeoutVariable = types.StringNull()
+	data.Nat64UdpTimeout = types.Int64Null()
+	data.Nat64UdpTimeoutVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsNat64UdpTimeout.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsNat64UdpTimeout.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsNat64UdpTimeoutVariable = types.StringValue(va.String())
+			data.Nat64UdpTimeoutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsNat64UdpTimeout = types.Int64Value(va.Int())
+			data.Nat64UdpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.GlobalSettingsNat64TcpTimeout = types.Int64Null()
-	data.GlobalSettingsNat64TcpTimeoutVariable = types.StringNull()
+	data.Nat64TcpTimeout = types.Int64Null()
+	data.Nat64TcpTimeoutVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsNat64TcpTimeout.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsNat64TcpTimeout.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsNat64TcpTimeoutVariable = types.StringValue(va.String())
+			data.Nat64TcpTimeoutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsNat64TcpTimeout = types.Int64Value(va.Int())
+			data.Nat64TcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.GlobalSettingsHttpAuthentication = types.StringNull()
-	data.GlobalSettingsHttpAuthenticationVariable = types.StringNull()
+	data.HttpAuthentication = types.StringNull()
+	data.HttpAuthenticationVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsHttpAuthentication.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsHttpAuthentication.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsHttpAuthenticationVariable = types.StringValue(va.String())
+			data.HttpAuthenticationVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsHttpAuthentication = types.StringValue(va.String())
+			data.HttpAuthentication = types.StringValue(va.String())
 		}
 	}
-	data.GlobalSettingsSSHVersion = types.StringNull()
-	data.GlobalSettingsSSHVersionVariable = types.StringNull()
+	data.SshVersion = types.StringNull()
+	data.SshVersionVariable = types.StringNull()
 	if t := res.Get(path + "services_global.services_ip.globalSettingsSSHVersion.optionType"); t.Exists() {
 		va := res.Get(path + "services_global.services_ip.globalSettingsSSHVersion.value")
 		if t.String() == "variable" {
-			data.GlobalSettingsSSHVersionVariable = types.StringValue(va.String())
+			data.SshVersionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GlobalSettingsSSHVersion = types.StringValue(va.String())
+			data.SshVersion = types.StringValue(va.String())
 		}
 	}
 }

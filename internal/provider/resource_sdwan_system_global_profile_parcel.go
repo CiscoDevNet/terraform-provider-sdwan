@@ -85,79 +85,79 @@ func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req reso
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_http_server": schema.BoolAttribute{
+			"http_server": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set a HTTP Server").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_http_server_variable": schema.StringAttribute{
+			"http_server_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_https_server": schema.BoolAttribute{
+			"https_server": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set a HTTPS Server").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_https_server_variable": schema.StringAttribute{
+			"https_server_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_ftp_passive": schema.BoolAttribute{
+			"ftp_passive": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set Passive FTP").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_ftp_passive_variable": schema.StringAttribute{
+			"ftp_passive_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_domain_lookup": schema.BoolAttribute{
+			"domain_lookup": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Domain-Lookup").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_domain_lookup_variable": schema.StringAttribute{
+			"domain_lookup_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_arp_proxy": schema.BoolAttribute{
+			"arp_proxy": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set ARP Proxy").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_arp_proxy_variable": schema.StringAttribute{
+			"arp_proxy_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_rcmd": schema.BoolAttribute{
+			"rsh_rcp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set RSH/RCP").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_rcmd_variable": schema.StringAttribute{
+			"rsh_rcp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_line_vty": schema.BoolAttribute{
+			"line_vty": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Telnet (Outbound)").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_line_vty_variable": schema.StringAttribute{
+			"line_vty_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_cdp": schema.BoolAttribute{
+			"cdp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure CDP").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_cdp_variable": schema.StringAttribute{
+			"cdp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_lldp": schema.BoolAttribute{
+			"lldp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure LLDP").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_lldp_variable": schema.StringAttribute{
+			"lldp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"services_global_services_ip_source_intrf": schema.StringAttribute{
+			"source_interface": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Specify interface for source address in all HTTP(S) client connections").String,
 				Optional:            true,
 				Validators: []validator.String{
@@ -165,123 +165,123 @@ func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req reso
 					stringvalidator.RegexMatches(regexp.MustCompile(`(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 				},
 			},
-			"services_global_services_ip_source_intrf_variable": schema.StringAttribute{
+			"source_interface_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_tcp_keepalives_in": schema.BoolAttribute{
+			"tcp_keepalives_in": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure tcp-keepalives-in").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"global_other_settings_tcp_keepalives_in_variable": schema.StringAttribute{
+			"tcp_keepalives_in_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_tcp_keepalives_out": schema.BoolAttribute{
+			"tcp_keepalives_out": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure tcp-keepalives-out").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"global_other_settings_tcp_keepalives_out_variable": schema.StringAttribute{
+			"tcp_keepalives_out_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_tcp_small_servers": schema.BoolAttribute{
+			"tcp_small_servers": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure tcp-small-servers").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"global_other_settings_tcp_small_servers_variable": schema.StringAttribute{
+			"tcp_small_servers_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_udp_small_servers": schema.BoolAttribute{
+			"udp_small_servers": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure udp-small-servers").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"global_other_settings_udp_small_servers_variable": schema.StringAttribute{
+			"udp_small_servers_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_console_logging": schema.BoolAttribute{
+			"console_logging": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Console Logging").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"global_other_settings_console_logging_variable": schema.StringAttribute{
+			"console_logging_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_i_p_source_route": schema.BoolAttribute{
+			"ip_source_routing": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set Source Route").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"global_other_settings_i_p_source_route_variable": schema.StringAttribute{
+			"ip_source_routing_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_vty_line_logging": schema.BoolAttribute{
+			"vty_line_logging": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure VTY Line Logging").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"global_other_settings_vty_line_logging_variable": schema.StringAttribute{
+			"vty_line_logging_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_snmp_ifindex_persist": schema.BoolAttribute{
+			"snmp_ifindex_persist": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure SNMP Ifindex Persist").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"global_other_settings_snmp_ifindex_persist_variable": schema.StringAttribute{
+			"snmp_ifindex_persist_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_other_settings_ignore_bootp": schema.BoolAttribute{
+			"ignore_bootp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Ignore BOOTP").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"global_other_settings_ignore_bootp_variable": schema.StringAttribute{
+			"ignore_bootp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_settings_nat64_udp_timeout": schema.Int64Attribute{
+			"nat64_udp_timeout": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set NAT64 UDP session timeout, in seconds").AddIntegerRangeDescription(1, 536870).AddDefaultValueDescription("300").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 536870),
 				},
 			},
-			"global_settings_nat64_udp_timeout_variable": schema.StringAttribute{
+			"nat64_udp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_settings_nat64_tcp_timeout": schema.Int64Attribute{
+			"nat64_tcp_timeout": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set NAT64 TCP session timeout, in seconds").AddIntegerRangeDescription(1, 536870).AddDefaultValueDescription("3600").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 536870),
 				},
 			},
-			"global_settings_nat64_tcp_timeout_variable": schema.StringAttribute{
+			"nat64_tcp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_settings_http_authentication": schema.StringAttribute{
+			"http_authentication": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set preference for HTTP Authentication").AddStringEnumDescription("local", "aaa").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("local", "aaa"),
 				},
 			},
-			"global_settings_http_authentication_variable": schema.StringAttribute{
+			"http_authentication_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"global_settings_s_s_h_version": schema.StringAttribute{
+			"ssh_version": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set SSH version").AddStringEnumDescription("2").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("2"),
 				},
 			},
-			"global_settings_s_s_h_version_variable": schema.StringAttribute{
+			"ssh_version_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

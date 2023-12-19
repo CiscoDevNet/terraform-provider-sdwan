@@ -29,52 +29,52 @@ data "sdwan_system_global_profile_parcel" "example" {
 
 ### Read-Only
 
+- `arp_proxy` (Boolean) Set ARP Proxy
+- `arp_proxy_variable` (String) Variable name
+- `cdp` (Boolean) Configure CDP
+- `cdp_variable` (String) Variable name
+- `console_logging` (Boolean) Configure Console Logging
+- `console_logging_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `global_other_settings_console_logging` (Boolean) Configure Console Logging
-- `global_other_settings_console_logging_variable` (String) Variable name
-- `global_other_settings_i_p_source_route` (Boolean) Set Source Route
-- `global_other_settings_i_p_source_route_variable` (String) Variable name
-- `global_other_settings_ignore_bootp` (Boolean) Configure Ignore BOOTP
-- `global_other_settings_ignore_bootp_variable` (String) Variable name
-- `global_other_settings_snmp_ifindex_persist` (Boolean) Configure SNMP Ifindex Persist
-- `global_other_settings_snmp_ifindex_persist_variable` (String) Variable name
-- `global_other_settings_tcp_keepalives_in` (Boolean) Configure tcp-keepalives-in
-- `global_other_settings_tcp_keepalives_in_variable` (String) Variable name
-- `global_other_settings_tcp_keepalives_out` (Boolean) Configure tcp-keepalives-out
-- `global_other_settings_tcp_keepalives_out_variable` (String) Variable name
-- `global_other_settings_tcp_small_servers` (Boolean) Configure tcp-small-servers
-- `global_other_settings_tcp_small_servers_variable` (String) Variable name
-- `global_other_settings_udp_small_servers` (Boolean) Configure udp-small-servers
-- `global_other_settings_udp_small_servers_variable` (String) Variable name
-- `global_other_settings_vty_line_logging` (Boolean) Configure VTY Line Logging
-- `global_other_settings_vty_line_logging_variable` (String) Variable name
-- `global_settings_http_authentication` (String) Set preference for HTTP Authentication
-- `global_settings_http_authentication_variable` (String) Variable name
-- `global_settings_nat64_tcp_timeout` (Number) Set NAT64 TCP session timeout, in seconds
-- `global_settings_nat64_tcp_timeout_variable` (String) Variable name
-- `global_settings_nat64_udp_timeout` (Number) Set NAT64 UDP session timeout, in seconds
-- `global_settings_nat64_udp_timeout_variable` (String) Variable name
-- `global_settings_s_s_h_version` (String) Set SSH version
-- `global_settings_s_s_h_version_variable` (String) Variable name
+- `domain_lookup` (Boolean) Configure Domain-Lookup
+- `domain_lookup_variable` (String) Variable name
+- `ftp_passive` (Boolean) Set Passive FTP
+- `ftp_passive_variable` (String) Variable name
+- `http_authentication` (String) Set preference for HTTP Authentication
+- `http_authentication_variable` (String) Variable name
+- `http_server` (Boolean) Set a HTTP Server
+- `http_server_variable` (String) Variable name
+- `https_server` (Boolean) Set a HTTPS Server
+- `https_server_variable` (String) Variable name
+- `ignore_bootp` (Boolean) Configure Ignore BOOTP
+- `ignore_bootp_variable` (String) Variable name
+- `ip_source_routing` (Boolean) Set Source Route
+- `ip_source_routing_variable` (String) Variable name
+- `line_vty` (Boolean) Configure Telnet (Outbound)
+- `line_vty_variable` (String) Variable name
+- `lldp` (Boolean) Configure LLDP
+- `lldp_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
-- `services_global_services_ip_arp_proxy` (Boolean) Set ARP Proxy
-- `services_global_services_ip_arp_proxy_variable` (String) Variable name
-- `services_global_services_ip_cdp` (Boolean) Configure CDP
-- `services_global_services_ip_cdp_variable` (String) Variable name
-- `services_global_services_ip_domain_lookup` (Boolean) Configure Domain-Lookup
-- `services_global_services_ip_domain_lookup_variable` (String) Variable name
-- `services_global_services_ip_ftp_passive` (Boolean) Set Passive FTP
-- `services_global_services_ip_ftp_passive_variable` (String) Variable name
-- `services_global_services_ip_http_server` (Boolean) Set a HTTP Server
-- `services_global_services_ip_http_server_variable` (String) Variable name
-- `services_global_services_ip_https_server` (Boolean) Set a HTTPS Server
-- `services_global_services_ip_https_server_variable` (String) Variable name
-- `services_global_services_ip_line_vty` (Boolean) Configure Telnet (Outbound)
-- `services_global_services_ip_line_vty_variable` (String) Variable name
-- `services_global_services_ip_lldp` (Boolean) Configure LLDP
-- `services_global_services_ip_lldp_variable` (String) Variable name
-- `services_global_services_ip_rcmd` (Boolean) Set RSH/RCP
-- `services_global_services_ip_rcmd_variable` (String) Variable name
-- `services_global_services_ip_source_intrf` (String) Specify interface for source address in all HTTP(S) client connections
-- `services_global_services_ip_source_intrf_variable` (String) Variable name
+- `nat64_tcp_timeout` (Number) Set NAT64 TCP session timeout, in seconds
+- `nat64_tcp_timeout_variable` (String) Variable name
+- `nat64_udp_timeout` (Number) Set NAT64 UDP session timeout, in seconds
+- `nat64_udp_timeout_variable` (String) Variable name
+- `rsh_rcp` (Boolean) Set RSH/RCP
+- `rsh_rcp_variable` (String) Variable name
+- `snmp_ifindex_persist` (Boolean) Configure SNMP Ifindex Persist
+- `snmp_ifindex_persist_variable` (String) Variable name
+- `source_interface` (String) Specify interface for source address in all HTTP(S) client connections
+- `source_interface_variable` (String) Variable name
+- `ssh_version` (String) Set SSH version
+- `ssh_version_variable` (String) Variable name
+- `tcp_keepalives_in` (Boolean) Configure tcp-keepalives-in
+- `tcp_keepalives_in_variable` (String) Variable name
+- `tcp_keepalives_out` (Boolean) Configure tcp-keepalives-out
+- `tcp_keepalives_out_variable` (String) Variable name
+- `tcp_small_servers` (Boolean) Configure tcp-small-servers
+- `tcp_small_servers_variable` (String) Variable name
+- `udp_small_servers` (Boolean) Configure udp-small-servers
+- `udp_small_servers_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
+- `vty_line_logging` (Boolean) Configure VTY Line Logging
+- `vty_line_logging_variable` (String) Variable name
