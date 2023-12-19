@@ -21,6 +21,7 @@ description: |-
 - BREAKING CHANGE: Convert `protocol`, `source_port`, `destination_port` attributes of `sdwan_traffic_data_policy_definition` to strings to support multiple values
 - Fix issue with `sdwan_traffic_data_policy_definition` not supporting local and restrict options
 - Add `sdwan_dns_security_policy_definition` resource and data source
+- Add `sdwan_system_global_profile_parcel` resource and data source
 
 ## 0.2.11
 
