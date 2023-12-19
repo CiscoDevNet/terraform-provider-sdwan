@@ -23,6 +23,7 @@ description: |-
 - Add `sdwan_dns_security_policy_definition` resource and data source
 - Add `sdwan_system_global_profile_parcel` resource and data source
 - BREAKING CHANGE: Rename `sdwan_acl_policy_definition` resource and data source to `sdwan_ipv4_acl_policy_definition`
+- BREAKING CHANGE: Rename `sdwan_device_acl_policy_definition` resource and data source to `sdwan_ipv4_device_acl_policy_definition`
 
 ## 0.2.11
 

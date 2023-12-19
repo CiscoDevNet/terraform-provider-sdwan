@@ -1,5 +1,5 @@
 ---
-name: Device ACL Policy Definition
+name: IPv4 Device ACL Policy Definition
 rest_endpoint: /template/policy/definition/deviceaccesspolicy/
 has_version: true
 id_attribute: definitionId
@@ -41,12 +41,6 @@ attributes:
         min_int: 1
         max_int: 65534
         example: 10
-      - model_name: sequenceIpType
-        tf_name: ip_type
-        type: String
-        enum_values: [ipv4, ipv6]
-        description: IP version, either `ipv4` or `ipv6`
-        example: ipv4
       - model_name: sequenceName
         tf_name: name
         type: String

@@ -28,25 +28,24 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type DeviceACLPolicyDefinition struct {
-	Id            types.String                         `tfsdk:"id"`
-	Version       types.Int64                          `tfsdk:"version"`
-	Name          types.String                         `tfsdk:"name"`
-	Description   types.String                         `tfsdk:"description"`
-	DefaultAction types.String                         `tfsdk:"default_action"`
-	Sequences     []DeviceACLPolicyDefinitionSequences `tfsdk:"sequences"`
+type IPv4DeviceACLPolicyDefinition struct {
+	Id            types.String                             `tfsdk:"id"`
+	Version       types.Int64                              `tfsdk:"version"`
+	Name          types.String                             `tfsdk:"name"`
+	Description   types.String                             `tfsdk:"description"`
+	DefaultAction types.String                             `tfsdk:"default_action"`
+	Sequences     []IPv4DeviceACLPolicyDefinitionSequences `tfsdk:"sequences"`
 }
 
-type DeviceACLPolicyDefinitionSequences struct {
-	Id            types.Int64                                       `tfsdk:"id"`
-	IpType        types.String                                      `tfsdk:"ip_type"`
-	Name          types.String                                      `tfsdk:"name"`
-	BaseAction    types.String                                      `tfsdk:"base_action"`
-	MatchEntries  []DeviceACLPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []DeviceACLPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
+type IPv4DeviceACLPolicyDefinitionSequences struct {
+	Id            types.Int64                                           `tfsdk:"id"`
+	Name          types.String                                          `tfsdk:"name"`
+	BaseAction    types.String                                          `tfsdk:"base_action"`
+	MatchEntries  []IPv4DeviceACLPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []IPv4DeviceACLPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
 
-type DeviceACLPolicyDefinitionSequencesMatchEntries struct {
+type IPv4DeviceACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                             types.String `tfsdk:"type"`
 	SourceIp                         types.String `tfsdk:"source_ip"`
 	DestinationIp                    types.String `tfsdk:"destination_ip"`
@@ -57,12 +56,12 @@ type DeviceACLPolicyDefinitionSequencesMatchEntries struct {
 	DestinationDataPrefixListId      types.String `tfsdk:"destination_data_prefix_list_id"`
 	DestinationDataPrefixListVersion types.Int64  `tfsdk:"destination_data_prefix_list_version"`
 }
-type DeviceACLPolicyDefinitionSequencesActionEntries struct {
+type IPv4DeviceACLPolicyDefinitionSequencesActionEntries struct {
 	Type        types.String `tfsdk:"type"`
 	CounterName types.String `tfsdk:"counter_name"`
 }
 
-func (data DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
+func (data IPv4DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "type", "deviceAccessPolicy")
 	if !data.Name.IsNull() {
@@ -80,9 +79,6 @@ func (data DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 			itemBody := ""
 			if !item.Id.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceId", item.Id.ValueInt64())
-			}
-			if !item.IpType.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "sequenceIpType", item.IpType.ValueString())
 			}
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceName", item.Name.ValueString())
@@ -138,7 +134,7 @@ func (data DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+func (data *IPv4DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -156,18 +152,13 @@ func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.R
 		data.DefaultAction = types.StringNull()
 	}
 	if value := res.Get("sequences"); value.Exists() && len(value.Array()) > 0 {
-		data.Sequences = make([]DeviceACLPolicyDefinitionSequences, 0)
+		data.Sequences = make([]IPv4DeviceACLPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := DeviceACLPolicyDefinitionSequences{}
+			item := IPv4DeviceACLPolicyDefinitionSequences{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.Id = types.Int64Value(cValue.Int())
 			} else {
 				item.Id = types.Int64Null()
-			}
-			if cValue := v.Get("sequenceIpType"); cValue.Exists() {
-				item.IpType = types.StringValue(cValue.String())
-			} else {
-				item.IpType = types.StringNull()
 			}
 			if cValue := v.Get("sequenceName"); cValue.Exists() {
 				item.Name = types.StringValue(cValue.String())
@@ -180,9 +171,9 @@ func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.R
 				item.BaseAction = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.MatchEntries = make([]DeviceACLPolicyDefinitionSequencesMatchEntries, 0)
+				item.MatchEntries = make([]IPv4DeviceACLPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := DeviceACLPolicyDefinitionSequencesMatchEntries{}
+					cItem := IPv4DeviceACLPolicyDefinitionSequencesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
@@ -223,9 +214,9 @@ func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.R
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.ActionEntries = make([]DeviceACLPolicyDefinitionSequencesActionEntries, 0)
+				item.ActionEntries = make([]IPv4DeviceACLPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := DeviceACLPolicyDefinitionSequencesActionEntries{}
+					cItem := IPv4DeviceACLPolicyDefinitionSequencesActionEntries{}
 					if ccValue := cv.Get("type"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
@@ -247,7 +238,7 @@ func (data *DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjson.R
 	data.updateVersions(ctx, &state)
 }
 
-func (data *DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state *DeviceACLPolicyDefinition) bool {
+func (data *IPv4DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state *IPv4DeviceACLPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -263,9 +254,6 @@ func (data *DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state *De
 	} else {
 		for i := range data.Sequences {
 			if !data.Sequences[i].Id.Equal(state.Sequences[i].Id) {
-				hasChanges = true
-			}
-			if !data.Sequences[i].IpType.Equal(state.Sequences[i].IpType) {
 				hasChanges = true
 			}
 			if !data.Sequences[i].Name.Equal(state.Sequences[i].Name) {
@@ -318,7 +306,7 @@ func (data *DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state *De
 	return hasChanges
 }
 
-func (data *DeviceACLPolicyDefinition) updateVersions(ctx context.Context, state *DeviceACLPolicyDefinition) {
+func (data *IPv4DeviceACLPolicyDefinition) updateVersions(ctx context.Context, state *IPv4DeviceACLPolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
 		stateIndex := -1
