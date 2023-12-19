@@ -106,6 +106,7 @@ attributes:
           - model_name: regionIds
             tf_name: region_ids
             type: StringList
+            id: true
             description: List of region IDs
             example: 1
             exclude_test: true
