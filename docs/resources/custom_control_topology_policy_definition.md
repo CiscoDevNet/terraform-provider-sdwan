@@ -160,7 +160,7 @@ Optional:
 - `omp_tag` (Number) OMP tag
   - Range: `0`-`4294967295`
 - `origin` (String) Origin
-  - Choices: `igp`, `egp`, `incomplete`
+  - Choices: `igp`, `egp`, `incomplete`, `aggregrate`, `bgp`, `bgp-external`, `bgp-internal`, `connected`, `eigrp`, `ospf`, `ospf-inter-area`, `ospf-intra-area`, `ospf-external1`, `ospf-external2`, `rip`, `static`, `eigrp-summary`, `eigrp-internal`, `eigrp-external`, `lisp`, `nat-dia`, `natpool`, `isis`, `isis-level1`, `isis-level2`
 - `originator` (String) Originator IP
 - `path_type` (String) Path type
   - Choices: `hierarchical-path`, `direct-path`, `transport-gateway-path`
