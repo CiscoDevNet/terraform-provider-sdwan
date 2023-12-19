@@ -36,7 +36,7 @@ func TestAccDataSourceSdwanCentralizedPolicy(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_centralized_policy.test", "name", "Example"),
 					resource.TestCheckResourceAttr("data.sdwan_centralized_policy.test", "description", "My description"),
 					resource.TestCheckResourceAttr("data.sdwan_centralized_policy.test", "definitions.0.type", "data"),
-					resource.TestCheckResourceAttr("data.sdwan_centralized_policy.test", "definitions.0.entries.0.direction", "service"),
+					resource.TestCheckResourceAttr("data.sdwan_centralized_policy.test", "definitions.0.entries.0.direction", "in"),
 				),
 			},
 		},
@@ -91,7 +91,7 @@ resource "sdwan_centralized_policy" "test" {
 	entries = [{
 		site_list_ids = [sdwan_site_list_policy_object.sites1.id]
 		vpn_list_ids = [sdwan_vpn_list_policy_object.vpns1.id]
-		direction = "service"
+		direction = "in"
 	}]
   }]
 }

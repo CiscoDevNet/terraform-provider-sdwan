@@ -24,7 +24,7 @@ resource "sdwan_centralized_policy" "example" {
         {
           site_list_ids = ["2081c2f4-3f9f-4fee-8078-dcc8904e368d"]
           vpn_list_ids  = ["7d0c2444-8743-4414-add0-866945ea9f70"]
-          direction     = "service"
+          direction     = "in"
         }
       ]
     }
@@ -69,7 +69,7 @@ Optional:
 Optional:
 
 - `direction` (String) Direction
-  - Choices: `service`, `tunnel`, `all`, `in`, `out`
+  - Choices: `in`, `out`
 - `region_ids` (List of String) List of region IDs
 - `region_list_ids` (List of String) List of region list IDs
 - `region_list_versions` (List of String) List of region list versions

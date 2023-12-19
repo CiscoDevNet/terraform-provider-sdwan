@@ -237,11 +237,11 @@ func (data *CentralizedPolicy) updateVersions(ctx context.Context, state *Centra
 			data.Definitions[i].Version = types.Int64Null()
 		}
 		for ii := range data.Definitions[i].Entries {
-			cDataKeys := [...]string{fmt.Sprintf("%v", data.Definitions[i].Entries[ii].SiteListIds.String()), fmt.Sprintf("%v", data.Definitions[i].Entries[ii].VpnListIds.String()), fmt.Sprintf("%v", data.Definitions[i].Entries[ii].RegionListIds.String())}
+			cDataKeys := [...]string{fmt.Sprintf("%v", data.Definitions[i].Entries[ii].SiteListIds.String()), fmt.Sprintf("%v", data.Definitions[i].Entries[ii].VpnListIds.String()), fmt.Sprintf("%v", data.Definitions[i].Entries[ii].RegionListIds.String()), fmt.Sprintf("%v", data.Definitions[i].Entries[ii].RegionIds.String())}
 			cStateIndex := -1
 			if stateIndex > -1 {
 				for jj := range state.Definitions[stateIndex].Entries {
-					cStateKeys := [...]string{fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].SiteListIds.String()), fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].VpnListIds.String()), fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].RegionListIds.String())}
+					cStateKeys := [...]string{fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].SiteListIds.String()), fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].VpnListIds.String()), fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].RegionListIds.String()), fmt.Sprintf("%v", state.Definitions[stateIndex].Entries[jj].RegionIds.String())}
 					if cDataKeys == cStateKeys {
 						cStateIndex = jj
 						break
