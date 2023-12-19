@@ -31,26 +31,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &ACLPolicyDefinitionDataSource{}
-	_ datasource.DataSourceWithConfigure = &ACLPolicyDefinitionDataSource{}
+	_ datasource.DataSource              = &IPv4ACLPolicyDefinitionDataSource{}
+	_ datasource.DataSourceWithConfigure = &IPv4ACLPolicyDefinitionDataSource{}
 )
 
-func NewACLPolicyDefinitionDataSource() datasource.DataSource {
-	return &ACLPolicyDefinitionDataSource{}
+func NewIPv4ACLPolicyDefinitionDataSource() datasource.DataSource {
+	return &IPv4ACLPolicyDefinitionDataSource{}
 }
 
-type ACLPolicyDefinitionDataSource struct {
+type IPv4ACLPolicyDefinitionDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *ACLPolicyDefinitionDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_acl_policy_definition"
+func (d *IPv4ACLPolicyDefinitionDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_ipv4_acl_policy_definition"
 }
 
-func (d *ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the ACL Policy Definition .",
+		MarkdownDescription: "This data source can read the IPv4 ACL Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -80,10 +80,6 @@ func (d *ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasour
 					Attributes: map[string]schema.Attribute{
 						"id": schema.Int64Attribute{
 							MarkdownDescription: "Sequence ID",
-							Computed:            true,
-						},
-						"ip_type": schema.StringAttribute{
-							MarkdownDescription: "IP version, either `ipv4` or `ipv6`",
 							Computed:            true,
 						},
 						"name": schema.StringAttribute{
@@ -237,7 +233,7 @@ func (d *ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req datasour
 	}
 }
 
-func (d *ACLPolicyDefinitionDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *IPv4ACLPolicyDefinitionDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -245,8 +241,8 @@ func (d *ACLPolicyDefinitionDataSource) Configure(_ context.Context, req datasou
 	d.client = req.ProviderData.(*SdwanProviderData).Client
 }
 
-func (d *ACLPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ACLPolicyDefinition
+func (d *IPv4ACLPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config IPv4ACLPolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

@@ -28,25 +28,24 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-type ACLPolicyDefinition struct {
-	Id            types.String                   `tfsdk:"id"`
-	Version       types.Int64                    `tfsdk:"version"`
-	Name          types.String                   `tfsdk:"name"`
-	Description   types.String                   `tfsdk:"description"`
-	DefaultAction types.String                   `tfsdk:"default_action"`
-	Sequences     []ACLPolicyDefinitionSequences `tfsdk:"sequences"`
+type IPv4ACLPolicyDefinition struct {
+	Id            types.String                       `tfsdk:"id"`
+	Version       types.Int64                        `tfsdk:"version"`
+	Name          types.String                       `tfsdk:"name"`
+	Description   types.String                       `tfsdk:"description"`
+	DefaultAction types.String                       `tfsdk:"default_action"`
+	Sequences     []IPv4ACLPolicyDefinitionSequences `tfsdk:"sequences"`
 }
 
-type ACLPolicyDefinitionSequences struct {
-	Id            types.Int64                                 `tfsdk:"id"`
-	IpType        types.String                                `tfsdk:"ip_type"`
-	Name          types.String                                `tfsdk:"name"`
-	BaseAction    types.String                                `tfsdk:"base_action"`
-	MatchEntries  []ACLPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []ACLPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
+type IPv4ACLPolicyDefinitionSequences struct {
+	Id            types.Int64                                     `tfsdk:"id"`
+	Name          types.String                                    `tfsdk:"name"`
+	BaseAction    types.String                                    `tfsdk:"base_action"`
+	MatchEntries  []IPv4ACLPolicyDefinitionSequencesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []IPv4ACLPolicyDefinitionSequencesActionEntries `tfsdk:"action_entries"`
 }
 
-type ACLPolicyDefinitionSequencesMatchEntries struct {
+type IPv4ACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                             types.String `tfsdk:"type"`
 	Dscp                             types.Int64  `tfsdk:"dscp"`
 	SourceIp                         types.String `tfsdk:"source_ip"`
@@ -64,26 +63,26 @@ type ACLPolicyDefinitionSequencesMatchEntries struct {
 	Protocol                         types.String `tfsdk:"protocol"`
 	Tcp                              types.String `tfsdk:"tcp"`
 }
-type ACLPolicyDefinitionSequencesActionEntries struct {
-	Type            types.String                                             `tfsdk:"type"`
-	ClassMapId      types.String                                             `tfsdk:"class_map_id"`
-	ClassMapVersion types.Int64                                              `tfsdk:"class_map_version"`
-	CounterName     types.String                                             `tfsdk:"counter_name"`
-	Log             types.Bool                                               `tfsdk:"log"`
-	MirrorId        types.String                                             `tfsdk:"mirror_id"`
-	MirrorVersion   types.Int64                                              `tfsdk:"mirror_version"`
-	PolicerId       types.String                                             `tfsdk:"policer_id"`
-	PolicerVersion  types.Int64                                              `tfsdk:"policer_version"`
-	SetParameters   []ACLPolicyDefinitionSequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
+type IPv4ACLPolicyDefinitionSequencesActionEntries struct {
+	Type            types.String                                                 `tfsdk:"type"`
+	ClassMapId      types.String                                                 `tfsdk:"class_map_id"`
+	ClassMapVersion types.Int64                                                  `tfsdk:"class_map_version"`
+	CounterName     types.String                                                 `tfsdk:"counter_name"`
+	Log             types.Bool                                                   `tfsdk:"log"`
+	MirrorId        types.String                                                 `tfsdk:"mirror_id"`
+	MirrorVersion   types.Int64                                                  `tfsdk:"mirror_version"`
+	PolicerId       types.String                                                 `tfsdk:"policer_id"`
+	PolicerVersion  types.Int64                                                  `tfsdk:"policer_version"`
+	SetParameters   []IPv4ACLPolicyDefinitionSequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
 }
 
-type ACLPolicyDefinitionSequencesActionEntriesSetParameters struct {
+type IPv4ACLPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	Type    types.String `tfsdk:"type"`
 	Dscp    types.Int64  `tfsdk:"dscp"`
 	NextHop types.String `tfsdk:"next_hop"`
 }
 
-func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
+func (data IPv4ACLPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "type", "acl")
 	if !data.Name.IsNull() {
@@ -101,9 +100,6 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 			itemBody := ""
 			if !item.Id.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceId", item.Id.ValueInt64())
-			}
-			if !item.IpType.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "sequenceIpType", item.IpType.ValueString())
 			}
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceName", item.Name.ValueString())
@@ -209,7 +205,7 @@ func (data ACLPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
-func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -227,18 +223,13 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 		data.DefaultAction = types.StringNull()
 	}
 	if value := res.Get("sequences"); value.Exists() && len(value.Array()) > 0 {
-		data.Sequences = make([]ACLPolicyDefinitionSequences, 0)
+		data.Sequences = make([]IPv4ACLPolicyDefinitionSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ACLPolicyDefinitionSequences{}
+			item := IPv4ACLPolicyDefinitionSequences{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.Id = types.Int64Value(cValue.Int())
 			} else {
 				item.Id = types.Int64Null()
-			}
-			if cValue := v.Get("sequenceIpType"); cValue.Exists() {
-				item.IpType = types.StringValue(cValue.String())
-			} else {
-				item.IpType = types.StringNull()
 			}
 			if cValue := v.Get("sequenceName"); cValue.Exists() {
 				item.Name = types.StringValue(cValue.String())
@@ -251,9 +242,9 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 				item.BaseAction = types.StringNull()
 			}
 			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.MatchEntries = make([]ACLPolicyDefinitionSequencesMatchEntries, 0)
+				item.MatchEntries = make([]IPv4ACLPolicyDefinitionSequencesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ACLPolicyDefinitionSequencesMatchEntries{}
+					cItem := IPv4ACLPolicyDefinitionSequencesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
@@ -324,9 +315,9 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.ActionEntries = make([]ACLPolicyDefinitionSequencesActionEntries, 0)
+				item.ActionEntries = make([]IPv4ACLPolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ACLPolicyDefinitionSequencesActionEntries{}
+					cItem := IPv4ACLPolicyDefinitionSequencesActionEntries{}
 					if ccValue := cv.Get("type"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
@@ -362,9 +353,9 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 						cItem.PolicerId = types.StringNull()
 					}
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "set" {
-						cItem.SetParameters = make([]ACLPolicyDefinitionSequencesActionEntriesSetParameters, 0)
+						cItem.SetParameters = make([]IPv4ACLPolicyDefinitionSequencesActionEntriesSetParameters, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := ACLPolicyDefinitionSequencesActionEntriesSetParameters{}
+							ccItem := IPv4ACLPolicyDefinitionSequencesActionEntriesSetParameters{}
 							if cccValue := ccv.Get("field"); cccValue.Exists() {
 								ccItem.Type = types.StringValue(cccValue.String())
 							} else {
@@ -395,7 +386,7 @@ func (data *ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Result)
 	data.updateVersions(ctx, &state)
 }
 
-func (data *ACLPolicyDefinition) hasChanges(ctx context.Context, state *ACLPolicyDefinition) bool {
+func (data *IPv4ACLPolicyDefinition) hasChanges(ctx context.Context, state *IPv4ACLPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true
@@ -411,9 +402,6 @@ func (data *ACLPolicyDefinition) hasChanges(ctx context.Context, state *ACLPolic
 	} else {
 		for i := range data.Sequences {
 			if !data.Sequences[i].Id.Equal(state.Sequences[i].Id) {
-				hasChanges = true
-			}
-			if !data.Sequences[i].IpType.Equal(state.Sequences[i].IpType) {
 				hasChanges = true
 			}
 			if !data.Sequences[i].Name.Equal(state.Sequences[i].Name) {
@@ -511,7 +499,7 @@ func (data *ACLPolicyDefinition) hasChanges(ctx context.Context, state *ACLPolic
 	return hasChanges
 }
 
-func (data *ACLPolicyDefinition) updateVersions(ctx context.Context, state *ACLPolicyDefinition) {
+func (data *IPv4ACLPolicyDefinition) updateVersions(ctx context.Context, state *IPv4ACLPolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
 		stateIndex := -1

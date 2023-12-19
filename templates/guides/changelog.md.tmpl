@@ -22,6 +22,7 @@ description: |-
 - Fix issue with `sdwan_traffic_data_policy_definition` not supporting local and restrict options
 - Add `sdwan_dns_security_policy_definition` resource and data source
 - Add `sdwan_system_global_profile_parcel` resource and data source
+- BREAKING CHANGE: Rename `sdwan_acl_policy_definition` resource and data source to `sdwan_ipv4_acl_policy_definition`
 
 ## 0.2.11
 

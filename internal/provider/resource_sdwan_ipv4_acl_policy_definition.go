@@ -40,26 +40,26 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &ACLPolicyDefinitionResource{}
-var _ resource.ResourceWithImportState = &ACLPolicyDefinitionResource{}
+var _ resource.Resource = &IPv4ACLPolicyDefinitionResource{}
+var _ resource.ResourceWithImportState = &IPv4ACLPolicyDefinitionResource{}
 
-func NewACLPolicyDefinitionResource() resource.Resource {
-	return &ACLPolicyDefinitionResource{}
+func NewIPv4ACLPolicyDefinitionResource() resource.Resource {
+	return &IPv4ACLPolicyDefinitionResource{}
 }
 
-type ACLPolicyDefinitionResource struct {
+type IPv4ACLPolicyDefinitionResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *ACLPolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_acl_policy_definition"
+func (r *IPv4ACLPolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_ipv4_acl_policy_definition"
 }
 
-func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a ACL Policy Definition .").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a IPv4 ACL Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -98,13 +98,6 @@ func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.S
 							Required:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 65534),
-							},
-						},
-						"ip_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IP version, either `ipv4` or `ipv6`").AddStringEnumDescription("ipv4", "ipv6").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("ipv4", "ipv6"),
 							},
 						},
 						"name": schema.StringAttribute{
@@ -291,7 +284,7 @@ func (r *ACLPolicyDefinitionResource) Schema(ctx context.Context, req resource.S
 	}
 }
 
-func (r *ACLPolicyDefinitionResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *IPv4ACLPolicyDefinitionResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -300,8 +293,8 @@ func (r *ACLPolicyDefinitionResource) Configure(_ context.Context, req resource.
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
-func (r *ACLPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ACLPolicyDefinition
+func (r *IPv4ACLPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan IPv4ACLPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -330,8 +323,8 @@ func (r *ACLPolicyDefinitionResource) Create(ctx context.Context, req resource.C
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ACLPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state ACLPolicyDefinition
+func (r *IPv4ACLPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state IPv4ACLPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -359,8 +352,8 @@ func (r *ACLPolicyDefinitionResource) Read(ctx context.Context, req resource.Rea
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ACLPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ACLPolicyDefinition
+func (r *IPv4ACLPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state IPv4ACLPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -401,8 +394,8 @@ func (r *ACLPolicyDefinitionResource) Update(ctx context.Context, req resource.U
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *ACLPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ACLPolicyDefinition
+func (r *IPv4ACLPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state IPv4ACLPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -424,6 +417,6 @@ func (r *ACLPolicyDefinitionResource) Delete(ctx context.Context, req resource.D
 	resp.State.RemoveResource(ctx)
 }
 
-func (r *ACLPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *IPv4ACLPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
