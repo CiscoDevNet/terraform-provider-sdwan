@@ -161,7 +161,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}Variable.ValueString())
 	} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if data.{{toGoName .TfName}}.IsNull() {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
-		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
+		{{if .DefaultValuePresent}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 	} else{{else}}if true{{end}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 		{{- if eq .Type "StringList"}}
@@ -183,7 +183,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", item.{{toGoName .TfName}}Variable.ValueString())
 		} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if item.{{toGoName .TfName}}.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
+			{{if .DefaultValuePresent}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 		} else{{else}}if true{{end}} {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 			{{- if eq .Type "StringList"}}
@@ -205,7 +205,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childItem.{{toGoName .TfName}}Variable.ValueString())
 			} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if childItem.{{toGoName .TfName}}.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
+				{{if .DefaultValuePresent}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 			} else{{else}}if true{{end}} {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 				{{- if eq .Type "StringList"}}
@@ -227,7 +227,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childChildItem.{{toGoName .TfName}}Variable.ValueString())
 				} else {{end}}{{if or .DefaultValue (not .ParcelMandatory)}}if childChildItem.{{toGoName .TfName}}.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
-					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}})
+					{{if .DefaultValuePresent}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 				} else{{else}}if true{{end}} {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 					{{- if eq .Type "StringList"}}

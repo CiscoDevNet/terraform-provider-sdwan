@@ -53,6 +53,7 @@ attribute:
   string_min_length: int(required=False)
   string_max_length: int(required=False)
   default_value: any(str(), int(), bool(), required=False)
+  default_value_present: bool(required=False)
   value: any(str(), int(), bool(), required=False)
   test_value: str(required=False)
   always_include: bool(required=False)

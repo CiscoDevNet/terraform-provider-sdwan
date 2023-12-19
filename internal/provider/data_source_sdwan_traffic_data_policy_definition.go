@@ -139,8 +139,8 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "PLP",
 										Computed:            true,
 									},
-									"protocol": schema.Int64Attribute{
-										MarkdownDescription: "IP Protocol",
+									"protocol": schema.StringAttribute{
+										MarkdownDescription: "IP Protocol, 0-255 (Single value or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"source_data_prefix_list_id": schema.StringAttribute{
@@ -155,8 +155,8 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "Source IP",
 										Computed:            true,
 									},
-									"source_port": schema.Int64Attribute{
-										MarkdownDescription: "Source port",
+									"source_port": schema.StringAttribute{
+										MarkdownDescription: "Source port, 0-65535 (Single value, range or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"destination_data_prefix_list_id": schema.StringAttribute{
@@ -171,8 +171,8 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "Destination IP",
 										Computed:            true,
 									},
-									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: "Destination port",
+									"destination_port": schema.StringAttribute{
+										MarkdownDescription: "Destination port, 0-65535 (Single value, range or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"destination_region": schema.StringAttribute{
@@ -354,6 +354,14 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 												},
 												"service_tloc_ip": schema.StringAttribute{
 													MarkdownDescription: "Service TLOC IP address",
+													Computed:            true,
+												},
+												"service_tloc_local": schema.BoolAttribute{
+													MarkdownDescription: "Service TLOC Local",
+													Computed:            true,
+												},
+												"service_tloc_restrict": schema.BoolAttribute{
+													MarkdownDescription: "Service TLOC Restrict",
 													Computed:            true,
 												},
 												"service_tloc_color": schema.StringAttribute{

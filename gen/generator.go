@@ -239,6 +239,7 @@ type YamlConfigAttribute struct {
 	StringMinLength      int64                          `yaml:"string_min_length"`
 	StringMaxLength      int64                          `yaml:"string_max_length"`
 	DefaultValue         string                         `yaml:"default_value"`
+	DefaultValuePresent  bool                           `yaml:"default_value_present"`
 	Value                string                         `yaml:"value"`
 	TestValue            string                         `yaml:"test_value"`
 	AlwaysInclude        bool                           `yaml:"always_include"`
@@ -604,14 +605,16 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		if d.Exists() {
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
 				attr.DefaultValue = value.String()
+				attr.DefaultValuePresent = true
 			} else if value := d.Get("properties.value.default"); value.Exists() {
 				attr.DefaultValue = value.String()
+				attr.DefaultValuePresent = true
 			} else if value := d.Get("properties.value.default"); value.Exists() {
 				attr.DefaultValue = value.String()
+				attr.DefaultValuePresent = true
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
 				attr.DefaultValue = value.String()
-			} else {
-				attr.DefaultValue = ""
+				attr.DefaultValuePresent = true
 			}
 		} else {
 			attr.ParcelMandatory = true
