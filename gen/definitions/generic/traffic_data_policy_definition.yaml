@@ -419,8 +419,8 @@ attributes:
             data_path: [parameter]
             tf_name: redirect_dns_type
             conditional_attribute:
-              name: type
-              value: redirectDns
+              name: redirect_dns
+              value: dnsType
             type: String
             enum_values: [host, umbrella]
             description: Redirect DNS type
@@ -430,8 +430,8 @@ attributes:
             data_path: [parameter]
             tf_name: redirect_dns_address
             conditional_attribute:
-              name: type
-              value: redirectDns
+              name: redirect_dns
+              value: ipAddress
             type: String
             description: Redirect DNS IP address
             example: 10.1.1.1

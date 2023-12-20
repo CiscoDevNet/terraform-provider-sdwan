@@ -272,10 +272,10 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.RedirectDns.IsNull() && childItem.Type.ValueString() == "redirectDns" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.field", childItem.RedirectDns.ValueString())
 					}
-					if !childItem.RedirectDnsType.IsNull() && childItem.Type.ValueString() == "redirectDns" {
+					if !childItem.RedirectDnsType.IsNull() && childItem.RedirectDns.ValueString() == "dnsType" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.value", childItem.RedirectDnsType.ValueString())
 					}
-					if !childItem.RedirectDnsAddress.IsNull() && childItem.Type.ValueString() == "redirectDns" {
+					if !childItem.RedirectDnsAddress.IsNull() && childItem.RedirectDns.ValueString() == "ipAddress" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.value", childItem.RedirectDnsAddress.ValueString())
 					}
 					if !childItem.ServiceNodeGroup.IsNull() && childItem.Type.ValueString() == "serviceNodeGroup" {
@@ -635,12 +635,12 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					} else {
 						cItem.RedirectDns = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter.value"); ccValue.Exists() && cItem.Type.ValueString() == "redirectDns" {
+					if ccValue := cv.Get("parameter.value"); ccValue.Exists() && cItem.RedirectDns.ValueString() == "dnsType" {
 						cItem.RedirectDnsType = types.StringValue(ccValue.String())
 					} else {
 						cItem.RedirectDnsType = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter.value"); ccValue.Exists() && cItem.Type.ValueString() == "redirectDns" {
+					if ccValue := cv.Get("parameter.value"); ccValue.Exists() && cItem.RedirectDns.ValueString() == "ipAddress" {
 						cItem.RedirectDnsAddress = types.StringValue(ccValue.String())
 					} else {
 						cItem.RedirectDnsAddress = types.StringNull()

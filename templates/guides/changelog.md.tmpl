@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.3.1 (unreleased)
+
+- Fix idempotency issue with DNS redirect configuration of `sdwan_traffic_data_policy_definition` resource
+
 ## 0.3.0
 
 - Add `sdwan_system_feature_profile` resource and data source
