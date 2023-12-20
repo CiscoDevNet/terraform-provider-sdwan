@@ -40,7 +40,9 @@ type AllowURLListPolicyObjectEntries struct {
 
 func (data AllowURLListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "urlwhitelist")
+	if true {
+		body, _ = sjson.Set(body, "type", "urlwhitelist")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

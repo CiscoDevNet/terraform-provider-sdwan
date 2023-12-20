@@ -40,7 +40,9 @@ type SiteListPolicyObjectEntries struct {
 
 func (data SiteListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "site")
+	if true {
+		body, _ = sjson.Set(body, "type", "site")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

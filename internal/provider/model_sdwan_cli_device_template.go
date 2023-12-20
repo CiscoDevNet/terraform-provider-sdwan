@@ -39,8 +39,12 @@ type CLIDeviceTemplate struct {
 
 func (data CLIDeviceTemplate) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "configType", "file")
-	body, _ = sjson.Set(body, "factoryDefault", false)
+	if true {
+		body, _ = sjson.Set(body, "configType", "file")
+	}
+	if true {
+		body, _ = sjson.Set(body, "factoryDefault", false)
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "templateName", data.Name.ValueString())
 	}

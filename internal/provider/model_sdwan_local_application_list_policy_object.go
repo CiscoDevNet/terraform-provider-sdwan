@@ -40,7 +40,9 @@ type LocalApplicationListPolicyObjectEntries struct {
 
 func (data LocalApplicationListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "localapp")
+	if true {
+		body, _ = sjson.Set(body, "type", "localapp")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

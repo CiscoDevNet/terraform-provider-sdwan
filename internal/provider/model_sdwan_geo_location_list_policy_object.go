@@ -41,7 +41,9 @@ type GeoLocationListPolicyObjectEntries struct {
 
 func (data GeoLocationListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "geolocation")
+	if true {
+		body, _ = sjson.Set(body, "type", "geolocation")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

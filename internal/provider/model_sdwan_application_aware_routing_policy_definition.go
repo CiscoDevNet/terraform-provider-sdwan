@@ -85,7 +85,9 @@ type ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParame
 
 func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "appRoute")
+	if true {
+		body, _ = sjson.Set(body, "type", "appRoute")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
@@ -102,7 +104,9 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceName", item.Name.ValueString())
 			}
-			itemBody, _ = sjson.Set(itemBody, "sequenceType", "appRoute")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sequenceType", "appRoute")
+			}
 			if !item.IpType.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceIpType", item.IpType.ValueString())
 			}

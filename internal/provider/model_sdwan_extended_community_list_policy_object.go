@@ -40,7 +40,9 @@ type ExtendedCommunityListPolicyObjectEntries struct {
 
 func (data ExtendedCommunityListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "extCommunity")
+	if true {
+		body, _ = sjson.Set(body, "type", "extCommunity")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

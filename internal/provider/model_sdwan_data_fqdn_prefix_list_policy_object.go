@@ -40,7 +40,9 @@ type DataFQDNPrefixListPolicyObjectEntries struct {
 
 func (data DataFQDNPrefixListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "fqdn")
+	if true {
+		body, _ = sjson.Set(body, "type", "fqdn")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

@@ -46,7 +46,9 @@ type RewriteRulePolicyDefinitionRules struct {
 
 func (data RewriteRulePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "rewriteRule")
+	if true {
+		body, _ = sjson.Set(body, "type", "rewriteRule")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

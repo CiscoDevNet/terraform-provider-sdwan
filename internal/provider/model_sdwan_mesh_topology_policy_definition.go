@@ -47,7 +47,9 @@ type MeshTopologyPolicyDefinitionRegions struct {
 
 func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "mesh")
+	if true {
+		body, _ = sjson.Set(body, "type", "mesh")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

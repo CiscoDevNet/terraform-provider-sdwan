@@ -40,7 +40,9 @@ type RegionListPolicyObjectEntries struct {
 
 func (data RegionListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "region")
+	if true {
+		body, _ = sjson.Set(body, "type", "region")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

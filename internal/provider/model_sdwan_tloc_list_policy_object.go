@@ -44,7 +44,9 @@ type TLOCListPolicyObjectEntries struct {
 
 func (data TLOCListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "tloc")
+	if true {
+		body, _ = sjson.Set(body, "type", "tloc")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

@@ -40,7 +40,9 @@ type DomainListPolicyObjectEntries struct {
 
 func (data DomainListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "localdomain")
+	if true {
+		body, _ = sjson.Set(body, "type", "localdomain")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

@@ -41,7 +41,9 @@ type PortListPolicyObjectEntries struct {
 
 func (data PortListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "port")
+	if true {
+		body, _ = sjson.Set(body, "type", "port")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

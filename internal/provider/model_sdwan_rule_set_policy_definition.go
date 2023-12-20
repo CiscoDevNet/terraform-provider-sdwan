@@ -77,7 +77,9 @@ type RuleSetPolicyDefinitionRules struct {
 
 func (data RuleSetPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "ruleSet")
+	if true {
+		body, _ = sjson.Set(body, "type", "ruleSet")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
@@ -88,7 +90,9 @@ func (data RuleSetPolicyDefinition) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, "definition.rules", []interface{}{})
 		for _, item := range data.Rules {
 			itemBody := ""
-			itemBody, _ = sjson.Set(itemBody, "action", "permit")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "action", "permit")
+			}
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "rule", item.Name.ValueString())
 			}

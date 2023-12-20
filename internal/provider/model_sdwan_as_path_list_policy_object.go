@@ -40,7 +40,9 @@ type ASPathListPolicyObjectEntries struct {
 
 func (data ASPathListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "asPath")
+	if true {
+		body, _ = sjson.Set(body, "type", "asPath")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

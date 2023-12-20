@@ -2,6 +2,7 @@
 
 - Fix idempotency issue with DNS redirect configuration of `sdwan_traffic_data_policy_definition` resource
 - Add option to select both `gre` and `ipsec` encaps for local TLOC set action of `sdwan_traffic_data_policy_definition` resource
+- Fix issue with `exportTo` action entry of `sdwan_custom_control_topology_policy_definition` resource
 
 ## 0.3.0
 

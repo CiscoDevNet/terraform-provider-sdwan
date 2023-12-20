@@ -90,7 +90,9 @@ type RoutePolicyDefinitionSequencesActionEntries struct {
 
 func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "vedgeRoute")
+	if true {
+		body, _ = sjson.Set(body, "type", "vedgeRoute")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
@@ -113,7 +115,9 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceName", item.Name.ValueString())
 			}
-			itemBody, _ = sjson.Set(itemBody, "sequenceType", "vedgeRoute")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sequenceType", "vedgeRoute")
+			}
 			if !item.BaseAction.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "baseAction", item.BaseAction.ValueString())
 			}
@@ -168,7 +172,9 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
-			itemBody, _ = sjson.Set(itemBody, "actions.0.type", "set")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "actions.0.type", "set")
+			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "actions.0.parameter", []interface{}{})
 				for _, childItem := range item.ActionEntries {

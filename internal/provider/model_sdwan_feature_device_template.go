@@ -64,9 +64,15 @@ type FeatureDeviceTemplateGeneralTemplatesSubTemplatesSubTemplates struct {
 
 func (data FeatureDeviceTemplate) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "configType", "template")
-	body, _ = sjson.Set(body, "factoryDefault", false)
-	body, _ = sjson.Set(body, "featureTemplateUidRange", []interface{}{})
+	if true {
+		body, _ = sjson.Set(body, "configType", "template")
+	}
+	if true {
+		body, _ = sjson.Set(body, "factoryDefault", false)
+	}
+	if true {
+		body, _ = sjson.Set(body, "featureTemplateUidRange", []interface{}{})
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "templateName", data.Name.ValueString())
 	}

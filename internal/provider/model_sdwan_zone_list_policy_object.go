@@ -41,7 +41,9 @@ type ZoneListPolicyObjectEntries struct {
 
 func (data ZoneListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "zone")
+	if true {
+		body, _ = sjson.Set(body, "type", "zone")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

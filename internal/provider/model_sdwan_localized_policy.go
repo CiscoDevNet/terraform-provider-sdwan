@@ -54,7 +54,9 @@ type LocalizedPolicyDefinitions struct {
 
 func (data LocalizedPolicy) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "policyType", "feature")
+	if true {
+		body, _ = sjson.Set(body, "policyType", "feature")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "policyName", data.Name.ValueString())
 	}

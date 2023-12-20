@@ -49,7 +49,9 @@ type ObjectGroupPolicyDefinition struct {
 
 func (data ObjectGroupPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "securityGroup")
+	if true {
+		body, _ = sjson.Set(body, "type", "securityGroup")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

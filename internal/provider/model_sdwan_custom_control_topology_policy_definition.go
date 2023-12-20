@@ -107,7 +107,9 @@ type CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters st
 
 func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "control")
+	if true {
+		body, _ = sjson.Set(body, "type", "control")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
@@ -271,6 +273,9 @@ func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) st
 							}
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "parameter.-1", itemChildChildBody)
 						}
+					}
+					if true && childItem.Type.ValueString() == "exportTo" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.field", "vpnList")
 					}
 					if !childItem.ExportToVpnListId.IsNull() && childItem.Type.ValueString() == "exportTo" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.ref", childItem.ExportToVpnListId.ValueString())

@@ -129,7 +129,9 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters struct {
 
 func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "data")
+	if true {
+		body, _ = sjson.Set(body, "type", "data")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

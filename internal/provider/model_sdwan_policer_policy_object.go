@@ -39,7 +39,9 @@ type PolicerPolicyObject struct {
 
 func (data PolicerPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "policer")
+	if true {
+		body, _ = sjson.Set(body, "type", "policer")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

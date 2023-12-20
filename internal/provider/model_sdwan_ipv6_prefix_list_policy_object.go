@@ -43,7 +43,9 @@ type IPv6PrefixListPolicyObjectEntries struct {
 
 func (data IPv6PrefixListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "ipv6prefix")
+	if true {
+		body, _ = sjson.Set(body, "type", "ipv6prefix")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

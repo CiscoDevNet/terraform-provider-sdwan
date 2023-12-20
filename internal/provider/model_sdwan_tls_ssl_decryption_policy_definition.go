@@ -74,7 +74,9 @@ type TLSSSLDecryptionPolicyDefinitionNetworkRulesSourceAndDestinationConfigurati
 
 func (data TLSSSLDecryptionPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "sslDecryption")
+	if true {
+		body, _ = sjson.Set(body, "type", "sslDecryption")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

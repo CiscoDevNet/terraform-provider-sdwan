@@ -48,7 +48,9 @@ type TLSSSLProfilePolicyDefinition struct {
 
 func (data TLSSSLProfilePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "sslUtdDecryptProfile")
+	if true {
+		body, _ = sjson.Set(body, "type", "sslUtdDecryptProfile")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

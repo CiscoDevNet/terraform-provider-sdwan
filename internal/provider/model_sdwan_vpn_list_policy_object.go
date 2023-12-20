@@ -40,7 +40,9 @@ type VPNListPolicyObjectEntries struct {
 
 func (data VPNListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "vpn")
+	if true {
+		body, _ = sjson.Set(body, "type", "vpn")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

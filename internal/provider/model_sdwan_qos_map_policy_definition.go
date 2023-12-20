@@ -49,7 +49,9 @@ type QoSMapPolicyDefinitionQosSchedulers struct {
 
 func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "qosMap")
+	if true {
+		body, _ = sjson.Set(body, "type", "qosMap")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

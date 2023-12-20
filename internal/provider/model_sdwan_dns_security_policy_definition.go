@@ -47,7 +47,9 @@ type DNSSecurityPolicyDefinition struct {
 
 func (data DNSSecurityPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "DNSSecurity")
+	if true {
+		body, _ = sjson.Set(body, "type", "DNSSecurity")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

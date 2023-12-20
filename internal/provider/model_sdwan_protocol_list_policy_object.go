@@ -40,7 +40,9 @@ type ProtocolListPolicyObjectEntries struct {
 
 func (data ProtocolListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "protocolname")
+	if true {
+		body, _ = sjson.Set(body, "type", "protocolname")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

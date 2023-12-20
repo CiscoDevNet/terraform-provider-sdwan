@@ -37,7 +37,9 @@ type ClassMapPolicyObject struct {
 
 func (data ClassMapPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "class")
+	if true {
+		body, _ = sjson.Set(body, "type", "class")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

@@ -63,7 +63,9 @@ type IPv4DeviceACLPolicyDefinitionSequencesActionEntries struct {
 
 func (data IPv4DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "deviceAccessPolicy")
+	if true {
+		body, _ = sjson.Set(body, "type", "deviceAccessPolicy")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
@@ -83,7 +85,9 @@ func (data IPv4DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "sequenceName", item.Name.ValueString())
 			}
-			itemBody, _ = sjson.Set(itemBody, "sequenceType", "deviceaccesspolicy")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sequenceType", "deviceaccesspolicy")
+			}
 			if !item.BaseAction.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "baseAction", item.BaseAction.ValueString())
 			}

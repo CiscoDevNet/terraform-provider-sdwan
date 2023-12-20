@@ -44,7 +44,9 @@ type IntrusionPreventionPolicyDefinition struct {
 
 func (data IntrusionPreventionPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "intrusionPrevention")
+	if true {
+		body, _ = sjson.Set(body, "type", "intrusionPrevention")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

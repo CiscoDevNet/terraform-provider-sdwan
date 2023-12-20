@@ -41,7 +41,9 @@ type ApplicationListPolicyObjectEntries struct {
 
 func (data ApplicationListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "app")
+	if true {
+		body, _ = sjson.Set(body, "type", "app")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

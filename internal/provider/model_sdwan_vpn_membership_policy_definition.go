@@ -46,7 +46,9 @@ type VPNMembershipPolicyDefinitionSites struct {
 
 func (data VPNMembershipPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "vpnMembershipGroup")
+	if true {
+		body, _ = sjson.Set(body, "type", "vpnMembershipGroup")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

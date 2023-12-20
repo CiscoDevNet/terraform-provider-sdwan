@@ -584,6 +584,13 @@ attributes:
                 description: Service TLOC encapsulation
                 example: ipsec
                 exclude_test: true
+          - model_name: field
+            data_path: [parameter]
+            conditional_attribute:
+              name: type
+              value: exportTo
+            type: String
+            value: vpnList
           - model_name: ref
             data_path: [parameter]
             tf_name: export_to_vpn_list_id

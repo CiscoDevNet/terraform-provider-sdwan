@@ -45,7 +45,9 @@ type AdvancedInspectionProfilePolicyDefinition struct {
 
 func (data AdvancedInspectionProfilePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "advancedInspectionProfile")
+	if true {
+		body, _ = sjson.Set(body, "type", "advancedInspectionProfile")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

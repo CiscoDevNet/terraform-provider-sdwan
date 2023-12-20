@@ -56,7 +56,9 @@ type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs struct {
 
 func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "hubAndSpoke")
+	if true {
+		body, _ = sjson.Set(body, "type", "hubAndSpoke")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}

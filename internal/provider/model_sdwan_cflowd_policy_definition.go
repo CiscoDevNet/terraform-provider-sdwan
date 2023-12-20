@@ -54,7 +54,9 @@ type CflowdPolicyDefinitionCollectors struct {
 
 func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "type", "cflowd")
+	if true {
+		body, _ = sjson.Set(body, "type", "cflowd")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	}
