@@ -363,14 +363,14 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													Optional:            true,
 												},
 												"local_tloc_list_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list color").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list color. Space separated list of colors.").String,
 													Optional:            true,
 												},
 												"local_tloc_list_encap": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list encapsulation").AddStringEnumDescription("ipsec", "gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Local TLOC list encapsulation.").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
 													Optional:            true,
 													Validators: []validator.String{
-														stringvalidator.OneOf("ipsec", "gre"),
+														stringvalidator.OneOf("ipsec", "gre", "ipsec gre"),
 													},
 												},
 												"local_tloc_list_restrict": schema.BoolAttribute{

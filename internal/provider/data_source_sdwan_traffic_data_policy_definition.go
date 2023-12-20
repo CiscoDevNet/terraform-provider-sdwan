@@ -285,11 +285,11 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 													Computed:            true,
 												},
 												"local_tloc_list_color": schema.StringAttribute{
-													MarkdownDescription: "Local TLOC list color",
+													MarkdownDescription: "Local TLOC list color. Space separated list of colors.",
 													Computed:            true,
 												},
 												"local_tloc_list_encap": schema.StringAttribute{
-													MarkdownDescription: "Local TLOC list encapsulation",
+													MarkdownDescription: "Local TLOC list encapsulation.",
 													Computed:            true,
 												},
 												"local_tloc_list_restrict": schema.BoolAttribute{

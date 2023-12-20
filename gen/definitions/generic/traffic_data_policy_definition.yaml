@@ -533,7 +533,7 @@ attributes:
                   name: type
                   value: localTlocList
                 type: String
-                description: Local TLOC list color
+                description: Local TLOC list color. Space separated list of colors.
                 example: bronze
                 exclude_test: true
               - model_name: encap
@@ -543,8 +543,8 @@ attributes:
                   name: type
                   value: localTlocList
                 type: String
-                enum_values: [ipsec, gre]
-                description: Local TLOC list encapsulation
+                enum_values: [ipsec, gre, "ipsec gre"]
+                description: Local TLOC list encapsulation.
                 example: ipsec
                 exclude_test: true
               - model_name: restrict

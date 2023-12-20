@@ -142,9 +142,9 @@ Optional:
 - `dscp` (Number) DSCP
   - Range: `0`-`63`
 - `forwarding_class` (String) Forwarding class
-- `local_tloc_list_color` (String) Local TLOC list color
-- `local_tloc_list_encap` (String) Local TLOC list encapsulation
-  - Choices: `ipsec`, `gre`
+- `local_tloc_list_color` (String) Local TLOC list color. Space separated list of colors.
+- `local_tloc_list_encap` (String) Local TLOC list encapsulation.
+  - Choices: `ipsec`, `gre`, `ipsec gre`
 - `local_tloc_list_restrict` (Boolean) Local TLOC list restrict
 - `next_hop` (String) Next hop IP
 - `next_hop_loose` (Boolean) Use routing table entry to forward the packet in case Next-hop is not available
