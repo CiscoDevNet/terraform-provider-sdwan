@@ -414,10 +414,10 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													Optional:            true,
 												},
 												"tloc_encapsulation": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation").AddStringEnumDescription("ipsec", "gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("TLOC encapsulation").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
 													Optional:            true,
 													Validators: []validator.String{
-														stringvalidator.OneOf("ipsec", "gre"),
+														stringvalidator.OneOf("ipsec", "gre", "ipsec gre"),
 													},
 												},
 												"service_type": schema.StringAttribute{
@@ -459,10 +459,10 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 													Optional:            true,
 												},
 												"service_tloc_encapsulation": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC encapsulation").AddStringEnumDescription("ipsec", "gre").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Service TLOC encapsulation").AddStringEnumDescription("ipsec", "gre", "ipsec gre").String,
 													Optional:            true,
 													Validators: []validator.String{
-														stringvalidator.OneOf("ipsec", "gre"),
+														stringvalidator.OneOf("ipsec", "gre", "ipsec gre"),
 													},
 												},
 												"vpn_id": schema.Int64Attribute{

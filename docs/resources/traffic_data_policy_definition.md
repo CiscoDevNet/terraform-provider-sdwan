@@ -154,7 +154,7 @@ Optional:
 - `preferred_color_group_list_version` (Number) Preferred color group list version
 - `service_tloc_color` (String) Service TLOC color
 - `service_tloc_encapsulation` (String) Service TLOC encapsulation
-  - Choices: `ipsec`, `gre`
+  - Choices: `ipsec`, `gre`, `ipsec gre`
 - `service_tloc_ip` (String) Service TLOC IP address
 - `service_tloc_list_id` (String) Service TLOC list ID
 - `service_tloc_list_version` (Number) Service TLOC list version
@@ -166,7 +166,7 @@ Optional:
   - Range: `0`-`65536`
 - `tloc_color` (String) TLOC color
 - `tloc_encapsulation` (String) TLOC encapsulation
-  - Choices: `ipsec`, `gre`
+  - Choices: `ipsec`, `gre`, `ipsec gre`
 - `tloc_ip` (String) TLOC IP address
 - `tloc_list_id` (String) TLOC list ID
 - `tloc_list_version` (Number) TLOC list version

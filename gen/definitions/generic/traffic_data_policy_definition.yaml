@@ -637,7 +637,7 @@ attributes:
                   name: type
                   value: tloc
                 type: String
-                enum_values: [ipsec, gre]
+                enum_values: [ipsec, gre, "ipsec gre"]
                 description: TLOC encapsulation
                 example: ipsec
                 exclude_test: true
@@ -666,8 +666,8 @@ attributes:
                 max_int: 65536
                 example: 100
                 exclude_test: true
-              - model_name: tlocList
-                data_path: [value]
+              - model_name: ref
+                data_path: [value, tlocList]
                 tf_name: service_tloc_list_id
                 conditional_attribute:
                   name: type
@@ -730,7 +730,7 @@ attributes:
                   name: type
                   value: service
                 type: String
-                enum_values: [ipsec, gre]
+                enum_values: [ipsec, gre, "ipsec gre"]
                 description: Service TLOC encapsulation
                 example: ipsec
                 exclude_test: true

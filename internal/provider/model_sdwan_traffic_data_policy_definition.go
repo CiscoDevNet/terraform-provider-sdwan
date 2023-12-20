@@ -358,7 +358,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.vpn", fmt.Sprint(childChildItem.ServiceVpnId.ValueInt64()))
 							}
 							if !childChildItem.ServiceTlocListId.IsNull() && childChildItem.Type.ValueString() == "service" {
-								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tlocList", childChildItem.ServiceTlocListId.ValueString())
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tlocList.ref", childChildItem.ServiceTlocListId.ValueString())
 							}
 							if !childChildItem.ServiceTlocIp.IsNull() && childChildItem.Type.ValueString() == "service" {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.tloc.ip", childChildItem.ServiceTlocIp.ValueString())
@@ -762,7 +762,7 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							} else {
 								ccItem.ServiceVpnId = types.Int64Null()
 							}
-							if cccValue := ccv.Get("value.tlocList"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
+							if cccValue := ccv.Get("value.tlocList.ref"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								ccItem.ServiceTlocListId = types.StringValue(cccValue.String())
 							} else {
 								ccItem.ServiceTlocListId = types.StringNull()
