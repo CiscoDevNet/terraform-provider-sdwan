@@ -41,6 +41,7 @@ func TestAccDataSourceSdwanIPv6ACLPolicyDefinition(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_ipv6_acl_policy_definition.test", "sequences.0.base_action", "accept"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv6_acl_policy_definition.test", "sequences.0.match_entries.0.type", "nextHeader"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv6_acl_policy_definition.test", "sequences.0.match_entries.0.next_header", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_ipv6_acl_policy_definition.test", "sequences.0.match_entries.0.traffic_class", "1"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv6_acl_policy_definition.test", "sequences.0.action_entries.0.type", "set"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv6_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.type", "trafficClass"),
 					resource.TestCheckResourceAttr("data.sdwan_ipv6_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.traffic_class", "16"),
@@ -63,6 +64,7 @@ resource "sdwan_ipv6_acl_policy_definition" "test" {
 	match_entries = [{
 		type = "nextHeader"
 		next_header = 1
+		traffic_class = 1
 	}]
 	action_entries = [{
 		type = "set"

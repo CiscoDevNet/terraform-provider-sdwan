@@ -61,6 +61,7 @@ type IPv6ACLPolicyDefinitionSequencesMatchEntries struct {
 	DestinationDataIpv6PrefixListId      types.String `tfsdk:"destination_data_ipv6_prefix_list_id"`
 	DestinationDataIpv6PrefixListVersion types.Int64  `tfsdk:"destination_data_ipv6_prefix_list_version"`
 	Tcp                                  types.String `tfsdk:"tcp"`
+	TrafficClass                         types.Int64  `tfsdk:"traffic_class"`
 }
 type IPv6ACLPolicyDefinitionSequencesActionEntries struct {
 	Type            types.String                                                 `tfsdk:"type"`
@@ -153,6 +154,9 @@ func (data IPv6ACLPolicyDefinition) toBody(ctx context.Context) string {
 					}
 					if !childItem.Tcp.IsNull() && childItem.Type.ValueString() == "tcp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Tcp.ValueString())
+					}
+					if !childItem.TrafficClass.IsNull() && childItem.Type.ValueString() == "trafficClass" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.TrafficClass.ValueInt64()))
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
@@ -308,6 +312,11 @@ func (data *IPv6ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 					} else {
 						cItem.Tcp = types.StringNull()
 					}
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "trafficClass" {
+						cItem.TrafficClass = types.Int64Value(ccValue.Int())
+					} else {
+						cItem.TrafficClass = types.Int64Null()
+					}
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
@@ -446,6 +455,9 @@ func (data *IPv6ACLPolicyDefinition) hasChanges(ctx context.Context, state *IPv6
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].Tcp.Equal(state.Sequences[i].MatchEntries[ii].Tcp) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].TrafficClass.Equal(state.Sequences[i].MatchEntries[ii].TrafficClass) {
 						hasChanges = true
 					}
 				}

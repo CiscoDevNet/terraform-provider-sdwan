@@ -90,4 +90,5 @@ Read-Only:
 - `source_ip` (String) Source IPv6 prefix
 - `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces.
 - `tcp` (String) TCP parameters
+- `traffic_class` (Number) Traffic class
 - `type` (String) Type of match entry

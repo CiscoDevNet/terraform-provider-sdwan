@@ -84,6 +84,7 @@ attributes:
                 sourceDataIpv6PrefixList,
                 destinationDataIpv6PrefixList,
                 tcp,
+                trafficClass,
               ]
             description: Type of match entry
             example: nextHeader
@@ -208,6 +209,17 @@ attributes:
             description: TCP parameters
             exclude_test: true
             example: syn
+          - model_name: value
+            tf_name: traffic_class
+            conditional_attribute:
+              name: type
+              value: trafficClass
+            type: Int64
+            model_type_string: true
+            min_int: 0
+            max_int: 63
+            description: Traffic class
+            example: 1
       - model_name: actions
         tf_name: action_entries
         type: List

@@ -6,6 +6,7 @@
 - BREAKING CHANGE: Rename `destination_port` attribute to `destination_ports` of `sdwan_ipv6_acl_policy_definition` resource and data source
 - BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv4_device_acl_policy_definition` resource and data source
 - BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv6_device_acl_policy_definition` resource and data source
+- Add `traffic_class` attribute to `sdwan_ipv6_acl_policy_definition` resource and data source
 
 ## 0.3.1
 

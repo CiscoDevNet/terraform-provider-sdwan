@@ -24,8 +24,9 @@ resource "sdwan_ipv6_acl_policy_definition" "example" {
       base_action = "accept"
       match_entries = [
         {
-          type        = "nextHeader"
-          next_header = 1
+          type          = "nextHeader"
+          next_header   = 1
+          traffic_class = 1
         }
       ]
       action_entries = [
@@ -121,7 +122,7 @@ Optional:
 Required:
 
 - `type` (String) Type of match entry
-  - Choices: `nextHeader`, `sourceIpv6`, `destinationIpv6`, `class`, `packetLength`, `plp`, `sourcePort`, `destinationPort`, `sourceDataIpv6PrefixList`, `destinationDataIpv6PrefixList`, `tcp`
+  - Choices: `nextHeader`, `sourceIpv6`, `destinationIpv6`, `class`, `packetLength`, `plp`, `sourcePort`, `destinationPort`, `sourceDataIpv6PrefixList`, `destinationDataIpv6PrefixList`, `tcp`, `trafficClass`
 
 Optional:
 
@@ -143,6 +144,8 @@ Optional:
 - `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces.
 - `tcp` (String) TCP parameters
   - Choices: `syn`
+- `traffic_class` (Number) Traffic class
+  - Range: `0`-`63`
 
 ## Import
 

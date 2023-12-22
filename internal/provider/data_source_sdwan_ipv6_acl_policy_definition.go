@@ -155,6 +155,10 @@ func (d *IPv6ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 										MarkdownDescription: "TCP parameters",
 										Computed:            true,
 									},
+									"traffic_class": schema.Int64Attribute{
+										MarkdownDescription: "Traffic class",
+										Computed:            true,
+									},
 								},
 							},
 						},

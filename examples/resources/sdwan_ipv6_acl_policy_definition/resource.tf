@@ -9,8 +9,9 @@ resource "sdwan_ipv6_acl_policy_definition" "example" {
       base_action = "accept"
       match_entries = [
         {
-          type        = "nextHeader"
-          next_header = 1
+          type          = "nextHeader"
+          next_header   = 1
+          traffic_class = 1
         }
       ]
       action_entries = [

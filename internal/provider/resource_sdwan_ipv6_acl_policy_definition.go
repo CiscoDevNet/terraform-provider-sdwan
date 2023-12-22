@@ -117,10 +117,10 @@ func (r *IPv6ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("nextHeader", "sourceIpv6", "destinationIpv6", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataIpv6PrefixList", "destinationDataIpv6PrefixList", "tcp").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("nextHeader", "sourceIpv6", "destinationIpv6", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataIpv6PrefixList", "destinationDataIpv6PrefixList", "tcp", "trafficClass").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("nextHeader", "sourceIpv6", "destinationIpv6", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataIpv6PrefixList", "destinationDataIpv6PrefixList", "tcp"),
+											stringvalidator.OneOf("nextHeader", "sourceIpv6", "destinationIpv6", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataIpv6PrefixList", "destinationDataIpv6PrefixList", "tcp", "trafficClass"),
 										},
 									},
 									"next_header": schema.Int64Attribute{
@@ -189,6 +189,13 @@ func (r *IPv6ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("syn"),
+										},
+									},
+									"traffic_class": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Traffic class").AddIntegerRangeDescription(0, 63).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(0, 63),
 										},
 									},
 								},
