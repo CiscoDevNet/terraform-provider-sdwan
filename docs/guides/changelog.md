@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.3.3 (unreleased)
+
+- Fix next hop action and match entry of `sdwan_route_policy_definition` resource and data source
+
 ## 0.3.2
 
 - BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv4_acl_policy_definition` resource and data source

@@ -193,8 +193,12 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 											int64validator.Between(0, 4294967295),
 										},
 									},
-									"next_hop": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Next hop IP").String,
+									"next_hop_prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Next hop prefix list ID").String,
+										Optional:            true,
+									},
+									"next_hop_prefix_list_version": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Next hop prefix list version").String,
 										Optional:            true,
 									},
 									"origin": schema.StringAttribute{
@@ -296,12 +300,8 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 											stringvalidator.OneOf("type1", "type2"),
 										},
 									},
-									"next_hop_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Next hop prefix list ID").String,
-										Optional:            true,
-									},
-									"next_hop_prefix_list_version": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Next hop prefix list version").String,
+									"next_hop": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Next hop IP").String,
 										Optional:            true,
 									},
 									"omp_tag": schema.Int64Attribute{

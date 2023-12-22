@@ -60,8 +60,7 @@ Read-Only:
 - `local_preference` (Number) Local preference
 - `metric` (Number) Metric
 - `metric_type` (String) Metric type
-- `next_hop_prefix_list_id` (String) Next hop prefix list ID
-- `next_hop_prefix_list_version` (Number) Next hop prefix list version
+- `next_hop` (String) Next hop IP
 - `omp_tag` (Number) OMP tag
 - `origin` (String) Origin
 - `originator` (String) Originator IP
@@ -86,7 +85,8 @@ Read-Only:
 - `extended_community_list_version` (Number) Extended community list version
 - `local_preference` (Number) Local preference
 - `metric` (Number) Metric
-- `next_hop` (String) Next hop IP
+- `next_hop_prefix_list_id` (String) Next hop prefix list ID
+- `next_hop_prefix_list_version` (Number) Next hop prefix list version
 - `omp_tag` (Number) OMP tag
 - `origin` (String) Origin
 - `ospf_tag` (Number) OSPF tag

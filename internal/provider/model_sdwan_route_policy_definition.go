@@ -62,31 +62,31 @@ type RoutePolicyDefinitionSequencesMatchEntries struct {
 	ExtendedCommunityListVersion types.Int64  `tfsdk:"extended_community_list_version"`
 	LocalPreference              types.Int64  `tfsdk:"local_preference"`
 	Metric                       types.Int64  `tfsdk:"metric"`
-	NextHop                      types.String `tfsdk:"next_hop"`
+	NextHopPrefixListId          types.String `tfsdk:"next_hop_prefix_list_id"`
+	NextHopPrefixListVersion     types.Int64  `tfsdk:"next_hop_prefix_list_version"`
 	Origin                       types.String `tfsdk:"origin"`
 	Peer                         types.String `tfsdk:"peer"`
 	OmpTag                       types.Int64  `tfsdk:"omp_tag"`
 	OspfTag                      types.Int64  `tfsdk:"ospf_tag"`
 }
 type RoutePolicyDefinitionSequencesActionEntries struct {
-	Type                     types.String `tfsdk:"type"`
-	Aggregator               types.Int64  `tfsdk:"aggregator"`
-	AggregatorIpAddress      types.String `tfsdk:"aggregator_ip_address"`
-	AsPathPrepend            types.String `tfsdk:"as_path_prepend"`
-	AsPathExclude            types.String `tfsdk:"as_path_exclude"`
-	AtomicAggregate          types.Bool   `tfsdk:"atomic_aggregate"`
-	Community                types.String `tfsdk:"community"`
-	CommunityAdditive        types.Bool   `tfsdk:"community_additive"`
-	LocalPreference          types.Int64  `tfsdk:"local_preference"`
-	Metric                   types.Int64  `tfsdk:"metric"`
-	Weight                   types.Int64  `tfsdk:"weight"`
-	MetricType               types.String `tfsdk:"metric_type"`
-	NextHopPrefixListId      types.String `tfsdk:"next_hop_prefix_list_id"`
-	NextHopPrefixListVersion types.Int64  `tfsdk:"next_hop_prefix_list_version"`
-	OmpTag                   types.Int64  `tfsdk:"omp_tag"`
-	OspfTag                  types.Int64  `tfsdk:"ospf_tag"`
-	Origin                   types.String `tfsdk:"origin"`
-	Originator               types.String `tfsdk:"originator"`
+	Type                types.String `tfsdk:"type"`
+	Aggregator          types.Int64  `tfsdk:"aggregator"`
+	AggregatorIpAddress types.String `tfsdk:"aggregator_ip_address"`
+	AsPathPrepend       types.String `tfsdk:"as_path_prepend"`
+	AsPathExclude       types.String `tfsdk:"as_path_exclude"`
+	AtomicAggregate     types.Bool   `tfsdk:"atomic_aggregate"`
+	Community           types.String `tfsdk:"community"`
+	CommunityAdditive   types.Bool   `tfsdk:"community_additive"`
+	LocalPreference     types.Int64  `tfsdk:"local_preference"`
+	Metric              types.Int64  `tfsdk:"metric"`
+	Weight              types.Int64  `tfsdk:"weight"`
+	MetricType          types.String `tfsdk:"metric_type"`
+	NextHop             types.String `tfsdk:"next_hop"`
+	OmpTag              types.Int64  `tfsdk:"omp_tag"`
+	OspfTag             types.Int64  `tfsdk:"ospf_tag"`
+	Origin              types.String `tfsdk:"origin"`
+	Originator          types.String `tfsdk:"originator"`
 }
 
 func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
@@ -155,8 +155,8 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.Metric.IsNull() && childItem.Type.ValueString() == "metric" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Metric.ValueInt64()))
 					}
-					if !childItem.NextHop.IsNull() && childItem.Type.ValueString() == "nextHop" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.NextHop.ValueString())
+					if !childItem.NextHopPrefixListId.IsNull() && childItem.Type.ValueString() == "nextHop" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.NextHopPrefixListId.ValueString())
 					}
 					if !childItem.Origin.IsNull() && childItem.Type.ValueString() == "origin" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Origin.ValueString())
@@ -224,8 +224,8 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.MetricType.IsNull() && childItem.Type.ValueString() == "metricType" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.MetricType.ValueString())
 					}
-					if !childItem.NextHopPrefixListId.IsNull() && childItem.Type.ValueString() == "nextHop" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.NextHopPrefixListId.ValueString())
+					if !childItem.NextHop.IsNull() && childItem.Type.ValueString() == "nextHop" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.NextHop.ValueString())
 					}
 					if !childItem.OmpTag.IsNull() && childItem.Type.ValueString() == "ompTag" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.OmpTag.ValueInt64()))
@@ -338,10 +338,10 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					} else {
 						cItem.Metric = types.Int64Null()
 					}
-					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "nextHop" {
-						cItem.NextHop = types.StringValue(ccValue.String())
+					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "nextHop" {
+						cItem.NextHopPrefixListId = types.StringValue(ccValue.String())
 					} else {
-						cItem.NextHop = types.StringNull()
+						cItem.NextHopPrefixListId = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "origin" {
 						cItem.Origin = types.StringValue(ccValue.String())
@@ -439,10 +439,10 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					} else {
 						cItem.MetricType = types.StringNull()
 					}
-					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "nextHop" {
-						cItem.NextHopPrefixListId = types.StringValue(ccValue.String())
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "nextHop" {
+						cItem.NextHop = types.StringValue(ccValue.String())
 					} else {
-						cItem.NextHopPrefixListId = types.StringNull()
+						cItem.NextHop = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "ompTag" {
 						cItem.OmpTag = types.Int64Value(ccValue.Int())
@@ -533,7 +533,7 @@ func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RouteP
 					if !data.Sequences[i].MatchEntries[ii].Metric.Equal(state.Sequences[i].MatchEntries[ii].Metric) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].MatchEntries[ii].NextHop.Equal(state.Sequences[i].MatchEntries[ii].NextHop) {
+					if !data.Sequences[i].MatchEntries[ii].NextHopPrefixListId.Equal(state.Sequences[i].MatchEntries[ii].NextHopPrefixListId) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].Origin.Equal(state.Sequences[i].MatchEntries[ii].Origin) {
@@ -590,7 +590,7 @@ func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RouteP
 					if !data.Sequences[i].ActionEntries[ii].MetricType.Equal(state.Sequences[i].ActionEntries[ii].MetricType) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].ActionEntries[ii].NextHopPrefixListId.Equal(state.Sequences[i].ActionEntries[ii].NextHopPrefixListId) {
+					if !data.Sequences[i].ActionEntries[ii].NextHop.Equal(state.Sequences[i].ActionEntries[ii].NextHop) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].ActionEntries[ii].OmpTag.Equal(state.Sequences[i].ActionEntries[ii].OmpTag) {
@@ -660,23 +660,10 @@ func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *Ro
 			} else {
 				data.Sequences[i].MatchEntries[ii].ExtendedCommunityListVersion = types.Int64Null()
 			}
-		}
-		for ii := range data.Sequences[i].ActionEntries {
-			cDataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].ActionEntries[ii].Type.ValueString())}
-			cStateIndex := -1
-			if stateIndex > -1 {
-				for jj := range state.Sequences[stateIndex].ActionEntries {
-					cStateKeys := [...]string{fmt.Sprintf("%v", state.Sequences[stateIndex].ActionEntries[jj].Type.ValueString())}
-					if cDataKeys == cStateKeys {
-						cStateIndex = jj
-						break
-					}
-				}
-			}
 			if cStateIndex > -1 {
-				data.Sequences[i].ActionEntries[ii].NextHopPrefixListVersion = state.Sequences[stateIndex].ActionEntries[cStateIndex].NextHopPrefixListVersion
+				data.Sequences[i].MatchEntries[ii].NextHopPrefixListVersion = state.Sequences[stateIndex].MatchEntries[cStateIndex].NextHopPrefixListVersion
 			} else {
-				data.Sequences[i].ActionEntries[ii].NextHopPrefixListVersion = types.Int64Null()
+				data.Sequences[i].MatchEntries[ii].NextHopPrefixListVersion = types.Int64Null()
 			}
 		}
 	}

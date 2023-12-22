@@ -158,8 +158,12 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 										MarkdownDescription: "Metric",
 										Computed:            true,
 									},
-									"next_hop": schema.StringAttribute{
-										MarkdownDescription: "Next hop IP",
+									"next_hop_prefix_list_id": schema.StringAttribute{
+										MarkdownDescription: "Next hop prefix list ID",
+										Computed:            true,
+									},
+									"next_hop_prefix_list_version": schema.Int64Attribute{
+										MarkdownDescription: "Next hop prefix list version",
 										Computed:            true,
 									},
 									"origin": schema.StringAttribute{
@@ -234,12 +238,8 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 										MarkdownDescription: "Metric type",
 										Computed:            true,
 									},
-									"next_hop_prefix_list_id": schema.StringAttribute{
-										MarkdownDescription: "Next hop prefix list ID",
-										Computed:            true,
-									},
-									"next_hop_prefix_list_version": schema.Int64Attribute{
-										MarkdownDescription: "Next hop prefix list version",
+									"next_hop": schema.StringAttribute{
+										MarkdownDescription: "Next hop IP",
 										Computed:            true,
 									},
 									"omp_tag": schema.Int64Attribute{

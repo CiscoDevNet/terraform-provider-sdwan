@@ -34,6 +34,7 @@ resource "sdwan_route_policy_definition" "example" {
           type                  = "aggregator"
           aggregator            = 10
           aggregator_ip_address = "10.1.2.3"
+          next_hop              = "10.1.1.5"
         }
       ]
     }
@@ -102,8 +103,7 @@ Optional:
   - Range: `0`-`4294967295`
 - `metric_type` (String) Metric type
   - Choices: `type1`, `type2`
-- `next_hop_prefix_list_id` (String) Next hop prefix list ID
-- `next_hop_prefix_list_version` (Number) Next hop prefix list version
+- `next_hop` (String) Next hop IP
 - `omp_tag` (Number) OMP tag
   - Range: `0`-`4294967295`
 - `origin` (String) Origin
@@ -139,7 +139,8 @@ Optional:
   - Range: `0`-`4294967295`
 - `metric` (Number) Metric
   - Range: `0`-`4294967295`
-- `next_hop` (String) Next hop IP
+- `next_hop_prefix_list_id` (String) Next hop prefix list ID
+- `next_hop_prefix_list_version` (Number) Next hop prefix list version
 - `omp_tag` (Number) OMP tag
   - Range: `0`-`4294967295`
 - `origin` (String) Origin
