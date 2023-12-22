@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.3.3 (unreleased)
+## 0.3.3
 
 - Fix next hop action and match entry of `sdwan_route_policy_definition` resource and data source
 
