@@ -220,6 +220,7 @@ attributes:
             max_int: 63
             description: Traffic class
             example: 1
+            exclude_test: true
       - model_name: actions
         tf_name: action_entries
         type: List
