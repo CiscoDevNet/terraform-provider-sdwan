@@ -34,7 +34,6 @@ resource "sdwan_route_policy_definition" "example" {
           type                  = "aggregator"
           aggregator            = 10
           aggregator_ip_address = "10.1.2.3"
-          next_hop              = "10.1.1.5"
         }
       ]
     }

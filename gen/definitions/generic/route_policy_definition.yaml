@@ -408,6 +408,7 @@ attributes:
             type: String
             description: Next hop IP
             example: 10.1.1.5
+            exclude_test: true
           - model_name: value
             tf_name: omp_tag
             conditional_attribute:

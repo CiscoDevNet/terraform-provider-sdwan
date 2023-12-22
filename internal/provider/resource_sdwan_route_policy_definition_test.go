@@ -45,7 +45,6 @@ func TestAccSdwanRoutePolicyDefinition(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.type", "aggregator"),
 					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.aggregator", "10"),
 					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.aggregator_ip_address", "10.1.2.3"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.next_hop", "10.1.1.5"),
 				),
 			},
 		},
@@ -72,7 +71,6 @@ resource "sdwan_route_policy_definition" "test" {
 			type = "aggregator"
 			aggregator = 10
 			aggregator_ip_address = "10.1.2.3"
-			next_hop = "10.1.1.5"
 		}]
 	}]
 }
