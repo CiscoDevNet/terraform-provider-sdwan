@@ -49,7 +49,7 @@ type IPv6DeviceACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                                 types.String `tfsdk:"type"`
 	SourceIp                             types.String `tfsdk:"source_ip"`
 	DestinationIp                        types.String `tfsdk:"destination_ip"`
-	SourcePort                           types.Int64  `tfsdk:"source_port"`
+	SourcePorts                          types.String `tfsdk:"source_ports"`
 	DestinationPort                      types.Int64  `tfsdk:"destination_port"`
 	SourceDataIpv6PrefixListId           types.String `tfsdk:"source_data_ipv6_prefix_list_id"`
 	SourceDataIpv6PrefixListVersion      types.Int64  `tfsdk:"source_data_ipv6_prefix_list_version"`
@@ -107,8 +107,8 @@ func (data IPv6DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.DestinationIp.IsNull() && childItem.Type.ValueString() == "destinationIpv6" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
 					}
-					if !childItem.SourcePort.IsNull() && childItem.Type.ValueString() == "sourcePort" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SourcePort.ValueInt64()))
+					if !childItem.SourcePorts.IsNull() && childItem.Type.ValueString() == "sourcePort" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourcePorts.ValueString())
 					}
 					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
@@ -197,9 +197,9 @@ func (data *IPv6DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjs
 						cItem.DestinationIp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
-						cItem.SourcePort = types.Int64Value(ccValue.Int())
+						cItem.SourcePorts = types.StringValue(ccValue.String())
 					} else {
-						cItem.SourcePort = types.Int64Null()
+						cItem.SourcePorts = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationPort" {
 						cItem.DestinationPort = types.Int64Value(ccValue.Int())
@@ -282,7 +282,7 @@ func (data *IPv6DeviceACLPolicyDefinition) hasChanges(ctx context.Context, state
 					if !data.Sequences[i].MatchEntries[ii].DestinationIp.Equal(state.Sequences[i].MatchEntries[ii].DestinationIp) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].MatchEntries[ii].SourcePort.Equal(state.Sequences[i].MatchEntries[ii].SourcePort) {
+					if !data.Sequences[i].MatchEntries[ii].SourcePorts.Equal(state.Sequences[i].MatchEntries[ii].SourcePorts) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].DestinationPort.Equal(state.Sequences[i].MatchEntries[ii].DestinationPort) {

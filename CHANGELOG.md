@@ -1,3 +1,12 @@
+## 0.3.2 (unreleased)
+
+- BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv4_acl_policy_definition` resource and data source
+- BREAKING CHANGE: Rename `destination_port` attribute to `destination_ports` of `sdwan_ipv4_acl_policy_definition` resource and data source
+- BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv6_acl_policy_definition` resource and data source
+- BREAKING CHANGE: Rename `destination_port` attribute to `destination_ports` of `sdwan_ipv6_acl_policy_definition` resource and data source
+- BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv4_device_acl_policy_definition` resource and data source
+- BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv6_device_acl_policy_definition` resource and data source
+
 ## 0.3.1
 
 - Fix idempotency issue with DNS redirect configuration of `sdwan_traffic_data_policy_definition` resource

@@ -105,8 +105,7 @@ Optional:
 - `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID
 - `source_data_ipv4_prefix_list_version` (Number) Source data IPv4 prefix list version
 - `source_ip` (String) Source IP prefix
-- `source_port` (Number) Source port
-  - Range: `0`-`65535`
+- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces.
 
 ## Import
 

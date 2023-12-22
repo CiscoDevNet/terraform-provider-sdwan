@@ -107,8 +107,8 @@ func (d *IPv6DeviceACLPolicyDefinitionDataSource) Schema(ctx context.Context, re
 										MarkdownDescription: "Destination IP prefix",
 										Computed:            true,
 									},
-									"source_port": schema.Int64Attribute{
-										MarkdownDescription: "Source port",
+									"source_ports": schema.StringAttribute{
+										MarkdownDescription: "Source ports. Single value (0-65535) or ranges separated by spaces.",
 										Computed:            true,
 									},
 									"destination_port": schema.Int64Attribute{

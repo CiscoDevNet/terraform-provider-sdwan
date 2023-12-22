@@ -160,19 +160,13 @@ func (r *IPv6ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 											stringvalidator.OneOf("high", "low"),
 										},
 									},
-									"source_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source port").AddIntegerRangeDescription(0, 65535).String,
+									"source_ports": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces.").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 65535),
-										},
 									},
-									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Destination port").AddIntegerRangeDescription(0, 65535).String,
+									"destination_ports": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination ports. Single value (0-65535) or ranges separated by spaces.").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 65535),
-										},
 									},
 									"source_data_ipv6_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source data IPv6 prefix list ID").String,

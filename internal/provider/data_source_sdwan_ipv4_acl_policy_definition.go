@@ -127,12 +127,12 @@ func (d *IPv4ACLPolicyDefinitionDataSource) Schema(ctx context.Context, req data
 										MarkdownDescription: "PLP - priority",
 										Computed:            true,
 									},
-									"source_port": schema.Int64Attribute{
-										MarkdownDescription: "Source port",
+									"source_ports": schema.StringAttribute{
+										MarkdownDescription: "Source ports. Single value (0-65535) or ranges separated by spaces.",
 										Computed:            true,
 									},
-									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: "Destination port",
+									"destination_ports": schema.StringAttribute{
+										MarkdownDescription: "Destination ports. Single value (0-65535) or ranges separated by spaces.",
 										Computed:            true,
 									},
 									"source_data_ipv4_prefix_list_id": schema.StringAttribute{

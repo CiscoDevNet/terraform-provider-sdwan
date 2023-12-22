@@ -65,5 +65,5 @@ Read-Only:
 - `source_data_ipv6_prefix_list_id` (String) Source data IPv6 prefix list ID
 - `source_data_ipv6_prefix_list_version` (Number) Source data IPv6 prefix list version
 - `source_ip` (String) Source IP prefix
-- `source_port` (Number) Source port
+- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces.
 - `type` (String) Type of match entry

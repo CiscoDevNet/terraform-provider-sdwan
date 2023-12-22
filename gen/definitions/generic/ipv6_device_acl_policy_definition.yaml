@@ -101,17 +101,14 @@ attributes:
             exclude_test: true
             example: 2001::/8
           - model_name: value
-            tf_name: source_port
+            tf_name: source_ports
             conditional_attribute:
               name: type
               value: sourcePort
-            type: Int64
-            model_type_string: true
-            description: Source port
+            type: String
+            description: Source ports. Single value (0-65535) or ranges separated by spaces.
             exclude_test: true
-            min_int: 0
-            max_int: 65535
-            example: 8000
+            example: "8000"
           - model_name: value
             tf_name: destination_port
             conditional_attribute:

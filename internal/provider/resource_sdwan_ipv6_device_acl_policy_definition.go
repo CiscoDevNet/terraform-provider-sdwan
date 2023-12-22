@@ -131,12 +131,9 @@ func (r *IPv6DeviceACLPolicyDefinitionResource) Schema(ctx context.Context, req 
 										MarkdownDescription: helpers.NewAttributeDescription("Destination IP prefix").String,
 										Optional:            true,
 									},
-									"source_port": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Source port").AddIntegerRangeDescription(0, 65535).String,
+									"source_ports": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source ports. Single value (0-65535) or ranges separated by spaces.").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(0, 65535),
-										},
 									},
 									"destination_port": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination port, only `22` and `161` supported").AddIntegerRangeDescription(0, 65535).String,

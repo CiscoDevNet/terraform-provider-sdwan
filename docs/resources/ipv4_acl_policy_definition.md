@@ -130,8 +130,7 @@ Optional:
 - `destination_data_ipv4_prefix_list_id` (String) Destination data IPv4 prefix list ID
 - `destination_data_ipv4_prefix_list_version` (Number) Destination data IPv4 prefix list version
 - `destination_ip` (String) Destination IP prefix
-- `destination_port` (Number) Destination port
-  - Range: `0`-`65535`
+- `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces.
 - `dscp` (Number) DSCP value
   - Range: `0`-`63`
 - `packet_length` (Number) Packet length
@@ -142,8 +141,7 @@ Optional:
 - `source_data_ipv4_prefix_list_id` (String) Source data IPv4 prefix list ID
 - `source_data_ipv4_prefix_list_version` (Number) Source data IPv4 prefix list version
 - `source_ip` (String) Source IP prefix
-- `source_port` (Number) Source port
-  - Range: `0`-`65535`
+- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces.
 - `tcp` (String) TCP parameters
   - Choices: `syn`
 

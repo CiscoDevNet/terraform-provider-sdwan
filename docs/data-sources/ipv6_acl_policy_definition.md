@@ -81,13 +81,13 @@ Read-Only:
 - `destination_data_ipv6_prefix_list_id` (String) Destination dataIPv6 prefix list ID
 - `destination_data_ipv6_prefix_list_version` (Number) Destination data prefix list version
 - `destination_ip` (String) Destination IPv6 prefix
-- `destination_port` (Number) Destination port
+- `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces.
 - `next_header` (Number) Next header
 - `packet_length` (Number) Packet length
 - `priority` (String) PLP - priority
 - `source_data_ipv6_prefix_list_id` (String) Source data IPv6 prefix list ID
 - `source_data_ipv6_prefix_list_version` (Number) Source data IPv6 prefix list version
 - `source_ip` (String) Source IPv6 prefix
-- `source_port` (Number) Source port
+- `source_ports` (String) Source ports. Single value (0-65535) or ranges separated by spaces.
 - `tcp` (String) TCP parameters
 - `type` (String) Type of match entry

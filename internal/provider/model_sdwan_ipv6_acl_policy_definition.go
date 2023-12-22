@@ -54,8 +54,8 @@ type IPv6ACLPolicyDefinitionSequencesMatchEntries struct {
 	ClassMapVersion                      types.Int64  `tfsdk:"class_map_version"`
 	PacketLength                         types.Int64  `tfsdk:"packet_length"`
 	Priority                             types.String `tfsdk:"priority"`
-	SourcePort                           types.Int64  `tfsdk:"source_port"`
-	DestinationPort                      types.Int64  `tfsdk:"destination_port"`
+	SourcePorts                          types.String `tfsdk:"source_ports"`
+	DestinationPorts                     types.String `tfsdk:"destination_ports"`
 	SourceDataIpv6PrefixListId           types.String `tfsdk:"source_data_ipv6_prefix_list_id"`
 	SourceDataIpv6PrefixListVersion      types.Int64  `tfsdk:"source_data_ipv6_prefix_list_version"`
 	DestinationDataIpv6PrefixListId      types.String `tfsdk:"destination_data_ipv6_prefix_list_id"`
@@ -139,11 +139,11 @@ func (data IPv6ACLPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.Priority.IsNull() && childItem.Type.ValueString() == "plp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Priority.ValueString())
 					}
-					if !childItem.SourcePort.IsNull() && childItem.Type.ValueString() == "sourcePort" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SourcePort.ValueInt64()))
+					if !childItem.SourcePorts.IsNull() && childItem.Type.ValueString() == "sourcePort" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourcePorts.ValueString())
 					}
-					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
+					if !childItem.DestinationPorts.IsNull() && childItem.Type.ValueString() == "destinationPort" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationPorts.ValueString())
 					}
 					if !childItem.SourceDataIpv6PrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataIpv6PrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataIpv6PrefixListId.ValueString())
@@ -284,14 +284,14 @@ func (data *IPv6ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 						cItem.Priority = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
-						cItem.SourcePort = types.Int64Value(ccValue.Int())
+						cItem.SourcePorts = types.StringValue(ccValue.String())
 					} else {
-						cItem.SourcePort = types.Int64Null()
+						cItem.SourcePorts = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationPort" {
-						cItem.DestinationPort = types.Int64Value(ccValue.Int())
+						cItem.DestinationPorts = types.StringValue(ccValue.String())
 					} else {
-						cItem.DestinationPort = types.Int64Null()
+						cItem.DestinationPorts = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "sourceDataIpv6PrefixList" {
 						cItem.SourceDataIpv6PrefixListId = types.StringValue(ccValue.String())
@@ -433,10 +433,10 @@ func (data *IPv6ACLPolicyDefinition) hasChanges(ctx context.Context, state *IPv6
 					if !data.Sequences[i].MatchEntries[ii].Priority.Equal(state.Sequences[i].MatchEntries[ii].Priority) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].MatchEntries[ii].SourcePort.Equal(state.Sequences[i].MatchEntries[ii].SourcePort) {
+					if !data.Sequences[i].MatchEntries[ii].SourcePorts.Equal(state.Sequences[i].MatchEntries[ii].SourcePorts) {
 						hasChanges = true
 					}
-					if !data.Sequences[i].MatchEntries[ii].DestinationPort.Equal(state.Sequences[i].MatchEntries[ii].DestinationPort) {
+					if !data.Sequences[i].MatchEntries[ii].DestinationPorts.Equal(state.Sequences[i].MatchEntries[ii].DestinationPorts) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].SourceDataIpv6PrefixListId.Equal(state.Sequences[i].MatchEntries[ii].SourceDataIpv6PrefixListId) {
