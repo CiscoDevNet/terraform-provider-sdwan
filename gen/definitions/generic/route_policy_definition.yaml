@@ -395,14 +395,19 @@ attributes:
             description: Metric type
             example: type2
             exclude_test: true
-          - model_name: value
-            tf_name: next_hop
+          - model_name: ref
+            tf_name: next_hop_prefix_list_id
             conditional_attribute:
               name: type
               value: nextHop
             type: String
-            description: Next hop IP
-            example: 10.1.1.5
+            description: Next hop prefix list ID
+            example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d
+            exclude_test: true
+          - tf_name: next_hop_prefix_list_version
+            tf_only: true
+            type: Version
+            description: Next hop prefix list version
             exclude_test: true
           - model_name: value
             tf_name: omp_tag

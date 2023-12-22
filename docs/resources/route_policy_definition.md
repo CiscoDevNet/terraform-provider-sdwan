@@ -102,7 +102,8 @@ Optional:
   - Range: `0`-`4294967295`
 - `metric_type` (String) Metric type
   - Choices: `type1`, `type2`
-- `next_hop` (String) Next hop IP
+- `next_hop_prefix_list_id` (String) Next hop prefix list ID
+- `next_hop_prefix_list_version` (Number) Next hop prefix list version
 - `omp_tag` (Number) OMP tag
   - Range: `0`-`4294967295`
 - `origin` (String) Origin
