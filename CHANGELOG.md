@@ -1,4 +1,4 @@
-## 0.3.2 (unreleased)
+## 0.3.2
 
 - BREAKING CHANGE: Rename `source_port` attribute to `source_ports` of `sdwan_ipv4_acl_policy_definition` resource and data source
 - BREAKING CHANGE: Rename `destination_port` attribute to `destination_ports` of `sdwan_ipv4_acl_policy_definition` resource and data source
