@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.3.4 (unreleased)
+
+- Add `sdwan_switchport_feature_template` resource and data source
+
 ## 0.3.3
 
 - Fix next hop action and match entry of `sdwan_route_policy_definition` resource and data source

@@ -1,0 +1,95 @@
+---
+name: Switchport
+minimum_version: 15.0.0
+attributes:
+  - model_name: slot
+    example: 0
+  - model_name: subslot
+    tf_name: sub_slot
+    example: 0
+  - model_name: module
+    tf_name: module_type
+    example: "4"
+  - model_name: interface
+    tf_name: interfaces
+    attributes:
+      - model_name: if-name
+        tf_name: name
+        example: GigabitEthernet0/0/0
+      - model_name: mode
+        tf_name: switchport_mode
+        example: access
+      - model_name: shutdown
+        example: true
+      - model_name: speed
+        example: 100
+      - model_name: duplex
+        example: full
+      - model_name: vlan
+        data_path: [switchport, access, vlan]
+        tf_name: switchport_access_vlan
+        example: 100
+      - model_name: vlans
+        tf_name: switchport_trunk_allowed_vlans
+        example: "100,200"
+      - model_name: vlan
+        data_path: [switchport, trunk, native]
+        tf_name: switchport_trunk_native_vlan
+        example: 100
+      - model_name: dot1x-enable
+        example: true
+      - model_name: port-control
+        tf_name: dot1x_port_control
+        example: auto
+      - model_name: auth-order
+        tf_name: dot1x_authentication_order
+        example: '["dot1x"]'
+      - model_name: voice-vlan
+        tf_name: dot1x_voice_vlan
+        example: 200
+      - model_name: pae-enable
+        tf_name: dot1x_pae_enable
+        example: true
+      - model_name: mac-authentication-bypass
+        tf_name: dot1x_mac_authentication_bypass
+        example: true
+      - model_name: host-mode
+        tf_name: dot1x_host_mode
+        example: multi-domain
+      - model_name: enable-periodic-reauth
+        tf_name: dot1x_enable_periodic_reauth
+        example: true
+      - model_name: inactivity
+        tf_name: dot1x_periodic_reauth_inactivity_timeout
+        example: 100
+      - model_name: reauthentication
+        tf_name: dot1x_periodic_reauth_interval
+        example: 60
+      - model_name: control-direction
+        tf_name: dot1x_control_direction
+        example: both
+      - model_name: restricted-vlan
+        tf_name: dot1x_restricted_vlan
+        example: 100
+      - model_name: guest-vlan
+        tf_name: dot1x_guest_vlan
+        example: 101
+      - model_name: critical-vlan
+        tf_name: dot1x_critical_vlan
+        example: 102
+      - model_name: enable-voice
+        tf_name: dot1x_enable_criticial_voice_vlan
+        example: true
+  - model_name: age-time
+    tf_name: age_out_time
+    example: 500
+  - model_name: static-mac-address
+    tf_name: static_mac_addresses
+    attributes:
+      - model_name: macaddr
+        tf_name: mac_address
+        example: "0000.0000.0000"
+      - model_name: if-name
+        example: GigabitEthernet0/0/0
+      - model_name: vlan
+        example: 100
