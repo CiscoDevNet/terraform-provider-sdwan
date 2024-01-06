@@ -1,0 +1,165 @@
+---
+name: VPN Interface SVI
+model: vpn-interface-svi
+minimum_version: 15.0.0
+attributes:
+  - model_name: if-name
+    example: Vlan100
+  - model_name: description
+    tf_name: interface_description
+    example: VPN Interface SVI
+  - model_name: address
+    data_path: [ip]
+    tf_name: ipv4_address
+    example: 2.3.4.5
+  - model_name: secondary-address
+    data_path: [ip]
+    tf_name: ipv4_secondary_addresses
+    attributes:
+      - model_name: address
+        tf_name: ipv4_address
+        example: 4.5.6.7
+  - model_name: address
+    data_path: [ipv6]
+    tf_name: ipv6_address
+    example: 2001:db8:85a3::8a2e:370:7334
+  - model_name: dhcp-client
+    tf_name: ipv6_dhcp_client
+    example: false
+  - model_name: dhcp-distance
+    tf_name: ipv6_dhcp_distance
+    example: 101
+  - model_name: dhcp-rapid-commit
+    tf_name: ipv6_dhcp_rapid_commit
+    example: false
+  - model_name: secondary-address
+    data_path: [ipv6]
+    tf_name: ipv6_secondary_addresses
+    attributes:
+      - model_name: address
+        tf_name: ipv6_address
+        example: 2001:db8:85a3::8a2e:370:7334
+  - model_name: dhcp-helper
+    tf_name: ipv4_dhcp_helper
+    example: '["7.7.7.7"]'
+  - model_name: dhcp-helper-v6
+    tf_name: ipv6_dhcp_helpers
+    attributes:
+      - model_name: address
+        example: 2001:db8:85a3::8a2e:370:7334
+      - model_name: vpn
+        tf_name: vpn_id
+        example: 100
+  - model_name: ip-directed-broadcast
+    example: true
+  - model_name: intrf-mtu
+    tf_name: mtu
+    example: 1500
+  - model_name: mtu
+    tf_name: ip_mtu
+    example: 1500
+  - model_name: tcp-mss-adjust
+    example: 1400
+  - model_name: shutdown
+    example: false
+  - model_name: arp-timeout
+    example: 100
+  - model_name: access-list
+    tf_name: ipv4_access_lists
+    attributes:
+      - model_name: direction
+        example: in
+      - model_name: acl-name
+        example: ACL1
+  - model_name: access-list
+    data_path: [ipv6]
+    tf_name: ipv6_access_lists
+    attributes:
+      - model_name: direction
+        example: in
+      - model_name: acl-name
+        example: ACL2
+  - model_name: policer
+    tf_name: policers
+    attributes:
+      - model_name: direction
+        example: in
+      - model_name: policer-name
+        example: POLICER1
+  - model_name: ip
+    tf_name: static_arp_entries
+    attributes:
+      - model_name: addr
+        tf_name: ipv4_address
+        example: 3.4.4.5
+      - model_name: mac
+        tf_name: mac_address
+        example: 00:00:00:00:00:00
+  - model_name: vrrp
+    tf_name: ipv4_vrrps
+    attributes:
+      - model_name: grp-id
+        tf_name: group_id
+        example: 1
+      - model_name: priority
+        example: 100
+      - model_name: timer
+        example: 1000
+      - model_name: track-omp
+        example: true
+      - model_name: track-prefix-list
+        example: TRACK1
+      - model_name: address
+        tf_name: ipv4_address
+        example: 5.6.7.8
+      - model_name: ipv4-secondary
+        tf_name: ipv4_secondary_addresses
+        attributes:
+          - model_name: address
+            tf_name: ipv4_address
+            example: 8.8.8.8
+      - model_name: tloc-change-pref
+        tf_name: tloc_preference_change
+        example: true
+      - model_name: value
+        tf_name: tloc_preference_change_value
+        example: 100
+      - model_name: tracking-object
+        tf_name: tracking_objects
+        attributes:
+          - model_name: name
+            example: 100
+          - model_name: track-action
+            example: decrement
+          - model_name: decrement
+            tf_name: decrement_value
+            example: 10
+  - model_name: ipv6-vrrp
+    tf_name: ipv6_vrrps
+    attributes:
+      - model_name: grp-id
+        tf_name: group_id
+        example: 1
+      - model_name: priority
+        example: 100
+      - model_name: timer
+        example: 1000
+      - model_name: track-omp
+        example: true
+      - model_name: track-prefix-list
+        example: TRACK1
+      - model_name: ipv6
+        tf_name: ipv6_addresses
+        attributes:
+          - model_name: ipv6-link-local
+            tf_name: link_local_address
+            example: FE80::1/64
+          - model_name: prefix
+            tf_name: prefix
+            example: 2001:db8:85a3::8a2e:370:7335
+      - model_name: ipv6-secondary
+        tf_name: ipv6_secondary_addresses
+        attributes:
+          - model_name: prefix
+            tf_name: prefix
+            example: 2001:db8:85a3::8a2e:370:7336

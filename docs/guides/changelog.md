@@ -10,6 +10,7 @@ description: |-
 ## 0.3.4 (unreleased)
 
 - Add `sdwan_switchport_feature_template` resource and data source
+- Add `sdwan_vpn_interface_svi_feature_template` resource and data source
 
 ## 0.3.3
 
