@@ -116,8 +116,7 @@ Optional:
 - `destination_data_prefix_list_id` (String) Destination Data Prefix list ID
 - `destination_data_prefix_list_version` (Number) Destination Data Prefix list version
 - `destination_ip` (String) Destination IP
-- `destination_port` (Number) Destination port
-  - Range: `0`-`65535`
+- `destination_port` (String) Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
 - `destination_region` (String) Destination region
   - Choices: `primary-region`, `secondary-region`, `other-region`
 - `dns` (String) DNS request or response
@@ -128,13 +127,11 @@ Optional:
   - Range: `0`-`63`
 - `plp` (String) PLP
   - Choices: `low`, `high`
-- `protocol` (Number) IP Protocol
-  - Range: `0`-`255`
+- `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)
 - `source_data_prefix_list_id` (String) Source Data Prefix list ID
 - `source_data_prefix_list_version` (Number) Source Data Prefix list version
 - `source_ip` (String) Source IP
-- `source_port` (Number) Source port
-  - Range: `0`-`65535`
+- `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces)
 - `traffic_to` (String) Traffic to
   - Choices: `access`, `core`, `service`
 

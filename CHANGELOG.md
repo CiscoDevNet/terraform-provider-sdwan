@@ -1,3 +1,7 @@
+## 0.3.5 (unreleased)
+
+- BREAKING CHANGE: convert `protocol`, `source_port`, `destination_port` attribute of `sdwan_application_aware_routing_definition` to Strings to support multiple values
+
 ## 0.3.4
 
 - Add `sdwan_switchport_feature_template` resource and data source
