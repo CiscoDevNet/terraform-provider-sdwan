@@ -168,13 +168,21 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Port").String,
 				Optional:            true,
 			},
-			"external_syslog_server_ip": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server IP").String,
+			"logging": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
-			},
-			"external_syslog_server_vpn": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server VPN").String,
-				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"external_syslog_server_ip": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server IP").String,
+							Optional:            true,
+						},
+						"external_syslog_server_vpn": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("External Syslog Server VPN").String,
+							Optional:            true,
+						},
+					},
+				},
 			},
 		},
 	}

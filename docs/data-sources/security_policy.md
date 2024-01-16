@@ -31,12 +31,11 @@ data "sdwan_security_policy" "example" {
 - `definitions` (Attributes List) List of policy definitions (see [below for nested schema](#nestedatt--definitions))
 - `description` (String) The description of the security policy
 - `direct_internet_applications` (String) Bypass firewall policy and allow all Internet traffic to/from VPN 0
-- `external_syslog_server_ip` (String) External Syslog Server IP
-- `external_syslog_server_vpn` (String) External Syslog Server VPN
 - `failure_mode` (String) Failure mode
 - `high_speed_logging_server_ip` (String) High Speed Logging Server IP
 - `high_speed_logging_server_port` (String) High Speed Logging Port
 - `high_speed_logging_vpn` (String) High Speed Logging VPN
+- `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
 - `match_statistics_per_filter` (String) Match Statistics per-filter
 - `mode` (String) The policy mode
 - `name` (String) The name of the security policy
@@ -51,3 +50,12 @@ Read-Only:
 
 - `id` (String) Policy definition ID
 - `type` (String) Policy definition type
+
+
+<a id="nestedatt--logging"></a>
+### Nested Schema for `logging`
+
+Read-Only:
+
+- `external_syslog_server_ip` (String) External Syslog Server IP
+- `external_syslog_server_vpn` (String) External Syslog Server VPN

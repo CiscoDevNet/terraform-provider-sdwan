@@ -10,4 +10,10 @@ resource "sdwan_security_policy" "example" {
     }
   ]
   failure_mode = "close"
+  logging = [
+    {
+      external_syslog_server_ip  = "10.0.0.1"
+      external_syslog_server_vpn = "123"
+    }
+  ]
 }

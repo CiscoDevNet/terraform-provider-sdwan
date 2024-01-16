@@ -25,6 +25,12 @@ resource "sdwan_security_policy" "example" {
     }
   ]
   failure_mode = "close"
+  logging = [
+    {
+      external_syslog_server_ip  = "10.0.0.1"
+      external_syslog_server_vpn = "123"
+    }
+  ]
 }
 ```
 
@@ -43,14 +49,13 @@ resource "sdwan_security_policy" "example" {
   - Choices: `on`, `off`
 - `direct_internet_applications` (String) Bypass firewall policy and allow all Internet traffic to/from VPN 0
   - Choices: `allow`, `deny`
-- `external_syslog_server_ip` (String) External Syslog Server IP
-- `external_syslog_server_vpn` (String) External Syslog Server VPN
 - `failure_mode` (String) Failure mode
   - Choices: `open`, `close`
   - Default value: `open`
 - `high_speed_logging_server_ip` (String) High Speed Logging Server IP
 - `high_speed_logging_server_port` (String) High Speed Logging Port
 - `high_speed_logging_vpn` (String) High Speed Logging VPN
+- `logging` (Attributes List) (see [below for nested schema](#nestedatt--logging))
 - `match_statistics_per_filter` (String) Match Statistics per-filter
   - Choices: `on`, `off`
 - `mode` (String) The policy mode
@@ -74,6 +79,15 @@ Required:
 - `id` (String) Policy definition ID
 - `type` (String) Policy definition type
   - Choices: `urlFiltering`, `zoneBasedFW`, `intrusionPrevention`, `sslDecryption`, `advancedMalwareProtection`, `dnsSecurity`
+
+
+<a id="nestedatt--logging"></a>
+### Nested Schema for `logging`
+
+Optional:
+
+- `external_syslog_server_ip` (String) External Syslog Server IP
+- `external_syslog_server_vpn` (String) External Syslog Server VPN
 
 ## Import
 

@@ -125,13 +125,21 @@ func (d *SecurityPolicyDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "High Speed Logging Port",
 				Computed:            true,
 			},
-			"external_syslog_server_ip": schema.StringAttribute{
-				MarkdownDescription: "External Syslog Server IP",
+			"logging": schema.ListNestedAttribute{
+				MarkdownDescription: "",
 				Computed:            true,
-			},
-			"external_syslog_server_vpn": schema.StringAttribute{
-				MarkdownDescription: "External Syslog Server VPN",
-				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"external_syslog_server_ip": schema.StringAttribute{
+							MarkdownDescription: "External Syslog Server IP",
+							Computed:            true,
+						},
+						"external_syslog_server_vpn": schema.StringAttribute{
+							MarkdownDescription: "External Syslog Server VPN",
+							Computed:            true,
+						},
+					},
+				},
 			},
 		},
 	}

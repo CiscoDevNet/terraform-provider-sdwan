@@ -43,8 +43,7 @@ type SecurityPolicy struct {
 	HighSpeedLoggingServerIp   types.String                `tfsdk:"high_speed_logging_server_ip"`
 	HighSpeedLoggingVpn        types.String                `tfsdk:"high_speed_logging_vpn"`
 	HighSpeedLoggingServerPort types.String                `tfsdk:"high_speed_logging_server_port"`
-	ExternalSyslogServerIp     types.String                `tfsdk:"external_syslog_server_ip"`
-	ExternalSyslogServerVpn    types.String                `tfsdk:"external_syslog_server_vpn"`
+	Logging                    []SecurityPolicyLogging     `tfsdk:"logging"`
 }
 
 type SecurityPolicyDefinitions struct {
@@ -52,9 +51,16 @@ type SecurityPolicyDefinitions struct {
 	Type types.String `tfsdk:"type"`
 }
 
+type SecurityPolicyLogging struct {
+	ExternalSyslogServerIp  types.String `tfsdk:"external_syslog_server_ip"`
+	ExternalSyslogServerVpn types.String `tfsdk:"external_syslog_server_vpn"`
+}
+
 func (data SecurityPolicy) toBody(ctx context.Context) string {
 	body := ""
-	body, _ = sjson.Set(body, "policyType", "feature")
+	if true {
+		body, _ = sjson.Set(body, "policyType", "feature")
+	}
 	if !data.Name.IsNull() {
 		body, _ = sjson.Set(body, "policyName", data.Name.ValueString())
 	}
@@ -104,11 +110,18 @@ func (data SecurityPolicy) toBody(ctx context.Context) string {
 	if !data.HighSpeedLoggingServerPort.IsNull() {
 		body, _ = sjson.Set(body, "policyDefinition.settings.highSpeedLogging.port", data.HighSpeedLoggingServerPort.ValueString())
 	}
-	if !data.ExternalSyslogServerIp.IsNull() {
-		body, _ = sjson.Set(body, "policyDefinition.settings.logging.serverIP", data.ExternalSyslogServerIp.ValueString())
-	}
-	if !data.ExternalSyslogServerVpn.IsNull() {
-		body, _ = sjson.Set(body, "policyDefinition.settings.logging.vpn", data.ExternalSyslogServerVpn.ValueString())
+	if true {
+		body, _ = sjson.Set(body, "policyDefinition.settings.logging", []interface{}{})
+		for _, item := range data.Logging {
+			itemBody := ""
+			if !item.ExternalSyslogServerIp.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "serverIP", item.ExternalSyslogServerIp.ValueString())
+			}
+			if !item.ExternalSyslogServerVpn.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "vpn", item.ExternalSyslogServerVpn.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, "policyDefinition.settings.logging.-1", itemBody)
+		}
 	}
 	return body
 }
@@ -192,15 +205,23 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.HighSpeedLoggingServerPort = types.StringNull()
 	}
-	if value := res.Get("policyDefinition.settings.logging.serverIP"); value.Exists() {
-		data.ExternalSyslogServerIp = types.StringValue(value.String())
-	} else {
-		data.ExternalSyslogServerIp = types.StringNull()
-	}
-	if value := res.Get("policyDefinition.settings.logging.vpn"); value.Exists() {
-		data.ExternalSyslogServerVpn = types.StringValue(value.String())
-	} else {
-		data.ExternalSyslogServerVpn = types.StringNull()
+	if value := res.Get("policyDefinition.settings.logging"); value.Exists() && len(value.Array()) > 0 {
+		data.Logging = make([]SecurityPolicyLogging, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := SecurityPolicyLogging{}
+			if cValue := v.Get("serverIP"); cValue.Exists() {
+				item.ExternalSyslogServerIp = types.StringValue(cValue.String())
+			} else {
+				item.ExternalSyslogServerIp = types.StringNull()
+			}
+			if cValue := v.Get("vpn"); cValue.Exists() {
+				item.ExternalSyslogServerVpn = types.StringValue(cValue.String())
+			} else {
+				item.ExternalSyslogServerVpn = types.StringNull()
+			}
+			data.Logging = append(data.Logging, item)
+			return true
+		})
 	}
 }
 
@@ -254,11 +275,17 @@ func (data *SecurityPolicy) hasChanges(ctx context.Context, state *SecurityPolic
 	if !data.HighSpeedLoggingServerPort.Equal(state.HighSpeedLoggingServerPort) {
 		hasChanges = true
 	}
-	if !data.ExternalSyslogServerIp.Equal(state.ExternalSyslogServerIp) {
+	if len(data.Logging) != len(state.Logging) {
 		hasChanges = true
-	}
-	if !data.ExternalSyslogServerVpn.Equal(state.ExternalSyslogServerVpn) {
-		hasChanges = true
+	} else {
+		for i := range data.Logging {
+			if !data.Logging[i].ExternalSyslogServerIp.Equal(state.Logging[i].ExternalSyslogServerIp) {
+				hasChanges = true
+			}
+			if !data.Logging[i].ExternalSyslogServerVpn.Equal(state.Logging[i].ExternalSyslogServerVpn) {
+				hasChanges = true
+			}
+		}
 	}
 	return hasChanges
 }

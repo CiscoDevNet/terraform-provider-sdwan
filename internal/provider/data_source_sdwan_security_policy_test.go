@@ -39,6 +39,8 @@ func TestAccDataSourceSdwanSecurityPolicy(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_security_policy.test", "use_case", "custom"),
 					resource.TestCheckResourceAttr("data.sdwan_security_policy.test", "definitions.0.type", "urlFiltering"),
 					resource.TestCheckResourceAttr("data.sdwan_security_policy.test", "failure_mode", "close"),
+					resource.TestCheckResourceAttr("data.sdwan_security_policy.test", "logging.0.external_syslog_server_ip", "10.0.0.1"),
+					resource.TestCheckResourceAttr("data.sdwan_security_policy.test", "logging.0.external_syslog_server_vpn", "123"),
 				),
 			},
 		},
@@ -69,6 +71,10 @@ resource "sdwan_security_policy" "test" {
     type = "urlFiltering"
   }]
   failure_mode = "close"
+  logging = [{
+    external_syslog_server_ip = "10.0.0.1"
+    external_syslog_server_vpn = "123"
+  }]
 }
 
 data "sdwan_security_policy" "test" {

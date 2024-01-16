@@ -118,20 +118,21 @@ attributes:
     description: High Speed Logging Port
     example: 2055
     exclude_test: true
-  - model_name: serverIP
-    data_path: [policyDefinition, settings, logging]
-    tf_name: external_syslog_server_ip
-    type: String
-    description: External Syslog Server IP
-    example: 10.0.0.1
-    exclude_test: true
-  - model_name: vpn
-    data_path: [policyDefinition, settings, logging]
-    tf_name: external_syslog_server_vpn
-    type: String
-    description: External Syslog Server VPN
-    example: 123
-    exclude_test: true
+  - model_name: logging
+    data_path: [policyDefinition, settings]
+    tf_name: logging
+    type: List
+    attributes:
+      - model_name: serverIP
+        tf_name: external_syslog_server_ip
+        type: String
+        description: External Syslog Server IP
+        example: 10.0.0.1
+      - model_name: vpn
+        tf_name: external_syslog_server_vpn
+        type: String
+        description: External Syslog Server VPN
+        example: 123
 
 test_prerequisites: |
   resource "sdwan_url_filtering_policy_definition" "test" {
@@ -146,5 +147,3 @@ test_prerequisites: |
     block_page_action     = "text"
     block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
   }
-
-
