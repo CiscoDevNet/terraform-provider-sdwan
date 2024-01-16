@@ -216,7 +216,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										},
 									},
 									"backup_sla_preferred_color": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA preferred color").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Backup SLA preferred color (Single value or multiple values separated by spaces)").String,
 										Optional:            true,
 									},
 									"counter": schema.StringAttribute{
@@ -260,7 +260,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 													Optional:            true,
 												},
 												"preferred_color": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("preferred color").String,
+													MarkdownDescription: helpers.NewAttributeDescription("preferred color (Single value or multiple values separated by spaces)").String,
 													Optional:            true,
 												},
 											},

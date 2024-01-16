@@ -180,7 +180,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										Computed:            true,
 									},
 									"backup_sla_preferred_color": schema.StringAttribute{
-										MarkdownDescription: "Backup SLA preferred color",
+										MarkdownDescription: "Backup SLA preferred color (Single value or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"counter": schema.StringAttribute{
@@ -221,7 +221,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 													Computed:            true,
 												},
 												"preferred_color": schema.StringAttribute{
-													MarkdownDescription: "preferred color",
+													MarkdownDescription: "preferred color (Single value or multiple values separated by spaces)",
 													Computed:            true,
 												},
 											},

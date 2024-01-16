@@ -252,7 +252,7 @@ attributes:
               name: type
               value: backupSlaPreferredColor
             type: String
-            description: Backup SLA preferred color
+            description: Backup SLA preferred color (Single value or multiple values separated by spaces)
             example: bronze
           - model_name: parameter
             tf_name: counter
@@ -334,7 +334,7 @@ attributes:
                   name: type
                   value: preferredColor
                 type: String
-                description: preferred color
+                description: preferred color (Single value or multiple values separated by spaces)
                 example: bronze
 
 test_prerequisites: |

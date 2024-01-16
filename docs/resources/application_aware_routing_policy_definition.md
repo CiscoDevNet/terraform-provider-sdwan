@@ -77,7 +77,7 @@ Required:
 
 Optional:
 
-- `backup_sla_preferred_color` (String) Backup SLA preferred color
+- `backup_sla_preferred_color` (String) Backup SLA preferred color (Single value or multiple values separated by spaces)
 - `cloud_sla` (Boolean) Cloud SLA
 - `counter` (String) Counter name
 - `log` (Boolean) Enable logging
@@ -93,7 +93,7 @@ Required:
 
 Optional:
 
-- `preferred_color` (String) preferred color
+- `preferred_color` (String) preferred color (Single value or multiple values separated by spaces)
 - `preferred_color_group_list` (String) Preferred color group list ID
 - `preferred_color_group_list_version` (Number) Preferred color group list version
 - `sla_class_list` (String) SLA class list ID
