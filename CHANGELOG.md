@@ -1,3 +1,7 @@
+## 0.3.5 (unreleased)
+
+- Add `sdwan_system_omp_profile_parcel` resource and data source
+
 ## 0.3.4
 
 - Add `sdwan_switchport_feature_template` resource and data source
