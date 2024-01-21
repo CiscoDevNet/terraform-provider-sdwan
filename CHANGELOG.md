@@ -1,3 +1,7 @@
+## 0.3.5 (unreleased)
+
+- Fix import operation of profile parcel resources
+
 ## 0.3.4
 
 - Add `sdwan_switchport_feature_template` resource and data source
