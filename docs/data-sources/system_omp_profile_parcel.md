@@ -40,9 +40,9 @@ data "sdwan_system_omp_profile_parcel" "example" {
 - `advertise_ipv4_lisp` (Boolean) LISP
 - `advertise_ipv4_lisp_variable` (String) Variable name
 - `advertise_ipv4_ospf` (Boolean) OSPF
+- `advertise_ipv4_ospf_v3` (Boolean) OSPFV3
+- `advertise_ipv4_ospf_v3_variable` (String) Variable name
 - `advertise_ipv4_ospf_variable` (String) Variable name
-- `advertise_ipv4_ospfv3` (Boolean) OSPFV3
-- `advertise_ipv4_ospfv3_variable` (String) Variable name
 - `advertise_ipv4_static` (Boolean) Static
 - `advertise_ipv4_static_variable` (String) Variable name
 - `advertise_ipv6_bgp` (Boolean) BGP
@@ -79,8 +79,8 @@ data "sdwan_system_omp_profile_parcel" "example" {
 - `omp_admin_distance_ipv6_variable` (String) Variable name
 - `overlay_as` (Number) Overlay AS Number
 - `overlay_as_variable` (String) Variable name
-- `send_path_limit` (Number) Number of Paths Advertised per Prefix
-- `send_path_limit_variable` (String) Variable name
+- `paths_advertised_per_prefix` (Number) Number of Paths Advertised per Prefix
+- `paths_advertised_per_prefix_variable` (String) Variable name
 - `shutdown` (Boolean) Shutdown
 - `shutdown_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel

@@ -39,7 +39,7 @@ func TestAccSdwanSystemOMPProfileParcel(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "graceful_restart", "true"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "overlay_as", "10"),
-					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "send_path_limit", "4"),
+					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "paths_advertised_per_prefix", "4"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "ecmp_limit", "4"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "shutdown", "false"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "omp_admin_distance_ipv4", "10"),
@@ -50,7 +50,7 @@ func TestAccSdwanSystemOMPProfileParcel(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "holdtime", "60"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "advertise_ipv4_bgp", "false"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf", "false"),
-					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospfv3", "false"),
+					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf_v3", "false"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "advertise_ipv4_cpnnected", "false"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "advertise_ipv4_static", "false"),
 					resource.TestCheckResourceAttr("sdwan_system_omp_profile_parcel.test", "advertise_ipv4_eigrp", "false"),
@@ -97,7 +97,7 @@ func testAccSdwanSystemOMPProfileParcelConfig_all() string {
 		feature_profile_id = sdwan_system_feature_profile.test.id
 		graceful_restart = true
 		overlay_as = 10
-		send_path_limit = 4
+		paths_advertised_per_prefix = 4
 		ecmp_limit = 4
 		shutdown = false
 		omp_admin_distance_ipv4 = 10
@@ -108,7 +108,7 @@ func testAccSdwanSystemOMPProfileParcelConfig_all() string {
 		holdtime = 60
 		advertise_ipv4_bgp = false
 		advertise_ipv4_ospf = false
-		advertise_ipv4_ospfv3 = false
+		advertise_ipv4_ospf_v3 = false
 		advertise_ipv4_cpnnected = false
 		advertise_ipv4_static = false
 		advertise_ipv4_eigrp = false

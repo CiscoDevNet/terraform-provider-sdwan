@@ -29,63 +29,63 @@ import (
 )
 
 type SystemOMP struct {
-	Id                             types.String `tfsdk:"id"`
-	Version                        types.Int64  `tfsdk:"version"`
-	Name                           types.String `tfsdk:"name"`
-	Description                    types.String `tfsdk:"description"`
-	FeatureProfileId               types.String `tfsdk:"feature_profile_id"`
-	GracefulRestart                types.Bool   `tfsdk:"graceful_restart"`
-	GracefulRestartVariable        types.String `tfsdk:"graceful_restart_variable"`
-	OverlayAs                      types.Int64  `tfsdk:"overlay_as"`
-	OverlayAsVariable              types.String `tfsdk:"overlay_as_variable"`
-	SendPathLimit                  types.Int64  `tfsdk:"send_path_limit"`
-	SendPathLimitVariable          types.String `tfsdk:"send_path_limit_variable"`
-	EcmpLimit                      types.Int64  `tfsdk:"ecmp_limit"`
-	EcmpLimitVariable              types.String `tfsdk:"ecmp_limit_variable"`
-	Shutdown                       types.Bool   `tfsdk:"shutdown"`
-	ShutdownVariable               types.String `tfsdk:"shutdown_variable"`
-	OmpAdminDistanceIpv4           types.Int64  `tfsdk:"omp_admin_distance_ipv4"`
-	OmpAdminDistanceIpv4Variable   types.String `tfsdk:"omp_admin_distance_ipv4_variable"`
-	OmpAdminDistanceIpv6           types.Int64  `tfsdk:"omp_admin_distance_ipv6"`
-	OmpAdminDistanceIpv6Variable   types.String `tfsdk:"omp_admin_distance_ipv6_variable"`
-	AdvertisementInterval          types.Int64  `tfsdk:"advertisement_interval"`
-	AdvertisementIntervalVariable  types.String `tfsdk:"advertisement_interval_variable"`
-	GracefulRestartTimer           types.Int64  `tfsdk:"graceful_restart_timer"`
-	GracefulRestartTimerVariable   types.String `tfsdk:"graceful_restart_timer_variable"`
-	EorTimer                       types.Int64  `tfsdk:"eor_timer"`
-	EorTimerVariable               types.String `tfsdk:"eor_timer_variable"`
-	Holdtime                       types.Int64  `tfsdk:"holdtime"`
-	HoldtimeVariable               types.String `tfsdk:"holdtime_variable"`
-	AdvertiseIpv4Bgp               types.Bool   `tfsdk:"advertise_ipv4_bgp"`
-	AdvertiseIpv4BgpVariable       types.String `tfsdk:"advertise_ipv4_bgp_variable"`
-	AdvertiseIpv4Ospf              types.Bool   `tfsdk:"advertise_ipv4_ospf"`
-	AdvertiseIpv4OspfVariable      types.String `tfsdk:"advertise_ipv4_ospf_variable"`
-	AdvertiseIpv4Ospfv3            types.Bool   `tfsdk:"advertise_ipv4_ospfv3"`
-	AdvertiseIpv4Ospfv3Variable    types.String `tfsdk:"advertise_ipv4_ospfv3_variable"`
-	AdvertiseIpv4Cpnnected         types.Bool   `tfsdk:"advertise_ipv4_cpnnected"`
-	AdvertiseIpv4CpnnectedVariable types.String `tfsdk:"advertise_ipv4_cpnnected_variable"`
-	AdvertiseIpv4Static            types.Bool   `tfsdk:"advertise_ipv4_static"`
-	AdvertiseIpv4StaticVariable    types.String `tfsdk:"advertise_ipv4_static_variable"`
-	AdvertiseIpv4Eigrp             types.Bool   `tfsdk:"advertise_ipv4_eigrp"`
-	AdvertiseIpv4EigrpVariable     types.String `tfsdk:"advertise_ipv4_eigrp_variable"`
-	AdvertiseIpv4Lisp              types.Bool   `tfsdk:"advertise_ipv4_lisp"`
-	AdvertiseIpv4LispVariable      types.String `tfsdk:"advertise_ipv4_lisp_variable"`
-	AdvertiseIpv4Isis              types.Bool   `tfsdk:"advertise_ipv4_isis"`
-	AdvertiseIpv4IsisVariable      types.String `tfsdk:"advertise_ipv4_isis_variable"`
-	AdvertiseIpv6Bgp               types.Bool   `tfsdk:"advertise_ipv6_bgp"`
-	AdvertiseIpv6BgpVariable       types.String `tfsdk:"advertise_ipv6_bgp_variable"`
-	AdvertiseIpv6Ospf              types.Bool   `tfsdk:"advertise_ipv6_ospf"`
-	AdvertiseIpv6OspfVariable      types.String `tfsdk:"advertise_ipv6_ospf_variable"`
-	AdvertiseIpv6Connected         types.Bool   `tfsdk:"advertise_ipv6_connected"`
-	AdvertiseIpv6ConnectedVariable types.String `tfsdk:"advertise_ipv6_connected_variable"`
-	AdvertiseIpv6Static            types.Bool   `tfsdk:"advertise_ipv6_static"`
-	AdvertiseIpv6StaticVariable    types.String `tfsdk:"advertise_ipv6_static_variable"`
-	AdvertiseIpv6Eigrp             types.Bool   `tfsdk:"advertise_ipv6_eigrp"`
-	AdvertiseIpv6EigrpVariable     types.String `tfsdk:"advertise_ipv6_eigrp_variable"`
-	AdvertiseIpv6Lisp              types.Bool   `tfsdk:"advertise_ipv6_lisp"`
-	AdvertiseIpv6LispVariable      types.String `tfsdk:"advertise_ipv6_lisp_variable"`
-	AdvertiseIpv6Isis              types.Bool   `tfsdk:"advertise_ipv6_isis"`
-	AdvertiseIpv6IsisVariable      types.String `tfsdk:"advertise_ipv6_isis_variable"`
+	Id                               types.String `tfsdk:"id"`
+	Version                          types.Int64  `tfsdk:"version"`
+	Name                             types.String `tfsdk:"name"`
+	Description                      types.String `tfsdk:"description"`
+	FeatureProfileId                 types.String `tfsdk:"feature_profile_id"`
+	GracefulRestart                  types.Bool   `tfsdk:"graceful_restart"`
+	GracefulRestartVariable          types.String `tfsdk:"graceful_restart_variable"`
+	OverlayAs                        types.Int64  `tfsdk:"overlay_as"`
+	OverlayAsVariable                types.String `tfsdk:"overlay_as_variable"`
+	PathsAdvertisedPerPrefix         types.Int64  `tfsdk:"paths_advertised_per_prefix"`
+	PathsAdvertisedPerPrefixVariable types.String `tfsdk:"paths_advertised_per_prefix_variable"`
+	EcmpLimit                        types.Int64  `tfsdk:"ecmp_limit"`
+	EcmpLimitVariable                types.String `tfsdk:"ecmp_limit_variable"`
+	Shutdown                         types.Bool   `tfsdk:"shutdown"`
+	ShutdownVariable                 types.String `tfsdk:"shutdown_variable"`
+	OmpAdminDistanceIpv4             types.Int64  `tfsdk:"omp_admin_distance_ipv4"`
+	OmpAdminDistanceIpv4Variable     types.String `tfsdk:"omp_admin_distance_ipv4_variable"`
+	OmpAdminDistanceIpv6             types.Int64  `tfsdk:"omp_admin_distance_ipv6"`
+	OmpAdminDistanceIpv6Variable     types.String `tfsdk:"omp_admin_distance_ipv6_variable"`
+	AdvertisementInterval            types.Int64  `tfsdk:"advertisement_interval"`
+	AdvertisementIntervalVariable    types.String `tfsdk:"advertisement_interval_variable"`
+	GracefulRestartTimer             types.Int64  `tfsdk:"graceful_restart_timer"`
+	GracefulRestartTimerVariable     types.String `tfsdk:"graceful_restart_timer_variable"`
+	EorTimer                         types.Int64  `tfsdk:"eor_timer"`
+	EorTimerVariable                 types.String `tfsdk:"eor_timer_variable"`
+	Holdtime                         types.Int64  `tfsdk:"holdtime"`
+	HoldtimeVariable                 types.String `tfsdk:"holdtime_variable"`
+	AdvertiseIpv4Bgp                 types.Bool   `tfsdk:"advertise_ipv4_bgp"`
+	AdvertiseIpv4BgpVariable         types.String `tfsdk:"advertise_ipv4_bgp_variable"`
+	AdvertiseIpv4Ospf                types.Bool   `tfsdk:"advertise_ipv4_ospf"`
+	AdvertiseIpv4OspfVariable        types.String `tfsdk:"advertise_ipv4_ospf_variable"`
+	AdvertiseIpv4OspfV3              types.Bool   `tfsdk:"advertise_ipv4_ospf_v3"`
+	AdvertiseIpv4OspfV3Variable      types.String `tfsdk:"advertise_ipv4_ospf_v3_variable"`
+	AdvertiseIpv4Cpnnected           types.Bool   `tfsdk:"advertise_ipv4_cpnnected"`
+	AdvertiseIpv4CpnnectedVariable   types.String `tfsdk:"advertise_ipv4_cpnnected_variable"`
+	AdvertiseIpv4Static              types.Bool   `tfsdk:"advertise_ipv4_static"`
+	AdvertiseIpv4StaticVariable      types.String `tfsdk:"advertise_ipv4_static_variable"`
+	AdvertiseIpv4Eigrp               types.Bool   `tfsdk:"advertise_ipv4_eigrp"`
+	AdvertiseIpv4EigrpVariable       types.String `tfsdk:"advertise_ipv4_eigrp_variable"`
+	AdvertiseIpv4Lisp                types.Bool   `tfsdk:"advertise_ipv4_lisp"`
+	AdvertiseIpv4LispVariable        types.String `tfsdk:"advertise_ipv4_lisp_variable"`
+	AdvertiseIpv4Isis                types.Bool   `tfsdk:"advertise_ipv4_isis"`
+	AdvertiseIpv4IsisVariable        types.String `tfsdk:"advertise_ipv4_isis_variable"`
+	AdvertiseIpv6Bgp                 types.Bool   `tfsdk:"advertise_ipv6_bgp"`
+	AdvertiseIpv6BgpVariable         types.String `tfsdk:"advertise_ipv6_bgp_variable"`
+	AdvertiseIpv6Ospf                types.Bool   `tfsdk:"advertise_ipv6_ospf"`
+	AdvertiseIpv6OspfVariable        types.String `tfsdk:"advertise_ipv6_ospf_variable"`
+	AdvertiseIpv6Connected           types.Bool   `tfsdk:"advertise_ipv6_connected"`
+	AdvertiseIpv6ConnectedVariable   types.String `tfsdk:"advertise_ipv6_connected_variable"`
+	AdvertiseIpv6Static              types.Bool   `tfsdk:"advertise_ipv6_static"`
+	AdvertiseIpv6StaticVariable      types.String `tfsdk:"advertise_ipv6_static_variable"`
+	AdvertiseIpv6Eigrp               types.Bool   `tfsdk:"advertise_ipv6_eigrp"`
+	AdvertiseIpv6EigrpVariable       types.String `tfsdk:"advertise_ipv6_eigrp_variable"`
+	AdvertiseIpv6Lisp                types.Bool   `tfsdk:"advertise_ipv6_lisp"`
+	AdvertiseIpv6LispVariable        types.String `tfsdk:"advertise_ipv6_lisp_variable"`
+	AdvertiseIpv6Isis                types.Bool   `tfsdk:"advertise_ipv6_isis"`
+	AdvertiseIpv6IsisVariable        types.String `tfsdk:"advertise_ipv6_isis_variable"`
 }
 
 func (data SystemOMP) getModel() string {
@@ -124,15 +124,15 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAs.ValueInt64())
 	}
 
-	if !data.SendPathLimitVariable.IsNull() {
+	if !data.PathsAdvertisedPerPrefixVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "variable")
-		body, _ = sjson.Set(body, path+"sendPathLimit.value", data.SendPathLimitVariable.ValueString())
-	} else if data.SendPathLimit.IsNull() {
+		body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefixVariable.ValueString())
+	} else if data.PathsAdvertisedPerPrefix.IsNull() {
 		body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "default")
 		body, _ = sjson.Set(body, path+"sendPathLimit.value", 4)
 	} else {
 		body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "global")
-		body, _ = sjson.Set(body, path+"sendPathLimit.value", data.SendPathLimit.ValueInt64())
+		body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefix.ValueInt64())
 	}
 
 	if !data.EcmpLimitVariable.IsNull() {
@@ -245,15 +245,15 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", data.AdvertiseIpv4Ospf.ValueBool())
 	}
 
-	if !data.AdvertiseIpv4Ospfv3Variable.IsNull() {
+	if !data.AdvertiseIpv4OspfV3Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4Ospfv3Variable.ValueString())
-	} else if data.AdvertiseIpv4Ospfv3.IsNull() {
+		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3Variable.ValueString())
+	} else if data.AdvertiseIpv4OspfV3.IsNull() {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "default")
 		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4Ospfv3.ValueBool())
+		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3.ValueBool())
 	}
 
 	if !data.AdvertiseIpv4CpnnectedVariable.IsNull() {
@@ -418,14 +418,14 @@ func (data *SystemOMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.OverlayAs = types.Int64Value(va.Int())
 		}
 	}
-	data.SendPathLimit = types.Int64Null()
-	data.SendPathLimitVariable = types.StringNull()
+	data.PathsAdvertisedPerPrefix = types.Int64Null()
+	data.PathsAdvertisedPerPrefixVariable = types.StringNull()
 	if t := res.Get(path + "sendPathLimit.optionType"); t.Exists() {
 		va := res.Get(path + "sendPathLimit.value")
 		if t.String() == "variable" {
-			data.SendPathLimitVariable = types.StringValue(va.String())
+			data.PathsAdvertisedPerPrefixVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SendPathLimit = types.Int64Value(va.Int())
+			data.PathsAdvertisedPerPrefix = types.Int64Value(va.Int())
 		}
 	}
 	data.EcmpLimit = types.Int64Null()
@@ -528,14 +528,14 @@ func (data *SystemOMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv4Ospf = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvertiseIpv4Ospfv3 = types.BoolNull()
-	data.AdvertiseIpv4Ospfv3Variable = types.StringNull()
+	data.AdvertiseIpv4OspfV3 = types.BoolNull()
+	data.AdvertiseIpv4OspfV3Variable = types.StringNull()
 	if t := res.Get(path + "advertiseIpv4.ospfv3.optionType"); t.Exists() {
 		va := res.Get(path + "advertiseIpv4.ospfv3.value")
 		if t.String() == "variable" {
-			data.AdvertiseIpv4Ospfv3Variable = types.StringValue(va.String())
+			data.AdvertiseIpv4OspfV3Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvertiseIpv4Ospfv3 = types.BoolValue(va.Bool())
+			data.AdvertiseIpv4OspfV3 = types.BoolValue(va.Bool())
 		}
 	}
 	data.AdvertiseIpv4Cpnnected = types.BoolNull()
@@ -688,14 +688,14 @@ func (data *SystemOMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.OverlayAs = types.Int64Value(va.Int())
 		}
 	}
-	data.SendPathLimit = types.Int64Null()
-	data.SendPathLimitVariable = types.StringNull()
+	data.PathsAdvertisedPerPrefix = types.Int64Null()
+	data.PathsAdvertisedPerPrefixVariable = types.StringNull()
 	if t := res.Get(path + "sendPathLimit.optionType"); t.Exists() {
 		va := res.Get(path + "sendPathLimit.value")
 		if t.String() == "variable" {
-			data.SendPathLimitVariable = types.StringValue(va.String())
+			data.PathsAdvertisedPerPrefixVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SendPathLimit = types.Int64Value(va.Int())
+			data.PathsAdvertisedPerPrefix = types.Int64Value(va.Int())
 		}
 	}
 	data.EcmpLimit = types.Int64Null()
@@ -798,14 +798,14 @@ func (data *SystemOMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv4Ospf = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvertiseIpv4Ospfv3 = types.BoolNull()
-	data.AdvertiseIpv4Ospfv3Variable = types.StringNull()
+	data.AdvertiseIpv4OspfV3 = types.BoolNull()
+	data.AdvertiseIpv4OspfV3Variable = types.StringNull()
 	if t := res.Get(path + "advertiseIpv4.ospfv3.optionType"); t.Exists() {
 		va := res.Get(path + "advertiseIpv4.ospfv3.value")
 		if t.String() == "variable" {
-			data.AdvertiseIpv4Ospfv3Variable = types.StringValue(va.String())
+			data.AdvertiseIpv4OspfV3Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvertiseIpv4Ospfv3 = types.BoolValue(va.Bool())
+			data.AdvertiseIpv4OspfV3 = types.BoolValue(va.Bool())
 		}
 	}
 	data.AdvertiseIpv4Cpnnected = types.BoolNull()

@@ -16,35 +16,35 @@ This resource can manage a System OMP profile parcel.
 
 ```terraform
 resource "sdwan_system_omp_profile_parcel" "example" {
-  name                     = "Example"
-  description              = "My Example"
-  feature_profile_id       = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  graceful_restart         = true
-  overlay_as               = 10
-  send_path_limit          = 4
-  ecmp_limit               = 4
-  shutdown                 = false
-  omp_admin_distance_ipv4  = 10
-  omp_admin_distance_ipv6  = 20
-  advertisement_interval   = 1
-  graceful_restart_timer   = 43200
-  eor_timer                = 300
-  holdtime                 = 60
-  advertise_ipv4_bgp       = false
-  advertise_ipv4_ospf      = false
-  advertise_ipv4_ospfv3    = false
-  advertise_ipv4_cpnnected = false
-  advertise_ipv4_static    = false
-  advertise_ipv4_eigrp     = false
-  advertise_ipv4_lisp      = false
-  advertise_ipv4_isis      = false
-  advertise_ipv6_bgp       = true
-  advertise_ipv6_ospf      = true
-  advertise_ipv6_connected = true
-  advertise_ipv6_static    = true
-  advertise_ipv6_eigrp     = true
-  advertise_ipv6_lisp      = true
-  advertise_ipv6_isis      = true
+  name                        = "Example"
+  description                 = "My Example"
+  feature_profile_id          = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  graceful_restart            = true
+  overlay_as                  = 10
+  paths_advertised_per_prefix = 4
+  ecmp_limit                  = 4
+  shutdown                    = false
+  omp_admin_distance_ipv4     = 10
+  omp_admin_distance_ipv6     = 20
+  advertisement_interval      = 1
+  graceful_restart_timer      = 43200
+  eor_timer                   = 300
+  holdtime                    = 60
+  advertise_ipv4_bgp          = false
+  advertise_ipv4_ospf         = false
+  advertise_ipv4_ospf_v3      = false
+  advertise_ipv4_cpnnected    = false
+  advertise_ipv4_static       = false
+  advertise_ipv4_eigrp        = false
+  advertise_ipv4_lisp         = false
+  advertise_ipv4_isis         = false
+  advertise_ipv6_bgp          = true
+  advertise_ipv6_ospf         = true
+  advertise_ipv6_connected    = true
+  advertise_ipv6_static       = true
+  advertise_ipv6_eigrp        = true
+  advertise_ipv6_lisp         = true
+  advertise_ipv6_isis         = true
 }
 ```
 
@@ -75,10 +75,10 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 - `advertise_ipv4_lisp_variable` (String) Variable name
 - `advertise_ipv4_ospf` (Boolean) OSPF
   - Default value: `false`
-- `advertise_ipv4_ospf_variable` (String) Variable name
-- `advertise_ipv4_ospfv3` (Boolean) OSPFV3
+- `advertise_ipv4_ospf_v3` (Boolean) OSPFV3
   - Default value: `false`
-- `advertise_ipv4_ospfv3_variable` (String) Variable name
+- `advertise_ipv4_ospf_v3_variable` (String) Variable name
+- `advertise_ipv4_ospf_variable` (String) Variable name
 - `advertise_ipv4_static` (Boolean) Static
   - Default value: `false`
 - `advertise_ipv4_static_variable` (String) Variable name
@@ -135,10 +135,10 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 - `overlay_as` (Number) Overlay AS Number
   - Range: `1`-`4294967295`
 - `overlay_as_variable` (String) Variable name
-- `send_path_limit` (Number) Number of Paths Advertised per Prefix
+- `paths_advertised_per_prefix` (Number) Number of Paths Advertised per Prefix
   - Range: `1`-`16`
   - Default value: `4`
-- `send_path_limit_variable` (String) Variable name
+- `paths_advertised_per_prefix_variable` (String) Variable name
 - `shutdown` (Boolean) Shutdown
   - Default value: `false`
 - `shutdown_variable` (String) Variable name

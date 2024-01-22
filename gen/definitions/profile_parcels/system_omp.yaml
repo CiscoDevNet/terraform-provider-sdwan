@@ -14,6 +14,7 @@ attributes:
   - model_name: overlayAs
     example: 10
   - model_name: sendPathLimit
+    tf_name: paths_advertised_per_prefix
     example: 4
   - model_name: ecmpLimit
     example: 4
@@ -40,7 +41,7 @@ attributes:
     data_path: [advertiseIpv4]
     example: false
   - model_name: ospfv3
-    tf_name: advertise_ipv4_ospfv3
+    tf_name: advertise_ipv4_ospf_v3
     data_path: [advertiseIpv4]
     example: false
   - model_name: connected

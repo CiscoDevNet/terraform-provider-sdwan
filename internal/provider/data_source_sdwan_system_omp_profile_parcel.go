@@ -90,11 +90,11 @@ func (d *SystemOMPProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"send_path_limit": schema.Int64Attribute{
+			"paths_advertised_per_prefix": schema.Int64Attribute{
 				MarkdownDescription: "Number of Paths Advertised per Prefix",
 				Computed:            true,
 			},
-			"send_path_limit_variable": schema.StringAttribute{
+			"paths_advertised_per_prefix_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -178,11 +178,11 @@ func (d *SystemOMPProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advertise_ipv4_ospfv3": schema.BoolAttribute{
+			"advertise_ipv4_ospf_v3": schema.BoolAttribute{
 				MarkdownDescription: "OSPFV3",
 				Computed:            true,
 			},
-			"advertise_ipv4_ospfv3_variable": schema.StringAttribute{
+			"advertise_ipv4_ospf_v3_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

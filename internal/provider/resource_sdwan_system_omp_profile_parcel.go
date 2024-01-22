@@ -102,14 +102,14 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"send_path_limit": schema.Int64Attribute{
+			"paths_advertised_per_prefix": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Number of Paths Advertised per Prefix").AddIntegerRangeDescription(1, 16).AddDefaultValueDescription("4").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 16),
 				},
 			},
-			"send_path_limit_variable": schema.StringAttribute{
+			"paths_advertised_per_prefix_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -205,11 +205,11 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"advertise_ipv4_ospfv3": schema.BoolAttribute{
+			"advertise_ipv4_ospf_v3": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("OSPFV3").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"advertise_ipv4_ospfv3_variable": schema.StringAttribute{
+			"advertise_ipv4_ospf_v3_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
