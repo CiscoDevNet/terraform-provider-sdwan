@@ -1480,3 +1480,52 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 }
+
+func (data *SystemAAA) isNull(ctx context.Context, res gjson.Result) bool {
+	if !data.FeatureProfileId.IsNull() {
+		return false
+	}
+	if !data.AuthenticationGroup.IsNull() {
+		return false
+	}
+	if !data.AuthenticationGroupVariable.IsNull() {
+		return false
+	}
+	if !data.AccountingGroup.IsNull() {
+		return false
+	}
+	if !data.AccountingGroupVariable.IsNull() {
+		return false
+	}
+	if !data.ServerAuthOrder.IsNull() {
+		return false
+	}
+	if len(data.Users) > 0 {
+		return false
+	}
+	if len(data.RadiusGroups) > 0 {
+		return false
+	}
+	if len(data.TacacsGroups) > 0 {
+		return false
+	}
+	if len(data.AccountingRules) > 0 {
+		return false
+	}
+	if !data.AuthorizationConsole.IsNull() {
+		return false
+	}
+	if !data.AuthorizationConsoleVariable.IsNull() {
+		return false
+	}
+	if !data.AuthorizationConfigCommands.IsNull() {
+		return false
+	}
+	if !data.AuthorizationConfigCommandsVariable.IsNull() {
+		return false
+	}
+	if len(data.AuthorizationRules) > 0 {
+		return false
+	}
+	return true
+}

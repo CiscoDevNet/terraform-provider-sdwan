@@ -137,3 +137,22 @@ func (data *SystemBanner) updateFromBody(ctx context.Context, res gjson.Result) 
 		}
 	}
 }
+
+func (data *SystemBanner) isNull(ctx context.Context, res gjson.Result) bool {
+	if !data.FeatureProfileId.IsNull() {
+		return false
+	}
+	if !data.Login.IsNull() {
+		return false
+	}
+	if !data.LoginVariable.IsNull() {
+		return false
+	}
+	if !data.Motd.IsNull() {
+		return false
+	}
+	if !data.MotdVariable.IsNull() {
+		return false
+	}
+	return true
+}
