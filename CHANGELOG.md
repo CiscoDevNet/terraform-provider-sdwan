@@ -1,5 +1,6 @@
 ## 0.3.5 (unreleased)
 
+- Fix import operation of profile parcel resources
 - Add `sdwan_system_omp_profile_parcel` resource and data source
 
 ## 0.3.4
