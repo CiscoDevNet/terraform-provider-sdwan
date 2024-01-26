@@ -24,7 +24,7 @@ attribute:
   model_name: str(required=False)
   response_model_name: str(required=False)
   tf_name: str(required=False)
-  type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', 'StringList', required=False)
+  type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', 'StringList', 'Int64List', required=False)
   object_type: enum('object', 'tree', 'list', required=False)
   model_type_string: bool(required=False)
   bool_empty_string: bool(required=False)
