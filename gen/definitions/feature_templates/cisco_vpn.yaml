@@ -71,16 +71,21 @@ attributes:
       - model_name: prefix
         example: 3.3.3.0/24
       - model_name: null0
+        exclude_ignore: true
         example: false
       - model_name: distance
+        exclude_ignore: true
         example: 10
       - model_name: vpn
         tf_name: vpn_id
+        exclude_ignore: true
         example: 5
       - model_name: dhcp
+        exclude_ignore: true
         example: false
       - model_name: next-hop
         tf_name: next_hops
+        exclude_ignore: true
         attributes:
           - model_name: address
             example: 11.1.1.1
@@ -88,6 +93,7 @@ attributes:
             example: 20
       - model_name: next-hop-with-track
         tf_name: track_next_hops
+        exclude_ignore: true
         attributes:
           - model_name: address
             example: 12.1.1.1
@@ -102,14 +108,18 @@ attributes:
       - model_name: prefix
         example: 2001::/48
       - model_name: null0
+        exclude_ignore: true
         example: false
       - model_name: vpn
         tf_name: vpn_id
+        exclude_ignore: true
         example: 5
       - model_name: nat
+        exclude_ignore: true
         example: NAT64
       - model_name: next-hop
         tf_name: next_hops
+        exclude_ignore: true
         attributes:
           - model_name: address
             example: 2001::11
