@@ -37,7 +37,9 @@ resource "sdwan_cisco_ospf_feature_template" "example" {
   areas = [
     {
       area_number     = 1
+      stub            = false
       stub_no_summary = false
+      nssa            = false
       nssa_no_summary = true
       interfaces = [
         {

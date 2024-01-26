@@ -54,7 +54,9 @@ resource "sdwan_cisco_ospf_feature_template" "example" {
   areas = [
     {
       area_number     = 1
+      stub            = false
       stub_no_summary = false
+      nssa            = false
       nssa_no_summary = true
       interfaces = [
         {
@@ -159,11 +161,13 @@ Optional:
   - Range: `0`-`4294967295`
 - `area_number_variable` (String) Variable name
 - `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--areas--interfaces))
+- `nssa` (Boolean) NSSA area
 - `nssa_no_summary` (Boolean) Do not inject interarea routes into NSSA
   - Default value: `false`
 - `nssa_no_summary_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `ranges` (Attributes List) Summarize OSPF routes at an area boundary (see [below for nested schema](#nestedatt--areas--ranges))
+- `stub` (Boolean) Stub area
 - `stub_no_summary` (Boolean) Do not inject interarea routes into stub
   - Default value: `false`
 - `stub_no_summary_variable` (String) Variable name

@@ -96,8 +96,10 @@ type CiscoOSPFAreas struct {
 	Optional              types.Bool                 `tfsdk:"optional"`
 	AreaNumber            types.Int64                `tfsdk:"area_number"`
 	AreaNumberVariable    types.String               `tfsdk:"area_number_variable"`
+	Stub                  types.Bool                 `tfsdk:"stub"`
 	StubNoSummary         types.Bool                 `tfsdk:"stub_no_summary"`
 	StubNoSummaryVariable types.String               `tfsdk:"stub_no_summary_variable"`
+	Nssa                  types.Bool                 `tfsdk:"nssa"`
 	NssaNoSummary         types.Bool                 `tfsdk:"nssa_no_summary"`
 	NssaNoSummaryVariable types.String               `tfsdk:"nssa_no_summary_variable"`
 	Interfaces            []CiscoOSPFAreasInterfaces `tfsdk:"interfaces"`
@@ -480,6 +482,15 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "a-num."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "a-num."+"vipValue", item.AreaNumber.ValueInt64())
 		}
+		itemAttributes = append(itemAttributes, "stub")
+		if !item.Stub.IsNull() {
+			if item.Stub.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "stub."+"vipObjectType", "")
+				itemBody, _ = sjson.Set(itemBody, "stub."+"vipType", "ignore")
+			}
+		}
 		itemAttributes = append(itemAttributes, "no-summary")
 
 		if !item.StubNoSummaryVariable.IsNull() {
@@ -493,6 +504,15 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipValue", strconv.FormatBool(item.StubNoSummary.ValueBool()))
+		}
+		itemAttributes = append(itemAttributes, "nssa")
+		if !item.Nssa.IsNull() {
+			if item.Nssa.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipObjectType", "")
+				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "no-summary")
 
@@ -1218,6 +1238,25 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 				item.AreaNumber = types.Int64Null()
 				item.AreaNumberVariable = types.StringNull()
 			}
+			if cValue := v.Get("stub.vipType"); cValue.Exists() {
+				if cValue.String() == "variableName" {
+					item.Stub = types.BoolNull()
+
+				} else if cValue.String() == "ignore" {
+					item.Stub = types.BoolValue(false)
+
+				} else if cValue.String() == "constant" {
+					cv := v.Get("stub.vipValue")
+					item.Stub = types.BoolValue(cv.Bool())
+
+				}
+			} else if cValue := v.Get("stub"); cValue.Exists() {
+				item.Stub = types.BoolValue(true)
+
+			} else {
+				item.Stub = types.BoolNull()
+
+			}
 			if cValue := v.Get("stub.no-summary.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.StubNoSummary = types.BoolNull()
@@ -1236,6 +1275,25 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			} else {
 				item.StubNoSummary = types.BoolNull()
 				item.StubNoSummaryVariable = types.StringNull()
+			}
+			if cValue := v.Get("nssa.vipType"); cValue.Exists() {
+				if cValue.String() == "variableName" {
+					item.Nssa = types.BoolNull()
+
+				} else if cValue.String() == "ignore" {
+					item.Nssa = types.BoolValue(false)
+
+				} else if cValue.String() == "constant" {
+					cv := v.Get("nssa.vipValue")
+					item.Nssa = types.BoolValue(cv.Bool())
+
+				}
+			} else if cValue := v.Get("nssa"); cValue.Exists() {
+				item.Nssa = types.BoolValue(true)
+
+			} else {
+				item.Nssa = types.BoolNull()
+
 			}
 			if cValue := v.Get("nssa.no-summary.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1641,7 +1699,13 @@ func (data *CiscoOSPF) hasChanges(ctx context.Context, state *CiscoOSPF) bool {
 			if !data.Areas[i].AreaNumber.Equal(state.Areas[i].AreaNumber) {
 				hasChanges = true
 			}
+			if !data.Areas[i].Stub.Equal(state.Areas[i].Stub) {
+				hasChanges = true
+			}
 			if !data.Areas[i].StubNoSummary.Equal(state.Areas[i].StubNoSummary) {
+				hasChanges = true
+			}
+			if !data.Areas[i].Nssa.Equal(state.Areas[i].Nssa) {
 				hasChanges = true
 			}
 			if !data.Areas[i].NssaNoSummary.Equal(state.Areas[i].NssaNoSummary) {

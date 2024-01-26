@@ -70,10 +70,12 @@ Read-Only:
 - `area_number` (Number) Set OSPF area number
 - `area_number_variable` (String) Variable name
 - `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--areas--interfaces))
+- `nssa` (Boolean) NSSA area
 - `nssa_no_summary` (Boolean) Do not inject interarea routes into NSSA
 - `nssa_no_summary_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `ranges` (Attributes List) Summarize OSPF routes at an area boundary (see [below for nested schema](#nestedatt--areas--ranges))
+- `stub` (Boolean) Stub area
 - `stub_no_summary` (Boolean) Do not inject interarea routes into stub
 - `stub_no_summary_variable` (String) Variable name
 

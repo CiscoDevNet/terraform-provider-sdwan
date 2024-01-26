@@ -338,12 +338,20 @@ func (r *CiscoOSPFFeatureTemplateResource) Schema(ctx context.Context, req resou
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"stub": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Stub area").String,
+							Optional:            true,
+						},
 						"stub_no_summary": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Do not inject interarea routes into stub").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
 						"stub_no_summary_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"nssa": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("NSSA area").String,
 							Optional:            true,
 						},
 						"nssa_no_summary": schema.BoolAttribute{

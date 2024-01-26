@@ -62,6 +62,7 @@ attribute:
   attributes: list(include('attribute'), required=False)
   conditional_attribute: include('conditional_attribute', required=False)
   query_param: bool(required=False)
+  no_augment_config: bool(required=False) # If true do not augment with model data
 
 conditional_attribute:
   name: str()

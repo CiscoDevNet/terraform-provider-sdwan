@@ -75,9 +75,23 @@ attributes:
       - model_name: a-num
         tf_name: area_number
         example: 1
+      - model_name: stub
+        tf_name: stub
+        type: Bool
+        no_augment_config: true
+        node_only_container: true
+        description: Stub area
+        example: false
       - model_name: no-summary
         data_path: [stub]
         tf_name: stub_no_summary
+        example: false
+      - model_name: nssa
+        tf_name: nssa
+        type: Bool
+        no_augment_config: true
+        node_only_container: true
+        description: NSSA area
         example: false
       - model_name: no-summary
         data_path: [nssa]

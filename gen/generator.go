@@ -248,6 +248,7 @@ type YamlConfigAttribute struct {
 	Attributes           []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
 	QueryParam           bool                           `yaml:"query_param"`
+	NoAugmentConfig      bool                           `yaml:"no_augment_config"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -396,6 +397,9 @@ var functions = template.FuncMap{
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
+	if attr.NoAugmentConfig {
+		return
+	}
 	var r gjson.Result
 	if model.Get("fields").Exists() {
 		r = model.Get("fields.#(key==\"" + attr.ModelName + "\")#")

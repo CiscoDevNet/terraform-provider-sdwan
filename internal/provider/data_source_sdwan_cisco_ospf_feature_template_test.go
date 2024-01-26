@@ -54,7 +54,9 @@ func TestAccDataSourceSdwanCiscoOSPFFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "route_policies.0.direction", "in"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "route_policies.0.policy_name", "POLICY1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.area_number", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.stub", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.stub_no_summary", "false"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.nssa", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.nssa_no_summary", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.interfaces.0.name", "e1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospf_feature_template.test", "areas.0.interfaces.0.hello_interval", "20"),
@@ -110,7 +112,9 @@ resource "sdwan_cisco_ospf_feature_template" "test" {
   }]
   areas = [{
     area_number = 1
+    stub = false
     stub_no_summary = false
+    nssa = false
     nssa_no_summary = true
 	interfaces = [{
 		name = "e1"
