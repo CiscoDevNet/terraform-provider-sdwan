@@ -12,6 +12,7 @@ attributes:
     example: "4"
   - model_name: interface
     tf_name: interfaces
+    exclude_ignore: true
     attributes:
       - model_name: if-name
         tf_name: name
@@ -85,6 +86,7 @@ attributes:
     example: 500
   - model_name: static-mac-address
     tf_name: static_mac_addresses
+    exclude_ignore: true
     attributes:
       - model_name: macaddr
         tf_name: mac_address

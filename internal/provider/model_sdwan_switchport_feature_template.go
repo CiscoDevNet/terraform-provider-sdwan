@@ -146,10 +146,6 @@ func (data Switchport) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"interface."+"vipPrimaryKey", []string{"if-name"})
 		body, _ = sjson.Set(body, path+"interface."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"interface."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"interface."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"interface."+"vipPrimaryKey", []string{"if-name"})
-		body, _ = sjson.Set(body, path+"interface."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.Interfaces {
 		itemBody := ""
@@ -491,10 +487,6 @@ func (data Switchport) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"static-mac-address."+"vipPrimaryKey", []string{"macaddr", "vlan"})
 		body, _ = sjson.Set(body, path+"static-mac-address."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"static-mac-address."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"static-mac-address."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"static-mac-address."+"vipPrimaryKey", []string{"macaddr", "vlan"})
-		body, _ = sjson.Set(body, path+"static-mac-address."+"vipValue", []interface{}{})
 	}
 	for _, item := range data.StaticMacAddresses {
 		itemBody := ""
