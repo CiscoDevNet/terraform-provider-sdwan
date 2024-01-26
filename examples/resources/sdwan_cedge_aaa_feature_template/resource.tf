@@ -50,12 +50,12 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       ]
     }
   ]
-  radius_dynamic_author_server_key             = "key123"
-  radius_dynamic_author_domain_stripping       = "yes"
-  radius_dynamic_author_authentication_type    = "all"
-  radius_dynamic_author_port                   = 1700
-  radius_dynamic_author_cts_authorization_list = "ALIST1"
-  radius_trustsec_group                        = "GROUP1"
+  radius_dynamic_author_server_key          = "key123"
+  radius_dynamic_author_domain_stripping    = "yes"
+  radius_dynamic_author_authentication_type = "all"
+  radius_dynamic_author_port                = 1700
+  radius_trustsec_cts_authorization_list    = "ALIST1"
+  radius_trustsec_group                     = "GROUP1"
   tacacs_server_groups = [
     {
       group_name       = "GROUP1"

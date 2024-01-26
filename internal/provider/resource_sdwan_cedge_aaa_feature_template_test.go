@@ -67,7 +67,7 @@ func TestAccSdwanCEdgeAAAFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_domain_stripping", "yes"),
 					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_authentication_type", "all"),
 					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_port", "1700"),
-					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_cts_authorization_list", "ALIST1"),
+					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_trustsec_cts_authorization_list", "ALIST1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "radius_trustsec_group", "GROUP1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.group_name", "GROUP1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_aaa_feature_template.test", "tacacs_server_groups.0.vpn_id", "1"),
@@ -153,7 +153,7 @@ func testAccSdwanCEdgeAAAFeatureTemplateConfig_all() string {
 		radius_dynamic_author_domain_stripping = "yes"
 		radius_dynamic_author_authentication_type = "all"
 		radius_dynamic_author_port = 1700
-		radius_dynamic_author_cts_authorization_list = "ALIST1"
+		radius_trustsec_cts_authorization_list = "ALIST1"
 		radius_trustsec_group = "GROUP1"
 		tacacs_server_groups = [{
 			group_name = "GROUP1"

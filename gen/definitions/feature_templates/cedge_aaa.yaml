@@ -92,7 +92,7 @@ attributes:
     tf_name: radius_dynamic_author_port
     example: 1700
   - model_name: cts-auth-list
-    tf_name: radius_dynamic_author_cts_authorization_list
+    tf_name: radius_trustsec_cts_authorization_list
     example: ALIST1
   - model_name: radius-trustsec-group
     example: GROUP1

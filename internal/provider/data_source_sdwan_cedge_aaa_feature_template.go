@@ -345,11 +345,11 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"radius_dynamic_author_cts_authorization_list": schema.StringAttribute{
+			"radius_trustsec_cts_authorization_list": schema.StringAttribute{
 				MarkdownDescription: "CTS Authorization List",
 				Computed:            true,
 			},
-			"radius_dynamic_author_cts_authorization_list_variable": schema.StringAttribute{
+			"radius_trustsec_cts_authorization_list_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

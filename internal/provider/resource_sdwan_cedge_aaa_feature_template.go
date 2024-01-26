@@ -403,14 +403,14 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"radius_dynamic_author_cts_authorization_list": schema.StringAttribute{
+			"radius_trustsec_cts_authorization_list": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("CTS Authorization List").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 64),
 				},
 			},
-			"radius_dynamic_author_cts_authorization_list_variable": schema.StringAttribute{
+			"radius_trustsec_cts_authorization_list_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

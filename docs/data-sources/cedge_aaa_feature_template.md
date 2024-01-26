@@ -43,8 +43,6 @@ data "sdwan_cedge_aaa_feature_template" "example" {
 - `radius_clients` (Attributes List) Specify a RADIUS client (see [below for nested schema](#nestedatt--radius_clients))
 - `radius_dynamic_author_authentication_type` (String) Authentication Type
 - `radius_dynamic_author_authentication_type_variable` (String) Variable name
-- `radius_dynamic_author_cts_authorization_list` (String) CTS Authorization List
-- `radius_dynamic_author_cts_authorization_list_variable` (String) Variable name
 - `radius_dynamic_author_domain_stripping` (String) Domain Stripping
 - `radius_dynamic_author_domain_stripping_variable` (String) Variable name
 - `radius_dynamic_author_port` (Number) Specify Radius Dynamic Author Port
@@ -52,6 +50,8 @@ data "sdwan_cedge_aaa_feature_template" "example" {
 - `radius_dynamic_author_server_key` (String) Specify a radius dynamic author server-key
 - `radius_dynamic_author_server_key_variable` (String) Variable name
 - `radius_server_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_server_groups))
+- `radius_trustsec_cts_authorization_list` (String) CTS Authorization List
+- `radius_trustsec_cts_authorization_list_variable` (String) Variable name
 - `radius_trustsec_group` (String) RADIUS trustsec group
 - `server_groups_priority_order` (String) ServerGroups priority order
 - `tacacs_server_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_server_groups))

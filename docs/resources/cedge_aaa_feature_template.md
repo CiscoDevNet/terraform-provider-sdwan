@@ -67,12 +67,12 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       ]
     }
   ]
-  radius_dynamic_author_server_key             = "key123"
-  radius_dynamic_author_domain_stripping       = "yes"
-  radius_dynamic_author_authentication_type    = "all"
-  radius_dynamic_author_port                   = 1700
-  radius_dynamic_author_cts_authorization_list = "ALIST1"
-  radius_trustsec_group                        = "GROUP1"
+  radius_dynamic_author_server_key          = "key123"
+  radius_dynamic_author_domain_stripping    = "yes"
+  radius_dynamic_author_authentication_type = "all"
+  radius_dynamic_author_port                = 1700
+  radius_trustsec_cts_authorization_list    = "ALIST1"
+  radius_trustsec_group                     = "GROUP1"
   tacacs_server_groups = [
     {
       group_name       = "GROUP1"
@@ -144,8 +144,6 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
   - Choices: `any`, `all`, `session-key`
   - Default value: `any`
 - `radius_dynamic_author_authentication_type_variable` (String) Variable name
-- `radius_dynamic_author_cts_authorization_list` (String) CTS Authorization List
-- `radius_dynamic_author_cts_authorization_list_variable` (String) Variable name
 - `radius_dynamic_author_domain_stripping` (String) Domain Stripping
   - Choices: `yes`, `no`, `right-to-left`
   - Default value: `no`
@@ -157,6 +155,8 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
 - `radius_dynamic_author_server_key` (String) Specify a radius dynamic author server-key
 - `radius_dynamic_author_server_key_variable` (String) Variable name
 - `radius_server_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_server_groups))
+- `radius_trustsec_cts_authorization_list` (String) CTS Authorization List
+- `radius_trustsec_cts_authorization_list_variable` (String) Variable name
 - `radius_trustsec_group` (String) RADIUS trustsec group
 - `server_groups_priority_order` (String) ServerGroups priority order
   - Default value: `local`

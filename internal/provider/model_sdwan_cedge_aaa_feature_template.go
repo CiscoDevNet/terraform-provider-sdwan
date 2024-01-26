@@ -30,38 +30,38 @@ import (
 )
 
 type CEdgeAAA struct {
-	Id                                              types.String                 `tfsdk:"id"`
-	Version                                         types.Int64                  `tfsdk:"version"`
-	TemplateType                                    types.String                 `tfsdk:"template_type"`
-	Name                                            types.String                 `tfsdk:"name"`
-	Description                                     types.String                 `tfsdk:"description"`
-	DeviceTypes                                     types.Set                    `tfsdk:"device_types"`
-	Dot1xAuthentication                             types.Bool                   `tfsdk:"dot1x_authentication"`
-	Dot1xAuthenticationVariable                     types.String                 `tfsdk:"dot1x_authentication_variable"`
-	Dot1xAccounting                                 types.Bool                   `tfsdk:"dot1x_accounting"`
-	Dot1xAccountingVariable                         types.String                 `tfsdk:"dot1x_accounting_variable"`
-	ServerGroupsPriorityOrder                       types.String                 `tfsdk:"server_groups_priority_order"`
-	Users                                           []CEdgeAAAUsers              `tfsdk:"users"`
-	RadiusServerGroups                              []CEdgeAAARadiusServerGroups `tfsdk:"radius_server_groups"`
-	RadiusClients                                   []CEdgeAAARadiusClients      `tfsdk:"radius_clients"`
-	RadiusDynamicAuthorServerKey                    types.String                 `tfsdk:"radius_dynamic_author_server_key"`
-	RadiusDynamicAuthorServerKeyVariable            types.String                 `tfsdk:"radius_dynamic_author_server_key_variable"`
-	RadiusDynamicAuthorDomainStripping              types.String                 `tfsdk:"radius_dynamic_author_domain_stripping"`
-	RadiusDynamicAuthorDomainStrippingVariable      types.String                 `tfsdk:"radius_dynamic_author_domain_stripping_variable"`
-	RadiusDynamicAuthorAuthenticationType           types.String                 `tfsdk:"radius_dynamic_author_authentication_type"`
-	RadiusDynamicAuthorAuthenticationTypeVariable   types.String                 `tfsdk:"radius_dynamic_author_authentication_type_variable"`
-	RadiusDynamicAuthorPort                         types.Int64                  `tfsdk:"radius_dynamic_author_port"`
-	RadiusDynamicAuthorPortVariable                 types.String                 `tfsdk:"radius_dynamic_author_port_variable"`
-	RadiusDynamicAuthorCtsAuthorizationList         types.String                 `tfsdk:"radius_dynamic_author_cts_authorization_list"`
-	RadiusDynamicAuthorCtsAuthorizationListVariable types.String                 `tfsdk:"radius_dynamic_author_cts_authorization_list_variable"`
-	RadiusTrustsecGroup                             types.String                 `tfsdk:"radius_trustsec_group"`
-	TacacsServerGroups                              []CEdgeAAATacacsServerGroups `tfsdk:"tacacs_server_groups"`
-	AccountingRules                                 []CEdgeAAAAccountingRules    `tfsdk:"accounting_rules"`
-	AuthorizationConsole                            types.Bool                   `tfsdk:"authorization_console"`
-	AuthorizationConsoleVariable                    types.String                 `tfsdk:"authorization_console_variable"`
-	AuthorizationConfigCommands                     types.Bool                   `tfsdk:"authorization_config_commands"`
-	AuthorizationConfigCommandsVariable             types.String                 `tfsdk:"authorization_config_commands_variable"`
-	AuthorizationRules                              []CEdgeAAAAuthorizationRules `tfsdk:"authorization_rules"`
+	Id                                            types.String                 `tfsdk:"id"`
+	Version                                       types.Int64                  `tfsdk:"version"`
+	TemplateType                                  types.String                 `tfsdk:"template_type"`
+	Name                                          types.String                 `tfsdk:"name"`
+	Description                                   types.String                 `tfsdk:"description"`
+	DeviceTypes                                   types.Set                    `tfsdk:"device_types"`
+	Dot1xAuthentication                           types.Bool                   `tfsdk:"dot1x_authentication"`
+	Dot1xAuthenticationVariable                   types.String                 `tfsdk:"dot1x_authentication_variable"`
+	Dot1xAccounting                               types.Bool                   `tfsdk:"dot1x_accounting"`
+	Dot1xAccountingVariable                       types.String                 `tfsdk:"dot1x_accounting_variable"`
+	ServerGroupsPriorityOrder                     types.String                 `tfsdk:"server_groups_priority_order"`
+	Users                                         []CEdgeAAAUsers              `tfsdk:"users"`
+	RadiusServerGroups                            []CEdgeAAARadiusServerGroups `tfsdk:"radius_server_groups"`
+	RadiusClients                                 []CEdgeAAARadiusClients      `tfsdk:"radius_clients"`
+	RadiusDynamicAuthorServerKey                  types.String                 `tfsdk:"radius_dynamic_author_server_key"`
+	RadiusDynamicAuthorServerKeyVariable          types.String                 `tfsdk:"radius_dynamic_author_server_key_variable"`
+	RadiusDynamicAuthorDomainStripping            types.String                 `tfsdk:"radius_dynamic_author_domain_stripping"`
+	RadiusDynamicAuthorDomainStrippingVariable    types.String                 `tfsdk:"radius_dynamic_author_domain_stripping_variable"`
+	RadiusDynamicAuthorAuthenticationType         types.String                 `tfsdk:"radius_dynamic_author_authentication_type"`
+	RadiusDynamicAuthorAuthenticationTypeVariable types.String                 `tfsdk:"radius_dynamic_author_authentication_type_variable"`
+	RadiusDynamicAuthorPort                       types.Int64                  `tfsdk:"radius_dynamic_author_port"`
+	RadiusDynamicAuthorPortVariable               types.String                 `tfsdk:"radius_dynamic_author_port_variable"`
+	RadiusTrustsecCtsAuthorizationList            types.String                 `tfsdk:"radius_trustsec_cts_authorization_list"`
+	RadiusTrustsecCtsAuthorizationListVariable    types.String                 `tfsdk:"radius_trustsec_cts_authorization_list_variable"`
+	RadiusTrustsecGroup                           types.String                 `tfsdk:"radius_trustsec_group"`
+	TacacsServerGroups                            []CEdgeAAATacacsServerGroups `tfsdk:"tacacs_server_groups"`
+	AccountingRules                               []CEdgeAAAAccountingRules    `tfsdk:"accounting_rules"`
+	AuthorizationConsole                          types.Bool                   `tfsdk:"authorization_console"`
+	AuthorizationConsoleVariable                  types.String                 `tfsdk:"authorization_console_variable"`
+	AuthorizationConfigCommands                   types.Bool                   `tfsdk:"authorization_config_commands"`
+	AuthorizationConfigCommandsVariable           types.String                 `tfsdk:"authorization_config_commands_variable"`
+	AuthorizationRules                            []CEdgeAAAAuthorizationRules `tfsdk:"authorization_rules"`
 }
 
 type CEdgeAAAUsers struct {
@@ -628,17 +628,17 @@ func (data CEdgeAAA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"radius-dynamic-author.port."+"vipValue", data.RadiusDynamicAuthorPort.ValueInt64())
 	}
 
-	if !data.RadiusDynamicAuthorCtsAuthorizationListVariable.IsNull() {
+	if !data.RadiusTrustsecCtsAuthorizationListVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipVariableName", data.RadiusDynamicAuthorCtsAuthorizationListVariable.ValueString())
-	} else if data.RadiusDynamicAuthorCtsAuthorizationList.IsNull() {
+		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipVariableName", data.RadiusTrustsecCtsAuthorizationListVariable.ValueString())
+	} else if data.RadiusTrustsecCtsAuthorizationList.IsNull() {
 		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipValue", data.RadiusDynamicAuthorCtsAuthorizationList.ValueString())
+		body, _ = sjson.Set(body, path+"radius-trustsec.cts-auth-list."+"vipValue", data.RadiusTrustsecCtsAuthorizationList.ValueString())
 	}
 	if data.RadiusTrustsecGroup.IsNull() {
 		body, _ = sjson.Set(body, path+"radius-trustsec.radius-trustsec-group."+"vipObjectType", "object")
@@ -1536,22 +1536,22 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "radius-trustsec.cts-auth-list.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.RadiusDynamicAuthorCtsAuthorizationList = types.StringNull()
+			data.RadiusTrustsecCtsAuthorizationList = types.StringNull()
 
 			v := res.Get(path + "radius-trustsec.cts-auth-list.vipVariableName")
-			data.RadiusDynamicAuthorCtsAuthorizationListVariable = types.StringValue(v.String())
+			data.RadiusTrustsecCtsAuthorizationListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.RadiusDynamicAuthorCtsAuthorizationList = types.StringNull()
-			data.RadiusDynamicAuthorCtsAuthorizationListVariable = types.StringNull()
+			data.RadiusTrustsecCtsAuthorizationList = types.StringNull()
+			data.RadiusTrustsecCtsAuthorizationListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "radius-trustsec.cts-auth-list.vipValue")
-			data.RadiusDynamicAuthorCtsAuthorizationList = types.StringValue(v.String())
-			data.RadiusDynamicAuthorCtsAuthorizationListVariable = types.StringNull()
+			data.RadiusTrustsecCtsAuthorizationList = types.StringValue(v.String())
+			data.RadiusTrustsecCtsAuthorizationListVariable = types.StringNull()
 		}
 	} else {
-		data.RadiusDynamicAuthorCtsAuthorizationList = types.StringNull()
-		data.RadiusDynamicAuthorCtsAuthorizationListVariable = types.StringNull()
+		data.RadiusTrustsecCtsAuthorizationList = types.StringNull()
+		data.RadiusTrustsecCtsAuthorizationListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "radius-trustsec.radius-trustsec-group.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2102,7 +2102,7 @@ func (data *CEdgeAAA) hasChanges(ctx context.Context, state *CEdgeAAA) bool {
 	if !data.RadiusDynamicAuthorPort.Equal(state.RadiusDynamicAuthorPort) {
 		hasChanges = true
 	}
-	if !data.RadiusDynamicAuthorCtsAuthorizationList.Equal(state.RadiusDynamicAuthorCtsAuthorizationList) {
+	if !data.RadiusTrustsecCtsAuthorizationList.Equal(state.RadiusTrustsecCtsAuthorizationList) {
 		hasChanges = true
 	}
 	if !data.RadiusTrustsecGroup.Equal(state.RadiusTrustsecGroup) {
