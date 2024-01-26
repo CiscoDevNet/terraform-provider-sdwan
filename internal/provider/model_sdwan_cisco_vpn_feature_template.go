@@ -213,7 +213,7 @@ type CiscoVPNNatPools struct {
 
 type CiscoVPNStaticNatRules struct {
 	Optional                   types.Bool   `tfsdk:"optional"`
-	PoolName                   types.String `tfsdk:"pool_name"`
+	PoolName                   types.Int64  `tfsdk:"pool_name"`
 	PoolNameVariable           types.String `tfsdk:"pool_name_variable"`
 	SourceIp                   types.String `tfsdk:"source_ip"`
 	SourceIpVariable           types.String `tfsdk:"source_ip_variable"`
@@ -241,7 +241,7 @@ type CiscoVPNStaticNatSubnetRules struct {
 
 type CiscoVPNPortForwardRules struct {
 	Optional              types.Bool   `tfsdk:"optional"`
-	PoolName              types.String `tfsdk:"pool_name"`
+	PoolName              types.Int64  `tfsdk:"pool_name"`
 	PoolNameVariable      types.String `tfsdk:"pool_name_variable"`
 	SourcePort            types.Int64  `tfsdk:"source_port"`
 	SourcePortVariable    types.String `tfsdk:"source_port_variable"`
@@ -1552,7 +1552,7 @@ func (data CiscoVPN) toBody(ctx context.Context) string {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipValue", item.PoolName.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipValue", item.PoolName.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "source-ip")
 
@@ -1718,7 +1718,7 @@ func (data CiscoVPN) toBody(ctx context.Context) string {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipValue", item.PoolName.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "pool-name."+"vipValue", item.PoolName.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "source-port")
 
@@ -3585,21 +3585,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("pool-name.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.PoolName = types.StringNull()
+					item.PoolName = types.Int64Null()
 
 					cv := v.Get("pool-name.vipVariableName")
 					item.PoolNameVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.PoolName = types.StringNull()
+					item.PoolName = types.Int64Null()
 					item.PoolNameVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("pool-name.vipValue")
-					item.PoolName = types.StringValue(cv.String())
+					item.PoolName = types.Int64Value(cv.Int())
 					item.PoolNameVariable = types.StringNull()
 				}
 			} else {
-				item.PoolName = types.StringNull()
+				item.PoolName = types.Int64Null()
 				item.PoolNameVariable = types.StringNull()
 			}
 			if cValue := v.Get("source-ip.vipType"); cValue.Exists() {
@@ -3801,21 +3801,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("pool-name.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.PoolName = types.StringNull()
+					item.PoolName = types.Int64Null()
 
 					cv := v.Get("pool-name.vipVariableName")
 					item.PoolNameVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.PoolName = types.StringNull()
+					item.PoolName = types.Int64Null()
 					item.PoolNameVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("pool-name.vipValue")
-					item.PoolName = types.StringValue(cv.String())
+					item.PoolName = types.Int64Value(cv.Int())
 					item.PoolNameVariable = types.StringNull()
 				}
 			} else {
-				item.PoolName = types.StringNull()
+				item.PoolName = types.Int64Null()
 				item.PoolNameVariable = types.StringNull()
 			}
 			if cValue := v.Get("source-port.vipType"); cValue.Exists() {

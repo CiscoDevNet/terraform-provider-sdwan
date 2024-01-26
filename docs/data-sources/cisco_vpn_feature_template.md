@@ -311,7 +311,7 @@ Read-Only:
 Read-Only:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `pool_name` (String) NAT Pool Name, natpool1..31
+- `pool_name` (Number) NAT Pool Name, natpool1..31
 - `pool_name_variable` (String) Variable name
 - `protocol` (String) Protocol
 - `protocol_variable` (String) Variable name
@@ -425,7 +425,7 @@ Read-Only:
 Read-Only:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `pool_name` (String) NAT Pool Name, natpool1..31
+- `pool_name` (Number) NAT Pool Name, natpool1..31
 - `pool_name_variable` (String) Variable name
 - `source_ip` (String) Source IP address to be translated
 - `source_ip_variable` (String) Variable name

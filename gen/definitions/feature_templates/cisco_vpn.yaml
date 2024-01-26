@@ -205,7 +205,8 @@ attributes:
     tf_name: static_nat_rules
     attributes:
       - model_name: pool-name
-        example: POOL1
+        type: Int64
+        example: 1
       - model_name: source-ip
         example: 10.1.1.1
       - model_name: translate-ip
@@ -231,7 +232,8 @@ attributes:
     tf_name: port_forward_rules
     attributes:
       - model_name: pool-name
-        example: POOL2
+        type: Int64
+        example: 1
       - model_name: source-port
         example: 5000
       - model_name: translate-port

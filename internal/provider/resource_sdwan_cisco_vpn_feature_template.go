@@ -870,7 +870,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"pool_name": schema.StringAttribute{
+						"pool_name": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Name, natpool1..31").String,
 							Optional:            true,
 						},
@@ -989,7 +989,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"pool_name": schema.StringAttribute{
+						"pool_name": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("NAT Pool Name, natpool1..31").String,
 							Optional:            true,
 						},

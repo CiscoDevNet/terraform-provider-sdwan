@@ -159,7 +159,7 @@ resource "sdwan_cisco_vpn_feature_template" "example" {
   ]
   static_nat_rules = [
     {
-      pool_name            = "POOL1"
+      pool_name            = 1
       source_ip            = "10.1.1.1"
       translate_ip         = "105.1.1.1"
       static_nat_direction = "inside"
@@ -177,7 +177,7 @@ resource "sdwan_cisco_vpn_feature_template" "example" {
   ]
   port_forward_rules = [
     {
-      pool_name      = "POOL2"
+      pool_name      = 1
       source_port    = 5000
       translate_port = 6000
       source_ip      = "10.3.1.1"
@@ -569,7 +569,7 @@ Optional:
 Optional:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `pool_name` (String) NAT Pool Name, natpool1..31
+- `pool_name` (Number) NAT Pool Name, natpool1..31
 - `pool_name_variable` (String) Variable name
 - `protocol` (String) Protocol
   - Choices: `tcp`, `udp`
@@ -696,7 +696,7 @@ Optional:
 Optional:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `pool_name` (String) NAT Pool Name, natpool1..31
+- `pool_name` (Number) NAT Pool Name, natpool1..31
 - `pool_name_variable` (String) Variable name
 - `source_ip` (String) Source IP address to be translated
 - `source_ip_variable` (String) Variable name

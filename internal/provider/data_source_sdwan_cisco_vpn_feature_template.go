@@ -788,7 +788,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"pool_name": schema.StringAttribute{
+						"pool_name": schema.Int64Attribute{
 							MarkdownDescription: "NAT Pool Name, natpool1..31",
 							Computed:            true,
 						},
@@ -892,7 +892,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"pool_name": schema.StringAttribute{
+						"pool_name": schema.Int64Attribute{
 							MarkdownDescription: "NAT Pool Name, natpool1..31",
 							Computed:            true,
 						},

@@ -101,7 +101,7 @@ func TestAccSdwanCiscoVPNFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "nat_pools.0.overload", "true"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "nat_pools.0.direction", "inside"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "nat_pools.0.tracker_id", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_rules.0.pool_name", "POOL1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_rules.0.pool_name", "1"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_rules.0.source_ip", "10.1.1.1"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_rules.0.translate_ip", "105.1.1.1"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_rules.0.static_nat_direction", "inside"),
@@ -111,7 +111,7 @@ func TestAccSdwanCiscoVPNFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_subnet_rules.0.prefix_length", "24"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_subnet_rules.0.static_nat_direction", "inside"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "static_nat_subnet_rules.0.tracker_id", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "port_forward_rules.0.pool_name", "POOL2"),
+					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "port_forward_rules.0.pool_name", "1"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "port_forward_rules.0.source_port", "5000"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "port_forward_rules.0.translate_port", "6000"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_feature_template.test", "port_forward_rules.0.source_ip", "10.3.1.1"),
@@ -258,7 +258,7 @@ func testAccSdwanCiscoVPNFeatureTemplateConfig_all() string {
 			tracker_id = 10
 		}]
 		static_nat_rules = [{
-			pool_name = "POOL1"
+			pool_name = 1
 			source_ip = "10.1.1.1"
 			translate_ip = "105.1.1.1"
 			static_nat_direction = "inside"
@@ -272,7 +272,7 @@ func testAccSdwanCiscoVPNFeatureTemplateConfig_all() string {
 			tracker_id = 10
 		}]
 		port_forward_rules = [{
-			pool_name = "POOL2"
+			pool_name = 1
 			source_port = 5000
 			translate_port = 6000
 			source_ip = "10.3.1.1"
