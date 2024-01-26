@@ -176,7 +176,6 @@ func (r *URLFilteringPolicyDefinitionResource) Create(ctx context.Context, req r
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
 

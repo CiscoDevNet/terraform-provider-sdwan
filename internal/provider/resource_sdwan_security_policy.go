@@ -217,8 +217,12 @@ func (r *SecurityPolicyResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-
-	plan.Id = types.StringValue(res.Get("policyId").String())
+	res, err = r.client.Get("/template/policy/security/")
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+	plan.Id = types.StringValue(res.Get("data.#(policyName==\"" + plan.Name.ValueString() + "\").policyId").String())
 	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))

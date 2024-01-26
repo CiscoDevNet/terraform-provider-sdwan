@@ -400,8 +400,18 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-	{{ if not .RemoveId}}
+	{{- if not .RemoveId}}
+		{{- if .IdAttribute}}
 	plan.Id = types.StringValue(res.Get("{{.IdAttribute}}").String())
+		{{- else if .IdFromQueryPath}}
+			{{- $id := getId .Attributes}}
+	res, err = r.client.Get("{{.RestEndpoint}}")
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+	plan.Id = types.StringValue(res.Get("{{.IdFromQueryPath}}.#({{if $id.ResponseModelName}}{{$id.ResponseModelName}}{{else}}{{$id.ModelName}}{{end}}==\""+ plan.{{toGoName $id.TfName}}.Value{{$id.Type}}() +"\").{{if .IdFromQueryPathAttribute}}{{.IdFromQueryPathAttribute}}{{else}}id{{end}}").String())
+		{{- end}}
 	{{- end}}
 	{{- if .HasVersion}}
 	plan.Version = types.Int64Value(0)

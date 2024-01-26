@@ -3,7 +3,8 @@ name: Security Policy
 rest_endpoint: /template/policy/security/
 get_rest_endpoint: /template/policy/security/definition/
 has_version: true
-id_attribute: policyId
+id_from_query_path: data
+id_from_query_path_attribute: policyId
 doc_category: Security Policies
 attributes:
   - model_name: policyType
@@ -12,6 +13,7 @@ attributes:
   - model_name: policyName
     tf_name: name
     type: String
+    id: true
     mandatory: true
     description: The name of the security policy
     example: Example

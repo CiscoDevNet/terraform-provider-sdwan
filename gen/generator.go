@@ -184,24 +184,26 @@ var genericTemplates = []t{
 }
 
 type YamlConfig struct {
-	Name              string                `yaml:"name"`
-	Model             string                `yaml:"model"`
-	RestEndpoint      string                `yaml:"rest_endpoint"`
-	GetRestEndpoint   string                `yaml:"get_rest_endpoint"`
-	PostRestEndpoint  string                `yaml:"post_rest_endpoint"`
-	Type              string                `yaml:"type"`
-	MinimumVersion    string                `yaml:"minimum_version"`
-	DsDescription     string                `yaml:"ds_description"`
-	ResDescription    string                `yaml:"res_description"`
-	DocCategory       string                `yaml:"doc_category"`
-	ExcludeTest       bool                  `yaml:"exclude_test"`
-	RootElement       string                `yaml:"root_element"`
-	HasVersion        bool                  `yaml:"has_version"`
-	IdAttribute       string                `yaml:"id_attribute"`
-	SkipTemplates     []string              `yaml:"skip_templates"`
-	Attributes        []YamlConfigAttribute `yaml:"attributes"`
-	TestPrerequisites string                `yaml:"test_prerequisites"`
-	RemoveId          bool                  `yaml:"remove_id"`
+	Name                     string                `yaml:"name"`
+	Model                    string                `yaml:"model"`
+	RestEndpoint             string                `yaml:"rest_endpoint"`
+	GetRestEndpoint          string                `yaml:"get_rest_endpoint"`
+	PostRestEndpoint         string                `yaml:"post_rest_endpoint"`
+	Type                     string                `yaml:"type"`
+	MinimumVersion           string                `yaml:"minimum_version"`
+	DsDescription            string                `yaml:"ds_description"`
+	ResDescription           string                `yaml:"res_description"`
+	DocCategory              string                `yaml:"doc_category"`
+	ExcludeTest              bool                  `yaml:"exclude_test"`
+	RootElement              string                `yaml:"root_element"`
+	HasVersion               bool                  `yaml:"has_version"`
+	IdAttribute              string                `yaml:"id_attribute"`
+	IdFromQueryPath          string                `yaml:"id_from_query_path"`
+	IdFromQueryPathAttribute string                `yaml:"id_from_query_path_attribute"`
+	SkipTemplates            []string              `yaml:"skip_templates"`
+	Attributes               []YamlConfigAttribute `yaml:"attributes"`
+	TestPrerequisites        string                `yaml:"test_prerequisites"`
+	RemoveId                 bool                  `yaml:"remove_id"`
 }
 
 type YamlConfigAttribute struct {
@@ -358,6 +360,16 @@ func GetGjsonType(t string) string {
 	}
 }
 
+// Templating helper function to return the ID attribute
+func GetId(attributes []YamlConfigAttribute) YamlConfigAttribute {
+	for _, attr := range attributes {
+		if attr.Id {
+			return attr
+		}
+	}
+	return YamlConfigAttribute{}
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -379,6 +391,7 @@ var functions = template.FuncMap{
 	"getResponseModelName": GetResponseModelName,
 	"hasReference":         HasReference,
 	"getGjsonType":         GetGjsonType,
+	"getId":                GetId,
 	"contains":             contains,
 }
 

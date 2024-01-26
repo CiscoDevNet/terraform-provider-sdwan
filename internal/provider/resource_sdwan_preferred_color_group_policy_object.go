@@ -142,7 +142,6 @@ func (r *PreferredColorGroupPolicyObjectResource) Create(ctx context.Context, re
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-
 	plan.Id = types.StringValue(res.Get("listId").String())
 	plan.Version = types.Int64Value(0)
 
