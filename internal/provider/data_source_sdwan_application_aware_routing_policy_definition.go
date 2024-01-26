@@ -123,8 +123,8 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										MarkdownDescription: "PLP",
 										Computed:            true,
 									},
-									"protocol": schema.Int64Attribute{
-										MarkdownDescription: "IP Protocol",
+									"protocol": schema.StringAttribute{
+										MarkdownDescription: "IP Protocol, 0-255 (Single value or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"source_data_prefix_list_id": schema.StringAttribute{
@@ -139,8 +139,8 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										MarkdownDescription: "Source IP",
 										Computed:            true,
 									},
-									"source_port": schema.Int64Attribute{
-										MarkdownDescription: "Source port",
+									"source_port": schema.StringAttribute{
+										MarkdownDescription: "Source port, 0-65535 (Single value, range or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"destination_data_prefix_list_id": schema.StringAttribute{
@@ -155,8 +155,8 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										MarkdownDescription: "Destination IP",
 										Computed:            true,
 									},
-									"destination_port": schema.Int64Attribute{
-										MarkdownDescription: "Destination port",
+									"destination_port": schema.StringAttribute{
+										MarkdownDescription: "Destination port, 0-65535 (Single value, range or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"destination_region": schema.StringAttribute{
@@ -180,7 +180,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										Computed:            true,
 									},
 									"backup_sla_preferred_color": schema.StringAttribute{
-										MarkdownDescription: "Backup SLA preferred color",
+										MarkdownDescription: "Backup SLA preferred color (Single value or multiple values separated by spaces)",
 										Computed:            true,
 									},
 									"counter": schema.StringAttribute{
@@ -221,7 +221,7 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 													Computed:            true,
 												},
 												"preferred_color": schema.StringAttribute{
-													MarkdownDescription: "preferred color",
+													MarkdownDescription: "preferred color (Single value or multiple values separated by spaces)",
 													Computed:            true,
 												},
 											},

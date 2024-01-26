@@ -48,7 +48,7 @@ Read-Only:
 
 Read-Only:
 
-- `backup_sla_preferred_color` (String) Backup SLA preferred color
+- `backup_sla_preferred_color` (String) Backup SLA preferred color (Single value or multiple values separated by spaces)
 - `cloud_sla` (Boolean) Cloud SLA
 - `counter` (String) Counter name
 - `log` (Boolean) Enable logging
@@ -60,7 +60,7 @@ Read-Only:
 
 Read-Only:
 
-- `preferred_color` (String) preferred color
+- `preferred_color` (String) preferred color (Single value or multiple values separated by spaces)
 - `preferred_color_group_list` (String) Preferred color group list ID
 - `preferred_color_group_list_version` (Number) Preferred color group list version
 - `sla_class_list` (String) SLA class list ID
@@ -79,17 +79,17 @@ Read-Only:
 - `destination_data_prefix_list_id` (String) Destination Data Prefix list ID
 - `destination_data_prefix_list_version` (Number) Destination Data Prefix list version
 - `destination_ip` (String) Destination IP
-- `destination_port` (Number) Destination port
+- `destination_port` (String) Destination port, 0-65535 (Single value, range or multiple values separated by spaces)
 - `destination_region` (String) Destination region
 - `dns` (String) DNS request or response
 - `dns_application_list_id` (String) DNS Application list ID
 - `dns_application_list_version` (Number) DNS Application list version
 - `dscp` (Number) DSCP value
 - `plp` (String) PLP
-- `protocol` (Number) IP Protocol
+- `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)
 - `source_data_prefix_list_id` (String) Source Data Prefix list ID
 - `source_data_prefix_list_version` (Number) Source Data Prefix list version
 - `source_ip` (String) Source IP
-- `source_port` (Number) Source port
+- `source_port` (String) Source port, 0-65535 (Single value, range or multiple values separated by spaces)
 - `traffic_to` (String) Traffic to
 - `type` (String) Type of match entry

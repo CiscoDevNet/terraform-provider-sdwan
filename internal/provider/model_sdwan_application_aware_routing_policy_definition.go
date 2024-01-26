@@ -53,15 +53,15 @@ type ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries struct {
 	Dns                              types.String `tfsdk:"dns"`
 	Dscp                             types.Int64  `tfsdk:"dscp"`
 	Plp                              types.String `tfsdk:"plp"`
-	Protocol                         types.Int64  `tfsdk:"protocol"`
+	Protocol                         types.String `tfsdk:"protocol"`
 	SourceDataPrefixListId           types.String `tfsdk:"source_data_prefix_list_id"`
 	SourceDataPrefixListVersion      types.Int64  `tfsdk:"source_data_prefix_list_version"`
 	SourceIp                         types.String `tfsdk:"source_ip"`
-	SourcePort                       types.Int64  `tfsdk:"source_port"`
+	SourcePort                       types.String `tfsdk:"source_port"`
 	DestinationDataPrefixListId      types.String `tfsdk:"destination_data_prefix_list_id"`
 	DestinationDataPrefixListVersion types.Int64  `tfsdk:"destination_data_prefix_list_version"`
 	DestinationIp                    types.String `tfsdk:"destination_ip"`
-	DestinationPort                  types.Int64  `tfsdk:"destination_port"`
+	DestinationPort                  types.String `tfsdk:"destination_port"`
 	DestinationRegion                types.String `tfsdk:"destination_region"`
 	TrafficTo                        types.String `tfsdk:"traffic_to"`
 }
@@ -133,7 +133,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Plp.ValueString())
 					}
 					if !childItem.Protocol.IsNull() && childItem.Type.ValueString() == "protocol" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.Protocol.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Protocol.ValueString())
 					}
 					if !childItem.SourceDataPrefixListId.IsNull() && childItem.Type.ValueString() == "sourceDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.SourceDataPrefixListId.ValueString())
@@ -142,7 +142,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
 					}
 					if !childItem.SourcePort.IsNull() && childItem.Type.ValueString() == "sourcePort" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.SourcePort.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourcePort.ValueString())
 					}
 					if !childItem.DestinationDataPrefixListId.IsNull() && childItem.Type.ValueString() == "destinationDataPrefixList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DestinationDataPrefixListId.ValueString())
@@ -151,7 +151,7 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
 					}
 					if !childItem.DestinationPort.IsNull() && childItem.Type.ValueString() == "destinationPort" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", fmt.Sprint(childItem.DestinationPort.ValueInt64()))
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationPort.ValueString())
 					}
 					if !childItem.DestinationRegion.IsNull() && childItem.Type.ValueString() == "destinationRegion" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationRegion.ValueString())
@@ -283,9 +283,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 						cItem.Plp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "protocol" {
-						cItem.Protocol = types.Int64Value(ccValue.Int())
+						cItem.Protocol = types.StringValue(ccValue.String())
 					} else {
-						cItem.Protocol = types.Int64Null()
+						cItem.Protocol = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "sourceDataPrefixList" {
 						cItem.SourceDataPrefixListId = types.StringValue(ccValue.String())
@@ -298,9 +298,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 						cItem.SourceIp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "sourcePort" {
-						cItem.SourcePort = types.Int64Value(ccValue.Int())
+						cItem.SourcePort = types.StringValue(ccValue.String())
 					} else {
-						cItem.SourcePort = types.Int64Null()
+						cItem.SourcePort = types.StringNull()
 					}
 					if ccValue := cv.Get("ref"); ccValue.Exists() && cItem.Type.ValueString() == "destinationDataPrefixList" {
 						cItem.DestinationDataPrefixListId = types.StringValue(ccValue.String())
@@ -313,9 +313,9 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 						cItem.DestinationIp = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationPort" {
-						cItem.DestinationPort = types.Int64Value(ccValue.Int())
+						cItem.DestinationPort = types.StringValue(ccValue.String())
 					} else {
-						cItem.DestinationPort = types.Int64Null()
+						cItem.DestinationPort = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationRegion" {
 						cItem.DestinationRegion = types.StringValue(ccValue.String())

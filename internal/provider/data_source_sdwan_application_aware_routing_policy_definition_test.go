@@ -39,7 +39,6 @@ func TestAccDataSourceSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T)
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.name", "Region1"),
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.ip_type", "ipv4"),
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.match_entries.0.type", "appList"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.match_entries.0.application_list_id", "e3aad846-abb9-425f-aaa8-9ed17b9c8d7c"),
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.action_entries.0.type", "backupSlaPreferredColor"),
 					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.action_entries.0.backup_sla_preferred_color", "bronze"),
 				),
@@ -49,7 +48,14 @@ func TestAccDataSourceSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T)
 }
 
 const testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig = `
-
+resource "sdwan_application_list_policy_object" "test" {
+  name = "TF_TEST"
+  entries = [
+    {
+      application = "netflix"
+    }
+  ]
+}
 resource "sdwan_application_aware_routing_policy_definition" "test" {
   name = "Example"
   description = "My description"
@@ -59,7 +65,7 @@ resource "sdwan_application_aware_routing_policy_definition" "test" {
     ip_type = "ipv4"
 	match_entries = [{
 		type = "appList"
-		application_list_id = "e3aad846-abb9-425f-aaa8-9ed17b9c8d7c"
+		application_list_id = sdwan_application_list_policy_object.test.id
 	}]
 	action_entries = [{
 		type = "backupSlaPreferredColor"
