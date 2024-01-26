@@ -77,20 +77,25 @@ attributes:
       - model_name: endpoint-ip
         data_path: ["endpoint-ip-transport-port"]
         tf_name: transport_endpoint_ip
+        exclude_ignore: true
         example: 5.6.7.8
       - model_name: protocol
         tf_name: transport_endpoint_protocol
+        exclude_ignore: true
         example: tcp
       - model_name: port
         tf_name: transport_endpoint_port
+        exclude_ignore: true
         example: 500
       - model_name: endpoint-dns-name
         example: abc.com
       - model_name: endpoint-api-url
         example: https://1.1.1.1
       - model_name: elements
+        exclude_ignore: true
         example: '["abc", "def"]'
       - model_name: boolean
+        exclude_ignore: true
         example: or
       - model_name: threshold
         example: 300
