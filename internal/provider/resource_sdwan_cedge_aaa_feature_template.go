@@ -327,7 +327,7 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"von_configurations": schema.ListNestedAttribute{
+						"vpn_configurations": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("VPN configuration").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

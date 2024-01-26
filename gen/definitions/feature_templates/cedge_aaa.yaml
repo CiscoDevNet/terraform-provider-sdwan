@@ -71,7 +71,7 @@ attributes:
         tf_name: client_ip
         example: 2.2.2.2
       - model_name: vpn
-        tf_name: von_configurations
+        tf_name: vpn_configurations
         attributes:
           - model_name: name
             tf_name: vpn_id

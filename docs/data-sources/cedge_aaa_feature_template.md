@@ -94,10 +94,10 @@ Read-Only:
 - `client_ip` (String) Client IP
 - `client_ip_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `von_configurations` (Attributes List) VPN configuration (see [below for nested schema](#nestedatt--radius_clients--von_configurations))
+- `vpn_configurations` (Attributes List) VPN configuration (see [below for nested schema](#nestedatt--radius_clients--vpn_configurations))
 
-<a id="nestedatt--radius_clients--von_configurations"></a>
-### Nested Schema for `radius_clients.von_configurations`
+<a id="nestedatt--radius_clients--vpn_configurations"></a>
+### Nested Schema for `radius_clients.vpn_configurations`
 
 Read-Only:
 

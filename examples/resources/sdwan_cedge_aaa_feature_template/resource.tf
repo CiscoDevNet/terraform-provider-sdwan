@@ -42,7 +42,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
   radius_clients = [
     {
       client_ip = "2.2.2.2"
-      von_configurations = [
+      vpn_configurations = [
         {
           vpn_id     = "1"
           server_key = "key123"

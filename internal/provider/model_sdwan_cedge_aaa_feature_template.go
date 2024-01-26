@@ -88,7 +88,7 @@ type CEdgeAAARadiusClients struct {
 	Optional          types.Bool                               `tfsdk:"optional"`
 	ClientIp          types.String                             `tfsdk:"client_ip"`
 	ClientIpVariable  types.String                             `tfsdk:"client_ip_variable"`
-	VonConfigurations []CEdgeAAARadiusClientsVonConfigurations `tfsdk:"von_configurations"`
+	VpnConfigurations []CEdgeAAARadiusClientsVpnConfigurations `tfsdk:"vpn_configurations"`
 }
 
 type CEdgeAAATacacsServerGroups struct {
@@ -145,7 +145,7 @@ type CEdgeAAARadiusServerGroupsServers struct {
 	KeyTypeVariable            types.String `tfsdk:"key_type_variable"`
 }
 
-type CEdgeAAARadiusClientsVonConfigurations struct {
+type CEdgeAAARadiusClientsVpnConfigurations struct {
 	Optional          types.Bool   `tfsdk:"optional"`
 	VpnId             types.String `tfsdk:"vpn_id"`
 	VpnIdVariable     types.String `tfsdk:"vpn_id_variable"`
@@ -523,7 +523,7 @@ func (data CEdgeAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ip."+"vipValue", item.ClientIp.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "vpn")
-		if len(item.VonConfigurations) > 0 {
+		if len(item.VpnConfigurations) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "vpn."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "vpn."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "vpn."+"vipPrimaryKey", []string{"name"})
@@ -534,7 +534,7 @@ func (data CEdgeAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vpn."+"vipPrimaryKey", []string{"name"})
 			itemBody, _ = sjson.Set(itemBody, "vpn."+"vipValue", []interface{}{})
 		}
-		for _, childItem := range item.VonConfigurations {
+		for _, childItem := range item.VpnConfigurations {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			itemChildAttributes = append(itemChildAttributes, "name")
@@ -1404,9 +1404,9 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 				item.ClientIpVariable = types.StringNull()
 			}
 			if cValue := v.Get("vpn.vipValue"); len(cValue.Array()) > 0 {
-				item.VonConfigurations = make([]CEdgeAAARadiusClientsVonConfigurations, 0)
+				item.VpnConfigurations = make([]CEdgeAAARadiusClientsVpnConfigurations, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CEdgeAAARadiusClientsVonConfigurations{}
+					cItem := CEdgeAAARadiusClientsVpnConfigurations{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -1450,7 +1450,7 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.ServerKey = types.StringNull()
 						cItem.ServerKeyVariable = types.StringNull()
 					}
-					item.VonConfigurations = append(item.VonConfigurations, cItem)
+					item.VpnConfigurations = append(item.VpnConfigurations, cItem)
 					return true
 				})
 			}
@@ -2076,14 +2076,14 @@ func (data *CEdgeAAA) hasChanges(ctx context.Context, state *CEdgeAAA) bool {
 			if !data.RadiusClients[i].ClientIp.Equal(state.RadiusClients[i].ClientIp) {
 				hasChanges = true
 			}
-			if len(data.RadiusClients[i].VonConfigurations) != len(state.RadiusClients[i].VonConfigurations) {
+			if len(data.RadiusClients[i].VpnConfigurations) != len(state.RadiusClients[i].VpnConfigurations) {
 				hasChanges = true
 			} else {
-				for ii := range data.RadiusClients[i].VonConfigurations {
-					if !data.RadiusClients[i].VonConfigurations[ii].VpnId.Equal(state.RadiusClients[i].VonConfigurations[ii].VpnId) {
+				for ii := range data.RadiusClients[i].VpnConfigurations {
+					if !data.RadiusClients[i].VpnConfigurations[ii].VpnId.Equal(state.RadiusClients[i].VpnConfigurations[ii].VpnId) {
 						hasChanges = true
 					}
-					if !data.RadiusClients[i].VonConfigurations[ii].ServerKey.Equal(state.RadiusClients[i].VonConfigurations[ii].ServerKey) {
+					if !data.RadiusClients[i].VpnConfigurations[ii].ServerKey.Equal(state.RadiusClients[i].VpnConfigurations[ii].ServerKey) {
 						hasChanges = true
 					}
 				}

@@ -55,8 +55,8 @@ func TestAccDataSourceSdwanCEdgeAAAFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.encryption_type", "7"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_server_groups.0.servers.0.key_type", "pac"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_clients.0.client_ip", "2.2.2.2"),
-					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_clients.0.von_configurations.0.vpn_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_clients.0.von_configurations.0.server_key", "key123"),
+					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_clients.0.vpn_configurations.0.vpn_id", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_clients.0.vpn_configurations.0.server_key", "key123"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_server_key", "key123"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_domain_stripping", "yes"),
 					resource.TestCheckResourceAttr("data.sdwan_cedge_aaa_feature_template.test", "radius_dynamic_author_authentication_type", "all"),
@@ -127,7 +127,7 @@ resource "sdwan_cedge_aaa_feature_template" "test" {
   }]
   radius_clients = [{
     client_ip = "2.2.2.2"
-	von_configurations = [{
+	vpn_configurations = [{
 		vpn_id = "1"
 		server_key = "key123"
 	}]
