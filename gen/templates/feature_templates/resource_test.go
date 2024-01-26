@@ -38,7 +38,7 @@ func TestAccSdwan{{camelCase .Name}}FeatureTemplate(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
-					{{- if and (.Mandatory) (ne .Type "StringList")}}
+					{{- if and (.Mandatory) (ne .Type "StringList") (ne .Type "Int64List")}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
@@ -61,21 +61,21 @@ func TestAccSdwan{{camelCase .Name}}FeatureTemplate(t *testing.T) {
 					{{- if eq .Type "List"}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (ne .Type "StringList")}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (ne .Type "StringList") (ne .Type "Int64List")}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
-					{{- else if ne .Type "StringList"}}
+					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if ne .Type "StringList"}}
+					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if ne .Type "StringList"}}
+					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}

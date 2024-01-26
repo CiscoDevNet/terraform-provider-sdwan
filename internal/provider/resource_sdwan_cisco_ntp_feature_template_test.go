@@ -40,7 +40,6 @@ func TestAccSdwanCiscoNTPFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_ntp_feature_template.test", "master", "true"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ntp_feature_template.test", "master_stratum", "6"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ntp_feature_template.test", "master_source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ntp_feature_template.test", "trusted_keys", "[1]"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.id", "1"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.value", "12345"),
 					resource.TestCheckResourceAttr("sdwan_cisco_ntp_feature_template.test", "servers.0.hostname_ip", "NTP_SERVER1"),
