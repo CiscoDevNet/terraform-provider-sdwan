@@ -807,10 +807,6 @@ func (data CiscoSystem) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "object."+"vipPrimaryKey", []string{"number"})
 			itemBody, _ = sjson.Set(itemBody, "object."+"vipValue", []interface{}{})
 		} else {
-			itemBody, _ = sjson.Set(itemBody, "object."+"vipObjectType", "tree")
-			itemBody, _ = sjson.Set(itemBody, "object."+"vipType", "ignore")
-			itemBody, _ = sjson.Set(itemBody, "object."+"vipPrimaryKey", []string{"number"})
-			itemBody, _ = sjson.Set(itemBody, "object."+"vipValue", []interface{}{})
 		}
 		for _, childItem := range item.GroupTracksIds {
 			itemChildBody := ""

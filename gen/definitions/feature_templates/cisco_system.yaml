@@ -118,6 +118,7 @@ attributes:
         example: 1
       - model_name: object
         tf_name: group_tracks_ids
+        exclude_ignore: true
         attributes:
           - model_name: number
             tf_name: track_id
