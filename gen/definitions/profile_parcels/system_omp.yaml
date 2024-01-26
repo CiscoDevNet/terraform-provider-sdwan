@@ -1,0 +1,107 @@
+---
+name: System OMP
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/omp
+minimum_version: 20.9.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: gracefulRestart
+    example: true
+  - model_name: overlayAs
+    example: 10
+  - model_name: sendPathLimit
+    tf_name: paths_advertised_per_prefix
+    example: 4
+  - model_name: ecmpLimit
+    example: 4
+  - model_name: shutdown
+    example: false
+  - model_name: ompAdminDistanceIpv4
+    example: 10
+  - model_name: ompAdminDistanceIpv6
+    example: 20
+  - model_name: advertisementInterval
+    example: 1
+  - model_name: gracefulRestartTimer
+    example: 43200
+  - model_name: eorTimer
+    example: 300
+  - model_name: holdtime
+    example: 60
+  - model_name: bgp
+    tf_name: advertise_ipv4_bgp
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: ospf
+    tf_name: advertise_ipv4_ospf
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: ospfv3
+    tf_name: advertise_ipv4_ospf_v3
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: connected
+    tf_name: advertise_ipv4_cpnnected
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: static
+    tf_name: advertise_ipv4_static
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: eigrp
+    tf_name: advertise_ipv4_eigrp
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: lisp
+    tf_name: advertise_ipv4_lisp
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: isis
+    tf_name: advertise_ipv4_isis
+    data_path: [advertiseIpv4]
+    example: false
+  - model_name: bgp
+    tf_name: advertise_ipv6_bgp
+    data_path: [advertiseIpv6]
+    example: true
+  - model_name: ospf
+    tf_name: advertise_ipv6_ospf
+    data_path: [advertiseIpv6]
+    example: true
+  - model_name: connected
+    tf_name: advertise_ipv6_connected
+    data_path: [advertiseIpv6]
+    example: true
+  - model_name: static
+    tf_name: advertise_ipv6_static
+    data_path: [advertiseIpv6]
+    example: true
+  - model_name: eigrp
+    tf_name: advertise_ipv6_eigrp
+    data_path: [advertiseIpv6]
+    example: true
+  - model_name: lisp
+    tf_name: advertise_ipv6_lisp
+    data_path: [advertiseIpv6]
+    example: true
+  - model_name: isis
+    tf_name: advertise_ipv6_isis
+    data_path: [advertiseIpv6]
+    example: true
+  ### NOT AVAILABLE IN 10.09 ###
+  # - model_name: ignoreRegionPathLength
+  #   example: false
+  # - model_name: transportGateway
+  #   example: prefer
+  # - model_name: siteTypes
+  #   example: type-1
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

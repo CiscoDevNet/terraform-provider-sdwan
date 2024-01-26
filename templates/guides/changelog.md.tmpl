@@ -11,6 +11,7 @@ description: |-
 
 - Fix import operation of profile parcel resources
 - BREAKING CHANGE: convert `protocol`, `source_port`, `destination_port` attribute of `sdwan_application_aware_routing_definition` to Strings to support multiple values
+- Add `sdwan_system_omp_profile_parcel` resource and data source
 
 ## 0.3.4
 
