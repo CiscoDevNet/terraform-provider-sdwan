@@ -101,12 +101,17 @@ attributes:
   - model_name: enable
     data_path: [nat64]
     tf_name: ipv6_nat
+    exclude_ignore: true
     example: false
   - model_name: nat64
     tf_name: nat64_interface
+    node_only_container: true
+    exclude_ignore: true
     example: false
   - model_name: nat66
     tf_name: nat66_interface
+    node_only_container: true
+    exclude_ignore: true
     example: false
   - model_name: static-nat66
     tf_name: static_nat66_entries

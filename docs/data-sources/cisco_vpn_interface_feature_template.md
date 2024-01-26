@@ -95,7 +95,6 @@ data "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `media_type_variable` (String) Variable name
 - `nat` (Boolean) Network Address Translation on this interface
 - `nat64_interface` (Boolean) NAT64 on this interface
-- `nat64_interface_variable` (String) Variable name
 - `nat66_interface` (Boolean) NAT66 on this interface
 - `nat_inside_source_loopback_interface` (String) Configure NAT Inside Loopback Interface
 - `nat_inside_source_loopback_interface_variable` (String) Variable name

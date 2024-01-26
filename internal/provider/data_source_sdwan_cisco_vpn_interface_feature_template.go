@@ -355,10 +355,6 @@ func (d *CiscoVPNInterfaceFeatureTemplateDataSource) Schema(ctx context.Context,
 				MarkdownDescription: "NAT64 on this interface",
 				Computed:            true,
 			},
-			"nat64_interface_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"nat66_interface": schema.BoolAttribute{
 				MarkdownDescription: "NAT66 on this interface",
 				Computed:            true,

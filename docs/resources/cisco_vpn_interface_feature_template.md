@@ -332,7 +332,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
   - Default value: `false`
 - `nat64_interface` (Boolean) NAT64 on this interface
   - Default value: `false`
-- `nat64_interface_variable` (String) Variable name
 - `nat66_interface` (Boolean) NAT66 on this interface
   - Default value: `false`
 - `nat_inside_source_loopback_interface` (String) Configure NAT Inside Loopback Interface

@@ -84,7 +84,6 @@ type CiscoVPNInterface struct {
 	Ipv6Nat                                            types.Bool                                       `tfsdk:"ipv6_nat"`
 	Ipv6NatVariable                                    types.String                                     `tfsdk:"ipv6_nat_variable"`
 	Nat64Interface                                     types.Bool                                       `tfsdk:"nat64_interface"`
-	Nat64InterfaceVariable                             types.String                                     `tfsdk:"nat64_interface_variable"`
 	Nat66Interface                                     types.Bool                                       `tfsdk:"nat66_interface"`
 	StaticNat66Entries                                 []CiscoVPNInterfaceStaticNat66Entries            `tfsdk:"static_nat66_entries"`
 	StaticNatEntries                                   []CiscoVPNInterfaceStaticNatEntries              `tfsdk:"static_nat_entries"`
@@ -820,33 +819,26 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"nat64.enable."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"nat64.enable."+"vipVariableName", data.Ipv6NatVariable.ValueString())
 	} else if data.Ipv6Nat.IsNull() {
-		body, _ = sjson.Set(body, path+"nat64.enable."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat64.enable."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"nat64.enable."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"nat64.enable."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"nat64.enable."+"vipValue", strconv.FormatBool(data.Ipv6Nat.ValueBool()))
 	}
-
-	if !data.Nat64InterfaceVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"nat64."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat64."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat64."+"vipVariableName", data.Nat64InterfaceVariable.ValueString())
-	} else if data.Nat64Interface.IsNull() {
-		body, _ = sjson.Set(body, path+"nat64."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat64."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"nat64."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat64."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat64."+"vipValue", strconv.FormatBool(data.Nat64Interface.ValueBool()))
+	if !data.Nat64Interface.IsNull() {
+		if data.Nat64Interface.ValueBool() {
+			body, _ = sjson.Set(body, path+"nat64", map[string]interface{}{})
+		} else {
+			body, _ = sjson.Set(body, path+"nat64."+"vipObjectType", "node-only")
+			body, _ = sjson.Set(body, path+"nat64."+"vipType", "ignore")
+		}
 	}
-	if data.Nat66Interface.IsNull() {
-		body, _ = sjson.Set(body, path+"nat66."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat66."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"nat66."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat66."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat66."+"vipValue", strconv.FormatBool(data.Nat66Interface.ValueBool()))
+	if !data.Nat66Interface.IsNull() {
+		if data.Nat66Interface.ValueBool() {
+			body, _ = sjson.Set(body, path+"nat66", map[string]interface{}{})
+		} else {
+			body, _ = sjson.Set(body, path+"nat66."+"vipObjectType", "node-only")
+			body, _ = sjson.Set(body, path+"nat66."+"vipType", "ignore")
+		}
 	}
 	if len(data.StaticNat66Entries) > 0 {
 		body, _ = sjson.Set(body, path+"nat66.static-nat66."+"vipObjectType", "tree")
@@ -3032,33 +3024,36 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		if value.String() == "variableName" {
 			data.Nat64Interface = types.BoolNull()
 
-			v := res.Get(path + "nat64.vipVariableName")
-			data.Nat64InterfaceVariable = types.StringValue(v.String())
-
 		} else if value.String() == "ignore" {
-			data.Nat64Interface = types.BoolNull()
-			data.Nat64InterfaceVariable = types.StringNull()
+			data.Nat64Interface = types.BoolValue(false)
+
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat64.vipValue")
 			data.Nat64Interface = types.BoolValue(v.Bool())
-			data.Nat64InterfaceVariable = types.StringNull()
+
 		}
+	} else if value := res.Get(path + "nat64"); value.Exists() {
+		data.Nat64Interface = types.BoolValue(true)
+
 	} else {
 		data.Nat64Interface = types.BoolNull()
-		data.Nat64InterfaceVariable = types.StringNull()
+
 	}
 	if value := res.Get(path + "nat66.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.Nat66Interface = types.BoolNull()
 
 		} else if value.String() == "ignore" {
-			data.Nat66Interface = types.BoolNull()
+			data.Nat66Interface = types.BoolValue(false)
 
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat66.vipValue")
 			data.Nat66Interface = types.BoolValue(v.Bool())
 
 		}
+	} else if value := res.Get(path + "nat66"); value.Exists() {
+		data.Nat66Interface = types.BoolValue(true)
+
 	} else {
 		data.Nat66Interface = types.BoolNull()
 
