@@ -929,3 +929,166 @@ func (data *SystemOMP) updateFromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 }
+
+func (data *SystemOMP) isNull(ctx context.Context, res gjson.Result) bool {
+	if !data.FeatureProfileId.IsNull() {
+		return false
+	}
+	if !data.GracefulRestart.IsNull() {
+		return false
+	}
+	if !data.GracefulRestartVariable.IsNull() {
+		return false
+	}
+	if !data.OverlayAs.IsNull() {
+		return false
+	}
+	if !data.OverlayAsVariable.IsNull() {
+		return false
+	}
+	if !data.PathsAdvertisedPerPrefix.IsNull() {
+		return false
+	}
+	if !data.PathsAdvertisedPerPrefixVariable.IsNull() {
+		return false
+	}
+	if !data.EcmpLimit.IsNull() {
+		return false
+	}
+	if !data.EcmpLimitVariable.IsNull() {
+		return false
+	}
+	if !data.Shutdown.IsNull() {
+		return false
+	}
+	if !data.ShutdownVariable.IsNull() {
+		return false
+	}
+	if !data.OmpAdminDistanceIpv4.IsNull() {
+		return false
+	}
+	if !data.OmpAdminDistanceIpv4Variable.IsNull() {
+		return false
+	}
+	if !data.OmpAdminDistanceIpv6.IsNull() {
+		return false
+	}
+	if !data.OmpAdminDistanceIpv6Variable.IsNull() {
+		return false
+	}
+	if !data.AdvertisementInterval.IsNull() {
+		return false
+	}
+	if !data.AdvertisementIntervalVariable.IsNull() {
+		return false
+	}
+	if !data.GracefulRestartTimer.IsNull() {
+		return false
+	}
+	if !data.GracefulRestartTimerVariable.IsNull() {
+		return false
+	}
+	if !data.EorTimer.IsNull() {
+		return false
+	}
+	if !data.EorTimerVariable.IsNull() {
+		return false
+	}
+	if !data.Holdtime.IsNull() {
+		return false
+	}
+	if !data.HoldtimeVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4Bgp.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4BgpVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4Ospf.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4OspfVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4OspfV3.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4OspfV3Variable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4Cpnnected.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4CpnnectedVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4Static.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4StaticVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4Eigrp.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4EigrpVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4Lisp.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4LispVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4Isis.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv4IsisVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6Bgp.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6BgpVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6Ospf.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6OspfVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6Connected.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6ConnectedVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6Static.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6StaticVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6Eigrp.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6EigrpVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6Lisp.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6LispVariable.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6Isis.IsNull() {
+		return false
+	}
+	if !data.AdvertiseIpv6IsisVariable.IsNull() {
+		return false
+	}
+	return true
+}
