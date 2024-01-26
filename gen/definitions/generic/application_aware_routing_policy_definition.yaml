@@ -297,7 +297,7 @@ attributes:
                 type: String
                 id: true
                 mandatory: true
-                enum_values: [name, preferredColor, preferredColorGroup]
+                enum_values: [name, preferredColor, preferredColorGroup, strict, fallbackToBestPath]
                 description: Type of SLA class parameter
                 example: name
               - model_name: ref

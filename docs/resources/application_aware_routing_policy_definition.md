@@ -89,7 +89,7 @@ Optional:
 Required:
 
 - `type` (String) Type of SLA class parameter
-  - Choices: `name`, `preferredColor`, `preferredColorGroup`
+  - Choices: `name`, `preferredColor`, `preferredColorGroup`, `strict`, `fallbackToBestPath`
 
 Optional:
 

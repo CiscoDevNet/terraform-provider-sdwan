@@ -237,10 +237,10 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"type": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Type of SLA class parameter").AddStringEnumDescription("name", "preferredColor", "preferredColorGroup").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Type of SLA class parameter").AddStringEnumDescription("name", "preferredColor", "preferredColorGroup", "strict", "fallbackToBestPath").String,
 													Required:            true,
 													Validators: []validator.String{
-														stringvalidator.OneOf("name", "preferredColor", "preferredColorGroup"),
+														stringvalidator.OneOf("name", "preferredColor", "preferredColorGroup", "strict", "fallbackToBestPath"),
 													},
 												},
 												"sla_class_list": schema.StringAttribute{
