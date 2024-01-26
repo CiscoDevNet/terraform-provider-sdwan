@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.3.5 (unreleased)
+## 0.3.5
 
 - Fix import operation of profile parcel resources
 - BREAKING CHANGE: Convert `protocol`, `source_port`, `destination_port` attribute of `sdwan_application_aware_routing_definition` to strings to support multiple values
