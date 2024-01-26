@@ -1,0 +1,149 @@
+---
+name: Security Policy
+rest_endpoint: /template/policy/security/
+get_rest_endpoint: /template/policy/security/definition/
+has_version: true
+id_attribute: policyId
+doc_category: Security Policies
+attributes:
+  - model_name: policyType
+    type: String
+    value: feature
+  - model_name: policyName
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the security policy
+    example: Example
+  - model_name: policyDescription
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the security policy
+    example: Example
+  - model_name: policyMode
+    tf_name: mode
+    type: String
+    default_value: security
+    enum_values: [security, unified]
+    description: The policy mode
+    example: security
+  - model_name: policyUseCase
+    tf_name: use_case
+    type: String
+    default_value: custom
+    enum_values: [custom, compliance, guestAccess, directCloudAccess, directInternetAccess, directCloudAccess]
+    description: The use case of the security policy
+    example: custom
+  - model_name: assembly
+    data_path: [policyDefinition] 
+    tf_name: definitions
+    type: List
+    mandatory: true
+    description: List of policy definitions
+    min_list: 1
+    attributes:
+      - model_name: definitionId
+        tf_name: id
+        id: true
+        type: String
+        mandatory: true
+        description: Policy definition ID
+        example: 7d299c34-981c-4fb3-9167-6be44ab1691f
+        test_value: sdwan_url_filtering_policy_definition.test.id
+      - model_name: type
+        tf_name: type
+        type: String
+        mandatory: true
+        enum_values: [urlFiltering, zoneBasedFW, intrusionPrevention, sslDecryption, advancedMalwareProtection, dnsSecurity]
+        description: Policy definition type
+        example: urlFiltering
+  - model_name: zoneToNozoneInternet
+    data_path: [policyDefinition, settings]
+    tf_name: direct_internet_applications
+    type: String
+    enum_values: [allow, deny]
+    description: Bypass firewall policy and allow all Internet traffic to/from VPN 0
+    example: allow
+    exclude_test: true
+  - model_name: tcpSynFloodLimit
+    data_path: [policyDefinition, settings]
+    tf_name: tcp_syn_flood_limit
+    type: String
+    description: TCP SYN Flood Limit, value from 1 to 4294967295
+    example: 432
+    exclude_test: true
+  - model_name: auditTrail
+    data_path: [policyDefinition, settings]
+    tf_name: audit_trail
+    type: String
+    enum_values: [on, off]
+    description: Audit trail
+    example: on
+    exclude_test: true
+  - model_name: platformMatch
+    data_path: [policyDefinition, settings]
+    tf_name: match_statistics_per_filter
+    type: String
+    enum_values: [on, off]
+    description: Match Statistics per-filter
+    example: on
+    exclude_test: true
+  - model_name: failureMode
+    data_path: [policyDefinition, settings]
+    tf_name: failure_mode
+    type: String
+    default_value: open
+    enum_values: [open, close]
+    description: Failure mode
+    example: close
+  - model_name: serverIp
+    data_path: [policyDefinition, settings, highSpeedLogging]
+    tf_name: high_speed_logging_server_ip
+    type: String
+    description: High Speed Logging Server IP
+    example: 10.0.0.1
+    exclude_test: true
+  - model_name: vrf
+    data_path: [policyDefinition, settings, highSpeedLogging]
+    tf_name: high_speed_logging_vpn
+    type: String
+    description: High Speed Logging VPN
+    example: 123
+    exclude_test: true
+  - model_name: port
+    data_path: [policyDefinition, settings, highSpeedLogging]
+    tf_name: high_speed_logging_server_port
+    type: String
+    description: High Speed Logging Port
+    example: 2055
+    exclude_test: true
+  - model_name: logging
+    data_path: [policyDefinition, settings]
+    tf_name: logging
+    type: List
+    attributes:
+      - model_name: serverIP
+        tf_name: external_syslog_server_ip
+        type: String
+        description: External Syslog Server IP
+        example: 10.0.0.1
+      - model_name: vpn
+        tf_name: external_syslog_server_vpn
+        type: String
+        description: External Syslog Server VPN
+        example: 123
+
+test_prerequisites: |
+  resource "sdwan_url_filtering_policy_definition" "test" {
+    name                  = "TEST_TF"
+    description           = "Terraform test"
+    mode                  = "security"
+    alerts                = ["blacklist"]
+    web_categories        = ["alcohol-and-tobacco"]
+    web_categories_action = "allow"
+    web_reputation        = "moderate-risk"
+    target_vpns           = ["1"]
+    block_page_action     = "text"
+    block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
+  }
