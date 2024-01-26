@@ -34,7 +34,7 @@ resource "sdwan_cisco_system_feature_template" "example" {
     }
   ]
   device_groups         = ["group1"]
-  controller_group_list = ["1"]
+  controller_group_list = [1]
   system_ip             = "5.5.5.5"
   overlay_id            = 1
   site_id               = 1
@@ -110,7 +110,7 @@ resource "sdwan_cisco_system_feature_template" "example" {
 - `affinity_group_number` (Number) Set the affinity group number for router
   - Range: `1`-`255`
 - `affinity_group_number_variable` (String) Variable name
-- `affinity_group_preference` (List of String) Set the affinity group preference
+- `affinity_group_preference` (List of Number) Set the affinity group preference
 - `affinity_group_preference_variable` (String) Variable name
 - `console_baud_rate` (String) Set the console baud rate
   - Choices: `1200`, `2400`, `4800`, `9600`, `19200`, `38400`, `57600`, `115200`
@@ -120,7 +120,7 @@ resource "sdwan_cisco_system_feature_template" "example" {
   - Range: `1`-`65535`
   - Default value: `300`
 - `control_session_pps_variable` (String) Variable name
-- `controller_group_list` (List of String) Configure a list of comma-separated device groups
+- `controller_group_list` (List of Number) Configure a list of comma-separated device groups
 - `controller_group_list_variable` (String) Variable name
 - `device_groups` (List of String) Device groups (Use comma(,) for multiple groups)
 - `device_groups_variable` (String) Variable name

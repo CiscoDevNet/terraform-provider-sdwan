@@ -140,7 +140,7 @@ func (data CiscoNTP) toBody(ctx context.Context) string {
 	} else {
 		body, _ = sjson.Set(body, path+"keys.trusted."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"keys.trusted."+"vipType", "constant")
-		var values []string
+		var values []int64
 		data.TrustedKeys.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"keys.trusted."+"vipValue", values)
 	}
@@ -375,21 +375,21 @@ func (data *CiscoNTP) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "keys.trusted.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.TrustedKeys = types.ListNull(types.StringType)
+			data.TrustedKeys = types.ListNull(types.Int64Type)
 
 			v := res.Get(path + "keys.trusted.vipVariableName")
 			data.TrustedKeysVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TrustedKeys = types.ListNull(types.StringType)
+			data.TrustedKeys = types.ListNull(types.Int64Type)
 			data.TrustedKeysVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "keys.trusted.vipValue")
-			data.TrustedKeys = helpers.GetStringList(v.Array())
+			data.TrustedKeys = helpers.GetInt64List(v.Array())
 			data.TrustedKeysVariable = types.StringNull()
 		}
 	} else {
-		data.TrustedKeys = types.ListNull(types.StringType)
+		data.TrustedKeys = types.ListNull(types.Int64Type)
 		data.TrustedKeysVariable = types.StringNull()
 	}
 	if value := res.Get(path + "keys.authentication.vipValue"); len(value.Array()) > 0 {

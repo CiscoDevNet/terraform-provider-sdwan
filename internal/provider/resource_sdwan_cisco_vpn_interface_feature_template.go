@@ -667,7 +667,7 @@ func (r *CiscoVPNInterfaceFeatureTemplateResource) Schema(ctx context.Context, r
 			},
 			"tunnel_interface_groups": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of groups").String,
-				ElementType:         types.StringType,
+				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
 			"tunnel_interface_groups_variable": schema.StringAttribute{
@@ -714,7 +714,7 @@ func (r *CiscoVPNInterfaceFeatureTemplateResource) Schema(ctx context.Context, r
 			},
 			"tunnel_interface_exclude_controller_group_list": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Exclude the following controller groups defined in this list").String,
-				ElementType:         types.StringType,
+				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
 			"tunnel_interface_exclude_controller_group_list_variable": schema.StringAttribute{

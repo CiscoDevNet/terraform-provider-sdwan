@@ -212,7 +212,7 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 			},
 			"controller_group_list": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure a list of comma-separated device groups").String,
-				ElementType:         types.StringType,
+				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
 			"controller_group_list_variable": schema.StringAttribute{
@@ -666,7 +666,7 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 			},
 			"affinity_group_preference": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the affinity group preference").String,
-				ElementType:         types.StringType,
+				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
 			"affinity_group_preference_variable": schema.StringAttribute{

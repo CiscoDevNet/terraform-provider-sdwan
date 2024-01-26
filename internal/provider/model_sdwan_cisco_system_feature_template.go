@@ -348,7 +348,7 @@ func (data CiscoSystem) toBody(ctx context.Context) string {
 	} else {
 		body, _ = sjson.Set(body, path+"controller-group-list."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"controller-group-list."+"vipType", "constant")
-		var values []string
+		var values []int64
 		data.ControllerGroupList.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"controller-group-list."+"vipValue", values)
 	}
@@ -936,7 +936,7 @@ func (data CiscoSystem) toBody(ctx context.Context) string {
 	} else {
 		body, _ = sjson.Set(body, path+"affinity-group.preference."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"affinity-group.preference."+"vipType", "constant")
-		var values []string
+		var values []int64
 		data.AffinityGroupPreference.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"affinity-group.preference."+"vipValue", values)
 	}
@@ -1213,21 +1213,21 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "controller-group-list.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.ControllerGroupList = types.ListNull(types.StringType)
+			data.ControllerGroupList = types.ListNull(types.Int64Type)
 
 			v := res.Get(path + "controller-group-list.vipVariableName")
 			data.ControllerGroupListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ControllerGroupList = types.ListNull(types.StringType)
+			data.ControllerGroupList = types.ListNull(types.Int64Type)
 			data.ControllerGroupListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "controller-group-list.vipValue")
-			data.ControllerGroupList = helpers.GetStringList(v.Array())
+			data.ControllerGroupList = helpers.GetInt64List(v.Array())
 			data.ControllerGroupListVariable = types.StringNull()
 		}
 	} else {
-		data.ControllerGroupList = types.ListNull(types.StringType)
+		data.ControllerGroupList = types.ListNull(types.Int64Type)
 		data.ControllerGroupListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "system-ip.vipType"); value.Exists() {
@@ -2047,21 +2047,21 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "affinity-group.preference.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.AffinityGroupPreference = types.ListNull(types.StringType)
+			data.AffinityGroupPreference = types.ListNull(types.Int64Type)
 
 			v := res.Get(path + "affinity-group.preference.vipVariableName")
 			data.AffinityGroupPreferenceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AffinityGroupPreference = types.ListNull(types.StringType)
+			data.AffinityGroupPreference = types.ListNull(types.Int64Type)
 			data.AffinityGroupPreferenceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "affinity-group.preference.vipValue")
-			data.AffinityGroupPreference = helpers.GetStringList(v.Array())
+			data.AffinityGroupPreference = helpers.GetInt64List(v.Array())
 			data.AffinityGroupPreferenceVariable = types.StringNull()
 		}
 	} else {
-		data.AffinityGroupPreference = types.ListNull(types.StringType)
+		data.AffinityGroupPreference = types.ListNull(types.Int64Type)
 		data.AffinityGroupPreferenceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "transport-gateway.vipType"); value.Exists() {

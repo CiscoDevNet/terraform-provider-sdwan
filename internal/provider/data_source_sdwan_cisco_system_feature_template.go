@@ -180,7 +180,7 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 			},
 			"controller_group_list": schema.ListAttribute{
 				MarkdownDescription: "Configure a list of comma-separated device groups",
-				ElementType:         types.StringType,
+				ElementType:         types.Int64Type,
 				Computed:            true,
 			},
 			"controller_group_list_variable": schema.StringAttribute{
@@ -550,7 +550,7 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 			},
 			"affinity_group_preference": schema.ListAttribute{
 				MarkdownDescription: "Set the affinity group preference",
-				ElementType:         types.StringType,
+				ElementType:         types.Int64Type,
 				Computed:            true,
 			},
 			"affinity_group_preference_variable": schema.StringAttribute{

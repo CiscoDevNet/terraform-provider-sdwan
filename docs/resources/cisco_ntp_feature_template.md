@@ -64,7 +64,7 @@ resource "sdwan_cisco_ntp_feature_template" "example" {
 - `master_stratum_variable` (String) Variable name
 - `master_variable` (String) Variable name
 - `servers` (Attributes List) Configure NTP servers (see [below for nested schema](#nestedatt--servers))
-- `trusted_keys` (List of String) Designate authentication key as trustworthy
+- `trusted_keys` (List of Number) Designate authentication key as trustworthy
 - `trusted_keys_variable` (String) Variable name
 
 ### Read-Only

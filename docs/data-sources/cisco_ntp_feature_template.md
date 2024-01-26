@@ -39,7 +39,7 @@ data "sdwan_cisco_ntp_feature_template" "example" {
 - `master_variable` (String) Variable name
 - `servers` (Attributes List) Configure NTP servers (see [below for nested schema](#nestedatt--servers))
 - `template_type` (String) The template type
-- `trusted_keys` (List of String) Designate authentication key as trustworthy
+- `trusted_keys` (List of Number) Designate authentication key as trustworthy
 - `trusted_keys_variable` (String) Variable name
 - `version` (Number) The version of the feature template
 

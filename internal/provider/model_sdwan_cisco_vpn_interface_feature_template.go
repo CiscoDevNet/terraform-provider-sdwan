@@ -1187,7 +1187,7 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipType", "constant")
-		var values []string
+		var values []int64
 		data.TunnelInterfaceGroups.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipValue", values)
 	}
@@ -1244,7 +1244,7 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipType", "constant")
-		var values []string
+		var values []int64
 		data.TunnelInterfaceExcludeControllerGroupList.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipValue", values)
 	}
@@ -3543,21 +3543,21 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.TunnelInterfaceGroups = types.ListNull(types.StringType)
+			data.TunnelInterfaceGroups = types.ListNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.group.vipVariableName")
 			data.TunnelInterfaceGroupsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TunnelInterfaceGroups = types.ListNull(types.StringType)
+			data.TunnelInterfaceGroups = types.ListNull(types.Int64Type)
 			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.group.vipValue")
-			data.TunnelInterfaceGroups = helpers.GetStringList(v.Array())
+			data.TunnelInterfaceGroups = helpers.GetInt64List(v.Array())
 			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		}
 	} else {
-		data.TunnelInterfaceGroups = types.ListNull(types.StringType)
+		data.TunnelInterfaceGroups = types.ListNull(types.Int64Type)
 		data.TunnelInterfaceGroupsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.color.value.vipType"); value.Exists() {
@@ -3638,21 +3638,21 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.StringType)
+			data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipVariableName")
 			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.StringType)
+			data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.Int64Type)
 			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipValue")
-			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetStringList(v.Array())
+			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64List(v.Array())
 			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		}
 	} else {
-		data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.StringType)
+		data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.Int64Type)
 		data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipType"); value.Exists() {

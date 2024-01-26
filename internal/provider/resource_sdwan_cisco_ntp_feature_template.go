@@ -124,7 +124,7 @@ func (r *CiscoNTPFeatureTemplateResource) Schema(ctx context.Context, req resour
 			},
 			"trusted_keys": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Designate authentication key as trustworthy").String,
-				ElementType:         types.StringType,
+				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
 			"trusted_keys_variable": schema.StringAttribute{

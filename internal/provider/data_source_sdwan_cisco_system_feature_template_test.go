@@ -108,7 +108,7 @@ resource "sdwan_cisco_system_feature_template" "test" {
     number = "+1234567"
   }]
   device_groups = ["group1"]
-  controller_group_list = ["1"]
+  controller_group_list = [1]
   system_ip = "5.5.5.5"
   overlay_id = 1
   site_id = 1

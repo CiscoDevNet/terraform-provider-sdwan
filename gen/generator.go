@@ -503,7 +503,11 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 			attr.Type = "Bool"
 		}
 	} else if r.Get("objectType").String() == "list" {
-		attr.Type = "StringList"
+		if r.Get("dataType.type").String() == "number" {
+			attr.Type = "Int64List"
+		} else {
+			attr.Type = "StringList"
+		}
 	}
 	if r.Get("dataType.default").Exists() {
 		attr.DefaultValue = r.Get("dataType.default").String()

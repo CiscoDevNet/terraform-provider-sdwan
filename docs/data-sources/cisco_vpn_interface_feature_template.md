@@ -200,11 +200,11 @@ data "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `tunnel_interface_control_connections` (Boolean) Allow Control Connection
 - `tunnel_interface_control_connections_variable` (String) Variable name
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
-- `tunnel_interface_exclude_controller_group_list` (List of String) Exclude the following controller groups defined in this list
+- `tunnel_interface_exclude_controller_group_list` (List of Number) Exclude the following controller groups defined in this list
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name
 - `tunnel_interface_gre_tunnel_destination_ip` (String) Extend the TLOC to a remote node over GRE tunnel
 - `tunnel_interface_gre_tunnel_destination_ip_variable` (String) Variable name
-- `tunnel_interface_groups` (List of String) List of groups
+- `tunnel_interface_groups` (List of Number) List of groups
 - `tunnel_interface_groups_variable` (String) Variable name
 - `tunnel_interface_hello_interval` (Number) Set time period of control hello packets <100..600000> milli seconds
 - `tunnel_interface_hello_interval_variable` (String) Variable name
