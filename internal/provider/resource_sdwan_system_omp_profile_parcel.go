@@ -22,12 +22,10 @@ package provider
 import (
 	"context"
 	"fmt"
-	"regexp"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -40,26 +38,26 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &SystemGlobalProfileParcelResource{}
-var _ resource.ResourceWithImportState = &SystemGlobalProfileParcelResource{}
+var _ resource.Resource = &SystemOMPProfileParcelResource{}
+var _ resource.ResourceWithImportState = &SystemOMPProfileParcelResource{}
 
-func NewSystemGlobalProfileParcelResource() resource.Resource {
-	return &SystemGlobalProfileParcelResource{}
+func NewSystemOMPProfileParcelResource() resource.Resource {
+	return &SystemOMPProfileParcelResource{}
 }
 
-type SystemGlobalProfileParcelResource struct {
+type SystemOMPProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *SystemGlobalProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_system_global_profile_parcel"
+func (r *SystemOMPProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_system_omp_profile_parcel"
 }
 
-func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System Global profile parcel.").AddMinimumVersionDescription("20.9.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a System OMP profile parcel.").AddMinimumVersionDescription("20.9.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -85,203 +83,229 @@ func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req reso
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Optional:            true,
 			},
-			"http_server": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set a HTTP Server").AddDefaultValueDescription("false").String,
+			"graceful_restart": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Graceful Restart for OMP").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"http_server_variable": schema.StringAttribute{
+			"graceful_restart_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"https_server": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set a HTTPS Server").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"https_server_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"ftp_passive": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set Passive FTP").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"ftp_passive_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"domain_lookup": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure Domain-Lookup").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"domain_lookup_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"arp_proxy": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set ARP Proxy").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"arp_proxy_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"rsh_rcp": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set RSH/RCP").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"rsh_rcp_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"line_vty": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure Telnet (Outbound)").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"line_vty_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"cdp": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure CDP").AddDefaultValueDescription("true").String,
-				Optional:            true,
-			},
-			"cdp_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"lldp": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure LLDP").AddDefaultValueDescription("true").String,
-				Optional:            true,
-			},
-			"lldp_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"source_interface": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Specify interface for source address in all HTTP(S) client connections").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.LengthBetween(3, 32),
-					stringvalidator.RegexMatches(regexp.MustCompile(`(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
-				},
-			},
-			"source_interface_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"tcp_keepalives_in": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure tcp-keepalives-in").AddDefaultValueDescription("true").String,
-				Optional:            true,
-			},
-			"tcp_keepalives_in_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"tcp_keepalives_out": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure tcp-keepalives-out").AddDefaultValueDescription("true").String,
-				Optional:            true,
-			},
-			"tcp_keepalives_out_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"tcp_small_servers": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure tcp-small-servers").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"tcp_small_servers_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"udp_small_servers": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure udp-small-servers").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"udp_small_servers_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"console_logging": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure Console Logging").AddDefaultValueDescription("true").String,
-				Optional:            true,
-			},
-			"console_logging_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"ip_source_routing": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set Source Route").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"ip_source_routing_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"vty_line_logging": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure VTY Line Logging").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"vty_line_logging_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"snmp_ifindex_persist": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure SNMP Ifindex Persist").AddDefaultValueDescription("true").String,
-				Optional:            true,
-			},
-			"snmp_ifindex_persist_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"ignore_bootp": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Configure Ignore BOOTP").AddDefaultValueDescription("true").String,
-				Optional:            true,
-			},
-			"ignore_bootp_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"nat64_udp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT64 UDP session timeout, in seconds").AddIntegerRangeDescription(1, 536870).AddDefaultValueDescription("300").String,
+			"overlay_as": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Overlay AS Number").AddIntegerRangeDescription(1, 4294967295).String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					int64validator.Between(1, 536870),
+					int64validator.Between(1, 4294967295),
 				},
 			},
-			"nat64_udp_timeout_variable": schema.StringAttribute{
+			"overlay_as_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"nat64_tcp_timeout": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set NAT64 TCP session timeout, in seconds").AddIntegerRangeDescription(1, 536870).AddDefaultValueDescription("3600").String,
+			"paths_advertised_per_prefix": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Number of Paths Advertised per Prefix").AddIntegerRangeDescription(1, 16).AddDefaultValueDescription("4").String,
 				Optional:            true,
 				Validators: []validator.Int64{
-					int64validator.Between(1, 536870),
+					int64validator.Between(1, 16),
 				},
 			},
-			"nat64_tcp_timeout_variable": schema.StringAttribute{
+			"paths_advertised_per_prefix_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"http_authentication": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set preference for HTTP Authentication").AddStringEnumDescription("local", "aaa").String,
+			"ecmp_limit": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set maximum number of OMP paths to install in cEdge route table").AddIntegerRangeDescription(1, 0).AddDefaultValueDescription("4").String,
 				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("local", "aaa"),
-				},
 			},
-			"http_authentication_variable": schema.StringAttribute{
+			"ecmp_limit_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ssh_version": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set SSH version").AddStringEnumDescription("2").String,
+			"shutdown": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Shutdown").AddDefaultValueDescription("false").String,
 				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("2"),
+			},
+			"shutdown_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"omp_admin_distance_ipv4": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("OMP Admin Distance IPv4").AddIntegerRangeDescription(1, 255).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 255),
 				},
 			},
-			"ssh_version_variable": schema.StringAttribute{
+			"omp_admin_distance_ipv4_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"omp_admin_distance_ipv6": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("OMP Admin Distance IPv6").AddIntegerRangeDescription(1, 255).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 255),
+				},
+			},
+			"omp_admin_distance_ipv6_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertisement_interval": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Advertisement Interval (seconds)").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("1").String,
+				Optional:            true,
+			},
+			"advertisement_interval_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"graceful_restart_timer": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Graceful Restart Timer (seconds)").AddIntegerRangeDescription(1, 604800).AddDefaultValueDescription("43200").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 604800),
+				},
+			},
+			"graceful_restart_timer_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"eor_timer": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("EOR Timer").AddIntegerRangeDescription(1, 3600).AddDefaultValueDescription("300").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 3600),
+				},
+			},
+			"eor_timer_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"holdtime": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Hold Time (seconds)").AddDefaultValueDescription("60").String,
+				Optional:            true,
+			},
+			"holdtime_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_bgp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("BGP").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_bgp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_ospf": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("OSPF").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_ospf_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_ospf_v3": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("OSPFV3").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_ospf_v3_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_cpnnected": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Connected").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_cpnnected_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_static": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Static").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_static_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_eigrp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("EIGRP").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_eigrp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_lisp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("LISP").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_lisp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_isis": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("ISIS").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv4_isis_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_bgp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("BGP").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_bgp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_ospf": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("OSPF").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_ospf_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_connected": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Connected").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_connected_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_static": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Static").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_static_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_eigrp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("EIGRP").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_eigrp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_lisp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("LISP").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_lisp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_isis": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("ISIS").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"advertise_ipv6_isis_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -289,7 +313,7 @@ func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req reso
 	}
 }
 
-func (r *SystemGlobalProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *SystemOMPProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -298,8 +322,8 @@ func (r *SystemGlobalProfileParcelResource) Configure(_ context.Context, req res
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
-func (r *SystemGlobalProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan SystemGlobal
+func (r *SystemOMPProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan SystemOMP
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -328,8 +352,8 @@ func (r *SystemGlobalProfileParcelResource) Create(ctx context.Context, req reso
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *SystemGlobalProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state SystemGlobal
+func (r *SystemOMPProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state SystemOMP
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -349,12 +373,7 @@ func (r *SystemGlobalProfileParcelResource) Read(ctx context.Context, req resour
 		return
 	}
 
-	// If every attribute is set to null we are dealing with an import operation and therefore reading all attributes
-	if state.isNull(ctx, res) {
-		state.fromBody(ctx, res)
-	} else {
-		state.updateFromBody(ctx, res)
-	}
+	state.updateFromBody(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", state.Name.ValueString()))
 
@@ -362,8 +381,8 @@ func (r *SystemGlobalProfileParcelResource) Read(ctx context.Context, req resour
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *SystemGlobalProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state SystemGlobal
+func (r *SystemOMPProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state SystemOMP
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -395,8 +414,8 @@ func (r *SystemGlobalProfileParcelResource) Update(ctx context.Context, req reso
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *SystemGlobalProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state SystemGlobal
+func (r *SystemOMPProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state SystemOMP
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -418,6 +437,6 @@ func (r *SystemGlobalProfileParcelResource) Delete(ctx context.Context, req reso
 	resp.State.RemoveResource(ctx)
 }
 
-func (r *SystemGlobalProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *SystemOMPProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }

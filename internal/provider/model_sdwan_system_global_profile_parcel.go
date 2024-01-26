@@ -830,3 +830,148 @@ func (data *SystemGlobal) updateFromBody(ctx context.Context, res gjson.Result) 
 		}
 	}
 }
+
+func (data *SystemGlobal) isNull(ctx context.Context, res gjson.Result) bool {
+	if !data.FeatureProfileId.IsNull() {
+		return false
+	}
+	if !data.HttpServer.IsNull() {
+		return false
+	}
+	if !data.HttpServerVariable.IsNull() {
+		return false
+	}
+	if !data.HttpsServer.IsNull() {
+		return false
+	}
+	if !data.HttpsServerVariable.IsNull() {
+		return false
+	}
+	if !data.FtpPassive.IsNull() {
+		return false
+	}
+	if !data.FtpPassiveVariable.IsNull() {
+		return false
+	}
+	if !data.DomainLookup.IsNull() {
+		return false
+	}
+	if !data.DomainLookupVariable.IsNull() {
+		return false
+	}
+	if !data.ArpProxy.IsNull() {
+		return false
+	}
+	if !data.ArpProxyVariable.IsNull() {
+		return false
+	}
+	if !data.RshRcp.IsNull() {
+		return false
+	}
+	if !data.RshRcpVariable.IsNull() {
+		return false
+	}
+	if !data.LineVty.IsNull() {
+		return false
+	}
+	if !data.LineVtyVariable.IsNull() {
+		return false
+	}
+	if !data.Cdp.IsNull() {
+		return false
+	}
+	if !data.CdpVariable.IsNull() {
+		return false
+	}
+	if !data.Lldp.IsNull() {
+		return false
+	}
+	if !data.LldpVariable.IsNull() {
+		return false
+	}
+	if !data.SourceInterface.IsNull() {
+		return false
+	}
+	if !data.SourceInterfaceVariable.IsNull() {
+		return false
+	}
+	if !data.TcpKeepalivesIn.IsNull() {
+		return false
+	}
+	if !data.TcpKeepalivesInVariable.IsNull() {
+		return false
+	}
+	if !data.TcpKeepalivesOut.IsNull() {
+		return false
+	}
+	if !data.TcpKeepalivesOutVariable.IsNull() {
+		return false
+	}
+	if !data.TcpSmallServers.IsNull() {
+		return false
+	}
+	if !data.TcpSmallServersVariable.IsNull() {
+		return false
+	}
+	if !data.UdpSmallServers.IsNull() {
+		return false
+	}
+	if !data.UdpSmallServersVariable.IsNull() {
+		return false
+	}
+	if !data.ConsoleLogging.IsNull() {
+		return false
+	}
+	if !data.ConsoleLoggingVariable.IsNull() {
+		return false
+	}
+	if !data.IpSourceRouting.IsNull() {
+		return false
+	}
+	if !data.IpSourceRoutingVariable.IsNull() {
+		return false
+	}
+	if !data.VtyLineLogging.IsNull() {
+		return false
+	}
+	if !data.VtyLineLoggingVariable.IsNull() {
+		return false
+	}
+	if !data.SnmpIfindexPersist.IsNull() {
+		return false
+	}
+	if !data.SnmpIfindexPersistVariable.IsNull() {
+		return false
+	}
+	if !data.IgnoreBootp.IsNull() {
+		return false
+	}
+	if !data.IgnoreBootpVariable.IsNull() {
+		return false
+	}
+	if !data.Nat64UdpTimeout.IsNull() {
+		return false
+	}
+	if !data.Nat64UdpTimeoutVariable.IsNull() {
+		return false
+	}
+	if !data.Nat64TcpTimeout.IsNull() {
+		return false
+	}
+	if !data.Nat64TcpTimeoutVariable.IsNull() {
+		return false
+	}
+	if !data.HttpAuthentication.IsNull() {
+		return false
+	}
+	if !data.HttpAuthenticationVariable.IsNull() {
+		return false
+	}
+	if !data.SshVersion.IsNull() {
+		return false
+	}
+	if !data.SshVersionVariable.IsNull() {
+		return false
+	}
+	return true
+}
