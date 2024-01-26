@@ -43,7 +43,6 @@ func TestAccSdwanCiscoLoggingFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.name", "PROF1"),
 					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.version", "TLSv1.2"),
 					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.authentication_type", "Server"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.ciphersuite_list", "aes-128-cbc-sha"),
 					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.hostname_ip", "2.2.2.2"),
 					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.vpn_id", "1"),
 					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.source_interface", "e1"),
@@ -87,7 +86,7 @@ func testAccSdwanCiscoLoggingFeatureTemplateConfig_all() string {
 			name = "PROF1"
 			version = "TLSv1.2"
 			authentication_type = "Server"
-			ciphersuite_list = "aes-128-cbc-sha"
+			ciphersuite_list = ["aes-128-cbc-sha"]
 		}]
 		ipv4_servers = [{
 			hostname_ip = "2.2.2.2"

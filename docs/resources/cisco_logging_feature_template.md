@@ -27,7 +27,7 @@ resource "sdwan_cisco_logging_feature_template" "example" {
       name                = "PROF1"
       version             = "TLSv1.2"
       authentication_type = "Server"
-      ciphersuite_list    = "aes-128-cbc-sha"
+      ciphersuite_list    = ["aes-128-cbc-sha"]
     }
   ]
   ipv4_servers = [
@@ -151,8 +151,7 @@ Optional:
 
 - `authentication_type` (String) Authentication Type
   - Choices: `Server`, `Mutual`
-- `ciphersuite_list` (String) Syslog secure server ciphersuites
-  - Choices: `aes-128-cbc-sha`, `aes-256-cbc-sha`, `dhe-aes-cbc-sha2`, `dhe-aes-gcm-sha2`, `ecdhe-ecdsa-aes-gcm-sha2`, `ecdhe-rsa-aes-cbc-sha2`, `ecdhe-rsa-aes-gcm-sha2`, `rsa-aes-cbc-sha2`, `rsa-aes-gcm-sha2`
+- `ciphersuite_list` (List of String) Syslog secure server ciphersuites. Possible values: `aes-128-cbc-sha`, `aes-256-cbc-sha`, `dhe-aes-cbc-sha2`, `dhe-aes-gcm-sha2`, `ecdhe-ecdsa-aes-gcm-sha2`, `ecdhe-rsa-aes-cbc-sha2`, `ecdhe-rsa-aes-gcm-sha2`, `rsa-aes-cbc-sha2`, `rsa-aes-gcm-sha2`
 - `ciphersuite_list_variable` (String) Variable name
 - `name` (String) Specify the name of the TLS profile
 - `name_variable` (String) Variable name

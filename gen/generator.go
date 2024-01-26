@@ -471,11 +471,13 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 					attr.StringMaxLength = r.Get("dataType.maxLength").Int()
 				}
 			}
-		} else if t == "enum" || t == "enumList" {
+		} else if t == "enum" {
 			attr.Type = "String"
 			for _, v := range r.Get("dataType.values").Array() {
 				attr.EnumValues = append(attr.EnumValues, v.Get("key").String())
 			}
+		} else if t == "enumList" {
+			attr.Type = "StringList"
 		} else if t == "radioButtonList" {
 			attr.Type = "String"
 			for _, v := range r.Get("dataType.values").Array() {

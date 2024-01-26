@@ -134,8 +134,9 @@ func (d *CiscoLoggingFeatureTemplateDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "Authentication Type",
 							Computed:            true,
 						},
-						"ciphersuite_list": schema.StringAttribute{
-							MarkdownDescription: "Syslog secure server ciphersuites",
+						"ciphersuite_list": schema.ListAttribute{
+							MarkdownDescription: "Syslog secure server ciphersuites. Possible values: `aes-128-cbc-sha`, `aes-256-cbc-sha`, `dhe-aes-cbc-sha2`, `dhe-aes-gcm-sha2`, `ecdhe-ecdsa-aes-gcm-sha2`, `ecdhe-rsa-aes-cbc-sha2`, `ecdhe-rsa-aes-gcm-sha2`, `rsa-aes-cbc-sha2`, `rsa-aes-gcm-sha2`",
+							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"ciphersuite_list_variable": schema.StringAttribute{

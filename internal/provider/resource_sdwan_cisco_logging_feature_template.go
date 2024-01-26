@@ -153,12 +153,10 @@ func (r *CiscoLoggingFeatureTemplateResource) Schema(ctx context.Context, req re
 								stringvalidator.OneOf("Server", "Mutual"),
 							},
 						},
-						"ciphersuite_list": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Syslog secure server ciphersuites").AddStringEnumDescription("aes-128-cbc-sha", "aes-256-cbc-sha", "dhe-aes-cbc-sha2", "dhe-aes-gcm-sha2", "ecdhe-ecdsa-aes-gcm-sha2", "ecdhe-rsa-aes-cbc-sha2", "ecdhe-rsa-aes-gcm-sha2", "rsa-aes-cbc-sha2", "rsa-aes-gcm-sha2").String,
+						"ciphersuite_list": schema.ListAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Syslog secure server ciphersuites. Possible values: `aes-128-cbc-sha`, `aes-256-cbc-sha`, `dhe-aes-cbc-sha2`, `dhe-aes-gcm-sha2`, `ecdhe-ecdsa-aes-gcm-sha2`, `ecdhe-rsa-aes-cbc-sha2`, `ecdhe-rsa-aes-gcm-sha2`, `rsa-aes-cbc-sha2`, `rsa-aes-gcm-sha2`").String,
+							ElementType:         types.StringType,
 							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("aes-128-cbc-sha", "aes-256-cbc-sha", "dhe-aes-cbc-sha2", "dhe-aes-gcm-sha2", "ecdhe-ecdsa-aes-gcm-sha2", "ecdhe-rsa-aes-cbc-sha2", "ecdhe-rsa-aes-gcm-sha2", "rsa-aes-cbc-sha2", "rsa-aes-gcm-sha2"),
-							},
 						},
 						"ciphersuite_list_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

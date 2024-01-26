@@ -10,7 +10,7 @@ resource "sdwan_cisco_logging_feature_template" "example" {
       name                = "PROF1"
       version             = "TLSv1.2"
       authentication_type = "Server"
-      ciphersuite_list    = "aes-128-cbc-sha"
+      ciphersuite_list    = ["aes-128-cbc-sha"]
     }
   ]
   ipv4_servers = [

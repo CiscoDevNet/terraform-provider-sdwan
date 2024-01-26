@@ -54,7 +54,7 @@ type CiscoLoggingTlsProfiles struct {
 	Version                 types.String `tfsdk:"version"`
 	VersionVariable         types.String `tfsdk:"version_variable"`
 	AuthenticationType      types.String `tfsdk:"authentication_type"`
-	CiphersuiteList         types.String `tfsdk:"ciphersuite_list"`
+	CiphersuiteList         types.List   `tfsdk:"ciphersuite_list"`
 	CiphersuiteListVariable types.String `tfsdk:"ciphersuite_list_variable"`
 }
 
@@ -212,7 +212,9 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ciphersuite.ciphersuite-list."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ciphersuite.ciphersuite-list."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "ciphersuite.ciphersuite-list."+"vipValue", item.CiphersuiteList.ValueString())
+			var values []string
+			item.CiphersuiteList.ElementsAs(ctx, &values, false)
+			itemBody, _ = sjson.Set(itemBody, "ciphersuite.ciphersuite-list."+"vipValue", values)
 		}
 		if !item.Optional.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
@@ -598,23 +600,23 @@ func (data *CiscoLogging) fromBody(ctx context.Context, res gjson.Result) {
 				item.AuthenticationType = types.StringNull()
 
 			}
-			if cValue := v.Get("ciphersuite.ciphersuite-list.vipType"); cValue.Exists() {
+			if cValue := v.Get("ciphersuite.ciphersuite-list.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.CiphersuiteList = types.StringNull()
+					item.CiphersuiteList = types.ListNull(types.StringType)
 
 					cv := v.Get("ciphersuite.ciphersuite-list.vipVariableName")
 					item.CiphersuiteListVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.CiphersuiteList = types.StringNull()
+					item.CiphersuiteList = types.ListNull(types.StringType)
 					item.CiphersuiteListVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("ciphersuite.ciphersuite-list.vipValue")
-					item.CiphersuiteList = types.StringValue(cv.String())
+					item.CiphersuiteList = helpers.GetStringList(cv.Array())
 					item.CiphersuiteListVariable = types.StringNull()
 				}
 			} else {
-				item.CiphersuiteList = types.StringNull()
+				item.CiphersuiteList = types.ListNull(types.StringType)
 				item.CiphersuiteListVariable = types.StringNull()
 			}
 			data.TlsProfiles = append(data.TlsProfiles, item)
