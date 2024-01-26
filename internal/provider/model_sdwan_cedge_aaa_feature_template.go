@@ -147,7 +147,7 @@ type CEdgeAAARadiusServerGroupsServers struct {
 
 type CEdgeAAARadiusClientsVpnConfigurations struct {
 	Optional          types.Bool   `tfsdk:"optional"`
-	VpnId             types.String `tfsdk:"vpn_id"`
+	VpnId             types.Int64  `tfsdk:"vpn_id"`
 	VpnIdVariable     types.String `tfsdk:"vpn_id_variable"`
 	ServerKey         types.String `tfsdk:"server_key"`
 	ServerKeyVariable types.String `tfsdk:"server_key_variable"`
@@ -547,7 +547,7 @@ func (data CEdgeAAA) toBody(ctx context.Context) string {
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "name."+"vipObjectType", "object")
 				itemChildBody, _ = sjson.Set(itemChildBody, "name."+"vipType", "constant")
-				itemChildBody, _ = sjson.Set(itemChildBody, "name."+"vipValue", childItem.VpnId.ValueString())
+				itemChildBody, _ = sjson.Set(itemChildBody, "name."+"vipValue", childItem.VpnId.ValueInt64())
 			}
 			itemChildAttributes = append(itemChildAttributes, "server-key")
 
@@ -1414,21 +1414,21 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 					}
 					if ccValue := cv.Get("name.vipType"); ccValue.Exists() {
 						if ccValue.String() == "variableName" {
-							cItem.VpnId = types.StringNull()
+							cItem.VpnId = types.Int64Null()
 
 							ccv := cv.Get("name.vipVariableName")
 							cItem.VpnIdVariable = types.StringValue(ccv.String())
 
 						} else if ccValue.String() == "ignore" {
-							cItem.VpnId = types.StringNull()
+							cItem.VpnId = types.Int64Null()
 							cItem.VpnIdVariable = types.StringNull()
 						} else if ccValue.String() == "constant" {
 							ccv := cv.Get("name.vipValue")
-							cItem.VpnId = types.StringValue(ccv.String())
+							cItem.VpnId = types.Int64Value(ccv.Int())
 							cItem.VpnIdVariable = types.StringNull()
 						}
 					} else {
-						cItem.VpnId = types.StringNull()
+						cItem.VpnId = types.Int64Null()
 						cItem.VpnIdVariable = types.StringNull()
 					}
 					if ccValue := cv.Get("server-key.vipType"); ccValue.Exists() {

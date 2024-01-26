@@ -44,7 +44,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       client_ip = "2.2.2.2"
       vpn_configurations = [
         {
-          vpn_id     = "1"
+          vpn_id     = 1
           server_key = "key123"
         }
       ]

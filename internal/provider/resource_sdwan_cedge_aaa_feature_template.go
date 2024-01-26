@@ -332,12 +332,9 @@ func (r *CEdgeAAAFeatureTemplateResource) Schema(ctx context.Context, req resour
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"vpn_id": schema.StringAttribute{
+									"vpn_id": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("VPN ID").String,
 										Optional:            true,
-										Validators: []validator.String{
-											stringvalidator.LengthBetween(1, 32),
-										},
 									},
 									"vpn_id_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

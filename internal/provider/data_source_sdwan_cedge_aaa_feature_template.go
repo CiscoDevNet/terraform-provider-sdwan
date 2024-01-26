@@ -283,7 +283,7 @@ func (d *CEdgeAAAFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"vpn_id": schema.StringAttribute{
+									"vpn_id": schema.Int64Attribute{
 										MarkdownDescription: "VPN ID",
 										Computed:            true,
 									},

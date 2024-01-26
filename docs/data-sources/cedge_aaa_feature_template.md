@@ -104,7 +104,7 @@ Read-Only:
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `server_key` (String) Specify a RADIUS client server-key
 - `server_key_variable` (String) Variable name
-- `vpn_id` (String) VPN ID
+- `vpn_id` (Number) VPN ID
 - `vpn_id_variable` (String) Variable name
 
 

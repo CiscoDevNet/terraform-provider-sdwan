@@ -61,7 +61,7 @@ resource "sdwan_cedge_aaa_feature_template" "example" {
       client_ip = "2.2.2.2"
       vpn_configurations = [
         {
-          vpn_id     = "1"
+          vpn_id     = 1
           server_key = "key123"
         }
       ]
@@ -220,7 +220,7 @@ Optional:
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `server_key` (String) Specify a RADIUS client server-key
 - `server_key_variable` (String) Variable name
-- `vpn_id` (String) VPN ID
+- `vpn_id` (Number) VPN ID
 - `vpn_id_variable` (String) Variable name
 
 

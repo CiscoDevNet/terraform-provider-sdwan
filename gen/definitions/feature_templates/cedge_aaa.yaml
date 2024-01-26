@@ -75,6 +75,7 @@ attributes:
         attributes:
           - model_name: name
             tf_name: vpn_id
+            type: Int64
             example: 1
           - model_name: server-key
             example: key123
