@@ -382,10 +382,10 @@ func (r *CiscoBGPFeatureTemplateResource) Schema(ctx context.Context, req resour
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"family_type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Set BGP address family").AddStringEnumDescription("ipv4-unicast").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Set BGP address family").AddStringEnumDescription("ipv4-unicast", "ipv6-unicast").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("ipv4-unicast"),
+								stringvalidator.OneOf("ipv4-unicast", "ipv6-unicast"),
 							},
 						},
 						"ipv4_aggregate_addresses": schema.ListNestedAttribute{

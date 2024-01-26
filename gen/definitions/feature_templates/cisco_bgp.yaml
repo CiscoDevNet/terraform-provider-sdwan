@@ -75,6 +75,8 @@ attributes:
     tf_name: address_families
     attributes:
       - model_name: family-type
+        type: String
+        enum_values: [ipv4-unicast, ipv6-unicast]
         example: ipv4-unicast
       - model_name: aggregate-address
         tf_name: ipv4_aggregate_addresses

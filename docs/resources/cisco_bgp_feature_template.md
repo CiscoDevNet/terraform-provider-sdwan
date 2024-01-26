@@ -263,7 +263,7 @@ Optional:
   - Default value: `false`
 - `default_information_originate_variable` (String) Variable name
 - `family_type` (String) Set BGP address family
-  - Choices: `ipv4-unicast`
+  - Choices: `ipv4-unicast`, `ipv6-unicast`
 - `ipv4_aggregate_addresses` (Attributes List) Aggregate prefixes in specific range (see [below for nested schema](#nestedatt--address_families--ipv4_aggregate_addresses))
 - `ipv4_networks` (Attributes List) Configure the networks for BGP to advertise (see [below for nested schema](#nestedatt--address_families--ipv4_networks))
 - `ipv6_aggregate_addresses` (Attributes List) IPv6 Aggregate prefixes in specific range (see [below for nested schema](#nestedatt--address_families--ipv6_aggregate_addresses))

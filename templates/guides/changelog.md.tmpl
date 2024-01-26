@@ -16,6 +16,7 @@ description: |-
 - BREAKING CHANGE: Rename `von_configurations` attribute of `sdwan_cedge_aaa_feature_template` resource and data source to `vpn_configurations`
 - Add `strict` and `fallbackToBestPath` options to SLA class action parameters of `sdwan_application_aware_routing_policy_definition` resource and data source
 - BREAKING CHANGE: Rename `radius_dynamic_author_cts_authorization_list` attribute of `sdwan_cedge_aaa_feature_template` resource and data source to `radius_trustsec_cts_authorization_list`
+- Add option to configure `ipv6-unicast` address families to `sdwan_cisco_bgp_feature_template` resource and data source
 
 ## 0.3.4
 
