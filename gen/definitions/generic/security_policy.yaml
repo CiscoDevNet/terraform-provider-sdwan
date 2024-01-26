@@ -79,7 +79,7 @@ attributes:
     data_path: [policyDefinition, settings]
     tf_name: audit_trail
     type: String
-    enum_values: [on, off]
+    enum_values: ["on", "off"]
     description: Audit trail
     example: on
     exclude_test: true
@@ -87,7 +87,7 @@ attributes:
     data_path: [policyDefinition, settings]
     tf_name: match_statistics_per_filter
     type: String
-    enum_values: [on, off]
+    enum_values: ["on", "off"]
     description: Match Statistics per-filter
     example: on
     exclude_test: true
