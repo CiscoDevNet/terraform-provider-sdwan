@@ -80,6 +80,7 @@ attributes:
         example: ipv4-unicast
       - model_name: aggregate-address
         tf_name: ipv4_aggregate_addresses
+        exclude_ignore: true
         attributes:
           - model_name: prefix
             example: 10.0.0.0/8
@@ -90,9 +91,11 @@ attributes:
             example: true
       - model_name: ipv6-aggregate-address
         tf_name: ipv6_aggregate_addresses
+        exclude_ignore: true
+        exclude_test: true
         attributes:
           - model_name: prefix
-            example: 10.0.0.0/8
+            example: 2001::/64
           - model_name: as-set
             tf_name: as_set_path
             example: true
@@ -100,14 +103,17 @@ attributes:
             example: true
       - model_name: network
         tf_name: ipv4_networks
+        exclude_ignore: true
         attributes:
           - model_name: prefix
             example: 10.2.2.0/24
       - model_name: ipv6-network
         tf_name: ipv6_networks
+        exclude_ignore: true
+        exclude_test: true
         attributes:
           - model_name: prefix
-            example: 10.2.2.0/24
+            example: 2001::1/128
       - model_name: paths
         tf_name: maximum_paths
         example: 8

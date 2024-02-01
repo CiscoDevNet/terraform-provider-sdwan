@@ -758,10 +758,6 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "aggregate-address."+"vipPrimaryKey", []string{"prefix"})
 			itemBody, _ = sjson.Set(itemBody, "aggregate-address."+"vipValue", []interface{}{})
 		} else {
-			itemBody, _ = sjson.Set(itemBody, "aggregate-address."+"vipObjectType", "tree")
-			itemBody, _ = sjson.Set(itemBody, "aggregate-address."+"vipType", "ignore")
-			itemBody, _ = sjson.Set(itemBody, "aggregate-address."+"vipPrimaryKey", []string{"prefix"})
-			itemBody, _ = sjson.Set(itemBody, "aggregate-address."+"vipValue", []interface{}{})
 		}
 		for _, childItem := range item.Ipv4AggregateAddresses {
 			itemChildBody := ""
@@ -819,10 +815,6 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipv6-aggregate-address."+"vipPrimaryKey", []string{"prefix"})
 			itemBody, _ = sjson.Set(itemBody, "ipv6-aggregate-address."+"vipValue", []interface{}{})
 		} else {
-			itemBody, _ = sjson.Set(itemBody, "ipv6-aggregate-address."+"vipObjectType", "tree")
-			itemBody, _ = sjson.Set(itemBody, "ipv6-aggregate-address."+"vipType", "ignore")
-			itemBody, _ = sjson.Set(itemBody, "ipv6-aggregate-address."+"vipPrimaryKey", []string{"prefix"})
-			itemBody, _ = sjson.Set(itemBody, "ipv6-aggregate-address."+"vipValue", []interface{}{})
 		}
 		for _, childItem := range item.Ipv6AggregateAddresses {
 			itemChildBody := ""
@@ -880,10 +872,6 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "network."+"vipPrimaryKey", []string{"prefix"})
 			itemBody, _ = sjson.Set(itemBody, "network."+"vipValue", []interface{}{})
 		} else {
-			itemBody, _ = sjson.Set(itemBody, "network."+"vipObjectType", "tree")
-			itemBody, _ = sjson.Set(itemBody, "network."+"vipType", "ignore")
-			itemBody, _ = sjson.Set(itemBody, "network."+"vipPrimaryKey", []string{"prefix"})
-			itemBody, _ = sjson.Set(itemBody, "network."+"vipValue", []interface{}{})
 		}
 		for _, childItem := range item.Ipv4Networks {
 			itemChildBody := ""
@@ -913,10 +901,6 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipv6-network."+"vipPrimaryKey", []string{"prefix"})
 			itemBody, _ = sjson.Set(itemBody, "ipv6-network."+"vipValue", []interface{}{})
 		} else {
-			itemBody, _ = sjson.Set(itemBody, "ipv6-network."+"vipObjectType", "tree")
-			itemBody, _ = sjson.Set(itemBody, "ipv6-network."+"vipType", "ignore")
-			itemBody, _ = sjson.Set(itemBody, "ipv6-network."+"vipPrimaryKey", []string{"prefix"})
-			itemBody, _ = sjson.Set(itemBody, "ipv6-network."+"vipValue", []interface{}{})
 		}
 		for _, childItem := range item.Ipv6Networks {
 			itemChildBody := ""

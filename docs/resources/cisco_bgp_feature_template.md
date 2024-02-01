@@ -79,19 +79,7 @@ resource "sdwan_cisco_bgp_feature_template" "example" {
           summary_only = true
         }
       ]
-      ipv6_aggregate_addresses = [
-        {
-          prefix       = "10.0.0.0/8"
-          as_set_path  = true
-          summary_only = true
-        }
-      ]
       ipv4_networks = [
-        {
-          prefix = "10.2.2.0/24"
-        }
-      ]
-      ipv6_networks = [
         {
           prefix = "10.2.2.0/24"
         }

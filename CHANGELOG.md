@@ -1,3 +1,7 @@
+## 0.3.6 (unreleased)
+
+- Fix issue with address family configuration of `sdwan_cisco_bgp_feature_template` resource
+
 ## 0.3.5
 
 - Fix import operation of profile parcel resources
