@@ -227,11 +227,11 @@ func (r *CiscoSecurityFeatureTemplateResource) Schema(ctx context.Context, req r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"send_lifetime": schema.BoolAttribute{
+						"send_lifetime_local": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Send lifetime Local").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
-						"send_lifetime_variable": schema.StringAttribute{
+						"send_lifetime_local_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -269,11 +269,11 @@ func (r *CiscoSecurityFeatureTemplateResource) Schema(ctx context.Context, req r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"accept_lifetime": schema.BoolAttribute{
+						"accept_lifetime_local": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Accept Lifetime Local").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
-						"accept_lifetime_variable": schema.StringAttribute{
+						"accept_lifetime_local_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

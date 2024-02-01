@@ -49,13 +49,13 @@ func TestAccSdwanCiscoSecurityFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.receive_id", "0"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.crypto_algorithm", "hmac-sha-256"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.key_string", "abc123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_local", "true"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_start_time", "2022-12-31T23:59"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_end_time_format", "infinite"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_duration", "1000"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_end_time", "2032-12-31T23:59"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_infinite", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_local", "true"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_start_time", "2022-12-31T23:59"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_end_time_format", "infinite"),
 					resource.TestCheckResourceAttr("sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_duration", "1000"),
@@ -102,13 +102,13 @@ func testAccSdwanCiscoSecurityFeatureTemplateConfig_all() string {
 			receive_id = 0
 			crypto_algorithm = "hmac-sha-256"
 			key_string = "abc123"
-			send_lifetime = true
+			send_lifetime_local = true
 			send_lifetime_start_time = "2022-12-31T23:59"
 			send_lifetime_end_time_format = "infinite"
 			send_lifetime_duration = 1000
 			send_lifetime_end_time = "2032-12-31T23:59"
 			send_lifetime_infinite = true
-			accept_lifetime = true
+			accept_lifetime_local = true
 			accept_lifetime_start_time = "2022-12-31T23:59"
 			accept_lifetime_end_time_format = "infinite"
 			accept_lifetime_duration = 1000

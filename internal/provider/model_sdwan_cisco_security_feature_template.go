@@ -69,8 +69,8 @@ type CiscoSecurityKeys struct {
 	CryptoAlgorithm                types.String `tfsdk:"crypto_algorithm"`
 	KeyString                      types.String `tfsdk:"key_string"`
 	KeyStringVariable              types.String `tfsdk:"key_string_variable"`
-	SendLifetime                   types.Bool   `tfsdk:"send_lifetime"`
-	SendLifetimeVariable           types.String `tfsdk:"send_lifetime_variable"`
+	SendLifetimeLocal              types.Bool   `tfsdk:"send_lifetime_local"`
+	SendLifetimeLocalVariable      types.String `tfsdk:"send_lifetime_local_variable"`
 	SendLifetimeStartTime          types.String `tfsdk:"send_lifetime_start_time"`
 	SendLifetimeEndTimeFormat      types.String `tfsdk:"send_lifetime_end_time_format"`
 	SendLifetimeDuration           types.Int64  `tfsdk:"send_lifetime_duration"`
@@ -78,8 +78,8 @@ type CiscoSecurityKeys struct {
 	SendLifetimeEndTime            types.String `tfsdk:"send_lifetime_end_time"`
 	SendLifetimeInfinite           types.Bool   `tfsdk:"send_lifetime_infinite"`
 	SendLifetimeInfiniteVariable   types.String `tfsdk:"send_lifetime_infinite_variable"`
-	AcceptLifetime                 types.Bool   `tfsdk:"accept_lifetime"`
-	AcceptLifetimeVariable         types.String `tfsdk:"accept_lifetime_variable"`
+	AcceptLifetimeLocal            types.Bool   `tfsdk:"accept_lifetime_local"`
+	AcceptLifetimeLocalVariable    types.String `tfsdk:"accept_lifetime_local_variable"`
 	AcceptLifetimeStartTime        types.String `tfsdk:"accept_lifetime_start_time"`
 	AcceptLifetimeEndTimeFormat    types.String `tfsdk:"accept_lifetime_end_time_format"`
 	AcceptLifetimeDuration         types.Int64  `tfsdk:"accept_lifetime_duration"`
@@ -301,17 +301,17 @@ func (data CiscoSecurity) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "local")
 
-		if !item.SendLifetimeVariable.IsNull() {
+		if !item.SendLifetimeLocalVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipVariableName", item.SendLifetimeVariable.ValueString())
-		} else if item.SendLifetime.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipVariableName", item.SendLifetimeLocalVariable.ValueString())
+		} else if item.SendLifetimeLocal.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipValue", strconv.FormatBool(item.SendLifetime.ValueBool()))
+			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.local."+"vipValue", strconv.FormatBool(item.SendLifetimeLocal.ValueBool()))
 		}
 		itemAttributes = append(itemAttributes, "start-epoch")
 		if item.SendLifetimeStartTime.IsNull() {
@@ -367,17 +367,17 @@ func (data CiscoSecurity) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "local")
 
-		if !item.AcceptLifetimeVariable.IsNull() {
+		if !item.AcceptLifetimeLocalVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipVariableName", item.AcceptLifetimeVariable.ValueString())
-		} else if item.AcceptLifetime.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipVariableName", item.AcceptLifetimeLocalVariable.ValueString())
+		} else if item.AcceptLifetimeLocal.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipValue", strconv.FormatBool(item.AcceptLifetime.ValueBool()))
+			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.local."+"vipValue", strconv.FormatBool(item.AcceptLifetimeLocal.ValueBool()))
 		}
 		itemAttributes = append(itemAttributes, "start-epoch")
 		if item.AcceptLifetimeStartTime.IsNull() {
@@ -766,22 +766,22 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("send-lifetime.lifetime-group-v1.local.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.SendLifetime = types.BoolNull()
+					item.SendLifetimeLocal = types.BoolNull()
 
 					cv := v.Get("send-lifetime.lifetime-group-v1.local.vipVariableName")
-					item.SendLifetimeVariable = types.StringValue(cv.String())
+					item.SendLifetimeLocalVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.SendLifetime = types.BoolNull()
-					item.SendLifetimeVariable = types.StringNull()
+					item.SendLifetimeLocal = types.BoolNull()
+					item.SendLifetimeLocalVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("send-lifetime.lifetime-group-v1.local.vipValue")
-					item.SendLifetime = types.BoolValue(cv.Bool())
-					item.SendLifetimeVariable = types.StringNull()
+					item.SendLifetimeLocal = types.BoolValue(cv.Bool())
+					item.SendLifetimeLocalVariable = types.StringNull()
 				}
 			} else {
-				item.SendLifetime = types.BoolNull()
-				item.SendLifetimeVariable = types.StringNull()
+				item.SendLifetimeLocal = types.BoolNull()
+				item.SendLifetimeLocalVariable = types.StringNull()
 			}
 			if cValue := v.Get("send-lifetime.lifetime-group-v1.start-epoch.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -871,22 +871,22 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("accept-lifetime.lifetime-group-v1.local.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.AcceptLifetime = types.BoolNull()
+					item.AcceptLifetimeLocal = types.BoolNull()
 
 					cv := v.Get("accept-lifetime.lifetime-group-v1.local.vipVariableName")
-					item.AcceptLifetimeVariable = types.StringValue(cv.String())
+					item.AcceptLifetimeLocalVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.AcceptLifetime = types.BoolNull()
-					item.AcceptLifetimeVariable = types.StringNull()
+					item.AcceptLifetimeLocal = types.BoolNull()
+					item.AcceptLifetimeLocalVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("accept-lifetime.lifetime-group-v1.local.vipValue")
-					item.AcceptLifetime = types.BoolValue(cv.Bool())
-					item.AcceptLifetimeVariable = types.StringNull()
+					item.AcceptLifetimeLocal = types.BoolValue(cv.Bool())
+					item.AcceptLifetimeLocalVariable = types.StringNull()
 				}
 			} else {
-				item.AcceptLifetime = types.BoolNull()
-				item.AcceptLifetimeVariable = types.StringNull()
+				item.AcceptLifetimeLocal = types.BoolNull()
+				item.AcceptLifetimeLocalVariable = types.StringNull()
 			}
 			if cValue := v.Get("accept-lifetime.lifetime-group-v1.start-epoch.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1072,7 +1072,7 @@ func (data *CiscoSecurity) hasChanges(ctx context.Context, state *CiscoSecurity)
 			if !data.Keys[i].KeyString.Equal(state.Keys[i].KeyString) {
 				hasChanges = true
 			}
-			if !data.Keys[i].SendLifetime.Equal(state.Keys[i].SendLifetime) {
+			if !data.Keys[i].SendLifetimeLocal.Equal(state.Keys[i].SendLifetimeLocal) {
 				hasChanges = true
 			}
 			if !data.Keys[i].SendLifetimeStartTime.Equal(state.Keys[i].SendLifetimeStartTime) {
@@ -1090,7 +1090,7 @@ func (data *CiscoSecurity) hasChanges(ctx context.Context, state *CiscoSecurity)
 			if !data.Keys[i].SendLifetimeInfinite.Equal(state.Keys[i].SendLifetimeInfinite) {
 				hasChanges = true
 			}
-			if !data.Keys[i].AcceptLifetime.Equal(state.Keys[i].AcceptLifetime) {
+			if !data.Keys[i].AcceptLifetimeLocal.Equal(state.Keys[i].AcceptLifetimeLocal) {
 				hasChanges = true
 			}
 			if !data.Keys[i].AcceptLifetimeStartTime.Equal(state.Keys[i].AcceptLifetimeStartTime) {

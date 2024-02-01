@@ -22,13 +22,13 @@ resource "sdwan_cisco_security_feature_template" "example" {
       receive_id                      = 0
       crypto_algorithm                = "hmac-sha-256"
       key_string                      = "abc123"
-      send_lifetime                   = true
+      send_lifetime_local             = true
       send_lifetime_start_time        = "2022-12-31T23:59"
       send_lifetime_end_time_format   = "infinite"
       send_lifetime_duration          = 1000
       send_lifetime_end_time          = "2032-12-31T23:59"
       send_lifetime_infinite          = true
-      accept_lifetime                 = true
+      accept_lifetime_local           = true
       accept_lifetime_start_time      = "2022-12-31T23:59"
       accept_lifetime_end_time_format = "infinite"
       accept_lifetime_duration        = 1000

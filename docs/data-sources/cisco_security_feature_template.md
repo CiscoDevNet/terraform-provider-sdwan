@@ -64,15 +64,15 @@ Read-Only:
 
 - `accept_ao_mismatch` (Boolean) Configure Accept AO Mismatch
 - `accept_ao_mismatch_variable` (String) Variable name
-- `accept_lifetime` (Boolean) Configure Accept Lifetime Local
 - `accept_lifetime_duration` (Number) Configure Accept lifetime Duration
 - `accept_lifetime_duration_variable` (String) Variable name
 - `accept_lifetime_end_time` (String) Configure Key lifetime end time
 - `accept_lifetime_end_time_format` (String) Configure Key lifetime end time
 - `accept_lifetime_infinite` (Boolean) Configure Key lifetime end time
 - `accept_lifetime_infinite_variable` (String) Variable name
+- `accept_lifetime_local` (Boolean) Configure Accept Lifetime Local
+- `accept_lifetime_local_variable` (String) Variable name
 - `accept_lifetime_start_time` (String) Configure Key lifetime start time
-- `accept_lifetime_variable` (String) Variable name
 - `chain_name` (String) Select the chain name
 - `crypto_algorithm` (String) Crypto Algorithm
 - `id` (String) Select the Key ID
@@ -85,12 +85,12 @@ Read-Only:
 - `receive_id_variable` (String) Variable name
 - `send_id` (Number) Specify the Send ID
 - `send_id_variable` (String) Variable name
-- `send_lifetime` (Boolean) Configure Send lifetime Local
 - `send_lifetime_duration` (Number) Configure Send lifetime Duration
 - `send_lifetime_duration_variable` (String) Variable name
 - `send_lifetime_end_time` (String) Configure Key lifetime end time
 - `send_lifetime_end_time_format` (String) Configure Key lifetime end time
 - `send_lifetime_infinite` (Boolean) Configure Key lifetime end time
 - `send_lifetime_infinite_variable` (String) Variable name
+- `send_lifetime_local` (Boolean) Configure Send lifetime Local
+- `send_lifetime_local_variable` (String) Variable name
 - `send_lifetime_start_time` (String) Configure Key lifetime start time
-- `send_lifetime_variable` (String) Variable name

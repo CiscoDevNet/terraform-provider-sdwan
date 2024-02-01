@@ -39,13 +39,13 @@ resource "sdwan_cisco_security_feature_template" "example" {
       receive_id                      = 0
       crypto_algorithm                = "hmac-sha-256"
       key_string                      = "abc123"
-      send_lifetime                   = true
+      send_lifetime_local             = true
       send_lifetime_start_time        = "2022-12-31T23:59"
       send_lifetime_end_time_format   = "infinite"
       send_lifetime_duration          = 1000
       send_lifetime_end_time          = "2032-12-31T23:59"
       send_lifetime_infinite          = true
-      accept_lifetime                 = true
+      accept_lifetime_local           = true
       accept_lifetime_start_time      = "2022-12-31T23:59"
       accept_lifetime_end_time_format = "infinite"
       accept_lifetime_duration        = 1000
@@ -117,8 +117,6 @@ Optional:
 - `accept_ao_mismatch` (Boolean) Configure Accept AO Mismatch
   - Default value: `false`
 - `accept_ao_mismatch_variable` (String) Variable name
-- `accept_lifetime` (Boolean) Configure Accept Lifetime Local
-  - Default value: `false`
 - `accept_lifetime_duration` (Number) Configure Accept lifetime Duration
   - Range: `1`-`2147483646`
 - `accept_lifetime_duration_variable` (String) Variable name
@@ -128,8 +126,10 @@ Optional:
   - Default value: `infinite`
 - `accept_lifetime_infinite` (Boolean) Configure Key lifetime end time
 - `accept_lifetime_infinite_variable` (String) Variable name
+- `accept_lifetime_local` (Boolean) Configure Accept Lifetime Local
+  - Default value: `false`
+- `accept_lifetime_local_variable` (String) Variable name
 - `accept_lifetime_start_time` (String) Configure Key lifetime start time
-- `accept_lifetime_variable` (String) Variable name
 - `chain_name` (String) Select the chain name
 - `crypto_algorithm` (String) Crypto Algorithm
   - Choices: `aes-128-cmac`, `hmac-sha-1`, `hmac-sha-256`
@@ -148,8 +148,6 @@ Optional:
   - Range: `0`-`255`
   - Default value: `0`
 - `send_id_variable` (String) Variable name
-- `send_lifetime` (Boolean) Configure Send lifetime Local
-  - Default value: `false`
 - `send_lifetime_duration` (Number) Configure Send lifetime Duration
   - Range: `1`-`2147483646`
 - `send_lifetime_duration_variable` (String) Variable name
@@ -159,8 +157,10 @@ Optional:
   - Default value: `infinite`
 - `send_lifetime_infinite` (Boolean) Configure Key lifetime end time
 - `send_lifetime_infinite_variable` (String) Variable name
+- `send_lifetime_local` (Boolean) Configure Send lifetime Local
+  - Default value: `false`
+- `send_lifetime_local_variable` (String) Variable name
 - `send_lifetime_start_time` (String) Configure Key lifetime start time
-- `send_lifetime_variable` (String) Variable name
 
 ## Import
 

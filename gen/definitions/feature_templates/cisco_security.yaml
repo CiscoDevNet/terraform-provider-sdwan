@@ -42,7 +42,7 @@ attributes:
         example: abc123
       - model_name: local
         data_path: [send-lifetime, lifetime-group-v1]
-        tf_name: send_lifetime
+        tf_name: send_lifetime_local
         example: true
       - model_name: start-epoch
         data_path: [send-lifetime, lifetime-group-v1]
@@ -66,7 +66,7 @@ attributes:
         example: true
       - model_name: local
         data_path: [accept-lifetime, lifetime-group-v1]
-        tf_name: accept_lifetime
+        tf_name: accept_lifetime_local
         example: true
       - model_name: start-epoch
         data_path: [accept-lifetime, lifetime-group-v1]

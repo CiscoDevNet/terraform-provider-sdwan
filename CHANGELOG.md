@@ -2,6 +2,8 @@
 
 - Fix issue with address family configuration of `sdwan_cisco_bgp_feature_template` resource
 - Fix issue with area configuration of `sdwan_cisco_ospf_feature_template` resource
+- BREAKING CHANGE: Rename `send_lifetime` attribute of `sdwan_cisco_security_feature_template` resource to `send_lifetime_local`
+- BREAKING CHANGE: Rename `accept_lifetime` attribute of `sdwan_cisco_security_feature_template` resource to `accept_lifetime_local`
 
 ## 0.3.5
 

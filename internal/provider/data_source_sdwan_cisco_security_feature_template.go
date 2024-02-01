@@ -196,11 +196,11 @@ func (d *CiscoSecurityFeatureTemplateDataSource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"send_lifetime": schema.BoolAttribute{
+						"send_lifetime_local": schema.BoolAttribute{
 							MarkdownDescription: "Configure Send lifetime Local",
 							Computed:            true,
 						},
-						"send_lifetime_variable": schema.StringAttribute{
+						"send_lifetime_local_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
@@ -232,11 +232,11 @@ func (d *CiscoSecurityFeatureTemplateDataSource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"accept_lifetime": schema.BoolAttribute{
+						"accept_lifetime_local": schema.BoolAttribute{
 							MarkdownDescription: "Configure Accept Lifetime Local",
 							Computed:            true,
 						},
-						"accept_lifetime_variable": schema.StringAttribute{
+						"accept_lifetime_local_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
