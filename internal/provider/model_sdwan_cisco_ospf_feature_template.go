@@ -498,8 +498,6 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipVariableName", item.StubNoSummaryVariable.ValueString())
 		} else if item.StubNoSummary.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipType", "constant")
@@ -521,8 +519,6 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipVariableName", item.NssaNoSummaryVariable.ValueString())
 		} else if item.NssaNoSummary.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipType", "constant")

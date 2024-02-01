@@ -80,22 +80,26 @@ attributes:
         type: Bool
         no_augment_config: true
         node_only_container: true
+        exclude_ignore: true
         description: Stub area
         example: false
       - model_name: no-summary
         data_path: [stub]
         tf_name: stub_no_summary
+        exclude_ignore: true
         example: false
       - model_name: nssa
         tf_name: nssa
         type: Bool
         no_augment_config: true
         node_only_container: true
+        exclude_ignore: true
         description: NSSA area
         example: false
       - model_name: no-summary
         data_path: [nssa]
         tf_name: nssa_no_summary
+        exclude_ignore: true
         example: true
       - model_name: interface
         tf_name: interfaces
