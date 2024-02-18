@@ -81,6 +81,9 @@ func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id strin
 				}
 				return true
 			})
+			if strings.Contains(res.Get("validation.status").String(), "failure") {
+				failures = append(failures, fmt.Sprintf("Validation for action %s failed. Validation log: %+v", id, res.Get("validation.activity").String()))
+			}
 			if len(failures) > 0 {
 				return errors.New(strings.Join(failures, "\n"))
 			}
@@ -90,7 +93,7 @@ func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id strin
 		}
 		if attempts > MaxActionAttempts {
 			tflog.Debug(ctx, fmt.Sprintf("[DEBUG] Maximum number of attempts reached for action '%s'.", id))
-			return errors.New(fmt.Sprintf("Maximum waiting time for action '%s' reached.", id))
+			return fmt.Errorf("Maximum waiting time for action '%s' reached.", id)
 		}
 	}
 	return nil
