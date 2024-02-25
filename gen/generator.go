@@ -612,12 +612,20 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				}
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
 				attr.Type = "StringList"
-				if value := t.Get("properties.value.minItems"); value.Exists() {
-					attr.MinList = value.Int()
-				}
-				if value := t.Get("properties.value.maxItems"); value.Exists() {
-					attr.MaxList = value.Int()
-				}
+				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
+				// 	attr.MinList = value.Int()
+				// }
+				// if value := t.Get("properties.value.items.maxItems"); value.Exists() {
+				// 	attr.MaxList = value.Int()
+				// }
+			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
+				attr.Type = "Int64List"
+				// if value := t.Get("properties.value.items.minimum"); value.Exists() {
+				// 	attr.MinInt = value.Int()
+				// }
+				// if value := t.Get("properties.value.items.maximum"); value.Exists() {
+				// 	attr.MaxInt = value.Int()
+				// }
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}

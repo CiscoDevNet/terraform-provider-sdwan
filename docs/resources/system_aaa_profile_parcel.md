@@ -21,7 +21,7 @@ resource "sdwan_system_aaa_profile_parcel" "example" {
   feature_profile_id   = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   authentication_group = true
   accounting_group     = true
-  server_auth_order    = local
+  server_auth_order    = ["local"]
   users = [
     {
       name      = "User1"
@@ -78,7 +78,7 @@ resource "sdwan_system_aaa_profile_parcel" "example" {
       method     = "commands"
       level      = "15"
       start_stop = true
-      group      = RGROUP1
+      group      = ["RGROUP1"]
     }
   ]
   authorization_console         = true
@@ -88,7 +88,7 @@ resource "sdwan_system_aaa_profile_parcel" "example" {
       rule_id          = "1"
       method           = "commands"
       level            = "15"
-      group            = RGROUP1
+      group            = ["RGROUP1"]
       if_authenticated = true
     }
   ]

@@ -81,7 +81,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 				Required:            true,
 			},
 			{{- range  .Attributes}}
-			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 					{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -98,6 +98,8 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 					.String,
 				{{- if eq .Type "StringList"}}
 				ElementType:         types.StringType,
+				{{- else if eq .Type "Int64List"}}
+				ElementType:         types.Int64Type,
 				{{- end}}
 				Optional:            true,
 				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -142,7 +144,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
-						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 								{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -159,6 +161,8 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 								.String,
 							{{- if eq .Type "StringList"}}
 							ElementType:         types.StringType,
+							{{- else if eq .Type "Int64List"}}
+							ElementType:         types.Int64Type,
 							{{- end}}
 							Optional:            true,
 							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -203,7 +207,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
-									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 											{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -220,6 +224,8 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 											.String,
 										{{- if eq .Type "StringList"}}
 										ElementType:         types.StringType,
+										{{- else if eq .Type "Int64List"}}
+										ElementType:         types.Int64Type,
 										{{- end}}
 										Optional:            true,
 										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
@@ -264,7 +270,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
-												"{{.TfName}}": schema.{{if eq .Type "StringList"}}List{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 														{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -281,6 +287,8 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 														.String,
 													{{- if eq .Type "StringList"}}
 													ElementType:         types.StringType,
+													{{- else if eq .Type "Int64List"}}
+													ElementType:         types.Int64Type,
 													{{- end}}
 													Optional:            true,
 													{{- if and (len .EnumValues) (not .IgnoreEnum)}}
