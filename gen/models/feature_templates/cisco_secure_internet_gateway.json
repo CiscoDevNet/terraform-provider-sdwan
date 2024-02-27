@@ -705,7 +705,7 @@
                         "variable", 
                         "notIgnore"
                     ]
-                }, 
+                },
                 {
                     "dataPath": [], 
                     "dataType": {
@@ -717,13 +717,14 @@
                             }
                         ]
                     }, 
-                    "defaultOption": "ignore", 
+                    "defaultOption": "constant", 
                     "description": "Tracker", 
                     "details": "Enable tracker for this interface", 
                     "key": "tracker", 
                     "objectType": "object", 
                     "optionType": [
                         "constant", 
+                        "variable",
                         "ignore"
                     ]
                 }, 
