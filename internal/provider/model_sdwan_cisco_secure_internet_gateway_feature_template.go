@@ -233,7 +233,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "unnumbered")
 		if item.IpUnnumbered.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ip", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ip.unnumbered."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "ip.unnumbered."+"vipType", "constant")
@@ -246,8 +245,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ip.address."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ip.address."+"vipVariableName", item.Ipv4AddressVariable.ValueString())
 		} else if item.Ipv4Address.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ip.address."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ip.address."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ip.address."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ip.address."+"vipType", "constant")

@@ -9,7 +9,7 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
       auto_tunnel_mode              = true
       shutdown                      = true
       description                   = "My Description"
-      ip_unnumbered                 = true
+      ip_unnumbered                 = false
       ipv4_address                  = "1.2.3.4/24"
       tunnel_source                 = "3.3.3.3"
       tunnel_source_interface       = "ge0/1"

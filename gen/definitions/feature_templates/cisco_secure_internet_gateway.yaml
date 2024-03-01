@@ -19,9 +19,11 @@ attributes:
         example: My Description
       - model_name: unnumbered
         tf_name: ip_unnumbered
-        example: true
+        exclude_ignore: true
+        example: false
       - model_name: address
         tf_name: ipv4_address
+        exclude_ignore: true
         example: 1.2.3.4/24
       - model_name: tunnel-source
         example: 3.3.3.3

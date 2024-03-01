@@ -45,7 +45,7 @@ func TestAccSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.auto_tunnel_mode", "true"),
 					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.shutdown", "true"),
 					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.description", "My Description"),
-					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ip_unnumbered", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ip_unnumbered", "false"),
 					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ipv4_address", "1.2.3.4/24"),
 					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.tunnel_source", "3.3.3.3"),
 					resource.TestCheckResourceAttr("sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.tunnel_source_interface", "ge0/1"),
@@ -132,7 +132,7 @@ func testAccSdwanCiscoSecureInternetGatewayFeatureTemplateConfig_all() string {
 			auto_tunnel_mode = true
 			shutdown = true
 			description = "My Description"
-			ip_unnumbered = true
+			ip_unnumbered = false
 			ipv4_address = "1.2.3.4/24"
 			tunnel_source = "3.3.3.3"
 			tunnel_source_interface = "ge0/1"
