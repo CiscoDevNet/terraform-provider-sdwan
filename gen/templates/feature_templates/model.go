@@ -157,6 +157,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "templateName", data.Name.ValueString())
 	body, _ = sjson.Set(body, "templateType", "{{.Model}}")
 	body, _ = sjson.Set(body, "templateDefinition", map[string]interface{}{})
+	{{- if .FeatureTemplateIsGlobal}}
+	body, _ = sjson.Set(body, "isGlobal", true)
+	{{ end}}
 
 	path := "templateDefinition."
 	{{- range .Attributes}}

@@ -75,6 +75,7 @@ func (data CiscoSIGCredentials) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "templateName", data.Name.ValueString())
 	body, _ = sjson.Set(body, "templateType", "cisco_sig_credentials")
 	body, _ = sjson.Set(body, "templateDefinition", map[string]interface{}{})
+	body, _ = sjson.Set(body, "isGlobal", true)
 
 	path := "templateDefinition."
 

@@ -15,6 +15,7 @@ has_version: bool(required=False)
 id_attribute: str(required=False)
 id_from_query_path: str(required=False) # Specify path to ID container if ID is not included in POST response and needs to be resolved via separate GET request
 id_from_query_path_attribute: str(required=False) # Specify attribute name of ID, only relevant if "id_from_query_path" option used, default is "id"
+feature_template_is_global: bool(required=False) # Specify if "isGlobal" flag in payload should be enabled
 skip_templates: list(str(), required=False)
 attributes: list(include('attribute'), required=False)
 test_prerequisites: str(required=False)

@@ -200,6 +200,7 @@ type YamlConfig struct {
 	IdAttribute              string                `yaml:"id_attribute"`
 	IdFromQueryPath          string                `yaml:"id_from_query_path"`
 	IdFromQueryPathAttribute string                `yaml:"id_from_query_path_attribute"`
+	FeatureTemplateIsGlobal  bool                  `yaml:"feature_template_is_global"`
 	SkipTemplates            []string              `yaml:"skip_templates"`
 	Attributes               []YamlConfigAttribute `yaml:"attributes"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
