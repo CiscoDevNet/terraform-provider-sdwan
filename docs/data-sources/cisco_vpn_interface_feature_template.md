@@ -111,7 +111,6 @@ data "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `poe` (Boolean) Configure interface as Power-over-Ethernet source
 - `poe_variable` (String) Variable name
 - `propagate_sgt` (Boolean) Enable/Disable CTS SGT propagation on an interface.
-- `qos_adaptive` (Boolean) Adaptive QoS
 - `qos_adaptive_bandwidth_downstream` (Number) Adaptive QoS default downstream bandwidth
 - `qos_adaptive_bandwidth_downstream_variable` (String) Variable name
 - `qos_adaptive_bandwidth_upstream` (Number) Adaptive QoS default upstream bandwidth

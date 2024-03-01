@@ -977,10 +977,6 @@ func (d *CiscoVPNInterfaceFeatureTemplateDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"qos_adaptive": schema.BoolAttribute{
-				MarkdownDescription: "Adaptive QoS",
-				Computed:            true,
-			},
 			"qos_adaptive_period": schema.Int64Attribute{
 				MarkdownDescription: "Periodic timer for adaptive QoS in minutes",
 				Computed:            true,

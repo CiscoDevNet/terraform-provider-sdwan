@@ -136,7 +136,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
   autonegotiate                                  = true
   ip_directed_broadcast                          = false
   icmp_redirect_disable                          = false
-  qos_adaptive                                   = false
   qos_adaptive_period                            = 15
   qos_adaptive_bandwidth_downstream              = 10000
   qos_adaptive_min_downstream                    = 100

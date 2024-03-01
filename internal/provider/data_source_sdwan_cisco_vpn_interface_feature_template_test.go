@@ -131,7 +131,6 @@ func TestAccDataSourceSdwanCiscoVPNInterfaceFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "autonegotiate", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "ip_directed_broadcast", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "icmp_redirect_disable", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_period", "15"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_bandwidth_downstream", "10000"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_vpn_interface_feature_template.test", "qos_adaptive_min_downstream", "100"),
@@ -305,7 +304,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "test" {
   autonegotiate = true
   ip_directed_broadcast = false
   icmp_redirect_disable = false
-  qos_adaptive = false
   qos_adaptive_period = 15
   qos_adaptive_bandwidth_downstream = 10000
   qos_adaptive_min_downstream = 100

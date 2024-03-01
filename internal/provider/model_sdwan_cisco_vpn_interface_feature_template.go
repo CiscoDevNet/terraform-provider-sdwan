@@ -198,7 +198,6 @@ type CiscoVPNInterface struct {
 	IpDirectedBroadcastVariable                        types.String                                     `tfsdk:"ip_directed_broadcast_variable"`
 	IcmpRedirectDisable                                types.Bool                                       `tfsdk:"icmp_redirect_disable"`
 	IcmpRedirectDisableVariable                        types.String                                     `tfsdk:"icmp_redirect_disable_variable"`
-	QosAdaptive                                        types.Bool                                       `tfsdk:"qos_adaptive"`
 	QosAdaptivePeriod                                  types.Int64                                      `tfsdk:"qos_adaptive_period"`
 	QosAdaptivePeriodVariable                          types.String                                     `tfsdk:"qos_adaptive_period_variable"`
 	QosAdaptiveBandwidthDownstream                     types.Int64                                      `tfsdk:"qos_adaptive_bandwidth_downstream"`
@@ -1752,14 +1751,6 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"icmp-redirect-disable."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"icmp-redirect-disable."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"icmp-redirect-disable."+"vipValue", strconv.FormatBool(data.IcmpRedirectDisable.ValueBool()))
-	}
-	if data.QosAdaptive.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipValue", strconv.FormatBool(data.QosAdaptive.ValueBool()))
 	}
 
 	if !data.QosAdaptivePeriodVariable.IsNull() {
@@ -4472,22 +4463,6 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 		data.IcmpRedirectDisable = types.BoolNull()
 		data.IcmpRedirectDisableVariable = types.StringNull()
 	}
-	if value := res.Get(path + "qos-adaptive.vipType"); value.Exists() {
-		if value.String() == "variableName" {
-			data.QosAdaptive = types.BoolNull()
-
-		} else if value.String() == "ignore" {
-			data.QosAdaptive = types.BoolNull()
-
-		} else if value.String() == "constant" {
-			v := res.Get(path + "qos-adaptive.vipValue")
-			data.QosAdaptive = types.BoolValue(v.Bool())
-
-		}
-	} else {
-		data.QosAdaptive = types.BoolNull()
-
-	}
 	if value := res.Get(path + "qos-adaptive.period.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.QosAdaptivePeriod = types.Int64Null()
@@ -5731,9 +5706,6 @@ func (data *CiscoVPNInterface) hasChanges(ctx context.Context, state *CiscoVPNIn
 		hasChanges = true
 	}
 	if !data.IcmpRedirectDisable.Equal(state.IcmpRedirectDisable) {
-		hasChanges = true
-	}
-	if !data.QosAdaptive.Equal(state.QosAdaptive) {
 		hasChanges = true
 	}
 	if !data.QosAdaptivePeriod.Equal(state.QosAdaptivePeriod) {

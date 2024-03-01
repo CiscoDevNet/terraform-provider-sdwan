@@ -153,7 +153,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
   autonegotiate                                  = true
   ip_directed_broadcast                          = false
   icmp_redirect_disable                          = false
-  qos_adaptive                                   = false
   qos_adaptive_period                            = 15
   qos_adaptive_bandwidth_downstream              = 10000
   qos_adaptive_min_downstream                    = 100
@@ -354,8 +353,6 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `poe_variable` (String) Variable name
 - `propagate_sgt` (Boolean) Enable/Disable CTS SGT propagation on an interface.
   - Default value: `true`
-- `qos_adaptive` (Boolean) Adaptive QoS
-  - Default value: `false`
 - `qos_adaptive_bandwidth_downstream` (Number) Adaptive QoS default downstream bandwidth
   - Range: `8`-`100000000`
 - `qos_adaptive_bandwidth_downstream_variable` (String) Variable name

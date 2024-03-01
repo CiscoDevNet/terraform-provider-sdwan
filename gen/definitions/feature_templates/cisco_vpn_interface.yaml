@@ -356,8 +356,6 @@ attributes:
     example: false
   - model_name: icmp-redirect-disable
     example: false
-  - model_name: qos-adaptive
-    example: false
   - model_name: period
     tf_name: qos_adaptive_period
     exclude_ignore: true
