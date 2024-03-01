@@ -105,60 +105,79 @@ attributes:
             example: 20
       - model_name: auth-required
         tf_name: zscaler_authentication_required
+        exclude_ignore: true
         example: true
       - model_name: xff-forward-enabled
         tf_name: zscaler_xff_forward
+        exclude_ignore: true
         example: true
       - model_name: ofw-enabled
         tf_name: zscaler_firewall_enabled
+        exclude_ignore: true
         example: true
       - model_name: ips-control
         tf_name: zscaler_ips_control_enabled
+        exclude_ignore: true
         example: true
       - model_name: caution-enabled
         tf_name: zscaler_caution_enabled
+        exclude_ignore: true
         example: true
       - model_name: primary-data-center
         tf_name: zscaler_primary_data_center
+        exclude_ignore: true
         example: Auto
       - model_name: secondary-data-center
         tf_name: zscaler_secondary_data_center
+        exclude_ignore: true
         example: Auto
       - model_name: ip
         tf_name: zscaler_surrogate_ip
+        exclude_ignore: true
         example: true
       - model_name: idle-time
         tf_name: zscaler_surrogate_idle_time
+        exclude_ignore: true
         example: 100
       - model_name: display-time-unit
         tf_name: zscaler_surrogate_display_time_unit
+        exclude_ignore: true
         example: MINUTE
       - model_name: ip-enforced-for-known-browsers
         tf_name: zscaler_surrogate_ip_enforce_for_known_browsers
+        exclude_ignore: true
         example: true
       - model_name: refresh-time-unit
         tf_name: zscaler_surrogate_refresh_time_unit
+        exclude_ignore: true
         example: MINUTE
       - model_name: enabled
-        tf_name: aup_enabled
+        tf_name: zscaler_aup_enabled
+        exclude_ignore: true
         example: true
       - model_name: block-internet-until-accepted
-        tf_name: aup_block_internet_until_accepted
+        tf_name: zscaler_aup_block_internet_until_accepted
+        exclude_ignore: true
         example: true
       - model_name: force-ssl-inspection
-        tf_name: aup_force_ssl_inspection
+        tf_name: zscaler_aup_force_ssl_inspection
+        exclude_ignore: true
         example: true
       - model_name: timeout
-        tf_name: aup_timeout
+        tf_name: zscaler_aup_timeout
+        exclude_ignore: true
         example: 60
       - model_name: location-name
         tf_name: zscaler_location_name
+        exclude_ignore: true
         example: LOC1
       - model_name: data-center-primary
         tf_name: umbrella_primary_data_center
+        exclude_ignore: true
         example: Auto
       - model_name: data-center-secondary
         tf_name: umbrella_secondary_data_center
+        exclude_ignore: true
         example: Auto
   - model_name: tracker-src-ip
     tf_name: tracker_source_ip

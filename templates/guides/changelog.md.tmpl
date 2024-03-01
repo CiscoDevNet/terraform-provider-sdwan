@@ -18,6 +18,11 @@ description: |-
 - Fix templating issue with `sdwan_cisco_sig_credentials_feature_template` resouce, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/162)
 - Enable `global` flag for `sdwan_cisco_sig_credentials_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/163)
 - Fix templating issue with `sdwan_cisco_secure_internet_gateway_feature_template` resource [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/164)
+- Fix templating issue with `sdwan_cisco_secure_internet_gateway_feature_template` resource [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/160)
+- BREAKING CHANGE: Rename `aup_enabled` attribute of `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source to `zscaler_aup_enabled`
+- BREAKING CHANGE: Rename `aup_block_internet_until_accepted` attribute of `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source to `zscaler_aup_block_internet_until_accepted`
+- BREAKING CHANGE: Rename `aup_force_ssl_inspection` attribute of `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source to `zscaler_aup_force_ssl_inspection`
+- BREAKING CHANGE: Rename `aup_timeout` attribute of `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source to `zscaler_aup_timeout`
 
 ## 0.3.5
 

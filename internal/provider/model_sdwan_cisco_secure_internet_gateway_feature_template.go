@@ -120,10 +120,10 @@ type CiscoSecureInternetGatewayServices struct {
 	ZscalerSurrogateDisplayTimeUnit           types.String                                       `tfsdk:"zscaler_surrogate_display_time_unit"`
 	ZscalerSurrogateIpEnforceForKnownBrowsers types.Bool                                         `tfsdk:"zscaler_surrogate_ip_enforce_for_known_browsers"`
 	ZscalerSurrogateRefreshTimeUnit           types.String                                       `tfsdk:"zscaler_surrogate_refresh_time_unit"`
-	AupEnabled                                types.Bool                                         `tfsdk:"aup_enabled"`
-	AupBlockInternetUntilAccepted             types.Bool                                         `tfsdk:"aup_block_internet_until_accepted"`
-	AupForceSslInspection                     types.Bool                                         `tfsdk:"aup_force_ssl_inspection"`
-	AupTimeout                                types.Int64                                        `tfsdk:"aup_timeout"`
+	ZscalerAupEnabled                         types.Bool                                         `tfsdk:"zscaler_aup_enabled"`
+	ZscalerAupBlockInternetUntilAccepted      types.Bool                                         `tfsdk:"zscaler_aup_block_internet_until_accepted"`
+	ZscalerAupForceSslInspection              types.Bool                                         `tfsdk:"zscaler_aup_force_ssl_inspection"`
+	ZscalerAupTimeout                         types.Int64                                        `tfsdk:"zscaler_aup_timeout"`
 	ZscalerLocationName                       types.String                                       `tfsdk:"zscaler_location_name"`
 	ZscalerLocationNameVariable               types.String                                       `tfsdk:"zscaler_location_name_variable"`
 	UmbrellaPrimaryDataCenter                 types.String                                       `tfsdk:"umbrella_primary_data_center"`
@@ -633,8 +633,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "auth-required")
 		if item.ZscalerAuthenticationRequired.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.auth-required."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.auth-required."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.auth-required."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.auth-required."+"vipType", "constant")
@@ -642,8 +640,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "xff-forward-enabled")
 		if item.ZscalerXffForward.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.xff-forward-enabled."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.xff-forward-enabled."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.xff-forward-enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.xff-forward-enabled."+"vipType", "constant")
@@ -651,8 +647,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "ofw-enabled")
 		if item.ZscalerFirewallEnabled.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ofw-enabled."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ofw-enabled."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ofw-enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ofw-enabled."+"vipType", "constant")
@@ -660,8 +654,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "ips-control")
 		if item.ZscalerIpsControlEnabled.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ips-control."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ips-control."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ips-control."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ips-control."+"vipType", "constant")
@@ -669,8 +661,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "caution-enabled")
 		if item.ZscalerCautionEnabled.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.caution-enabled."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.caution-enabled."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.caution-enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.caution-enabled."+"vipType", "constant")
@@ -683,8 +673,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipVariableName", item.ZscalerPrimaryDataCenterVariable.ValueString())
 		} else if item.ZscalerPrimaryDataCenter.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipType", "constant")
@@ -697,8 +685,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipVariableName", item.ZscalerSecondaryDataCenterVariable.ValueString())
 		} else if item.ZscalerSecondaryDataCenter.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipType", "constant")
@@ -706,8 +692,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "ip")
 		if item.ZscalerSurrogateIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip."+"vipType", "constant")
@@ -715,8 +699,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "idle-time")
 		if item.ZscalerSurrogateIdleTime.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.idle-time."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.idle-time."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.idle-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.idle-time."+"vipType", "constant")
@@ -724,8 +706,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "display-time-unit")
 		if item.ZscalerSurrogateDisplayTimeUnit.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.display-time-unit."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.display-time-unit."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.display-time-unit."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.display-time-unit."+"vipType", "constant")
@@ -733,8 +713,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "ip-enforced-for-known-browsers")
 		if item.ZscalerSurrogateIpEnforceForKnownBrowsers.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipType", "constant")
@@ -742,48 +720,38 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "refresh-time-unit")
 		if item.ZscalerSurrogateRefreshTimeUnit.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipValue", item.ZscalerSurrogateRefreshTimeUnit.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "enabled")
-		if item.AupEnabled.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipType", "ignore")
+		if item.ZscalerAupEnabled.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipValue", strconv.FormatBool(item.AupEnabled.ValueBool()))
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipValue", strconv.FormatBool(item.ZscalerAupEnabled.ValueBool()))
 		}
 		itemAttributes = append(itemAttributes, "block-internet-until-accepted")
-		if item.AupBlockInternetUntilAccepted.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipType", "ignore")
+		if item.ZscalerAupBlockInternetUntilAccepted.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipValue", strconv.FormatBool(item.AupBlockInternetUntilAccepted.ValueBool()))
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipValue", strconv.FormatBool(item.ZscalerAupBlockInternetUntilAccepted.ValueBool()))
 		}
 		itemAttributes = append(itemAttributes, "force-ssl-inspection")
-		if item.AupForceSslInspection.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipType", "ignore")
+		if item.ZscalerAupForceSslInspection.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipValue", strconv.FormatBool(item.AupForceSslInspection.ValueBool()))
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipValue", strconv.FormatBool(item.ZscalerAupForceSslInspection.ValueBool()))
 		}
 		itemAttributes = append(itemAttributes, "timeout")
-		if item.AupTimeout.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipType", "ignore")
+		if item.ZscalerAupTimeout.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipValue", item.AupTimeout.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipValue", item.ZscalerAupTimeout.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "location-name")
 
@@ -792,8 +760,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipVariableName", item.ZscalerLocationNameVariable.ValueString())
 		} else if item.ZscalerLocationName.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipType", "constant")
@@ -806,8 +772,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipVariableName", item.UmbrellaPrimaryDataCenterVariable.ValueString())
 		} else if item.UmbrellaPrimaryDataCenter.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipType", "constant")
@@ -820,8 +784,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipVariableName", item.UmbrellaSecondaryDataCenterVariable.ValueString())
 		} else if item.UmbrellaSecondaryDataCenter.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipType", "constant")
@@ -1845,66 +1807,66 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 			}
 			if cValue := v.Get("zscaler-location-settings.aup.enabled.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.AupEnabled = types.BoolNull()
+					item.ZscalerAupEnabled = types.BoolNull()
 
 				} else if cValue.String() == "ignore" {
-					item.AupEnabled = types.BoolNull()
+					item.ZscalerAupEnabled = types.BoolNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("zscaler-location-settings.aup.enabled.vipValue")
-					item.AupEnabled = types.BoolValue(cv.Bool())
+					item.ZscalerAupEnabled = types.BoolValue(cv.Bool())
 
 				}
 			} else {
-				item.AupEnabled = types.BoolNull()
+				item.ZscalerAupEnabled = types.BoolNull()
 
 			}
 			if cValue := v.Get("zscaler-location-settings.aup.block-internet-until-accepted.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.AupBlockInternetUntilAccepted = types.BoolNull()
+					item.ZscalerAupBlockInternetUntilAccepted = types.BoolNull()
 
 				} else if cValue.String() == "ignore" {
-					item.AupBlockInternetUntilAccepted = types.BoolNull()
+					item.ZscalerAupBlockInternetUntilAccepted = types.BoolNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("zscaler-location-settings.aup.block-internet-until-accepted.vipValue")
-					item.AupBlockInternetUntilAccepted = types.BoolValue(cv.Bool())
+					item.ZscalerAupBlockInternetUntilAccepted = types.BoolValue(cv.Bool())
 
 				}
 			} else {
-				item.AupBlockInternetUntilAccepted = types.BoolNull()
+				item.ZscalerAupBlockInternetUntilAccepted = types.BoolNull()
 
 			}
 			if cValue := v.Get("zscaler-location-settings.aup.force-ssl-inspection.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.AupForceSslInspection = types.BoolNull()
+					item.ZscalerAupForceSslInspection = types.BoolNull()
 
 				} else if cValue.String() == "ignore" {
-					item.AupForceSslInspection = types.BoolNull()
+					item.ZscalerAupForceSslInspection = types.BoolNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("zscaler-location-settings.aup.force-ssl-inspection.vipValue")
-					item.AupForceSslInspection = types.BoolValue(cv.Bool())
+					item.ZscalerAupForceSslInspection = types.BoolValue(cv.Bool())
 
 				}
 			} else {
-				item.AupForceSslInspection = types.BoolNull()
+				item.ZscalerAupForceSslInspection = types.BoolNull()
 
 			}
 			if cValue := v.Get("zscaler-location-settings.aup.timeout.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.AupTimeout = types.Int64Null()
+					item.ZscalerAupTimeout = types.Int64Null()
 
 				} else if cValue.String() == "ignore" {
-					item.AupTimeout = types.Int64Null()
+					item.ZscalerAupTimeout = types.Int64Null()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("zscaler-location-settings.aup.timeout.vipValue")
-					item.AupTimeout = types.Int64Value(cv.Int())
+					item.ZscalerAupTimeout = types.Int64Value(cv.Int())
 
 				}
 			} else {
-				item.AupTimeout = types.Int64Null()
+				item.ZscalerAupTimeout = types.Int64Null()
 
 			}
 			if cValue := v.Get("zscaler-location-settings.location-name.vipType"); cValue.Exists() {
@@ -2259,16 +2221,16 @@ func (data *CiscoSecureInternetGateway) hasChanges(ctx context.Context, state *C
 			if !data.Services[i].ZscalerSurrogateRefreshTimeUnit.Equal(state.Services[i].ZscalerSurrogateRefreshTimeUnit) {
 				hasChanges = true
 			}
-			if !data.Services[i].AupEnabled.Equal(state.Services[i].AupEnabled) {
+			if !data.Services[i].ZscalerAupEnabled.Equal(state.Services[i].ZscalerAupEnabled) {
 				hasChanges = true
 			}
-			if !data.Services[i].AupBlockInternetUntilAccepted.Equal(state.Services[i].AupBlockInternetUntilAccepted) {
+			if !data.Services[i].ZscalerAupBlockInternetUntilAccepted.Equal(state.Services[i].ZscalerAupBlockInternetUntilAccepted) {
 				hasChanges = true
 			}
-			if !data.Services[i].AupForceSslInspection.Equal(state.Services[i].AupForceSslInspection) {
+			if !data.Services[i].ZscalerAupForceSslInspection.Equal(state.Services[i].ZscalerAupForceSslInspection) {
 				hasChanges = true
 			}
-			if !data.Services[i].AupTimeout.Equal(state.Services[i].AupTimeout) {
+			if !data.Services[i].ZscalerAupTimeout.Equal(state.Services[i].ZscalerAupTimeout) {
 				hasChanges = true
 			}
 			if !data.Services[i].ZscalerLocationName.Equal(state.Services[i].ZscalerLocationName) {

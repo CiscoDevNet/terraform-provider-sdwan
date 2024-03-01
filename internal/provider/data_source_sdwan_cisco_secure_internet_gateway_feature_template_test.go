@@ -82,10 +82,10 @@ func TestAccDataSourceSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_display_time_unit", "MINUTE"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_ip_enforce_for_known_browsers", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_refresh_time_unit", "MINUTE"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.aup_enabled", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.aup_block_internet_until_accepted", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.aup_force_ssl_inspection", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.aup_timeout", "60"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_aup_enabled", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_aup_block_internet_until_accepted", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_aup_force_ssl_inspection", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_aup_timeout", "60"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_location_name", "LOC1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.umbrella_primary_data_center", "Auto"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.umbrella_secondary_data_center", "Auto"),
@@ -161,10 +161,10 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "test" {
     zscaler_surrogate_display_time_unit = "MINUTE"
     zscaler_surrogate_ip_enforce_for_known_browsers = true
     zscaler_surrogate_refresh_time_unit = "MINUTE"
-    aup_enabled = true
-    aup_block_internet_until_accepted = true
-    aup_force_ssl_inspection = true
-    aup_timeout = 60
+    zscaler_aup_enabled = true
+    zscaler_aup_block_internet_until_accepted = true
+    zscaler_aup_force_ssl_inspection = true
+    zscaler_aup_timeout = 60
     zscaler_location_name = "LOC1"
     umbrella_primary_data_center = "Auto"
     umbrella_secondary_data_center = "Auto"

@@ -78,10 +78,10 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
       zscaler_surrogate_display_time_unit             = "MINUTE"
       zscaler_surrogate_ip_enforce_for_known_browsers = true
       zscaler_surrogate_refresh_time_unit             = "MINUTE"
-      aup_enabled                                     = true
-      aup_block_internet_until_accepted               = true
-      aup_force_ssl_inspection                        = true
-      aup_timeout                                     = 60
+      zscaler_aup_enabled                             = true
+      zscaler_aup_block_internet_until_accepted       = true
+      zscaler_aup_force_ssl_inspection                = true
+      zscaler_aup_timeout                             = 60
       zscaler_location_name                           = "LOC1"
       umbrella_primary_data_center                    = "Auto"
       umbrella_secondary_data_center                  = "Auto"
@@ -229,14 +229,6 @@ Optional:
 
 Optional:
 
-- `aup_block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access
-  - Default value: `false`
-- `aup_enabled` (Boolean) Enable Acceptable User Policy
-  - Default value: `false`
-- `aup_force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection
-  - Default value: `false`
-- `aup_timeout` (Number) Custom Acceptable User Policy frequency in days
-  - Default value: `0`
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--services--interface_pairs))
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `service_type` (String) Service Type
@@ -248,6 +240,14 @@ Optional:
 - `umbrella_secondary_data_center` (String) Umbrella Secondary Datacenter
   - Default value: `Auto`
 - `umbrella_secondary_data_center_variable` (String) Variable name
+- `zscaler_aup_block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access
+  - Default value: `false`
+- `zscaler_aup_enabled` (Boolean) Enable Acceptable User Policy
+  - Default value: `false`
+- `zscaler_aup_force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection
+  - Default value: `false`
+- `zscaler_aup_timeout` (Number) Custom Acceptable User Policy frequency in days
+  - Default value: `0`
 - `zscaler_authentication_required` (Boolean) Enforce Authentication
   - Default value: `false`
 - `zscaler_caution_enabled` (Boolean) Enable Caution

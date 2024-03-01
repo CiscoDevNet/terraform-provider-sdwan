@@ -498,19 +498,19 @@ func (r *CiscoSecureInternetGatewayFeatureTemplateResource) Schema(ctx context.C
 								stringvalidator.OneOf("MINUTE", "HOUR", "DAY"),
 							},
 						},
-						"aup_enabled": schema.BoolAttribute{
+						"zscaler_aup_enabled": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Enable Acceptable User Policy").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
-						"aup_block_internet_until_accepted": schema.BoolAttribute{
+						"zscaler_aup_block_internet_until_accepted": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("For first-time Acceptable User Policy behavior, block Internet access").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
-						"aup_force_ssl_inspection": schema.BoolAttribute{
+						"zscaler_aup_force_ssl_inspection": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("For first-time Acceptable User Policy behavior, force SSL inspection").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
-						"aup_timeout": schema.Int64Attribute{
+						"zscaler_aup_timeout": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Custom Acceptable User Policy frequency in days").AddDefaultValueDescription("0").String,
 							Optional:            true,
 						},

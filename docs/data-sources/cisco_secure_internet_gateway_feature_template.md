@@ -106,10 +106,6 @@ Read-Only:
 
 Read-Only:
 
-- `aup_block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access
-- `aup_enabled` (Boolean) Enable Acceptable User Policy
-- `aup_force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection
-- `aup_timeout` (Number) Custom Acceptable User Policy frequency in days
 - `interface_pairs` (Attributes List) Interface Pair for active and backup (see [below for nested schema](#nestedatt--services--interface_pairs))
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `service_type` (String) Service Type
@@ -117,6 +113,10 @@ Read-Only:
 - `umbrella_primary_data_center_variable` (String) Variable name
 - `umbrella_secondary_data_center` (String) Umbrella Secondary Datacenter
 - `umbrella_secondary_data_center_variable` (String) Variable name
+- `zscaler_aup_block_internet_until_accepted` (Boolean) For first-time Acceptable User Policy behavior, block Internet access
+- `zscaler_aup_enabled` (Boolean) Enable Acceptable User Policy
+- `zscaler_aup_force_ssl_inspection` (Boolean) For first-time Acceptable User Policy behavior, force SSL inspection
+- `zscaler_aup_timeout` (Number) Custom Acceptable User Policy frequency in days
 - `zscaler_authentication_required` (Boolean) Enforce Authentication
 - `zscaler_caution_enabled` (Boolean) Enable Caution
 - `zscaler_firewall_enabled` (Boolean) Firewall enabled
