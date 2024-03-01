@@ -32,19 +32,7 @@ func TestAccSdwanCiscoSIGCredentialsFeatureTemplate(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_organization", "org1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_base_uri", "abc"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_username", "user1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_password", "password123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_cloud_name", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_username", "partner1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_password", "password123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_api_key", "key123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_key", "key123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_secret", "secret123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_organization_id", "org1"),
-				),
+				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_all(),
@@ -72,17 +60,6 @@ func testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_minimum() string {
 		name = "TF_TEST_MIN"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		zscaler_organization = "org1"
-		zscaler_partner_base_uri = "abc"
-		zscaler_username = "user1"
-		zscaler_password = "password123"
-		zscaler_cloud_name = 1
-		zscaler_partner_username = "partner1"
-		zscaler_partner_password = "password123"
-		zscaler_partner_api_key = "key123"
-		umbrella_api_key = "key123"
-		umbrella_api_secret = "secret123"
-		umbrella_organization_id = "org1"
 	}
 	`
 }

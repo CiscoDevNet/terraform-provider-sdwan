@@ -6,6 +6,7 @@
 - BREAKING CHANGE: Rename `accept_lifetime` attribute of `sdwan_cisco_security_feature_template` resource to `accept_lifetime_local`
 - Improve error handling when detaching device templates
 - Fix templating issue with `sdwan_cisco_vpn_interface_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/165)
+- Fix templating issue with `sdwan_cisco_sig_credentials_feature_template` resouce, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/162)
 
 ## 0.3.5
 
