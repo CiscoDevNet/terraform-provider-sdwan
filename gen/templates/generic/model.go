@@ -156,9 +156,10 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	if {{if not .AlwaysInclude}}!data.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 		if {{.BoolEmptyString}} && data.{{toGoName .TfName}}.Value{{.Type}}() {
 			body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
-		} else {
+		}{{if not .BoolEmptyString}} else {
 			body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}data.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 		}
+		{{- end}}
 	}
 	{{- else if eq .Type "StringList"}}
 	if {{if not .AlwaysInclude}}!data.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
@@ -185,9 +186,10 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			if {{if not .AlwaysInclude}}!item.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 				if {{.BoolEmptyString}} && item.{{toGoName .TfName}}.Value{{.Type}}() {
 					itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
-				} else {
+				}{{if not .BoolEmptyString}} else {
 					itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}item.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 				}
+				{{- end}}
 			}
 			{{- else if eq .Type "StringList"}}
 			if {{if not .AlwaysInclude}}!item.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
@@ -214,9 +216,10 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					if {{if not .AlwaysInclude}}!childItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 						if {{.BoolEmptyString}} && childItem.{{toGoName .TfName}}.Value{{.Type}}() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
-						} else {
+						}{{if not .BoolEmptyString}} else {
 							itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}childItem.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 						}
+						{{- end}}
 					}
 					{{- else if eq .Type "StringList"}}
 					if {{if not .AlwaysInclude}}!childItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
@@ -243,9 +246,10 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 							if {{if not .AlwaysInclude}}!childChildItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 								if {{.BoolEmptyString}} && childChildItem.{{toGoName .TfName}}.Value{{.Type}}() {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", "")
-								} else {
+								}{{if not .BoolEmptyString}} else {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{if .ModelTypeString}}fmt.Sprint({{end}}childChildItem.{{toGoName .TfName}}.Value{{.Type}}(){{if .ModelTypeString}}){{end}})
 								}
+								{{- end}}
 							}
 							{{- else if eq .Type "StringList"}}
 							if {{if not .AlwaysInclude}}!childChildItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {

@@ -228,8 +228,6 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.Cflowd.IsNull() && childItem.Type.ValueString() == "cflowd" {
 						if true && childItem.Cflowd.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Cflowd.ValueBool())
 						}
 					}
 					if !childItem.Counter.IsNull() && childItem.Type.ValueString() == "count" {
@@ -238,22 +236,16 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.DreOptimization.IsNull() && childItem.Type.ValueString() == "dreOptimization" {
 						if true && childItem.DreOptimization.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.DreOptimization.ValueBool())
 						}
 					}
 					if !childItem.FallbackToRouting.IsNull() && childItem.Type.ValueString() == "fallbackToRouting" {
 						if true && childItem.FallbackToRouting.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.FallbackToRouting.ValueBool())
 						}
 					}
 					if !childItem.Log.IsNull() && childItem.Type.ValueString() == "log" {
 						if true && childItem.Log.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueBool())
 						}
 					}
 					if !childItem.LossCorrection.IsNull() && childItem.Type.ValueString() == "lossProtect" {
@@ -286,15 +278,11 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.SecureInternetGateway.IsNull() && childItem.Type.ValueString() == "sig" {
 						if true && childItem.SecureInternetGateway.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.SecureInternetGateway.ValueBool())
 						}
 					}
 					if !childItem.TcpOptimization.IsNull() && childItem.Type.ValueString() == "tcpOptimization" {
 						if true && childItem.TcpOptimization.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.TcpOptimization.ValueBool())
 						}
 					}
 					if true && childItem.Type.ValueString() == "set" {
@@ -322,8 +310,6 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							if !childChildItem.LocalTlocListRestrict.IsNull() && childChildItem.Type.ValueString() == "localTlocList" {
 								if true && childChildItem.LocalTlocListRestrict.ValueBool() {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", "")
-								} else {
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", childChildItem.LocalTlocListRestrict.ValueBool())
 								}
 							}
 							if !childChildItem.NextHopLoose.IsNull() && childChildItem.Type.ValueString() == "nextHopLoose" {
@@ -366,15 +352,11 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 							if !childChildItem.ServiceTlocLocal.IsNull() && childChildItem.Type.ValueString() == "service" {
 								if true && childChildItem.ServiceTlocLocal.ValueBool() {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", "")
-								} else {
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.local", childChildItem.ServiceTlocLocal.ValueBool())
 								}
 							}
 							if !childChildItem.ServiceTlocRestrict.IsNull() && childChildItem.Type.ValueString() == "service" {
 								if true && childChildItem.ServiceTlocRestrict.ValueBool() {
 									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", "")
-								} else {
-									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "value.restrict", childChildItem.ServiceTlocRestrict.ValueBool())
 								}
 							}
 							if !childChildItem.ServiceTlocColor.IsNull() && childChildItem.Type.ValueString() == "service" {

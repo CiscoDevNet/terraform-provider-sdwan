@@ -174,8 +174,6 @@ func (data IPv4ACLPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.Log.IsNull() && childItem.Type.ValueString() == "log" {
 						if true && childItem.Log.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueBool())
 						}
 					}
 					if !childItem.MirrorId.IsNull() && childItem.Type.ValueString() == "mirror" {

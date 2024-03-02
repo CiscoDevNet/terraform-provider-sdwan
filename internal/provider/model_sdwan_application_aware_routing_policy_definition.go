@@ -178,15 +178,11 @@ func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) 
 					if !childItem.Log.IsNull() && childItem.Type.ValueString() == "log" {
 						if true && childItem.Log.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Log.ValueBool())
 						}
 					}
 					if !childItem.CloudSla.IsNull() && childItem.Type.ValueString() == "cloudSaas" {
 						if true && childItem.CloudSla.ValueBool() {
 							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", "")
-						} else {
-							itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.CloudSla.ValueBool())
 						}
 					}
 					if true && childItem.Type.ValueString() == "slaClass" {
