@@ -46,7 +46,7 @@ func TestAccDataSourceSdwanSwitchportFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.switchport_trunk_native_vlan", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.dot1x_enable", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.dot1x_port_control", "auto"),
-					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.dot1x_voice_vlan", "200"),
+					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.voice_vlan", "200"),
 					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.dot1x_pae_enable", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.dot1x_mac_authentication_bypass", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_switchport_feature_template.test", "interfaces.0.dot1x_host_mode", "multi-domain"),
@@ -89,7 +89,7 @@ resource "sdwan_switchport_feature_template" "test" {
     dot1x_enable = true
     dot1x_port_control = "auto"
     dot1x_authentication_order = ["dot1x"]
-    dot1x_voice_vlan = 200
+    voice_vlan = 200
     dot1x_pae_enable = true
     dot1x_mac_authentication_bypass = true
     dot1x_host_mode = "multi-domain"

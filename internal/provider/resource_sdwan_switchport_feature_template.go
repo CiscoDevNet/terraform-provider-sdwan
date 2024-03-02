@@ -221,14 +221,14 @@ func (r *SwitchportFeatureTemplateResource) Schema(ctx context.Context, req reso
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"dot1x_voice_vlan": schema.Int64Attribute{
+						"voice_vlan": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Voice Vlan").AddIntegerRangeDescription(1, 4094).String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 4094),
 							},
 						},
-						"dot1x_voice_vlan_variable": schema.StringAttribute{
+						"voice_vlan_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

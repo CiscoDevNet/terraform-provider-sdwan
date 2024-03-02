@@ -73,8 +73,6 @@ Read-Only:
 - `dot1x_port_control_variable` (String) Variable name
 - `dot1x_restricted_vlan` (Number) Set Restricted VLAN ID
 - `dot1x_restricted_vlan_variable` (String) Variable name
-- `dot1x_voice_vlan` (Number) Configure Voice Vlan
-- `dot1x_voice_vlan_variable` (String) Variable name
 - `duplex` (String) Duplex mode
 - `duplex_variable` (String) Variable name
 - `name` (String) Set Interface name
@@ -91,6 +89,8 @@ Read-Only:
 - `switchport_trunk_allowed_vlans_variable` (String) Variable name
 - `switchport_trunk_native_vlan` (Number) Configure VLAN ID used for native VLAN
 - `switchport_trunk_native_vlan_variable` (String) Variable name
+- `voice_vlan` (Number) Configure Voice Vlan
+- `voice_vlan_variable` (String) Variable name
 
 
 <a id="nestedatt--static_mac_addresses"></a>

@@ -187,11 +187,11 @@ func (d *SwitchportFeatureTemplateDataSource) Schema(ctx context.Context, req da
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"dot1x_voice_vlan": schema.Int64Attribute{
+						"voice_vlan": schema.Int64Attribute{
 							MarkdownDescription: "Configure Voice Vlan",
 							Computed:            true,
 						},
-						"dot1x_voice_vlan_variable": schema.StringAttribute{
+						"voice_vlan_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

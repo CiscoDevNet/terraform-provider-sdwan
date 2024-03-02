@@ -35,7 +35,7 @@ resource "sdwan_switchport_feature_template" "example" {
       dot1x_enable                             = true
       dot1x_port_control                       = "auto"
       dot1x_authentication_order               = ["dot1x"]
-      dot1x_voice_vlan                         = 200
+      voice_vlan                               = 200
       dot1x_pae_enable                         = true
       dot1x_mac_authentication_bypass          = true
       dot1x_host_mode                          = "multi-domain"
@@ -144,9 +144,6 @@ Optional:
 - `dot1x_restricted_vlan` (Number) Set Restricted VLAN ID
   - Range: `1`-`4094`
 - `dot1x_restricted_vlan_variable` (String) Variable name
-- `dot1x_voice_vlan` (Number) Configure Voice Vlan
-  - Range: `1`-`4094`
-- `dot1x_voice_vlan_variable` (String) Variable name
 - `duplex` (String) Duplex mode
   - Choices: `full`, `half`
 - `duplex_variable` (String) Variable name
@@ -169,6 +166,9 @@ Optional:
 - `switchport_trunk_native_vlan` (Number) Configure VLAN ID used for native VLAN
   - Range: `1`-`4094`
 - `switchport_trunk_native_vlan_variable` (String) Variable name
+- `voice_vlan` (Number) Configure Voice Vlan
+  - Range: `1`-`4094`
+- `voice_vlan_variable` (String) Variable name
 
 
 <a id="nestedatt--static_mac_addresses"></a>

@@ -68,8 +68,8 @@ type SwitchportInterfaces struct {
 	Dot1xPortControlVariable                     types.String `tfsdk:"dot1x_port_control_variable"`
 	Dot1xAuthenticationOrder                     types.List   `tfsdk:"dot1x_authentication_order"`
 	Dot1xAuthenticationOrderVariable             types.String `tfsdk:"dot1x_authentication_order_variable"`
-	Dot1xVoiceVlan                               types.Int64  `tfsdk:"dot1x_voice_vlan"`
-	Dot1xVoiceVlanVariable                       types.String `tfsdk:"dot1x_voice_vlan_variable"`
+	VoiceVlan                                    types.Int64  `tfsdk:"voice_vlan"`
+	VoiceVlanVariable                            types.String `tfsdk:"voice_vlan_variable"`
 	Dot1xPaeEnable                               types.Bool   `tfsdk:"dot1x_pae_enable"`
 	Dot1xPaeEnableVariable                       types.String `tfsdk:"dot1x_pae_enable_variable"`
 	Dot1xMacAuthenticationBypass                 types.Bool   `tfsdk:"dot1x_mac_authentication_bypass"`
@@ -300,17 +300,17 @@ func (data Switchport) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "voice-vlan")
 
-		if !item.Dot1xVoiceVlanVariable.IsNull() {
+		if !item.VoiceVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipVariableName", item.Dot1xVoiceVlanVariable.ValueString())
-		} else if item.Dot1xVoiceVlan.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipVariableName", item.VoiceVlanVariable.ValueString())
+		} else if item.VoiceVlan.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipValue", item.Dot1xVoiceVlan.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipValue", item.VoiceVlan.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "pae-enable")
 
@@ -824,22 +824,22 @@ func (data *Switchport) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("dot1x.voice-vlan.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.Dot1xVoiceVlan = types.Int64Null()
+					item.VoiceVlan = types.Int64Null()
 
 					cv := v.Get("dot1x.voice-vlan.vipVariableName")
-					item.Dot1xVoiceVlanVariable = types.StringValue(cv.String())
+					item.VoiceVlanVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Dot1xVoiceVlan = types.Int64Null()
-					item.Dot1xVoiceVlanVariable = types.StringNull()
+					item.VoiceVlan = types.Int64Null()
+					item.VoiceVlanVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("dot1x.voice-vlan.vipValue")
-					item.Dot1xVoiceVlan = types.Int64Value(cv.Int())
-					item.Dot1xVoiceVlanVariable = types.StringNull()
+					item.VoiceVlan = types.Int64Value(cv.Int())
+					item.VoiceVlanVariable = types.StringNull()
 				}
 			} else {
-				item.Dot1xVoiceVlan = types.Int64Null()
-				item.Dot1xVoiceVlanVariable = types.StringNull()
+				item.VoiceVlan = types.Int64Null()
+				item.VoiceVlanVariable = types.StringNull()
 			}
 			if cValue := v.Get("dot1x.pae-enable.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1193,7 +1193,7 @@ func (data *Switchport) hasChanges(ctx context.Context, state *Switchport) bool 
 			if !data.Interfaces[i].Dot1xAuthenticationOrder.Equal(state.Interfaces[i].Dot1xAuthenticationOrder) {
 				hasChanges = true
 			}
-			if !data.Interfaces[i].Dot1xVoiceVlan.Equal(state.Interfaces[i].Dot1xVoiceVlan) {
+			if !data.Interfaces[i].VoiceVlan.Equal(state.Interfaces[i].VoiceVlan) {
 				hasChanges = true
 			}
 			if !data.Interfaces[i].Dot1xPaeEnable.Equal(state.Interfaces[i].Dot1xPaeEnable) {

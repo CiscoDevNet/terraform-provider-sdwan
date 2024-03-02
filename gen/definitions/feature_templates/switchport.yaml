@@ -46,7 +46,6 @@ attributes:
         tf_name: dot1x_authentication_order
         example: '["dot1x"]'
       - model_name: voice-vlan
-        tf_name: dot1x_voice_vlan
         example: 200
       - model_name: pae-enable
         tf_name: dot1x_pae_enable
