@@ -87,7 +87,7 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 				Computed:            true,
 			},
 			{{- range  .Attributes}}
-			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}Set{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
 				{{- if eq .Type "StringList"}}
 				ElementType:         types.StringType,
@@ -99,7 +99,7 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
-						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}Set{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: "{{.Description}}",
 							{{- if eq .Type "StringList"}}
 							ElementType:         types.StringType,
@@ -111,7 +111,7 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
-									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if eq .Type "List"}}ListNested{{else if or (eq .Type "StringList") (eq .Type "Int64List")}}Set{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: "{{.Description}}",
 										{{- if eq .Type "StringList"}}
 										ElementType:         types.StringType,
@@ -123,7 +123,7 @@ func (d *{{camelCase .Name}}FeatureTemplateDataSource) Schema(ctx context.Contex
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
-												"{{.TfName}}": schema.{{if or (eq .Type "StringList") (eq .Type "Int64List")}}List{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if or (eq .Type "StringList") (eq .Type "Int64List")}}Set{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: "{{.Description}}",
 													{{- if eq .Type "StringList"}}
 													ElementType:         types.StringType,

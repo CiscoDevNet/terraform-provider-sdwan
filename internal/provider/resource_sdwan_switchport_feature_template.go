@@ -212,7 +212,7 @@ func (r *SwitchportFeatureTemplateResource) Schema(ctx context.Context, req reso
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"dot1x_authentication_order": schema.ListAttribute{
+						"dot1x_authentication_order": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Specify authentication methods in the order of preference").String,
 							ElementType:         types.StringType,
 							Optional:            true,

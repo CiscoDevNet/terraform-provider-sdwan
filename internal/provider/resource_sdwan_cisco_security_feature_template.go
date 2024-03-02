@@ -125,7 +125,7 @@ func (r *CiscoSecurityFeatureTemplateResource) Schema(ctx context.Context, req r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"authentication_type": schema.ListAttribute{
+			"authentication_type": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the authentication type for DTLS connections").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -134,7 +134,7 @@ func (r *CiscoSecurityFeatureTemplateResource) Schema(ctx context.Context, req r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"integrity_type": schema.ListAttribute{
+			"integrity_type": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the authentication type for DTLS connections").String,
 				ElementType:         types.StringType,
 				Optional:            true,

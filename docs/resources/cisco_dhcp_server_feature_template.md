@@ -59,11 +59,11 @@ resource "sdwan_cisco_dhcp_server_feature_template" "example" {
 - `address_pool_variable` (String) Variable name
 - `default_gateway` (String) Set IP address of default gateway
 - `default_gateway_variable` (String) Variable name
-- `dns_servers` (List of String) Configure one or more DNS server IP addresses
+- `dns_servers` (Set of String) Configure one or more DNS server IP addresses
 - `dns_servers_variable` (String) Variable name
 - `domain_name` (String) Set domain name client uses to resolve hostnames
 - `domain_name_variable` (String) Variable name
-- `exclude_addresses` (List of String) Configure IPv4 address to exclude from DHCP address pool
+- `exclude_addresses` (Set of String) Configure IPv4 address to exclude from DHCP address pool
 - `exclude_addresses_variable` (String) Variable name
 - `interface_mtu` (Number) Set MTU on interface to DHCP client
   - Range: `68`-`65535`
@@ -74,7 +74,7 @@ resource "sdwan_cisco_dhcp_server_feature_template" "example" {
 - `lease_time_variable` (String) Variable name
 - `options` (Attributes List) Configure Options Code (see [below for nested schema](#nestedatt--options))
 - `static_leases` (Attributes List) Configure static IP addresses (see [below for nested schema](#nestedatt--static_leases))
-- `tftp_servers` (List of String) Configure TFTP server IP addresses
+- `tftp_servers` (Set of String) Configure TFTP server IP addresses
 - `tftp_servers_variable` (String) Variable name
 
 ### Read-Only
@@ -92,7 +92,7 @@ Optional:
 - `ascii_variable` (String) Variable name
 - `hex` (String) Set HEX value
 - `hex_variable` (String) Variable name
-- `ip_address` (List of String) Set ip address
+- `ip_address` (Set of String) Set ip address
 - `ip_address_variable` (String) Variable name
 - `option_code` (Number) Set Option Code
   - Range: `1`-`254`

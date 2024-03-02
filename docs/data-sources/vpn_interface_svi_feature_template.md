@@ -43,7 +43,7 @@ data "sdwan_vpn_interface_svi_feature_template" "example" {
 - `ipv4_access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--ipv4_access_lists))
 - `ipv4_address` (String) Assign IPv4 address
 - `ipv4_address_variable` (String) Variable name
-- `ipv4_dhcp_helper` (List of String) List of DHCP helper addresses
+- `ipv4_dhcp_helper` (Set of String) List of DHCP helper addresses
 - `ipv4_dhcp_helper_variable` (String) Variable name
 - `ipv4_secondary_addresses` (Attributes List) Assign secondary IP addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
 - `ipv4_vrrps` (Attributes List) Enable VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))

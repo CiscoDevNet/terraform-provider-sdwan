@@ -53,9 +53,9 @@ type CiscoSystem struct {
 	GeoFencingRangeVariable           types.String                           `tfsdk:"geo_fencing_range_variable"`
 	GeoFencingSms                     types.Bool                             `tfsdk:"geo_fencing_sms"`
 	GeoFencingSmsPhoneNumbers         []CiscoSystemGeoFencingSmsPhoneNumbers `tfsdk:"geo_fencing_sms_phone_numbers"`
-	DeviceGroups                      types.List                             `tfsdk:"device_groups"`
+	DeviceGroups                      types.Set                              `tfsdk:"device_groups"`
 	DeviceGroupsVariable              types.String                           `tfsdk:"device_groups_variable"`
-	ControllerGroupList               types.List                             `tfsdk:"controller_group_list"`
+	ControllerGroupList               types.Set                              `tfsdk:"controller_group_list"`
 	ControllerGroupListVariable       types.String                           `tfsdk:"controller_group_list_variable"`
 	SystemIp                          types.String                           `tfsdk:"system_ip"`
 	SystemIpVariable                  types.String                           `tfsdk:"system_ip_variable"`
@@ -99,7 +99,7 @@ type CiscoSystem struct {
 	RoleVariable                      types.String                           `tfsdk:"role_variable"`
 	AffinityGroupNumber               types.Int64                            `tfsdk:"affinity_group_number"`
 	AffinityGroupNumberVariable       types.String                           `tfsdk:"affinity_group_number_variable"`
-	AffinityGroupPreference           types.List                             `tfsdk:"affinity_group_preference"`
+	AffinityGroupPreference           types.Set                              `tfsdk:"affinity_group_preference"`
 	AffinityGroupPreferenceVariable   types.String                           `tfsdk:"affinity_group_preference_variable"`
 	TransportGateway                  types.Bool                             `tfsdk:"transport_gateway"`
 	TransportGatewayVariable          types.String                           `tfsdk:"transport_gateway_variable"`
@@ -129,7 +129,7 @@ type CiscoSystemTrackers struct {
 	EndpointDnsNameVariable           types.String `tfsdk:"endpoint_dns_name_variable"`
 	EndpointApiUrl                    types.String `tfsdk:"endpoint_api_url"`
 	EndpointApiUrlVariable            types.String `tfsdk:"endpoint_api_url_variable"`
-	Elements                          types.List   `tfsdk:"elements"`
+	Elements                          types.Set    `tfsdk:"elements"`
 	ElementsVariable                  types.String `tfsdk:"elements_variable"`
 	Boolean                           types.String `tfsdk:"boolean"`
 	BooleanVariable                   types.String `tfsdk:"boolean_variable"`
@@ -1189,40 +1189,40 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "device-groups.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.DeviceGroups = types.ListNull(types.StringType)
+			data.DeviceGroups = types.SetNull(types.StringType)
 
 			v := res.Get(path + "device-groups.vipVariableName")
 			data.DeviceGroupsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DeviceGroups = types.ListNull(types.StringType)
+			data.DeviceGroups = types.SetNull(types.StringType)
 			data.DeviceGroupsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "device-groups.vipValue")
-			data.DeviceGroups = helpers.GetStringList(v.Array())
+			data.DeviceGroups = helpers.GetStringSet(v.Array())
 			data.DeviceGroupsVariable = types.StringNull()
 		}
 	} else {
-		data.DeviceGroups = types.ListNull(types.StringType)
+		data.DeviceGroups = types.SetNull(types.StringType)
 		data.DeviceGroupsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "controller-group-list.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.ControllerGroupList = types.ListNull(types.Int64Type)
+			data.ControllerGroupList = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "controller-group-list.vipVariableName")
 			data.ControllerGroupListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ControllerGroupList = types.ListNull(types.Int64Type)
+			data.ControllerGroupList = types.SetNull(types.Int64Type)
 			data.ControllerGroupListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "controller-group-list.vipValue")
-			data.ControllerGroupList = helpers.GetInt64List(v.Array())
+			data.ControllerGroupList = helpers.GetInt64Set(v.Array())
 			data.ControllerGroupListVariable = types.StringNull()
 		}
 	} else {
-		data.ControllerGroupList = types.ListNull(types.Int64Type)
+		data.ControllerGroupList = types.SetNull(types.Int64Type)
 		data.ControllerGroupListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "system-ip.vipType"); value.Exists() {
@@ -1635,21 +1635,21 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("elements.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Elements = types.ListNull(types.StringType)
+					item.Elements = types.SetNull(types.StringType)
 
 					cv := v.Get("elements.vipVariableName")
 					item.ElementsVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Elements = types.ListNull(types.StringType)
+					item.Elements = types.SetNull(types.StringType)
 					item.ElementsVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("elements.vipValue")
-					item.Elements = helpers.GetStringList(cv.Array())
+					item.Elements = helpers.GetStringSet(cv.Array())
 					item.ElementsVariable = types.StringNull()
 				}
 			} else {
-				item.Elements = types.ListNull(types.StringType)
+				item.Elements = types.SetNull(types.StringType)
 				item.ElementsVariable = types.StringNull()
 			}
 			if cValue := v.Get("boolean.vipType"); cValue.Exists() {
@@ -2042,21 +2042,21 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "affinity-group.preference.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.AffinityGroupPreference = types.ListNull(types.Int64Type)
+			data.AffinityGroupPreference = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "affinity-group.preference.vipVariableName")
 			data.AffinityGroupPreferenceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AffinityGroupPreference = types.ListNull(types.Int64Type)
+			data.AffinityGroupPreference = types.SetNull(types.Int64Type)
 			data.AffinityGroupPreferenceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "affinity-group.preference.vipValue")
-			data.AffinityGroupPreference = helpers.GetInt64List(v.Array())
+			data.AffinityGroupPreference = helpers.GetInt64Set(v.Array())
 			data.AffinityGroupPreferenceVariable = types.StringNull()
 		}
 	} else {
-		data.AffinityGroupPreference = types.ListNull(types.Int64Type)
+		data.AffinityGroupPreference = types.SetNull(types.Int64Type)
 		data.AffinityGroupPreferenceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "transport-gateway.vipType"); value.Exists() {

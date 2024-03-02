@@ -100,7 +100,7 @@ func (r *CiscoDHCPServerFeatureTemplateResource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"exclude_addresses": schema.ListAttribute{
+			"exclude_addresses": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure IPv4 address to exclude from DHCP address pool").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -150,7 +150,7 @@ func (r *CiscoDHCPServerFeatureTemplateResource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"dns_servers": schema.ListAttribute{
+			"dns_servers": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure one or more DNS server IP addresses").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -159,7 +159,7 @@ func (r *CiscoDHCPServerFeatureTemplateResource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tftp_servers": schema.ListAttribute{
+			"tftp_servers": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure TFTP server IP addresses").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -245,7 +245,7 @@ func (r *CiscoDHCPServerFeatureTemplateResource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"ip_address": schema.ListAttribute{
+						"ip_address": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set ip address").String,
 							ElementType:         types.StringType,
 							Optional:            true,

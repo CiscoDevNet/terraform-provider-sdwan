@@ -44,7 +44,7 @@ type {{camelCase .Name}} struct {
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+	{{toGoName .TfName}} types.Set `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -66,7 +66,7 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+	{{toGoName .TfName}} types.Set `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -93,7 +93,7 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- if eq .Type "List"}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
 {{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+	{{toGoName .TfName}} types.Set `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -122,7 +122,7 @@ type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 	Optional types.Bool `tfsdk:"optional"`
 {{- range .Attributes}}
 {{- if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+	{{toGoName .TfName}} types.Set `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -638,21 +638,21 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	{{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+			data.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 			{{if .Variable}}
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 			data.{{toGoName .TfName}}Variable = types.StringValue(v.String())
 			{{end}}
 		} else if value.String() == "ignore" {
-			data.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+			data.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 			{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 		} else if value.String() == "constant" {
 			v := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipValue")
-			data.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}List(v.Array())
+			data.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Set(v.Array())
 			{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 		}
 	} else {
-		data.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+		data.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 		{{if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 	}
 	{{- else if eq .Type "List"}}
@@ -759,21 +759,21 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			{{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+					item.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 					{{if .Variable}}
 					cv := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 					item.{{toGoName .TfName}}Variable = types.StringValue(cv.String())
 					{{end}}
 				} else if cValue.String() == "ignore" {
-					item.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+					item.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 					{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 				} else if cValue.String() == "constant" {
 					cv := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipValue")
-					item.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}List(cv.Array())
+					item.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Set(cv.Array())
 					{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 				}
 			} else {
-				item.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+				item.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 				{{if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 			}
 			{{- else if eq .Type "List"}}
@@ -879,21 +879,21 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					{{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(ccValue.Array()) > 0 {
 						if ccValue.String() == "variableName" {
-							cItem.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+							cItem.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 							{{if .Variable}}
 							ccv := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 							cItem.{{toGoName .TfName}}Variable = types.StringValue(ccv.String())
 							{{end}}
 						} else if ccValue.String() == "ignore" {
-							cItem.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+							cItem.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 							{{if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 						} else if ccValue.String() == "constant" {
 							ccv := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipValue")
-							cItem.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}List(ccv.Array())
+							cItem.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Set(ccv.Array())
 							{{if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 						}
 					} else {
-						cItem.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+						cItem.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 						{{if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 					}
 					{{- else if eq .Type "List"}}
@@ -999,21 +999,21 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							{{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
 							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipType"); len(cccValue.Array()) > 0 {
 								if cccValue.String() == "variableName" {
-									ccItem.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+									ccItem.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 									{{if .Variable}}
 									cccv := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipVariableName")
 									ccItem.{{toGoName .TfName}}Variable = types.StringValue(cccv.String())
 									{{end}}
 								} else if cccValue.String() == "ignore" {
-									ccItem.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+									ccItem.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 									{{if .Variable}}ccItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 								} else if cccValue.String() == "constant" {
 									cccv := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.vipValue")
-									ccItem.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}List(cccv.Array())
+									ccItem.{{toGoName .TfName}} = helpers.Get{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Set(cccv.Array())
 									{{if .Variable}}ccItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 								}
 							} else {
-								ccItem.{{toGoName .TfName}} = types.ListNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
+								ccItem.{{toGoName .TfName}} = types.SetNull(types.{{if eq .Type "StringList"}}String{{else if eq .Type "Int64List"}}Int64{{end}}Type)
 								{{if .Variable}}ccItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 							}
 							{{- end}}

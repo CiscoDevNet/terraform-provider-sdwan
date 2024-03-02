@@ -42,7 +42,7 @@ type CiscoNTP struct {
 	MasterStratumVariable         types.String                 `tfsdk:"master_stratum_variable"`
 	MasterSourceInterface         types.String                 `tfsdk:"master_source_interface"`
 	MasterSourceInterfaceVariable types.String                 `tfsdk:"master_source_interface_variable"`
-	TrustedKeys                   types.List                   `tfsdk:"trusted_keys"`
+	TrustedKeys                   types.Set                    `tfsdk:"trusted_keys"`
 	TrustedKeysVariable           types.String                 `tfsdk:"trusted_keys_variable"`
 	AuthenticationKeys            []CiscoNTPAuthenticationKeys `tfsdk:"authentication_keys"`
 	Servers                       []CiscoNTPServers            `tfsdk:"servers"`
@@ -375,21 +375,21 @@ func (data *CiscoNTP) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "keys.trusted.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.TrustedKeys = types.ListNull(types.Int64Type)
+			data.TrustedKeys = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "keys.trusted.vipVariableName")
 			data.TrustedKeysVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TrustedKeys = types.ListNull(types.Int64Type)
+			data.TrustedKeys = types.SetNull(types.Int64Type)
 			data.TrustedKeysVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "keys.trusted.vipValue")
-			data.TrustedKeys = helpers.GetInt64List(v.Array())
+			data.TrustedKeys = helpers.GetInt64Set(v.Array())
 			data.TrustedKeysVariable = types.StringNull()
 		}
 	} else {
-		data.TrustedKeys = types.ListNull(types.Int64Type)
+		data.TrustedKeys = types.SetNull(types.Int64Type)
 		data.TrustedKeysVariable = types.StringNull()
 	}
 	if value := res.Get(path + "keys.authentication.vipValue"); len(value.Array()) > 0 {

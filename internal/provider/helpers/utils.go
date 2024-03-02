@@ -66,6 +66,14 @@ func GetStringSet(result []gjson.Result) types.Set {
 	return types.SetValueMust(types.StringType, v)
 }
 
+func GetInt64Set(result []gjson.Result) types.Set {
+	v := make([]attr.Value, len(result))
+	for r := range result {
+		v[r] = types.Int64Value(result[r].Int())
+	}
+	return types.SetValueMust(types.Int64Type, v)
+}
+
 func WaitForActionToComplete(ctx context.Context, client *sdwan.Client, id string) error {
 	for attempts := 0; ; attempts++ {
 		time.Sleep(5 * time.Second)

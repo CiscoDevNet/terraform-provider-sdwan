@@ -55,10 +55,10 @@ type CiscoVPNInterface struct {
 	Dhcpv6Variable                                     types.String                                     `tfsdk:"dhcpv6_variable"`
 	Ipv6SecondaryAddresses                             []CiscoVPNInterfaceIpv6SecondaryAddresses        `tfsdk:"ipv6_secondary_addresses"`
 	Ipv6AccessLists                                    []CiscoVPNInterfaceIpv6AccessLists               `tfsdk:"ipv6_access_lists"`
-	Ipv4DhcpHelper                                     types.List                                       `tfsdk:"ipv4_dhcp_helper"`
+	Ipv4DhcpHelper                                     types.Set                                        `tfsdk:"ipv4_dhcp_helper"`
 	Ipv4DhcpHelperVariable                             types.String                                     `tfsdk:"ipv4_dhcp_helper_variable"`
 	Ipv6DhcpHelpers                                    []CiscoVPNInterfaceIpv6DhcpHelpers               `tfsdk:"ipv6_dhcp_helpers"`
-	Tracker                                            types.List                                       `tfsdk:"tracker"`
+	Tracker                                            types.Set                                        `tfsdk:"tracker"`
 	TrackerVariable                                    types.String                                     `tfsdk:"tracker_variable"`
 	AutoBandwidthDetect                                types.Bool                                       `tfsdk:"auto_bandwidth_detect"`
 	AutoBandwidthDetectVariable                        types.String                                     `tfsdk:"auto_bandwidth_detect_variable"`
@@ -100,7 +100,7 @@ type CiscoVPNInterface struct {
 	TunnelQosModeVariable                              types.String                                     `tfsdk:"tunnel_qos_mode_variable"`
 	TunnelBandwidth                                    types.Int64                                      `tfsdk:"tunnel_bandwidth"`
 	TunnelBandwidthVariable                            types.String                                     `tfsdk:"tunnel_bandwidth_variable"`
-	TunnelInterfaceGroups                              types.List                                       `tfsdk:"tunnel_interface_groups"`
+	TunnelInterfaceGroups                              types.Set                                        `tfsdk:"tunnel_interface_groups"`
 	TunnelInterfaceGroupsVariable                      types.String                                     `tfsdk:"tunnel_interface_groups_variable"`
 	TunnelInterfaceColor                               types.String                                     `tfsdk:"tunnel_interface_color"`
 	TunnelInterfaceColorVariable                       types.String                                     `tfsdk:"tunnel_interface_color_variable"`
@@ -110,7 +110,7 @@ type CiscoVPNInterface struct {
 	TunnelInterfaceControlConnectionsVariable          types.String                                     `tfsdk:"tunnel_interface_control_connections_variable"`
 	TunnelInterfaceVbondAsStunServer                   types.Bool                                       `tfsdk:"tunnel_interface_vbond_as_stun_server"`
 	TunnelInterfaceVbondAsStunServerVariable           types.String                                     `tfsdk:"tunnel_interface_vbond_as_stun_server_variable"`
-	TunnelInterfaceExcludeControllerGroupList          types.List                                       `tfsdk:"tunnel_interface_exclude_controller_group_list"`
+	TunnelInterfaceExcludeControllerGroupList          types.Set                                        `tfsdk:"tunnel_interface_exclude_controller_group_list"`
 	TunnelInterfaceExcludeControllerGroupListVariable  types.String                                     `tfsdk:"tunnel_interface_exclude_controller_group_list_variable"`
 	TunnelInterfaceVmanageConnectionPreference         types.Int64                                      `tfsdk:"tunnel_interface_vmanage_connection_preference"`
 	TunnelInterfaceVmanageConnectionPreferenceVariable types.String                                     `tfsdk:"tunnel_interface_vmanage_connection_preference_variable"`
@@ -2696,21 +2696,21 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "dhcp-helper.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.Ipv4DhcpHelper = types.ListNull(types.StringType)
+			data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 
 			v := res.Get(path + "dhcp-helper.vipVariableName")
 			data.Ipv4DhcpHelperVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Ipv4DhcpHelper = types.ListNull(types.StringType)
+			data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 			data.Ipv4DhcpHelperVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "dhcp-helper.vipValue")
-			data.Ipv4DhcpHelper = helpers.GetStringList(v.Array())
+			data.Ipv4DhcpHelper = helpers.GetStringSet(v.Array())
 			data.Ipv4DhcpHelperVariable = types.StringNull()
 		}
 	} else {
-		data.Ipv4DhcpHelper = types.ListNull(types.StringType)
+		data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 		data.Ipv4DhcpHelperVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ipv6.dhcp-helper-v6.vipValue"); len(value.Array()) > 0 {
@@ -2766,21 +2766,21 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "tracker.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.Tracker = types.ListNull(types.StringType)
+			data.Tracker = types.SetNull(types.StringType)
 
 			v := res.Get(path + "tracker.vipVariableName")
 			data.TrackerVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Tracker = types.ListNull(types.StringType)
+			data.Tracker = types.SetNull(types.StringType)
 			data.TrackerVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tracker.vipValue")
-			data.Tracker = helpers.GetStringList(v.Array())
+			data.Tracker = helpers.GetStringSet(v.Array())
 			data.TrackerVariable = types.StringNull()
 		}
 	} else {
-		data.Tracker = types.ListNull(types.StringType)
+		data.Tracker = types.SetNull(types.StringType)
 		data.TrackerVariable = types.StringNull()
 	}
 	if value := res.Get(path + "auto-bandwidth-detect.vipType"); value.Exists() {
@@ -3534,21 +3534,21 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.TunnelInterfaceGroups = types.ListNull(types.Int64Type)
+			data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.group.vipVariableName")
 			data.TunnelInterfaceGroupsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TunnelInterfaceGroups = types.ListNull(types.Int64Type)
+			data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
 			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.group.vipValue")
-			data.TunnelInterfaceGroups = helpers.GetInt64List(v.Array())
+			data.TunnelInterfaceGroups = helpers.GetInt64Set(v.Array())
 			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		}
 	} else {
-		data.TunnelInterfaceGroups = types.ListNull(types.Int64Type)
+		data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
 		data.TunnelInterfaceGroupsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.color.value.vipType"); value.Exists() {
@@ -3629,21 +3629,21 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.Int64Type)
+			data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipVariableName")
 			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.Int64Type)
+			data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipValue")
-			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64List(v.Array())
+			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64Set(v.Array())
 			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		}
 	} else {
-		data.TunnelInterfaceExcludeControllerGroupList = types.ListNull(types.Int64Type)
+		data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 		data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipType"); value.Exists() {

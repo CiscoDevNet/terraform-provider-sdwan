@@ -178,7 +178,7 @@ func (d *SwitchportFeatureTemplateDataSource) Schema(ctx context.Context, req da
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"dot1x_authentication_order": schema.ListAttribute{
+						"dot1x_authentication_order": schema.SetAttribute{
 							MarkdownDescription: "Specify authentication methods in the order of preference",
 							ElementType:         types.StringType,
 							Computed:            true,

@@ -133,7 +133,7 @@ resource "sdwan_cisco_vpn_interface_ipsec_feature_template" "example" {
 - `tcp_mss_adjust` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_adjust_variable` (String) Variable name
-- `tracker` (List of String) Enable tracker for this interface
+- `tracker` (Set of String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
 - `tunnel_destination` (String) Tunnel destination IP address
 - `tunnel_destination_variable` (String) Variable name

@@ -52,7 +52,7 @@ type VPNInterfaceSVI struct {
 	Ipv6DhcpRapidCommit          types.Bool                              `tfsdk:"ipv6_dhcp_rapid_commit"`
 	Ipv6DhcpRapidCommitVariable  types.String                            `tfsdk:"ipv6_dhcp_rapid_commit_variable"`
 	Ipv6SecondaryAddresses       []VPNInterfaceSVIIpv6SecondaryAddresses `tfsdk:"ipv6_secondary_addresses"`
-	Ipv4DhcpHelper               types.List                              `tfsdk:"ipv4_dhcp_helper"`
+	Ipv4DhcpHelper               types.Set                               `tfsdk:"ipv4_dhcp_helper"`
 	Ipv4DhcpHelperVariable       types.String                            `tfsdk:"ipv4_dhcp_helper_variable"`
 	Ipv6DhcpHelpers              []VPNInterfaceSVIIpv6DhcpHelpers        `tfsdk:"ipv6_dhcp_helpers"`
 	IpDirectedBroadcast          types.Bool                              `tfsdk:"ip_directed_broadcast"`
@@ -1264,21 +1264,21 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "dhcp-helper.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.Ipv4DhcpHelper = types.ListNull(types.StringType)
+			data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 
 			v := res.Get(path + "dhcp-helper.vipVariableName")
 			data.Ipv4DhcpHelperVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Ipv4DhcpHelper = types.ListNull(types.StringType)
+			data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 			data.Ipv4DhcpHelperVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "dhcp-helper.vipValue")
-			data.Ipv4DhcpHelper = helpers.GetStringList(v.Array())
+			data.Ipv4DhcpHelper = helpers.GetStringSet(v.Array())
 			data.Ipv4DhcpHelperVariable = types.StringNull()
 		}
 	} else {
-		data.Ipv4DhcpHelper = types.ListNull(types.StringType)
+		data.Ipv4DhcpHelper = types.SetNull(types.StringType)
 		data.Ipv4DhcpHelperVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ipv6.dhcp-helper-v6.vipValue"); len(value.Array()) > 0 {

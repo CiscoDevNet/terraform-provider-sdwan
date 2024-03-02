@@ -32,16 +32,16 @@ data "sdwan_cisco_system_feature_template" "example" {
 - `admin_tech_on_failure_variable` (String) Variable name
 - `affinity_group_number` (Number) Set the affinity group number for router
 - `affinity_group_number_variable` (String) Variable name
-- `affinity_group_preference` (List of Number) Set the affinity group preference
+- `affinity_group_preference` (Set of Number) Set the affinity group preference
 - `affinity_group_preference_variable` (String) Variable name
 - `console_baud_rate` (String) Set the console baud rate
 - `console_baud_rate_variable` (String) Variable name
 - `control_session_pps` (Number) Set the policer rate for control sessions
 - `control_session_pps_variable` (String) Variable name
-- `controller_group_list` (List of Number) Configure a list of comma-separated device groups
+- `controller_group_list` (Set of Number) Configure a list of comma-separated device groups
 - `controller_group_list_variable` (String) Variable name
 - `description` (String) The description of the feature template
-- `device_groups` (List of String) Device groups (Use comma(,) for multiple groups)
+- `device_groups` (Set of String) Device groups (Use comma(,) for multiple groups)
 - `device_groups_variable` (String) Variable name
 - `device_types` (Set of String) List of supported device types
 - `enable_mrf_migration` (String) Enable migration mode to Multi-Region Fabric
@@ -151,7 +151,7 @@ Read-Only:
 
 - `boolean` (String) Type of grouping to be performed for tracker group
 - `boolean_variable` (String) Variable name
-- `elements` (List of String) Tracker member names separated by space
+- `elements` (Set of String) Tracker member names separated by space
 - `elements_variable` (String) Variable name
 - `endpoint_api_url` (String) API url of endpoint
 - `endpoint_api_url_variable` (String) Variable name

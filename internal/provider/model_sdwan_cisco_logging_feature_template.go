@@ -54,7 +54,7 @@ type CiscoLoggingTlsProfiles struct {
 	Version                 types.String `tfsdk:"version"`
 	VersionVariable         types.String `tfsdk:"version_variable"`
 	AuthenticationType      types.String `tfsdk:"authentication_type"`
-	CiphersuiteList         types.List   `tfsdk:"ciphersuite_list"`
+	CiphersuiteList         types.Set    `tfsdk:"ciphersuite_list"`
 	CiphersuiteListVariable types.String `tfsdk:"ciphersuite_list_variable"`
 }
 
@@ -602,21 +602,21 @@ func (data *CiscoLogging) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("ciphersuite.ciphersuite-list.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.CiphersuiteList = types.ListNull(types.StringType)
+					item.CiphersuiteList = types.SetNull(types.StringType)
 
 					cv := v.Get("ciphersuite.ciphersuite-list.vipVariableName")
 					item.CiphersuiteListVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.CiphersuiteList = types.ListNull(types.StringType)
+					item.CiphersuiteList = types.SetNull(types.StringType)
 					item.CiphersuiteListVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("ciphersuite.ciphersuite-list.vipValue")
-					item.CiphersuiteList = helpers.GetStringList(cv.Array())
+					item.CiphersuiteList = helpers.GetStringSet(cv.Array())
 					item.CiphersuiteListVariable = types.StringNull()
 				}
 			} else {
-				item.CiphersuiteList = types.ListNull(types.StringType)
+				item.CiphersuiteList = types.SetNull(types.StringType)
 				item.CiphersuiteListVariable = types.StringNull()
 			}
 			data.TlsProfiles = append(data.TlsProfiles, item)

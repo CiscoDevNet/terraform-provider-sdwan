@@ -37,7 +37,7 @@ type CiscoDHCPServer struct {
 	DeviceTypes              types.Set                     `tfsdk:"device_types"`
 	AddressPool              types.String                  `tfsdk:"address_pool"`
 	AddressPoolVariable      types.String                  `tfsdk:"address_pool_variable"`
-	ExcludeAddresses         types.List                    `tfsdk:"exclude_addresses"`
+	ExcludeAddresses         types.Set                     `tfsdk:"exclude_addresses"`
 	ExcludeAddressesVariable types.String                  `tfsdk:"exclude_addresses_variable"`
 	LeaseTime                types.Int64                   `tfsdk:"lease_time"`
 	LeaseTimeVariable        types.String                  `tfsdk:"lease_time_variable"`
@@ -47,9 +47,9 @@ type CiscoDHCPServer struct {
 	DomainNameVariable       types.String                  `tfsdk:"domain_name_variable"`
 	DefaultGateway           types.String                  `tfsdk:"default_gateway"`
 	DefaultGatewayVariable   types.String                  `tfsdk:"default_gateway_variable"`
-	DnsServers               types.List                    `tfsdk:"dns_servers"`
+	DnsServers               types.Set                     `tfsdk:"dns_servers"`
 	DnsServersVariable       types.String                  `tfsdk:"dns_servers_variable"`
-	TftpServers              types.List                    `tfsdk:"tftp_servers"`
+	TftpServers              types.Set                     `tfsdk:"tftp_servers"`
 	TftpServersVariable      types.String                  `tfsdk:"tftp_servers_variable"`
 	StaticLeases             []CiscoDHCPServerStaticLeases `tfsdk:"static_leases"`
 	Options                  []CiscoDHCPServerOptions      `tfsdk:"options"`
@@ -73,7 +73,7 @@ type CiscoDHCPServerOptions struct {
 	AsciiVariable      types.String `tfsdk:"ascii_variable"`
 	Hex                types.String `tfsdk:"hex"`
 	HexVariable        types.String `tfsdk:"hex_variable"`
-	IpAddress          types.List   `tfsdk:"ip_address"`
+	IpAddress          types.Set    `tfsdk:"ip_address"`
 	IpAddressVariable  types.String `tfsdk:"ip_address_variable"`
 }
 
@@ -378,21 +378,21 @@ func (data *CiscoDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "exclude.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.ExcludeAddresses = types.ListNull(types.StringType)
+			data.ExcludeAddresses = types.SetNull(types.StringType)
 
 			v := res.Get(path + "exclude.vipVariableName")
 			data.ExcludeAddressesVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ExcludeAddresses = types.ListNull(types.StringType)
+			data.ExcludeAddresses = types.SetNull(types.StringType)
 			data.ExcludeAddressesVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "exclude.vipValue")
-			data.ExcludeAddresses = helpers.GetStringList(v.Array())
+			data.ExcludeAddresses = helpers.GetStringSet(v.Array())
 			data.ExcludeAddressesVariable = types.StringNull()
 		}
 	} else {
-		data.ExcludeAddresses = types.ListNull(types.StringType)
+		data.ExcludeAddresses = types.SetNull(types.StringType)
 		data.ExcludeAddressesVariable = types.StringNull()
 	}
 	if value := res.Get(path + "lease-time.vipType"); value.Exists() {
@@ -473,40 +473,40 @@ func (data *CiscoDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "options.dns-servers.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.DnsServers = types.ListNull(types.StringType)
+			data.DnsServers = types.SetNull(types.StringType)
 
 			v := res.Get(path + "options.dns-servers.vipVariableName")
 			data.DnsServersVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DnsServers = types.ListNull(types.StringType)
+			data.DnsServers = types.SetNull(types.StringType)
 			data.DnsServersVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "options.dns-servers.vipValue")
-			data.DnsServers = helpers.GetStringList(v.Array())
+			data.DnsServers = helpers.GetStringSet(v.Array())
 			data.DnsServersVariable = types.StringNull()
 		}
 	} else {
-		data.DnsServers = types.ListNull(types.StringType)
+		data.DnsServers = types.SetNull(types.StringType)
 		data.DnsServersVariable = types.StringNull()
 	}
 	if value := res.Get(path + "options.tftp-servers.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.TftpServers = types.ListNull(types.StringType)
+			data.TftpServers = types.SetNull(types.StringType)
 
 			v := res.Get(path + "options.tftp-servers.vipVariableName")
 			data.TftpServersVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TftpServers = types.ListNull(types.StringType)
+			data.TftpServers = types.SetNull(types.StringType)
 			data.TftpServersVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "options.tftp-servers.vipValue")
-			data.TftpServers = helpers.GetStringList(v.Array())
+			data.TftpServers = helpers.GetStringSet(v.Array())
 			data.TftpServersVariable = types.StringNull()
 		}
 	} else {
-		data.TftpServers = types.ListNull(types.StringType)
+		data.TftpServers = types.SetNull(types.StringType)
 		data.TftpServersVariable = types.StringNull()
 	}
 	if value := res.Get(path + "static-lease.vipValue"); len(value.Array()) > 0 {
@@ -647,21 +647,21 @@ func (data *CiscoDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("ip.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.IpAddress = types.ListNull(types.StringType)
+					item.IpAddress = types.SetNull(types.StringType)
 
 					cv := v.Get("ip.vipVariableName")
 					item.IpAddressVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.IpAddress = types.ListNull(types.StringType)
+					item.IpAddress = types.SetNull(types.StringType)
 					item.IpAddressVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("ip.vipValue")
-					item.IpAddress = helpers.GetStringList(cv.Array())
+					item.IpAddress = helpers.GetStringSet(cv.Array())
 					item.IpAddressVariable = types.StringNull()
 				}
 			} else {
-				item.IpAddress = types.ListNull(types.StringType)
+				item.IpAddress = types.SetNull(types.StringType)
 				item.IpAddressVariable = types.StringNull()
 			}
 			data.Options = append(data.Options, item)

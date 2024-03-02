@@ -109,7 +109,7 @@ func (d *CiscoSecurityFeatureTemplateDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"authentication_type": schema.ListAttribute{
+			"authentication_type": schema.SetAttribute{
 				MarkdownDescription: "Set the authentication type for DTLS connections",
 				ElementType:         types.StringType,
 				Computed:            true,
@@ -118,7 +118,7 @@ func (d *CiscoSecurityFeatureTemplateDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"integrity_type": schema.ListAttribute{
+			"integrity_type": schema.SetAttribute{
 				MarkdownDescription: "Set the authentication type for DTLS connections",
 				ElementType:         types.StringType,
 				Computed:            true,

@@ -225,7 +225,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"ip": schema.ListAttribute{
+						"ip": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of IP").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -253,7 +253,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 								stringvalidator.OneOf("FW", "IDS", "IDP", "netsvc1", "netsvc2", "netsvc3", "netsvc4", "TE", "appqoe"),
 							},
 						},
-						"address": schema.ListAttribute{
+						"address": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of IPv4 address").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -536,7 +536,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Destination VPN to resolve the prefix").AddDefaultValueDescription("0").String,
 							Optional:            true,
 						},
-						"interface": schema.ListAttribute{
+						"interface": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of GRE Interfaces").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -569,7 +569,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Destination VPN to resolve the prefix").AddDefaultValueDescription("0").String,
 							Optional:            true,
 						},
-						"interface": schema.ListAttribute{
+						"interface": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of IPSEC Interfaces (Separated by commas)").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -612,7 +612,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -683,7 +683,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -1063,7 +1063,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("external").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -1137,7 +1137,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("external").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -1208,7 +1208,7 @@ func (r *CiscoVPNFeatureTemplateResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("external").String,
 							ElementType:         types.StringType,
 							Optional:            true,

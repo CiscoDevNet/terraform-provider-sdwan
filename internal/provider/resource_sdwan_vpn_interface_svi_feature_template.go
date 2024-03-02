@@ -197,7 +197,7 @@ func (r *VPNInterfaceSVIFeatureTemplateResource) Schema(ctx context.Context, req
 					},
 				},
 			},
-			"ipv4_dhcp_helper": schema.ListAttribute{
+			"ipv4_dhcp_helper": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of DHCP helper addresses").String,
 				ElementType:         types.StringType,
 				Optional:            true,

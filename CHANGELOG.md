@@ -16,6 +16,7 @@
 - BREAKING CHANGE: Rename `aup_timeout` attribute of `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source to `zscaler_aup_timeout`
 - Fix templating of certain boolean values, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/133), [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/134)
 - BREAKING CHANGE: Rename `dot1x_voice_vlan` attribute of `sdwan_switchport_feature_template` resource and data source to `voice_vlan`
+- Use `set` type for list attributes with primitive values
 
 ## 0.3.5
 

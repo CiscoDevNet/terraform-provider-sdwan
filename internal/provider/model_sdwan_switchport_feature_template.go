@@ -66,7 +66,7 @@ type SwitchportInterfaces struct {
 	Dot1xEnableVariable                          types.String `tfsdk:"dot1x_enable_variable"`
 	Dot1xPortControl                             types.String `tfsdk:"dot1x_port_control"`
 	Dot1xPortControlVariable                     types.String `tfsdk:"dot1x_port_control_variable"`
-	Dot1xAuthenticationOrder                     types.List   `tfsdk:"dot1x_authentication_order"`
+	Dot1xAuthenticationOrder                     types.Set    `tfsdk:"dot1x_authentication_order"`
 	Dot1xAuthenticationOrderVariable             types.String `tfsdk:"dot1x_authentication_order_variable"`
 	VoiceVlan                                    types.Int64  `tfsdk:"voice_vlan"`
 	VoiceVlanVariable                            types.String `tfsdk:"voice_vlan_variable"`
@@ -805,21 +805,21 @@ func (data *Switchport) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("dot1x.auth-order.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Dot1xAuthenticationOrder = types.ListNull(types.StringType)
+					item.Dot1xAuthenticationOrder = types.SetNull(types.StringType)
 
 					cv := v.Get("dot1x.auth-order.vipVariableName")
 					item.Dot1xAuthenticationOrderVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Dot1xAuthenticationOrder = types.ListNull(types.StringType)
+					item.Dot1xAuthenticationOrder = types.SetNull(types.StringType)
 					item.Dot1xAuthenticationOrderVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("dot1x.auth-order.vipValue")
-					item.Dot1xAuthenticationOrder = helpers.GetStringList(cv.Array())
+					item.Dot1xAuthenticationOrder = helpers.GetStringSet(cv.Array())
 					item.Dot1xAuthenticationOrderVariable = types.StringNull()
 				}
 			} else {
-				item.Dot1xAuthenticationOrder = types.ListNull(types.StringType)
+				item.Dot1xAuthenticationOrder = types.SetNull(types.StringType)
 				item.Dot1xAuthenticationOrderVariable = types.StringNull()
 			}
 			if cValue := v.Get("dot1x.voice-vlan.vipType"); cValue.Exists() {

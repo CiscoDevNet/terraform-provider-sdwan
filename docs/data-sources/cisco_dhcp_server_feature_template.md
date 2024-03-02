@@ -34,11 +34,11 @@ data "sdwan_cisco_dhcp_server_feature_template" "example" {
 - `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
-- `dns_servers` (List of String) Configure one or more DNS server IP addresses
+- `dns_servers` (Set of String) Configure one or more DNS server IP addresses
 - `dns_servers_variable` (String) Variable name
 - `domain_name` (String) Set domain name client uses to resolve hostnames
 - `domain_name_variable` (String) Variable name
-- `exclude_addresses` (List of String) Configure IPv4 address to exclude from DHCP address pool
+- `exclude_addresses` (Set of String) Configure IPv4 address to exclude from DHCP address pool
 - `exclude_addresses_variable` (String) Variable name
 - `interface_mtu` (Number) Set MTU on interface to DHCP client
 - `interface_mtu_variable` (String) Variable name
@@ -47,7 +47,7 @@ data "sdwan_cisco_dhcp_server_feature_template" "example" {
 - `options` (Attributes List) Configure Options Code (see [below for nested schema](#nestedatt--options))
 - `static_leases` (Attributes List) Configure static IP addresses (see [below for nested schema](#nestedatt--static_leases))
 - `template_type` (String) The template type
-- `tftp_servers` (List of String) Configure TFTP server IP addresses
+- `tftp_servers` (Set of String) Configure TFTP server IP addresses
 - `tftp_servers_variable` (String) Variable name
 - `version` (Number) The version of the feature template
 
@@ -60,7 +60,7 @@ Read-Only:
 - `ascii_variable` (String) Variable name
 - `hex` (String) Set HEX value
 - `hex_variable` (String) Variable name
-- `ip_address` (List of String) Set ip address
+- `ip_address` (Set of String) Set ip address
 - `ip_address_variable` (String) Variable name
 - `option_code` (Number) Set Option Code
 - `option_code_variable` (String) Variable name

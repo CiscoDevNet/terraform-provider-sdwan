@@ -42,9 +42,9 @@ type CiscoSecurity struct {
 	ReplayWindowVariable       types.String             `tfsdk:"replay_window_variable"`
 	ExtendedArWindow           types.Int64              `tfsdk:"extended_ar_window"`
 	ExtendedArWindowVariable   types.String             `tfsdk:"extended_ar_window_variable"`
-	AuthenticationType         types.List               `tfsdk:"authentication_type"`
+	AuthenticationType         types.Set                `tfsdk:"authentication_type"`
 	AuthenticationTypeVariable types.String             `tfsdk:"authentication_type_variable"`
-	IntegrityType              types.List               `tfsdk:"integrity_type"`
+	IntegrityType              types.Set                `tfsdk:"integrity_type"`
 	IntegrityTypeVariable      types.String             `tfsdk:"integrity_type_variable"`
 	PairwiseKeying             types.Bool               `tfsdk:"pairwise_keying"`
 	PairwiseKeyingVariable     types.String             `tfsdk:"pairwise_keying_variable"`
@@ -550,40 +550,40 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "ipsec.authentication-type.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.AuthenticationType = types.ListNull(types.StringType)
+			data.AuthenticationType = types.SetNull(types.StringType)
 
 			v := res.Get(path + "ipsec.authentication-type.vipVariableName")
 			data.AuthenticationTypeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AuthenticationType = types.ListNull(types.StringType)
+			data.AuthenticationType = types.SetNull(types.StringType)
 			data.AuthenticationTypeVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ipsec.authentication-type.vipValue")
-			data.AuthenticationType = helpers.GetStringList(v.Array())
+			data.AuthenticationType = helpers.GetStringSet(v.Array())
 			data.AuthenticationTypeVariable = types.StringNull()
 		}
 	} else {
-		data.AuthenticationType = types.ListNull(types.StringType)
+		data.AuthenticationType = types.SetNull(types.StringType)
 		data.AuthenticationTypeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ipsec.integrity-type.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.IntegrityType = types.ListNull(types.StringType)
+			data.IntegrityType = types.SetNull(types.StringType)
 
 			v := res.Get(path + "ipsec.integrity-type.vipVariableName")
 			data.IntegrityTypeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.IntegrityType = types.ListNull(types.StringType)
+			data.IntegrityType = types.SetNull(types.StringType)
 			data.IntegrityTypeVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ipsec.integrity-type.vipValue")
-			data.IntegrityType = helpers.GetStringList(v.Array())
+			data.IntegrityType = helpers.GetStringSet(v.Array())
 			data.IntegrityTypeVariable = types.StringNull()
 		}
 	} else {
-		data.IntegrityType = types.ListNull(types.StringType)
+		data.IntegrityType = types.SetNull(types.StringType)
 		data.IntegrityTypeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ipsec.pairwise-keying.vipType"); value.Exists() {

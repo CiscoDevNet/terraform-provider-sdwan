@@ -87,14 +87,14 @@ type CiscoVPNDnsHosts struct {
 	Optional         types.Bool   `tfsdk:"optional"`
 	Hostname         types.String `tfsdk:"hostname"`
 	HostnameVariable types.String `tfsdk:"hostname_variable"`
-	Ip               types.List   `tfsdk:"ip"`
+	Ip               types.Set    `tfsdk:"ip"`
 	IpVariable       types.String `tfsdk:"ip_variable"`
 }
 
 type CiscoVPNServices struct {
 	Optional            types.Bool   `tfsdk:"optional"`
 	ServiceTypes        types.String `tfsdk:"service_types"`
-	Address             types.List   `tfsdk:"address"`
+	Address             types.Set    `tfsdk:"address"`
 	AddressVariable     types.String `tfsdk:"address_variable"`
 	Interface           types.String `tfsdk:"interface"`
 	InterfaceVariable   types.String `tfsdk:"interface_variable"`
@@ -144,7 +144,7 @@ type CiscoVPNIpv4StaticGreRoutes struct {
 	Prefix            types.String `tfsdk:"prefix"`
 	PrefixVariable    types.String `tfsdk:"prefix_variable"`
 	VpnId             types.Int64  `tfsdk:"vpn_id"`
-	Interface         types.List   `tfsdk:"interface"`
+	Interface         types.Set    `tfsdk:"interface"`
 	InterfaceVariable types.String `tfsdk:"interface_variable"`
 }
 
@@ -153,7 +153,7 @@ type CiscoVPNIpv4StaticIpsecRoutes struct {
 	Prefix            types.String `tfsdk:"prefix"`
 	PrefixVariable    types.String `tfsdk:"prefix_variable"`
 	VpnId             types.Int64  `tfsdk:"vpn_id"`
-	Interface         types.List   `tfsdk:"interface"`
+	Interface         types.Set    `tfsdk:"interface"`
 	InterfaceVariable types.String `tfsdk:"interface_variable"`
 }
 
@@ -163,7 +163,7 @@ type CiscoVPNOmpAdvertiseIpv4Routes struct {
 	ProtocolVariable        types.String                             `tfsdk:"protocol_variable"`
 	RoutePolicy             types.String                             `tfsdk:"route_policy"`
 	RoutePolicyVariable     types.String                             `tfsdk:"route_policy_variable"`
-	ProtocolSubType         types.List                               `tfsdk:"protocol_sub_type"`
+	ProtocolSubType         types.Set                                `tfsdk:"protocol_sub_type"`
 	ProtocolSubTypeVariable types.String                             `tfsdk:"protocol_sub_type_variable"`
 	Prefixes                []CiscoVPNOmpAdvertiseIpv4RoutesPrefixes `tfsdk:"prefixes"`
 }
@@ -174,7 +174,7 @@ type CiscoVPNOmpAdvertiseIpv6Routes struct {
 	ProtocolVariable        types.String                             `tfsdk:"protocol_variable"`
 	RoutePolicy             types.String                             `tfsdk:"route_policy"`
 	RoutePolicyVariable     types.String                             `tfsdk:"route_policy_variable"`
-	ProtocolSubType         types.List                               `tfsdk:"protocol_sub_type"`
+	ProtocolSubType         types.Set                                `tfsdk:"protocol_sub_type"`
 	ProtocolSubTypeVariable types.String                             `tfsdk:"protocol_sub_type_variable"`
 	Prefixes                []CiscoVPNOmpAdvertiseIpv6RoutesPrefixes `tfsdk:"prefixes"`
 }
@@ -259,7 +259,7 @@ type CiscoVPNRouteGlobalImports struct {
 	Optional                types.Bool                                `tfsdk:"optional"`
 	Protocol                types.String                              `tfsdk:"protocol"`
 	ProtocolVariable        types.String                              `tfsdk:"protocol_variable"`
-	ProtocolSubType         types.List                                `tfsdk:"protocol_sub_type"`
+	ProtocolSubType         types.Set                                 `tfsdk:"protocol_sub_type"`
 	ProtocolSubTypeVariable types.String                              `tfsdk:"protocol_sub_type_variable"`
 	RoutePolicy             types.String                              `tfsdk:"route_policy"`
 	Redistributes           []CiscoVPNRouteGlobalImportsRedistributes `tfsdk:"redistributes"`
@@ -271,7 +271,7 @@ type CiscoVPNRouteVpnImports struct {
 	SourceVpnIdVariable     types.String                           `tfsdk:"source_vpn_id_variable"`
 	Protocol                types.String                           `tfsdk:"protocol"`
 	ProtocolVariable        types.String                           `tfsdk:"protocol_variable"`
-	ProtocolSubType         types.List                             `tfsdk:"protocol_sub_type"`
+	ProtocolSubType         types.Set                              `tfsdk:"protocol_sub_type"`
 	ProtocolSubTypeVariable types.String                           `tfsdk:"protocol_sub_type_variable"`
 	RoutePolicy             types.String                           `tfsdk:"route_policy"`
 	RoutePolicyVariable     types.String                           `tfsdk:"route_policy_variable"`
@@ -282,7 +282,7 @@ type CiscoVPNRouteGlobalExports struct {
 	Optional                types.Bool                                `tfsdk:"optional"`
 	Protocol                types.String                              `tfsdk:"protocol"`
 	ProtocolVariable        types.String                              `tfsdk:"protocol_variable"`
-	ProtocolSubType         types.List                                `tfsdk:"protocol_sub_type"`
+	ProtocolSubType         types.Set                                 `tfsdk:"protocol_sub_type"`
 	ProtocolSubTypeVariable types.String                              `tfsdk:"protocol_sub_type_variable"`
 	RoutePolicy             types.String                              `tfsdk:"route_policy"`
 	Redistributes           []CiscoVPNRouteGlobalExportsRedistributes `tfsdk:"redistributes"`
@@ -2352,21 +2352,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("ip.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Ip = types.ListNull(types.StringType)
+					item.Ip = types.SetNull(types.StringType)
 
 					cv := v.Get("ip.vipVariableName")
 					item.IpVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Ip = types.ListNull(types.StringType)
+					item.Ip = types.SetNull(types.StringType)
 					item.IpVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("ip.vipValue")
-					item.Ip = helpers.GetStringList(cv.Array())
+					item.Ip = helpers.GetStringSet(cv.Array())
 					item.IpVariable = types.StringNull()
 				}
 			} else {
-				item.Ip = types.ListNull(types.StringType)
+				item.Ip = types.SetNull(types.StringType)
 				item.IpVariable = types.StringNull()
 			}
 			data.DnsHosts = append(data.DnsHosts, item)
@@ -2400,21 +2400,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("address.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Address = types.ListNull(types.StringType)
+					item.Address = types.SetNull(types.StringType)
 
 					cv := v.Get("address.vipVariableName")
 					item.AddressVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Address = types.ListNull(types.StringType)
+					item.Address = types.SetNull(types.StringType)
 					item.AddressVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("address.vipValue")
-					item.Address = helpers.GetStringList(cv.Array())
+					item.Address = helpers.GetStringSet(cv.Array())
 					item.AddressVariable = types.StringNull()
 				}
 			} else {
-				item.Address = types.ListNull(types.StringType)
+				item.Address = types.SetNull(types.StringType)
 				item.AddressVariable = types.StringNull()
 			}
 			if cValue := v.Get("interface.vipType"); cValue.Exists() {
@@ -2938,21 +2938,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("interface.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Interface = types.ListNull(types.StringType)
+					item.Interface = types.SetNull(types.StringType)
 
 					cv := v.Get("interface.vipVariableName")
 					item.InterfaceVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Interface = types.ListNull(types.StringType)
+					item.Interface = types.SetNull(types.StringType)
 					item.InterfaceVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("interface.vipValue")
-					item.Interface = helpers.GetStringList(cv.Array())
+					item.Interface = helpers.GetStringSet(cv.Array())
 					item.InterfaceVariable = types.StringNull()
 				}
 			} else {
-				item.Interface = types.ListNull(types.StringType)
+				item.Interface = types.SetNull(types.StringType)
 				item.InterfaceVariable = types.StringNull()
 			}
 			data.Ipv4StaticGreRoutes = append(data.Ipv4StaticGreRoutes, item)
@@ -3005,21 +3005,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("interface.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.Interface = types.ListNull(types.StringType)
+					item.Interface = types.SetNull(types.StringType)
 
 					cv := v.Get("interface.vipVariableName")
 					item.InterfaceVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.Interface = types.ListNull(types.StringType)
+					item.Interface = types.SetNull(types.StringType)
 					item.InterfaceVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("interface.vipValue")
-					item.Interface = helpers.GetStringList(cv.Array())
+					item.Interface = helpers.GetStringSet(cv.Array())
 					item.InterfaceVariable = types.StringNull()
 				}
 			} else {
-				item.Interface = types.ListNull(types.StringType)
+				item.Interface = types.SetNull(types.StringType)
 				item.InterfaceVariable = types.StringNull()
 			}
 			data.Ipv4StaticIpsecRoutes = append(data.Ipv4StaticIpsecRoutes, item)
@@ -3075,21 +3075,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("protocol-sub-type.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 
 					cv := v.Get("protocol-sub-type.vipVariableName")
 					item.ProtocolSubTypeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 					item.ProtocolSubTypeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("protocol-sub-type.vipValue")
-					item.ProtocolSubType = helpers.GetStringList(cv.Array())
+					item.ProtocolSubType = helpers.GetStringSet(cv.Array())
 					item.ProtocolSubTypeVariable = types.StringNull()
 				}
 			} else {
-				item.ProtocolSubType = types.ListNull(types.StringType)
+				item.ProtocolSubType = types.SetNull(types.StringType)
 				item.ProtocolSubTypeVariable = types.StringNull()
 			}
 			if cValue := v.Get("prefix-list.vipValue"); len(cValue.Array()) > 0 {
@@ -3196,21 +3196,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("protocol-sub-type.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 
 					cv := v.Get("protocol-sub-type.vipVariableName")
 					item.ProtocolSubTypeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 					item.ProtocolSubTypeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("protocol-sub-type.vipValue")
-					item.ProtocolSubType = helpers.GetStringList(cv.Array())
+					item.ProtocolSubType = helpers.GetStringSet(cv.Array())
 					item.ProtocolSubTypeVariable = types.StringNull()
 				}
 			} else {
-				item.ProtocolSubType = types.ListNull(types.StringType)
+				item.ProtocolSubType = types.SetNull(types.StringType)
 				item.ProtocolSubTypeVariable = types.StringNull()
 			}
 			if cValue := v.Get("prefix-list.vipValue"); len(cValue.Array()) > 0 {
@@ -3921,21 +3921,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("protocol-sub-type.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 
 					cv := v.Get("protocol-sub-type.vipVariableName")
 					item.ProtocolSubTypeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 					item.ProtocolSubTypeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("protocol-sub-type.vipValue")
-					item.ProtocolSubType = helpers.GetStringList(cv.Array())
+					item.ProtocolSubType = helpers.GetStringSet(cv.Array())
 					item.ProtocolSubTypeVariable = types.StringNull()
 				}
 			} else {
-				item.ProtocolSubType = types.ListNull(types.StringType)
+				item.ProtocolSubType = types.SetNull(types.StringType)
 				item.ProtocolSubTypeVariable = types.StringNull()
 			}
 			if cValue := v.Get("route-policy.vipType"); cValue.Exists() {
@@ -4055,21 +4055,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("protocol-sub-type.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 
 					cv := v.Get("protocol-sub-type.vipVariableName")
 					item.ProtocolSubTypeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 					item.ProtocolSubTypeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("protocol-sub-type.vipValue")
-					item.ProtocolSubType = helpers.GetStringList(cv.Array())
+					item.ProtocolSubType = helpers.GetStringSet(cv.Array())
 					item.ProtocolSubTypeVariable = types.StringNull()
 				}
 			} else {
-				item.ProtocolSubType = types.ListNull(types.StringType)
+				item.ProtocolSubType = types.SetNull(types.StringType)
 				item.ProtocolSubTypeVariable = types.StringNull()
 			}
 			if cValue := v.Get("route-policy.vipType"); cValue.Exists() {
@@ -4176,21 +4176,21 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("protocol-sub-type.vipType"); len(cValue.Array()) > 0 {
 				if cValue.String() == "variableName" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 
 					cv := v.Get("protocol-sub-type.vipVariableName")
 					item.ProtocolSubTypeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ProtocolSubType = types.ListNull(types.StringType)
+					item.ProtocolSubType = types.SetNull(types.StringType)
 					item.ProtocolSubTypeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("protocol-sub-type.vipValue")
-					item.ProtocolSubType = helpers.GetStringList(cv.Array())
+					item.ProtocolSubType = helpers.GetStringSet(cv.Array())
 					item.ProtocolSubTypeVariable = types.StringNull()
 				}
 			} else {
-				item.ProtocolSubType = types.ListNull(types.StringType)
+				item.ProtocolSubType = types.SetNull(types.StringType)
 				item.ProtocolSubTypeVariable = types.StringNull()
 			}
 			if cValue := v.Get("route-policy.vipType"); cValue.Exists() {

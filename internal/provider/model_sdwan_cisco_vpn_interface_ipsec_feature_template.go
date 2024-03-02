@@ -85,7 +85,7 @@ type CiscoVPNInterfaceIPSec struct {
 	IpsecCiphersuiteVariable           types.String `tfsdk:"ipsec_ciphersuite_variable"`
 	IpsecPerfectForwardSecrecy         types.String `tfsdk:"ipsec_perfect_forward_secrecy"`
 	IpsecPerfectForwardSecrecyVariable types.String `tfsdk:"ipsec_perfect_forward_secrecy_variable"`
-	Tracker                            types.List   `tfsdk:"tracker"`
+	Tracker                            types.Set    `tfsdk:"tracker"`
 	TrackerVariable                    types.String `tfsdk:"tracker_variable"`
 	TunnelRouteVia                     types.String `tfsdk:"tunnel_route_via"`
 	TunnelRouteViaVariable             types.String `tfsdk:"tunnel_route_via_variable"`
@@ -945,21 +945,21 @@ func (data *CiscoVPNInterfaceIPSec) fromBody(ctx context.Context, res gjson.Resu
 	}
 	if value := res.Get(path + "tracker.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.Tracker = types.ListNull(types.StringType)
+			data.Tracker = types.SetNull(types.StringType)
 
 			v := res.Get(path + "tracker.vipVariableName")
 			data.TrackerVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Tracker = types.ListNull(types.StringType)
+			data.Tracker = types.SetNull(types.StringType)
 			data.TrackerVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tracker.vipValue")
-			data.Tracker = helpers.GetStringList(v.Array())
+			data.Tracker = helpers.GetStringSet(v.Array())
 			data.TrackerVariable = types.StringNull()
 		}
 	} else {
-		data.Tracker = types.ListNull(types.StringType)
+		data.Tracker = types.SetNull(types.StringType)
 		data.TrackerVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-route-via.vipType"); value.Exists() {

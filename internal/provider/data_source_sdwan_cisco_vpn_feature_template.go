@@ -194,7 +194,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"ip": schema.ListAttribute{
+						"ip": schema.SetAttribute{
 							MarkdownDescription: "List of IP",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -219,7 +219,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Service Type",
 							Computed:            true,
 						},
-						"address": schema.ListAttribute{
+						"address": schema.SetAttribute{
 							MarkdownDescription: "List of IPv4 address",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -484,7 +484,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Destination VPN to resolve the prefix",
 							Computed:            true,
 						},
-						"interface": schema.ListAttribute{
+						"interface": schema.SetAttribute{
 							MarkdownDescription: "List of GRE Interfaces",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -517,7 +517,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Destination VPN to resolve the prefix",
 							Computed:            true,
 						},
-						"interface": schema.ListAttribute{
+						"interface": schema.SetAttribute{
 							MarkdownDescription: "List of IPSEC Interfaces (Separated by commas)",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -554,7 +554,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: "",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -619,7 +619,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: "",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -960,7 +960,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: "",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -1025,7 +1025,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: "",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -1090,7 +1090,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"protocol_sub_type": schema.ListAttribute{
+						"protocol_sub_type": schema.SetAttribute{
 							MarkdownDescription: "",
 							ElementType:         types.StringType,
 							Computed:            true,

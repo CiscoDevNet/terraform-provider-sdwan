@@ -70,13 +70,13 @@ resource "sdwan_cisco_security_feature_template" "example" {
 
 ### Optional
 
-- `authentication_type` (List of String) Set the authentication type for DTLS connections
+- `authentication_type` (Set of String) Set the authentication type for DTLS connections
 - `authentication_type_variable` (String) Variable name
 - `extended_ar_window` (Number) Extended Anti-Replay Window
   - Range: `10`-`2048`
   - Default value: `256`
 - `extended_ar_window_variable` (String) Variable name
-- `integrity_type` (List of String) Set the authentication type for DTLS connections
+- `integrity_type` (Set of String) Set the authentication type for DTLS connections
 - `integrity_type_variable` (String) Variable name
 - `keychains` (Attributes List) Configure a Keychain (see [below for nested schema](#nestedatt--keychains))
 - `keys` (Attributes List) Configure a Key (see [below for nested schema](#nestedatt--keys))

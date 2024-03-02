@@ -70,7 +70,7 @@ Read-Only:
 
 - `hostname` (String) Hostname
 - `hostname_variable` (String) Variable name
-- `ip` (List of String) List of IP
+- `ip` (Set of String) List of IP
 - `ip_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 
@@ -103,7 +103,7 @@ Read-Only:
 
 Read-Only:
 
-- `interface` (List of String) List of GRE Interfaces
+- `interface` (Set of String) List of GRE Interfaces
 - `interface_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
@@ -116,7 +116,7 @@ Read-Only:
 
 Read-Only:
 
-- `interface` (List of String) List of IPSEC Interfaces (Separated by commas)
+- `interface` (Set of String) List of IPSEC Interfaces (Separated by commas)
 - `interface_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
@@ -259,7 +259,7 @@ Read-Only:
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefixes` (Attributes List) (see [below for nested schema](#nestedatt--omp_advertise_ipv4_routes--prefixes))
 - `protocol` (String) Advertised routes protocol
-- `protocol_sub_type` (List of String)
+- `protocol_sub_type` (Set of String)
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `route_policy` (String) Set Route Policy to OMP
@@ -286,7 +286,7 @@ Read-Only:
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefixes` (Attributes List) (see [below for nested schema](#nestedatt--omp_advertise_ipv6_routes--prefixes))
 - `protocol` (String) Advertised routes protocol
-- `protocol_sub_type` (List of String)
+- `protocol_sub_type` (Set of String)
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `route_policy` (String)
@@ -332,7 +332,7 @@ Read-Only:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `protocol` (String) Select a Route Protocol to enable route leaking from this Service VPN to Global VPN
-- `protocol_sub_type` (List of String)
+- `protocol_sub_type` (Set of String)
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `redistributes` (Attributes List) Enable redistribution of replicated route protocol (see [below for nested schema](#nestedatt--route_global_exports--redistributes))
@@ -357,7 +357,7 @@ Read-Only:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `protocol` (String) Select a Route Protocol to enable route leaking from Global VPN to this Service VPN
-- `protocol_sub_type` (List of String)
+- `protocol_sub_type` (Set of String)
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `redistributes` (Attributes List) Enable redistribution of replicated route protocol (see [below for nested schema](#nestedatt--route_global_imports--redistributes))
@@ -382,7 +382,7 @@ Read-Only:
 
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `protocol` (String) Select a Route Protocol to enable route leaking to current VPN
-- `protocol_sub_type` (List of String)
+- `protocol_sub_type` (Set of String)
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `redistributes` (Attributes List) Enable redistribution of replicated route protocol (see [below for nested schema](#nestedatt--route_vpn_imports--redistributes))
@@ -409,7 +409,7 @@ Read-Only:
 
 Read-Only:
 
-- `address` (List of String) List of IPv4 address
+- `address` (Set of String) List of IPv4 address
 - `address_variable` (String) Variable name
 - `interface` (String) Tracking Service
 - `interface_variable` (String) Variable name

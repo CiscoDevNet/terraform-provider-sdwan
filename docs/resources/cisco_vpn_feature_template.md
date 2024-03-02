@@ -291,7 +291,7 @@ Optional:
 
 - `hostname` (String) Hostname
 - `hostname_variable` (String) Variable name
-- `ip` (List of String) List of IP
+- `ip` (Set of String) List of IP
 - `ip_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 
@@ -328,7 +328,7 @@ Optional:
 
 Optional:
 
-- `interface` (List of String) List of GRE Interfaces
+- `interface` (Set of String) List of GRE Interfaces
 - `interface_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
@@ -342,7 +342,7 @@ Optional:
 
 Optional:
 
-- `interface` (List of String) List of IPSEC Interfaces (Separated by commas)
+- `interface` (Set of String) List of IPSEC Interfaces (Separated by commas)
 - `interface_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `prefix` (String) Prefix
@@ -514,7 +514,7 @@ Optional:
 - `prefixes` (Attributes List) (see [below for nested schema](#nestedatt--omp_advertise_ipv4_routes--prefixes))
 - `protocol` (String) Advertised routes protocol
   - Choices: `bgp`, `ospf`, `ospfv3`, `connected`, `static`, `network`, `aggregate`, `eigrp`, `lisp`, `isis`
-- `protocol_sub_type` (List of String)
+- `protocol_sub_type` (Set of String)
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `route_policy` (String) Set Route Policy to OMP
@@ -543,7 +543,7 @@ Optional:
 - `prefixes` (Attributes List) (see [below for nested schema](#nestedatt--omp_advertise_ipv6_routes--prefixes))
 - `protocol` (String) Advertised routes protocol
   - Choices: `bgp`, `ospf`, `connected`, `static`, `network`, `aggregate`
-- `protocol_sub_type` (List of String)
+- `protocol_sub_type` (Set of String)
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `route_policy` (String)
@@ -594,7 +594,7 @@ Optional:
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `protocol` (String) Select a Route Protocol to enable route leaking from this Service VPN to Global VPN
   - Choices: `static`, `connected`, `bgp`, `eigrp`, `ospf`
-- `protocol_sub_type` (List of String) - Default value: `external`
+- `protocol_sub_type` (Set of String) - Default value: `external`
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `redistributes` (Attributes List) Enable redistribution of replicated route protocol (see [below for nested schema](#nestedatt--route_global_exports--redistributes))
@@ -621,7 +621,7 @@ Optional:
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `protocol` (String) Select a Route Protocol to enable route leaking from Global VPN to this Service VPN
   - Choices: `static`, `connected`, `bgp`, `ospf`
-- `protocol_sub_type` (List of String) - Default value: `external`
+- `protocol_sub_type` (Set of String) - Default value: `external`
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `redistributes` (Attributes List) Enable redistribution of replicated route protocol (see [below for nested schema](#nestedatt--route_global_imports--redistributes))
@@ -648,7 +648,7 @@ Optional:
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `protocol` (String) Select a Route Protocol to enable route leaking to current VPN
   - Choices: `static`, `connected`, `bgp`, `ospf`, `eigrp`
-- `protocol_sub_type` (List of String) - Default value: `external`
+- `protocol_sub_type` (Set of String) - Default value: `external`
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `redistributes` (Attributes List) Enable redistribution of replicated route protocol (see [below for nested schema](#nestedatt--route_vpn_imports--redistributes))
@@ -678,7 +678,7 @@ Optional:
 
 Optional:
 
-- `address` (List of String) List of IPv4 address
+- `address` (Set of String) List of IPv4 address
 - `address_variable` (String) Variable name
 - `interface` (String) Tracking Service
 - `interface_variable` (String) Variable name

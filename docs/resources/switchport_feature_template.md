@@ -98,7 +98,7 @@ resource "sdwan_switchport_feature_template" "example" {
 
 Optional:
 
-- `dot1x_authentication_order` (List of String) Specify authentication methods in the order of preference
+- `dot1x_authentication_order` (Set of String) Specify authentication methods in the order of preference
 - `dot1x_authentication_order_variable` (String) Variable name
 - `dot1x_control_direction` (String) Set uni or bi directional authorization mode
   - Choices: `both`, `in`

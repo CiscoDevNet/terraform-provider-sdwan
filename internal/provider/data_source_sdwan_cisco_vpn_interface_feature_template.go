@@ -213,7 +213,7 @@ func (d *CiscoVPNInterfaceFeatureTemplateDataSource) Schema(ctx context.Context,
 					},
 				},
 			},
-			"ipv4_dhcp_helper": schema.ListAttribute{
+			"ipv4_dhcp_helper": schema.SetAttribute{
 				MarkdownDescription: "List of DHCP IPv4 helper addresses",
 				ElementType:         types.StringType,
 				Computed:            true,
@@ -250,7 +250,7 @@ func (d *CiscoVPNInterfaceFeatureTemplateDataSource) Schema(ctx context.Context,
 					},
 				},
 			},
-			"tracker": schema.ListAttribute{
+			"tracker": schema.SetAttribute{
 				MarkdownDescription: "Enable tracker for this interface",
 				ElementType:         types.StringType,
 				Computed:            true,
@@ -583,7 +583,7 @@ func (d *CiscoVPNInterfaceFeatureTemplateDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_interface_groups": schema.ListAttribute{
+			"tunnel_interface_groups": schema.SetAttribute{
 				MarkdownDescription: "List of groups",
 				ElementType:         types.Int64Type,
 				Computed:            true,
@@ -624,7 +624,7 @@ func (d *CiscoVPNInterfaceFeatureTemplateDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_interface_exclude_controller_group_list": schema.ListAttribute{
+			"tunnel_interface_exclude_controller_group_list": schema.SetAttribute{
 				MarkdownDescription: "Exclude the following controller groups defined in this list",
 				ElementType:         types.Int64Type,
 				Computed:            true,

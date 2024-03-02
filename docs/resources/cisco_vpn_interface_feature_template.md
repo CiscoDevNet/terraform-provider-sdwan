@@ -305,7 +305,7 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `iperf_server` (String) Iperf server for auto bandwidth detect
 - `iperf_server_variable` (String) Variable name
-- `ipv4_dhcp_helper` (List of String) List of DHCP IPv4 helper addresses
+- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses
 - `ipv4_dhcp_helper_variable` (String) Variable name
 - `ipv4_secondary_addresses` (Attributes List) Assign secondary IP addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
 - `ipv4_vrrps` (Attributes List) Enable VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
@@ -417,7 +417,7 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
 - `tcp_timeout_variable` (String) Variable name
 - `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
 - `tloc_extension_variable` (String) Variable name
-- `tracker` (List of String) Enable tracker for this interface
+- `tracker` (Set of String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
 - `tunnel_bandwidth` (Number) Tunnels Bandwidth Percent
   - Range: `1`-`99`
@@ -482,11 +482,11 @@ resource "sdwan_cisco_vpn_interface_feature_template" "example" {
   - Default value: `true`
 - `tunnel_interface_control_connections_variable` (String) Variable name
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
-- `tunnel_interface_exclude_controller_group_list` (List of Number) Exclude the following controller groups defined in this list
+- `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list
 - `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name
 - `tunnel_interface_gre_tunnel_destination_ip` (String) Extend the TLOC to a remote node over GRE tunnel
 - `tunnel_interface_gre_tunnel_destination_ip_variable` (String) Variable name
-- `tunnel_interface_groups` (List of Number) List of groups
+- `tunnel_interface_groups` (Set of Number) List of groups
 - `tunnel_interface_groups_variable` (String) Variable name
 - `tunnel_interface_hello_interval` (Number) Set time period of control hello packets <100..600000> milli seconds
   - Range: `100`-`600000`

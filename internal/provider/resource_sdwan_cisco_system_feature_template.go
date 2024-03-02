@@ -201,7 +201,7 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 					},
 				},
 			},
-			"device_groups": schema.ListAttribute{
+			"device_groups": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Device groups (Use comma(,) for multiple groups)").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -210,7 +210,7 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"controller_group_list": schema.ListAttribute{
+			"controller_group_list": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure a list of comma-separated device groups").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,
@@ -431,7 +431,7 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"elements": schema.ListAttribute{
+						"elements": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Tracker member names separated by space").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -664,7 +664,7 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"affinity_group_preference": schema.ListAttribute{
+			"affinity_group_preference": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the affinity group preference").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,

@@ -345,7 +345,7 @@ func (r *CiscoVPNInterfaceIPSecFeatureTemplateResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tracker": schema.ListAttribute{
+			"tracker": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable tracker for this interface").String,
 				ElementType:         types.StringType,
 				Optional:            true,
