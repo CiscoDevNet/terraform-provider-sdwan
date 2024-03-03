@@ -11,10 +11,10 @@ This example demonstrates how the provider can be used to attach an existing dev
 
 ## Environment
 
-This example is built specifically for the [Cisco SD-WAN 20.10 Sandbox](https://devnetsandbox.cisco.com/RM/Diagram/Index/ed2c839d-621e-4c55-b176-db2457baf4c8?diagramType=Topology). 
+This example is built specifically for the [Cisco SD-WAN 20.10 Sandbox](https://devnetsandbox.cisco.com/DevNet/catalog/sd-wan). 
 For use with other environments, it is required to adapt the code accordingly since it refers to specific template/device IDs and names available in the mentioned sandbox environment.
 
-Navigate to the [Cisco SD-WAN 20.10 page](https://devnetsandbox.cisco.com/RM/Diagram/Index/ed2c839d-621e-4c55-b176-db2457baf4c8?diagramType=Topology) and click **Reserve** in the top-right corner. Select the preferred schedule and press the **Reserve** button. The setup typically takes around 15 minutes. During the setup process and after successful completion, you are informed via email.
+Navigate to the [Cisco SD-WAN 20.10 page](https://devnetsandbox.cisco.com/DevNet/catalog/sd-wan) and click **Launch**. Select the preferred schedule and press the **Launch** button. The setup typically takes around 15 minutes. During the setup process and after successful completion, you are informed via email.
 
 Note the IP address, port, username and password for HTTPS provided in the **Credentials** tab of the sandbox page for a later step.
 
