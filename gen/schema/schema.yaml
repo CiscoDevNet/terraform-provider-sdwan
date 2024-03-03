@@ -1,71 +1,69 @@
 ---
-name: str()
-model: str(required=False)
-rest_endpoint: str(required=False)
-get_rest_endpoint: str(required=False)
-post_rest_endpoint: str(required=False)
-type: str(required=False)
-minimum_version: str(required=False)
-ds_description: str(required=False)
-res_description: str(required=False)
-doc_category: str(required=False)
-exclude_test: bool(required=False)
-root_element: str(required=False)
-has_version: bool(required=False)
-id_attribute: str(required=False)
+name: str() # Name of the resource
+model: str(required=False) # Name of model file without file extension
+rest_endpoint: str(required=False) # REST endpoint path
+get_rest_endpoint: str(required=False) # Override GET REST endpoint path
+post_rest_endpoint: str(required=False) # Override POST REST endpoint path
+minimum_version: str(required=False) # Minimum version of SDWAN Manager
+ds_description: str(required=False) # Define a data source description
+res_description: str(required=False) # Define a resource description
+doc_category: str(required=False) # Define a documentation category
+root_element: str(required=False) # Set to path if payload has a root element under which all other attributes should be added
+has_version: bool(required=False) # Set to true if version attribute should be added
+id_attribute: str(required=False) # Attribute name in payload from which ID should be derived
 id_from_query_path: str(required=False) # Specify path to ID container if ID is not included in POST response and needs to be resolved via separate GET request
 id_from_query_path_attribute: str(required=False) # Specify attribute name of ID, only relevant if "id_from_query_path" option used, default is "id"
 feature_template_is_global: bool(required=False) # Specify if "isGlobal" flag in payload should be enabled
-skip_templates: list(str(), required=False)
-attributes: list(include('attribute'), required=False)
-test_prerequisites: str(required=False)
-remove_id: bool(required=False)
+skip_templates: list(str(), required=False) # Skip rendering of listed templates
+attributes: list(include('attribute'), required=False) # List of attributes
+test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
+remove_id: bool(required=False) # Set to true if default ID attribute should be removed
 ---
 attribute:
-  model_name: str(required=False)
-  response_model_name: str(required=False)
-  tf_name: str(required=False)
-  type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', required=False)
+  model_name: str(required=False) # Name of the attribute in the model (payload)
+  response_model_name: str(required=False) # Name of the attribute in the model (response payload)
+  tf_name: str(required=False) # Name of the attribute in the Terraform resource, by default derived from model_name
+  type: enum('String', 'Int64', 'Bool', 'List', 'Set', 'Version', 'Versions', required=False) # Type of the attribute
   element_type: enum('String', 'Int64', required=False) # only relevant if type is either 'List' or 'Set'
-  object_type: enum('object', 'tree', 'list', required=False)
-  model_type_string: bool(required=False)
-  bool_empty_string: bool(required=False)
-  data_path: list(str(), required=False)
-  keys: list(str(), required=False)
-  id: bool(required=False)
+  object_type: enum('object', 'tree', 'list', required=False) # Feature template schema object type
+  model_type_string: bool(required=False) # Set to true if element should be added as string to payload
+  bool_empty_string: bool(required=False) # Set to true if a boolean value of "true" should be expressed as an empty string in the payload
+  data_path: list(str(), required=False) # Path to the attribute in the model structure
+  keys: list(str(), required=False) # Keys according to feature template schema
+  id: bool(required=False) # Set to true if the attribute is part of the ID
   reference: bool(required=False) # Indicates that the attribute is being used in the url path
-  variable: bool(required=False)
-  mandatory: bool(required=False)
+  variable: bool(required=False) # Indicates that this attribute can be provided as a feature template or profile parcel variable
+  mandatory: bool(required=False) # Set to true if the attribute is mandatory
   parcel_mandatory: bool(required=False) # Set to true if profile parcel attribute requires either a "global" or "variable" value
-  write_only: bool(required=False)
-  tf_only: bool(required=False)
-  exclude_test: bool(required=False)
-  exclude_example: bool(required=False)
+  write_only: bool(required=False) # Set to true if the attribute is write-only, meaning we cannot read the value
+  tf_only: bool(required=False) # Set to true if this attribute is only used in Terraform but not added to payload
+  exclude_test: bool(required=False) # Exclude attribute from example (documentation) and acceptance test
+  exclude_example: bool(required=False) # Exclude attribute from example (documentation)
   exclude_ignore: bool(required=False) # If true the object will not be included in the payload if vipType="ignore"
   node_only_container: bool(required=False) # Some node-only attributes are at the same time a container for other attributes, in this case set to "true"
-  description: str(required=False)
-  example: any(str(), int(), bool(), required=False)
-  enum_values: list(str(), required=False)
-  ignore_enum: bool(required=False)
-  min_list: int(required=False)
-  max_list: int(required=False)
-  min_int: int(required=False)
-  max_int: int(required=False)
-  min_float: num(required=False)
-  max_float: num(required=False)
-  string_patterns: list(str(), required=False)
-  string_min_length: int(required=False)
-  string_max_length: int(required=False)
-  default_value: any(str(), int(), bool(), required=False)
-  default_value_present: bool(required=False)
-  value: any(str(), int(), bool(), required=False)
-  test_value: str(required=False)
-  always_include: bool(required=False)
-  attributes: list(include('attribute'), required=False)
-  conditional_attribute: include('conditional_attribute', required=False)
-  query_param: bool(required=False)
+  description: str(required=False) # Attribute description
+  example: any(str(), int(), bool(), required=False) # Example value for documentation, also used for acceptance test
+  enum_values: list(str(), required=False) # List of enum values, only relevant if type is "String"
+  ignore_enum: bool(required=False) # Set to true if enum is not an exhaustive list of possible values
+  min_list: int(required=False) # Minimum number of elements in a list, only relevant if type is "List"
+  max_list: int(required=False) # Maximum number of elements in a list, only relevant if type is "List"
+  min_int: int(required=False) # Minimum value of an integer, only relevant if type is "Int64"
+  max_int: int(required=False) # Maximum value of an integer, only relevant if type is "Int64"
+  min_float: num(required=False) # Minimum value of a float, only relevant if type is "Float"
+  max_float: num(required=False) # Maximum value of a float, only relevant if type is "Float"
+  string_patterns: list(str(), required=False) # List of regular expressions that the string must match, only relevant if type is "String"
+  string_min_length: int(required=False) # Minimum length of a string, only relevant if type is "String"
+  string_max_length: int(required=False) # Maximum length of a string, only relevant if type is "String"
+  default_value: any(str(), int(), bool(), required=False) # Default value for the attribute
+  default_value_present: bool(required=False) # Set to true if profile parcel has default value in schema
+  value: any(str(), int(), bool(), required=False) # Hardcoded value for the attribute
+  test_value: str(required=False) # Value used for acceptance test
+  always_include: bool(required=False) # Include attribute always in payload
+  attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
+  conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true
+  query_param: bool(required=False) # Set to true if attribute is a query parameter to be included in request url
   no_augment_config: bool(required=False) # If true do not augment with model data
 
 conditional_attribute:
-  name: str()
-  value: str()
+  name: str() # Reference to other attribute
+  value: str() # Attribute value

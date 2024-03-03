@@ -189,12 +189,10 @@ type YamlConfig struct {
 	RestEndpoint             string                `yaml:"rest_endpoint"`
 	GetRestEndpoint          string                `yaml:"get_rest_endpoint"`
 	PostRestEndpoint         string                `yaml:"post_rest_endpoint"`
-	Type                     string                `yaml:"type"`
 	MinimumVersion           string                `yaml:"minimum_version"`
 	DsDescription            string                `yaml:"ds_description"`
 	ResDescription           string                `yaml:"res_description"`
 	DocCategory              string                `yaml:"doc_category"`
-	ExcludeTest              bool                  `yaml:"exclude_test"`
 	RootElement              string                `yaml:"root_element"`
 	HasVersion               bool                  `yaml:"has_version"`
 	IdAttribute              string                `yaml:"id_attribute"`
