@@ -43,6 +43,7 @@ attributes:
       - model_name: local
         data_path: [send-lifetime, lifetime-group-v1]
         tf_name: send_lifetime_local
+        exclude_ignore: true
         example: true
       - model_name: start-epoch
         data_path: [send-lifetime, lifetime-group-v1]
@@ -55,18 +56,22 @@ attributes:
       - model_name: duration
         data_path: [send-lifetime, lifetime-group-v1]
         tf_name: send_lifetime_duration
+        exclude_ignore: true
         example: 1000
       - model_name: end-epoch
         data_path: [send-lifetime, lifetime-group-v1]
         tf_name: send_lifetime_end_time
+        exclude_ignore: true
         example: 2032-12-31T23:59
       - model_name: infinite
         data_path: [send-lifetime, lifetime-group-v1]
         tf_name: send_lifetime_infinite
+        exclude_ignore: true
         example: true
       - model_name: local
         data_path: [accept-lifetime, lifetime-group-v1]
         tf_name: accept_lifetime_local
+        exclude_ignore: true
         example: true
       - model_name: start-epoch
         data_path: [accept-lifetime, lifetime-group-v1]
@@ -79,14 +84,17 @@ attributes:
       - model_name: duration
         data_path: [accept-lifetime, lifetime-group-v1]
         tf_name: accept_lifetime_duration
+        exclude_ignore: true
         example: 1000
       - model_name: end-epoch
         data_path: [accept-lifetime, lifetime-group-v1]
         tf_name: accept_lifetime_end_time
+        exclude_ignore: true
         example: 2032-12-31T23:59
       - model_name: infinite
         data_path: [accept-lifetime, lifetime-group-v1]
         tf_name: accept_lifetime_infinite
+        exclude_ignore: true
         example: true
       - model_name: include-tcp-options
         example: false
