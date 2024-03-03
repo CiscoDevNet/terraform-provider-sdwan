@@ -48,7 +48,7 @@ attributes:
         example: Region1
       - model_name: siteLists
         tf_name: site_list_ids
-        type: List
+        type: Set
         element_type: String
         description: Site list IDs
         example: e858e1c4-6aa8-4de7-99df-c3adbf80290d

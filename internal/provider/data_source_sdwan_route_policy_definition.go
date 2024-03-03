@@ -120,7 +120,7 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 										MarkdownDescription: "AS path list version",
 										Computed:            true,
 									},
-									"community_list_ids": schema.ListAttribute{
+									"community_list_ids": schema.SetAttribute{
 										MarkdownDescription: "Community list IDs",
 										ElementType:         types.StringType,
 										Computed:            true,

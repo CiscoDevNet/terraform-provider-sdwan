@@ -63,7 +63,7 @@ attributes:
   - model_name: targetVpns
     data_path: [definition]
     tf_name: target_vpns
-    type: List
+    type: Set
     element_type: String
     description: List of VPN IDs
     example: 1

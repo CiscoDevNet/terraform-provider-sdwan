@@ -39,7 +39,7 @@ type SystemAAA struct {
 	AuthenticationGroupVariable         types.String                  `tfsdk:"authentication_group_variable"`
 	AccountingGroup                     types.Bool                    `tfsdk:"accounting_group"`
 	AccountingGroupVariable             types.String                  `tfsdk:"accounting_group_variable"`
-	ServerAuthOrder                     types.List                    `tfsdk:"server_auth_order"`
+	ServerAuthOrder                     types.Set                     `tfsdk:"server_auth_order"`
 	Users                               []SystemAAAUsers              `tfsdk:"users"`
 	RadiusGroups                        []SystemAAARadiusGroups       `tfsdk:"radius_groups"`
 	TacacsGroups                        []SystemAAATacacsGroups       `tfsdk:"tacacs_groups"`
@@ -83,14 +83,14 @@ type SystemAAAAccountingRules struct {
 	Level             types.String `tfsdk:"level"`
 	StartStop         types.Bool   `tfsdk:"start_stop"`
 	StartStopVariable types.String `tfsdk:"start_stop_variable"`
-	Group             types.List   `tfsdk:"group"`
+	Group             types.Set    `tfsdk:"group"`
 }
 
 type SystemAAAAuthorizationRules struct {
 	RuleId          types.String `tfsdk:"rule_id"`
 	Method          types.String `tfsdk:"method"`
 	Level           types.String `tfsdk:"level"`
-	Group           types.List   `tfsdk:"group"`
+	Group           types.Set    `tfsdk:"group"`
 	IfAuthenticated types.Bool   `tfsdk:"if_authenticated"`
 }
 
@@ -525,12 +525,12 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AccountingGroup = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServerAuthOrder = types.ListNull(types.StringType)
+	data.ServerAuthOrder = types.SetNull(types.StringType)
 
 	if t := res.Get(path + "serverAuthOrder.optionType"); t.Exists() {
 		va := res.Get(path + "serverAuthOrder.value")
 		if t.String() == "global" {
-			data.ServerAuthOrder = helpers.GetStringList(va.Array())
+			data.ServerAuthOrder = helpers.GetStringSet(va.Array())
 		}
 	}
 	if value := res.Get(path + "user"); value.Exists() {
@@ -831,12 +831,12 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.StartStop = types.BoolValue(va.Bool())
 				}
 			}
-			item.Group = types.ListNull(types.StringType)
+			item.Group = types.SetNull(types.StringType)
 
 			if t := v.Get("group.optionType"); t.Exists() {
 				va := v.Get("group.value")
 				if t.String() == "global" {
-					item.Group = helpers.GetStringList(va.Array())
+					item.Group = helpers.GetStringSet(va.Array())
 				}
 			}
 			data.AccountingRules = append(data.AccountingRules, item)
@@ -891,12 +891,12 @@ func (data *SystemAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.Level = types.StringValue(va.String())
 				}
 			}
-			item.Group = types.ListNull(types.StringType)
+			item.Group = types.SetNull(types.StringType)
 
 			if t := v.Get("group.optionType"); t.Exists() {
 				va := v.Get("group.value")
 				if t.String() == "global" {
-					item.Group = helpers.GetStringList(va.Array())
+					item.Group = helpers.GetStringSet(va.Array())
 				}
 			}
 			item.IfAuthenticated = types.BoolNull()
@@ -941,12 +941,12 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.AccountingGroup = types.BoolValue(va.Bool())
 		}
 	}
-	data.ServerAuthOrder = types.ListNull(types.StringType)
+	data.ServerAuthOrder = types.SetNull(types.StringType)
 
 	if t := res.Get(path + "serverAuthOrder.optionType"); t.Exists() {
 		va := res.Get(path + "serverAuthOrder.value")
 		if t.String() == "global" {
-			data.ServerAuthOrder = helpers.GetStringList(va.Array())
+			data.ServerAuthOrder = helpers.GetStringSet(va.Array())
 		}
 	}
 	for i := range data.Users {
@@ -1383,12 +1383,12 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 				data.AccountingRules[i].StartStop = types.BoolValue(va.Bool())
 			}
 		}
-		data.AccountingRules[i].Group = types.ListNull(types.StringType)
+		data.AccountingRules[i].Group = types.SetNull(types.StringType)
 
 		if t := r.Get("group.optionType"); t.Exists() {
 			va := r.Get("group.value")
 			if t.String() == "global" {
-				data.AccountingRules[i].Group = helpers.GetStringList(va.Array())
+				data.AccountingRules[i].Group = helpers.GetStringSet(va.Array())
 			}
 		}
 	}
@@ -1462,12 +1462,12 @@ func (data *SystemAAA) updateFromBody(ctx context.Context, res gjson.Result) {
 				data.AuthorizationRules[i].Level = types.StringValue(va.String())
 			}
 		}
-		data.AuthorizationRules[i].Group = types.ListNull(types.StringType)
+		data.AuthorizationRules[i].Group = types.SetNull(types.StringType)
 
 		if t := r.Get("group.optionType"); t.Exists() {
 			va := r.Get("group.value")
 			if t.String() == "global" {
-				data.AuthorizationRules[i].Group = helpers.GetStringList(va.Array())
+				data.AuthorizationRules[i].Group = helpers.GetStringSet(va.Array())
 			}
 		}
 		data.AuthorizationRules[i].IfAuthenticated = types.BoolNull()

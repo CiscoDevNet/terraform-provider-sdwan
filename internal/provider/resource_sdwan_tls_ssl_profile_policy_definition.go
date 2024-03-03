@@ -87,17 +87,17 @@ func (r *TLSSSLProfilePolicyDefinitionResource) Schema(ctx context.Context, req 
 					stringvalidator.OneOf("security", "unified"),
 				},
 			},
-			"decrypt_categories": schema.ListAttribute{
+			"decrypt_categories": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Categories that should be decrypted").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"never_decrypt_categories": schema.ListAttribute{
+			"never_decrypt_categories": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Categories that should never be decrypted").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"skip_decrypt_categories": schema.ListAttribute{
+			"skip_decrypt_categories": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Categories that should skipped").String,
 				ElementType:         types.StringType,
 				Optional:            true,

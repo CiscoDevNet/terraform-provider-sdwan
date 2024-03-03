@@ -45,14 +45,14 @@ type CentralizedPolicyDefinitions struct {
 }
 
 type CentralizedPolicyDefinitionsEntries struct {
-	SiteListIds        types.List   `tfsdk:"site_list_ids"`
+	SiteListIds        types.Set    `tfsdk:"site_list_ids"`
 	SiteListVersions   types.List   `tfsdk:"site_list_versions"`
-	VpnListIds         types.List   `tfsdk:"vpn_list_ids"`
+	VpnListIds         types.Set    `tfsdk:"vpn_list_ids"`
 	VpnListVersions    types.List   `tfsdk:"vpn_list_versions"`
 	Direction          types.String `tfsdk:"direction"`
-	RegionListIds      types.List   `tfsdk:"region_list_ids"`
+	RegionListIds      types.Set    `tfsdk:"region_list_ids"`
 	RegionListVersions types.List   `tfsdk:"region_list_versions"`
-	RegionIds          types.List   `tfsdk:"region_ids"`
+	RegionIds          types.Set    `tfsdk:"region_ids"`
 }
 
 func (data CentralizedPolicy) toBody(ctx context.Context) string {
@@ -143,14 +143,14 @@ func (data *CentralizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := CentralizedPolicyDefinitionsEntries{}
 					if ccValue := cv.Get("siteLists"); ccValue.Exists() {
-						cItem.SiteListIds = helpers.GetStringList(ccValue.Array())
+						cItem.SiteListIds = helpers.GetStringSet(ccValue.Array())
 					} else {
-						cItem.SiteListIds = types.ListNull(types.StringType)
+						cItem.SiteListIds = types.SetNull(types.StringType)
 					}
 					if ccValue := cv.Get("vpnLists"); ccValue.Exists() {
-						cItem.VpnListIds = helpers.GetStringList(ccValue.Array())
+						cItem.VpnListIds = helpers.GetStringSet(ccValue.Array())
 					} else {
-						cItem.VpnListIds = types.ListNull(types.StringType)
+						cItem.VpnListIds = types.SetNull(types.StringType)
 					}
 					if ccValue := cv.Get("direction"); ccValue.Exists() {
 						cItem.Direction = types.StringValue(ccValue.String())
@@ -158,14 +158,14 @@ func (data *CentralizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.Direction = types.StringNull()
 					}
 					if ccValue := cv.Get("regionLists"); ccValue.Exists() {
-						cItem.RegionListIds = helpers.GetStringList(ccValue.Array())
+						cItem.RegionListIds = helpers.GetStringSet(ccValue.Array())
 					} else {
-						cItem.RegionListIds = types.ListNull(types.StringType)
+						cItem.RegionListIds = types.SetNull(types.StringType)
 					}
 					if ccValue := cv.Get("regionIds"); ccValue.Exists() {
-						cItem.RegionIds = helpers.GetStringList(ccValue.Array())
+						cItem.RegionIds = helpers.GetStringSet(ccValue.Array())
 					} else {
-						cItem.RegionIds = types.ListNull(types.StringType)
+						cItem.RegionIds = types.SetNull(types.StringType)
 					}
 					item.Entries = append(item.Entries, cItem)
 					return true

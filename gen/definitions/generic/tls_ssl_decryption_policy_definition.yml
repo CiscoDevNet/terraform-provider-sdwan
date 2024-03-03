@@ -90,7 +90,7 @@ attributes:
         example: Example
       - model_name: vpn
         tf_name: target_vpns
-        type: List
+        type: Set
         element_type: String
         description: List of VPN IDs
         example: 1

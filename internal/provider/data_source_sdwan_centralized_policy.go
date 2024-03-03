@@ -92,7 +92,7 @@ func (d *CentralizedPolicyDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"site_list_ids": schema.ListAttribute{
+									"site_list_ids": schema.SetAttribute{
 										MarkdownDescription: "List of site list IDs",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -102,7 +102,7 @@ func (d *CentralizedPolicyDataSource) Schema(ctx context.Context, req datasource
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"vpn_list_ids": schema.ListAttribute{
+									"vpn_list_ids": schema.SetAttribute{
 										MarkdownDescription: "List of VPN list IDs",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -116,7 +116,7 @@ func (d *CentralizedPolicyDataSource) Schema(ctx context.Context, req datasource
 										MarkdownDescription: "Direction",
 										Computed:            true,
 									},
-									"region_list_ids": schema.ListAttribute{
+									"region_list_ids": schema.SetAttribute{
 										MarkdownDescription: "List of region list IDs",
 										ElementType:         types.StringType,
 										Computed:            true,
@@ -126,7 +126,7 @@ func (d *CentralizedPolicyDataSource) Schema(ctx context.Context, req datasource
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
-									"region_ids": schema.ListAttribute{
+									"region_ids": schema.SetAttribute{
 										MarkdownDescription: "List of region IDs",
 										ElementType:         types.StringType,
 										Computed:            true,

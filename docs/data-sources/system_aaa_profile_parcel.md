@@ -42,7 +42,7 @@ data "sdwan_system_aaa_profile_parcel" "example" {
 - `description` (String) The description of the profile parcel
 - `name` (String) The name of the profile parcel
 - `radius_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_groups))
-- `server_auth_order` (List of String) ServerGroups priority order
+- `server_auth_order` (Set of String) ServerGroups priority order
 - `tacacs_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_groups))
 - `users` (Attributes List) Create local login account (see [below for nested schema](#nestedatt--users))
 - `version` (Number) The version of the profile parcel
@@ -52,7 +52,7 @@ data "sdwan_system_aaa_profile_parcel" "example" {
 
 Read-Only:
 
-- `group` (List of String) Use Server-group
+- `group` (Set of String) Use Server-group
 - `level` (String) Privilege level when method is commands
 - `method` (String) Configure Accounting Method
 - `rule_id` (String) Configure Accounting Rule ID
@@ -65,7 +65,7 @@ Read-Only:
 
 Read-Only:
 
-- `group` (List of String) Use Server-group
+- `group` (Set of String) Use Server-group
 - `if_authenticated` (Boolean) Succeed if user has authenticated
 - `level` (String) Privilege level when method is commands
 - `method` (String) Method

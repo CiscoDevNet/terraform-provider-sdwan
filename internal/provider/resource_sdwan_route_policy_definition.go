@@ -146,7 +146,7 @@ func (r *RoutePolicyDefinitionResource) Schema(ctx context.Context, req resource
 										MarkdownDescription: helpers.NewAttributeDescription("AS path list version").String,
 										Optional:            true,
 									},
-									"community_list_ids": schema.ListAttribute{
+									"community_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Community list IDs").String,
 										ElementType:         types.StringType,
 										Optional:            true,

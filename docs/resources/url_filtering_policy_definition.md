@@ -37,7 +37,7 @@ resource "sdwan_url_filtering_policy_definition" "example" {
 
 ### Optional
 
-- `alerts` (List of String) List of alerts options that will be exported as syslog messages
+- `alerts` (Set of String) List of alerts options that will be exported as syslog messages
 - `allow_url_list_id` (String) Allow URL list ID
 - `allow_url_list_version` (Number) Allow URL list version
 - `block_page_action` (String) Redirect to a URL or display a message when a blocked page is accessed.
@@ -47,8 +47,8 @@ resource "sdwan_url_filtering_policy_definition" "example" {
 - `block_url_list_version` (Number) Block URL list version
 - `mode` (String) The policy mode
   - Choices: `security`, `unified`
-- `target_vpns` (List of String) List of VPN IDs
-- `web_categories` (List of String) List of categories to block or allow
+- `target_vpns` (Set of String) List of VPN IDs
+- `web_categories` (Set of String) List of categories to block or allow
 - `web_categories_action` (String) whether the selected web categories should be blocked or allowed.
   - Choices: `block`, `allow`
 - `web_reputation` (String) The web reputation of the policy definition

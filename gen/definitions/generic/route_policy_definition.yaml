@@ -123,7 +123,7 @@ attributes:
             conditional_attribute:
               name: type
               value: advancedCommunity
-            type: List
+            type: Set
             element_type: String
             description: Community list IDs
             example: 2081c2f4-3f9f-4fee-8078-dcc8904e368d

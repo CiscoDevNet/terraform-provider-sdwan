@@ -100,7 +100,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"server_auth_order": schema.ListAttribute{
+			"server_auth_order": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("ServerGroups priority order").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -420,7 +420,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"group": schema.ListAttribute{
+						"group": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Use Server-group").String,
 							ElementType:         types.StringType,
 							Optional:            true,
@@ -470,7 +470,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 								stringvalidator.OneOf("1", "15"),
 							},
 						},
-						"group": schema.ListAttribute{
+						"group": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Use Server-group").String,
 							ElementType:         types.StringType,
 							Optional:            true,

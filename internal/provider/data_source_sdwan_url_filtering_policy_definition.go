@@ -74,12 +74,12 @@ func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: "The policy mode",
 				Computed:            true,
 			},
-			"alerts": schema.ListAttribute{
+			"alerts": schema.SetAttribute{
 				MarkdownDescription: "List of alerts options that will be exported as syslog messages",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"web_categories": schema.ListAttribute{
+			"web_categories": schema.SetAttribute{
 				MarkdownDescription: "List of categories to block or allow",
 				ElementType:         types.StringType,
 				Computed:            true,
@@ -92,7 +92,7 @@ func (d *URLFilteringPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: "The web reputation of the policy definition",
 				Computed:            true,
 			},
-			"target_vpns": schema.ListAttribute{
+			"target_vpns": schema.SetAttribute{
 				MarkdownDescription: "List of VPN IDs",
 				ElementType:         types.StringType,
 				Computed:            true,

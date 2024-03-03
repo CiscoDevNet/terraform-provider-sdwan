@@ -39,7 +39,6 @@ func TestAccSdwanIntrusionPreventionPolicyDefinition(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "inspection_mode", "protection"),
 					resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "log_level", "alert"),
 					resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "signature_set", "connectivity"),
-					resource.TestCheckResourceAttr("sdwan_intrusion_prevention_policy_definition.test", "target_vpns.0", "1"),
 				),
 			},
 		},

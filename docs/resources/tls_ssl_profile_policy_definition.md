@@ -40,15 +40,15 @@ resource "sdwan_tls_ssl_profile_policy_definition" "example" {
 - `allow_url_list_version` (Number) Allow URL list version
 - `block_url_list_id` (String) Block URL list ID
 - `block_url_list_version` (Number) Block URL list version
-- `decrypt_categories` (List of String) Categories that should be decrypted
+- `decrypt_categories` (Set of String) Categories that should be decrypted
 - `decrypt_threshold` (String) Decrypt threshold
   - Choices: `high-risk`, `suspicious`, `moderate-risk`, `low-risk`, `trustworthy`
 - `fail_decrypt` (Boolean) Fail decrypt enabled
 - `mode` (String) The policy mode
   - Choices: `security`, `unified`
-- `never_decrypt_categories` (List of String) Categories that should never be decrypted
+- `never_decrypt_categories` (Set of String) Categories that should never be decrypted
 - `reputation` (Boolean) Reputation enabled
-- `skip_decrypt_categories` (List of String) Categories that should skipped
+- `skip_decrypt_categories` (Set of String) Categories that should skipped
 
 ### Read-Only
 

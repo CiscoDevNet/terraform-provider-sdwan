@@ -62,7 +62,7 @@ type TLSSSLDecryptionPolicyDefinitionNetworkRules struct {
 
 type TLSSSLDecryptionPolicyDefinitionUrlRules struct {
 	RuleName              types.String `tfsdk:"rule_name"`
-	TargetVpns            types.List   `tfsdk:"target_vpns"`
+	TargetVpns            types.Set    `tfsdk:"target_vpns"`
 	TlsSslProfilePolicyId types.String `tfsdk:"tls_ssl_profile_policy_id"`
 	TlsSslProfileVersion  types.Int64  `tfsdk:"tls_ssl_profile_version"`
 }
@@ -263,9 +263,9 @@ func (data *TLSSSLDecryptionPolicyDefinition) fromBody(ctx context.Context, res 
 				item.RuleName = types.StringNull()
 			}
 			if cValue := v.Get("vpn"); cValue.Exists() {
-				item.TargetVpns = helpers.GetStringList(cValue.Array())
+				item.TargetVpns = helpers.GetStringSet(cValue.Array())
 			} else {
-				item.TargetVpns = types.ListNull(types.StringType)
+				item.TargetVpns = types.SetNull(types.StringType)
 			}
 			if cValue := v.Get("ref"); cValue.Exists() {
 				item.TlsSslProfilePolicyId = types.StringValue(cValue.String())

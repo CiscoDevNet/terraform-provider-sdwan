@@ -34,9 +34,9 @@ type TLSSSLProfilePolicyDefinition struct {
 	Name                   types.String `tfsdk:"name"`
 	Description            types.String `tfsdk:"description"`
 	Mode                   types.String `tfsdk:"mode"`
-	DecryptCategories      types.List   `tfsdk:"decrypt_categories"`
-	NeverDecryptCategories types.List   `tfsdk:"never_decrypt_categories"`
-	SkipDecryptCategories  types.List   `tfsdk:"skip_decrypt_categories"`
+	DecryptCategories      types.Set    `tfsdk:"decrypt_categories"`
+	NeverDecryptCategories types.Set    `tfsdk:"never_decrypt_categories"`
+	SkipDecryptCategories  types.Set    `tfsdk:"skip_decrypt_categories"`
 	DecryptThreshold       types.String `tfsdk:"decrypt_threshold"`
 	Reputation             types.Bool   `tfsdk:"reputation"`
 	AllowUrlListId         types.String `tfsdk:"allow_url_list_id"`
@@ -119,19 +119,19 @@ func (data *TLSSSLProfilePolicyDefinition) fromBody(ctx context.Context, res gjs
 		data.Mode = types.StringNull()
 	}
 	if value := res.Get("definition.decryptCategories"); value.Exists() {
-		data.DecryptCategories = helpers.GetStringList(value.Array())
+		data.DecryptCategories = helpers.GetStringSet(value.Array())
 	} else {
-		data.DecryptCategories = types.ListNull(types.StringType)
+		data.DecryptCategories = types.SetNull(types.StringType)
 	}
 	if value := res.Get("definition.never_decrypt_categories"); value.Exists() {
-		data.NeverDecryptCategories = helpers.GetStringList(value.Array())
+		data.NeverDecryptCategories = helpers.GetStringSet(value.Array())
 	} else {
-		data.NeverDecryptCategories = types.ListNull(types.StringType)
+		data.NeverDecryptCategories = types.SetNull(types.StringType)
 	}
 	if value := res.Get("definition.skipDecryptCategories"); value.Exists() {
-		data.SkipDecryptCategories = helpers.GetStringList(value.Array())
+		data.SkipDecryptCategories = helpers.GetStringSet(value.Array())
 	} else {
-		data.SkipDecryptCategories = types.ListNull(types.StringType)
+		data.SkipDecryptCategories = types.SetNull(types.StringType)
 	}
 	if value := res.Get("definition.decryptThreshold"); value.Exists() {
 		data.DecryptThreshold = types.StringValue(value.String())

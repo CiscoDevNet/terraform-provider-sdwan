@@ -94,7 +94,7 @@ func (d *IntrusionPreventionPolicyDefinitionDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "IPS signature list version",
 				Computed:            true,
 			},
-			"target_vpns": schema.ListAttribute{
+			"target_vpns": schema.SetAttribute{
 				MarkdownDescription: "List of VPN IDs",
 				ElementType:         types.StringType,
 				Computed:            true,

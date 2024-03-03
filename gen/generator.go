@@ -688,7 +688,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 					attr.MaxInt = value.Int()
 				}
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
-				attr.Type = "List"
+				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
 				// 	attr.MinList = value.Int()
@@ -697,7 +697,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				// 	attr.MaxList = value.Int()
 				// }
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
-				attr.Type = "List"
+				attr.Type = "Set"
 				attr.ElementType = "Int64"
 				// if value := t.Get("properties.value.items.minimum"); value.Exists() {
 				// 	attr.MinInt = value.Int()
@@ -770,7 +770,7 @@ func augmentGenericAttribute(attr *YamlConfigAttribute) {
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
-	if attr.Type == "List" || attr.Type == "Set" {
+	if (attr.Type == "List" || attr.Type == "Set") && attr.ElementType == "" {
 		for a := range attr.Attributes {
 			augmentGenericAttribute(&attr.Attributes[a])
 		}

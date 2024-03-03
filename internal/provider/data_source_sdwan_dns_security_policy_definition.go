@@ -86,10 +86,30 @@ func (d *DNSSecurityPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 				MarkdownDescription: "Should use match all VPN",
 				Computed:            true,
 			},
-			"target_vpns": schema.ListAttribute{
+			"target_vpns": schema.ListNestedAttribute{
 				MarkdownDescription: "Only relevant when `match_all_vpn` is `false`",
-				ElementType:         types.StringType,
 				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"vpn_ids": schema.SetAttribute{
+							MarkdownDescription: "VPN ID's separated by Comma",
+							ElementType:         types.StringType,
+							Computed:            true,
+						},
+						"umbrella_dns_default": schema.BoolAttribute{
+							MarkdownDescription: "Should use umbrella as DNS Server",
+							Computed:            true,
+						},
+						"custom_dns_server_ip": schema.StringAttribute{
+							MarkdownDescription: "Only relevant when `umbrella_dns_default` is `false`",
+							Computed:            true,
+						},
+						"local_domain_bypass_enabled": schema.BoolAttribute{
+							MarkdownDescription: "Should the local domain bypass list be enabled",
+							Computed:            true,
+						},
+					},
+				},
 			},
 			"dnscrypt": schema.BoolAttribute{
 				MarkdownDescription: "Should DNSCrypt be enabled",

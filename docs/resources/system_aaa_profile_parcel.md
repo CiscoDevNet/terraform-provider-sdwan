@@ -121,7 +121,7 @@ resource "sdwan_system_aaa_profile_parcel" "example" {
 - `authorization_rules` (Attributes List) Configure the Authorization Rules (see [below for nested schema](#nestedatt--authorization_rules))
 - `feature_profile_id` (String) Feature Profile ID
 - `radius_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_groups))
-- `server_auth_order` (List of String) ServerGroups priority order
+- `server_auth_order` (Set of String) ServerGroups priority order
 - `tacacs_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_groups))
 - `users` (Attributes List) Create local login account (see [below for nested schema](#nestedatt--users))
 
@@ -135,7 +135,7 @@ resource "sdwan_system_aaa_profile_parcel" "example" {
 
 Optional:
 
-- `group` (List of String) Use Server-group
+- `group` (Set of String) Use Server-group
 - `level` (String) Privilege level when method is commands
   - Choices: `1`, `15`
 - `method` (String) Configure Accounting Method
@@ -151,7 +151,7 @@ Optional:
 
 Optional:
 
-- `group` (List of String) Use Server-group
+- `group` (Set of String) Use Server-group
 - `if_authenticated` (Boolean) Succeed if user has authenticated
   - Default value: `false`
 - `level` (String) Privilege level when method is commands

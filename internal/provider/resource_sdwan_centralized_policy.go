@@ -105,7 +105,7 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"site_list_ids": schema.ListAttribute{
+									"site_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of site list IDs").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -115,7 +115,7 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"vpn_list_ids": schema.ListAttribute{
+									"vpn_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of VPN list IDs").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -132,7 +132,7 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 											stringvalidator.OneOf("service", "tunnel", "all", "in", "out"),
 										},
 									},
-									"region_list_ids": schema.ListAttribute{
+									"region_list_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of region list IDs").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -142,7 +142,7 @@ func (r *CentralizedPolicyResource) Schema(ctx context.Context, req resource.Sch
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"region_ids": schema.ListAttribute{
+									"region_ids": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of region IDs").String,
 										ElementType:         types.StringType,
 										Optional:            true,

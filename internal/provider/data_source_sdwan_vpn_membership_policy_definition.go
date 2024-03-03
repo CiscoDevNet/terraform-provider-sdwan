@@ -83,7 +83,7 @@ func (d *VPNMembershipPolicyDefinitionDataSource) Schema(ctx context.Context, re
 							MarkdownDescription: "Site list version",
 							Computed:            true,
 						},
-						"vpn_list_ids": schema.ListAttribute{
+						"vpn_list_ids": schema.SetAttribute{
 							MarkdownDescription: "VPN list IDs",
 							ElementType:         types.StringType,
 							Computed:            true,

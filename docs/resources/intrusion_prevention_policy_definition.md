@@ -44,7 +44,7 @@ resource "sdwan_intrusion_prevention_policy_definition" "example" {
   - Choices: `security`, `unified`
 - `signature_set` (String) Signature set
   - Choices: `balanced`, `connectivity`, `security`
-- `target_vpns` (List of String) List of VPN IDs
+- `target_vpns` (Set of String) List of VPN IDs
 
 ### Read-Only
 

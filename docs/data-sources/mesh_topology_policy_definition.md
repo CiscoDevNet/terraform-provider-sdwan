@@ -40,5 +40,5 @@ data "sdwan_mesh_topology_policy_definition" "example" {
 Read-Only:
 
 - `name` (String) Region name
-- `site_list_ids` (List of String) Site list IDs
+- `site_list_ids` (Set of String) Site list IDs
 - `site_list_versions` (List of String) Site list versions

@@ -39,7 +39,7 @@ type IntrusionPreventionPolicyDefinition struct {
 	SignatureSet            types.String `tfsdk:"signature_set"`
 	IpsSignatureListId      types.String `tfsdk:"ips_signature_list_id"`
 	IpsSignatureListVersion types.Int64  `tfsdk:"ips_signature_list_version"`
-	TargetVpns              types.List   `tfsdk:"target_vpns"`
+	TargetVpns              types.Set    `tfsdk:"target_vpns"`
 }
 
 func (data IntrusionPreventionPolicyDefinition) toBody(ctx context.Context) string {
@@ -114,9 +114,9 @@ func (data *IntrusionPreventionPolicyDefinition) fromBody(ctx context.Context, r
 		data.IpsSignatureListId = types.StringNull()
 	}
 	if value := res.Get("definition.targetVpns"); value.Exists() {
-		data.TargetVpns = helpers.GetStringList(value.Array())
+		data.TargetVpns = helpers.GetStringSet(value.Array())
 	} else {
-		data.TargetVpns = types.ListNull(types.StringType)
+		data.TargetVpns = types.SetNull(types.StringType)
 	}
 	data.updateVersions(ctx, &state)
 }

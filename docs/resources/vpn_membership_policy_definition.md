@@ -46,7 +46,7 @@ Optional:
 
 - `site_list_id` (String) Site list ID
 - `site_list_version` (Number) Site list version
-- `vpn_list_ids` (List of String) VPN list IDs
+- `vpn_list_ids` (Set of String) VPN list IDs
 - `vpn_list_versions` (List of String) VPN list versions
 
 ## Import

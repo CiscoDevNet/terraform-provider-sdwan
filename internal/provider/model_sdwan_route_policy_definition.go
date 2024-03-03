@@ -53,7 +53,7 @@ type RoutePolicyDefinitionSequencesMatchEntries struct {
 	PrefixListVersion            types.Int64  `tfsdk:"prefix_list_version"`
 	AsPathListId                 types.String `tfsdk:"as_path_list_id"`
 	AsPathListVersion            types.Int64  `tfsdk:"as_path_list_version"`
-	CommunityListIds             types.List   `tfsdk:"community_list_ids"`
+	CommunityListIds             types.Set    `tfsdk:"community_list_ids"`
 	CommunityListVersions        types.List   `tfsdk:"community_list_versions"`
 	CommunityListMatchFlag       types.String `tfsdk:"community_list_match_flag"`
 	ExpandedCommunityListId      types.String `tfsdk:"expanded_community_list_id"`
@@ -309,9 +309,9 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 						cItem.AsPathListId = types.StringNull()
 					}
 					if ccValue := cv.Get("refs"); ccValue.Exists() && cItem.Type.ValueString() == "advancedCommunity" {
-						cItem.CommunityListIds = helpers.GetStringList(ccValue.Array())
+						cItem.CommunityListIds = helpers.GetStringSet(ccValue.Array())
 					} else {
-						cItem.CommunityListIds = types.ListNull(types.StringType)
+						cItem.CommunityListIds = types.SetNull(types.StringType)
 					}
 					if ccValue := cv.Get("matchFlag"); ccValue.Exists() && cItem.Type.ValueString() == "advancedCommunity" {
 						cItem.CommunityListMatchFlag = types.StringValue(ccValue.String())

@@ -31,13 +31,13 @@ data "sdwan_tls_ssl_profile_policy_definition" "example" {
 - `allow_url_list_version` (Number) Allow URL list version
 - `block_url_list_id` (String) Block URL list ID
 - `block_url_list_version` (Number) Block URL list version
-- `decrypt_categories` (List of String) Categories that should be decrypted
+- `decrypt_categories` (Set of String) Categories that should be decrypted
 - `decrypt_threshold` (String) Decrypt threshold
 - `description` (String) The description of the policy definition.
 - `fail_decrypt` (Boolean) Fail decrypt enabled
 - `mode` (String) The policy mode
 - `name` (String) The name of the policy definition.
-- `never_decrypt_categories` (List of String) Categories that should never be decrypted
+- `never_decrypt_categories` (Set of String) Categories that should never be decrypted
 - `reputation` (Boolean) Reputation enabled
-- `skip_decrypt_categories` (List of String) Categories that should skipped
+- `skip_decrypt_categories` (Set of String) Categories that should skipped
 - `version` (Number) The version of the object

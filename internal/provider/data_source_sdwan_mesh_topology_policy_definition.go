@@ -87,7 +87,7 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Schema(ctx context.Context, req
 							MarkdownDescription: "Region name",
 							Computed:            true,
 						},
-						"site_list_ids": schema.ListAttribute{
+						"site_list_ids": schema.SetAttribute{
 							MarkdownDescription: "Site list IDs",
 							ElementType:         types.StringType,
 							Computed:            true,

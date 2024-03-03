@@ -74,17 +74,17 @@ func (d *TLSSSLProfilePolicyDefinitionDataSource) Schema(ctx context.Context, re
 				MarkdownDescription: "The policy mode",
 				Computed:            true,
 			},
-			"decrypt_categories": schema.ListAttribute{
+			"decrypt_categories": schema.SetAttribute{
 				MarkdownDescription: "Categories that should be decrypted",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"never_decrypt_categories": schema.ListAttribute{
+			"never_decrypt_categories": schema.SetAttribute{
 				MarkdownDescription: "Categories that should never be decrypted",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"skip_decrypt_categories": schema.ListAttribute{
+			"skip_decrypt_categories": schema.SetAttribute{
 				MarkdownDescription: "Categories that should skipped",
 				ElementType:         types.StringType,
 				Computed:            true,

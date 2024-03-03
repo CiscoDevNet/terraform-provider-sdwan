@@ -41,7 +41,7 @@ type MeshTopologyPolicyDefinition struct {
 
 type MeshTopologyPolicyDefinitionRegions struct {
 	Name             types.String `tfsdk:"name"`
-	SiteListIds      types.List   `tfsdk:"site_list_ids"`
+	SiteListIds      types.Set    `tfsdk:"site_list_ids"`
 	SiteListVersions types.List   `tfsdk:"site_list_versions"`
 }
 
@@ -104,9 +104,9 @@ func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjso
 				item.Name = types.StringNull()
 			}
 			if cValue := v.Get("siteLists"); cValue.Exists() {
-				item.SiteListIds = helpers.GetStringList(cValue.Array())
+				item.SiteListIds = helpers.GetStringSet(cValue.Array())
 			} else {
-				item.SiteListIds = types.ListNull(types.StringType)
+				item.SiteListIds = types.SetNull(types.StringType)
 			}
 			data.Regions = append(data.Regions, item)
 			return true

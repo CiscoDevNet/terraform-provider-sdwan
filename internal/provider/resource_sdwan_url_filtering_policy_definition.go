@@ -87,12 +87,12 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 					stringvalidator.OneOf("security", "unified"),
 				},
 			},
-			"alerts": schema.ListAttribute{
+			"alerts": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of alerts options that will be exported as syslog messages").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"web_categories": schema.ListAttribute{
+			"web_categories": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of categories to block or allow").String,
 				ElementType:         types.StringType,
 				Optional:            true,
@@ -111,7 +111,7 @@ func (r *URLFilteringPolicyDefinitionResource) Schema(ctx context.Context, req r
 					stringvalidator.OneOf("high-risk", "suspicious", "moderate-risk", "low-risk", "trustworthy"),
 				},
 			},
-			"target_vpns": schema.ListAttribute{
+			"target_vpns": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of VPN IDs").String,
 				ElementType:         types.StringType,
 				Optional:            true,

@@ -149,7 +149,7 @@ func (r *TLSSSLDecryptionPolicyDefinitionResource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Country").String,
 							Optional:            true,
 						},
-						"target_vpns": schema.ListAttribute{
+						"target_vpns": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of VPN IDs").String,
 							ElementType:         types.StringType,
 							Optional:            true,

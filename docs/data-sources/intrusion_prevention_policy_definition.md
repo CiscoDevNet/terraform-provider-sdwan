@@ -35,5 +35,5 @@ data "sdwan_intrusion_prevention_policy_definition" "example" {
 - `mode` (String) The policy mode
 - `name` (String) The name of the policy definition
 - `signature_set` (String) Signature set
-- `target_vpns` (List of String) List of VPN IDs
+- `target_vpns` (Set of String) List of VPN IDs
 - `version` (Number) The version of the object

@@ -40,7 +40,7 @@ type VPNMembershipPolicyDefinition struct {
 type VPNMembershipPolicyDefinitionSites struct {
 	SiteListId      types.String `tfsdk:"site_list_id"`
 	SiteListVersion types.Int64  `tfsdk:"site_list_version"`
-	VpnListIds      types.List   `tfsdk:"vpn_list_ids"`
+	VpnListIds      types.Set    `tfsdk:"vpn_list_ids"`
 	VpnListVersions types.List   `tfsdk:"vpn_list_versions"`
 }
 
@@ -95,9 +95,9 @@ func (data *VPNMembershipPolicyDefinition) fromBody(ctx context.Context, res gjs
 				item.SiteListId = types.StringNull()
 			}
 			if cValue := v.Get("vpnList"); cValue.Exists() {
-				item.VpnListIds = helpers.GetStringList(cValue.Array())
+				item.VpnListIds = helpers.GetStringSet(cValue.Array())
 			} else {
-				item.VpnListIds = types.ListNull(types.StringType)
+				item.VpnListIds = types.SetNull(types.StringType)
 			}
 			data.Sites = append(data.Sites, item)
 			return true

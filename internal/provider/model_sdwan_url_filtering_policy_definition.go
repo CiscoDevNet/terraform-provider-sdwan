@@ -34,11 +34,11 @@ type URLFilteringPolicyDefinition struct {
 	Name                types.String `tfsdk:"name"`
 	Description         types.String `tfsdk:"description"`
 	Mode                types.String `tfsdk:"mode"`
-	Alerts              types.List   `tfsdk:"alerts"`
-	WebCategories       types.List   `tfsdk:"web_categories"`
+	Alerts              types.Set    `tfsdk:"alerts"`
+	WebCategories       types.Set    `tfsdk:"web_categories"`
 	WebCategoriesAction types.String `tfsdk:"web_categories_action"`
 	WebReputation       types.String `tfsdk:"web_reputation"`
-	TargetVpns          types.List   `tfsdk:"target_vpns"`
+	TargetVpns          types.Set    `tfsdk:"target_vpns"`
 	AllowUrlListId      types.String `tfsdk:"allow_url_list_id"`
 	AllowUrlListVersion types.Int64  `tfsdk:"allow_url_list_version"`
 	BlockUrlListId      types.String `tfsdk:"block_url_list_id"`
@@ -115,14 +115,14 @@ func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjso
 		data.Mode = types.StringNull()
 	}
 	if value := res.Get("definition.alerts"); value.Exists() {
-		data.Alerts = helpers.GetStringList(value.Array())
+		data.Alerts = helpers.GetStringSet(value.Array())
 	} else {
-		data.Alerts = types.ListNull(types.StringType)
+		data.Alerts = types.SetNull(types.StringType)
 	}
 	if value := res.Get("definition.webCategories"); value.Exists() {
-		data.WebCategories = helpers.GetStringList(value.Array())
+		data.WebCategories = helpers.GetStringSet(value.Array())
 	} else {
-		data.WebCategories = types.ListNull(types.StringType)
+		data.WebCategories = types.SetNull(types.StringType)
 	}
 	if value := res.Get("definition.webCategoriesAction"); value.Exists() {
 		data.WebCategoriesAction = types.StringValue(value.String())
@@ -135,9 +135,9 @@ func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjso
 		data.WebReputation = types.StringNull()
 	}
 	if value := res.Get("definition.targetVpns"); value.Exists() {
-		data.TargetVpns = helpers.GetStringList(value.Array())
+		data.TargetVpns = helpers.GetStringSet(value.Array())
 	} else {
-		data.TargetVpns = types.ListNull(types.StringType)
+		data.TargetVpns = types.SetNull(types.StringType)
 	}
 	if value := res.Get("definition.urlWhiteList.ref"); value.Exists() {
 		data.AllowUrlListId = types.StringValue(value.String())

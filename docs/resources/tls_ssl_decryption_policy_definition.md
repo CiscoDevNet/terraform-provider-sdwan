@@ -122,7 +122,7 @@ Optional:
 Optional:
 
 - `rule_name` (String) Country
-- `target_vpns` (List of String) List of VPN IDs
+- `target_vpns` (Set of String) List of VPN IDs
 - `tls_ssl_profile_policy_id` (String) TLS SSL Profile Policy ID
 - `tls_ssl_profile_version` (Number) TLS SSL Profile Policy version
 

@@ -29,20 +29,27 @@ import (
 )
 
 type DNSSecurityPolicyDefinition struct {
-	Id                                        types.String `tfsdk:"id"`
-	Version                                   types.Int64  `tfsdk:"version"`
-	Name                                      types.String `tfsdk:"name"`
-	Description                               types.String `tfsdk:"description"`
-	DomainListId                              types.String `tfsdk:"domain_list_id"`
-	DomainListVersion                         types.Int64  `tfsdk:"domain_list_version"`
-	LocalDomainBypassEnabled                  types.Bool   `tfsdk:"local_domain_bypass_enabled"`
-	MatchAllVpn                               types.Bool   `tfsdk:"match_all_vpn"`
-	TargetVpns                                types.List   `tfsdk:"target_vpns"`
-	Dnscrypt                                  types.Bool   `tfsdk:"dnscrypt"`
-	UmbrellaDnsDefault                        types.Bool   `tfsdk:"umbrella_dns_default"`
-	CustomDnsServerIp                         types.String `tfsdk:"custom_dns_server_ip"`
-	CiscoSigCredentialsFeatureTemplateId      types.String `tfsdk:"cisco_sig_credentials_feature_template_id"`
-	CiscoSigCredentialsFeatureTemplateVersion types.Int64  `tfsdk:"cisco_sig_credentials_feature_template_version"`
+	Id                                        types.String                            `tfsdk:"id"`
+	Version                                   types.Int64                             `tfsdk:"version"`
+	Name                                      types.String                            `tfsdk:"name"`
+	Description                               types.String                            `tfsdk:"description"`
+	DomainListId                              types.String                            `tfsdk:"domain_list_id"`
+	DomainListVersion                         types.Int64                             `tfsdk:"domain_list_version"`
+	LocalDomainBypassEnabled                  types.Bool                              `tfsdk:"local_domain_bypass_enabled"`
+	MatchAllVpn                               types.Bool                              `tfsdk:"match_all_vpn"`
+	TargetVpns                                []DNSSecurityPolicyDefinitionTargetVpns `tfsdk:"target_vpns"`
+	Dnscrypt                                  types.Bool                              `tfsdk:"dnscrypt"`
+	UmbrellaDnsDefault                        types.Bool                              `tfsdk:"umbrella_dns_default"`
+	CustomDnsServerIp                         types.String                            `tfsdk:"custom_dns_server_ip"`
+	CiscoSigCredentialsFeatureTemplateId      types.String                            `tfsdk:"cisco_sig_credentials_feature_template_id"`
+	CiscoSigCredentialsFeatureTemplateVersion types.Int64                             `tfsdk:"cisco_sig_credentials_feature_template_version"`
+}
+
+type DNSSecurityPolicyDefinitionTargetVpns struct {
+	VpnIds                   types.Set    `tfsdk:"vpn_ids"`
+	UmbrellaDnsDefault       types.Bool   `tfsdk:"umbrella_dns_default"`
+	CustomDnsServerIp        types.String `tfsdk:"custom_dns_server_ip"`
+	LocalDomainBypassEnabled types.Bool   `tfsdk:"local_domain_bypass_enabled"`
 }
 
 func (data DNSSecurityPolicyDefinition) toBody(ctx context.Context) string {
@@ -73,10 +80,34 @@ func (data DNSSecurityPolicyDefinition) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, "definition.matchAllVpn", data.MatchAllVpn.ValueBool())
 		}
 	}
-	if !data.TargetVpns.IsNull() {
-		var values []string
-		data.TargetVpns.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, "definition.targetVpns", values)
+	if true {
+		body, _ = sjson.Set(body, "definition.targetVpns", []interface{}{})
+		for _, item := range data.TargetVpns {
+			itemBody := ""
+			if !item.VpnIds.IsNull() {
+				var values []string
+				item.VpnIds.ElementsAs(ctx, &values, false)
+				itemBody, _ = sjson.Set(itemBody, "vpns", values)
+			}
+			if !item.UmbrellaDnsDefault.IsNull() {
+				if false && item.UmbrellaDnsDefault.ValueBool() {
+					itemBody, _ = sjson.Set(itemBody, "umbrellaDefault", "")
+				} else {
+					itemBody, _ = sjson.Set(itemBody, "umbrellaDefault", item.UmbrellaDnsDefault.ValueBool())
+				}
+			}
+			if !item.CustomDnsServerIp.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "dnsServerIP", item.CustomDnsServerIp.ValueString())
+			}
+			if !item.LocalDomainBypassEnabled.IsNull() {
+				if false && item.LocalDomainBypassEnabled.ValueBool() {
+					itemBody, _ = sjson.Set(itemBody, "localDomainBypassEnabled", "")
+				} else {
+					itemBody, _ = sjson.Set(itemBody, "localDomainBypassEnabled", item.LocalDomainBypassEnabled.ValueBool())
+				}
+			}
+			body, _ = sjson.SetRaw(body, "definition.targetVpns.-1", itemBody)
+		}
 	}
 	if !data.Dnscrypt.IsNull() {
 		if false && data.Dnscrypt.ValueBool() {
@@ -136,10 +167,41 @@ func (data *DNSSecurityPolicyDefinition) fromBody(ctx context.Context, res gjson
 	} else {
 		data.MatchAllVpn = types.BoolNull()
 	}
-	if value := res.Get("definition.targetVpns"); value.Exists() {
-		data.TargetVpns = helpers.GetStringList(value.Array())
-	} else {
-		data.TargetVpns = types.ListNull(types.StringType)
+	if value := res.Get("definition.targetVpns"); value.Exists() && len(value.Array()) > 0 {
+		data.TargetVpns = make([]DNSSecurityPolicyDefinitionTargetVpns, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := DNSSecurityPolicyDefinitionTargetVpns{}
+			if cValue := v.Get("vpns"); cValue.Exists() {
+				item.VpnIds = helpers.GetStringSet(cValue.Array())
+			} else {
+				item.VpnIds = types.SetNull(types.StringType)
+			}
+			if cValue := v.Get("umbrellaDefault"); cValue.Exists() {
+				if false && cValue.String() == "" {
+					item.UmbrellaDnsDefault = types.BoolValue(true)
+				} else {
+					item.UmbrellaDnsDefault = types.BoolValue(cValue.Bool())
+				}
+			} else {
+				item.UmbrellaDnsDefault = types.BoolNull()
+			}
+			if cValue := v.Get("dnsServerIP"); cValue.Exists() {
+				item.CustomDnsServerIp = types.StringValue(cValue.String())
+			} else {
+				item.CustomDnsServerIp = types.StringNull()
+			}
+			if cValue := v.Get("localDomainBypassEnabled"); cValue.Exists() {
+				if false && cValue.String() == "" {
+					item.LocalDomainBypassEnabled = types.BoolValue(true)
+				} else {
+					item.LocalDomainBypassEnabled = types.BoolValue(cValue.Bool())
+				}
+			} else {
+				item.LocalDomainBypassEnabled = types.BoolNull()
+			}
+			data.TargetVpns = append(data.TargetVpns, item)
+			return true
+		})
 	}
 	if value := res.Get("definition.dnsCrypt"); value.Exists() {
 		if false && value.String() == "" {
@@ -189,8 +251,23 @@ func (data *DNSSecurityPolicyDefinition) hasChanges(ctx context.Context, state *
 	if !data.MatchAllVpn.Equal(state.MatchAllVpn) {
 		hasChanges = true
 	}
-	if !data.TargetVpns.Equal(state.TargetVpns) {
+	if len(data.TargetVpns) != len(state.TargetVpns) {
 		hasChanges = true
+	} else {
+		for i := range data.TargetVpns {
+			if !data.TargetVpns[i].VpnIds.Equal(state.TargetVpns[i].VpnIds) {
+				hasChanges = true
+			}
+			if !data.TargetVpns[i].UmbrellaDnsDefault.Equal(state.TargetVpns[i].UmbrellaDnsDefault) {
+				hasChanges = true
+			}
+			if !data.TargetVpns[i].CustomDnsServerIp.Equal(state.TargetVpns[i].CustomDnsServerIp) {
+				hasChanges = true
+			}
+			if !data.TargetVpns[i].LocalDomainBypassEnabled.Equal(state.TargetVpns[i].LocalDomainBypassEnabled) {
+				hasChanges = true
+			}
+		}
 	}
 	if !data.Dnscrypt.Equal(state.Dnscrypt) {
 		hasChanges = true

@@ -91,7 +91,7 @@ func (r *VPNMembershipPolicyDefinitionResource) Schema(ctx context.Context, req 
 							MarkdownDescription: helpers.NewAttributeDescription("Site list version").String,
 							Optional:            true,
 						},
-						"vpn_list_ids": schema.ListAttribute{
+						"vpn_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("VPN list IDs").String,
 							ElementType:         types.StringType,
 							Optional:            true,

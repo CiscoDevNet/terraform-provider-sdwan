@@ -50,15 +50,15 @@ func TestAccSdwan{{camelCase .Name}}FeatureTemplate(t *testing.T) {
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest)}}
-					{{- if eq .Type "List"}}
+					{{- if isNestedListSet .}}
 					{{- $list := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest)}}
-					{{- if eq .Type "List"}}
+					{{- if isNestedListSet .}}
 					{{- $clist := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest)}}
-					{{- if eq .Type "List"}}
+					{{- if isNestedListSet .}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not (isListSet .))}}

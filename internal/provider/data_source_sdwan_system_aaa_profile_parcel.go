@@ -91,7 +91,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"server_auth_order": schema.ListAttribute{
+			"server_auth_order": schema.SetAttribute{
 				MarkdownDescription: "ServerGroups priority order",
 				ElementType:         types.StringType,
 				Computed:            true,
@@ -333,7 +333,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"group": schema.ListAttribute{
+						"group": schema.SetAttribute{
 							MarkdownDescription: "Use Server-group",
 							ElementType:         types.StringType,
 							Computed:            true,
@@ -374,7 +374,7 @@ func (d *SystemAAAProfileParcelDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: "Privilege level when method is commands",
 							Computed:            true,
 						},
-						"group": schema.ListAttribute{
+						"group": schema.SetAttribute{
 							MarkdownDescription: "Use Server-group",
 							ElementType:         types.StringType,
 							Computed:            true,

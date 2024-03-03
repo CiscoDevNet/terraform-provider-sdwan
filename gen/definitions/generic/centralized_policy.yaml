@@ -63,7 +63,7 @@ attributes:
         attributes:
           - model_name: siteLists
             tf_name: site_list_ids
-            type: List
+            type: Set
             element_type: String
             id: true
             description: List of site list IDs
@@ -76,7 +76,7 @@ attributes:
             exclude_test: true
           - model_name: vpnLists
             tf_name: vpn_list_ids
-            type: List
+            type: Set
             element_type: String
             id: true
             description: List of VPN list IDs
@@ -95,7 +95,7 @@ attributes:
             example: service
           - model_name: regionLists
             tf_name: region_list_ids
-            type: List
+            type: Set
             element_type: String
             id: true
             description: List of region list IDs
@@ -108,7 +108,7 @@ attributes:
             exclude_test: true
           - model_name: regionIds
             tf_name: region_ids
-            type: List
+            type: Set
             element_type: String
             id: true
             description: List of region IDs

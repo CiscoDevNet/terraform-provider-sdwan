@@ -95,7 +95,7 @@ func (r *MeshTopologyPolicyDefinitionResource) Schema(ctx context.Context, req r
 							MarkdownDescription: helpers.NewAttributeDescription("Region name").String,
 							Required:            true,
 						},
-						"site_list_ids": schema.ListAttribute{
+						"site_list_ids": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Site list IDs").String,
 							ElementType:         types.StringType,
 							Optional:            true,

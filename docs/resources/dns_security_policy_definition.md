@@ -44,12 +44,22 @@ resource "sdwan_dns_security_policy_definition" "example" {
 - `domain_list_id` (String) Local domain bypass list ID
 - `domain_list_version` (Number) Local domain bypass list version
 - `local_domain_bypass_enabled` (Boolean) Should the local domain bypass list be enabled
-- `target_vpns` (List of String) Only relevant when `match_all_vpn` is `false`
+- `target_vpns` (Attributes List) Only relevant when `match_all_vpn` is `false` (see [below for nested schema](#nestedatt--target_vpns))
 
 ### Read-Only
 
 - `id` (String) The id of the object
 - `version` (Number) The version of the object
+
+<a id="nestedatt--target_vpns"></a>
+### Nested Schema for `target_vpns`
+
+Optional:
+
+- `custom_dns_server_ip` (String) Only relevant when `umbrella_dns_default` is `false`
+- `local_domain_bypass_enabled` (Boolean) Should the local domain bypass list be enabled
+- `umbrella_dns_default` (Boolean) Should use umbrella as DNS Server
+- `vpn_ids` (Set of String) VPN ID's separated by Comma
 
 ## Import
 
