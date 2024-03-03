@@ -1,4 +1,4 @@
-## 0.3.6 (unreleased)
+## 0.3.6
 
 - Fix issue with address family configuration of `sdwan_cisco_bgp_feature_template` resource
 - Fix issue with area configuration of `sdwan_cisco_ospf_feature_template` resource
