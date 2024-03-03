@@ -379,36 +379,6 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"transport_endpoint_ip": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IP address of endpoint").String,
-							Optional:            true,
-						},
-						"transport_endpoint_ip_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
-						"transport_endpoint_protocol": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("transport protocol: TCP/UDP").AddStringEnumDescription("tcp", "udp").String,
-							Optional:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("tcp", "udp"),
-							},
-						},
-						"transport_endpoint_protocol_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
-						"transport_endpoint_port": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("TCP/UDP port pf endpoint").AddIntegerRangeDescription(1, 65535).String,
-							Optional:            true,
-							Validators: []validator.Int64{
-								int64validator.Between(1, 65535),
-							},
-						},
-						"transport_endpoint_port_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Optional:            true,
-						},
 						"endpoint_dns_name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("DNS name of endpoint").String,
 							Optional:            true,
@@ -485,10 +455,10 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Default(Interface)").AddStringEnumDescription("interface", "static-route").AddDefaultValueDescription("interface").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Default(Interface)").AddStringEnumDescription("tracker-group", "interface", "static-route").AddDefaultValueDescription("interface").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.OneOf("interface", "static-route"),
+								stringvalidator.OneOf("tracker-group", "interface", "static-route"),
 							},
 						},
 						"type_variable": schema.StringAttribute{

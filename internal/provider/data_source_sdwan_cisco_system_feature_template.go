@@ -320,30 +320,6 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"transport_endpoint_ip": schema.StringAttribute{
-							MarkdownDescription: "IP address of endpoint",
-							Computed:            true,
-						},
-						"transport_endpoint_ip_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
-						"transport_endpoint_protocol": schema.StringAttribute{
-							MarkdownDescription: "transport protocol: TCP/UDP",
-							Computed:            true,
-						},
-						"transport_endpoint_protocol_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
-						"transport_endpoint_port": schema.Int64Attribute{
-							MarkdownDescription: "TCP/UDP port pf endpoint",
-							Computed:            true,
-						},
-						"transport_endpoint_port_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
 						"endpoint_dns_name": schema.StringAttribute{
 							MarkdownDescription: "DNS name of endpoint",
 							Computed:            true,

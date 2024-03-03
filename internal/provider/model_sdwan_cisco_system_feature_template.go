@@ -114,33 +114,27 @@ type CiscoSystemGeoFencingSmsPhoneNumbers struct {
 }
 
 type CiscoSystemTrackers struct {
-	Optional                          types.Bool   `tfsdk:"optional"`
-	Name                              types.String `tfsdk:"name"`
-	NameVariable                      types.String `tfsdk:"name_variable"`
-	EndpointIp                        types.String `tfsdk:"endpoint_ip"`
-	EndpointIpVariable                types.String `tfsdk:"endpoint_ip_variable"`
-	TransportEndpointIp               types.String `tfsdk:"transport_endpoint_ip"`
-	TransportEndpointIpVariable       types.String `tfsdk:"transport_endpoint_ip_variable"`
-	TransportEndpointProtocol         types.String `tfsdk:"transport_endpoint_protocol"`
-	TransportEndpointProtocolVariable types.String `tfsdk:"transport_endpoint_protocol_variable"`
-	TransportEndpointPort             types.Int64  `tfsdk:"transport_endpoint_port"`
-	TransportEndpointPortVariable     types.String `tfsdk:"transport_endpoint_port_variable"`
-	EndpointDnsName                   types.String `tfsdk:"endpoint_dns_name"`
-	EndpointDnsNameVariable           types.String `tfsdk:"endpoint_dns_name_variable"`
-	EndpointApiUrl                    types.String `tfsdk:"endpoint_api_url"`
-	EndpointApiUrlVariable            types.String `tfsdk:"endpoint_api_url_variable"`
-	Elements                          types.Set    `tfsdk:"elements"`
-	ElementsVariable                  types.String `tfsdk:"elements_variable"`
-	Boolean                           types.String `tfsdk:"boolean"`
-	BooleanVariable                   types.String `tfsdk:"boolean_variable"`
-	Threshold                         types.Int64  `tfsdk:"threshold"`
-	ThresholdVariable                 types.String `tfsdk:"threshold_variable"`
-	Interval                          types.Int64  `tfsdk:"interval"`
-	IntervalVariable                  types.String `tfsdk:"interval_variable"`
-	Multiplier                        types.Int64  `tfsdk:"multiplier"`
-	MultiplierVariable                types.String `tfsdk:"multiplier_variable"`
-	Type                              types.String `tfsdk:"type"`
-	TypeVariable                      types.String `tfsdk:"type_variable"`
+	Optional                types.Bool   `tfsdk:"optional"`
+	Name                    types.String `tfsdk:"name"`
+	NameVariable            types.String `tfsdk:"name_variable"`
+	EndpointIp              types.String `tfsdk:"endpoint_ip"`
+	EndpointIpVariable      types.String `tfsdk:"endpoint_ip_variable"`
+	EndpointDnsName         types.String `tfsdk:"endpoint_dns_name"`
+	EndpointDnsNameVariable types.String `tfsdk:"endpoint_dns_name_variable"`
+	EndpointApiUrl          types.String `tfsdk:"endpoint_api_url"`
+	EndpointApiUrlVariable  types.String `tfsdk:"endpoint_api_url_variable"`
+	Elements                types.Set    `tfsdk:"elements"`
+	ElementsVariable        types.String `tfsdk:"elements_variable"`
+	Boolean                 types.String `tfsdk:"boolean"`
+	BooleanVariable         types.String `tfsdk:"boolean_variable"`
+	Threshold               types.Int64  `tfsdk:"threshold"`
+	ThresholdVariable       types.String `tfsdk:"threshold_variable"`
+	Interval                types.Int64  `tfsdk:"interval"`
+	IntervalVariable        types.String `tfsdk:"interval_variable"`
+	Multiplier              types.Int64  `tfsdk:"multiplier"`
+	MultiplierVariable      types.String `tfsdk:"multiplier_variable"`
+	Type                    types.String `tfsdk:"type"`
+	TypeVariable            types.String `tfsdk:"type_variable"`
 }
 
 type CiscoSystemObjectTrackers struct {
@@ -564,42 +558,6 @@ func (data CiscoSystem) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "endpoint-ip."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "endpoint-ip."+"vipValue", item.EndpointIp.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "endpoint-ip")
-
-		if !item.TransportEndpointIpVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.endpoint-ip."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.endpoint-ip."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.endpoint-ip."+"vipVariableName", item.TransportEndpointIpVariable.ValueString())
-		} else if item.TransportEndpointIp.IsNull() {
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.endpoint-ip."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.endpoint-ip."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.endpoint-ip."+"vipValue", item.TransportEndpointIp.ValueString())
-		}
-		itemAttributes = append(itemAttributes, "protocol")
-
-		if !item.TransportEndpointProtocolVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.protocol."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.protocol."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.protocol."+"vipVariableName", item.TransportEndpointProtocolVariable.ValueString())
-		} else if item.TransportEndpointProtocol.IsNull() {
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.protocol."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.protocol."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.protocol."+"vipValue", item.TransportEndpointProtocol.ValueString())
-		}
-		itemAttributes = append(itemAttributes, "port")
-
-		if !item.TransportEndpointPortVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.port."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.port."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.port."+"vipVariableName", item.TransportEndpointPortVariable.ValueString())
-		} else if item.TransportEndpointPort.IsNull() {
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.port."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.port."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "endpoint-ip-transport-port.port."+"vipValue", item.TransportEndpointPort.ValueInt64())
-		}
 		itemAttributes = append(itemAttributes, "endpoint-dns-name")
 
 		if !item.EndpointDnsNameVariable.IsNull() {
@@ -781,8 +739,6 @@ func (data CiscoSystem) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "mask."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "mask."+"vipVariableName", item.MaskVariable.ValueString())
 		} else if item.Mask.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "mask."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "mask."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "mask."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "mask."+"vipType", "constant")
@@ -1538,63 +1494,6 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 				item.EndpointIp = types.StringNull()
 				item.EndpointIpVariable = types.StringNull()
 			}
-			if cValue := v.Get("endpoint-ip-transport-port.endpoint-ip.vipType"); cValue.Exists() {
-				if cValue.String() == "variableName" {
-					item.TransportEndpointIp = types.StringNull()
-
-					cv := v.Get("endpoint-ip-transport-port.endpoint-ip.vipVariableName")
-					item.TransportEndpointIpVariable = types.StringValue(cv.String())
-
-				} else if cValue.String() == "ignore" {
-					item.TransportEndpointIp = types.StringNull()
-					item.TransportEndpointIpVariable = types.StringNull()
-				} else if cValue.String() == "constant" {
-					cv := v.Get("endpoint-ip-transport-port.endpoint-ip.vipValue")
-					item.TransportEndpointIp = types.StringValue(cv.String())
-					item.TransportEndpointIpVariable = types.StringNull()
-				}
-			} else {
-				item.TransportEndpointIp = types.StringNull()
-				item.TransportEndpointIpVariable = types.StringNull()
-			}
-			if cValue := v.Get("endpoint-ip-transport-port.protocol.vipType"); cValue.Exists() {
-				if cValue.String() == "variableName" {
-					item.TransportEndpointProtocol = types.StringNull()
-
-					cv := v.Get("endpoint-ip-transport-port.protocol.vipVariableName")
-					item.TransportEndpointProtocolVariable = types.StringValue(cv.String())
-
-				} else if cValue.String() == "ignore" {
-					item.TransportEndpointProtocol = types.StringNull()
-					item.TransportEndpointProtocolVariable = types.StringNull()
-				} else if cValue.String() == "constant" {
-					cv := v.Get("endpoint-ip-transport-port.protocol.vipValue")
-					item.TransportEndpointProtocol = types.StringValue(cv.String())
-					item.TransportEndpointProtocolVariable = types.StringNull()
-				}
-			} else {
-				item.TransportEndpointProtocol = types.StringNull()
-				item.TransportEndpointProtocolVariable = types.StringNull()
-			}
-			if cValue := v.Get("endpoint-ip-transport-port.port.vipType"); cValue.Exists() {
-				if cValue.String() == "variableName" {
-					item.TransportEndpointPort = types.Int64Null()
-
-					cv := v.Get("endpoint-ip-transport-port.port.vipVariableName")
-					item.TransportEndpointPortVariable = types.StringValue(cv.String())
-
-				} else if cValue.String() == "ignore" {
-					item.TransportEndpointPort = types.Int64Null()
-					item.TransportEndpointPortVariable = types.StringNull()
-				} else if cValue.String() == "constant" {
-					cv := v.Get("endpoint-ip-transport-port.port.vipValue")
-					item.TransportEndpointPort = types.Int64Value(cv.Int())
-					item.TransportEndpointPortVariable = types.StringNull()
-				}
-			} else {
-				item.TransportEndpointPort = types.Int64Null()
-				item.TransportEndpointPortVariable = types.StringNull()
-			}
 			if cValue := v.Get("endpoint-dns-name.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.EndpointDnsName = types.StringNull()
@@ -2206,15 +2105,6 @@ func (data *CiscoSystem) hasChanges(ctx context.Context, state *CiscoSystem) boo
 				hasChanges = true
 			}
 			if !data.Trackers[i].EndpointIp.Equal(state.Trackers[i].EndpointIp) {
-				hasChanges = true
-			}
-			if !data.Trackers[i].TransportEndpointIp.Equal(state.Trackers[i].TransportEndpointIp) {
-				hasChanges = true
-			}
-			if !data.Trackers[i].TransportEndpointProtocol.Equal(state.Trackers[i].TransportEndpointProtocol) {
-				hasChanges = true
-			}
-			if !data.Trackers[i].TransportEndpointPort.Equal(state.Trackers[i].TransportEndpointPort) {
 				hasChanges = true
 			}
 			if !data.Trackers[i].EndpointDnsName.Equal(state.Trackers[i].EndpointDnsName) {

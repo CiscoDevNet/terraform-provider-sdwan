@@ -18,6 +18,7 @@
 - BREAKING CHANGE: Rename `dot1x_voice_vlan` attribute of `sdwan_switchport_feature_template` resource and data source to `voice_vlan`
 - Use `set` type for list attributes with primitive values
 - Fix templating issue with `sdwan_cisco_security_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/157)
+- Fix templating of endpoint and object trackers with `sdwan_cisco_system_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/159)
 
 ## 0.3.5
 

@@ -73,29 +73,36 @@ attributes:
         example: tracker1
       - model_name: endpoint-ip
         data_path: []
-        example: 5.6.7.8
-      - model_name: endpoint-ip
-        data_path: ["endpoint-ip-transport-port"]
-        tf_name: transport_endpoint_ip
         exclude_ignore: true
         example: 5.6.7.8
-      - model_name: protocol
-        tf_name: transport_endpoint_protocol
-        exclude_ignore: true
-        example: tcp
-      - model_name: port
-        tf_name: transport_endpoint_port
-        exclude_ignore: true
-        example: 500
+      # - model_name: endpoint-ip
+      #   data_path: ["endpoint-ip-transport-port"]
+      #   tf_name: transport_endpoint_ip
+      #   exclude_ignore: true
+      #   example: 5.6.7.8
+      # - model_name: protocol
+      #   tf_name: transport_endpoint_protocol
+      #   exclude_ignore: true
+      #   example: tcp
+      # - model_name: port
+      #   tf_name: transport_endpoint_port
+      #   exclude_ignore: true
+      #   example: 500
       - model_name: endpoint-dns-name
+        exclude_ignore: true
+        exclude_example: true
         example: abc.com
       - model_name: endpoint-api-url
+        exclude_ignore: true
+        exclude_example: true
         example: https://1.1.1.1
       - model_name: elements
         exclude_ignore: true
+        exclude_example: true
         example: 'abc", "def'
       - model_name: boolean
         exclude_ignore: true
+        exclude_example: true
         example: or
       - model_name: threshold
         example: 300
@@ -104,6 +111,7 @@ attributes:
       - model_name: multiplier
         example: 3
       - model_name: type
+        enum_values: [tracker-group]
         example: interface
   - model_name: object-track
     tf_name: object_trackers
@@ -111,24 +119,36 @@ attributes:
       - model_name: object-number
         example: 1
       - model_name: interface
+        exclude_ignore: true
         example: e1
       - model_name: sig
+        exclude_ignore: true
+        exclude_example: true
         example: sig1
       - model_name: ip
+        exclude_ignore: true
+        exclude_example: true
         example: 6.6.6.6
       - model_name: mask
+        exclude_ignore: true
+        exclude_example: true
         example: 0.0.0.0
       - model_name: vpn
         tf_name: vpn_id
+        exclude_ignore: true
+        exclude_example: true
         example: 1
       - model_name: object
         tf_name: group_tracks_ids
         exclude_ignore: true
+        exclude_example: true
         attributes:
           - model_name: number
             tf_name: track_id
             example: 1
       - model_name: boolean
+        exclude_ignore: true
+        exclude_example: true
         example: and
   - model_name: enable
     data_path: ["on-demand"]

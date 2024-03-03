@@ -34,35 +34,18 @@ resource "sdwan_cisco_system_feature_template" "example" {
   idle_timeout          = 100
   trackers = [
     {
-      name                        = "tracker1"
-      endpoint_ip                 = "5.6.7.8"
-      transport_endpoint_ip       = "5.6.7.8"
-      transport_endpoint_protocol = "tcp"
-      transport_endpoint_port     = 500
-      endpoint_dns_name           = "abc.com"
-      endpoint_api_url            = "https://1.1.1.1"
-      elements                    = ["abc", "def"]
-      boolean                     = "or"
-      threshold                   = 300
-      interval                    = 60
-      multiplier                  = 3
-      type                        = "interface"
+      name        = "tracker1"
+      endpoint_ip = "5.6.7.8"
+      threshold   = 300
+      interval    = 60
+      multiplier  = 3
+      type        = "interface"
     }
   ]
   object_trackers = [
     {
       object_number = 1
       interface     = "e1"
-      sig           = "sig1"
-      ip            = "6.6.6.6"
-      mask          = "0.0.0.0"
-      vpn_id        = 1
-      group_tracks_ids = [
-        {
-          track_id = 1
-        }
-      ]
-      boolean = "and"
     }
   ]
   on_demand_tunnel              = true

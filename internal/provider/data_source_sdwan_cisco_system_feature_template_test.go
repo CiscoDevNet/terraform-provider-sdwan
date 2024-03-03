@@ -59,9 +59,6 @@ func TestAccDataSourceSdwanCiscoSystemFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "idle_timeout", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.name", "tracker1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_ip", "5.6.7.8"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.transport_endpoint_ip", "5.6.7.8"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.transport_endpoint_protocol", "tcp"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.transport_endpoint_port", "500"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_dns_name", "abc.com"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_api_url", "https://1.1.1.1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_system_feature_template.test", "trackers.0.boolean", "or"),
@@ -126,9 +123,6 @@ resource "sdwan_cisco_system_feature_template" "test" {
   trackers = [{
     name = "tracker1"
     endpoint_ip = "5.6.7.8"
-    transport_endpoint_ip = "5.6.7.8"
-    transport_endpoint_protocol = "tcp"
-    transport_endpoint_port = 500
     endpoint_dns_name = "abc.com"
     endpoint_api_url = "https://1.1.1.1"
     elements = ["abc", "def"]
