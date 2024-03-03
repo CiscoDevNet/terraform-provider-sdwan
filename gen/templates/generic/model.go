@@ -40,9 +40,11 @@ type {{camelCase .Name}} struct {
 {{- end}}
 {{- range .Attributes}}
 {{- if not .Value}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if or (eq .Type "StringList") (eq .Type "Versions")}}
+{{- else if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -56,13 +58,15 @@ type {{camelCase .Name}} struct {
 {{ range .Attributes}}
 {{- if not .Value}}
 {{- $childName := toGoName .TfName}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 type {{$name}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if not .Value}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if or (eq .Type "StringList") (eq .Type "Versions")}}
+{{- else if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -79,17 +83,19 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{ range .Attributes}}
 {{- if not .Value}}
 {{- $childName := toGoName .TfName}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 {{ range .Attributes}}
 {{- if not .Value}}
 {{- $childChildName := toGoName .TfName}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if not .Value}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if or (eq .Type "StringList") (eq .Type "Versions")}}
+{{- else if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -109,18 +115,20 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{ range .Attributes}}
 {{- if not .Value}}
 {{- $childName := toGoName .TfName}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 {{ range .Attributes}}
 {{- if not .Value}}
 {{- $childChildName := toGoName .TfName}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 {{ range .Attributes}}
 {{- if not .Value}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if not .Value}}
-{{- if or (eq .Type "StringList") (eq .Type "Versions")}}
+{{- if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
+{{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -161,13 +169,13 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		}
 		{{- end}}
 	}
-	{{- else if eq .Type "StringList"}}
+	{{- else if isListSet .}}
 	if {{if not .AlwaysInclude}}!data.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 		var values []string
 		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 	}
-	{{- else if or (eq .Type "List") (eq .Type "Set")}}
+	{{- else if isNestedListSet .}}
 	if true{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 		body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{})
 		for _, item := range data.{{toGoName .TfName}} {
@@ -191,13 +199,13 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				}
 				{{- end}}
 			}
-			{{- else if eq .Type "StringList"}}
+			{{- else if isListSet .}}
 			if {{if not .AlwaysInclude}}!item.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 				var values []string
 				item.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 			}
-			{{- else if or (eq .Type "List") (eq .Type "Set")}}
+			{{- else if isNestedListSet .}}
 			if true{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{})
 				for _, childItem := range item.{{toGoName .TfName}} {
@@ -221,13 +229,13 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 						}
 						{{- end}}
 					}
-					{{- else if eq .Type "StringList"}}
+					{{- else if isListSet .}}
 					if {{if not .AlwaysInclude}}!childItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 						var values []string
 						childItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 					}
-					{{- else if or (eq .Type "List") (eq .Type "Set")}}
+					{{- else if isNestedListSet .}}
 					if true{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{})
 						for _, childChildItem := range childItem.{{toGoName .TfName}} {
@@ -251,7 +259,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 								}
 								{{- end}}
 							}
-							{{- else if eq .Type "StringList"}}
+							{{- else if isListSet .}}
 							if {{if not .AlwaysInclude}}!childChildItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 								var values []string
 								childChildItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
@@ -316,13 +324,13 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	} else {
 		data.{{toGoName .TfName}} = types.BoolNull()
 	}
-	{{- else if eq .Type "StringList"}}
+	{{- else if isListSet .}}
 	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
-		data.{{toGoName .TfName}} = helpers.GetStringList(value.Array())
+		data.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(value.Array())
 	} else {
-		data.{{toGoName .TfName}} = types.ListNull(types.StringType)
+		data.{{toGoName .TfName}} = types.{{.Type}}Null(types.{{.ElementType}}Type)
 	}
-	{{- else if or (eq .Type "List") (eq .Type "Set")}}
+	{{- else if isNestedListSet .}}
 	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); value.Exists() && len(value.Array()) > 0{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 		data.{{toGoName .TfName}} = make([]{{$name}}{{toGoName .TfName}}, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
@@ -358,13 +366,13 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			} else {
 				item.{{toGoName .TfName}} = types.BoolNull()
 			}
-			{{- else if eq .Type "StringList"}}
+			{{- else if isListSet .}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
-				item.{{toGoName .TfName}} = helpers.GetStringList(cValue.Array())
+				item.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(cValue.Array())
 			} else {
-				item.{{toGoName .TfName}} = types.ListNull(types.StringType)
+				item.{{toGoName .TfName}} = types.{{.Type}}Null(types.{{.ElementType}}Type)
 			}
-			{{- else if or (eq .Type "List") (eq .Type "Set")}}
+			{{- else if isNestedListSet .}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); cValue.Exists() && len(cValue.Array()) > 0{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 				item.{{toGoName .TfName}} = make([]{{$name}}{{$cname}}{{toGoName .TfName}}, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
@@ -399,13 +407,13 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					} else {
 						cItem.{{toGoName .TfName}} = types.BoolNull()
 					}
-					{{- else if eq .Type "StringList"}}
+					{{- else if isListSet .}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
-						cItem.{{toGoName .TfName}} = helpers.GetStringList(ccValue.Array())
+						cItem.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(ccValue.Array())
 					} else {
-						cItem.{{toGoName .TfName}} = types.ListNull(types.StringType)
+						cItem.{{toGoName .TfName}} = types.{{.Type}}Null(types.{{.ElementType}}Type)
 					}
-					{{- else if or (eq .Type "List") (eq .Type "Set")}}
+					{{- else if isNestedListSet .}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); ccValue.Exists() && len(ccValue.Array()) > 0{{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
 						cItem.{{toGoName .TfName}} = make([]{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
@@ -440,11 +448,11 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							} else {
 								ccItem.{{toGoName .TfName}} = types.BoolNull()
 							}
-							{{- else if eq .Type "StringList"}}
+							{{- else if isListSet .}}
 							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
-								ccItem.{{toGoName .TfName}} = helpers.GetStringList(cccValue.Array())
+								ccItem.{{toGoName .TfName}} = helpers.Get{{.ElementType}}{{.Type}}(cccValue.Array())
 							} else {
-								ccItem.{{toGoName .TfName}} = types.ListNull(types.StringType)
+								ccItem.{{toGoName .TfName}} = types.{{.Type}}Null(types.{{.ElementType}}Type)
 							}
 							{{- end}}
 							{{- end}}
@@ -480,7 +488,7 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 	{{- range .Attributes}}
 	{{- $name := toGoName .TfName}}
 	{{- if and (not .Value) (not .TfOnly)}}
-	{{- if and (ne .Type "List") (ne .Type "Set")}}
+	{{- if not (isNestedListSet .)}}
 	if !data.{{toGoName .TfName}}.Equal(state.{{toGoName .TfName}}) {
 		hasChanges = true
 	}
@@ -492,7 +500,7 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 			{{- range .Attributes}}
 			{{- $cname := toGoName .TfName}}
 			{{- if and (not .Value) (not .TfOnly)}}
-			{{- if and (ne .Type "List") (ne .Type "Set")}}
+			{{- if not (isNestedListSet .)}}
 			if !data.{{$name}}[i].{{toGoName .TfName}}.Equal(state.{{$name}}[i].{{toGoName .TfName}}) {
 				hasChanges = true
 			}
@@ -504,7 +512,7 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 					{{- range .Attributes}}
 					{{- $ccname := toGoName .TfName}}
 					{{- if and (not .Value) (not .TfOnly)}}
-					{{- if and (ne .Type "List") (ne .Type "Set")}}
+					{{- if not (isNestedListSet .)}}
 					if !data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.Equal(state.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}) {
 						hasChanges = true
 					}
@@ -544,12 +552,12 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 	{{- $name := toGoName .TfName}}
 	{{- if eq .Type "Version"}}
 	data.{{toGoName .TfName}} = state.{{toGoName .TfName}}
-	{{- else if and (or (eq .Type "List") (eq .Type "Set")) (hasVersionAttribute .Attributes)}}
+	{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 	for i := range data.{{toGoName .TfName}} {
-		dataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{toGoName .TfName}}.{{if eq .Type "StringList"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+		dataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{toGoName .TfName}}.{{if isStringListSet .}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 		stateIndex := -1
 		for j := range state.{{toGoName .TfName}} {
-			stateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[j].{{toGoName .TfName}}.{{if eq .Type "StringList"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+			stateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[j].{{toGoName .TfName}}.{{if isStringListSet .}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 			if dataKeys == stateKeys {
 				stateIndex = j
                 break
@@ -569,13 +577,13 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 		} else {
 			data.{{$name}}[i].{{toGoName .TfName}} = types.ListNull(types.StringType)
 		}
-		{{- else if and (or (eq .Type "List") (eq .Type "Set")) (hasVersionAttribute .Attributes)}}
+		{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 		for ii := range data.{{$name}}[i].{{toGoName .TfName}} {
-			cDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.{{if eq .Type "StringList"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+			cDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}}.{{if isStringListSet .}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 			cStateIndex := -1
 			if stateIndex > -1 {
 				for jj := range state.{{$name}}[stateIndex].{{toGoName .TfName}} {
-					cStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[jj].{{toGoName .TfName}}.{{if eq .Type "StringList"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+					cStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[jj].{{toGoName .TfName}}.{{if isStringListSet .}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 					if cDataKeys == cStateKeys {
 						cStateIndex = jj
 						break
@@ -596,13 +604,13 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 			} else {
 				data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} = types.ListNull(types.StringType)
 			}
-			{{- else if and (or (eq .Type "List") (eq .Type "Set")) (hasVersionAttribute .Attributes)}}
+			{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 			for iii := range data.{{$name}}[i].{{$cname}}[ii].{{toGoName .TfName}} {
-				ccDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}.{{if eq .Type "StringList"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+				ccDataKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", data.{{$name}}[i].{{$cname}}[ii].{{$ccname}}[iii].{{toGoName .TfName}}.{{if isStringListSet .}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 				ccStateIndex := -1
 				if cStateIndex > -1 {
 					for jjj := range state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{toGoName .TfName}} {
-						ccStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[jjj].{{toGoName .TfName}}.{{if eq .Type "StringList"}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
+						ccStateKeys := [...]string{ {{range .Attributes}}{{if .Id}}fmt.Sprintf("%v", state.{{$name}}[stateIndex].{{$cname}}[cStateIndex].{{$ccname}}[jjj].{{toGoName .TfName}}.{{if isStringListSet .}}String{{else}}Value{{.Type}}{{end}}()), {{end}}{{end}} }
 						if ccDataKeys == ccStateKeys {
 							ccStateIndex = jjj
 							break

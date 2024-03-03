@@ -41,7 +41,7 @@ attributes:
       - model_name: hostname
         example: abc1
       - model_name: ip
-        example: '["7.7.7.7"]'
+        example: 7.7.7.7
   - model_name: service
     tf_name: services
     attributes:
@@ -49,7 +49,7 @@ attributes:
         tf_name: service_types
         example: FW
       - model_name: address
-        example: '["8.8.8.8"]'
+        example: 8.8.8.8
       - model_name: interface
         example: e1
       - model_name: track-enable
@@ -134,7 +134,7 @@ attributes:
         tf_name: vpn_id
         example: 2
       - model_name: interface
-        example: '["e1"]'
+        example: e1
   - model_name: ipsec-route
     tf_name: ipv4_static_ipsec_routes
     attributes:
@@ -144,7 +144,7 @@ attributes:
         tf_name: vpn_id
         example: 2
       - model_name: interface
-        example: '["e1"]'
+        example: e1
   - model_name: advertise
     tf_name: omp_advertise_ipv4_routes
     attributes:
@@ -153,7 +153,7 @@ attributes:
       - model_name: route-policy
         example: rp1
       - model_name: protocol-sub-type
-        example: '["external"]'
+        example: external
       - model_name: prefix-list
         tf_name: prefixes
         attributes:
@@ -169,7 +169,7 @@ attributes:
       - model_name: route-policy
         example: rp1
       - model_name: protocol-sub-type
-        example: '["external"]'
+        example: external
       - model_name: prefix-list
         tf_name: prefixes
         attributes:
@@ -261,7 +261,7 @@ attributes:
       - model_name: protocol
         example: ospf
       - model_name: protocol-sub-type
-        example: '["external"]'
+        example: external
       - model_name: route-policy
         example: policy1
       - model_name: redistribute
@@ -280,7 +280,7 @@ attributes:
       - model_name: protocol
         example: ospf
       - model_name: protocol-sub-type
-        example: '["external"]'
+        example: external
       - model_name: route-policy
         example: policy1
       - model_name: redistribute
@@ -296,7 +296,7 @@ attributes:
       - model_name: protocol
         example: ospf
       - model_name: protocol-sub-type
-        example: '["external"]'
+        example: external
       - model_name: route-policy
         example: policy1
       - model_name: redistribute

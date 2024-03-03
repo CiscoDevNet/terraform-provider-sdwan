@@ -49,14 +49,16 @@ attributes:
   - model_name: targetVpns
     data_path: [definition]
     tf_name: target_vpns
-    type: StringList
+    type: List
+    element_type: String
     description: Only relevant when `match_all_vpn` is `false` 
     example: 1
     exclude_test: true
     attributes:
       - model_name: vpns
         tf_name: vpn_ids
-        type: StringList
+        type: List
+        element_type: String
         description: VPN ID's separated by Comma 
         example: 1
       - model_name: umbrellaDefault

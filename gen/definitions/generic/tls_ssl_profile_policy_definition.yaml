@@ -30,19 +30,22 @@ attributes:
   - model_name: decryptCategories
     data_path: [definition]
     tf_name: decrypt_categories
-    type: StringList
+    type: List
+    element_type: String
     description: Categories that should be decrypted
     example: alcohol-and-tobacco
   - model_name: never_decrypt_categories
     data_path: [definition]
     tf_name: never_decrypt_categories
-    type: StringList
+    type: List
+    element_type: String
     description: Categories that should never be decrypted
     example: auctions
   - model_name: skipDecryptCategories
     data_path: [definition]
     tf_name: skip_decrypt_categories
-    type: StringList
+    type: List
+    element_type: String
     description: Categories that should skipped
     example: cdns
   - model_name: decryptThreshold

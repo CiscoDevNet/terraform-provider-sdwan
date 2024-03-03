@@ -39,10 +39,10 @@ type {{camelCase .Name}} struct {
 	Name types.String `tfsdk:"name"`
 	Description types.String `tfsdk:"description"`
 {{- range .Attributes}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+{{- else if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -57,13 +57,13 @@ type {{camelCase .Name}} struct {
 
 {{ range .Attributes}}
 {{- $childName := toGoName .TfName}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 type {{$name}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+{{- else if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -80,16 +80,16 @@ type {{$name}}{{toGoName .TfName}} struct {
 
 {{ range .Attributes}}
 {{- $childName := toGoName .TfName}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 {{ range .Attributes}}
 {{- $childChildName := toGoName .TfName}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+{{- else if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -108,16 +108,16 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 
 {{ range .Attributes}}
 {{- $childName := toGoName .TfName}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 {{ range .Attributes}}
 {{- $childChildName := toGoName .TfName}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 {{ range .Attributes}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
-{{- if or (eq .Type "StringList") (eq .Type "Int64List")}}
-	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
+{{- if isListSet .}}
+	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
 {{- end}}
@@ -154,7 +154,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 	{{- range .Attributes}}
-	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference)}}
+	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference)}}
 	{{if .Variable}}
 	if !data.{{toGoName .TfName}}Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
@@ -164,19 +164,19 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		{{if .DefaultValuePresent}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 	} else{{else}}if true{{end}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
-		{{- if or (eq .Type "StringList") (eq .Type "Int64List")}}
-		var values []{{if eq .Type "StringList"}}string{{else if eq .Type "Int64List"}}int{{end}}
+		{{- if isListSet .}}
+		var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 		{{- else}}
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", data.{{toGoName .TfName}}.Value{{.Type}}())
 		{{- end}}
 	}
-	{{- else if eq .Type "List"}}
+	{{- else if isNestedListSet .}}
 	for _, item := range data.{{toGoName .TfName}} {
 		itemBody := ""
 		{{- range .Attributes}}
-		{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")}}
+		{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
 		{{if .Variable}}
 		if !item.{{toGoName .TfName}}Variable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
@@ -186,19 +186,19 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			{{if .DefaultValuePresent}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 		} else{{else}}if true{{end}} {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
-			{{- if or (eq .Type "StringList") (eq .Type "Int64List")}}
-			var values []{{if eq .Type "StringList"}}string{{else if eq .Type "Int64List"}}int{{end}}
+			{{- if isListSet .}}
+			var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 			item.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 			{{- else}}
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", item.{{toGoName .TfName}}.Value{{.Type}}())
 			{{- end}}
 		}
-		{{- else if eq .Type "List"}}
+		{{- else if isNestedListSet .}}
 		for _, childItem := range item.{{toGoName .TfName}} {
 			itemChildBody := ""
 			{{- range .Attributes}}
-			{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")}}
+			{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
 			{{if .Variable}}
 			if !childItem.{{toGoName .TfName}}Variable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
@@ -208,19 +208,19 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				{{if .DefaultValuePresent}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 			} else{{else}}if true{{end}} {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
-				{{- if or (eq .Type "StringList") (eq .Type "Int64List")}}
-				var values []{{if eq .Type "StringList"}}string{{else if eq .Type "Int64List"}}int{{end}}
+				{{- if isListSet .}}
+				var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 				childItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 				{{- else}}
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", childItem.{{toGoName .TfName}}.Value{{.Type}}())
 				{{- end}}
 			}
-			{{- else if eq .Type "List"}}
+			{{- else if isNestedListSet .}}
 			for _, childChildItem := range childItem.{{toGoName .TfName}} {
 				itemChildChildBody := ""
 				{{- range .Attributes}}
-				{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")}}
+				{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
 				{{if .Variable}}
 				if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
@@ -230,8 +230,8 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					{{if .DefaultValuePresent}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
 				} else{{else}}if true{{end}} {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
-					{{- if or (eq .Type "StringList") (eq .Type "Int64List")}}
-					var values []{{if eq .Type "StringList"}}string{{else if eq .Type "Int64List"}}int{{end}}
+					{{- if isListSet .}}
+					var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 					childChildItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 					{{- else}}
@@ -265,67 +265,67 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	path := "payload.data."
 	{{- range .Attributes}}
 	{{- $cname := toGoName .TfName}}
-	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-	data.{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+	data.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 	{{ if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 	if t := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 		va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 		{{if .Variable}}if t.String() == "variable" {
 			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 		} else{{end}} if t.String() == "global" {
-			data.{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 		}
 	}
-	{{- else if eq .Type "List"}}
+	{{- else if isNestedListSet .}}
 	if value := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); value.Exists() {
 		data.{{toGoName .TfName}} = make([]{{$name}}{{toGoName .TfName}}, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := {{$name}}{{toGoName .TfName}}{}
 			{{- range .Attributes}}
 			{{- $ccname := toGoName .TfName}}
-			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-			item.{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+			item.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 			{{ if .Variable}}item.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 			if t := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 				va := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 				{{if .Variable}}if t.String() == "variable" {
 					item.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 				} else{{end}} if t.String() == "global" {
-					item.{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+					item.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 				}
 			}
-			{{- else if eq .Type "List"}}
+			{{- else if isNestedListSet .}}
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); cValue.Exists() {
 				item.{{toGoName .TfName}} = make([]{{$name}}{{$cname}}{{toGoName .TfName}}, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := {{$name}}{{$cname}}{{toGoName .TfName}}{}
 					{{- range .Attributes}}
-					{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-					cItem.{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+					{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+					cItem.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 					{{ if .Variable}}cItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 					if t := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 						va := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 						{{if .Variable}}if t.String() == "variable" {
 							cItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 						} else{{end}} if t.String() == "global" {
-							cItem.{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+							cItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 						}
 					}
-					{{- else if eq .Type "List"}}
+					{{- else if isNestedListSet .}}
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}"); ccValue.Exists() {
 						cItem.{{toGoName .TfName}} = make([]{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
 							ccItem := {{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}{}
 							{{- range .Attributes}}
-							{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-							ccItem.{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+							{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+							ccItem.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 							{{ if .Variable}}ccItem.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 							if t := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 								va := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 								{{if .Variable}}if t.String() == "variable" {
 									ccItem.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 								} else{{end}} if t.String() == "global" {
-									ccItem.{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+									ccItem.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 								}
 							}
 							{{- end}}
@@ -359,18 +359,18 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 	}
 	path := "payload.data."
 	{{- range .Attributes}}
-	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-	data.{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+	{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+	data.{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 	{{ if .Variable}}data.{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 	if t := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 		va := res.Get(path + "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 		{{if .Variable}}if t.String() == "variable" {
 			data.{{toGoName .TfName}}Variable = types.StringValue(va.String())
 		} else{{end}} if t.String() == "global" {
-			data.{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+			data.{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 		}
 	}
-	{{- else if eq .Type "List"}}
+	{{- else if isNestedListSet .}}
 	{{- $list := (toGoName .TfName)}}
 	for i := range data.{{toGoName .TfName}} {
 		keys := [...]string{ {{range .Attributes}}{{if .Id}}{{if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{end}}{{end}}{{end}} }
@@ -400,18 +400,18 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 		)
 
 		{{- range .Attributes}}
-		{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-		data.{{$list}}[i].{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+		{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+		data.{{$list}}[i].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 		{{ if .Variable}}data.{{$list}}[i].{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 		if t := r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 			va := r.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 			{{if .Variable}}if t.String() == "variable" {
 				data.{{$list}}[i].{{toGoName .TfName}}Variable = types.StringValue(va.String())
 			} else{{end}} if t.String() == "global" {
-				data.{{$list}}[i].{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+				data.{{$list}}[i].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 			}
 		}
-		{{- else if eq .Type "List"}}
+		{{- else if isNestedListSet .}}
 		{{- $clist := (toGoName .TfName)}}
 		for ci := range data.{{$list}}[i].{{toGoName .TfName}} {
 			keys := [...]string{ {{range .Attributes}}{{if .Id}}{{if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{end}}{{end}}{{end}} }
@@ -441,18 +441,18 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 			)
 
 			{{- range .Attributes}}
-			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-			data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+			{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+			data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 			{{ if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 			if t := cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 				va := cr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 				{{if .Variable}}if t.String() == "variable" {
 					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
 				} else{{end}} if t.String() == "global" {
-					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+					data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 				}
 			}
-			{{- else if eq .Type "List"}}
+			{{- else if isNestedListSet .}}
 			{{- $cclist := (toGoName .TfName)}}
 			for cci := range data.{{$list}}[i].{{$clist}}[ci].{{toGoName .TfName}} {
 				keys := [...]string{ {{range .Attributes}}{{if .Id}}{{if or (eq .Type "Int64") (eq .Type "Bool") (eq .Type "String")}}"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", {{end}}{{end}}{{end}} }
@@ -482,15 +482,15 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 				)
 
 				{{- range .Attributes}}
-				{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (eq .Type "StringList") (eq .Type "Int64List")) (not .Reference) (not .WriteOnly)}}
-				data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = {{if eq .Type "StringList"}}types.ListNull(types.StringType){{else if eq .Type "Int64List"}}types.ListNull(types.Int64Type){{else}}types.{{.Type}}Null(){{end}}
+				{{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference) (not .WriteOnly)}}
+				data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = types.{{.Type}}Null({{if isListSet .}}types.{{.ElementType}}Type{{end}})
 				{{ if .Variable}}data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable = types.StringNull(){{end}}
 				if t := ccr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType"); t.Exists() {
 					va := ccr.Get("{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value")
 					{{if .Variable}}if t.String() == "variable" {
 						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}}Variable = types.StringValue(va.String())
 					} else{{end}} if t.String() == "global" {
-						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = {{if eq .Type "StringList"}}helpers.GetStringList(va.Array()){{else if eq .Type "Int64List"}}helpers.GetInt64List(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
+						data.{{$list}}[i].{{$clist}}[ci].{{$cclist}}[cci].{{toGoName .TfName}} = {{if isListSet .}}helpers.Get{{.ElementType}}{{.Type}}(va.Array()){{else}}types.{{.Type}}Value(va.{{getGjsonType .Type}}()){{end}}
 					}
 				}
 				{{- end}}
@@ -509,7 +509,7 @@ func (data *{{camelCase .Name}}) updateFromBody(ctx context.Context, res gjson.R
 func (data *{{camelCase .Name}}) isNull(ctx context.Context, res gjson.Result) bool {
 	{{- range .Attributes}}
 	{{- if not .Value}}
-	{{- if or (eq .Type "List") (eq .Type "Set")}}
+	{{- if isNestedListSet .}}
 	if len(data.{{toGoName .TfName}}) > 0 {
 		return false
 	}

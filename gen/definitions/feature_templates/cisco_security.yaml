@@ -10,9 +10,9 @@ attributes:
   - model_name: extended-ar-window
     example: 256
   - model_name: authentication-type
-    example: '["none"]'
+    example: none
   - model_name: integrity-type
-    example: '["none"]'
+    example: none
   - model_name: pairwise-keying
     example: true
   - model_name: keychain

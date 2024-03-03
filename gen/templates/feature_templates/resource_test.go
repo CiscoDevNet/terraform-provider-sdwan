@@ -38,7 +38,7 @@ func TestAccSdwan{{camelCase .Name}}FeatureTemplate(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
-					{{- if and (.Mandatory) (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- if and (.Mandatory) (not (isListSet .))}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
@@ -61,21 +61,21 @@ func TestAccSdwan{{camelCase .Name}}FeatureTemplate(t *testing.T) {
 					{{- if eq .Type "List"}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not (isListSet .))}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
-					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- else if not (isListSet .)}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- else if not (isListSet .)}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- else if not (isListSet .)}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_feature_template.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
@@ -93,8 +93,8 @@ func testAccSdwan{{camelCase .Name}}FeatureTemplateConfig_minimum() string {
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
 		{{- range .Attributes}}
-		{{- if and (.Mandatory) (ne .Type "List")}}
-		{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+		{{- if and (.Mandatory) (not (isNestedListSet .))}}
+		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 		{{- end}}
 		{{- end}}
 	}
@@ -109,36 +109,36 @@ func testAccSdwan{{camelCase .Name}}FeatureTemplateConfig_all() string {
 		device_types = ["vedge-C8000V"]
 		{{- range  .Attributes}}
 		{{- if not .ExcludeTest}}
-		{{- if eq .Type "List"}}
+		{{- if isNestedListSet .}}
 		{{.TfName}} = [{
 			{{- range  .Attributes}}
 			{{- if not .ExcludeTest}}
-			{{- if eq .Type "List"}}
+			{{- if isNestedListSet .}}
 			{{.TfName}} = [{
 				{{- range  .Attributes}}
 				{{- if not .ExcludeTest}}
-				{{- if eq .Type "List"}}
+				{{- if isNestedListSet .}}
 				{{.TfName}} = [{
 					{{- range  .Attributes}}
 					{{- if not .ExcludeTest}}
-					{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+					{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 					{{- end}}
 					{{- end}}
 				}]
 				{{- else}}
-				{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+				{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 				{{- end}}
 				{{- end}}
 				{{- end}}
 			}]
 			{{- else}}
-			{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 			{{- end}}
 			{{- end}}
 			{{- end}}
 		}]
 		{{- else}}
-		{{.TfName}} = {{if eq .Type "String"}}"{{end}}{{.Example}}{{if eq .Type "String"}}"{{end}}
+		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 		{{- end}}
 		{{- end}}
 		{{- end}}

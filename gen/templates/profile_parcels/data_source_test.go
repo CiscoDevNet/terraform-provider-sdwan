@@ -39,32 +39,32 @@ func TestAccDataSourceSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference)}}
-					{{- if eq .Type "List"}}
+					{{- if isNestedListSet .}}
 					{{- $list := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference)}}
-					{{- if eq .Type "List"}}
+					{{- if isNestedListSet .}}
 					{{- $clist := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference)}}
-					{{- if eq .Type "List"}}
+					{{- if isNestedListSet .}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not (isListSet .))}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
-					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- else if not (isListSet .)}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- else if not (isListSet .)}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else if and (ne .Type "StringList") (ne .Type "Int64List")}}
+					{{- else if not (isListSet .)}}
 					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
@@ -83,36 +83,36 @@ resource "sdwan_{{snakeCase $name}}_profile_parcel" "test" {
   description = "Terraform integration test"
 {{- range  .Attributes}}
 {{- if not .ExcludeTest}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
   {{.TfName}} = [{
     {{- range  .Attributes}}
     {{- if not .ExcludeTest}}
-	{{- if eq .Type "List"}}
+	{{- if isNestedListSet .}}
 	{{.TfName}} = [{
 		{{- range  .Attributes}}
 		{{- if not .ExcludeTest}}
-		{{- if eq .Type "List"}}
+		{{- if isNestedListSet .}}
 		{{.TfName}} = [{
 			{{- range  .Attributes}}
 			{{- if not .ExcludeTest}}
-			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
+			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 			{{- end}}
 			{{- end}}
 		}]
 		{{- else}}
-		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
+		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 		{{- end}}
 		{{- end}}
 		{{- end}}
 	}]
 	{{- else}}
-    {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
+    {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
     {{- end}}
     {{- end}}
 	{{- end}}
   }]
 {{- else}}
-  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
+  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 {{- end}}
 {{- end}}
 {{- end}}
@@ -122,7 +122,7 @@ data "sdwan_{{snakeCase .Name}}_profile_parcel" "test" {
   id = sdwan_{{snakeCase $name}}_profile_parcel.test.id
 {{- range  .Attributes}}
 {{- if .Reference}}
-  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
+  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 {{- end}}
 {{- end}}
 }

@@ -6,7 +6,7 @@ attributes:
     example: 10.1.1.0/24
   - model_name: exclude
     tf_name: exclude_addresses
-    example: '["10.1.1.1-10.1.1.5", "10.1.1.254"]'
+    example: '10.1.1.1-10.1.1.5", "10.1.1.254'
   - model_name: lease-time
     example: 600
   - model_name: interface-mtu
@@ -16,9 +16,9 @@ attributes:
   - model_name: default-gateway
     example: 10.1.1.254
   - model_name: dns-servers
-    example: '["1.2.3.4"]'
+    example: '1.2.3.4'
   - model_name: tftp-servers
-    example: '["1.2.3.4"]'
+    example: '1.2.3.4'
   - model_name: static-lease
     tf_name: static_leases
     attributes:

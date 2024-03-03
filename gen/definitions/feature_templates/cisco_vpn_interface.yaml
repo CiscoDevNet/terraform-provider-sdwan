@@ -50,7 +50,7 @@ attributes:
         example: ACL1
   - model_name: dhcp-helper
     tf_name: ipv4_dhcp_helper
-    example: '["6.6.6.6"]'
+    example: 6.6.6.6
   - model_name: dhcp-helper-v6
     tf_name: ipv6_dhcp_helpers
     attributes:
@@ -60,7 +60,7 @@ attributes:
         tf_name: vpn_id
         example: 5
   - model_name: tracker
-    example: '["tracker1"]'
+    example: tracker1
   - model_name: auto-bandwidth-detect
     example: false
   - model_name: iperf-server
@@ -191,7 +191,7 @@ attributes:
   - model_name: group
     tf_name: tunnel_interface_groups
     exclude_ignore: true
-    example: "[5]"
+    example: 5
   - model_name: value
     tf_name: tunnel_interface_color
     exclude_ignore: true
@@ -211,7 +211,7 @@ attributes:
   - model_name: exclude-controller-group-list
     tf_name: tunnel_interface_exclude_controller_group_list
     exclude_ignore: true
-    example: "[10]"
+    example: 10
   - model_name: vmanage-connection-preference
     tf_name: tunnel_interface_vmanage_connection_preference
     exclude_ignore: true

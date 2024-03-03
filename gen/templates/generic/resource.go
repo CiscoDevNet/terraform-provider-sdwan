@@ -81,7 +81,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 			{{- end}}
 			{{- range  .Attributes}}
 			{{- if not .Value}}
-			"{{.TfName}}": schema.{{if or (eq .Type "List") (eq .Type "Set")}}{{.Type}}Nested{{else if or (eq .Type "StringList") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 					{{- if len .EnumValues -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -96,7 +96,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 					.AddDefaultValueDescription("{{.DefaultValue}}")
 					{{- end -}}
 					.String,
-				{{- if or (eq .Type "StringList") (eq .Type "Versions")}}
+				{{- if isListSet .}}
+				ElementType:         types.{{.ElementType}}Type,
+				{{- else if eq .Type "Versions"}}
 				ElementType:         types.StringType,
 				{{- end}}
 				{{- if .Mandatory}}
@@ -136,12 +138,12 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- else if and (len .DefaultValue) (eq .Type "String")}}
 				Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 				{{- end}}
-				{{- if or (eq .Type "List") (eq .Type "Set")}}
+				{{- if isNestedListSet .}}
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
 						{{- if not .Value}}
-						"{{.TfName}}": schema.{{if or (eq .Type "List") (eq .Type "Set")}}{{.Type}}Nested{{else if or (eq .Type "StringList") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 								{{- if len .EnumValues -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -156,7 +158,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 								.AddDefaultValueDescription("{{.DefaultValue}}")
 								{{- end -}}
 								.String,
-							{{- if or (eq .Type "StringList") (eq .Type "Versions")}}
+							{{- if isListSet .}}
+							ElementType:         types.{{.ElementType}}Type,
+							{{- else if eq .Type "Versions"}}
 							ElementType:         types.StringType,
 							{{- end}}
 							{{- if .Mandatory}}
@@ -196,12 +200,12 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							{{- else if and (len .DefaultValue) (eq .Type "String")}}
 							Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 							{{- end}}
-							{{- if or (eq .Type "List") (eq .Type "Set")}}
+							{{- if isNestedListSet .}}
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
 									{{- if not .Value}}
-									"{{.TfName}}": schema.{{if or (eq .Type "List") (eq .Type "Set")}}{{.Type}}Nested{{else if or (eq .Type "StringList") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 											{{- if len .EnumValues -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -216,7 +220,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 											.AddDefaultValueDescription("{{.DefaultValue}}")
 											{{- end -}}
 											.String,
-										{{- if or (eq .Type "StringList") (eq .Type "Versions")}}
+										{{- if isListSet .}}
+										ElementType:         types.{{.ElementType}}Type,
+										{{- else if eq .Type "Versions"}}
 										ElementType:         types.StringType,
 										{{- end}}
 										{{- if .Mandatory}}
@@ -256,12 +262,12 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										{{- else if and (len .DefaultValue) (eq .Type "String")}}
 										Default:             stringdefault.StaticString("{{.DefaultValue}}"),
 										{{- end}}
-										{{- if or (eq .Type "List") (eq .Type "Set")}}
+										{{- if isNestedListSet .}}
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
 												{{- if not .Value}}
-												"{{.TfName}}": schema.{{if or (eq .Type "List") (eq .Type "Set")}}{{.Type}}Nested{{else if or (eq .Type "StringList") (eq .Type "Versions")}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
+												"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
 														{{- if len .EnumValues -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
@@ -276,7 +282,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 														.AddDefaultValueDescription("{{.DefaultValue}}")
 														{{- end -}}
 														.String,
-													{{- if or (eq .Type "StringList") (eq .Type "Versions")}}
+													{{- if isListSet .}}
+													ElementType:         types.{{.ElementType}}Type,
+													{{- else if eq .Type "Versions"}}
 													ElementType:         types.StringType,
 													{{- end}}
 													{{- if .Mandatory}}

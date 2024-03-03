@@ -44,7 +44,7 @@ attributes:
         example: auto
       - model_name: auth-order
         tf_name: dot1x_authentication_order
-        example: '["dot1x"]'
+        example: dot1x
       - model_name: voice-vlan
         example: 200
       - model_name: pae-enable

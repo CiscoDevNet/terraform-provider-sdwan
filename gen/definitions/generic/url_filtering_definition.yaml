@@ -30,13 +30,15 @@ attributes:
   - model_name: alerts
     data_path: [definition]
     tf_name: alerts
-    type: StringList
+    type: List
+    element_type: String
     description: List of alerts options that will be exported as syslog messages
     example: blacklist
   - model_name: webCategories
     data_path: [definition]
     tf_name: web_categories
-    type: StringList
+    type: List
+    element_type: String
     description: List of categories to block or allow
     example: alcohol-and-tobacco
   - model_name: webCategoriesAction
@@ -56,7 +58,8 @@ attributes:
   - model_name: targetVpns
     data_path: [definition]
     tf_name: target_vpns
-    type: StringList
+    type: List
+    element_type: String
     description: List of VPN IDs
     example: 1
   - model_name: ref

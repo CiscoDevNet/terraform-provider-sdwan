@@ -62,6 +62,6 @@ attributes:
     tf_name: ipsec_perfect_forward_secrecy
     example: group-20
   - model_name: tracker
-    example: '["TRACKER1"]'
+    example: TRACKER1
   - model_name: tunnel-route-via
     example: g0/0

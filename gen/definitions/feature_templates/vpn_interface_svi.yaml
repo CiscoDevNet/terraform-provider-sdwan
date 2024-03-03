@@ -41,7 +41,7 @@ attributes:
         example: 2001:db8:85a3::8a2e:370:7334
   - model_name: dhcp-helper
     tf_name: ipv4_dhcp_helper
-    example: '["7.7.7.7"]'
+    example: 7.7.7.7
   - model_name: dhcp-helper-v6
     tf_name: ipv6_dhcp_helpers
     attributes:

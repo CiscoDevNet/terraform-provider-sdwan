@@ -13,7 +13,7 @@ attributes:
     example: e1
   - model_name: trusted
     tf_name: trusted_keys
-    example: '[1]'
+    example: 1
   - model_name: authentication
     tf_name: authentication_keys
     attributes:

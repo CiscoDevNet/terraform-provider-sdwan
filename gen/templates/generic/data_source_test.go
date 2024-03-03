@@ -39,33 +39,33 @@ func TestAccDataSourceSdwan{{camelCase .Name}}(t *testing.T) {
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue) (not .QueryParam)}}
-					{{- if or (eq .Type "List") (eq .Type "Set")}}
+					{{- if isNestedListSet .}}
 					{{- $list := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
-					{{- if or (eq .Type "List") (eq .Type "Set")}}
+					{{- if isNestedListSet .}}
 					{{- $clist := .TfName }}
 					{{- range  .Attributes}}
 					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
-					{{- if or (eq .Type "List") (eq .Type "Set")}}
+					{{- if isNestedListSet .}}
 					{{- $cclist := .TfName }}
 					{{- range  .Attributes}}
-					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue)}}
-					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}{{if eq .Type "StringList"}}.0{{end}}", "{{.Example}}"),
+					{{- if and (not .WriteOnly) (not .ExcludeTest) (not .TfOnly) (not .Value) (not .TestValue) (not (isSet .))}}
+					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}{{if isList .}}.0{{end}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
-					{{- else}}
-					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}{{if eq .Type "StringList"}}.0{{end}}", "{{.Example}}"),
-					{{- end}}
-					{{- end}}
-					{{- end}}
-					{{- else}}
-					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{.TfName}}{{if eq .Type "StringList"}}.0{{end}}", "{{.Example}}"),
+					{{- else if not (isSet .)}}
+					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}{{if isList .}}.0{{end}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
-					{{- else}}
-					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{.TfName}}{{if eq .Type "StringList"}}.0{{end}}", "{{.Example}}"),
+					{{- else if not (isSet .)}}
+					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{$list}}.0.{{.TfName}}{{if isList .}}.0{{end}}", "{{.Example}}"),
+					{{- end}}
+					{{- end}}
+					{{- end}}
+					{{- else if not (isSet .)}}
+					resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}.test", "{{.TfName}}{{if isList .}}.0{{end}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}
 					{{- end}}
@@ -82,36 +82,36 @@ const testAccDataSourceSdwan{{camelCase .Name}}Config = `
 resource "sdwan_{{snakeCase $name}}" "test" {
 {{- range  .Attributes}}
 {{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-{{- if or (eq .Type "List") (eq .Type "Set")}}
+{{- if isNestedListSet .}}
   {{.TfName}} = [{
     {{- range  .Attributes}}
     {{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-	{{- if or (eq .Type "List") (eq .Type "Set")}}
+	{{- if isNestedListSet .}}
 	{{.TfName}} = [{
 		{{- range  .Attributes}}
 		{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-		{{- if or (eq .Type "List") (eq .Type "Set")}}
+		{{- if isNestedListSet .}}
 		{{.TfName}} = [{
 			{{- range  .Attributes}}
 			{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
-			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}{{end}}
+			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 			{{- end}}
 			{{- end}}
 		}]
 		{{- else}}
-		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}{{end}}
+		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 		{{- end}}
 		{{- end}}
 		{{- end}}
 	}]
 	{{- else}}
-    {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}{{end}}
+    {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
     {{- end}}
 	{{- end}}
 	{{- end}}
   }]
 {{- else}}
-  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}{{end}}
+  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 {{- end}}
 {{- end}}
 {{- end}}
@@ -121,7 +121,7 @@ resource "sdwan_{{snakeCase $name}}" "test" {
 data "sdwan_{{snakeCase .Name}}" "test" {
 {{- range  .Attributes}}
 {{- if .QueryParam}}
-  {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}
+  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 {{- end}}
 {{- end}}
 {{- if not .RemoveId}}

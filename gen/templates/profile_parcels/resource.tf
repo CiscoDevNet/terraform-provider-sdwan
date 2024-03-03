@@ -3,42 +3,42 @@ resource "sdwan_{{snakeCase .Name}}_profile_parcel" "example" {
 	description = "My Example"
 {{- range  .Attributes}}
 {{- if and (not .ExcludeTest) (not .ExcludeExample)}}
-{{- if eq .Type "List"}}
+{{- if isNestedListSet .}}
   {{.TfName}} = [
     {
       {{- range  .Attributes}}
       {{- if and (not .ExcludeTest) (not .ExcludeExample)}}
-      {{- if eq .Type "List"}}
+      {{- if isNestedListSet .}}
       {{.TfName}} = [
         {
           {{- range  .Attributes}}
           {{- if and (not .ExcludeTest) (not .ExcludeExample)}}
-          {{- if eq .Type "List"}}
+          {{- if isNestedListSet .}}
           {{.TfName}} = [
             {
               {{- range  .Attributes}}
               {{- if and (not .ExcludeTest) (not .ExcludeExample)}}
-              {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}
+              {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}
               {{- end}}
               {{- end}}
             }
           ]
           {{- else}}
-          {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}
+          {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}
           {{- end}}
           {{- end}}
           {{- end}}
         }
       ]
       {{- else}}
-      {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}
+      {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}
       {{- end}}
       {{- end}}
       {{- end}}
     }
   ]
 {{- else}}
-  {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else if eq .Type "Int64List"}}[{{.Example}}]{{else}}{{.Example}}{{end}}
+  {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}
 {{- end}}
 {{- end}}
 {{- end}}

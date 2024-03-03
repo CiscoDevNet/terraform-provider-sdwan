@@ -33,9 +33,9 @@ attributes:
       - model_name: number
         example: "+1234567"
   - model_name: device-groups
-    example: '["group1"]'
+    example: group1
   - model_name: controller-group-list
-    example: '[1]'
+    example: 1
   - model_name: system-ip
     example: 5.5.5.5
   - model_name: overlay-id
@@ -93,7 +93,7 @@ attributes:
         example: https://1.1.1.1
       - model_name: elements
         exclude_ignore: true
-        example: '["abc", "def"]'
+        example: 'abc", "def'
       - model_name: boolean
         exclude_ignore: true
         example: or
@@ -152,7 +152,7 @@ attributes:
     example: 5
   - model_name: preference
     tf_name: affinity_group_preference
-    example: "[1]"
+    example: 1
   - model_name: transport-gateway
     example: true
   - model_name: enable-mrf-migration

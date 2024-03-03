@@ -1,7 +1,7 @@
 data "sdwan_{{snakeCase .Name}}" "example" {
 {{- range  .Attributes}}
 {{- if .QueryParam}}
-  {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if eq .Type "StringList"}}["{{.Example}}"]{{else}}{{.Example}}{{end}}
+  {{.TfName}} = {{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}
 {{- end}}
 {{- end}}
 {{- if not .RemoveId}}
