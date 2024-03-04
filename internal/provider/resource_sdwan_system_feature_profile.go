@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -127,7 +128,7 @@ func (r *SystemFeatureProfileResource) Read(ctx context.Context, req resource.Re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/v1/feature-profile/sdwan/system/" + state.Id.ValueString())
+	res, err := r.client.Get("/v1/feature-profile/sdwan/system/" + url.QueryEscape(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -165,7 +166,7 @@ func (r *SystemFeatureProfileResource) Update(ctx context.Context, req resource.
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/v1/feature-profile/sdwan/system/"+plan.Id.ValueString(), body)
+		res, err := r.client.Put("/v1/feature-profile/sdwan/system/"+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -197,7 +198,7 @@ func (r *SystemFeatureProfileResource) Delete(ctx context.Context, req resource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/v1/feature-profile/sdwan/system/" + state.Id.ValueString())
+	res, err := r.client.Delete("/v1/feature-profile/sdwan/system/" + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
@@ -437,7 +438,7 @@ func (r *CiscoSNMPFeatureTemplateResource) Read(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/template/feature/object/" + state.Id.ValueString())
+	res, err := r.client.Get("/template/feature/object/" + url.QueryEscape(state.Id.ValueString()))
 	if res.Get("error.message").String() == "Invalid Template Id" {
 		resp.State.RemoveResource(ctx)
 		return
@@ -474,7 +475,7 @@ func (r *CiscoSNMPFeatureTemplateResource) Update(ctx context.Context, req resou
 
 	body := plan.toBody(ctx)
 	r.updateMutex.Lock()
-	res, err := r.client.Put("/template/feature/"+plan.Id.ValueString(), body)
+	res, err := r.client.Put("/template/feature/"+url.QueryEscape(plan.Id.ValueString()), body)
 	r.updateMutex.Unlock()
 	if err != nil {
 		if res.Get("error.message").String() == "Template locked in edit mode." {
@@ -509,7 +510,7 @@ func (r *CiscoSNMPFeatureTemplateResource) Delete(ctx context.Context, req resou
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/template/feature/" + state.Id.ValueString())
+	res, err := r.client.Delete("/template/feature/" + url.QueryEscape(state.Id.ValueString()))
 	if err != nil && res.Get("error.message").String() != "Invalid Template Id" {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

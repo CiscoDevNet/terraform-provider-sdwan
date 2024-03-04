@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -87,7 +88,7 @@ func (data SystemGlobal) getModel() string {
 }
 
 func (data SystemGlobal) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/system/%v/global", data.FeatureProfileId.ValueString())
+	return fmt.Sprintf("/v1/feature-profile/sdwan/system/%v/global", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 func (data SystemGlobal) toBody(ctx context.Context) string {

@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -328,7 +329,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Read(ctx context.Context, req resource
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/template/policy/definition/acl/" + state.Id.ValueString())
+	res, err := r.client.Get("/template/policy/definition/acl/" + url.QueryEscape(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -366,7 +367,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Update(ctx context.Context, req resour
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/template/policy/definition/acl/"+plan.Id.ValueString(), body)
+		res, err := r.client.Put("/template/policy/definition/acl/"+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -399,7 +400,7 @@ func (r *IPv4ACLPolicyDefinitionResource) Delete(ctx context.Context, req resour
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/template/policy/definition/acl/" + state.Id.ValueString())
+	res, err := r.client.Delete("/template/policy/definition/acl/" + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

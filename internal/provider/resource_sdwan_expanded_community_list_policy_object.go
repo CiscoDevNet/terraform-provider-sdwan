@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -145,7 +146,7 @@ func (r *ExpandedCommunityListPolicyObjectResource) Read(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/template/policy/list/expandedcommunity/" + state.Id.ValueString())
+	res, err := r.client.Get("/template/policy/list/expandedcommunity/" + url.QueryEscape(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -183,7 +184,7 @@ func (r *ExpandedCommunityListPolicyObjectResource) Update(ctx context.Context, 
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/template/policy/list/expandedcommunity/"+plan.Id.ValueString(), body)
+		res, err := r.client.Put("/template/policy/list/expandedcommunity/"+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -216,7 +217,7 @@ func (r *ExpandedCommunityListPolicyObjectResource) Delete(ctx context.Context, 
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/template/policy/list/expandedcommunity/" + state.Id.ValueString())
+	res, err := r.client.Delete("/template/policy/list/expandedcommunity/" + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/datasourcevalidator"
@@ -1189,7 +1190,7 @@ func (d *CiscoVPNFeatureTemplateDataSource) Read(ctx context.Context, req dataso
 		}
 	}
 
-	res, err := d.client.Get("/template/feature/object/" + config.Id.ValueString())
+	res, err := d.client.Get("/template/feature/object/" + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

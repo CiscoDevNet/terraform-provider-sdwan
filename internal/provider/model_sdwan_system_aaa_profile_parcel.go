@@ -22,6 +22,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -135,7 +136,7 @@ func (data SystemAAA) getModel() string {
 }
 
 func (data SystemAAA) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/system/%v/aaa", data.FeatureProfileId.ValueString())
+	return fmt.Sprintf("/v1/feature-profile/sdwan/system/%v/aaa", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 func (data SystemAAA) toBody(ctx context.Context) string {

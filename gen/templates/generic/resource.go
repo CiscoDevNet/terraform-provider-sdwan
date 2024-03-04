@@ -23,6 +23,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -443,7 +444,7 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" {{if not .RemoveId}} + state.Id.ValueString() {{end}})
+	res, err := r.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" {{if not .RemoveId}} + url.QueryEscape(state.Id.ValueString()) {{end}})
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -481,7 +482,7 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("{{.RestEndpoint}}" {{if not .RemoveId}} + plan.Id.ValueString(){{end}}, body)
+		res, err := r.client.Put("{{.RestEndpoint}}" {{if not .RemoveId}} + url.QueryEscape(plan.Id.ValueString()){{end}}, body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -517,7 +518,7 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 	{{if not .RemoveId}}
-	res, err := r.client.Delete("{{.RestEndpoint}}" + state.Id.ValueString())
+	res, err := r.client.Delete("{{.RestEndpoint}}" + url.QueryEscape(state.Id.ValueString()))
 	{{- else}}
 	res, err := r.client.Delete("{{.RestEndpoint}}")
 	{{- end}}
