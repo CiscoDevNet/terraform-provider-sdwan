@@ -43,11 +43,6 @@ type {{camelCase .Name}} struct {
 {{- range .Attributes}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -65,11 +60,6 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -92,11 +82,6 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -121,16 +106,9 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 	Optional types.Bool `tfsdk:"optional"`
 {{- range .Attributes}}
-{{- if isListSet .}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
-{{- else}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- end}}
 {{- end}}
 }

@@ -41,11 +41,6 @@ type {{camelCase .Name}} struct {
 {{- range .Attributes}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -62,11 +57,6 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -88,11 +78,6 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- else}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
@@ -116,16 +101,9 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- if isNestedListSet .}}
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
-{{- if isListSet .}}
 	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- if .Variable}}
 	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
-{{- else}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- if .Variable}}
-	{{toGoName .TfName}}Variable types.String `tfsdk:"{{.TfName}}_variable"`
-{{- end}}
 {{- end}}
 {{- end}}
 }
@@ -165,7 +143,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	} else{{else}}if true{{end}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 		{{- if isListSet .}}
-		var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
+		var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 		{{- else}}
@@ -187,7 +165,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		} else{{else}}if true{{end}} {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 			{{- if isListSet .}}
-			var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
+			var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 			item.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 			{{- else}}
@@ -209,7 +187,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			} else{{else}}if true{{end}} {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 				{{- if isListSet .}}
-				var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
+				var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 				childItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 				{{- else}}
@@ -231,7 +209,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				} else{{else}}if true{{end}} {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 					{{- if isListSet .}}
-					var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
+					var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int64{{end}}
 					childChildItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", values)
 					{{- else}}
