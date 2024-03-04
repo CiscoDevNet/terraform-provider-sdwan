@@ -42,8 +42,6 @@ type {{camelCase .Name}} struct {
 {{- if not .Value}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
@@ -64,8 +62,6 @@ type {{$name}}{{toGoName .TfName}} struct {
 {{- if not .Value}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
@@ -93,8 +89,6 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 {{- if not .Value}}
 {{- if isNestedListSet .}}
 	{{toGoName .TfName}} []{{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} `tfsdk:"{{.TfName}}"`
-{{- else if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
@@ -126,9 +120,7 @@ type {{$name}}{{$childName}}{{toGoName .TfName}} struct {
 type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- range .Attributes}}
 {{- if not .Value}}
-{{- if isListSet .}}
-	{{toGoName .TfName}} types.{{.Type}} `tfsdk:"{{.TfName}}"`
-{{- else if eq .Type "Versions"}}
+{{- if eq .Type "Versions"}}
 	{{toGoName .TfName}} types.List `tfsdk:"{{.TfName}}"`
 {{- else if eq .Type "Version"}}
 	{{toGoName .TfName}} types.Int64 `tfsdk:"{{.TfName}}"`
@@ -171,7 +163,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	}
 	{{- else if isListSet .}}
 	if {{if not .AlwaysInclude}}!data.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
-		var values []string
+		var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 	}
@@ -201,7 +193,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			}
 			{{- else if isListSet .}}
 			if {{if not .AlwaysInclude}}!item.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
-				var values []string
+				var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 				item.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 			}
@@ -231,7 +223,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					}
 					{{- else if isListSet .}}
 					if {{if not .AlwaysInclude}}!childItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
-						var values []string
+						var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 						childItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 					}
@@ -261,7 +253,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 							}
 							{{- else if isListSet .}}
 							if {{if not .AlwaysInclude}}!childChildItem.{{toGoName .TfName}}.IsNull(){{else}}true{{end}}{{if ne .ConditionalAttribute.Name ""}} && childChildItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}} {
-								var values []string
+								var values []{{if isStringListSet .}}string{{else if isInt64ListSet .}}int{{end}}
 								childChildItem.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", values)
 							}
