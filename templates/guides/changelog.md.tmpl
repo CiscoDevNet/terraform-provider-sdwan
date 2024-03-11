@@ -11,6 +11,7 @@ description: |-
 
 - Add `sdwan_cisco_trustsec_feature_template` resource and data source
 - Add `sdwan_cisco_vpn_interface_gre_feature_template` resource and data source
+- Add `sdwan_cellular_profile_feature_template` resource and data source
 
 ## 0.3.6
 

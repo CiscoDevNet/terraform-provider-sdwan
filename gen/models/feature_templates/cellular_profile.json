@@ -1,0 +1,154 @@
+{
+    "name": "Cellular Profile",
+    "xmlPath": [],
+    "xmlRootTag": "profile",
+    "parentPath": "</cellular>",
+    "uniqueKey": "id",
+    "nameSpace": "http://viptela.com/wwan",
+    "fields": [
+        {
+            "key": "id",
+            "description": "Profile ID",
+            "details": "Set Profile ID",
+            "optionType": [
+                "constant",
+                "variable"
+            ],
+            "defaultOption": "constant",
+            "dataType": {
+                "type": "number",
+                "min": 1,
+                "max": 16
+            },
+            "dataPath": [],
+            "objectType": "object"
+        },
+        {
+            "key": "apn",
+            "description": "Access Point Name",
+            "details": "Set access point name",
+            "optionType": [
+                "constant",
+                "variable"
+            ],
+            "defaultOption": "constant",
+            "dataType": {
+                "type": "string"
+            },
+            "dataPath": [],
+            "objectType": "object"
+        },
+        {
+            "key": "authentication",
+            "description": "Authentication",
+            "details": "Set authentication type",
+            "optionType": [
+                "constant",
+                "variable",
+                "ignore"
+            ],
+            "defaultOption": "ignore",
+            "dataType": {
+                "type": "enum",
+                "values": [
+                    {
+                        "key": "none",
+                        "value": "none"
+                    },
+                    {
+                        "key": "pap",
+                        "value": "pap"
+                    },
+                    {
+                        "key": "chap",
+                        "value": "chap"
+                    },
+                    {
+                        "key": "pap_chap",
+                        "value": "pap_chap"
+                    }
+                ],
+                "default": "none"
+            },
+            "dataPath": [],
+            "objectType": "object"
+        },
+        {
+            "key": "pdn-type",
+            "description": "Packet Data Network Type",
+            "details": "Set packet data network type",
+            "optionType": [
+                "constant",
+                "variable",
+                "ignore"
+            ],
+            "defaultOption": "ignore",
+            "dataType": {
+                "type": "enum",
+                "values": [
+                    {
+                        "key": "ipv4",
+                        "value": "ipv4"
+                    },
+                    {
+                        "key": "ipv4v6",
+                        "value": "ipv4v6"
+                    },
+                    {
+                        "key": "ipv6",
+                        "value": "ipv6"
+                    }
+                ],
+                "default": "ipv4"
+            },
+            "dataPath": [],
+            "objectType": "object"
+        },
+        {
+            "key": "username",
+            "description": "Profile Username",
+            "details": "Set the profile username",
+            "optionType": [
+                "constant",
+                "variable"
+            ],
+            "defaultOption": "constant",
+            "dataType": {
+                "type": "string"
+            },
+            "dataPath": [],
+            "objectType": "object"
+        },
+        {
+            "key": "password",
+            "description": "Profile password",
+            "details": "Set the profile password",
+            "optionType": [
+                "constant",
+                "variable"
+            ],
+            "defaultOption": "constant",
+            "dataType": {
+                "type": "string"
+            },
+            "dataPath": [],
+            "objectType": "object"
+        },
+        {
+            "key": "no-overwrite",
+            "description": "No Overwrite",
+            "details": "No Overwrite",
+            "optionType": [
+                "constant",
+                "variable",
+                "ignore"
+            ],
+            "defaultOption": "ignore",
+            "dataType": {
+                "type": "boolean"
+            },
+            "dataPath": [],
+            "objectType": "node-only"
+        }
+    ]
+}

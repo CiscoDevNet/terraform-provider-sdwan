@@ -1,0 +1,23 @@
+---
+name: Cellular Profile
+minimum_version: 20.9.0
+attributes:
+  - model_name: id
+    tf_name: profile_id
+    example: 1
+  - model_name: apn
+    tf_name: access_point_name
+    example: example
+  - model_name: authentication
+    example: chap
+  - model_name: pdn-type
+    tf_name: packet_data_network_type
+    example: ipv4
+  - model_name: username
+    tf_name: profile_username
+    example: MyUsername
+  - model_name: password
+    tf_name: profile_password
+    example: MyPassword
+  - model_name: no-overwrite
+    example: true
