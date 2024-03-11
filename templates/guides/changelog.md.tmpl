@@ -15,6 +15,7 @@ description: |-
 - Add `sdwan_cedge_igmp_feature_template` resource and data source
 - Add `sdwan_cedge_multicast_feature_template` resource and data source
 - Add `sdwan_cisco_wireless_lan_feature_template` resource and data source
+- Add `sdwan_gps_feature_template` resource and data source
 
 ## 0.3.6
 

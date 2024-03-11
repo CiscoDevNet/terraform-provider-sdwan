@@ -1,0 +1,17 @@
+name: gps
+model: cellular-cedge-gps-controller
+minimum_version: 15.0.0
+attributes:
+  - model_name: enable
+    example: true
+  - model_name: mode
+    tf_name: gps_mode
+    example: ms-based
+  - model_name: nmea
+    example: true
+  - model_name: source-address
+    example: 1.2.3.4
+  - model_name: destination-address
+    example: 2.3.4.5
+  - model_name: destination-port
+    example: 1234
