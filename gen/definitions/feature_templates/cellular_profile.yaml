@@ -1,5 +1,6 @@
 ---
 name: Cellular Profile
+model: cellular-profile
 minimum_version: 20.9.0
 attributes:
   - model_name: id

@@ -53,7 +53,7 @@ type CellularProfile struct {
 }
 
 func (data CellularProfile) getModel() string {
-	return "cellular_profile"
+	return "cellular-profile"
 }
 
 func (data CellularProfile) toBody(ctx context.Context) string {
@@ -66,7 +66,7 @@ func (data CellularProfile) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "templateDescription", data.Description.ValueString())
 	body, _ = sjson.Set(body, "templateMinVersion", "15.0.0")
 	body, _ = sjson.Set(body, "templateName", data.Name.ValueString())
-	body, _ = sjson.Set(body, "templateType", "cellular_profile")
+	body, _ = sjson.Set(body, "templateType", "cellular-profile")
 	body, _ = sjson.Set(body, "templateDefinition", map[string]interface{}{})
 
 	path := "templateDefinition."
