@@ -1,3 +1,7 @@
+## 0.3.7 (unreleased)
+
+- Add `sdwan_cisco_trustsec_feature_template` resource and data source
+
 ## 0.3.6
 
 - Fix issue with address family configuration of `sdwan_cisco_bgp_feature_template` resource
