@@ -1,0 +1,69 @@
+---
+name: cEdge PIM
+minimum_version: 15.0.0
+attributes:
+  - model_name: auto-rp
+    example: true
+  - model_name: send-rp-announce-list
+    tf_name: rp_announce_fields
+    attributes:
+    - model_name: if-name
+      tf_name: interface_name
+      example: example
+    - model_name: scope
+      example: 1
+  - model_name: if-name
+    tf_name: interface_name
+    example: example
+  - model_name: rp-candidate
+    tf_name: rp_candidates
+    attributes:
+    - model_name: pim-interface-name
+      tf_name: interface
+      example: example-interface
+    - model_name: group-list
+      tf_name: access_list
+      example: 1
+    - model_name: interval
+      example: 100
+    - model_name: priority
+      example: 2
+  - model_name: bsr-interface-name
+    tf_name: bsr_candidate
+    example: example-interface
+  - model_name: mask
+    tf_name: hask_mask_length
+    example: 100
+  - model_name: priority
+    example: 1
+  - model_name: accept-rp-candidate
+    tf_name: rp_candidate_access_list
+    example: 120
+  - model_name: scope
+    example: 1
+  - model_name: range
+    example: 16
+  - model_name: default
+    example: true
+  - model_name: rp-addr
+    tf_name: rp_addresses
+    attributes:
+    - model_name: address
+      tf_name: ip_address
+      example: 1.2.3.4
+    - model_name: access-list
+      example: 99
+    - model_name: override
+      example: false
+  - model_name: spt-threshold
+    example: 0
+  - model_name: interface
+    tf_name: interfaces
+    attributes:
+    - model_name: name
+      tf_name: interface_name
+      example: example-interface
+    - model_name: query-interval
+      example: 30
+    - model_name: join-prune-interval
+      example: 60
