@@ -10,6 +10,7 @@
 - Add `sdwan_eigrp_feature_template` resource and data source
 - Add `sdwan_cedge_pim_feature_template` resource and data source
 - Add `sdwan_cisco_ospfv3_feature_template` resource and data source
+- Add `sdwan_security_app_hosting_feature_template` resource and data source
 
 ## 0.3.6
 
