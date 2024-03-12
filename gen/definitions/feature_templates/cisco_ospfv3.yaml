@@ -1,0 +1,317 @@
+---
+name: Cisco OSPFv3
+minimum_version: 15.0.0
+attributes:
+  - model_name: router-id
+    tf_name: router_id_ipv4
+    data_path: [ospfv3, address-family, ipv4]
+    example: 1.2.3.4
+  - model_name: reference-bandwidth
+    tf_name: auto_cost_reference_bandwidth_ipv4
+    data_path: [ospfv3, address-family, ipv4, auto-cost]
+    example: 100000
+  - model_name: rfc1583
+    tf_name: compatible_rfc1583_ipv4
+    data_path: [ospfv3, address-family, ipv4, compatible]
+    example: true
+  - model_name: originate
+    tf_name: default_information_originate_ipv4
+    data_path: [ospfv3, address-family, ipv4, default-information]
+    node_only_container: true
+    example: true
+  - model_name: always
+    tf_name: default_information_originate_always_ipv4
+    data_path: [ospfv3, address-family, ipv4, default-information, originate]
+    exclude_ignore: true
+    example: true
+  - model_name: metric
+    tf_name: default_information_originate_metric_ipv4
+    data_path: [ospfv3, address-family, ipv4, default-information, originate]
+    exclude_ignore: true
+    example: 100
+  - model_name: metric-type
+    tf_name: default_information_originate_metric_type_ipv4
+    data_path: [ospfv3, address-family, ipv4, default-information, originate]
+    exclude_ignore: true
+    example: type1
+  - model_name: external
+    tf_name: distance_external_ipv4
+    data_path: [ospfv3, address-family, ipv4, distance-ipv4, ospf]
+    example: 111
+  - model_name: inter-area
+    tf_name: distance_inter_area_ipv4
+    data_path: [ospfv3, address-family, ipv4, distance-ipv4, ospf]
+    example: 111
+  - model_name: intra-area
+    tf_name: distance_intra_area_ipv4
+    data_path: [ospfv3, address-family, ipv4, distance-ipv4, ospf]
+    example: 112
+  - model_name: delay
+    tf_name: timers_spf_delay_ipv4
+    data_path: [ospfv3, address-family, ipv4, timers, throttle, spf]
+    example: 300
+  - model_name: initial-hold
+    tf_name: timers_spf_initial_hold_ipv4
+    data_path: [ospfv3, address-family, ipv4, timers, throttle, spf]
+    example: 2000
+  - model_name: max-hold
+    tf_name: timers_spf_max_hold_ipv4
+    data_path: [ospfv3, address-family, ipv4, timers, throttle, spf]
+    example: 20000
+  - model_name: distance
+    tf_name: distance_ipv4
+    data_path: [ospfv3, address-family, ipv4, distance-ipv4]
+    example: 110
+  - model_name: name
+    tf_name: policy_name_ipv4
+    data_path: [ospfv3, address-family, ipv4, table-map]
+    example: example
+  - model_name: filter
+    tf_name: filter_ipv4
+    data_path: [ospfv3, address-family, ipv4, table-map]
+    example: false
+  - model_name: redistribute
+    tf_name: redistribute_ipv4
+    data_path: [ospfv3, address-family, ipv4]
+    attributes:
+      - model_name: protocol
+        example: static
+      - model_name: route-policy
+        example: RP1
+      - model_name: dia
+        tf_name: nat_dia
+        example: true
+  - model_name: router-lsa
+    tf_name: max_metric_router_lsa_ipv4
+    data_path: [ospfv3, address-family, ipv4, max-metric]
+    attributes:
+      - model_name: ad-type
+        example: on-startup
+      - model_name: time
+        example: 100
+  - model_name: area
+    tf_name: areas_ipv4
+    data_path: [ospfv3, address-family, ipv4]
+    attributes:
+      - model_name: a-num
+        tf_name: area_number
+        example: 1
+      - model_name: stub
+        tf_name: stub
+        type: Bool
+        no_augment_config: true
+        node_only_container: true
+        exclude_ignore: true
+        description: Stub area
+        example: false
+      - model_name: no-summary
+        data_path: [stub]
+        tf_name: stub_no_summary
+        exclude_ignore: true
+        example: false
+      - model_name: nssa
+        tf_name: nssa
+        type: Bool
+        no_augment_config: true
+        node_only_container: true
+        exclude_ignore: true
+        description: NSSA area
+        example: false
+      - model_name: no-summary
+        data_path: [nssa]
+        tf_name: nssa_no_summary
+        exclude_ignore: true
+        example: true
+      - model_name: translate
+        example: always
+      - model_name: normal
+        example: false
+      - model_name: interface
+        tf_name: interfaces
+        attributes:
+          - model_name: name
+            example: e1
+          - model_name: hello-interval
+            example: 20
+          - model_name: dead-interval
+            example: 60
+          - model_name: retransmit-interval
+            example: 10
+          - model_name: cost
+            example: 100
+          - model_name: network
+            example: point-to-point
+          - model_name: passive-interface
+            example: true
+          - model_name: type
+            tf_name: authentication_type
+            example: message-digest
+          - model_name: authentication-key
+            example: authenticationKey
+          - model_name: spi
+            tf_name: ipsec_spi
+            example: 256
+      - model_name: range
+        tf_name: ranges
+        attributes:
+          - model_name: address
+            example: 1.1.1.0/24
+          - model_name: cost
+            example: 100
+          - model_name: no-advertise
+            example: true
+  - model_name: router-id
+    tf_name: router_id_ipv6
+    data_path: [ospfv3, address-family, ipv6]
+    example: 1.2.3.4
+  - model_name: reference-bandwidth
+    tf_name: auto_cost_reference_bandwidth_ipv6
+    data_path: [ospfv3, address-family, ipv6, auto-cost]
+    example: 100000
+  - model_name: rfc1583
+    tf_name: compatible_rfc1583_ipv6
+    data_path: [ospfv3, address-family, ipv6, compatible]
+    example: true
+  - model_name: originate
+    tf_name: default_information_originate_ipv6
+    data_path: [ospfv3, address-family, ipv6, default-information]
+    node_only_container: true
+    example: true
+  - model_name: always
+    tf_name: default_information_originate_always_ipv6
+    data_path: [ospfv3, address-family, ipv6, default-information, originate]
+    exclude_ignore: true
+    example: true
+  - model_name: metric
+    tf_name: default_information_originate_metric_ipv6
+    data_path: [ospfv3, address-family, ipv6, default-information, originate]
+    exclude_ignore: true
+    example: 100
+  - model_name: metric-type
+    tf_name: default_information_originate_metric_type_ipv6
+    data_path: [ospfv3, address-family, ipv6, default-information, originate]
+    exclude_ignore: true
+    example: type1
+  - model_name: external
+    tf_name: distance_external_ipv6
+    data_path: [ospfv3, address-family, ipv6, distance-ipv6, ospf]
+    example: 111
+  - model_name: inter-area
+    tf_name: distance_inter_area_ipv6
+    data_path: [ospfv3, address-family, ipv6, distance-ipv6, ospf]
+    example: 111
+  - model_name: intra-area
+    tf_name: distance_intra_area_ipv6
+    data_path: [ospfv3, address-family, ipv6, distance-ipv6, ospf]
+    example: 112
+  - model_name: delay
+    tf_name: timers_spf_delay_ipv6
+    data_path: [ospfv3, address-family, ipv6, timers, throttle, spf]
+    example: 300
+  - model_name: initial-hold
+    tf_name: timers_spf_initial_hold_ipv6
+    data_path: [ospfv3, address-family, ipv6, timers, throttle, spf]
+    example: 2000
+  - model_name: max-hold
+    tf_name: timers_spf_max_hold_ipv6
+    data_path: [ospfv3, address-family, ipv6, timers, throttle, spf]
+    example: 20000
+  - model_name: distance
+    tf_name: distance_ipv6
+    data_path: [ospfv3, address-family, ipv6, distance-ipv6]
+    example: 110
+  - model_name: name
+    tf_name: policy_name_ipv6
+    data_path: [ospfv3, address-family, ipv6, table-map]
+    example: example
+  - model_name: filter
+    tf_name: filter_ipv6 
+    data_path: [ospfv3, address-family, ipv6, table-map]
+    example: false
+  - model_name: redistribute
+    tf_name: redistribute_ipv6
+    data_path: [ospfv3, address-family, ipv6]
+    attributes:
+      - model_name: protocol
+        example: static
+      - model_name: route-policy
+        example: RP1
+  - model_name: router-lsa
+    tf_name: max_metric_router_lsa_ipv6
+    data_path: [ospfv3, address-family, ipv6, max-metric]
+    attributes:
+      - model_name: ad-type
+        example: on-startup
+      - model_name: time
+        example: 100
+  - model_name: area
+    tf_name: areas_ipv6
+    data_path: [ospfv3, address-family, ipv6]
+    attributes:
+      - model_name: a-num
+        tf_name: area_number
+        example: 1
+      - model_name: stub
+        tf_name: stub
+        type: Bool
+        no_augment_config: true
+        node_only_container: true
+        exclude_ignore: true
+        description: Stub area
+        example: false
+      - model_name: no-summary
+        data_path: [stub]
+        tf_name: stub_no_summary
+        exclude_ignore: true
+        example: false
+      - model_name: nssa
+        tf_name: nssa
+        type: Bool
+        no_augment_config: true
+        node_only_container: true
+        exclude_ignore: true
+        description: NSSA area
+        example: false
+      - model_name: no-summary
+        data_path: [nssa]
+        tf_name: nssa_no_summary
+        exclude_ignore: true
+        example: true
+      - model_name: translate
+        example: always
+      - model_name: normal
+        example: false
+      - model_name: interface
+        tf_name: interfaces
+        attributes:
+          - model_name: name
+            example: e1
+          - model_name: hello-interval
+            example: 20
+          - model_name: dead-interval
+            example: 60
+          - model_name: retransmit-interval
+            example: 10
+          - model_name: cost
+            example: 100
+          - model_name: network
+            example: point-to-point
+          - model_name: passive-interface
+            example: true
+          - model_name: type
+            tf_name: authentication_type
+            example: message-digest
+          - model_name: authentication-key
+            example: authenticationKey
+          - model_name: spi
+            tf_name: ipsec_spi
+            example: 256
+      - model_name: range
+        tf_name: ranges
+        attributes:
+          - model_name: address
+            example: 1.1.1.0/24
+          - model_name: cost
+            example: 100
+          - model_name: no-advertise
+            example: true
