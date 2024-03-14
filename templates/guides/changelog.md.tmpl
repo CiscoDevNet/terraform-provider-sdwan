@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.3.7
+
+- Add `sdwan_vpn_interface_dsl_pppoa_feature_template` resource and data source
+
 ## 0.3.6
 
 - Fix issue with address family configuration of `sdwan_cisco_bgp_feature_template` resource
