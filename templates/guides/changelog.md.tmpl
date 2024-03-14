@@ -10,6 +10,7 @@ description: |-
 ## 0.3.7
 
 - Add `sdwan_vpn_interface_dsl_pppoa_feature_template` resource and data source
+- Add `sdwan_vpn_interface_dsl_pppoe_feature_template` resource and data source
 
 ## 0.3.6
 
