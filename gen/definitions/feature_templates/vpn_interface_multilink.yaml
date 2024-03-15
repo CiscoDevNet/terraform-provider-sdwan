@@ -1,0 +1,253 @@
+name: VPN Interface Multilink
+model: vpn-cedge-interface-multilink-controller
+minimum_version: 15.0.0
+attributes:
+  - model_name: if-name
+    tf_name: interface_name
+    example: Example
+  - model_name: group
+    data_path: [ppp, multilink]
+    tf_name: multilink_group_number
+    example: 2147483
+  - model_name: description
+    tf_name: interface_description
+    example: My Description
+  - model_name: address
+    data_path: [ip]
+    tf_name: ipv4_address
+    example: 1.2.3.4
+  - model_name: address
+    data_path: [ipv6]
+    tf_name: ipv6_address
+    example: 2001:0:0:1::/64
+  - model_name: access-list
+    tf_name: ipv6_access_lists
+    attributes:
+    - model_name: direction
+      example: in
+    - model_name: acl-name
+      example: Egress ACL - IPv4
+  - model_name: method
+    tf_name: ppp_authentication_protocol
+    example: chap
+  - model_name: pap
+    tf_name: ppp_authentication_protocol_pap
+    example: false
+  - model_name: callin
+    tf_name: authentication_type
+    example: callin
+  - model_name: hostname
+    tf_name: chap_hostname
+    example: chap-example
+  - model_name: ppp-auth-password
+    tf_name: chap_ppp_auth_password
+    data_path: [ppp, chap, password]
+    example: myPassword
+  - model_name: username-string
+    tf_name: pap_username
+    example: pap-username
+  - model_name: password
+    tf_name: pap_password
+    example: true
+  - model_name: ppp-auth-password
+    tf_name: pap_ppp_auth_password
+    data_path: [ppp, pap, sent-username, username]
+    example: myPassword
+  - model_name: enable-core-region
+    example: true
+  - model_name: core-region
+    example: core
+  - model_name: secondary-region
+    example: off
+  - model_name: encapsulation
+    attributes:
+    - model_name: encap
+      tf_name: encapsulation_type
+      example: gre
+    - model_name: preference
+      example: 4294967
+    - model_name: weight
+      example: 250
+  - model_name: group
+    data_path: [tunnel-interface]
+    tf_name: groups
+    example: 42949672
+  - model_name: border
+    example: true
+  - model_name: per-tunnel-qos
+    example: true
+  - model_name: per-tunnel-qos-aggregator
+    example: false
+  - model_name: value
+    tf_name: color
+    example: custom1
+  - model_name: last-resort-circuit
+    example: false
+  - model_name: low-bandwidth-link
+    example: false
+  - model_name: tunnel-tcp-mss-adjust
+    tf_name: tunnel_tcp_mss
+    example: 1460
+  - model_name: clear-dont-fragment
+    tf_name: enable_clear_dont_fragment
+    example: false
+  - model_name: network-broadcast
+    tf_name: network_broadcast_1
+    data_path: [tunnel-interface]
+    example: false
+  - model_name: max-control-connections
+    example: 8
+  - model_name: control-connections
+    example: true
+  - model_name: vbond-as-stun-server
+    example: false
+  - model_name: exclude-controller-group-list
+    example: 100
+  - model_name: vmanage-connection-preference
+    example: 5
+  - model_name: port-hop
+    example: false
+  - model_name: restrict
+    example: false
+  - model_name: carrier
+    example: carrier1
+  - model_name: nat-refresh-interval
+    example: 15
+  - model_name: hello-interval
+    example: 1000
+  - model_name: hello-tolerance
+    example: 12
+  - model_name: bind
+    tf_name: bind_loopback_tunnel
+    example: 12
+  - model_name: all
+    example: false
+  - model_name: network-broadcast
+    tf_name: network_broadcast_2
+    data_path: [tunnel-interface]
+    example: false
+  - model_name: bgp
+    example: false
+  - model_name: dhcp
+    example: true
+  - model_name: dns
+    example: true
+  - model_name: icmp
+    example: true
+  - model_name: sshd
+    tf_name: ssh
+    example: false
+  - model_name: netconf
+    example: false
+  - model_name: ospf
+    example: false
+  - model_name: stun
+    example: false
+  - model_name: snmp
+    example: false
+  - model_name: https
+    example: true
+  - model_name: disable
+    tf_name: disable_fragmentation
+    example: true
+  - model_name: delay-value
+    tf_name: fragment_max_delay
+    example: 1
+  - model_name: interleave
+    tf_name: interleaving_fragment
+    example: false
+  - model_name: clear-dont-fragment
+    tf_name: clear_dont_fragment_bit
+    example: false
+  - model_name: pmtu
+    tf_name: pmtu_discovery
+    example: false
+  - model_name: mtu
+    tf_name: ip_mtu
+    example: 1500
+  - model_name: static-ingress-qos
+    example: 6
+  - model_name: tcp-mss-adjust
+    tf_name: tcp_mss
+    example: 720
+  - model_name: ip-directed-broadcast
+    example: true
+  - model_name: tloc-extension
+    example: tloc
+  - model_name: shutdown
+    tf_name: administrative_shutdown
+    example: true
+  - model_name: autonegotiate
+    tf_name: link_autonegotiate
+    example: true
+  - model_name: shaping-rate
+    example: 10000000
+  - model_name: qos-map
+    example: test
+  - model_name: qos-map-vpn
+    tf_name: vpn_qos_map
+    example: test
+  - model_name: bandwidth-upstream
+    example: 214748300
+  - model_name: bandwidth-downstream
+    example: 214748300
+  - model_name: rule-name
+    tf_name: write_rule
+    example: test_rule
+  - model_name: access-list
+    attributes:
+    - model_name: direction
+      example: in
+    - model_name: acl-name
+      example: Egress ACL - IPv4
+  - model_name: controller-tx-ex-list
+    attributes:
+    - model_name: name
+      tf_name: card_type
+      example: E1
+    - model_name: number
+      tf_name: slot
+      example: interface-t1
+    - model_name: framing
+      example: example-framing
+    - model_name: line-mode
+      example: primary
+    - model_name: internal
+      example: false
+    - model_name: description
+      example: example-interface
+    - model_name: linecode
+      example: ami
+    - model_name: long
+      tf_name: set_length_for_long
+      example: 100
+    - model_name: short
+      tf_name: set_length_for_short
+      example: 100
+    - model_name: channel-group
+      tf_name: channel_group_list
+      attributes:
+        - model_name: number
+          tf_name: channel_group
+          example: 30
+        - model_name: timeslots
+          example: example
+  - model_name: nim-list
+    data_path: [controller]
+    tf_name: nim_interface_list
+    attributes:
+    - model_name: nim
+      tf_name: nim_serial_interface_type
+      example: 2t
+    - model_name: if-name
+      tf_name: interface_name
+      example: nim-interface
+    - model_name: description
+      tf_name: interface_description
+      example: interface description
+    - model_name: bandwidth
+      example: 21474836
+    - model_name: clock-rate
+      example: 120000
+    - model_name: encapsulation-serial
+      example: hdlc
