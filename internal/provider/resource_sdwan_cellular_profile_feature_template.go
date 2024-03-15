@@ -59,7 +59,7 @@ func (r *CellularProfileFeatureTemplateResource) Metadata(ctx context.Context, r
 func (r *CellularProfileFeatureTemplateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Cellular Profile feature template.").AddMinimumVersionDescription("20.9.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Cellular Profile feature template.").AddMinimumVersionDescription("15.0.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -93,6 +93,17 @@ func (r *CellularProfileFeatureTemplateResource) Schema(ctx context.Context, req
 				ElementType:         types.StringType,
 				Required:            true,
 			},
+			"if_name": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set interface name").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+				},
+			},
+			"if_name_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
 			"profile_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set Profile ID").AddIntegerRangeDescription(1, 16).String,
 				Optional:            true,
@@ -107,27 +118,49 @@ func (r *CellularProfileFeatureTemplateResource) Schema(ctx context.Context, req
 			"access_point_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set access point name").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+				},
 			},
 			"access_point_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"authentication": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set authentication type").AddStringEnumDescription("none", "pap", "chap", "pap_chap").AddDefaultValueDescription("none").String,
+			"authentication_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set authentication type").AddStringEnumDescription("None", "PAP", "CHAP", "PAP/CHAP").AddDefaultValueDescription("None").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("none", "pap", "chap", "pap_chap"),
+					stringvalidator.OneOf("None", "PAP", "CHAP", "PAP/CHAP"),
 				},
 			},
-			"authentication_variable": schema.StringAttribute{
+			"authentication_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ip_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set IP address").String,
+				Optional:            true,
+			},
+			"ip_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"profile_name": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set profile name").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 14),
+				},
+			},
+			"profile_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
 			"packet_data_network_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set packet data network type").AddStringEnumDescription("ipv4", "ipv4v6", "ipv6").AddDefaultValueDescription("ipv4").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set packet data network type").AddStringEnumDescription("ipv4", "ipv6", "ipv46").String,
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("ipv4", "ipv4v6", "ipv6"),
+					stringvalidator.OneOf("ipv4", "ipv6", "ipv46"),
 				},
 			},
 			"packet_data_network_type_variable": schema.StringAttribute{
@@ -137,6 +170,9 @@ func (r *CellularProfileFeatureTemplateResource) Schema(ctx context.Context, req
 			"profile_username": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the profile username").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 129),
+				},
 			},
 			"profile_username_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -150,11 +186,19 @@ func (r *CellularProfileFeatureTemplateResource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"no_overwrite": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("No Overwrite").String,
+			"primary_dns_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the address of the primary DNS server").String,
 				Optional:            true,
 			},
-			"no_overwrite_variable": schema.StringAttribute{
+			"primary_dns_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"secondary_dns_address": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the address of the secondary DNS server").String,
+				Optional:            true,
+			},
+			"secondary_dns_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

@@ -86,6 +86,14 @@ func (d *CellularProfileFeatureTemplateDataSource) Schema(ctx context.Context, r
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
+			"if_name": schema.StringAttribute{
+				MarkdownDescription: "Set interface name",
+				Computed:            true,
+			},
+			"if_name_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"profile_id": schema.Int64Attribute{
 				MarkdownDescription: "Set Profile ID",
 				Computed:            true,
@@ -102,11 +110,27 @@ func (d *CellularProfileFeatureTemplateDataSource) Schema(ctx context.Context, r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"authentication": schema.StringAttribute{
+			"authentication_type": schema.StringAttribute{
 				MarkdownDescription: "Set authentication type",
 				Computed:            true,
 			},
-			"authentication_variable": schema.StringAttribute{
+			"authentication_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ip_address": schema.StringAttribute{
+				MarkdownDescription: "Set IP address",
+				Computed:            true,
+			},
+			"ip_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"profile_name": schema.StringAttribute{
+				MarkdownDescription: "Set profile name",
+				Computed:            true,
+			},
+			"profile_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -134,11 +158,19 @@ func (d *CellularProfileFeatureTemplateDataSource) Schema(ctx context.Context, r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"no_overwrite": schema.BoolAttribute{
-				MarkdownDescription: "No Overwrite",
+			"primary_dns_address": schema.StringAttribute{
+				MarkdownDescription: "Set the address of the primary DNS server",
 				Computed:            true,
 			},
-			"no_overwrite_variable": schema.StringAttribute{
+			"primary_dns_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"secondary_dns_address": schema.StringAttribute{
+				MarkdownDescription: "Set the address of the secondary DNS server",
+				Computed:            true,
+			},
+			"secondary_dns_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

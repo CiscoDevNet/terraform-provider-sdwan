@@ -4,13 +4,13 @@ page_title: "sdwan_cellular_profile_feature_template Resource - terraform-provid
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cellular Profile feature template.
-    - Minimum SD-WAN Manager version: 20.9.0
+    - Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cellular_profile_feature_template (Resource)
 
 This resource can manage a Cellular Profile feature template.
-  - Minimum SD-WAN Manager version: `20.9.0`
+  - Minimum SD-WAN Manager version: `15.0.0`
 
 ## Example Usage
 
@@ -19,13 +19,17 @@ resource "sdwan_cellular_profile_feature_template" "example" {
   name                     = "Example"
   description              = "My Example"
   device_types             = ["vedge-C8000V"]
+  if_name                  = "example"
   profile_id               = 1
   access_point_name        = "example"
-  authentication           = "chap"
+  authentication_type      = "CHAP"
+  ip_address               = "1.2.3.4"
+  profile_name             = "example"
   packet_data_network_type = "ipv4"
   profile_username         = "MyUsername"
   profile_password         = "MyPassword"
-  no_overwrite             = true
+  primary_dns_address      = "1.2.3.4"
+  secondary_dns_address    = "1.2.3.4"
 }
 ```
 
@@ -43,23 +47,30 @@ resource "sdwan_cellular_profile_feature_template" "example" {
 
 - `access_point_name` (String) Set access point name
 - `access_point_name_variable` (String) Variable name
-- `authentication` (String) Set authentication type
-  - Choices: `none`, `pap`, `chap`, `pap_chap`
-  - Default value: `none`
-- `authentication_variable` (String) Variable name
-- `no_overwrite` (Boolean) No Overwrite
-- `no_overwrite_variable` (String) Variable name
+- `authentication_type` (String) Set authentication type
+  - Choices: `None`, `PAP`, `CHAP`, `PAP/CHAP`
+  - Default value: `None`
+- `authentication_type_variable` (String) Variable name
+- `if_name` (String) Set interface name
+- `if_name_variable` (String) Variable name
+- `ip_address` (String) Set IP address
+- `ip_address_variable` (String) Variable name
 - `packet_data_network_type` (String) Set packet data network type
-  - Choices: `ipv4`, `ipv4v6`, `ipv6`
-  - Default value: `ipv4`
+  - Choices: `ipv4`, `ipv6`, `ipv46`
 - `packet_data_network_type_variable` (String) Variable name
+- `primary_dns_address` (String) Set the address of the primary DNS server
+- `primary_dns_address_variable` (String) Variable name
 - `profile_id` (Number) Set Profile ID
   - Range: `1`-`16`
 - `profile_id_variable` (String) Variable name
+- `profile_name` (String) Set profile name
+- `profile_name_variable` (String) Variable name
 - `profile_password` (String) Set the profile password
 - `profile_password_variable` (String) Variable name
 - `profile_username` (String) Set the profile username
 - `profile_username_variable` (String) Variable name
+- `secondary_dns_address` (String) Set the address of the secondary DNS server
+- `secondary_dns_address_variable` (String) Variable name
 
 ### Read-Only
 

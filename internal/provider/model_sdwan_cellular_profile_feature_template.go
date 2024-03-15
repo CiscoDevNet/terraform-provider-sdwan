@@ -21,7 +21,6 @@ package provider
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -36,20 +35,28 @@ type CellularProfile struct {
 	Name                          types.String `tfsdk:"name"`
 	Description                   types.String `tfsdk:"description"`
 	DeviceTypes                   types.Set    `tfsdk:"device_types"`
+	IfName                        types.String `tfsdk:"if_name"`
+	IfNameVariable                types.String `tfsdk:"if_name_variable"`
 	ProfileId                     types.Int64  `tfsdk:"profile_id"`
 	ProfileIdVariable             types.String `tfsdk:"profile_id_variable"`
 	AccessPointName               types.String `tfsdk:"access_point_name"`
 	AccessPointNameVariable       types.String `tfsdk:"access_point_name_variable"`
-	Authentication                types.String `tfsdk:"authentication"`
-	AuthenticationVariable        types.String `tfsdk:"authentication_variable"`
+	AuthenticationType            types.String `tfsdk:"authentication_type"`
+	AuthenticationTypeVariable    types.String `tfsdk:"authentication_type_variable"`
+	IpAddress                     types.String `tfsdk:"ip_address"`
+	IpAddressVariable             types.String `tfsdk:"ip_address_variable"`
+	ProfileName                   types.String `tfsdk:"profile_name"`
+	ProfileNameVariable           types.String `tfsdk:"profile_name_variable"`
 	PacketDataNetworkType         types.String `tfsdk:"packet_data_network_type"`
 	PacketDataNetworkTypeVariable types.String `tfsdk:"packet_data_network_type_variable"`
 	ProfileUsername               types.String `tfsdk:"profile_username"`
 	ProfileUsernameVariable       types.String `tfsdk:"profile_username_variable"`
 	ProfilePassword               types.String `tfsdk:"profile_password"`
 	ProfilePasswordVariable       types.String `tfsdk:"profile_password_variable"`
-	NoOverwrite                   types.Bool   `tfsdk:"no_overwrite"`
-	NoOverwriteVariable           types.String `tfsdk:"no_overwrite_variable"`
+	PrimaryDnsAddress             types.String `tfsdk:"primary_dns_address"`
+	PrimaryDnsAddressVariable     types.String `tfsdk:"primary_dns_address_variable"`
+	SecondaryDnsAddress           types.String `tfsdk:"secondary_dns_address"`
+	SecondaryDnsAddressVariable   types.String `tfsdk:"secondary_dns_address_variable"`
 }
 
 func (data CellularProfile) getModel() string {
@@ -71,87 +78,144 @@ func (data CellularProfile) toBody(ctx context.Context) string {
 
 	path := "templateDefinition."
 
-	if !data.ProfileIdVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"id."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"id."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"id."+"vipVariableName", data.ProfileIdVariable.ValueString())
-	} else if data.ProfileId.IsNull() {
+	if !data.IfNameVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"if-name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"if-name."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"if-name."+"vipVariableName", data.IfNameVariable.ValueString())
+	} else if data.IfName.IsNull() {
 	} else {
-		body, _ = sjson.Set(body, path+"id."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"id."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"id."+"vipValue", data.ProfileId.ValueInt64())
+		body, _ = sjson.Set(body, path+"if-name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"if-name."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"if-name."+"vipValue", data.IfName.ValueString())
+	}
+
+	if !data.ProfileIdVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipVariableName", data.ProfileIdVariable.ValueString())
+	} else if data.ProfileId.IsNull() {
+		body, _ = sjson.Set(body, path+"profile", map[string]interface{}{})
+	} else {
+		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipValue", data.ProfileId.ValueInt64())
 	}
 
 	if !data.AccessPointNameVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"apn."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"apn."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"apn."+"vipVariableName", data.AccessPointNameVariable.ValueString())
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipVariableName", data.AccessPointNameVariable.ValueString())
 	} else if data.AccessPointName.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipType", "ignore")
 	} else {
-		body, _ = sjson.Set(body, path+"apn."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"apn."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"apn."+"vipValue", data.AccessPointName.ValueString())
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.apn."+"vipValue", data.AccessPointName.ValueString())
 	}
 
-	if !data.AuthenticationVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"authentication."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"authentication."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"authentication."+"vipVariableName", data.AuthenticationVariable.ValueString())
-	} else if data.Authentication.IsNull() {
-		body, _ = sjson.Set(body, path+"authentication."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"authentication."+"vipType", "ignore")
+	if !data.AuthenticationTypeVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipVariableName", data.AuthenticationTypeVariable.ValueString())
+	} else if data.AuthenticationType.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipType", "ignore")
 	} else {
-		body, _ = sjson.Set(body, path+"authentication."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"authentication."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"authentication."+"vipValue", data.Authentication.ValueString())
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.auth."+"vipValue", data.AuthenticationType.ValueString())
+	}
+
+	if !data.IpAddressVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipVariableName", data.IpAddressVariable.ValueString())
+	} else if data.IpAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipType", "ignore")
+	} else {
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.ip-addr."+"vipValue", data.IpAddress.ValueString())
+	}
+
+	if !data.ProfileNameVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.name."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.name."+"vipVariableName", data.ProfileNameVariable.ValueString())
+	} else if data.ProfileName.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.name."+"vipType", "ignore")
+	} else {
+		body, _ = sjson.Set(body, path+"profile.name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.name."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.name."+"vipValue", data.ProfileName.ValueString())
 	}
 
 	if !data.PacketDataNetworkTypeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipVariableName", data.PacketDataNetworkTypeVariable.ValueString())
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipVariableName", data.PacketDataNetworkTypeVariable.ValueString())
 	} else if data.PacketDataNetworkType.IsNull() {
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipType", "ignore")
 	} else {
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"pdn-type."+"vipValue", data.PacketDataNetworkType.ValueString())
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.pdn-type."+"vipValue", data.PacketDataNetworkType.ValueString())
 	}
 
 	if !data.ProfileUsernameVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"username."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"username."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"username."+"vipVariableName", data.ProfileUsernameVariable.ValueString())
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipVariableName", data.ProfileUsernameVariable.ValueString())
 	} else if data.ProfileUsername.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipType", "ignore")
 	} else {
-		body, _ = sjson.Set(body, path+"username."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"username."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"username."+"vipValue", data.ProfileUsername.ValueString())
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.user-name."+"vipValue", data.ProfileUsername.ValueString())
 	}
 
 	if !data.ProfilePasswordVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"password."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"password."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"password."+"vipVariableName", data.ProfilePasswordVariable.ValueString())
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipVariableName", data.ProfilePasswordVariable.ValueString())
 	} else if data.ProfilePassword.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipType", "ignore")
 	} else {
-		body, _ = sjson.Set(body, path+"password."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"password."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"password."+"vipValue", data.ProfilePassword.ValueString())
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.user-pass."+"vipValue", data.ProfilePassword.ValueString())
 	}
 
-	if !data.NoOverwriteVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipVariableName", data.NoOverwriteVariable.ValueString())
-	} else if data.NoOverwrite.IsNull() {
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipType", "ignore")
+	if !data.PrimaryDnsAddressVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipVariableName", data.PrimaryDnsAddressVariable.ValueString())
+	} else if data.PrimaryDnsAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipType", "ignore")
 	} else {
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"no-overwrite."+"vipValue", strconv.FormatBool(data.NoOverwrite.ValueBool()))
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.primary-dns."+"vipValue", data.PrimaryDnsAddress.ValueString())
+	}
+
+	if !data.SecondaryDnsAddressVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipVariableName", data.SecondaryDnsAddressVariable.ValueString())
+	} else if data.SecondaryDnsAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipType", "ignore")
+	} else {
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"profile.secondary-dns."+"vipValue", data.SecondaryDnsAddress.ValueString())
 	}
 	return body
 }
@@ -179,18 +243,37 @@ func (data *CellularProfile) fromBody(ctx context.Context, res gjson.Result) {
 	}
 
 	path := "templateDefinition."
-	if value := res.Get(path + "id.vipType"); value.Exists() {
+	if value := res.Get(path + "if-name.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.IfName = types.StringNull()
+
+			v := res.Get(path + "if-name.vipVariableName")
+			data.IfNameVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.IfName = types.StringNull()
+			data.IfNameVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "if-name.vipValue")
+			data.IfName = types.StringValue(v.String())
+			data.IfNameVariable = types.StringNull()
+		}
+	} else {
+		data.IfName = types.StringNull()
+		data.IfNameVariable = types.StringNull()
+	}
+	if value := res.Get(path + "profile.profile-id.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.ProfileId = types.Int64Null()
 
-			v := res.Get(path + "id.vipVariableName")
+			v := res.Get(path + "profile.profile-id.vipVariableName")
 			data.ProfileIdVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
 			data.ProfileId = types.Int64Null()
 			data.ProfileIdVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "id.vipValue")
+			v := res.Get(path + "profile.profile-id.vipValue")
 			data.ProfileId = types.Int64Value(v.Int())
 			data.ProfileIdVariable = types.StringNull()
 		}
@@ -198,18 +281,18 @@ func (data *CellularProfile) fromBody(ctx context.Context, res gjson.Result) {
 		data.ProfileId = types.Int64Null()
 		data.ProfileIdVariable = types.StringNull()
 	}
-	if value := res.Get(path + "apn.vipType"); value.Exists() {
+	if value := res.Get(path + "profile.apn.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.AccessPointName = types.StringNull()
 
-			v := res.Get(path + "apn.vipVariableName")
+			v := res.Get(path + "profile.apn.vipVariableName")
 			data.AccessPointNameVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
 			data.AccessPointName = types.StringNull()
 			data.AccessPointNameVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "apn.vipValue")
+			v := res.Get(path + "profile.apn.vipValue")
 			data.AccessPointName = types.StringValue(v.String())
 			data.AccessPointNameVariable = types.StringNull()
 		}
@@ -217,37 +300,75 @@ func (data *CellularProfile) fromBody(ctx context.Context, res gjson.Result) {
 		data.AccessPointName = types.StringNull()
 		data.AccessPointNameVariable = types.StringNull()
 	}
-	if value := res.Get(path + "authentication.vipType"); value.Exists() {
+	if value := res.Get(path + "profile.auth.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Authentication = types.StringNull()
+			data.AuthenticationType = types.StringNull()
 
-			v := res.Get(path + "authentication.vipVariableName")
-			data.AuthenticationVariable = types.StringValue(v.String())
+			v := res.Get(path + "profile.auth.vipVariableName")
+			data.AuthenticationTypeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Authentication = types.StringNull()
-			data.AuthenticationVariable = types.StringNull()
+			data.AuthenticationType = types.StringNull()
+			data.AuthenticationTypeVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "authentication.vipValue")
-			data.Authentication = types.StringValue(v.String())
-			data.AuthenticationVariable = types.StringNull()
+			v := res.Get(path + "profile.auth.vipValue")
+			data.AuthenticationType = types.StringValue(v.String())
+			data.AuthenticationTypeVariable = types.StringNull()
 		}
 	} else {
-		data.Authentication = types.StringNull()
-		data.AuthenticationVariable = types.StringNull()
+		data.AuthenticationType = types.StringNull()
+		data.AuthenticationTypeVariable = types.StringNull()
 	}
-	if value := res.Get(path + "pdn-type.vipType"); value.Exists() {
+	if value := res.Get(path + "profile.ip-addr.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.IpAddress = types.StringNull()
+
+			v := res.Get(path + "profile.ip-addr.vipVariableName")
+			data.IpAddressVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.IpAddress = types.StringNull()
+			data.IpAddressVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "profile.ip-addr.vipValue")
+			data.IpAddress = types.StringValue(v.String())
+			data.IpAddressVariable = types.StringNull()
+		}
+	} else {
+		data.IpAddress = types.StringNull()
+		data.IpAddressVariable = types.StringNull()
+	}
+	if value := res.Get(path + "profile.name.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.ProfileName = types.StringNull()
+
+			v := res.Get(path + "profile.name.vipVariableName")
+			data.ProfileNameVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.ProfileName = types.StringNull()
+			data.ProfileNameVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "profile.name.vipValue")
+			data.ProfileName = types.StringValue(v.String())
+			data.ProfileNameVariable = types.StringNull()
+		}
+	} else {
+		data.ProfileName = types.StringNull()
+		data.ProfileNameVariable = types.StringNull()
+	}
+	if value := res.Get(path + "profile.pdn-type.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.PacketDataNetworkType = types.StringNull()
 
-			v := res.Get(path + "pdn-type.vipVariableName")
+			v := res.Get(path + "profile.pdn-type.vipVariableName")
 			data.PacketDataNetworkTypeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
 			data.PacketDataNetworkType = types.StringNull()
 			data.PacketDataNetworkTypeVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "pdn-type.vipValue")
+			v := res.Get(path + "profile.pdn-type.vipValue")
 			data.PacketDataNetworkType = types.StringValue(v.String())
 			data.PacketDataNetworkTypeVariable = types.StringNull()
 		}
@@ -255,18 +376,18 @@ func (data *CellularProfile) fromBody(ctx context.Context, res gjson.Result) {
 		data.PacketDataNetworkType = types.StringNull()
 		data.PacketDataNetworkTypeVariable = types.StringNull()
 	}
-	if value := res.Get(path + "username.vipType"); value.Exists() {
+	if value := res.Get(path + "profile.user-name.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.ProfileUsername = types.StringNull()
 
-			v := res.Get(path + "username.vipVariableName")
+			v := res.Get(path + "profile.user-name.vipVariableName")
 			data.ProfileUsernameVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
 			data.ProfileUsername = types.StringNull()
 			data.ProfileUsernameVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "username.vipValue")
+			v := res.Get(path + "profile.user-name.vipValue")
 			data.ProfileUsername = types.StringValue(v.String())
 			data.ProfileUsernameVariable = types.StringNull()
 		}
@@ -274,18 +395,18 @@ func (data *CellularProfile) fromBody(ctx context.Context, res gjson.Result) {
 		data.ProfileUsername = types.StringNull()
 		data.ProfileUsernameVariable = types.StringNull()
 	}
-	if value := res.Get(path + "password.vipType"); value.Exists() {
+	if value := res.Get(path + "profile.user-pass.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.ProfilePassword = types.StringNull()
 
-			v := res.Get(path + "password.vipVariableName")
+			v := res.Get(path + "profile.user-pass.vipVariableName")
 			data.ProfilePasswordVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
 			data.ProfilePassword = types.StringNull()
 			data.ProfilePasswordVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "password.vipValue")
+			v := res.Get(path + "profile.user-pass.vipValue")
 			data.ProfilePassword = types.StringValue(v.String())
 			data.ProfilePasswordVariable = types.StringNull()
 		}
@@ -293,36 +414,64 @@ func (data *CellularProfile) fromBody(ctx context.Context, res gjson.Result) {
 		data.ProfilePassword = types.StringNull()
 		data.ProfilePasswordVariable = types.StringNull()
 	}
-	if value := res.Get(path + "no-overwrite.vipType"); value.Exists() {
+	if value := res.Get(path + "profile.primary-dns.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.NoOverwrite = types.BoolNull()
+			data.PrimaryDnsAddress = types.StringNull()
 
-			v := res.Get(path + "no-overwrite.vipVariableName")
-			data.NoOverwriteVariable = types.StringValue(v.String())
+			v := res.Get(path + "profile.primary-dns.vipVariableName")
+			data.PrimaryDnsAddressVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.NoOverwrite = types.BoolNull()
-			data.NoOverwriteVariable = types.StringNull()
+			data.PrimaryDnsAddress = types.StringNull()
+			data.PrimaryDnsAddressVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "no-overwrite.vipValue")
-			data.NoOverwrite = types.BoolValue(v.Bool())
-			data.NoOverwriteVariable = types.StringNull()
+			v := res.Get(path + "profile.primary-dns.vipValue")
+			data.PrimaryDnsAddress = types.StringValue(v.String())
+			data.PrimaryDnsAddressVariable = types.StringNull()
 		}
 	} else {
-		data.NoOverwrite = types.BoolNull()
-		data.NoOverwriteVariable = types.StringNull()
+		data.PrimaryDnsAddress = types.StringNull()
+		data.PrimaryDnsAddressVariable = types.StringNull()
+	}
+	if value := res.Get(path + "profile.secondary-dns.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.SecondaryDnsAddress = types.StringNull()
+
+			v := res.Get(path + "profile.secondary-dns.vipVariableName")
+			data.SecondaryDnsAddressVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.SecondaryDnsAddress = types.StringNull()
+			data.SecondaryDnsAddressVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "profile.secondary-dns.vipValue")
+			data.SecondaryDnsAddress = types.StringValue(v.String())
+			data.SecondaryDnsAddressVariable = types.StringNull()
+		}
+	} else {
+		data.SecondaryDnsAddress = types.StringNull()
+		data.SecondaryDnsAddressVariable = types.StringNull()
 	}
 }
 
 func (data *CellularProfile) hasChanges(ctx context.Context, state *CellularProfile) bool {
 	hasChanges := false
+	if !data.IfName.Equal(state.IfName) {
+		hasChanges = true
+	}
 	if !data.ProfileId.Equal(state.ProfileId) {
 		hasChanges = true
 	}
 	if !data.AccessPointName.Equal(state.AccessPointName) {
 		hasChanges = true
 	}
-	if !data.Authentication.Equal(state.Authentication) {
+	if !data.AuthenticationType.Equal(state.AuthenticationType) {
+		hasChanges = true
+	}
+	if !data.IpAddress.Equal(state.IpAddress) {
+		hasChanges = true
+	}
+	if !data.ProfileName.Equal(state.ProfileName) {
 		hasChanges = true
 	}
 	if !data.PacketDataNetworkType.Equal(state.PacketDataNetworkType) {
@@ -334,7 +483,10 @@ func (data *CellularProfile) hasChanges(ctx context.Context, state *CellularProf
 	if !data.ProfilePassword.Equal(state.ProfilePassword) {
 		hasChanges = true
 	}
-	if !data.NoOverwrite.Equal(state.NoOverwrite) {
+	if !data.PrimaryDnsAddress.Equal(state.PrimaryDnsAddress) {
+		hasChanges = true
+	}
+	if !data.SecondaryDnsAddress.Equal(state.SecondaryDnsAddress) {
 		hasChanges = true
 	}
 	return hasChanges

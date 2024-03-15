@@ -33,22 +33,24 @@ func TestAccSdwanCellularProfileFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanCellularProfileFeatureTemplateConfig_minimum(),
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "if_name", "example"),
 					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "access_point_name", "example"),
-					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_username", "MyUsername"),
-					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_password", "MyPassword"),
 				),
 			},
 			{
 				Config: testAccSdwanCellularProfileFeatureTemplateConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "if_name", "example"),
 					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_id", "1"),
 					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "access_point_name", "example"),
-					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "authentication", "chap"),
+					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "authentication_type", "CHAP"),
+					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "ip_address", "1.2.3.4"),
+					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_name", "example"),
 					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "packet_data_network_type", "ipv4"),
 					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_username", "MyUsername"),
 					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "profile_password", "MyPassword"),
-					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "no_overwrite", "true"),
+					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "primary_dns_address", "1.2.3.4"),
+					resource.TestCheckResourceAttr("sdwan_cellular_profile_feature_template.test", "secondary_dns_address", "1.2.3.4"),
 				),
 			},
 		},
@@ -61,10 +63,8 @@ func testAccSdwanCellularProfileFeatureTemplateConfig_minimum() string {
 		name = "TF_TEST_MIN"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
+		if_name = "example"
 		profile_id = 1
-		access_point_name = "example"
-		profile_username = "MyUsername"
-		profile_password = "MyPassword"
 	}
 	`
 }
@@ -75,13 +75,17 @@ func testAccSdwanCellularProfileFeatureTemplateConfig_all() string {
 		name = "TF_TEST_ALL"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
+		if_name = "example"
 		profile_id = 1
 		access_point_name = "example"
-		authentication = "chap"
+		authentication_type = "CHAP"
+		ip_address = "1.2.3.4"
+		profile_name = "example"
 		packet_data_network_type = "ipv4"
 		profile_username = "MyUsername"
 		profile_password = "MyPassword"
-		no_overwrite = true
+		primary_dns_address = "1.2.3.4"
+		secondary_dns_address = "1.2.3.4"
 	}
 	`
 }

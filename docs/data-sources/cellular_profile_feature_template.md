@@ -30,19 +30,27 @@ data "sdwan_cellular_profile_feature_template" "example" {
 
 - `access_point_name` (String) Set access point name
 - `access_point_name_variable` (String) Variable name
-- `authentication` (String) Set authentication type
-- `authentication_variable` (String) Variable name
+- `authentication_type` (String) Set authentication type
+- `authentication_type_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
-- `no_overwrite` (Boolean) No Overwrite
-- `no_overwrite_variable` (String) Variable name
+- `if_name` (String) Set interface name
+- `if_name_variable` (String) Variable name
+- `ip_address` (String) Set IP address
+- `ip_address_variable` (String) Variable name
 - `packet_data_network_type` (String) Set packet data network type
 - `packet_data_network_type_variable` (String) Variable name
+- `primary_dns_address` (String) Set the address of the primary DNS server
+- `primary_dns_address_variable` (String) Variable name
 - `profile_id` (Number) Set Profile ID
 - `profile_id_variable` (String) Variable name
+- `profile_name` (String) Set profile name
+- `profile_name_variable` (String) Variable name
 - `profile_password` (String) Set the profile password
 - `profile_password_variable` (String) Variable name
 - `profile_username` (String) Set the profile username
 - `profile_username_variable` (String) Variable name
+- `secondary_dns_address` (String) Set the address of the secondary DNS server
+- `secondary_dns_address_variable` (String) Variable name
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
