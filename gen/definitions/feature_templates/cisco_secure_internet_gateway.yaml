@@ -53,33 +53,45 @@ attributes:
         example: 5
       - model_name: ike-version
         example: 1
+        exclude_ignore: true
       - model_name: pre-shared-secret
         tf_name: ike_pre_shared_key
         example: A1234567
+        exclude_ignore: true
       - model_name: ike-rekey-interval
         example: 600
+        exclude_ignore: true
       - model_name: ike-ciphersuite
         example: aes256-cbc-sha2
+        exclude_ignore: true
       - model_name: ike-group
         example: 14
+        exclude_ignore: true
       - model_name: pre-shared-key-dynamic
         tf_name: ike_pre_shared_key_dynamic
         example: false
+        exclude_ignore: true
       - model_name: ike-local-id
         tf_name: ike_pre_shared_key_local_id
         example: 1.2.3.4
+        exclude_ignore: true
       - model_name: ike-remote-id
         tf_name: ike_pre_shared_key_remote_id
         example: 2.3.4.5
+        exclude_ignore: true
       - model_name: ipsec-rekey-interval
         example: 7200
+        exclude_ignore: true
       - model_name: ipsec-replay-window
         example: 1024
+        exclude_ignore: true
       - model_name: ipsec-ciphersuite
         example: aes256-cbc-sha1
+        exclude_ignore: true
       - model_name: perfect-forward-secrecy
         tf_name: ipsec_perfect_forward_secrecy
         example: group-14
+        exclude_ignore: true
       - model_name: track-enable
         example: false
       - model_name: tunnel-public-ip
