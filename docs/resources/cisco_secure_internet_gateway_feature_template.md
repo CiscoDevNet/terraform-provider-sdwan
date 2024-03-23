@@ -212,7 +212,6 @@ Optional:
 - `track_enable` (Boolean) Enable/disable SIG tracking
   - Default value: `true`
 - `tracker` (String) Enable tracker for this interface
-- `tracker_variable` (String) Variable name
 - `tunnel_dc_preference` (String) SIG Tunnel Data Center
   - Choices: `primary-dc`, `secondary-dc`
   - Default value: `primary-dc`

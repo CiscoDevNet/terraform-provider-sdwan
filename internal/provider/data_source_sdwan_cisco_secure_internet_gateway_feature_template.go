@@ -303,10 +303,6 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 							MarkdownDescription: "Enable tracker for this interface",
 							Computed:            true,
 						},
-						"tracker_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
 						"track_enable": schema.BoolAttribute{
 							MarkdownDescription: "Enable/disable SIG tracking",
 							Computed:            true,

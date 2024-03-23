@@ -89,7 +89,6 @@ Read-Only:
 - `tcp_mss_variable` (String) Variable name
 - `track_enable` (Boolean) Enable/disable SIG tracking
 - `tracker` (String) Enable tracker for this interface
-- `tracker_variable` (String) Variable name
 - `tunnel_dc_preference` (String) SIG Tunnel Data Center
 - `tunnel_destination` (String) Tunnel destination IP address
 - `tunnel_destination_variable` (String) Variable name

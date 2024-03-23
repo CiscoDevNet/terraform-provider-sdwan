@@ -98,7 +98,6 @@ type CiscoSecureInternetGatewayInterfaces struct {
 	IpsecPerfectForwardSecrecy         types.String `tfsdk:"ipsec_perfect_forward_secrecy"`
 	IpsecPerfectForwardSecrecyVariable types.String `tfsdk:"ipsec_perfect_forward_secrecy_variable"`
 	Tracker                            types.String `tfsdk:"tracker"`
-	TrackerVariable                    types.String `tfsdk:"tracker_variable"`
 	TrackEnable                        types.Bool   `tfsdk:"track_enable"`
 	TunnelPublicIp                     types.String `tfsdk:"tunnel_public_ip"`
 	TunnelPublicIpVariable             types.String `tfsdk:"tunnel_public_ip_variable"`
@@ -518,12 +517,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipValue", item.IpsecPerfectForwardSecrecy.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "tracker")
-
-		if !item.TrackerVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipVariableName", item.TrackerVariable.ValueString())
-		} else if item.Tracker.IsNull() {
+		if item.Tracker.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipType", "ignore")
 		} else {
@@ -1492,20 +1486,17 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 				if cValue.String() == "variableName" {
 					item.Tracker = types.StringNull()
 
-					cv := v.Get("tracker.vipVariableName")
-					item.TrackerVariable = types.StringValue(cv.String())
-
 				} else if cValue.String() == "ignore" {
 					item.Tracker = types.StringNull()
-					item.TrackerVariable = types.StringNull()
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("tracker.vipValue")
 					item.Tracker = types.StringValue(cv.String())
-					item.TrackerVariable = types.StringNull()
+
 				}
 			} else {
 				item.Tracker = types.StringNull()
-				item.TrackerVariable = types.StringNull()
+
 			}
 			if cValue := v.Get("track-enable.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
