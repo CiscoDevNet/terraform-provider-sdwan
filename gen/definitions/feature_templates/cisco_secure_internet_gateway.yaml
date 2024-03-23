@@ -92,6 +92,9 @@ attributes:
         tf_name: ipsec_perfect_forward_secrecy
         example: group-14
         exclude_ignore: true
+      - model_name: tracker
+        ignore_enum: true
+        example: test
       - model_name: track-enable
         example: false
       - model_name: tunnel-public-ip
@@ -159,6 +162,9 @@ attributes:
         tf_name: zscaler_surrogate_ip_enforce_for_known_browsers
         exclude_ignore: true
         example: true
+      - model_name: refresh-time
+        tf_name: zscaler_surrogate_refresh_time
+        example: 12345
       - model_name: refresh-time-unit
         tf_name: zscaler_surrogate_refresh_time_unit
         exclude_ignore: true
@@ -203,6 +209,8 @@ attributes:
         example: https://1.1.1.1
       - model_name: threshold
         example: 500
+      - model_name: interval
+        example: 60
       - model_name: multiplier
         example: 4
       - model_name: tracker-type

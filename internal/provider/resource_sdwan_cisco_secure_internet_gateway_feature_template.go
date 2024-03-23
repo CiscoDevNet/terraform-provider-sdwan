@@ -372,6 +372,14 @@ func (r *CiscoSecureInternetGatewayFeatureTemplateResource) Schema(ctx context.C
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"tracker": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Enable tracker for this interface").String,
+							Optional:            true,
+						},
+						"tracker_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 						"track_enable": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Enable/disable SIG tracking").AddDefaultValueDescription("true").String,
 							Optional:            true,
@@ -492,6 +500,10 @@ func (r *CiscoSecureInternetGatewayFeatureTemplateResource) Schema(ctx context.C
 							MarkdownDescription: helpers.NewAttributeDescription("Enforce Surrogate IP for known browsers").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
+						"zscaler_surrogate_refresh_time": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Refresh time for re-validation of surrogacy in minutes").AddDefaultValueDescription("0").String,
+							Optional:            true,
+						},
 						"zscaler_surrogate_refresh_time_unit": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Refresh Time unit").AddStringEnumDescription("MINUTE", "HOUR", "DAY").AddDefaultValueDescription("MINUTE").String,
 							Optional:            true,
@@ -589,6 +601,17 @@ func (r *CiscoSecureInternetGatewayFeatureTemplateResource) Schema(ctx context.C
 							},
 						},
 						"threshold_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"interval": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Probe interval <10..600> seconds").AddIntegerRangeDescription(20, 600).AddDefaultValueDescription("60").String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(20, 600),
+							},
+						},
+						"interval_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
