@@ -380,8 +380,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipVariableName", item.IkeVersionVariable.ValueString())
 		} else if item.IkeVersion.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipType", "constant")
@@ -394,8 +392,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipVariableName", item.IkePreSharedKeyVariable.ValueString())
 		} else if item.IkePreSharedKey.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipType", "constant")
@@ -408,8 +404,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipVariableName", item.IkeRekeyIntervalVariable.ValueString())
 		} else if item.IkeRekeyInterval.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipType", "constant")
@@ -422,8 +416,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipVariableName", item.IkeCiphersuiteVariable.ValueString())
 		} else if item.IkeCiphersuite.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipType", "constant")
@@ -436,7 +428,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipVariableName", item.IkeGroupVariable.ValueString())
 		} else if item.IkeGroup.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipType", "constant")
@@ -444,7 +435,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "pre-shared-key-dynamic")
 		if item.IkePreSharedKeyDynamic.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key-dynamic."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key-dynamic."+"vipType", "constant")
@@ -457,8 +447,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipVariableName", item.IkePreSharedKeyLocalIdVariable.ValueString())
 		} else if item.IkePreSharedKeyLocalId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipType", "constant")
@@ -471,8 +459,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipVariableName", item.IkePreSharedKeyRemoteIdVariable.ValueString())
 		} else if item.IkePreSharedKeyRemoteId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipType", "constant")
@@ -485,8 +471,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipVariableName", item.IpsecRekeyIntervalVariable.ValueString())
 		} else if item.IpsecRekeyInterval.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipType", "constant")
@@ -499,8 +483,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipVariableName", item.IpsecReplayWindowVariable.ValueString())
 		} else if item.IpsecReplayWindow.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipType", "constant")
@@ -513,7 +495,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipVariableName", item.IpsecCiphersuiteVariable.ValueString())
 		} else if item.IpsecCiphersuite.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipType", "constant")
@@ -526,7 +507,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipVariableName", item.IpsecPerfectForwardSecrecyVariable.ValueString())
 		} else if item.IpsecPerfectForwardSecrecy.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipType", "constant")
