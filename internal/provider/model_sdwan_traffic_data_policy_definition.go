@@ -551,8 +551,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "cflowd" {
 						if true && ccValue.String() == "" {
 							cItem.Cflowd = types.BoolValue(true)
-						} else {
-							cItem.Cflowd = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.Cflowd = types.BoolNull()
@@ -565,8 +563,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "dreOptimization" {
 						if true && ccValue.String() == "" {
 							cItem.DreOptimization = types.BoolValue(true)
-						} else {
-							cItem.DreOptimization = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.DreOptimization = types.BoolNull()
@@ -574,8 +570,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "fallbackToRouting" {
 						if true && ccValue.String() == "" {
 							cItem.FallbackToRouting = types.BoolValue(true)
-						} else {
-							cItem.FallbackToRouting = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.FallbackToRouting = types.BoolNull()
@@ -583,8 +577,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "log" {
 						if true && ccValue.String() == "" {
 							cItem.Log = types.BoolValue(true)
-						} else {
-							cItem.Log = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.Log = types.BoolNull()
@@ -637,8 +629,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "sig" {
 						if true && ccValue.String() == "" {
 							cItem.SecureInternetGateway = types.BoolValue(true)
-						} else {
-							cItem.SecureInternetGateway = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.SecureInternetGateway = types.BoolNull()
@@ -646,8 +636,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "tcpOptimization" {
 						if true && ccValue.String() == "" {
 							cItem.TcpOptimization = types.BoolValue(true)
-						} else {
-							cItem.TcpOptimization = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.TcpOptimization = types.BoolNull()
@@ -689,8 +677,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							if cccValue := ccv.Get("value.restrict"); cccValue.Exists() && ccItem.Type.ValueString() == "localTlocList" {
 								if true && cccValue.String() == "" {
 									ccItem.LocalTlocListRestrict = types.BoolValue(true)
-								} else {
-									ccItem.LocalTlocListRestrict = types.BoolValue(cccValue.Bool())
 								}
 							} else {
 								ccItem.LocalTlocListRestrict = types.BoolNull()
@@ -757,8 +743,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							if cccValue := ccv.Get("value.local"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								if true && cccValue.String() == "" {
 									ccItem.ServiceTlocLocal = types.BoolValue(true)
-								} else {
-									ccItem.ServiceTlocLocal = types.BoolValue(cccValue.Bool())
 								}
 							} else {
 								ccItem.ServiceTlocLocal = types.BoolNull()
@@ -766,8 +750,6 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							if cccValue := ccv.Get("value.restrict"); cccValue.Exists() && ccItem.Type.ValueString() == "service" {
 								if true && cccValue.String() == "" {
 									ccItem.ServiceTlocRestrict = types.BoolValue(true)
-								} else {
-									ccItem.ServiceTlocRestrict = types.BoolValue(cccValue.Bool())
 								}
 							} else {
 								ccItem.ServiceTlocRestrict = types.BoolNull()

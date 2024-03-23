@@ -349,8 +349,6 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "log" {
 						if true && ccValue.String() == "" {
 							cItem.Log = types.BoolValue(true)
-						} else {
-							cItem.Log = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.Log = types.BoolNull()
@@ -358,8 +356,6 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "cloudSaas" {
 						if true && ccValue.String() == "" {
 							cItem.CloudSla = types.BoolValue(true)
-						} else {
-							cItem.CloudSla = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.CloudSla = types.BoolNull()
