@@ -1,5 +1,6 @@
 ## 0.3.7 (unreleased)
 
+- Add `tracker`, `interval`, `interval_variable` and `zscaler_surrogate_refresh_time` to `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source
 - Add `sdwan_cisco_trustsec_feature_template` resource and data source
 - Add `sdwan_cisco_vpn_interface_gre_feature_template` resource and data source
 - Add `sdwan_cellular_profile_feature_template` resource and data source

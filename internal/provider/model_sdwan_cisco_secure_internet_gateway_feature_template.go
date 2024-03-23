@@ -97,6 +97,7 @@ type CiscoSecureInternetGatewayInterfaces struct {
 	IpsecCiphersuiteVariable           types.String `tfsdk:"ipsec_ciphersuite_variable"`
 	IpsecPerfectForwardSecrecy         types.String `tfsdk:"ipsec_perfect_forward_secrecy"`
 	IpsecPerfectForwardSecrecyVariable types.String `tfsdk:"ipsec_perfect_forward_secrecy_variable"`
+	Tracker                            types.String `tfsdk:"tracker"`
 	TrackEnable                        types.Bool   `tfsdk:"track_enable"`
 	TunnelPublicIp                     types.String `tfsdk:"tunnel_public_ip"`
 	TunnelPublicIpVariable             types.String `tfsdk:"tunnel_public_ip_variable"`
@@ -119,6 +120,7 @@ type CiscoSecureInternetGatewayServices struct {
 	ZscalerSurrogateIdleTime                  types.Int64                                        `tfsdk:"zscaler_surrogate_idle_time"`
 	ZscalerSurrogateDisplayTimeUnit           types.String                                       `tfsdk:"zscaler_surrogate_display_time_unit"`
 	ZscalerSurrogateIpEnforceForKnownBrowsers types.Bool                                         `tfsdk:"zscaler_surrogate_ip_enforce_for_known_browsers"`
+	ZscalerSurrogateRefreshTime               types.Int64                                        `tfsdk:"zscaler_surrogate_refresh_time"`
 	ZscalerSurrogateRefreshTimeUnit           types.String                                       `tfsdk:"zscaler_surrogate_refresh_time_unit"`
 	ZscalerAupEnabled                         types.Bool                                         `tfsdk:"zscaler_aup_enabled"`
 	ZscalerAupBlockInternetUntilAccepted      types.Bool                                         `tfsdk:"zscaler_aup_block_internet_until_accepted"`
@@ -140,6 +142,8 @@ type CiscoSecureInternetGatewayTrackers struct {
 	EndpointApiUrlVariable types.String `tfsdk:"endpoint_api_url_variable"`
 	Threshold              types.Int64  `tfsdk:"threshold"`
 	ThresholdVariable      types.String `tfsdk:"threshold_variable"`
+	Interval               types.Int64  `tfsdk:"interval"`
+	IntervalVariable       types.String `tfsdk:"interval_variable"`
 	Multiplier             types.Int64  `tfsdk:"multiplier"`
 	MultiplierVariable     types.String `tfsdk:"multiplier_variable"`
 	TrackerType            types.String `tfsdk:"tracker_type"`
@@ -380,8 +384,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipVariableName", item.IkeVersionVariable.ValueString())
 		} else if item.IkeVersion.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipType", "constant")
@@ -394,8 +396,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipVariableName", item.IkePreSharedKeyVariable.ValueString())
 		} else if item.IkePreSharedKey.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipType", "constant")
@@ -408,8 +408,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipVariableName", item.IkeRekeyIntervalVariable.ValueString())
 		} else if item.IkeRekeyInterval.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipType", "constant")
@@ -422,8 +420,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipVariableName", item.IkeCiphersuiteVariable.ValueString())
 		} else if item.IkeCiphersuite.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipType", "constant")
@@ -436,7 +432,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipVariableName", item.IkeGroupVariable.ValueString())
 		} else if item.IkeGroup.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipType", "constant")
@@ -444,7 +439,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "pre-shared-key-dynamic")
 		if item.IkePreSharedKeyDynamic.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key-dynamic."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key-dynamic."+"vipType", "constant")
@@ -457,8 +451,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipVariableName", item.IkePreSharedKeyLocalIdVariable.ValueString())
 		} else if item.IkePreSharedKeyLocalId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipType", "constant")
@@ -471,8 +463,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipVariableName", item.IkePreSharedKeyRemoteIdVariable.ValueString())
 		} else if item.IkePreSharedKeyRemoteId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipType", "constant")
@@ -485,8 +475,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipVariableName", item.IpsecRekeyIntervalVariable.ValueString())
 		} else if item.IpsecRekeyInterval.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipType", "constant")
@@ -499,8 +487,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipVariableName", item.IpsecReplayWindowVariable.ValueString())
 		} else if item.IpsecReplayWindow.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipType", "constant")
@@ -513,7 +499,6 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipVariableName", item.IpsecCiphersuiteVariable.ValueString())
 		} else if item.IpsecCiphersuite.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipType", "constant")
@@ -526,11 +511,19 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipVariableName", item.IpsecPerfectForwardSecrecyVariable.ValueString())
 		} else if item.IpsecPerfectForwardSecrecy.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipsec", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipValue", item.IpsecPerfectForwardSecrecy.ValueString())
+		}
+		itemAttributes = append(itemAttributes, "tracker")
+		if item.Tracker.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipType", "ignore")
+		} else {
+			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipType", "constant")
+			itemBody, _ = sjson.Set(itemBody, "tracker."+"vipValue", item.Tracker.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "track-enable")
 		if item.TrackEnable.IsNull() {
@@ -718,6 +711,15 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipValue", strconv.FormatBool(item.ZscalerSurrogateIpEnforceForKnownBrowsers.ValueBool()))
 		}
+		itemAttributes = append(itemAttributes, "refresh-time")
+		if item.ZscalerSurrogateRefreshTime.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipType", "ignore")
+		} else {
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipType", "constant")
+			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipValue", item.ZscalerSurrogateRefreshTime.ValueInt64())
+		}
 		itemAttributes = append(itemAttributes, "refresh-time-unit")
 		if item.ZscalerSurrogateRefreshTimeUnit.IsNull() {
 		} else {
@@ -857,6 +859,20 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "threshold."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "threshold."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "threshold."+"vipValue", item.Threshold.ValueInt64())
+		}
+		itemAttributes = append(itemAttributes, "interval")
+
+		if !item.IntervalVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipType", "variableName")
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipVariableName", item.IntervalVariable.ValueString())
+		} else if item.Interval.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipType", "ignore")
+		} else {
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipType", "constant")
+			itemBody, _ = sjson.Set(itemBody, "interval."+"vipValue", item.Interval.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "multiplier")
 
@@ -1466,6 +1482,22 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 				item.IpsecPerfectForwardSecrecy = types.StringNull()
 				item.IpsecPerfectForwardSecrecyVariable = types.StringNull()
 			}
+			if cValue := v.Get("tracker.vipType"); cValue.Exists() {
+				if cValue.String() == "variableName" {
+					item.Tracker = types.StringNull()
+
+				} else if cValue.String() == "ignore" {
+					item.Tracker = types.StringNull()
+
+				} else if cValue.String() == "constant" {
+					cv := v.Get("tracker.vipValue")
+					item.Tracker = types.StringValue(cv.String())
+
+				}
+			} else {
+				item.Tracker = types.StringNull()
+
+			}
 			if cValue := v.Get("track-enable.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.TrackEnable = types.BoolNull()
@@ -1789,6 +1821,22 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 				item.ZscalerSurrogateIpEnforceForKnownBrowsers = types.BoolNull()
 
 			}
+			if cValue := v.Get("zscaler-location-settings.surrogate.refresh-time.vipType"); cValue.Exists() {
+				if cValue.String() == "variableName" {
+					item.ZscalerSurrogateRefreshTime = types.Int64Null()
+
+				} else if cValue.String() == "ignore" {
+					item.ZscalerSurrogateRefreshTime = types.Int64Null()
+
+				} else if cValue.String() == "constant" {
+					cv := v.Get("zscaler-location-settings.surrogate.refresh-time.vipValue")
+					item.ZscalerSurrogateRefreshTime = types.Int64Value(cv.Int())
+
+				}
+			} else {
+				item.ZscalerSurrogateRefreshTime = types.Int64Null()
+
+			}
 			if cValue := v.Get("zscaler-location-settings.surrogate.refresh-time-unit.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.ZscalerSurrogateRefreshTimeUnit = types.StringNull()
@@ -2015,6 +2063,25 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 				item.Threshold = types.Int64Null()
 				item.ThresholdVariable = types.StringNull()
 			}
+			if cValue := v.Get("interval.vipType"); cValue.Exists() {
+				if cValue.String() == "variableName" {
+					item.Interval = types.Int64Null()
+
+					cv := v.Get("interval.vipVariableName")
+					item.IntervalVariable = types.StringValue(cv.String())
+
+				} else if cValue.String() == "ignore" {
+					item.Interval = types.Int64Null()
+					item.IntervalVariable = types.StringNull()
+				} else if cValue.String() == "constant" {
+					cv := v.Get("interval.vipValue")
+					item.Interval = types.Int64Value(cv.Int())
+					item.IntervalVariable = types.StringNull()
+				}
+			} else {
+				item.Interval = types.Int64Null()
+				item.IntervalVariable = types.StringNull()
+			}
 			if cValue := v.Get("multiplier.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.Multiplier = types.Int64Null()
@@ -2152,6 +2219,9 @@ func (data *CiscoSecureInternetGateway) hasChanges(ctx context.Context, state *C
 			if !data.Interfaces[i].IpsecPerfectForwardSecrecy.Equal(state.Interfaces[i].IpsecPerfectForwardSecrecy) {
 				hasChanges = true
 			}
+			if !data.Interfaces[i].Tracker.Equal(state.Interfaces[i].Tracker) {
+				hasChanges = true
+			}
 			if !data.Interfaces[i].TrackEnable.Equal(state.Interfaces[i].TrackEnable) {
 				hasChanges = true
 			}
@@ -2218,6 +2288,9 @@ func (data *CiscoSecureInternetGateway) hasChanges(ctx context.Context, state *C
 			if !data.Services[i].ZscalerSurrogateIpEnforceForKnownBrowsers.Equal(state.Services[i].ZscalerSurrogateIpEnforceForKnownBrowsers) {
 				hasChanges = true
 			}
+			if !data.Services[i].ZscalerSurrogateRefreshTime.Equal(state.Services[i].ZscalerSurrogateRefreshTime) {
+				hasChanges = true
+			}
 			if !data.Services[i].ZscalerSurrogateRefreshTimeUnit.Equal(state.Services[i].ZscalerSurrogateRefreshTimeUnit) {
 				hasChanges = true
 			}
@@ -2258,6 +2331,9 @@ func (data *CiscoSecureInternetGateway) hasChanges(ctx context.Context, state *C
 				hasChanges = true
 			}
 			if !data.Trackers[i].Threshold.Equal(state.Trackers[i].Threshold) {
+				hasChanges = true
+			}
+			if !data.Trackers[i].Interval.Equal(state.Trackers[i].Interval) {
 				hasChanges = true
 			}
 			if !data.Trackers[i].Multiplier.Equal(state.Trackers[i].Multiplier) {

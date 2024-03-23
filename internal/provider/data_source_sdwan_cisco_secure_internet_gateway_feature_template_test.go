@@ -63,6 +63,7 @@ func TestAccDataSourceSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ipsec_replay_window", "1024"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ipsec_ciphersuite", "aes256-cbc-sha1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.ipsec_perfect_forward_secrecy", "group-14"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.tracker", "test"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.track_enable", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "interfaces.0.tunnel_public_ip", "5.5.5.5"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.service_type", "sig"),
@@ -81,6 +82,7 @@ func TestAccDataSourceSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_idle_time", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_display_time_unit", "MINUTE"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_ip_enforce_for_known_browsers", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_refresh_time", "12345"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_surrogate_refresh_time_unit", "MINUTE"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_aup_enabled", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "services.0.zscaler_aup_block_internet_until_accepted", "true"),
@@ -93,6 +95,7 @@ func TestAccDataSourceSdwanCiscoSecureInternetGatewayFeatureTemplate(t *testing.
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.name", "TRACKER1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.endpoint_api_url", "https://1.1.1.1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.threshold", "500"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.interval", "60"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.multiplier", "4"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_secure_internet_gateway_feature_template.test", "trackers.0.tracker_type", "SIG"),
 				),
@@ -138,6 +141,7 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "test" {
     ipsec_replay_window = 1024
     ipsec_ciphersuite = "aes256-cbc-sha1"
     ipsec_perfect_forward_secrecy = "group-14"
+    tracker = "test"
     track_enable = false
     tunnel_public_ip = "5.5.5.5"
   }]
@@ -160,6 +164,7 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "test" {
     zscaler_surrogate_idle_time = 100
     zscaler_surrogate_display_time_unit = "MINUTE"
     zscaler_surrogate_ip_enforce_for_known_browsers = true
+    zscaler_surrogate_refresh_time = 12345
     zscaler_surrogate_refresh_time_unit = "MINUTE"
     zscaler_aup_enabled = true
     zscaler_aup_block_internet_until_accepted = true
@@ -174,6 +179,7 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "test" {
     name = "TRACKER1"
     endpoint_api_url = "https://1.1.1.1"
     threshold = 500
+    interval = 60
     multiplier = 4
     tracker_type = "SIG"
   }]
