@@ -9,14 +9,14 @@ attributes:
     tf_name: serial_number
     type: String
     description: Serial number for device. Could be board or virtual identifier
-    example: EE16A1C0BAD74974AF666E446F15605F
+    example: E6486A92D4404888BC795DB045AF86D1
     query_param: true
   - model_name: host-name
     tf_name: name
     type: String
     query_param: true
     description: The hostname of a device
-    example: vsmart
+    example: Controller01
   - model_name: data
     tf_name: devices
     type: List
@@ -25,28 +25,28 @@ attributes:
       - model_name: deviceId
         type: String
         tf_name: device_id
-        example: 10.0.0.14
+        example: 100.0.0.101
         description: The device ID as defined in SD-WAN Manager
       - model_name: uuid
         type: String
         description: Unique identifier for device
         id: true
-        example: cd4aa06a-dee3-43c5-bb95-2a1b29cb86e2
+        example: a6e71b79-1cf1-4387-b90d-1835d4501c7f
       - model_name: site-id
         tf_name: site_id
         type: String
         description: Site id for respective device
-        example: 1
+        example: 100
       - model_name: board-serial
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: EE16A1C0BAD74974AF666E446F15605F
+        example: E6486A92D4404888BC795DB045AF86D1
       - model_name: host-name
         tf_name: hostname
         type: String
         description: Hostname for respective device
-        example: vsmart
+        example: Controller01
       - model_name: reachability
         type: String
         description: Reachability of device

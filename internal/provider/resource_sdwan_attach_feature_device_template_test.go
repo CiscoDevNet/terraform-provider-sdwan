@@ -32,16 +32,16 @@ func TestAccSdwanAttachFeatureDeviceTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("1.1.1.1"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_site_id", "1001"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_site_id", "1"),
 					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_system_ip", "1.1.1.1"),
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_host_name", "router1"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_host_name", "Edge1"),
 					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface", "GigabitEthernet1"),
 				),
 			},
 			{
-				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("1.1.1.2"),
+				Config: testAccSdwanAttachFeatureDeviceTemplateConfig_all("10.0.0.1"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_system_ip", "1.1.1.2"),
+					resource.TestCheckResourceAttr("sdwan_attach_feature_device_template.test", "devices.0.variables.system_system_ip", "10.0.0.1"),
 				),
 			},
 		},
@@ -134,11 +134,11 @@ func testAccSdwanAttachFeatureDeviceTemplateConfig_all(ip string) string {
 		resource "sdwan_attach_feature_device_template" "test" {
 			id      = sdwan_feature_device_template.TF_device_template.id
 			devices = [{
-				id = "C8K-CC678D1C-8EDF-3966-4F51-ABFAB64F5ABE"
+				id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
 				variables = {
 					system_system_ip                                = "%s"
-					system_site_id                                  = "1001"
-					system_host_name                                = "router1"
+					system_site_id                                  = "1"
+					system_host_name                                = "Edge1"
 					vpn_if_name_Default_vEdge_DHCP_Tunnel_Interface = "GigabitEthernet1"
 				}
 			}]
