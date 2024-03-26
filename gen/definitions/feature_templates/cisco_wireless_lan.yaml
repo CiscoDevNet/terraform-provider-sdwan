@@ -1,0 +1,51 @@
+---
+name: Cisco Wireless LAN
+minimum_version: 15.0.0
+attributes:
+  - model_name: shutdown-2.4ghz
+    tf_name: shutdown_2_4ghz
+    example: false
+  - model_name: shutdown-5ghz
+    tf_name: shutdown_5ghz
+    example: false
+  - model_name: ssid
+    tf_name: ssids
+    attributes:
+    - model_name: name
+      tf_name: wireless_network_name
+      example: WLAN1
+    - model_name: admin-state
+      example: false
+    - model_name: broadcast-ssid
+      example: true
+    - model_name: vlan-id
+      example: 1
+    - model_name: radio-type
+      example: 24ghz
+    - model_name: security-type
+      example: enterprise
+    - model_name: radius-server-ip
+      example: 1.2.3.4
+    - model_name: radius-server-port
+      example: 1812
+    - model_name: radius-server-secret
+      example: MySecret1
+    - model_name: passphrase
+      example: passphrase
+    - model_name: qos-profile
+      example: silver
+  - model_name: country
+    example: AE
+  - model_name: username
+    example: user1
+  - model_name: password
+    example:  myPassword01
+  - model_name: address
+    tf_name: controller_ip_address
+    example: 0.0.0.0
+  - model_name: netmask
+    tf_name: controller_subnet_mask
+    example: 0.0.0.0
+  - model_name: default-gateway
+    tf_name: controller_default_gateway
+    example: 0.0.0.0

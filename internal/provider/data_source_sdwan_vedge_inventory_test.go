@@ -33,8 +33,8 @@ func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanVEdgeInventoryConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "ISR-7C260167-7A6C-628A-00A6-A30214119017"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "d4da6eb56aca4a5a884688ed25abcaed"),
+					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"),
+					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "ADC5837E"),
 					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.device_type", "vedge"),
 				),
 			},

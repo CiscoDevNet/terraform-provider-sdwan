@@ -1,0 +1,26 @@
+---
+name: Security App Hosting
+model: virtual-application-utd
+minimum_version: 15.0.0
+attributes:
+- model_name: virtual-application
+  tf_name: virtual_applications
+  attributes:
+  - model_name: instance-id
+    example: 2e89c1fe-440a-43f5-9f3a-54a9836fdbb5
+  - model_name: application-type
+    example: utd
+  - model_name: nat
+    example: true
+  - model_name: database-url
+    example: false
+  - model_name: resource-profile
+    example: low
+  - model_name: service-gateway-ip
+    example: 1.2.3.4/24
+  - model_name: service-ip
+    example: 1.2.3.5/24
+  - model_name: data-gateway-ip
+    example: 192.0.2.1/24
+  - model_name: data-service-ip
+    example: 192.0.2.2/24

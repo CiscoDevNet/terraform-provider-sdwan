@@ -1,5 +1,18 @@
-## 0.3.7
+## 0.3.7 (unreleased)
 
+- Add `tracker`, `interval`, `interval_variable` and `zscaler_surrogate_refresh_time` to `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source
+- Add `sdwan_cisco_trustsec_feature_template` resource and data source
+- Add `sdwan_cisco_vpn_interface_gre_feature_template` resource and data source
+- Add `sdwan_cellular_profile_feature_template` resource and data source
+- Add `sdwan_cedge_igmp_feature_template` resource and data source
+- Add `sdwan_cedge_multicast_feature_template` resource and data source
+- Add `sdwan_cisco_wireless_lan_feature_template` resource and data source
+- Add `sdwan_gps_feature_template` resource and data source
+- Add `sdwan_eigrp_feature_template` resource and data source
+- Add `sdwan_cedge_pim_feature_template` resource and data source
+- Add `sdwan_cisco_ospfv3_feature_template` resource and data source
+- Add `sdwan_security_app_hosting_feature_template` resource and data source
+- Add `sdwan_cellular_cedge_profile_feature_template` resource and data source
 - Add `sdwan_vpn_interface_dsl_pppoa_feature_template` resource and data source
 - Add `sdwan_vpn_interface_dsl_pppoe_feature_template` resource and data source
 - Add `sdwan_vpn_interface_ethernet_pppoe_feature_template` resource and data source

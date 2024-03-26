@@ -1,0 +1,44 @@
+---
+name: Cisco VPN Interface GRE
+minimum_version: 15.0.0
+attributes:
+  - model_name: if-name
+    tf_name: interface_name
+    example: gre0/0
+  - model_name: description
+    tf_name: interface_description
+    example: My Description
+  - model_name: address
+    tf_name: ip_address
+    example:  1.1.1.1/24
+  - model_name: tunnel-source
+    example: 1.2.3.4
+  - model_name: shutdown
+    example: true
+  - model_name: tunnel-source-interface
+    example: e1
+  - model_name: tunnel-destination
+    example: 3.4.5.6
+  - model_name: application
+    example: sig
+  - model_name: mtu
+    tf_name: ip_mtu
+    example: 1500
+  - model_name: tcp-mss-adjust
+    example: 1400
+  - model_name: clear-dont-fragment
+    example: true
+  - model_name: rule-name
+    tf_name: rewrite_rule
+    example: ACL1
+  - model_name: access-list
+    tf_name: access_lists
+    attributes:
+    - model_name: direction
+      example: in
+    - model_name: acl-name
+      example: ACL2
+  - model_name: tracker
+    example: TRACKER1
+  - model_name: tunnel-route-via
+    example: g0/0

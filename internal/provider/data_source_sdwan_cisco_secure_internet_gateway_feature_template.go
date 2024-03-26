@@ -299,6 +299,10 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"tracker": schema.StringAttribute{
+							MarkdownDescription: "Enable tracker for this interface",
+							Computed:            true,
+						},
 						"track_enable": schema.BoolAttribute{
 							MarkdownDescription: "Enable/disable SIG tracking",
 							Computed:            true,
@@ -407,6 +411,10 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 							MarkdownDescription: "Enforce Surrogate IP for known browsers",
 							Computed:            true,
 						},
+						"zscaler_surrogate_refresh_time": schema.Int64Attribute{
+							MarkdownDescription: "Refresh time for re-validation of surrogacy in minutes",
+							Computed:            true,
+						},
 						"zscaler_surrogate_refresh_time_unit": schema.StringAttribute{
 							MarkdownDescription: "Refresh Time unit",
 							Computed:            true,
@@ -492,6 +500,14 @@ func (d *CiscoSecureInternetGatewayFeatureTemplateDataSource) Schema(ctx context
 							Computed:            true,
 						},
 						"threshold_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"interval": schema.Int64Attribute{
+							MarkdownDescription: "Probe interval <10..600> seconds",
+							Computed:            true,
+						},
+						"interval_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

@@ -1,0 +1,25 @@
+---
+name: Cellular cEdge Profile
+model: cellular-cedge-profile
+minimum_version: 15.0.0
+attributes:
+  - model_name: id
+    tf_name: profile_id
+    example: 1
+  - model_name: apn
+    tf_name: access_point_name
+    example: APN1
+  - model_name: authentication
+    tf_name: authentication_type
+    example: chap
+  - model_name: pdn-type
+    tf_name: packet_data_network_type
+    example: ipv4
+  - model_name: username
+    tf_name: profile_username
+    example: MyUsername
+  - model_name: password
+    tf_name: profile_password
+    example: MyPassword
+  - model_name: no-overwrite
+    example: false

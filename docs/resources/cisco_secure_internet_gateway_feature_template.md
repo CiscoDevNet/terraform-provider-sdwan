@@ -51,6 +51,7 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
       ipsec_replay_window           = 1024
       ipsec_ciphersuite             = "aes256-cbc-sha1"
       ipsec_perfect_forward_secrecy = "group-14"
+      tracker                       = "test"
       track_enable                  = false
       tunnel_public_ip              = "5.5.5.5"
     }
@@ -77,6 +78,7 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
       zscaler_surrogate_idle_time                     = 100
       zscaler_surrogate_display_time_unit             = "MINUTE"
       zscaler_surrogate_ip_enforce_for_known_browsers = true
+      zscaler_surrogate_refresh_time                  = 12345
       zscaler_surrogate_refresh_time_unit             = "MINUTE"
       zscaler_aup_enabled                             = true
       zscaler_aup_block_internet_until_accepted       = true
@@ -93,6 +95,7 @@ resource "sdwan_cisco_secure_internet_gateway_feature_template" "example" {
       name             = "TRACKER1"
       endpoint_api_url = "https://1.1.1.1"
       threshold        = 500
+      interval         = 60
       multiplier       = 4
       tracker_type     = "SIG"
     }
@@ -208,6 +211,7 @@ Optional:
 - `tcp_mss_variable` (String) Variable name
 - `track_enable` (Boolean) Enable/disable SIG tracking
   - Default value: `true`
+- `tracker` (String) Enable tracker for this interface
 - `tunnel_dc_preference` (String) SIG Tunnel Data Center
   - Choices: `primary-dc`, `secondary-dc`
   - Default value: `primary-dc`
@@ -274,6 +278,8 @@ Optional:
   - Default value: `false`
 - `zscaler_surrogate_ip_enforce_for_known_browsers` (Boolean) Enforce Surrogate IP for known browsers
   - Default value: `false`
+- `zscaler_surrogate_refresh_time` (Number) Refresh time for re-validation of surrogacy in minutes
+  - Default value: `0`
 - `zscaler_surrogate_refresh_time_unit` (String) Refresh Time unit
   - Choices: `MINUTE`, `HOUR`, `DAY`
   - Default value: `MINUTE`
@@ -304,6 +310,10 @@ Optional:
 
 - `endpoint_api_url` (String) API url of endpoint
 - `endpoint_api_url_variable` (String) Variable name
+- `interval` (Number) Probe interval <10..600> seconds
+  - Range: `20`-`600`
+  - Default value: `60`
+- `interval_variable` (String) Variable name
 - `multiplier` (Number) Probe failure multiplier <1..10> failed attempts
   - Range: `1`-`10`
   - Default value: `3`

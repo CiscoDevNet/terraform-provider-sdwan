@@ -1,0 +1,63 @@
+---
+name: eigrp
+minimum_version: 15.0.0
+attributes:
+- model_name: as-num
+  tf_name: as_number
+  example: 1
+- model_name: address-family
+  tf_name: address_families
+  attributes:
+  - model_name: type
+    example: ipv4
+  - model_name: redistribute
+    tf_name: redistributes
+    attributes:
+    - model_name: protocol
+      example: bgp
+    - model_name: route-map
+      tf_name: route_policy
+      example: 1.2.3.4
+  - model_name: network
+    tf_name: networks
+    attributes:
+    - model_name: prefix
+      example: 1.2.3.4/24
+- model_name: hello-interval
+  example: 5
+- model_name: hold-time
+  example: 15
+- model_name: name
+  tf_name: route_policy_name
+  example: RP1
+- model_name: filter
+  example: false
+- model_name: type
+  tf_name: authentication_type
+  example: hmac-sha-256
+- model_name: auth-key
+  tf_name: hmac_authentication_key
+  example: myAuthKey
+- model_name: key
+  tf_name: keys
+  exclude_test: true
+  attributes:
+  - model_name: key_id
+    tf_name: md5_key_id
+    example: 1
+  - model_name: keystring
+    tf_name: md5_authentication_key
+    example: myAuthKey
+- model_name: af-interface
+  tf_name: interfaces
+  attributes:
+  - model_name: name
+    tf_name: interface_name
+    example: Ethernet1
+  - model_name: shutdown
+    example: false
+  - model_name: summary-address
+    tf_name: summary_addresses
+    attributes: 
+    - model_name: prefix
+      example: 1.2.3.4/24

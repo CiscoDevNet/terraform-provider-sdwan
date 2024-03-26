@@ -33,11 +33,11 @@ func TestAccDataSourceSdwanDevice(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanDeviceConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.device_id", "10.0.0.14"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "cd4aa06a-dee3-43c5-bb95-2a1b29cb86e2"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.site_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "EE16A1C0BAD74974AF666E446F15605F"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.hostname", "vsmart"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.device_id", "100.0.0.101"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "a6e71b79-1cf1-4387-b90d-1835d4501c7f"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.site_id", "100"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "E6486A92D4404888BC795DB045AF86D1"),
+					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.hostname", "Controller01"),
 					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.reachability", "reachable"),
 					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.status", "normal"),
 					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.state", "green"),
@@ -51,7 +51,7 @@ const testAccDataSourceSdwanDeviceConfig = `
 
 
 data "sdwan_device" "test" {
-  serial_number = "EE16A1C0BAD74974AF666E446F15605F"
-  name = "vsmart"
+  serial_number = "E6486A92D4404888BC795DB045AF86D1"
+  name = "Controller01"
 }
 `

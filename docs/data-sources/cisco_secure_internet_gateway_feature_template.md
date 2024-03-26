@@ -88,6 +88,7 @@ Read-Only:
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
 - `tcp_mss_variable` (String) Variable name
 - `track_enable` (Boolean) Enable/disable SIG tracking
+- `tracker` (String) Enable tracker for this interface
 - `tunnel_dc_preference` (String) SIG Tunnel Data Center
 - `tunnel_destination` (String) Tunnel destination IP address
 - `tunnel_destination_variable` (String) Variable name
@@ -131,6 +132,7 @@ Read-Only:
 - `zscaler_surrogate_idle_time` (Number) Idle time to disassociation
 - `zscaler_surrogate_ip` (Boolean) Enable Surrogate IP
 - `zscaler_surrogate_ip_enforce_for_known_browsers` (Boolean) Enforce Surrogate IP for known browsers
+- `zscaler_surrogate_refresh_time` (Number) Refresh time for re-validation of surrogacy in minutes
 - `zscaler_surrogate_refresh_time_unit` (String) Refresh Time unit
 - `zscaler_xff_forward` (Boolean) XFF forwarding enabled
 
@@ -154,6 +156,8 @@ Read-Only:
 
 - `endpoint_api_url` (String) API url of endpoint
 - `endpoint_api_url_variable` (String) Variable name
+- `interval` (Number) Probe interval <10..600> seconds
+- `interval_variable` (String) Variable name
 - `multiplier` (Number) Probe failure multiplier <1..10> failed attempts
 - `multiplier_variable` (String) Variable name
 - `name` (String) Tracker name

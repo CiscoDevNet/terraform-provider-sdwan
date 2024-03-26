@@ -311,9 +311,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	if value := res.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); value.Exists(){{if ne .ConditionalAttribute.Name ""}} && data.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && value.String() != ""{{end}} {
 		if {{.BoolEmptyString}} && value.String() == "" {
 			data.{{toGoName .TfName}} = types.BoolValue(true)
-		} else {
+		}{{if not .BoolEmptyString}} else {
 			data.{{toGoName .TfName}} = types.BoolValue(value.Bool())
 		}
+		{{- end}}
 	} else {
 		data.{{toGoName .TfName}} = types.BoolNull()
 	}
@@ -353,9 +354,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			if cValue := v.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); cValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && item.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cValue.String() != ""{{end}} {
 				if {{.BoolEmptyString}} && cValue.String() == "" {
 					item.{{toGoName .TfName}} = types.BoolValue(true)
-				} else {
+				}{{if not .BoolEmptyString}} else {
 					item.{{toGoName .TfName}} = types.BoolValue(cValue.Bool())
 				}
+				{{- end}}
 			} else {
 				item.{{toGoName .TfName}} = types.BoolNull()
 			}
@@ -394,9 +396,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					if ccValue := cv.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); ccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && cItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && ccValue.String() != ""{{end}} {
 						if {{.BoolEmptyString}} && ccValue.String() == "" {
 							cItem.{{toGoName .TfName}} = types.BoolValue(true)
-						} else {
+						}{{if not .BoolEmptyString}} else {
 							cItem.{{toGoName .TfName}} = types.BoolValue(ccValue.Bool())
 						}
+						{{- end}}
 					} else {
 						cItem.{{toGoName .TfName}} = types.BoolNull()
 					}
@@ -435,9 +438,10 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							if cccValue := ccv.Get("{{range .DataPath}}{{.}}.{{end}}{{getResponseModelName .}}"); cccValue.Exists(){{if ne .ConditionalAttribute.Name ""}} && ccItem.{{toGoName .ConditionalAttribute.Name}}.ValueString() == "{{.ConditionalAttribute.Value}}"{{end}}{{if .AlwaysInclude}} && cccValue.String() != ""{{end}} {
 								if {{.BoolEmptyString}} && cccValue.String() == "" {
 									ccItem.{{toGoName .TfName}} = types.BoolValue(true)
-								} else {
+								}{{if not .BoolEmptyString}} else {
 									ccItem.{{toGoName .TfName}} = types.BoolValue(cccValue.Bool())
 								}
+								{{- end}}
 							} else {
 								ccItem.{{toGoName .TfName}} = types.BoolNull()
 							}

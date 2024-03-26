@@ -15,7 +15,7 @@ attributes:
         type: String
         description: Chassis Number
         id: true
-        example: ISR-7C260167-7A6C-628A-00A6-A30214119017
+        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
       - model_name: site-id
         tf_name: site_id
         type: String
@@ -26,12 +26,12 @@ attributes:
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: d4da6eb56aca4a5a884688ed25abcaed
+        example: ADC5837E
       - model_name: host-name
         tf_name: hostname
         type: String
         description: Hostname for respective device
-        example: router1
+        example: Edge1
         exclude_test: true
       - model_name: validity
         type: String

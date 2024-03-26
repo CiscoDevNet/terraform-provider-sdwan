@@ -338,8 +338,6 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "log" {
 						if true && ccValue.String() == "" {
 							cItem.Log = types.BoolValue(true)
-						} else {
-							cItem.Log = types.BoolValue(ccValue.Bool())
 						}
 					} else {
 						cItem.Log = types.BoolNull()
