@@ -4,12 +4,12 @@ model: cellular-profile
 minimum_version: 15.0.0
 attributes:
   - model_name: if-name
-    example: example
+    example: Ethernet1
   - model_name: profile-id
     example: 1
   - model_name: apn
     tf_name: access_point_name
-    example: example
+    example: APN1
   - model_name: auth
     tf_name: authentication_type
     example: CHAP
@@ -18,7 +18,7 @@ attributes:
     example: 1.2.3.4
   - model_name: name
     tf_name: profile_name
-    example: example
+    example: PROFILE1
   - model_name: pdn-type
     tf_name: packet_data_network_type
     example: ipv4
@@ -33,4 +33,4 @@ attributes:
     example: 1.2.3.4
   - model_name: secondary-dns
     tf_name: secondary_dns_address
-    example: 1.2.3.4
+    example: 1.2.3.5
