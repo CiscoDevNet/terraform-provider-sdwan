@@ -44,8 +44,8 @@ type CEdgePIM struct {
 	RpCandidates                  []CEdgePIMRpCandidates     `tfsdk:"rp_candidates"`
 	BsrCandidate                  types.String               `tfsdk:"bsr_candidate"`
 	BsrCandidateVariable          types.String               `tfsdk:"bsr_candidate_variable"`
-	HaskMaskLength                types.String               `tfsdk:"hask_mask_length"`
-	HaskMaskLengthVariable        types.String               `tfsdk:"hask_mask_length_variable"`
+	HashMaskLength                types.String               `tfsdk:"hash_mask_length"`
+	HashMaskLengthVariable        types.String               `tfsdk:"hash_mask_length_variable"`
 	Priority                      types.Int64                `tfsdk:"priority"`
 	PriorityVariable              types.String               `tfsdk:"priority_variable"`
 	RpCandidateAccessList         types.String               `tfsdk:"rp_candidate_access_list"`
@@ -277,17 +277,17 @@ func (data CEdgePIM) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"pim.bsr-candidate.bsr-interface-name."+"vipValue", data.BsrCandidate.ValueString())
 	}
 
-	if !data.HaskMaskLengthVariable.IsNull() {
+	if !data.HashMaskLengthVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipVariableName", data.HaskMaskLengthVariable.ValueString())
-	} else if data.HaskMaskLength.IsNull() {
+		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipVariableName", data.HashMaskLengthVariable.ValueString())
+	} else if data.HashMaskLength.IsNull() {
 		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipValue", data.HaskMaskLength.ValueString())
+		body, _ = sjson.Set(body, path+"pim.bsr-candidate.mask."+"vipValue", data.HashMaskLength.ValueString())
 	}
 
 	if !data.PriorityVariable.IsNull() {
@@ -708,22 +708,22 @@ func (data *CEdgePIM) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "pim.bsr-candidate.mask.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.HaskMaskLength = types.StringNull()
+			data.HashMaskLength = types.StringNull()
 
 			v := res.Get(path + "pim.bsr-candidate.mask.vipVariableName")
-			data.HaskMaskLengthVariable = types.StringValue(v.String())
+			data.HashMaskLengthVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.HaskMaskLength = types.StringNull()
-			data.HaskMaskLengthVariable = types.StringNull()
+			data.HashMaskLength = types.StringNull()
+			data.HashMaskLengthVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "pim.bsr-candidate.mask.vipValue")
-			data.HaskMaskLength = types.StringValue(v.String())
-			data.HaskMaskLengthVariable = types.StringNull()
+			data.HashMaskLength = types.StringValue(v.String())
+			data.HashMaskLengthVariable = types.StringNull()
 		}
 	} else {
-		data.HaskMaskLength = types.StringNull()
-		data.HaskMaskLengthVariable = types.StringNull()
+		data.HashMaskLength = types.StringNull()
+		data.HashMaskLengthVariable = types.StringNull()
 	}
 	if value := res.Get(path + "pim.bsr-candidate.priority.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1022,7 +1022,7 @@ func (data *CEdgePIM) hasChanges(ctx context.Context, state *CEdgePIM) bool {
 	if !data.BsrCandidate.Equal(state.BsrCandidate) {
 		hasChanges = true
 	}
-	if !data.HaskMaskLength.Equal(state.HaskMaskLength) {
+	if !data.HashMaskLength.Equal(state.HashMaskLength) {
 		hasChanges = true
 	}
 	if !data.Priority.Equal(state.Priority) {

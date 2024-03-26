@@ -9,18 +9,18 @@ attributes:
     attributes:
     - model_name: if-name
       tf_name: interface_name
-      example: example
+      example: Ethernet1
     - model_name: scope
       example: 1
   - model_name: if-name
     tf_name: interface_name
-    example: example
+    example: Ethernet1
   - model_name: rp-candidate
     tf_name: rp_candidates
     attributes:
     - model_name: pim-interface-name
       tf_name: interface
-      example: example-interface
+      example: Ethernet1
     - model_name: group-list
       tf_name: access_list
       example: 1
@@ -30,10 +30,10 @@ attributes:
       example: 2
   - model_name: bsr-interface-name
     tf_name: bsr_candidate
-    example: example-interface
+    example: Ethernet1
   - model_name: mask
-    tf_name: hask_mask_length
-    example: 100
+    tf_name: hash_mask_length
+    example: 24
   - model_name: priority
     example: 1
   - model_name: accept-rp-candidate
@@ -62,7 +62,7 @@ attributes:
     attributes:
     - model_name: name
       tf_name: interface_name
-      example: example-interface
+      example: Ethernet1
     - model_name: query-interval
       example: 30
     - model_name: join-prune-interval

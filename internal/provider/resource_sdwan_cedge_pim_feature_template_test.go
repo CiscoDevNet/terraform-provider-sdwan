@@ -33,7 +33,7 @@ func TestAccSdwanCEdgePIMFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanCEdgePIMFeatureTemplateConfig_minimum(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interface_name", "example"),
+					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interface_name", "Ethernet1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "scope", "1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "spt_threshold", "0"),
 				),
@@ -42,15 +42,15 @@ func TestAccSdwanCEdgePIMFeatureTemplate(t *testing.T) {
 				Config: testAccSdwanCEdgePIMFeatureTemplateConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "auto_rp", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_announce_fields.0.interface_name", "example"),
+					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_announce_fields.0.interface_name", "Ethernet1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_announce_fields.0.scope", "1"),
-					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interface_name", "example"),
-					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_candidates.0.interface", "example-interface"),
+					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interface_name", "Ethernet1"),
+					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_candidates.0.interface", "Ethernet1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_candidates.0.access_list", "1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_candidates.0.interval", "100"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_candidates.0.priority", "2"),
-					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "bsr_candidate", "example-interface"),
-					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "hask_mask_length", "100"),
+					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "bsr_candidate", "Ethernet1"),
+					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "hash_mask_length", "24"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "priority", "1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_candidate_access_list", "120"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "scope", "1"),
@@ -60,7 +60,7 @@ func TestAccSdwanCEdgePIMFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_addresses.0.access_list", "99"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "rp_addresses.0.override", "false"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "spt_threshold", "0"),
-					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interfaces.0.interface_name", "example-interface"),
+					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interfaces.0.interface_name", "Ethernet1"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interfaces.0.query_interval", "30"),
 					resource.TestCheckResourceAttr("sdwan_cedge_pim_feature_template.test", "interfaces.0.join_prune_interval", "60"),
 				),
@@ -75,7 +75,7 @@ func testAccSdwanCEdgePIMFeatureTemplateConfig_minimum() string {
 		name = "TF_TEST_MIN"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		interface_name = "example"
+		interface_name = "Ethernet1"
 		scope = 1
 		spt_threshold = "0"
 	}
@@ -90,18 +90,18 @@ func testAccSdwanCEdgePIMFeatureTemplateConfig_all() string {
 		device_types = ["vedge-C8000V"]
 		auto_rp = true
 		rp_announce_fields = [{
-			interface_name = "example"
+			interface_name = "Ethernet1"
 			scope = 1
 		}]
-		interface_name = "example"
+		interface_name = "Ethernet1"
 		rp_candidates = [{
-			interface = "example-interface"
+			interface = "Ethernet1"
 			access_list = "1"
 			interval = 100
 			priority = 2
 		}]
-		bsr_candidate = "example-interface"
-		hask_mask_length = "100"
+		bsr_candidate = "Ethernet1"
+		hash_mask_length = "24"
 		priority = 1
 		rp_candidate_access_list = "120"
 		scope = 1
@@ -114,7 +114,7 @@ func testAccSdwanCEdgePIMFeatureTemplateConfig_all() string {
 		}]
 		spt_threshold = "0"
 		interfaces = [{
-			interface_name = "example-interface"
+			interface_name = "Ethernet1"
 			query_interval = 30
 			join_prune_interval = 60
 		}]

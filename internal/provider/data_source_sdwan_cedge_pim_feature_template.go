@@ -182,11 +182,11 @@ func (d *CEdgePIMFeatureTemplateDataSource) Schema(ctx context.Context, req data
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"hask_mask_length": schema.StringAttribute{
+			"hash_mask_length": schema.StringAttribute{
 				MarkdownDescription: "Hash Mask length for RP selection",
 				Computed:            true,
 			},
-			"hask_mask_length_variable": schema.StringAttribute{
+			"hash_mask_length_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

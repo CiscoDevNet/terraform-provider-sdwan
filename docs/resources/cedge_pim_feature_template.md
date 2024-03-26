@@ -22,21 +22,21 @@ resource "sdwan_cedge_pim_feature_template" "example" {
   auto_rp      = true
   rp_announce_fields = [
     {
-      interface_name = "example"
+      interface_name = "Ethernet1"
       scope          = 1
     }
   ]
-  interface_name = "example"
+  interface_name = "Ethernet1"
   rp_candidates = [
     {
-      interface   = "example-interface"
+      interface   = "Ethernet1"
       access_list = "1"
       interval    = 100
       priority    = 2
     }
   ]
-  bsr_candidate            = "example-interface"
-  hask_mask_length         = "100"
+  bsr_candidate            = "Ethernet1"
+  hash_mask_length         = "24"
   priority                 = 1
   rp_candidate_access_list = "120"
   scope                    = 1
@@ -52,7 +52,7 @@ resource "sdwan_cedge_pim_feature_template" "example" {
   spt_threshold = "0"
   interfaces = [
     {
-      interface_name      = "example-interface"
+      interface_name      = "Ethernet1"
       query_interval      = 30
       join_prune_interval = 60
     }
@@ -80,8 +80,8 @@ resource "sdwan_cedge_pim_feature_template" "example" {
 - `default` (Boolean) Turn SSM On / Off
   - Default value: `false`
 - `default_variable` (String) Variable name
-- `hask_mask_length` (String) Hash Mask length for RP selection
-- `hask_mask_length_variable` (String) Variable name
+- `hash_mask_length` (String) Hash Mask length for RP selection
+- `hash_mask_length_variable` (String) Variable name
 - `interface_name` (String) Set RP Discovery Interface Name
 - `interface_name_variable` (String) Variable name
 - `interfaces` (Attributes List) Set PIM interface parameters (see [below for nested schema](#nestedatt--interfaces))

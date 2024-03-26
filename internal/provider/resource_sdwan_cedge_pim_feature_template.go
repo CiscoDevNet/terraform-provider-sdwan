@@ -201,14 +201,14 @@ func (r *CEdgePIMFeatureTemplateResource) Schema(ctx context.Context, req resour
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"hask_mask_length": schema.StringAttribute{
+			"hash_mask_length": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Hash Mask length for RP selection").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
-			"hask_mask_length_variable": schema.StringAttribute{
+			"hash_mask_length_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

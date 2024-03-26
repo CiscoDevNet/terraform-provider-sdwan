@@ -36,8 +36,8 @@ data "sdwan_cedge_pim_feature_template" "example" {
 - `default_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
-- `hask_mask_length` (String) Hash Mask length for RP selection
-- `hask_mask_length_variable` (String) Variable name
+- `hash_mask_length` (String) Hash Mask length for RP selection
+- `hash_mask_length_variable` (String) Variable name
 - `interface_name` (String) Set RP Discovery Interface Name
 - `interface_name_variable` (String) Variable name
 - `interfaces` (Attributes List) Set PIM interface parameters (see [below for nested schema](#nestedatt--interfaces))
