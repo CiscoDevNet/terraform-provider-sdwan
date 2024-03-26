@@ -34,7 +34,7 @@ func TestAccSdwanCellularCEdgeProfileFeatureTemplate(t *testing.T) {
 				Config: testAccSdwanCellularCEdgeProfileFeatureTemplateConfig_minimum(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "profile_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "example"),
+					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "APN1"),
 					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "profile_username", "MyUsername"),
 					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "profile_password", "MyPassword"),
 				),
@@ -43,7 +43,7 @@ func TestAccSdwanCellularCEdgeProfileFeatureTemplate(t *testing.T) {
 				Config: testAccSdwanCellularCEdgeProfileFeatureTemplateConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "profile_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "example"),
+					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "APN1"),
 					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "authentication_type", "chap"),
 					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "packet_data_network_type", "ipv4"),
 					resource.TestCheckResourceAttr("sdwan_cellular_cedge_profile_feature_template.test", "profile_username", "MyUsername"),
@@ -62,7 +62,7 @@ func testAccSdwanCellularCEdgeProfileFeatureTemplateConfig_minimum() string {
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
 		profile_id = 1
-		access_point_name = "example"
+		access_point_name = "APN1"
 		profile_username = "MyUsername"
 		profile_password = "MyPassword"
 	}
@@ -76,7 +76,7 @@ func testAccSdwanCellularCEdgeProfileFeatureTemplateConfig_all() string {
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
 		profile_id = 1
-		access_point_name = "example"
+		access_point_name = "APN1"
 		authentication_type = "chap"
 		packet_data_network_type = "ipv4"
 		profile_username = "MyUsername"

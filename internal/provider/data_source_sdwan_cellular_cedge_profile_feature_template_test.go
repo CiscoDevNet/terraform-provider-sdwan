@@ -34,7 +34,7 @@ func TestAccDataSourceSdwanCellularCEdgeProfileFeatureTemplate(t *testing.T) {
 				Config: testAccDataSourceSdwanCellularCEdgeProfileFeatureTemplateConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "example"),
+					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "APN1"),
 					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "authentication_type", "chap"),
 					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "packet_data_network_type", "ipv4"),
 					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_username", "MyUsername"),
@@ -53,7 +53,7 @@ resource "sdwan_cellular_cedge_profile_feature_template" "test" {
   description = "Terraform integration test"
   device_types = ["vedge-C8000V"]
   profile_id = 1
-  access_point_name = "example"
+  access_point_name = "APN1"
   authentication_type = "chap"
   packet_data_network_type = "ipv4"
   profile_username = "MyUsername"

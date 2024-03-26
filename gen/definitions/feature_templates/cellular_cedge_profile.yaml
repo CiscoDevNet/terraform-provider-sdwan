@@ -8,7 +8,7 @@ attributes:
     example: 1
   - model_name: apn
     tf_name: access_point_name
-    example: example
+    example: APN1
   - model_name: authentication
     tf_name: authentication_type
     example: chap

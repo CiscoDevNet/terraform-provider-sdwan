@@ -20,7 +20,7 @@ resource "sdwan_cellular_cedge_profile_feature_template" "example" {
   description              = "My Example"
   device_types             = ["vedge-C8000V"]
   profile_id               = 1
-  access_point_name        = "example"
+  access_point_name        = "APN1"
   authentication_type      = "chap"
   packet_data_network_type = "ipv4"
   profile_username         = "MyUsername"
