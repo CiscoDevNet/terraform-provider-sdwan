@@ -13,6 +13,13 @@
 - Add `sdwan_cisco_ospfv3_feature_template` resource and data source
 - Add `sdwan_security_app_hosting_feature_template` resource and data source
 - Add `sdwan_cellular_cedge_profile_feature_template` resource and data source
+- Add `sdwan_vpn_interface_dsl_pppoa_feature_template` resource and data source
+- Add `sdwan_vpn_interface_dsl_pppoe_feature_template` resource and data source
+- Add `sdwan_vpn_interface_ethernet_pppoe_feature_template` resource and data source
+- Add `sdwan_vpn_interface_dsl_ipoe_feature_template` resource and data source
+- Add `sdwan_vpn_interface_multilink_feature_template` resource and data source
+- Add `sdwan_vpn_interface_t1_e1_serial_feature_template` resource and data source
+- Add `sdwan_cellular_controller_feature_template` resource and data source
 
 ## 0.3.6
 

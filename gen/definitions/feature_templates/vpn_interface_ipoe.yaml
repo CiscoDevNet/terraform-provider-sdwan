@@ -1,0 +1,264 @@
+---
+name: VPN Interface DSL IPoE
+model: vpn-interface-ipoe
+minimum_version: 15.0.0
+attributes:
+  - model_name: if-name
+    tf_name: ethernet_interface_name
+    example: Example
+  - model_name: address
+    tf_name: ipv4_address
+    example: 1.2.3.4/24
+  - model_name: dhcp-client
+    tf_name: enable_dhcp
+    example: false
+  - model_name: dhcp-distance
+    example: 1234
+  - model_name: dhcp-helper
+    example: 3
+  - model_name: controller-type
+    tf_name: internal_controller_type
+    example: ipoe
+  - model_name: shutdown
+    example: true
+  - model_name: description
+    tf_name: interface_description
+    example: My Description
+  - model_name: vdsl
+    attributes: 
+    - model_name: name
+      tf_name: controller_vdsl_slot
+      example: Example
+    - model_name: sra
+      example: true
+    - model_name: adsl1
+      tf_name: mode_adsl1
+      example: false
+    - model_name: adsl2
+      tf_name: mode_adsl2
+      example: false
+    - model_name: adsl2plus
+      tf_name: mode_adsl2plus
+      example: false
+    - model_name: vdsl2
+      tf_name: mode_vdsl2
+      example: false
+    - model_name: ansi
+      tf_name: mode_ansi
+      example: false
+    - model_name: modem
+      tf_name: vdsl_modem_configuration
+      example: 100
+  - model_name: encap
+    example: 4094
+  - model_name: dial-pool-number
+    tf_name: dialer_pool_number
+    example: 255
+  - model_name: ppp-max-payload
+    tf_name: ppp_maximum_payload
+    example: 1790
+  - model_name: address-negotiated
+    tf_name: dialer_address_negotiated
+    example: false
+  - model_name: unnumbered
+    tf_name: unnumbered_loopback_interface
+    example: example
+  - model_name: method
+    tf_name: ppp_authentication_protocol
+    example: chap
+  - model_name: pap
+    tf_name: ppp_authentication_protocol_pap
+    example: false
+  - model_name: hostname
+    tf_name: chap_hostname
+    example: chap-example
+  - model_name: ppp-auth-password
+    tf_name: chap_password
+    data_path: [ppp, chap, password]
+    example: myPassword
+  - model_name: username-string
+    tf_name: pap_username
+    example: pap-username
+  - model_name: password
+    tf_name: pap_password
+    example: true
+  - model_name: ppp-auth-password
+    tf_name: pap_outbound_password
+    data_path: [ppp, pap, sent-username, username]
+    example: myPassword
+  - model_name: encapsulation
+    attributes:
+    - model_name: encap
+      tf_name: encapsulation_type
+      example: gre
+    - model_name: preference
+      example: 4294967
+    - model_name: weight
+      example: 250
+  - model_name: group
+    tf_name: groups
+    example: 42949672
+  - model_name: border
+    example: true
+  - model_name: per-tunnel-qos
+    example: true
+  - model_name: per-tunnel-qos-aggregator
+    example: false
+  - model_name: value
+    tf_name: color
+    example: custom1
+  - model_name: last-resort-circuit
+    example: false
+  - model_name: low-bandwidth-link
+    example: false
+  - model_name: tunnel-tcp-mss-adjust
+    tf_name: tunnel_tcp_mss
+    example: 1460
+  - model_name: clear-dont-fragment
+    example: false
+  - model_name: network-broadcast
+    tf_name: network_broadcast_1
+    data_path: [tunnel-interface]
+    example: false
+  - model_name: max-control-connections
+    example: 8
+  - model_name: control-connections
+    example: true
+  - model_name: vbond-as-stun-server
+    example: false
+  - model_name: exclude-controller-group-list
+    example: 100
+  - model_name: vmanage-connection-preference
+    example: 5
+  - model_name: port-hop
+    example: false
+  - model_name: restrict
+    example: false
+  - model_name: carrier
+    example: carrier1
+  - model_name: nat-refresh-interval
+    example: 15
+  - model_name: hello-interval
+    example: 1000
+  - model_name: hello-tolerance
+    example: 12
+  - model_name: bind
+    tf_name: bind_loopback_tunnel
+    example: 12
+  - model_name: all
+    example: false
+  - model_name: network-broadcast
+    tf_name: network_broadcast_2
+    data_path: [tunnel-interface]
+    example: false
+  - model_name: bgp
+    example: false
+  - model_name: dhcp
+    example: true
+  - model_name: dns
+    example: true
+  - model_name: icmp
+    example: true
+  - model_name: sshd
+    tf_name: ssh
+    example: false
+  - model_name: netconf
+    example: false
+  - model_name: ospf
+    example: false
+  - model_name: stun
+    example: false
+  - model_name: snmp
+    example: false
+  - model_name: https
+    example: true
+  - model_name: nat
+    example: true
+  - model_name: refresh
+    tf_name: refresh_mode
+    example: outbound
+  - model_name: udp-timeout
+    example: 1
+  - model_name: tcp-timeout
+    example: 60
+  - model_name: block-icmp-error
+    example: true
+  - model_name: respond-to-ping
+    example: false
+  - model_name: port-forward
+    attributes:
+    - model_name: port-start
+      tf_name: port_start_range
+      example: 0
+    - model_name: port-end
+      tf_name: port_end_range
+      example: 65530
+    - model_name: proto
+      tf_name: protocol
+      example: tcp
+    - model_name: private-vpn
+      example: 65530
+    - model_name: private-ip-address
+      example: 1.2.3.4
+  - model_name: qos-adaptive
+    tf_name: adaptive_qos
+    example: true
+  - model_name: period
+    tf_name: adapt_period
+    example: 15
+  - model_name: bandwidth-down
+    tf_name: shaping_rate_downstream_default
+    example: 10000000
+  - model_name: dmin
+    tf_name: shaping_rate_downstream_min
+    example: 10000000
+  - model_name: dmax
+    tf_name: shaping_rate_downstream_max
+    example: 10000000
+  - model_name: bandwidth-up
+    tf_name: shaping_rate_upstream_default
+    example: 10000000
+  - model_name: umin
+    tf_name: shaping_rate_upstream_min
+    example: 10000000
+  - model_name: umax
+    tf_name: shaping_rate_upstream_max
+    example: 10000000
+  - model_name: shaping-rate
+    example: 10000000
+  - model_name: qos-map
+    example: test
+  - model_name: qos-map-vpn
+    tf_name: vpn_qos_map
+    example: test
+  - model_name: bandwidth-upstream
+    example: 214748300
+  - model_name: bandwidth-downstream
+    example: 214748300
+  - model_name: rule-name
+    tf_name: write_rule
+    example: test_rule
+  - model_name: access-list
+    attributes:
+    - model_name: direction
+      example: in
+    - model_name: acl-name
+      example: Egress ACL - IPv4
+  - model_name: policer
+    attributes:
+    - model_name: direction
+      example: in
+    - model_name: policer-name
+      example: example
+  - model_name: mtu
+    tf_name: ip_mtu
+    example: 1500
+  - model_name: tcp-mss-adjust
+    tf_name: tcp_mss
+    example: 720
+  - model_name: tloc-extension
+    example: tloc
+  - model_name: tracker
+    example: tracker1
+  - model_name: ip-directed-broadcast
+    example: true
