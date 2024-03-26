@@ -556,7 +556,7 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 			for _, v := range r.Get("dataType.values").Array() {
 				attr.EnumValues = append(attr.EnumValues, v.Get("value").String())
 			}
-		} else if contains([]string{"number", "numberFixedInterval", "holdTime"}, t) {
+		} else if contains([]string{"number", "numberFixedInterval", "holdTime", "bandwidth"}, t) {
 			attr.Type = "Int64"
 			if r.Get("dataType.min").Exists() {
 				attr.MinInt = r.Get("dataType.min").Int()
