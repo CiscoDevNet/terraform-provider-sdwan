@@ -30,32 +30,32 @@ import (
 )
 
 type CiscoWirelessLAN struct {
-	Id                          types.String           `tfsdk:"id"`
-	Version                     types.Int64            `tfsdk:"version"`
-	TemplateType                types.String           `tfsdk:"template_type"`
-	Name                        types.String           `tfsdk:"name"`
-	Description                 types.String           `tfsdk:"description"`
-	DeviceTypes                 types.Set              `tfsdk:"device_types"`
-	Shutdown24ghz               types.Bool             `tfsdk:"shutdown_2_4ghz"`
-	Shutdown24ghzVariable       types.String           `tfsdk:"shutdown_2_4ghz_variable"`
-	Shutdown5ghz                types.Bool             `tfsdk:"shutdown_5ghz"`
-	Shutdown5ghzVariable        types.String           `tfsdk:"shutdown_5ghz_variable"`
-	Ssid                        []CiscoWirelessLANSsid `tfsdk:"ssid"`
-	Country                     types.String           `tfsdk:"country"`
-	CountryVariable             types.String           `tfsdk:"country_variable"`
-	Username                    types.String           `tfsdk:"username"`
-	UsernameVariable            types.String           `tfsdk:"username_variable"`
-	Password                    types.String           `tfsdk:"password"`
-	PasswordVariable            types.String           `tfsdk:"password_variable"`
-	ControllerIpAddress         types.String           `tfsdk:"controller_ip_address"`
-	ControllerIpAddressVariable types.String           `tfsdk:"controller_ip_address_variable"`
-	SubnetMask                  types.String           `tfsdk:"subnet_mask"`
-	SubnetMaskVariable          types.String           `tfsdk:"subnet_mask_variable"`
-	DefaultGateway              types.String           `tfsdk:"default_gateway"`
-	DefaultGatewayVariable      types.String           `tfsdk:"default_gateway_variable"`
+	Id                               types.String            `tfsdk:"id"`
+	Version                          types.Int64             `tfsdk:"version"`
+	TemplateType                     types.String            `tfsdk:"template_type"`
+	Name                             types.String            `tfsdk:"name"`
+	Description                      types.String            `tfsdk:"description"`
+	DeviceTypes                      types.Set               `tfsdk:"device_types"`
+	Shutdown24ghz                    types.Bool              `tfsdk:"shutdown_2_4ghz"`
+	Shutdown24ghzVariable            types.String            `tfsdk:"shutdown_2_4ghz_variable"`
+	Shutdown5ghz                     types.Bool              `tfsdk:"shutdown_5ghz"`
+	Shutdown5ghzVariable             types.String            `tfsdk:"shutdown_5ghz_variable"`
+	Ssids                            []CiscoWirelessLANSsids `tfsdk:"ssids"`
+	Country                          types.String            `tfsdk:"country"`
+	CountryVariable                  types.String            `tfsdk:"country_variable"`
+	Username                         types.String            `tfsdk:"username"`
+	UsernameVariable                 types.String            `tfsdk:"username_variable"`
+	Password                         types.String            `tfsdk:"password"`
+	PasswordVariable                 types.String            `tfsdk:"password_variable"`
+	ControllerIpAddress              types.String            `tfsdk:"controller_ip_address"`
+	ControllerIpAddressVariable      types.String            `tfsdk:"controller_ip_address_variable"`
+	ControllerSubnetMask             types.String            `tfsdk:"controller_subnet_mask"`
+	ControllerSubnetMaskVariable     types.String            `tfsdk:"controller_subnet_mask_variable"`
+	ControllerDefaultGateway         types.String            `tfsdk:"controller_default_gateway"`
+	ControllerDefaultGatewayVariable types.String            `tfsdk:"controller_default_gateway_variable"`
 }
 
-type CiscoWirelessLANSsid struct {
+type CiscoWirelessLANSsids struct {
 	Optional                   types.Bool   `tfsdk:"optional"`
 	WirelessNetworkName        types.String `tfsdk:"wireless_network_name"`
 	AdminState                 types.Bool   `tfsdk:"admin_state"`
@@ -69,10 +69,10 @@ type CiscoWirelessLANSsid struct {
 	SecurityTypeVariable       types.String `tfsdk:"security_type_variable"`
 	RadiusServerIp             types.String `tfsdk:"radius_server_ip"`
 	RadiusServerIpVariable     types.String `tfsdk:"radius_server_ip_variable"`
-	AuthenticationPort         types.Int64  `tfsdk:"authentication_port"`
-	AuthenticationPortVariable types.String `tfsdk:"authentication_port_variable"`
-	SharedSecret               types.String `tfsdk:"shared_secret"`
-	SharedSecretVariable       types.String `tfsdk:"shared_secret_variable"`
+	RadiusServerPort           types.Int64  `tfsdk:"radius_server_port"`
+	RadiusServerPortVariable   types.String `tfsdk:"radius_server_port_variable"`
+	RadiusServerSecret         types.String `tfsdk:"radius_server_secret"`
+	RadiusServerSecretVariable types.String `tfsdk:"radius_server_secret_variable"`
 	Passphrase                 types.String `tfsdk:"passphrase"`
 	PassphraseVariable         types.String `tfsdk:"passphrase_variable"`
 	QosProfile                 types.String `tfsdk:"qos_profile"`
@@ -123,7 +123,7 @@ func (data CiscoWirelessLAN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"radio.shutdown-5ghz."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"radio.shutdown-5ghz."+"vipValue", strconv.FormatBool(data.Shutdown5ghz.ValueBool()))
 	}
-	if len(data.Ssid) > 0 {
+	if len(data.Ssids) > 0 {
 		body, _ = sjson.Set(body, path+"ssid."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"ssid."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ssid."+"vipPrimaryKey", []string{"name"})
@@ -134,7 +134,7 @@ func (data CiscoWirelessLAN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ssid."+"vipPrimaryKey", []string{"name"})
 		body, _ = sjson.Set(body, path+"ssid."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Ssid {
+	for _, item := range data.Ssids {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "name")
@@ -223,31 +223,31 @@ func (data CiscoWirelessLAN) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "radius-server-port")
 
-		if !item.AuthenticationPortVariable.IsNull() {
+		if !item.RadiusServerPortVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipVariableName", item.AuthenticationPortVariable.ValueString())
-		} else if item.AuthenticationPort.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipVariableName", item.RadiusServerPortVariable.ValueString())
+		} else if item.RadiusServerPort.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipValue", item.AuthenticationPort.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "radius-server-port."+"vipValue", item.RadiusServerPort.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "radius-server-secret")
 
-		if !item.SharedSecretVariable.IsNull() {
+		if !item.RadiusServerSecretVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipVariableName", item.SharedSecretVariable.ValueString())
-		} else if item.SharedSecret.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipVariableName", item.RadiusServerSecretVariable.ValueString())
+		} else if item.RadiusServerSecret.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipValue", item.SharedSecret.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "radius-server-secret."+"vipValue", item.RadiusServerSecret.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "passphrase")
 
@@ -332,30 +332,30 @@ func (data CiscoWirelessLAN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"mgmt.address."+"vipValue", data.ControllerIpAddress.ValueString())
 	}
 
-	if !data.SubnetMaskVariable.IsNull() {
+	if !data.ControllerSubnetMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipVariableName", data.SubnetMaskVariable.ValueString())
-	} else if data.SubnetMask.IsNull() {
+		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipVariableName", data.ControllerSubnetMaskVariable.ValueString())
+	} else if data.ControllerSubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipValue", data.SubnetMask.ValueString())
+		body, _ = sjson.Set(body, path+"mgmt.netmask."+"vipValue", data.ControllerSubnetMask.ValueString())
 	}
 
-	if !data.DefaultGatewayVariable.IsNull() {
+	if !data.ControllerDefaultGatewayVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipVariableName", data.DefaultGatewayVariable.ValueString())
-	} else if data.DefaultGateway.IsNull() {
+		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipVariableName", data.ControllerDefaultGatewayVariable.ValueString())
+	} else if data.ControllerDefaultGateway.IsNull() {
 		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipValue", data.DefaultGateway.ValueString())
+		body, _ = sjson.Set(body, path+"mgmt.default-gateway."+"vipValue", data.ControllerDefaultGateway.ValueString())
 	}
 	return body
 }
@@ -422,9 +422,9 @@ func (data *CiscoWirelessLAN) fromBody(ctx context.Context, res gjson.Result) {
 		data.Shutdown5ghzVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ssid.vipValue"); len(value.Array()) > 0 {
-		data.Ssid = make([]CiscoWirelessLANSsid, 0)
+		data.Ssids = make([]CiscoWirelessLANSsids, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoWirelessLANSsid{}
+			item := CiscoWirelessLANSsids{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -559,41 +559,41 @@ func (data *CiscoWirelessLAN) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("radius-server-port.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.AuthenticationPort = types.Int64Null()
+					item.RadiusServerPort = types.Int64Null()
 
 					cv := v.Get("radius-server-port.vipVariableName")
-					item.AuthenticationPortVariable = types.StringValue(cv.String())
+					item.RadiusServerPortVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.AuthenticationPort = types.Int64Null()
-					item.AuthenticationPortVariable = types.StringNull()
+					item.RadiusServerPort = types.Int64Null()
+					item.RadiusServerPortVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("radius-server-port.vipValue")
-					item.AuthenticationPort = types.Int64Value(cv.Int())
-					item.AuthenticationPortVariable = types.StringNull()
+					item.RadiusServerPort = types.Int64Value(cv.Int())
+					item.RadiusServerPortVariable = types.StringNull()
 				}
 			} else {
-				item.AuthenticationPort = types.Int64Null()
-				item.AuthenticationPortVariable = types.StringNull()
+				item.RadiusServerPort = types.Int64Null()
+				item.RadiusServerPortVariable = types.StringNull()
 			}
 			if cValue := v.Get("radius-server-secret.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.SharedSecret = types.StringNull()
+					item.RadiusServerSecret = types.StringNull()
 
 					cv := v.Get("radius-server-secret.vipVariableName")
-					item.SharedSecretVariable = types.StringValue(cv.String())
+					item.RadiusServerSecretVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.SharedSecret = types.StringNull()
-					item.SharedSecretVariable = types.StringNull()
+					item.RadiusServerSecret = types.StringNull()
+					item.RadiusServerSecretVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("radius-server-secret.vipValue")
-					item.SharedSecret = types.StringValue(cv.String())
-					item.SharedSecretVariable = types.StringNull()
+					item.RadiusServerSecret = types.StringValue(cv.String())
+					item.RadiusServerSecretVariable = types.StringNull()
 				}
 			} else {
-				item.SharedSecret = types.StringNull()
-				item.SharedSecretVariable = types.StringNull()
+				item.RadiusServerSecret = types.StringNull()
+				item.RadiusServerSecretVariable = types.StringNull()
 			}
 			if cValue := v.Get("passphrase.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -633,7 +633,7 @@ func (data *CiscoWirelessLAN) fromBody(ctx context.Context, res gjson.Result) {
 				item.QosProfile = types.StringNull()
 				item.QosProfileVariable = types.StringNull()
 			}
-			data.Ssid = append(data.Ssid, item)
+			data.Ssids = append(data.Ssids, item)
 			return true
 		})
 	}
@@ -715,41 +715,41 @@ func (data *CiscoWirelessLAN) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "mgmt.netmask.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.SubnetMask = types.StringNull()
+			data.ControllerSubnetMask = types.StringNull()
 
 			v := res.Get(path + "mgmt.netmask.vipVariableName")
-			data.SubnetMaskVariable = types.StringValue(v.String())
+			data.ControllerSubnetMaskVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.SubnetMask = types.StringNull()
-			data.SubnetMaskVariable = types.StringNull()
+			data.ControllerSubnetMask = types.StringNull()
+			data.ControllerSubnetMaskVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "mgmt.netmask.vipValue")
-			data.SubnetMask = types.StringValue(v.String())
-			data.SubnetMaskVariable = types.StringNull()
+			data.ControllerSubnetMask = types.StringValue(v.String())
+			data.ControllerSubnetMaskVariable = types.StringNull()
 		}
 	} else {
-		data.SubnetMask = types.StringNull()
-		data.SubnetMaskVariable = types.StringNull()
+		data.ControllerSubnetMask = types.StringNull()
+		data.ControllerSubnetMaskVariable = types.StringNull()
 	}
 	if value := res.Get(path + "mgmt.default-gateway.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultGateway = types.StringNull()
+			data.ControllerDefaultGateway = types.StringNull()
 
 			v := res.Get(path + "mgmt.default-gateway.vipVariableName")
-			data.DefaultGatewayVariable = types.StringValue(v.String())
+			data.ControllerDefaultGatewayVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DefaultGateway = types.StringNull()
-			data.DefaultGatewayVariable = types.StringNull()
+			data.ControllerDefaultGateway = types.StringNull()
+			data.ControllerDefaultGatewayVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "mgmt.default-gateway.vipValue")
-			data.DefaultGateway = types.StringValue(v.String())
-			data.DefaultGatewayVariable = types.StringNull()
+			data.ControllerDefaultGateway = types.StringValue(v.String())
+			data.ControllerDefaultGatewayVariable = types.StringNull()
 		}
 	} else {
-		data.DefaultGateway = types.StringNull()
-		data.DefaultGatewayVariable = types.StringNull()
+		data.ControllerDefaultGateway = types.StringNull()
+		data.ControllerDefaultGatewayVariable = types.StringNull()
 	}
 }
 
@@ -761,41 +761,41 @@ func (data *CiscoWirelessLAN) hasChanges(ctx context.Context, state *CiscoWirele
 	if !data.Shutdown5ghz.Equal(state.Shutdown5ghz) {
 		hasChanges = true
 	}
-	if len(data.Ssid) != len(state.Ssid) {
+	if len(data.Ssids) != len(state.Ssids) {
 		hasChanges = true
 	} else {
-		for i := range data.Ssid {
-			if !data.Ssid[i].WirelessNetworkName.Equal(state.Ssid[i].WirelessNetworkName) {
+		for i := range data.Ssids {
+			if !data.Ssids[i].WirelessNetworkName.Equal(state.Ssids[i].WirelessNetworkName) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].AdminState.Equal(state.Ssid[i].AdminState) {
+			if !data.Ssids[i].AdminState.Equal(state.Ssids[i].AdminState) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].BroadcastSsid.Equal(state.Ssid[i].BroadcastSsid) {
+			if !data.Ssids[i].BroadcastSsid.Equal(state.Ssids[i].BroadcastSsid) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].VlanId.Equal(state.Ssid[i].VlanId) {
+			if !data.Ssids[i].VlanId.Equal(state.Ssids[i].VlanId) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].RadioType.Equal(state.Ssid[i].RadioType) {
+			if !data.Ssids[i].RadioType.Equal(state.Ssids[i].RadioType) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].SecurityType.Equal(state.Ssid[i].SecurityType) {
+			if !data.Ssids[i].SecurityType.Equal(state.Ssids[i].SecurityType) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].RadiusServerIp.Equal(state.Ssid[i].RadiusServerIp) {
+			if !data.Ssids[i].RadiusServerIp.Equal(state.Ssids[i].RadiusServerIp) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].AuthenticationPort.Equal(state.Ssid[i].AuthenticationPort) {
+			if !data.Ssids[i].RadiusServerPort.Equal(state.Ssids[i].RadiusServerPort) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].SharedSecret.Equal(state.Ssid[i].SharedSecret) {
+			if !data.Ssids[i].RadiusServerSecret.Equal(state.Ssids[i].RadiusServerSecret) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].Passphrase.Equal(state.Ssid[i].Passphrase) {
+			if !data.Ssids[i].Passphrase.Equal(state.Ssids[i].Passphrase) {
 				hasChanges = true
 			}
-			if !data.Ssid[i].QosProfile.Equal(state.Ssid[i].QosProfile) {
+			if !data.Ssids[i].QosProfile.Equal(state.Ssids[i].QosProfile) {
 				hasChanges = true
 			}
 		}
@@ -812,10 +812,10 @@ func (data *CiscoWirelessLAN) hasChanges(ctx context.Context, state *CiscoWirele
 	if !data.ControllerIpAddress.Equal(state.ControllerIpAddress) {
 		hasChanges = true
 	}
-	if !data.SubnetMask.Equal(state.SubnetMask) {
+	if !data.ControllerSubnetMask.Equal(state.ControllerSubnetMask) {
 		hasChanges = true
 	}
-	if !data.DefaultGateway.Equal(state.DefaultGateway) {
+	if !data.ControllerDefaultGateway.Equal(state.ControllerDefaultGateway) {
 		hasChanges = true
 	}
 	return hasChanges

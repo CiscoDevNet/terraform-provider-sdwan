@@ -102,7 +102,7 @@ func (d *CiscoWirelessLANFeatureTemplateDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ssid": schema.ListNestedAttribute{
+			"ssids": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure Wi-Fi SSID",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -155,19 +155,19 @@ func (d *CiscoWirelessLANFeatureTemplateDataSource) Schema(ctx context.Context, 
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"authentication_port": schema.Int64Attribute{
+						"radius_server_port": schema.Int64Attribute{
 							MarkdownDescription: "Set RADIUS server authentication port",
 							Computed:            true,
 						},
-						"authentication_port_variable": schema.StringAttribute{
+						"radius_server_port_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"shared_secret": schema.StringAttribute{
+						"radius_server_secret": schema.StringAttribute{
 							MarkdownDescription: "Set RADIUS server shared secret",
 							Computed:            true,
 						},
-						"shared_secret_variable": schema.StringAttribute{
+						"radius_server_secret_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
@@ -226,19 +226,19 @@ func (d *CiscoWirelessLANFeatureTemplateDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"subnet_mask": schema.StringAttribute{
+			"controller_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "Set mobile express controller subnet mask",
 				Computed:            true,
 			},
-			"subnet_mask_variable": schema.StringAttribute{
+			"controller_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_gateway": schema.StringAttribute{
+			"controller_default_gateway": schema.StringAttribute{
 				MarkdownDescription: "Set mobile express default gateway",
 				Computed:            true,
 			},
-			"default_gateway_variable": schema.StringAttribute{
+			"controller_default_gateway_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

@@ -28,12 +28,14 @@ data "sdwan_cisco_wireless_lan_feature_template" "example" {
 
 ### Read-Only
 
+- `controller_default_gateway` (String) Set mobile express default gateway
+- `controller_default_gateway_variable` (String) Variable name
 - `controller_ip_address` (String) Set mobile express controller address
 - `controller_ip_address_variable` (String) Variable name
+- `controller_subnet_mask` (String) Set mobile express controller subnet mask
+- `controller_subnet_mask_variable` (String) Variable name
 - `country` (String) Select country
 - `country_variable` (String) Variable name
-- `default_gateway` (String) Set mobile express default gateway
-- `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
 - `password` (String) Set management password
@@ -42,23 +44,19 @@ data "sdwan_cisco_wireless_lan_feature_template" "example" {
 - `shutdown_2_4ghz_variable` (String) Variable name
 - `shutdown_5ghz` (Boolean) 5GHz Shutdown
 - `shutdown_5ghz_variable` (String) Variable name
-- `ssid` (Attributes List) Configure Wi-Fi SSID (see [below for nested schema](#nestedatt--ssid))
-- `subnet_mask` (String) Set mobile express controller subnet mask
-- `subnet_mask_variable` (String) Variable name
+- `ssids` (Attributes List) Configure Wi-Fi SSID (see [below for nested schema](#nestedatt--ssids))
 - `template_type` (String) The template type
 - `username` (String) Set management username
 - `username_variable` (String) Variable name
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--ssid"></a>
-### Nested Schema for `ssid`
+<a id="nestedatt--ssids"></a>
+### Nested Schema for `ssids`
 
 Read-Only:
 
 - `admin_state` (Boolean) Set admin state
 - `admin_state_variable` (String) Variable name
-- `authentication_port` (Number) Set RADIUS server authentication port
-- `authentication_port_variable` (String) Variable name
 - `broadcast_ssid` (Boolean) Enable broadcast SSID
 - `optional` (Boolean) Indicates if list item is considered optional.
 - `passphrase` (String) Set passphrase
@@ -69,10 +67,12 @@ Read-Only:
 - `radio_type_variable` (String) Variable name
 - `radius_server_ip` (String) Set RADIUS server IP
 - `radius_server_ip_variable` (String) Variable name
+- `radius_server_port` (Number) Set RADIUS server authentication port
+- `radius_server_port_variable` (String) Variable name
+- `radius_server_secret` (String) Set RADIUS server shared secret
+- `radius_server_secret_variable` (String) Variable name
 - `security_type` (String) Select security type
 - `security_type_variable` (String) Variable name
-- `shared_secret` (String) Set RADIUS server shared secret
-- `shared_secret_variable` (String) Variable name
 - `vlan_id` (Number) Set VLAN ID
 - `vlan_id_variable` (String) Variable name
 - `wireless_network_name` (String) Configure wlan SSID

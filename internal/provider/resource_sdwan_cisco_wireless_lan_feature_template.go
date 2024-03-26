@@ -109,7 +109,7 @@ func (r *CiscoWirelessLANFeatureTemplateResource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ssid": schema.ListNestedAttribute{
+			"ssids": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Wi-Fi SSID").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -174,22 +174,22 @@ func (r *CiscoWirelessLANFeatureTemplateResource) Schema(ctx context.Context, re
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"authentication_port": schema.Int64Attribute{
+						"radius_server_port": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server authentication port").AddIntegerRangeDescription(1, 65535).AddDefaultValueDescription("1812").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 65535),
 							},
 						},
-						"authentication_port_variable": schema.StringAttribute{
+						"radius_server_port_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"shared_secret": schema.StringAttribute{
+						"radius_server_secret": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set RADIUS server shared secret").String,
 							Optional:            true,
 						},
-						"shared_secret_variable": schema.StringAttribute{
+						"radius_server_secret_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -257,19 +257,19 @@ func (r *CiscoWirelessLANFeatureTemplateResource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"subnet_mask": schema.StringAttribute{
+			"controller_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set mobile express controller subnet mask").AddDefaultValueDescription("0.0.0.0").String,
 				Optional:            true,
 			},
-			"subnet_mask_variable": schema.StringAttribute{
+			"controller_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"default_gateway": schema.StringAttribute{
+			"controller_default_gateway": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set mobile express default gateway").AddDefaultValueDescription("0.0.0.0").String,
 				Optional:            true,
 			},
-			"default_gateway_variable": schema.StringAttribute{
+			"controller_default_gateway_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

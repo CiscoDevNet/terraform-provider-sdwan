@@ -35,23 +35,23 @@ func TestAccDataSourceSdwanCiscoWirelessLANFeatureTemplate(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "shutdown_2_4ghz", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "shutdown_5ghz", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.wireless_network_name", "example"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.admin_state", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.broadcast_ssid", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.vlan_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.radio_type", "24ghz"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.security_type", "enterprise"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.radius_server_ip", "1.2.3.4"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.authentication_port", "1812"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.shared_secret", "example"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.passphrase", "passphrase"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssid.0.qos_profile", "silver"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.wireless_network_name", "WLAN1"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.admin_state", "false"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.broadcast_ssid", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.vlan_id", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radio_type", "24ghz"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.security_type", "enterprise"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_ip", "1.2.3.4"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_port", "1812"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_secret", "MySecret1"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.passphrase", "passphrase"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.qos_profile", "silver"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "country", "AE"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "username", "example"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "username", "user1"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "password", "myPassword01"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "controller_ip_address", "0.0.0.0"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "subnet_mask", "0.0.0.0"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "default_gateway", "0.0.0.0"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "controller_subnet_mask", "0.0.0.0"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_wireless_lan_feature_template.test", "controller_default_gateway", "0.0.0.0"),
 				),
 			},
 		},
@@ -66,25 +66,25 @@ resource "sdwan_cisco_wireless_lan_feature_template" "test" {
   device_types = ["vedge-C8000V"]
   shutdown_2_4ghz = false
   shutdown_5ghz = false
-  ssid = [{
-    wireless_network_name = "example"
+  ssids = [{
+    wireless_network_name = "WLAN1"
     admin_state = false
     broadcast_ssid = true
     vlan_id = 1
     radio_type = "24ghz"
     security_type = "enterprise"
     radius_server_ip = "1.2.3.4"
-    authentication_port = 1812
-    shared_secret = "example"
+    radius_server_port = 1812
+    radius_server_secret = "MySecret1"
     passphrase = "passphrase"
     qos_profile = "silver"
   }]
   country = "AE"
-  username = "example"
+  username = "user1"
   password = "myPassword01"
   controller_ip_address = "0.0.0.0"
-  subnet_mask = "0.0.0.0"
-  default_gateway = "0.0.0.0"
+  controller_subnet_mask = "0.0.0.0"
+  controller_default_gateway = "0.0.0.0"
 }
 
 data "sdwan_cisco_wireless_lan_feature_template" "test" {

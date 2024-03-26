@@ -9,10 +9,11 @@ attributes:
     tf_name: shutdown_5ghz
     example: false
   - model_name: ssid
+    tf_name: ssids
     attributes:
     - model_name: name
       tf_name: wireless_network_name
-      example: example
+      example: WLAN1
     - model_name: admin-state
       example: false
     - model_name: broadcast-ssid
@@ -26,11 +27,9 @@ attributes:
     - model_name: radius-server-ip
       example: 1.2.3.4
     - model_name: radius-server-port
-      tf_name: authentication_port
       example: 1812
     - model_name: radius-server-secret
-      tf_name: shared_secret
-      example: example
+      example: MySecret1
     - model_name: passphrase
       example: passphrase
     - model_name: qos-profile
@@ -38,14 +37,15 @@ attributes:
   - model_name: country
     example: AE
   - model_name: username
-    example: example
+    example: user1
   - model_name: password
     example:  myPassword01
   - model_name: address
     tf_name: controller_ip_address
     example: 0.0.0.0
   - model_name: netmask
-    tf_name: subnet_mask
+    tf_name: controller_subnet_mask
     example: 0.0.0.0
   - model_name: default-gateway
+    tf_name: controller_default_gateway
     example: 0.0.0.0
