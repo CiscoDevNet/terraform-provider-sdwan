@@ -1,0 +1,14 @@
+---
+name: cEdge IGMP
+minimum_version: 15.0.0
+attributes:
+  - model_name: interface
+    attributes:
+    - model_name: name
+      example: example
+    - model_name: join-group
+      attributes:
+      - model_name: group-address
+        example: 1.2.3.4
+      - model_name: source
+        example: 1.2.3.4

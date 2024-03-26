@@ -1,0 +1,55 @@
+---
+name: Cisco TrustSec
+minimum_version: 15.0.0
+attributes:
+  - model_name: device-sgt
+    example: 100
+  - model_name: credentials-id
+    example: example
+  - model_name: credentials-password
+    example: MyPassword
+  - model_name: enable-enforcement
+    example: true
+  - model_name: enable-sxp
+    example: true
+  - model_name: sxp-source-ip
+    example: 1.2.3.4
+  - model_name: sxp-default-password
+    example: MyPassword
+  - model_name: sxp-key-chain
+    example: example
+  - model_name: sxp-log-binding-changes
+    example: false
+  - model_name: sxp-reconciliation-period
+    example: 120
+  - model_name: sxp-retry-period
+    example: 120
+  - model_name: speaker-hold-time
+    example: 120
+  - model_name: listener-hold-time-min
+    example: 90
+  - model_name: listener-hold-time-max
+    example: 180
+  - model_name: sxp-node-id-type
+    example: interface-name
+  - model_name: sxp-node-id
+    example: VirtualPortGroup
+  - model_name: sxp-connection-list
+    attributes:
+    - model_name: connection-peer-ip
+      example: 1.2.3.4
+    - model_name: connection-source-ip
+      example: 2.3.4.5
+    - model_name: connection-preshared-key
+      example: default
+    - model_name: connection-mode
+      example: local
+    - model_name: connection-mode-type
+      example: listener
+    - model_name: connection-min-hold-time
+      example: 0
+    - model_name: connection-max-hold-time
+      example: 0
+    - model_name: connection-vpn-id
+      example: 0
+

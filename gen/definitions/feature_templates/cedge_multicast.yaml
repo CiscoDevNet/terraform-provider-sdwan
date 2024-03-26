@@ -1,0 +1,11 @@
+---
+name: cEdge Multicast
+minimum_version: 15.0.0
+attributes:
+  - model_name: spt-only
+    example: true
+  - model_name: local
+    tf_name: local_replicator
+    example: true
+  - model_name: threshold
+    example: 200
