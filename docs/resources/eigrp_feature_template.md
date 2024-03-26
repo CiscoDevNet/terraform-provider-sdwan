@@ -19,17 +19,17 @@ resource "sdwan_eigrp_feature_template" "example" {
   name         = "Example"
   description  = "My Example"
   device_types = ["vedge-C8000V"]
-  as_num       = 1
-  address_family = [
+  as_number    = 1
+  address_families = [
     {
       type = "ipv4"
-      redistribute = [
+      redistributes = [
         {
           protocol     = "bgp"
           route_policy = "1.2.3.4"
         }
       ]
-      network = [
+      networks = [
         {
           prefix = "1.2.3.4/24"
         }
@@ -38,15 +38,15 @@ resource "sdwan_eigrp_feature_template" "example" {
   ]
   hello_interval          = 5
   hold_time               = 15
-  route_policy_name       = "example"
+  route_policy_name       = "RP1"
   filter                  = false
   authentication_type     = "hmac-sha-256"
   hmac_authentication_key = "myAuthKey"
   interfaces = [
     {
-      interface_name = "Ethernet"
+      interface_name = "Ethernet1"
       shutdown       = false
-      summary_address = [
+      summary_addresses = [
         {
           prefix = "1.2.3.4/24"
         }
@@ -68,10 +68,10 @@ resource "sdwan_eigrp_feature_template" "example" {
 
 ### Optional
 
-- `address_family` (Attributes List) Set EIGRP address family (see [below for nested schema](#nestedatt--address_family))
-- `as_num` (Number) Set autonomous system ID <1..65535>
+- `address_families` (Attributes List) Set EIGRP address family (see [below for nested schema](#nestedatt--address_families))
+- `as_number` (Number) Set autonomous system ID <1..65535>
   - Range: `1`-`65535`
-- `as_num_variable` (String) Variable name
+- `as_number_variable` (String) Variable name
 - `authentication_type` (String) Set EIGRP router authentication type
   - Choices: `md5`, `hmac-sha-256`
 - `authentication_type_variable` (String) Variable name
@@ -89,7 +89,7 @@ resource "sdwan_eigrp_feature_template" "example" {
   - Default value: `15`
 - `hold_time_variable` (String) Variable name
 - `interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--interfaces))
-- `key` (Attributes List) Set keychain name (see [below for nested schema](#nestedatt--key))
+- `keys` (Attributes List) Set keychain name (see [below for nested schema](#nestedatt--keys))
 - `route_policy_name` (String) Configure policy to apply to prefixes received from EIGRP neighbor
 - `route_policy_name_variable` (String) Variable name
 
@@ -99,20 +99,20 @@ resource "sdwan_eigrp_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--address_family"></a>
-### Nested Schema for `address_family`
+<a id="nestedatt--address_families"></a>
+### Nested Schema for `address_families`
 
 Optional:
 
-- `network` (Attributes List) Configure the networks for EIGRP to advertise (see [below for nested schema](#nestedatt--address_family--network))
+- `networks` (Attributes List) Configure the networks for EIGRP to advertise (see [below for nested schema](#nestedatt--address_families--networks))
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `redistribute` (Attributes List) Redistribute routes into EIGRP (see [below for nested schema](#nestedatt--address_family--redistribute))
+- `redistributes` (Attributes List) Redistribute routes into EIGRP (see [below for nested schema](#nestedatt--address_families--redistributes))
 - `type` (String) Set EIGRP address family
   - Choices: `ipv4`
   - Default value: `ipv4`
 
-<a id="nestedatt--address_family--network"></a>
-### Nested Schema for `address_family.network`
+<a id="nestedatt--address_families--networks"></a>
+### Nested Schema for `address_families.networks`
 
 Optional:
 
@@ -121,8 +121,8 @@ Optional:
 - `prefix_variable` (String) Variable name
 
 
-<a id="nestedatt--address_family--redistribute"></a>
-### Nested Schema for `address_family.redistribute`
+<a id="nestedatt--address_families--redistributes"></a>
+### Nested Schema for `address_families.redistributes`
 
 Optional:
 
@@ -146,10 +146,10 @@ Optional:
 - `shutdown` (Boolean) Enable/disable EIGRP
   - Default value: `false`
 - `shutdown_variable` (String) Variable name
-- `summary_address` (Attributes List) Set summary addresses (see [below for nested schema](#nestedatt--interfaces--summary_address))
+- `summary_addresses` (Attributes List) Set summary addresses (see [below for nested schema](#nestedatt--interfaces--summary_addresses))
 
-<a id="nestedatt--interfaces--summary_address"></a>
-### Nested Schema for `interfaces.summary_address`
+<a id="nestedatt--interfaces--summary_addresses"></a>
+### Nested Schema for `interfaces.summary_addresses`
 
 Optional:
 
@@ -159,8 +159,8 @@ Optional:
 
 
 
-<a id="nestedatt--key"></a>
-### Nested Schema for `key`
+<a id="nestedatt--keys"></a>
+### Nested Schema for `keys`
 
 Optional:
 

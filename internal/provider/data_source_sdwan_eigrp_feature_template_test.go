@@ -33,20 +33,20 @@ func TestAccDataSourceSdwanEigrpFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanEigrpFeatureTemplateConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "as_num", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_family.0.type", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_family.0.redistribute.0.protocol", "bgp"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_family.0.redistribute.0.route_policy", "1.2.3.4"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_family.0.network.0.prefix", "1.2.3.4/24"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "as_number", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.type", "ipv4"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.redistributes.0.protocol", "bgp"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.redistributes.0.route_policy", "1.2.3.4"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.networks.0.prefix", "1.2.3.4/24"),
 					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hello_interval", "5"),
 					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hold_time", "15"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "route_policy_name", "example"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "route_policy_name", "RP1"),
 					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "filter", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "authentication_type", "hmac-sha-256"),
 					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hmac_authentication_key", "myAuthKey"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.interface_name", "Ethernet"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.interface_name", "Ethernet1"),
 					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.shutdown", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.summary_address.0.prefix", "1.2.3.4/24"),
+					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.summary_addresses.0.prefix", "1.2.3.4/24"),
 				),
 			},
 		},
@@ -59,27 +59,27 @@ resource "sdwan_eigrp_feature_template" "test" {
   name = "TF_TEST_MIN"
   description = "Terraform integration test"
   device_types = ["vedge-C8000V"]
-  as_num = 1
-  address_family = [{
+  as_number = 1
+  address_families = [{
     type = "ipv4"
-	redistribute = [{
+	redistributes = [{
 		protocol = "bgp"
 		route_policy = "1.2.3.4"
 	}]
-	network = [{
+	networks = [{
 		prefix = "1.2.3.4/24"
 	}]
   }]
   hello_interval = 5
   hold_time = 15
-  route_policy_name = "example"
+  route_policy_name = "RP1"
   filter = false
   authentication_type = "hmac-sha-256"
   hmac_authentication_key = "myAuthKey"
   interfaces = [{
-    interface_name = "Ethernet"
+    interface_name = "Ethernet1"
     shutdown = false
-	summary_address = [{
+	summary_addresses = [{
 		prefix = "1.2.3.4/24"
 	}]
   }]

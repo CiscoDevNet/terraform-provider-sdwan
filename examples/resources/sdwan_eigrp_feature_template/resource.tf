@@ -2,17 +2,17 @@ resource "sdwan_eigrp_feature_template" "example" {
   name         = "Example"
   description  = "My Example"
   device_types = ["vedge-C8000V"]
-  as_num       = 1
-  address_family = [
+  as_number    = 1
+  address_families = [
     {
       type = "ipv4"
-      redistribute = [
+      redistributes = [
         {
           protocol     = "bgp"
           route_policy = "1.2.3.4"
         }
       ]
-      network = [
+      networks = [
         {
           prefix = "1.2.3.4/24"
         }
@@ -21,15 +21,15 @@ resource "sdwan_eigrp_feature_template" "example" {
   ]
   hello_interval          = 5
   hold_time               = 15
-  route_policy_name       = "example"
+  route_policy_name       = "RP1"
   filter                  = false
   authentication_type     = "hmac-sha-256"
   hmac_authentication_key = "myAuthKey"
   interfaces = [
     {
-      interface_name = "Ethernet"
+      interface_name = "Ethernet1"
       shutdown       = false
-      summary_address = [
+      summary_addresses = [
         {
           prefix = "1.2.3.4/24"
         }

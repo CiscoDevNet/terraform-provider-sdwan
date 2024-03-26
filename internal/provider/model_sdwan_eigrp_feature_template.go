@@ -30,39 +30,39 @@ import (
 )
 
 type Eigrp struct {
-	Id                            types.String         `tfsdk:"id"`
-	Version                       types.Int64          `tfsdk:"version"`
-	TemplateType                  types.String         `tfsdk:"template_type"`
-	Name                          types.String         `tfsdk:"name"`
-	Description                   types.String         `tfsdk:"description"`
-	DeviceTypes                   types.Set            `tfsdk:"device_types"`
-	AsNum                         types.Int64          `tfsdk:"as_num"`
-	AsNumVariable                 types.String         `tfsdk:"as_num_variable"`
-	AddressFamily                 []EigrpAddressFamily `tfsdk:"address_family"`
-	HelloInterval                 types.Int64          `tfsdk:"hello_interval"`
-	HelloIntervalVariable         types.String         `tfsdk:"hello_interval_variable"`
-	HoldTime                      types.Int64          `tfsdk:"hold_time"`
-	HoldTimeVariable              types.String         `tfsdk:"hold_time_variable"`
-	RoutePolicyName               types.String         `tfsdk:"route_policy_name"`
-	RoutePolicyNameVariable       types.String         `tfsdk:"route_policy_name_variable"`
-	Filter                        types.Bool           `tfsdk:"filter"`
-	FilterVariable                types.String         `tfsdk:"filter_variable"`
-	AuthenticationType            types.String         `tfsdk:"authentication_type"`
-	AuthenticationTypeVariable    types.String         `tfsdk:"authentication_type_variable"`
-	HmacAuthenticationKey         types.String         `tfsdk:"hmac_authentication_key"`
-	HmacAuthenticationKeyVariable types.String         `tfsdk:"hmac_authentication_key_variable"`
-	Key                           []EigrpKey           `tfsdk:"key"`
-	Interfaces                    []EigrpInterfaces    `tfsdk:"interfaces"`
+	Id                            types.String           `tfsdk:"id"`
+	Version                       types.Int64            `tfsdk:"version"`
+	TemplateType                  types.String           `tfsdk:"template_type"`
+	Name                          types.String           `tfsdk:"name"`
+	Description                   types.String           `tfsdk:"description"`
+	DeviceTypes                   types.Set              `tfsdk:"device_types"`
+	AsNumber                      types.Int64            `tfsdk:"as_number"`
+	AsNumberVariable              types.String           `tfsdk:"as_number_variable"`
+	AddressFamilies               []EigrpAddressFamilies `tfsdk:"address_families"`
+	HelloInterval                 types.Int64            `tfsdk:"hello_interval"`
+	HelloIntervalVariable         types.String           `tfsdk:"hello_interval_variable"`
+	HoldTime                      types.Int64            `tfsdk:"hold_time"`
+	HoldTimeVariable              types.String           `tfsdk:"hold_time_variable"`
+	RoutePolicyName               types.String           `tfsdk:"route_policy_name"`
+	RoutePolicyNameVariable       types.String           `tfsdk:"route_policy_name_variable"`
+	Filter                        types.Bool             `tfsdk:"filter"`
+	FilterVariable                types.String           `tfsdk:"filter_variable"`
+	AuthenticationType            types.String           `tfsdk:"authentication_type"`
+	AuthenticationTypeVariable    types.String           `tfsdk:"authentication_type_variable"`
+	HmacAuthenticationKey         types.String           `tfsdk:"hmac_authentication_key"`
+	HmacAuthenticationKeyVariable types.String           `tfsdk:"hmac_authentication_key_variable"`
+	Keys                          []EigrpKeys            `tfsdk:"keys"`
+	Interfaces                    []EigrpInterfaces      `tfsdk:"interfaces"`
 }
 
-type EigrpAddressFamily struct {
-	Optional     types.Bool                       `tfsdk:"optional"`
-	Type         types.String                     `tfsdk:"type"`
-	Redistribute []EigrpAddressFamilyRedistribute `tfsdk:"redistribute"`
-	Network      []EigrpAddressFamilyNetwork      `tfsdk:"network"`
+type EigrpAddressFamilies struct {
+	Optional      types.Bool                          `tfsdk:"optional"`
+	Type          types.String                        `tfsdk:"type"`
+	Redistributes []EigrpAddressFamiliesRedistributes `tfsdk:"redistributes"`
+	Networks      []EigrpAddressFamiliesNetworks      `tfsdk:"networks"`
 }
 
-type EigrpKey struct {
+type EigrpKeys struct {
 	Optional                     types.Bool   `tfsdk:"optional"`
 	Md5KeyId                     types.Int64  `tfsdk:"md5_key_id"`
 	Md5KeyIdVariable             types.String `tfsdk:"md5_key_id_variable"`
@@ -71,28 +71,28 @@ type EigrpKey struct {
 }
 
 type EigrpInterfaces struct {
-	Optional              types.Bool                      `tfsdk:"optional"`
-	InterfaceName         types.String                    `tfsdk:"interface_name"`
-	InterfaceNameVariable types.String                    `tfsdk:"interface_name_variable"`
-	Shutdown              types.Bool                      `tfsdk:"shutdown"`
-	ShutdownVariable      types.String                    `tfsdk:"shutdown_variable"`
-	SummaryAddress        []EigrpInterfacesSummaryAddress `tfsdk:"summary_address"`
+	Optional              types.Bool                        `tfsdk:"optional"`
+	InterfaceName         types.String                      `tfsdk:"interface_name"`
+	InterfaceNameVariable types.String                      `tfsdk:"interface_name_variable"`
+	Shutdown              types.Bool                        `tfsdk:"shutdown"`
+	ShutdownVariable      types.String                      `tfsdk:"shutdown_variable"`
+	SummaryAddresses      []EigrpInterfacesSummaryAddresses `tfsdk:"summary_addresses"`
 }
 
-type EigrpAddressFamilyRedistribute struct {
+type EigrpAddressFamiliesRedistributes struct {
 	Optional            types.Bool   `tfsdk:"optional"`
 	Protocol            types.String `tfsdk:"protocol"`
 	ProtocolVariable    types.String `tfsdk:"protocol_variable"`
 	RoutePolicy         types.String `tfsdk:"route_policy"`
 	RoutePolicyVariable types.String `tfsdk:"route_policy_variable"`
 }
-type EigrpAddressFamilyNetwork struct {
+type EigrpAddressFamiliesNetworks struct {
 	Optional       types.Bool   `tfsdk:"optional"`
 	Prefix         types.String `tfsdk:"prefix"`
 	PrefixVariable types.String `tfsdk:"prefix_variable"`
 }
 
-type EigrpInterfacesSummaryAddress struct {
+type EigrpInterfacesSummaryAddresses struct {
 	Optional       types.Bool   `tfsdk:"optional"`
 	Prefix         types.String `tfsdk:"prefix"`
 	PrefixVariable types.String `tfsdk:"prefix_variable"`
@@ -117,18 +117,18 @@ func (data Eigrp) toBody(ctx context.Context) string {
 
 	path := "templateDefinition."
 
-	if !data.AsNumVariable.IsNull() {
+	if !data.AsNumberVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipVariableName", data.AsNumVariable.ValueString())
-	} else if data.AsNum.IsNull() {
+		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipVariableName", data.AsNumberVariable.ValueString())
+	} else if data.AsNumber.IsNull() {
 		body, _ = sjson.Set(body, path+"eigrp", map[string]interface{}{})
 	} else {
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipValue", data.AsNum.ValueInt64())
+		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipValue", data.AsNumber.ValueInt64())
 	}
-	if len(data.AddressFamily) > 0 {
+	if len(data.AddressFamilies) > 0 {
 		body, _ = sjson.Set(body, path+"eigrp.address-family."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"eigrp.address-family."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"eigrp.address-family."+"vipPrimaryKey", []string{"type"})
@@ -139,7 +139,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"eigrp.address-family."+"vipPrimaryKey", []string{"type"})
 		body, _ = sjson.Set(body, path+"eigrp.address-family."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.AddressFamily {
+	for _, item := range data.AddressFamilies {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "type")
@@ -150,7 +150,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "type."+"vipValue", item.Type.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "redistribute")
-		if len(item.Redistribute) > 0 {
+		if len(item.Redistributes) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipPrimaryKey", []string{"protocol"})
@@ -161,7 +161,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipPrimaryKey", []string{"protocol"})
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipValue", []interface{}{})
 		}
-		for _, childItem := range item.Redistribute {
+		for _, childItem := range item.Redistributes {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			itemChildAttributes = append(itemChildAttributes, "protocol")
@@ -197,7 +197,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.SetRaw(itemBody, "topology.base.redistribute."+"vipValue.-1", itemChildBody)
 		}
 		itemAttributes = append(itemAttributes, "network")
-		if len(item.Network) > 0 {
+		if len(item.Networks) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "network."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "network."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "network."+"vipPrimaryKey", []string{"prefix"})
@@ -208,7 +208,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "network."+"vipPrimaryKey", []string{"prefix"})
 			itemBody, _ = sjson.Set(itemBody, "network."+"vipValue", []interface{}{})
 		}
-		for _, childItem := range item.Network {
+		for _, childItem := range item.Networks {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			itemChildAttributes = append(itemChildAttributes, "prefix")
@@ -313,7 +313,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"eigrp.authentication.auth-key."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"eigrp.authentication.auth-key."+"vipValue", data.HmacAuthenticationKey.ValueString())
 	}
-	if len(data.Key) > 0 {
+	if len(data.Keys) > 0 {
 		body, _ = sjson.Set(body, path+"eigrp.authentication.keychain.key."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"eigrp.authentication.keychain.key."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"eigrp.authentication.keychain.key."+"vipPrimaryKey", []string{"key_id"})
@@ -324,7 +324,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"eigrp.authentication.keychain.key."+"vipPrimaryKey", []string{"key_id"})
 		body, _ = sjson.Set(body, path+"eigrp.authentication.keychain.key."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Key {
+	for _, item := range data.Keys {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "key_id")
@@ -402,7 +402,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "shutdown."+"vipValue", strconv.FormatBool(item.Shutdown.ValueBool()))
 		}
 		itemAttributes = append(itemAttributes, "summary-address")
-		if len(item.SummaryAddress) > 0 {
+		if len(item.SummaryAddresses) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "summary-address."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "summary-address."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "summary-address."+"vipPrimaryKey", []string{"prefix"})
@@ -413,7 +413,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "summary-address."+"vipPrimaryKey", []string{"prefix"})
 			itemBody, _ = sjson.Set(itemBody, "summary-address."+"vipValue", []interface{}{})
 		}
-		for _, childItem := range item.SummaryAddress {
+		for _, childItem := range item.SummaryAddresses {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			itemChildAttributes = append(itemChildAttributes, "prefix")
@@ -470,27 +470,27 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 	path := "templateDefinition."
 	if value := res.Get(path + "eigrp.as-num.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.AsNum = types.Int64Null()
+			data.AsNumber = types.Int64Null()
 
 			v := res.Get(path + "eigrp.as-num.vipVariableName")
-			data.AsNumVariable = types.StringValue(v.String())
+			data.AsNumberVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AsNum = types.Int64Null()
-			data.AsNumVariable = types.StringNull()
+			data.AsNumber = types.Int64Null()
+			data.AsNumberVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "eigrp.as-num.vipValue")
-			data.AsNum = types.Int64Value(v.Int())
-			data.AsNumVariable = types.StringNull()
+			data.AsNumber = types.Int64Value(v.Int())
+			data.AsNumberVariable = types.StringNull()
 		}
 	} else {
-		data.AsNum = types.Int64Null()
-		data.AsNumVariable = types.StringNull()
+		data.AsNumber = types.Int64Null()
+		data.AsNumberVariable = types.StringNull()
 	}
 	if value := res.Get(path + "eigrp.address-family.vipValue"); len(value.Array()) > 0 {
-		data.AddressFamily = make([]EigrpAddressFamily, 0)
+		data.AddressFamilies = make([]EigrpAddressFamilies, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := EigrpAddressFamily{}
+			item := EigrpAddressFamilies{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -513,9 +513,9 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 
 			}
 			if cValue := v.Get("topology.base.redistribute.vipValue"); len(cValue.Array()) > 0 {
-				item.Redistribute = make([]EigrpAddressFamilyRedistribute, 0)
+				item.Redistributes = make([]EigrpAddressFamiliesRedistributes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := EigrpAddressFamilyRedistribute{}
+					cItem := EigrpAddressFamiliesRedistributes{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -559,14 +559,14 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.RoutePolicy = types.StringNull()
 						cItem.RoutePolicyVariable = types.StringNull()
 					}
-					item.Redistribute = append(item.Redistribute, cItem)
+					item.Redistributes = append(item.Redistributes, cItem)
 					return true
 				})
 			}
 			if cValue := v.Get("network.vipValue"); len(cValue.Array()) > 0 {
-				item.Network = make([]EigrpAddressFamilyNetwork, 0)
+				item.Networks = make([]EigrpAddressFamiliesNetworks, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := EigrpAddressFamilyNetwork{}
+					cItem := EigrpAddressFamiliesNetworks{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -591,11 +591,11 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.Prefix = types.StringNull()
 						cItem.PrefixVariable = types.StringNull()
 					}
-					item.Network = append(item.Network, cItem)
+					item.Networks = append(item.Networks, cItem)
 					return true
 				})
 			}
-			data.AddressFamily = append(data.AddressFamily, item)
+			data.AddressFamilies = append(data.AddressFamilies, item)
 			return true
 		})
 	}
@@ -714,9 +714,9 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 		data.HmacAuthenticationKeyVariable = types.StringNull()
 	}
 	if value := res.Get(path + "eigrp.authentication.keychain.key.vipValue"); len(value.Array()) > 0 {
-		data.Key = make([]EigrpKey, 0)
+		data.Keys = make([]EigrpKeys, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := EigrpKey{}
+			item := EigrpKeys{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -760,7 +760,7 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 				item.Md5AuthenticationKey = types.StringNull()
 				item.Md5AuthenticationKeyVariable = types.StringNull()
 			}
-			data.Key = append(data.Key, item)
+			data.Keys = append(data.Keys, item)
 			return true
 		})
 	}
@@ -812,9 +812,9 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 				item.ShutdownVariable = types.StringNull()
 			}
 			if cValue := v.Get("summary-address.vipValue"); len(cValue.Array()) > 0 {
-				item.SummaryAddress = make([]EigrpInterfacesSummaryAddress, 0)
+				item.SummaryAddresses = make([]EigrpInterfacesSummaryAddresses, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := EigrpInterfacesSummaryAddress{}
+					cItem := EigrpInterfacesSummaryAddresses{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -839,7 +839,7 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.Prefix = types.StringNull()
 						cItem.PrefixVariable = types.StringNull()
 					}
-					item.SummaryAddress = append(item.SummaryAddress, cItem)
+					item.SummaryAddresses = append(item.SummaryAddresses, cItem)
 					return true
 				})
 			}
@@ -851,33 +851,33 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 
 func (data *Eigrp) hasChanges(ctx context.Context, state *Eigrp) bool {
 	hasChanges := false
-	if !data.AsNum.Equal(state.AsNum) {
+	if !data.AsNumber.Equal(state.AsNumber) {
 		hasChanges = true
 	}
-	if len(data.AddressFamily) != len(state.AddressFamily) {
+	if len(data.AddressFamilies) != len(state.AddressFamilies) {
 		hasChanges = true
 	} else {
-		for i := range data.AddressFamily {
-			if !data.AddressFamily[i].Type.Equal(state.AddressFamily[i].Type) {
+		for i := range data.AddressFamilies {
+			if !data.AddressFamilies[i].Type.Equal(state.AddressFamilies[i].Type) {
 				hasChanges = true
 			}
-			if len(data.AddressFamily[i].Redistribute) != len(state.AddressFamily[i].Redistribute) {
+			if len(data.AddressFamilies[i].Redistributes) != len(state.AddressFamilies[i].Redistributes) {
 				hasChanges = true
 			} else {
-				for ii := range data.AddressFamily[i].Redistribute {
-					if !data.AddressFamily[i].Redistribute[ii].Protocol.Equal(state.AddressFamily[i].Redistribute[ii].Protocol) {
+				for ii := range data.AddressFamilies[i].Redistributes {
+					if !data.AddressFamilies[i].Redistributes[ii].Protocol.Equal(state.AddressFamilies[i].Redistributes[ii].Protocol) {
 						hasChanges = true
 					}
-					if !data.AddressFamily[i].Redistribute[ii].RoutePolicy.Equal(state.AddressFamily[i].Redistribute[ii].RoutePolicy) {
+					if !data.AddressFamilies[i].Redistributes[ii].RoutePolicy.Equal(state.AddressFamilies[i].Redistributes[ii].RoutePolicy) {
 						hasChanges = true
 					}
 				}
 			}
-			if len(data.AddressFamily[i].Network) != len(state.AddressFamily[i].Network) {
+			if len(data.AddressFamilies[i].Networks) != len(state.AddressFamilies[i].Networks) {
 				hasChanges = true
 			} else {
-				for ii := range data.AddressFamily[i].Network {
-					if !data.AddressFamily[i].Network[ii].Prefix.Equal(state.AddressFamily[i].Network[ii].Prefix) {
+				for ii := range data.AddressFamilies[i].Networks {
+					if !data.AddressFamilies[i].Networks[ii].Prefix.Equal(state.AddressFamilies[i].Networks[ii].Prefix) {
 						hasChanges = true
 					}
 				}
@@ -902,14 +902,14 @@ func (data *Eigrp) hasChanges(ctx context.Context, state *Eigrp) bool {
 	if !data.HmacAuthenticationKey.Equal(state.HmacAuthenticationKey) {
 		hasChanges = true
 	}
-	if len(data.Key) != len(state.Key) {
+	if len(data.Keys) != len(state.Keys) {
 		hasChanges = true
 	} else {
-		for i := range data.Key {
-			if !data.Key[i].Md5KeyId.Equal(state.Key[i].Md5KeyId) {
+		for i := range data.Keys {
+			if !data.Keys[i].Md5KeyId.Equal(state.Keys[i].Md5KeyId) {
 				hasChanges = true
 			}
-			if !data.Key[i].Md5AuthenticationKey.Equal(state.Key[i].Md5AuthenticationKey) {
+			if !data.Keys[i].Md5AuthenticationKey.Equal(state.Keys[i].Md5AuthenticationKey) {
 				hasChanges = true
 			}
 		}
@@ -924,11 +924,11 @@ func (data *Eigrp) hasChanges(ctx context.Context, state *Eigrp) bool {
 			if !data.Interfaces[i].Shutdown.Equal(state.Interfaces[i].Shutdown) {
 				hasChanges = true
 			}
-			if len(data.Interfaces[i].SummaryAddress) != len(state.Interfaces[i].SummaryAddress) {
+			if len(data.Interfaces[i].SummaryAddresses) != len(state.Interfaces[i].SummaryAddresses) {
 				hasChanges = true
 			} else {
-				for ii := range data.Interfaces[i].SummaryAddress {
-					if !data.Interfaces[i].SummaryAddress[ii].Prefix.Equal(state.Interfaces[i].SummaryAddress[ii].Prefix) {
+				for ii := range data.Interfaces[i].SummaryAddresses {
+					if !data.Interfaces[i].SummaryAddresses[ii].Prefix.Equal(state.Interfaces[i].SummaryAddresses[ii].Prefix) {
 						hasChanges = true
 					}
 				}

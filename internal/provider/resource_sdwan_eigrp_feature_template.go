@@ -93,18 +93,18 @@ func (r *EigrpFeatureTemplateResource) Schema(ctx context.Context, req resource.
 				ElementType:         types.StringType,
 				Required:            true,
 			},
-			"as_num": schema.Int64Attribute{
+			"as_number": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set autonomous system ID <1..65535>").AddIntegerRangeDescription(1, 65535).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
 			},
-			"as_num_variable": schema.StringAttribute{
+			"as_number_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"address_family": schema.ListNestedAttribute{
+			"address_families": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP address family").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -116,7 +116,7 @@ func (r *EigrpFeatureTemplateResource) Schema(ctx context.Context, req resource.
 								stringvalidator.OneOf("ipv4"),
 							},
 						},
-						"redistribute": schema.ListNestedAttribute{
+						"redistributes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Redistribute routes into EIGRP").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -150,7 +150,7 @@ func (r *EigrpFeatureTemplateResource) Schema(ctx context.Context, req resource.
 								},
 							},
 						},
-						"network": schema.ListNestedAttribute{
+						"networks": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure the networks for EIGRP to advertise").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -240,7 +240,7 @@ func (r *EigrpFeatureTemplateResource) Schema(ctx context.Context, req resource.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"key": schema.ListNestedAttribute{
+			"keys": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set keychain name").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -292,7 +292,7 @@ func (r *EigrpFeatureTemplateResource) Schema(ctx context.Context, req resource.
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"summary_address": schema.ListNestedAttribute{
+						"summary_addresses": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set summary addresses").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

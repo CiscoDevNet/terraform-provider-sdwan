@@ -86,15 +86,15 @@ func (d *EigrpFeatureTemplateDataSource) Schema(ctx context.Context, req datasou
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"as_num": schema.Int64Attribute{
+			"as_number": schema.Int64Attribute{
 				MarkdownDescription: "Set autonomous system ID <1..65535>",
 				Computed:            true,
 			},
-			"as_num_variable": schema.StringAttribute{
+			"as_number_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"address_family": schema.ListNestedAttribute{
+			"address_families": schema.ListNestedAttribute{
 				MarkdownDescription: "Set EIGRP address family",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -103,7 +103,7 @@ func (d *EigrpFeatureTemplateDataSource) Schema(ctx context.Context, req datasou
 							MarkdownDescription: "Set EIGRP address family",
 							Computed:            true,
 						},
-						"redistribute": schema.ListNestedAttribute{
+						"redistributes": schema.ListNestedAttribute{
 							MarkdownDescription: "Redistribute routes into EIGRP",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -131,7 +131,7 @@ func (d *EigrpFeatureTemplateDataSource) Schema(ctx context.Context, req datasou
 								},
 							},
 						},
-						"network": schema.ListNestedAttribute{
+						"networks": schema.ListNestedAttribute{
 							MarkdownDescription: "Configure the networks for EIGRP to advertise",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -206,7 +206,7 @@ func (d *EigrpFeatureTemplateDataSource) Schema(ctx context.Context, req datasou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"key": schema.ListNestedAttribute{
+			"keys": schema.ListNestedAttribute{
 				MarkdownDescription: "Set keychain name",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -255,7 +255,7 @@ func (d *EigrpFeatureTemplateDataSource) Schema(ctx context.Context, req datasou
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"summary_address": schema.ListNestedAttribute{
+						"summary_addresses": schema.ListNestedAttribute{
 							MarkdownDescription: "Set summary addresses",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
