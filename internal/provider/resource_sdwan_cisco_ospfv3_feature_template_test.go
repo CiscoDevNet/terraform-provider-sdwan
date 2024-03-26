@@ -37,87 +37,87 @@ func TestAccSdwanCiscoOSPFv3FeatureTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanCiscoOSPFv3FeatureTemplateConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "router_id_ipv4", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "auto_cost_reference_bandwidth_ipv4", "100000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "compatible_rfc1583_ipv4", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_ipv4", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_always_ipv4", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_metric_ipv4", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_metric_type_ipv4", "type1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_external_ipv4", "111"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_inter_area_ipv4", "111"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_intra_area_ipv4", "112"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "timers_spf_delay_ipv4", "300"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "timers_spf_initial_hold_ipv4", "2000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "timers_spf_max_hold_ipv4", "20000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_ipv4", "110"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "policy_name_ipv4", "example"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "filter_ipv4", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "redistribute_ipv4.0.protocol", "static"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "redistribute_ipv4.0.route_policy", "RP1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "redistribute_ipv4.0.nat_dia", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "max_metric_router_lsa_ipv4.0.ad_type", "on-startup"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "max_metric_router_lsa_ipv4.0.time", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.area_number", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.stub", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.stub_no_summary", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.nssa", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.nssa_no_summary", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.translate", "always"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.normal", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.name", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.hello_interval", "20"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.dead_interval", "60"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.retransmit_interval", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.cost", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.network", "point-to-point"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.passive_interface", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.authentication_type", "message-digest"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.authentication_key", "authenticationKey"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.interfaces.0.ipsec_spi", "256"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.ranges.0.address", "1.1.1.0/24"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.ranges.0.cost", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv4.0.ranges.0.no_advertise", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "router_id_ipv6", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "auto_cost_reference_bandwidth_ipv6", "100000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "compatible_rfc1583_ipv6", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_ipv6", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_always_ipv6", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_metric_ipv6", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "default_information_originate_metric_type_ipv6", "type1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_external_ipv6", "111"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_inter_area_ipv6", "111"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_intra_area_ipv6", "112"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "timers_spf_delay_ipv6", "300"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "timers_spf_initial_hold_ipv6", "2000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "timers_spf_max_hold_ipv6", "20000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "distance_ipv6", "110"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "policy_name_ipv6", "example"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "filter_ipv6", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "redistribute_ipv6.0.protocol", "static"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "redistribute_ipv6.0.route_policy", "RP1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "max_metric_router_lsa_ipv6.0.ad_type", "on-startup"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "max_metric_router_lsa_ipv6.0.time", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.area_number", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.stub", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.stub_no_summary", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.nssa", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.nssa_no_summary", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.translate", "always"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.normal", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.name", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.hello_interval", "20"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.dead_interval", "60"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.retransmit_interval", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.cost", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.network", "point-to-point"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.passive_interface", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.authentication_type", "message-digest"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.authentication_key", "authenticationKey"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.interfaces.0.ipsec_spi", "256"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.ranges.0.address", "1.1.1.0/24"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.ranges.0.cost", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "areas_ipv6.0.ranges.0.no_advertise", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_router_id", "1.2.3.4"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_auto_cost_reference_bandwidth", "100000"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_compatible_rfc1583", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_default_information_originate", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_default_information_originate_always", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_default_information_originate_metric", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_default_information_originate_metric_type", "type1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_distance_external", "111"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_distance_inter_area", "111"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_distance_intra_area", "112"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_timers_spf_delay", "300"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_timers_spf_initial_hold", "2000"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_timers_spf_max_hold", "20000"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_distance", "110"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_policy_name", "POLICY1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_filter", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_redistributes.0.protocol", "static"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_redistributes.0.route_policy", "RP1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_redistributes.0.nat_dia", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_max_metric_router_lsas.0.ad_type", "on-startup"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_max_metric_router_lsas.0.time", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.area_number", "1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.stub", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.stub_no_summary", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.nssa", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.nssa_no_summary", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.translate", "always"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.normal", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.name", "e1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.hello_interval", "20"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.dead_interval", "60"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.retransmit_interval", "10"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.cost", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.network", "point-to-point"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.passive_interface", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.authentication_type", "message-digest"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.authentication_key", "authenticationKey"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.ipsec_spi", "256"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.ranges.0.address", "1.1.1.0/24"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.ranges.0.cost", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.ranges.0.no_advertise", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_router_id", "1.2.3.4"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_auto_cost_reference_bandwidth", "100000"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_compatible_rfc1583", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_default_information_originate", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_default_information_originate_always", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_default_information_originate_metric", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_default_information_originate_metric_type", "type1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_distance_external", "111"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_distance_inter_area", "111"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_distance_intra_area", "112"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_timers_spf_delay", "300"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_timers_spf_initial_hold", "2000"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_timers_spf_max_hold", "20000"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_distance", "110"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_policy_name", "POLICY2"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_filter", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_redistributes.0.protocol", "static"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_redistributes.0.route_policy", "RP1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_max_metric_router_lsas.0.ad_type", "on-startup"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_max_metric_router_lsas.0.time", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.area_number", "1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.stub", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.stub_no_summary", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.nssa", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.nssa_no_summary", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.translate", "always"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.normal", "false"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.name", "e1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.hello_interval", "20"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.dead_interval", "60"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.retransmit_interval", "10"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.cost", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.network", "point-to-point"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.passive_interface", "true"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.authentication_type", "message-digest"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.authentication_key", "authenticationKey"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.ipsec_spi", "256"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.ranges.0.address", "2001::/48"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.ranges.0.cost", "100"),
+					resource.TestCheckResourceAttr("sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.ranges.0.no_advertise", "true"),
 				),
 			},
 		},
@@ -140,32 +140,32 @@ func testAccSdwanCiscoOSPFv3FeatureTemplateConfig_all() string {
 		name = "TF_TEST_ALL"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		router_id_ipv4 = "1.2.3.4"
-		auto_cost_reference_bandwidth_ipv4 = 100000
-		compatible_rfc1583_ipv4 = true
-		default_information_originate_ipv4 = true
-		default_information_originate_always_ipv4 = true
-		default_information_originate_metric_ipv4 = 100
-		default_information_originate_metric_type_ipv4 = "type1"
-		distance_external_ipv4 = 111
-		distance_inter_area_ipv4 = 111
-		distance_intra_area_ipv4 = 112
-		timers_spf_delay_ipv4 = 300
-		timers_spf_initial_hold_ipv4 = 2000
-		timers_spf_max_hold_ipv4 = 20000
-		distance_ipv4 = 110
-		policy_name_ipv4 = "example"
-		filter_ipv4 = false
-		redistribute_ipv4 = [{
+		ipv4_router_id = "1.2.3.4"
+		ipv4_auto_cost_reference_bandwidth = 100000
+		ipv4_compatible_rfc1583 = true
+		ipv4_default_information_originate = true
+		ipv4_default_information_originate_always = true
+		ipv4_default_information_originate_metric = 100
+		ipv4_default_information_originate_metric_type = "type1"
+		ipv4_distance_external = 111
+		ipv4_distance_inter_area = 111
+		ipv4_distance_intra_area = 112
+		ipv4_timers_spf_delay = 300
+		ipv4_timers_spf_initial_hold = 2000
+		ipv4_timers_spf_max_hold = 20000
+		ipv4_distance = 110
+		ipv4_policy_name = "POLICY1"
+		ipv4_filter = false
+		ipv4_redistributes = [{
 			protocol = "static"
 			route_policy = "RP1"
 			nat_dia = true
 		}]
-		max_metric_router_lsa_ipv4 = [{
+		ipv4_max_metric_router_lsas = [{
 			ad_type = "on-startup"
 			time = 100
 		}]
-		areas_ipv4 = [{
+		ipv4_areas = [{
 			area_number = 1
 			stub = false
 			stub_no_summary = false
@@ -191,31 +191,31 @@ func testAccSdwanCiscoOSPFv3FeatureTemplateConfig_all() string {
 				no_advertise = true
 			}]
 		}]
-		router_id_ipv6 = "1.2.3.4"
-		auto_cost_reference_bandwidth_ipv6 = 100000
-		compatible_rfc1583_ipv6 = true
-		default_information_originate_ipv6 = true
-		default_information_originate_always_ipv6 = true
-		default_information_originate_metric_ipv6 = 100
-		default_information_originate_metric_type_ipv6 = "type1"
-		distance_external_ipv6 = 111
-		distance_inter_area_ipv6 = 111
-		distance_intra_area_ipv6 = 112
-		timers_spf_delay_ipv6 = 300
-		timers_spf_initial_hold_ipv6 = 2000
-		timers_spf_max_hold_ipv6 = 20000
-		distance_ipv6 = 110
-		policy_name_ipv6 = "example"
-		filter_ipv6 = false
-		redistribute_ipv6 = [{
+		ipv6_router_id = "1.2.3.4"
+		ipv6_auto_cost_reference_bandwidth = 100000
+		ipv6_compatible_rfc1583 = true
+		ipv6_default_information_originate = true
+		ipv6_default_information_originate_always = true
+		ipv6_default_information_originate_metric = 100
+		ipv6_default_information_originate_metric_type = "type1"
+		ipv6_distance_external = 111
+		ipv6_distance_inter_area = 111
+		ipv6_distance_intra_area = 112
+		ipv6_timers_spf_delay = 300
+		ipv6_timers_spf_initial_hold = 2000
+		ipv6_timers_spf_max_hold = 20000
+		ipv6_distance = 110
+		ipv6_policy_name = "POLICY2"
+		ipv6_filter = false
+		ipv6_redistributes = [{
 			protocol = "static"
 			route_policy = "RP1"
 		}]
-		max_metric_router_lsa_ipv6 = [{
+		ipv6_max_metric_router_lsas = [{
 			ad_type = "on-startup"
 			time = 100
 		}]
-		areas_ipv6 = [{
+		ipv6_areas = [{
 			area_number = 1
 			stub = false
 			stub_no_summary = false
@@ -236,7 +236,7 @@ func testAccSdwanCiscoOSPFv3FeatureTemplateConfig_all() string {
 				ipsec_spi = 256
 			}]
 			ranges = [{
-				address = "1.1.1.0/24"
+				address = "2001::/48"
 				cost = 100
 				no_advertise = true
 			}]

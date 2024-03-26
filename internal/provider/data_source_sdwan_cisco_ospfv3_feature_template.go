@@ -86,131 +86,131 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"router_id_ipv4": schema.StringAttribute{
+			"ipv4_router_id": schema.StringAttribute{
 				MarkdownDescription: "Set OSPF router ID to override system IP address",
 				Computed:            true,
 			},
-			"router_id_ipv4_variable": schema.StringAttribute{
+			"ipv4_router_id_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"auto_cost_reference_bandwidth_ipv4": schema.Int64Attribute{
+			"ipv4_auto_cost_reference_bandwidth": schema.Int64Attribute{
 				MarkdownDescription: "Set reference bandwidth method to assign OSPF cost",
 				Computed:            true,
 			},
-			"auto_cost_reference_bandwidth_ipv4_variable": schema.StringAttribute{
+			"ipv4_auto_cost_reference_bandwidth_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"compatible_rfc1583_ipv4": schema.BoolAttribute{
+			"ipv4_compatible_rfc1583": schema.BoolAttribute{
 				MarkdownDescription: "Calculate summary route cost based on RFC 1583",
 				Computed:            true,
 			},
-			"compatible_rfc1583_ipv4_variable": schema.StringAttribute{
+			"ipv4_compatible_rfc1583_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_information_originate_ipv4": schema.BoolAttribute{
+			"ipv4_default_information_originate": schema.BoolAttribute{
 				MarkdownDescription: "Distribute default external route into OSPF",
 				Computed:            true,
 			},
-			"default_information_originate_always_ipv4": schema.BoolAttribute{
+			"ipv4_default_information_originate_always": schema.BoolAttribute{
 				MarkdownDescription: "Always advertise default route",
 				Computed:            true,
 			},
-			"default_information_originate_always_ipv4_variable": schema.StringAttribute{
+			"ipv4_default_information_originate_always_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_information_originate_metric_ipv4": schema.Int64Attribute{
+			"ipv4_default_information_originate_metric": schema.Int64Attribute{
 				MarkdownDescription: "Set metric used to generate default route <0..16777214>",
 				Computed:            true,
 			},
-			"default_information_originate_metric_ipv4_variable": schema.StringAttribute{
+			"ipv4_default_information_originate_metric_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_information_originate_metric_type_ipv4": schema.StringAttribute{
+			"ipv4_default_information_originate_metric_type": schema.StringAttribute{
 				MarkdownDescription: "Set default route type",
 				Computed:            true,
 			},
-			"default_information_originate_metric_type_ipv4_variable": schema.StringAttribute{
+			"ipv4_default_information_originate_metric_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_external_ipv4": schema.Int64Attribute{
+			"ipv4_distance_external": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for external routes",
 				Computed:            true,
 			},
-			"distance_external_ipv4_variable": schema.StringAttribute{
+			"ipv4_distance_external_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_inter_area_ipv4": schema.Int64Attribute{
+			"ipv4_distance_inter_area": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for inter-area routes",
 				Computed:            true,
 			},
-			"distance_inter_area_ipv4_variable": schema.StringAttribute{
+			"ipv4_distance_inter_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_intra_area_ipv4": schema.Int64Attribute{
+			"ipv4_distance_intra_area": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for intra-area routes",
 				Computed:            true,
 			},
-			"distance_intra_area_ipv4_variable": schema.StringAttribute{
+			"ipv4_distance_intra_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"timers_spf_delay_ipv4": schema.Int64Attribute{
+			"ipv4_timers_spf_delay": schema.Int64Attribute{
 				MarkdownDescription: "Set delay from first change received until performing SPF calculation",
 				Computed:            true,
 			},
-			"timers_spf_delay_ipv4_variable": schema.StringAttribute{
+			"ipv4_timers_spf_delay_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"timers_spf_initial_hold_ipv4": schema.Int64Attribute{
+			"ipv4_timers_spf_initial_hold": schema.Int64Attribute{
 				MarkdownDescription: "Set initial hold time between consecutive SPF calculations",
 				Computed:            true,
 			},
-			"timers_spf_initial_hold_ipv4_variable": schema.StringAttribute{
+			"ipv4_timers_spf_initial_hold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"timers_spf_max_hold_ipv4": schema.Int64Attribute{
+			"ipv4_timers_spf_max_hold": schema.Int64Attribute{
 				MarkdownDescription: "Set maximum hold time between consecutive SPF calculations",
 				Computed:            true,
 			},
-			"timers_spf_max_hold_ipv4_variable": schema.StringAttribute{
+			"ipv4_timers_spf_max_hold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_ipv4": schema.Int64Attribute{
+			"ipv4_distance": schema.Int64Attribute{
 				MarkdownDescription: "Distance",
 				Computed:            true,
 			},
-			"distance_ipv4_variable": schema.StringAttribute{
+			"ipv4_distance_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"policy_name_ipv4": schema.StringAttribute{
+			"ipv4_policy_name": schema.StringAttribute{
 				MarkdownDescription: "Policy Name",
 				Computed:            true,
 			},
-			"policy_name_ipv4_variable": schema.StringAttribute{
+			"ipv4_policy_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"filter_ipv4": schema.BoolAttribute{
+			"ipv4_filter": schema.BoolAttribute{
 				MarkdownDescription: "Filter",
 				Computed:            true,
 			},
-			"filter_ipv4_variable": schema.StringAttribute{
+			"ipv4_filter_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"redistribute_ipv4": schema.ListNestedAttribute{
+			"ipv4_redistributes": schema.ListNestedAttribute{
 				MarkdownDescription: "Redistribute routes",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -246,7 +246,7 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 					},
 				},
 			},
-			"max_metric_router_lsa_ipv4": schema.ListNestedAttribute{
+			"ipv4_max_metric_router_lsas": schema.ListNestedAttribute{
 				MarkdownDescription: "Advertise own router LSA with infinite distance",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -270,7 +270,7 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 					},
 				},
 			},
-			"areas_ipv4": schema.ListNestedAttribute{
+			"ipv4_areas": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure OSPF area",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -458,131 +458,131 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 					},
 				},
 			},
-			"router_id_ipv6": schema.StringAttribute{
+			"ipv6_router_id": schema.StringAttribute{
 				MarkdownDescription: "Set OSPF router ID to override system IP address",
 				Computed:            true,
 			},
-			"router_id_ipv6_variable": schema.StringAttribute{
+			"ipv6_router_id_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"auto_cost_reference_bandwidth_ipv6": schema.Int64Attribute{
+			"ipv6_auto_cost_reference_bandwidth": schema.Int64Attribute{
 				MarkdownDescription: "Set reference bandwidth method to assign OSPF cost",
 				Computed:            true,
 			},
-			"auto_cost_reference_bandwidth_ipv6_variable": schema.StringAttribute{
+			"ipv6_auto_cost_reference_bandwidth_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"compatible_rfc1583_ipv6": schema.BoolAttribute{
+			"ipv6_compatible_rfc1583": schema.BoolAttribute{
 				MarkdownDescription: "Calculate summary route cost based on RFC 1583",
 				Computed:            true,
 			},
-			"compatible_rfc1583_ipv6_variable": schema.StringAttribute{
+			"ipv6_compatible_rfc1583_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_information_originate_ipv6": schema.BoolAttribute{
+			"ipv6_default_information_originate": schema.BoolAttribute{
 				MarkdownDescription: "Distribute default external route into OSPF",
 				Computed:            true,
 			},
-			"default_information_originate_always_ipv6": schema.BoolAttribute{
+			"ipv6_default_information_originate_always": schema.BoolAttribute{
 				MarkdownDescription: "Always advertise default route",
 				Computed:            true,
 			},
-			"default_information_originate_always_ipv6_variable": schema.StringAttribute{
+			"ipv6_default_information_originate_always_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_information_originate_metric_ipv6": schema.Int64Attribute{
+			"ipv6_default_information_originate_metric": schema.Int64Attribute{
 				MarkdownDescription: "Set metric used to generate default route <0..16777214>",
 				Computed:            true,
 			},
-			"default_information_originate_metric_ipv6_variable": schema.StringAttribute{
+			"ipv6_default_information_originate_metric_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_information_originate_metric_type_ipv6": schema.StringAttribute{
+			"ipv6_default_information_originate_metric_type": schema.StringAttribute{
 				MarkdownDescription: "Set default route type",
 				Computed:            true,
 			},
-			"default_information_originate_metric_type_ipv6_variable": schema.StringAttribute{
+			"ipv6_default_information_originate_metric_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_external_ipv6": schema.Int64Attribute{
+			"ipv6_distance_external": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for external routes",
 				Computed:            true,
 			},
-			"distance_external_ipv6_variable": schema.StringAttribute{
+			"ipv6_distance_external_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_inter_area_ipv6": schema.Int64Attribute{
+			"ipv6_distance_inter_area": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for inter-area routes",
 				Computed:            true,
 			},
-			"distance_inter_area_ipv6_variable": schema.StringAttribute{
+			"ipv6_distance_inter_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_intra_area_ipv6": schema.Int64Attribute{
+			"ipv6_distance_intra_area": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for intra-area routes",
 				Computed:            true,
 			},
-			"distance_intra_area_ipv6_variable": schema.StringAttribute{
+			"ipv6_distance_intra_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"timers_spf_delay_ipv6": schema.Int64Attribute{
+			"ipv6_timers_spf_delay": schema.Int64Attribute{
 				MarkdownDescription: "Set delay from first change received until performing SPF calculation",
 				Computed:            true,
 			},
-			"timers_spf_delay_ipv6_variable": schema.StringAttribute{
+			"ipv6_timers_spf_delay_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"timers_spf_initial_hold_ipv6": schema.Int64Attribute{
+			"ipv6_timers_spf_initial_hold": schema.Int64Attribute{
 				MarkdownDescription: "Set initial hold time between consecutive SPF calculations",
 				Computed:            true,
 			},
-			"timers_spf_initial_hold_ipv6_variable": schema.StringAttribute{
+			"ipv6_timers_spf_initial_hold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"timers_spf_max_hold_ipv6": schema.Int64Attribute{
+			"ipv6_timers_spf_max_hold": schema.Int64Attribute{
 				MarkdownDescription: "Set maximum hold time between consecutive SPF calculations",
 				Computed:            true,
 			},
-			"timers_spf_max_hold_ipv6_variable": schema.StringAttribute{
+			"ipv6_timers_spf_max_hold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_ipv6": schema.Int64Attribute{
+			"ipv6_distance": schema.Int64Attribute{
 				MarkdownDescription: "Distance",
 				Computed:            true,
 			},
-			"distance_ipv6_variable": schema.StringAttribute{
+			"ipv6_distance_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"policy_name_ipv6": schema.StringAttribute{
+			"ipv6_policy_name": schema.StringAttribute{
 				MarkdownDescription: "Name",
 				Computed:            true,
 			},
-			"policy_name_ipv6_variable": schema.StringAttribute{
+			"ipv6_policy_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"filter_ipv6": schema.BoolAttribute{
+			"ipv6_filter": schema.BoolAttribute{
 				MarkdownDescription: "Filter",
 				Computed:            true,
 			},
-			"filter_ipv6_variable": schema.StringAttribute{
+			"ipv6_filter_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"redistribute_ipv6": schema.ListNestedAttribute{
+			"ipv6_redistributes": schema.ListNestedAttribute{
 				MarkdownDescription: "Redistribute routes",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -610,7 +610,7 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 					},
 				},
 			},
-			"max_metric_router_lsa_ipv6": schema.ListNestedAttribute{
+			"ipv6_max_metric_router_lsas": schema.ListNestedAttribute{
 				MarkdownDescription: "Advertise own router LSA with infinite distance",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -634,7 +634,7 @@ func (d *CiscoOSPFv3FeatureTemplateDataSource) Schema(ctx context.Context, req d
 					},
 				},
 			},
-			"areas_ipv6": schema.ListNestedAttribute{
+			"ipv6_areas": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure OSPF area",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

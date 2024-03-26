@@ -30,83 +30,83 @@ import (
 )
 
 type CiscoOSPFv3 struct {
-	Id                                                types.String                        `tfsdk:"id"`
-	Version                                           types.Int64                         `tfsdk:"version"`
-	TemplateType                                      types.String                        `tfsdk:"template_type"`
-	Name                                              types.String                        `tfsdk:"name"`
-	Description                                       types.String                        `tfsdk:"description"`
-	DeviceTypes                                       types.Set                           `tfsdk:"device_types"`
-	RouterIdIpv4                                      types.String                        `tfsdk:"router_id_ipv4"`
-	RouterIdIpv4Variable                              types.String                        `tfsdk:"router_id_ipv4_variable"`
-	AutoCostReferenceBandwidthIpv4                    types.Int64                         `tfsdk:"auto_cost_reference_bandwidth_ipv4"`
-	AutoCostReferenceBandwidthIpv4Variable            types.String                        `tfsdk:"auto_cost_reference_bandwidth_ipv4_variable"`
-	CompatibleRfc1583Ipv4                             types.Bool                          `tfsdk:"compatible_rfc1583_ipv4"`
-	CompatibleRfc1583Ipv4Variable                     types.String                        `tfsdk:"compatible_rfc1583_ipv4_variable"`
-	DefaultInformationOriginateIpv4                   types.Bool                          `tfsdk:"default_information_originate_ipv4"`
-	DefaultInformationOriginateAlwaysIpv4             types.Bool                          `tfsdk:"default_information_originate_always_ipv4"`
-	DefaultInformationOriginateAlwaysIpv4Variable     types.String                        `tfsdk:"default_information_originate_always_ipv4_variable"`
-	DefaultInformationOriginateMetricIpv4             types.Int64                         `tfsdk:"default_information_originate_metric_ipv4"`
-	DefaultInformationOriginateMetricIpv4Variable     types.String                        `tfsdk:"default_information_originate_metric_ipv4_variable"`
-	DefaultInformationOriginateMetricTypeIpv4         types.String                        `tfsdk:"default_information_originate_metric_type_ipv4"`
-	DefaultInformationOriginateMetricTypeIpv4Variable types.String                        `tfsdk:"default_information_originate_metric_type_ipv4_variable"`
-	DistanceExternalIpv4                              types.Int64                         `tfsdk:"distance_external_ipv4"`
-	DistanceExternalIpv4Variable                      types.String                        `tfsdk:"distance_external_ipv4_variable"`
-	DistanceInterAreaIpv4                             types.Int64                         `tfsdk:"distance_inter_area_ipv4"`
-	DistanceInterAreaIpv4Variable                     types.String                        `tfsdk:"distance_inter_area_ipv4_variable"`
-	DistanceIntraAreaIpv4                             types.Int64                         `tfsdk:"distance_intra_area_ipv4"`
-	DistanceIntraAreaIpv4Variable                     types.String                        `tfsdk:"distance_intra_area_ipv4_variable"`
-	TimersSpfDelayIpv4                                types.Int64                         `tfsdk:"timers_spf_delay_ipv4"`
-	TimersSpfDelayIpv4Variable                        types.String                        `tfsdk:"timers_spf_delay_ipv4_variable"`
-	TimersSpfInitialHoldIpv4                          types.Int64                         `tfsdk:"timers_spf_initial_hold_ipv4"`
-	TimersSpfInitialHoldIpv4Variable                  types.String                        `tfsdk:"timers_spf_initial_hold_ipv4_variable"`
-	TimersSpfMaxHoldIpv4                              types.Int64                         `tfsdk:"timers_spf_max_hold_ipv4"`
-	TimersSpfMaxHoldIpv4Variable                      types.String                        `tfsdk:"timers_spf_max_hold_ipv4_variable"`
-	DistanceIpv4                                      types.Int64                         `tfsdk:"distance_ipv4"`
-	DistanceIpv4Variable                              types.String                        `tfsdk:"distance_ipv4_variable"`
-	PolicyNameIpv4                                    types.String                        `tfsdk:"policy_name_ipv4"`
-	PolicyNameIpv4Variable                            types.String                        `tfsdk:"policy_name_ipv4_variable"`
-	FilterIpv4                                        types.Bool                          `tfsdk:"filter_ipv4"`
-	FilterIpv4Variable                                types.String                        `tfsdk:"filter_ipv4_variable"`
-	RedistributeIpv4                                  []CiscoOSPFv3RedistributeIpv4       `tfsdk:"redistribute_ipv4"`
-	MaxMetricRouterLsaIpv4                            []CiscoOSPFv3MaxMetricRouterLsaIpv4 `tfsdk:"max_metric_router_lsa_ipv4"`
-	AreasIpv4                                         []CiscoOSPFv3AreasIpv4              `tfsdk:"areas_ipv4"`
-	RouterIdIpv6                                      types.String                        `tfsdk:"router_id_ipv6"`
-	RouterIdIpv6Variable                              types.String                        `tfsdk:"router_id_ipv6_variable"`
-	AutoCostReferenceBandwidthIpv6                    types.Int64                         `tfsdk:"auto_cost_reference_bandwidth_ipv6"`
-	AutoCostReferenceBandwidthIpv6Variable            types.String                        `tfsdk:"auto_cost_reference_bandwidth_ipv6_variable"`
-	CompatibleRfc1583Ipv6                             types.Bool                          `tfsdk:"compatible_rfc1583_ipv6"`
-	CompatibleRfc1583Ipv6Variable                     types.String                        `tfsdk:"compatible_rfc1583_ipv6_variable"`
-	DefaultInformationOriginateIpv6                   types.Bool                          `tfsdk:"default_information_originate_ipv6"`
-	DefaultInformationOriginateAlwaysIpv6             types.Bool                          `tfsdk:"default_information_originate_always_ipv6"`
-	DefaultInformationOriginateAlwaysIpv6Variable     types.String                        `tfsdk:"default_information_originate_always_ipv6_variable"`
-	DefaultInformationOriginateMetricIpv6             types.Int64                         `tfsdk:"default_information_originate_metric_ipv6"`
-	DefaultInformationOriginateMetricIpv6Variable     types.String                        `tfsdk:"default_information_originate_metric_ipv6_variable"`
-	DefaultInformationOriginateMetricTypeIpv6         types.String                        `tfsdk:"default_information_originate_metric_type_ipv6"`
-	DefaultInformationOriginateMetricTypeIpv6Variable types.String                        `tfsdk:"default_information_originate_metric_type_ipv6_variable"`
-	DistanceExternalIpv6                              types.Int64                         `tfsdk:"distance_external_ipv6"`
-	DistanceExternalIpv6Variable                      types.String                        `tfsdk:"distance_external_ipv6_variable"`
-	DistanceInterAreaIpv6                             types.Int64                         `tfsdk:"distance_inter_area_ipv6"`
-	DistanceInterAreaIpv6Variable                     types.String                        `tfsdk:"distance_inter_area_ipv6_variable"`
-	DistanceIntraAreaIpv6                             types.Int64                         `tfsdk:"distance_intra_area_ipv6"`
-	DistanceIntraAreaIpv6Variable                     types.String                        `tfsdk:"distance_intra_area_ipv6_variable"`
-	TimersSpfDelayIpv6                                types.Int64                         `tfsdk:"timers_spf_delay_ipv6"`
-	TimersSpfDelayIpv6Variable                        types.String                        `tfsdk:"timers_spf_delay_ipv6_variable"`
-	TimersSpfInitialHoldIpv6                          types.Int64                         `tfsdk:"timers_spf_initial_hold_ipv6"`
-	TimersSpfInitialHoldIpv6Variable                  types.String                        `tfsdk:"timers_spf_initial_hold_ipv6_variable"`
-	TimersSpfMaxHoldIpv6                              types.Int64                         `tfsdk:"timers_spf_max_hold_ipv6"`
-	TimersSpfMaxHoldIpv6Variable                      types.String                        `tfsdk:"timers_spf_max_hold_ipv6_variable"`
-	DistanceIpv6                                      types.Int64                         `tfsdk:"distance_ipv6"`
-	DistanceIpv6Variable                              types.String                        `tfsdk:"distance_ipv6_variable"`
-	PolicyNameIpv6                                    types.String                        `tfsdk:"policy_name_ipv6"`
-	PolicyNameIpv6Variable                            types.String                        `tfsdk:"policy_name_ipv6_variable"`
-	FilterIpv6                                        types.Bool                          `tfsdk:"filter_ipv6"`
-	FilterIpv6Variable                                types.String                        `tfsdk:"filter_ipv6_variable"`
-	RedistributeIpv6                                  []CiscoOSPFv3RedistributeIpv6       `tfsdk:"redistribute_ipv6"`
-	MaxMetricRouterLsaIpv6                            []CiscoOSPFv3MaxMetricRouterLsaIpv6 `tfsdk:"max_metric_router_lsa_ipv6"`
-	AreasIpv6                                         []CiscoOSPFv3AreasIpv6              `tfsdk:"areas_ipv6"`
+	Id                                                types.String                         `tfsdk:"id"`
+	Version                                           types.Int64                          `tfsdk:"version"`
+	TemplateType                                      types.String                         `tfsdk:"template_type"`
+	Name                                              types.String                         `tfsdk:"name"`
+	Description                                       types.String                         `tfsdk:"description"`
+	DeviceTypes                                       types.Set                            `tfsdk:"device_types"`
+	Ipv4RouterId                                      types.String                         `tfsdk:"ipv4_router_id"`
+	Ipv4RouterIdVariable                              types.String                         `tfsdk:"ipv4_router_id_variable"`
+	Ipv4AutoCostReferenceBandwidth                    types.Int64                          `tfsdk:"ipv4_auto_cost_reference_bandwidth"`
+	Ipv4AutoCostReferenceBandwidthVariable            types.String                         `tfsdk:"ipv4_auto_cost_reference_bandwidth_variable"`
+	Ipv4CompatibleRfc1583                             types.Bool                           `tfsdk:"ipv4_compatible_rfc1583"`
+	Ipv4CompatibleRfc1583Variable                     types.String                         `tfsdk:"ipv4_compatible_rfc1583_variable"`
+	Ipv4DefaultInformationOriginate                   types.Bool                           `tfsdk:"ipv4_default_information_originate"`
+	Ipv4DefaultInformationOriginateAlways             types.Bool                           `tfsdk:"ipv4_default_information_originate_always"`
+	Ipv4DefaultInformationOriginateAlwaysVariable     types.String                         `tfsdk:"ipv4_default_information_originate_always_variable"`
+	Ipv4DefaultInformationOriginateMetric             types.Int64                          `tfsdk:"ipv4_default_information_originate_metric"`
+	Ipv4DefaultInformationOriginateMetricVariable     types.String                         `tfsdk:"ipv4_default_information_originate_metric_variable"`
+	Ipv4DefaultInformationOriginateMetricType         types.String                         `tfsdk:"ipv4_default_information_originate_metric_type"`
+	Ipv4DefaultInformationOriginateMetricTypeVariable types.String                         `tfsdk:"ipv4_default_information_originate_metric_type_variable"`
+	Ipv4DistanceExternal                              types.Int64                          `tfsdk:"ipv4_distance_external"`
+	Ipv4DistanceExternalVariable                      types.String                         `tfsdk:"ipv4_distance_external_variable"`
+	Ipv4DistanceInterArea                             types.Int64                          `tfsdk:"ipv4_distance_inter_area"`
+	Ipv4DistanceInterAreaVariable                     types.String                         `tfsdk:"ipv4_distance_inter_area_variable"`
+	Ipv4DistanceIntraArea                             types.Int64                          `tfsdk:"ipv4_distance_intra_area"`
+	Ipv4DistanceIntraAreaVariable                     types.String                         `tfsdk:"ipv4_distance_intra_area_variable"`
+	Ipv4TimersSpfDelay                                types.Int64                          `tfsdk:"ipv4_timers_spf_delay"`
+	Ipv4TimersSpfDelayVariable                        types.String                         `tfsdk:"ipv4_timers_spf_delay_variable"`
+	Ipv4TimersSpfInitialHold                          types.Int64                          `tfsdk:"ipv4_timers_spf_initial_hold"`
+	Ipv4TimersSpfInitialHoldVariable                  types.String                         `tfsdk:"ipv4_timers_spf_initial_hold_variable"`
+	Ipv4TimersSpfMaxHold                              types.Int64                          `tfsdk:"ipv4_timers_spf_max_hold"`
+	Ipv4TimersSpfMaxHoldVariable                      types.String                         `tfsdk:"ipv4_timers_spf_max_hold_variable"`
+	Ipv4Distance                                      types.Int64                          `tfsdk:"ipv4_distance"`
+	Ipv4DistanceVariable                              types.String                         `tfsdk:"ipv4_distance_variable"`
+	Ipv4PolicyName                                    types.String                         `tfsdk:"ipv4_policy_name"`
+	Ipv4PolicyNameVariable                            types.String                         `tfsdk:"ipv4_policy_name_variable"`
+	Ipv4Filter                                        types.Bool                           `tfsdk:"ipv4_filter"`
+	Ipv4FilterVariable                                types.String                         `tfsdk:"ipv4_filter_variable"`
+	Ipv4Redistributes                                 []CiscoOSPFv3Ipv4Redistributes       `tfsdk:"ipv4_redistributes"`
+	Ipv4MaxMetricRouterLsas                           []CiscoOSPFv3Ipv4MaxMetricRouterLsas `tfsdk:"ipv4_max_metric_router_lsas"`
+	Ipv4Areas                                         []CiscoOSPFv3Ipv4Areas               `tfsdk:"ipv4_areas"`
+	Ipv6RouterId                                      types.String                         `tfsdk:"ipv6_router_id"`
+	Ipv6RouterIdVariable                              types.String                         `tfsdk:"ipv6_router_id_variable"`
+	Ipv6AutoCostReferenceBandwidth                    types.Int64                          `tfsdk:"ipv6_auto_cost_reference_bandwidth"`
+	Ipv6AutoCostReferenceBandwidthVariable            types.String                         `tfsdk:"ipv6_auto_cost_reference_bandwidth_variable"`
+	Ipv6CompatibleRfc1583                             types.Bool                           `tfsdk:"ipv6_compatible_rfc1583"`
+	Ipv6CompatibleRfc1583Variable                     types.String                         `tfsdk:"ipv6_compatible_rfc1583_variable"`
+	Ipv6DefaultInformationOriginate                   types.Bool                           `tfsdk:"ipv6_default_information_originate"`
+	Ipv6DefaultInformationOriginateAlways             types.Bool                           `tfsdk:"ipv6_default_information_originate_always"`
+	Ipv6DefaultInformationOriginateAlwaysVariable     types.String                         `tfsdk:"ipv6_default_information_originate_always_variable"`
+	Ipv6DefaultInformationOriginateMetric             types.Int64                          `tfsdk:"ipv6_default_information_originate_metric"`
+	Ipv6DefaultInformationOriginateMetricVariable     types.String                         `tfsdk:"ipv6_default_information_originate_metric_variable"`
+	Ipv6DefaultInformationOriginateMetricType         types.String                         `tfsdk:"ipv6_default_information_originate_metric_type"`
+	Ipv6DefaultInformationOriginateMetricTypeVariable types.String                         `tfsdk:"ipv6_default_information_originate_metric_type_variable"`
+	Ipv6DistanceExternal                              types.Int64                          `tfsdk:"ipv6_distance_external"`
+	Ipv6DistanceExternalVariable                      types.String                         `tfsdk:"ipv6_distance_external_variable"`
+	Ipv6DistanceInterArea                             types.Int64                          `tfsdk:"ipv6_distance_inter_area"`
+	Ipv6DistanceInterAreaVariable                     types.String                         `tfsdk:"ipv6_distance_inter_area_variable"`
+	Ipv6DistanceIntraArea                             types.Int64                          `tfsdk:"ipv6_distance_intra_area"`
+	Ipv6DistanceIntraAreaVariable                     types.String                         `tfsdk:"ipv6_distance_intra_area_variable"`
+	Ipv6TimersSpfDelay                                types.Int64                          `tfsdk:"ipv6_timers_spf_delay"`
+	Ipv6TimersSpfDelayVariable                        types.String                         `tfsdk:"ipv6_timers_spf_delay_variable"`
+	Ipv6TimersSpfInitialHold                          types.Int64                          `tfsdk:"ipv6_timers_spf_initial_hold"`
+	Ipv6TimersSpfInitialHoldVariable                  types.String                         `tfsdk:"ipv6_timers_spf_initial_hold_variable"`
+	Ipv6TimersSpfMaxHold                              types.Int64                          `tfsdk:"ipv6_timers_spf_max_hold"`
+	Ipv6TimersSpfMaxHoldVariable                      types.String                         `tfsdk:"ipv6_timers_spf_max_hold_variable"`
+	Ipv6Distance                                      types.Int64                          `tfsdk:"ipv6_distance"`
+	Ipv6DistanceVariable                              types.String                         `tfsdk:"ipv6_distance_variable"`
+	Ipv6PolicyName                                    types.String                         `tfsdk:"ipv6_policy_name"`
+	Ipv6PolicyNameVariable                            types.String                         `tfsdk:"ipv6_policy_name_variable"`
+	Ipv6Filter                                        types.Bool                           `tfsdk:"ipv6_filter"`
+	Ipv6FilterVariable                                types.String                         `tfsdk:"ipv6_filter_variable"`
+	Ipv6Redistributes                                 []CiscoOSPFv3Ipv6Redistributes       `tfsdk:"ipv6_redistributes"`
+	Ipv6MaxMetricRouterLsas                           []CiscoOSPFv3Ipv6MaxMetricRouterLsas `tfsdk:"ipv6_max_metric_router_lsas"`
+	Ipv6Areas                                         []CiscoOSPFv3Ipv6Areas               `tfsdk:"ipv6_areas"`
 }
 
-type CiscoOSPFv3RedistributeIpv4 struct {
+type CiscoOSPFv3Ipv4Redistributes struct {
 	Optional            types.Bool   `tfsdk:"optional"`
 	Protocol            types.String `tfsdk:"protocol"`
 	ProtocolVariable    types.String `tfsdk:"protocol_variable"`
@@ -116,14 +116,14 @@ type CiscoOSPFv3RedistributeIpv4 struct {
 	NatDiaVariable      types.String `tfsdk:"nat_dia_variable"`
 }
 
-type CiscoOSPFv3MaxMetricRouterLsaIpv4 struct {
+type CiscoOSPFv3Ipv4MaxMetricRouterLsas struct {
 	Optional     types.Bool   `tfsdk:"optional"`
 	AdType       types.String `tfsdk:"ad_type"`
 	Time         types.Int64  `tfsdk:"time"`
 	TimeVariable types.String `tfsdk:"time_variable"`
 }
 
-type CiscoOSPFv3AreasIpv4 struct {
+type CiscoOSPFv3Ipv4Areas struct {
 	Optional              types.Bool                       `tfsdk:"optional"`
 	AreaNumber            types.Int64                      `tfsdk:"area_number"`
 	AreaNumberVariable    types.String                     `tfsdk:"area_number_variable"`
@@ -137,11 +137,11 @@ type CiscoOSPFv3AreasIpv4 struct {
 	TranslateVariable     types.String                     `tfsdk:"translate_variable"`
 	Normal                types.Bool                       `tfsdk:"normal"`
 	NormalVariable        types.String                     `tfsdk:"normal_variable"`
-	Interfaces            []CiscoOSPFv3AreasIpv4Interfaces `tfsdk:"interfaces"`
-	Ranges                []CiscoOSPFv3AreasIpv4Ranges     `tfsdk:"ranges"`
+	Interfaces            []CiscoOSPFv3Ipv4AreasInterfaces `tfsdk:"interfaces"`
+	Ranges                []CiscoOSPFv3Ipv4AreasRanges     `tfsdk:"ranges"`
 }
 
-type CiscoOSPFv3RedistributeIpv6 struct {
+type CiscoOSPFv3Ipv6Redistributes struct {
 	Optional            types.Bool   `tfsdk:"optional"`
 	Protocol            types.String `tfsdk:"protocol"`
 	ProtocolVariable    types.String `tfsdk:"protocol_variable"`
@@ -149,14 +149,14 @@ type CiscoOSPFv3RedistributeIpv6 struct {
 	RoutePolicyVariable types.String `tfsdk:"route_policy_variable"`
 }
 
-type CiscoOSPFv3MaxMetricRouterLsaIpv6 struct {
+type CiscoOSPFv3Ipv6MaxMetricRouterLsas struct {
 	Optional     types.Bool   `tfsdk:"optional"`
 	AdType       types.String `tfsdk:"ad_type"`
 	Time         types.Int64  `tfsdk:"time"`
 	TimeVariable types.String `tfsdk:"time_variable"`
 }
 
-type CiscoOSPFv3AreasIpv6 struct {
+type CiscoOSPFv3Ipv6Areas struct {
 	Optional              types.Bool                       `tfsdk:"optional"`
 	AreaNumber            types.Int64                      `tfsdk:"area_number"`
 	AreaNumberVariable    types.String                     `tfsdk:"area_number_variable"`
@@ -170,11 +170,11 @@ type CiscoOSPFv3AreasIpv6 struct {
 	TranslateVariable     types.String                     `tfsdk:"translate_variable"`
 	Normal                types.Bool                       `tfsdk:"normal"`
 	NormalVariable        types.String                     `tfsdk:"normal_variable"`
-	Interfaces            []CiscoOSPFv3AreasIpv6Interfaces `tfsdk:"interfaces"`
-	Ranges                []CiscoOSPFv3AreasIpv6Ranges     `tfsdk:"ranges"`
+	Interfaces            []CiscoOSPFv3Ipv6AreasInterfaces `tfsdk:"interfaces"`
+	Ranges                []CiscoOSPFv3Ipv6AreasRanges     `tfsdk:"ranges"`
 }
 
-type CiscoOSPFv3AreasIpv4Interfaces struct {
+type CiscoOSPFv3Ipv4AreasInterfaces struct {
 	Optional                   types.Bool   `tfsdk:"optional"`
 	Name                       types.String `tfsdk:"name"`
 	NameVariable               types.String `tfsdk:"name_variable"`
@@ -197,7 +197,7 @@ type CiscoOSPFv3AreasIpv4Interfaces struct {
 	IpsecSpi                   types.Int64  `tfsdk:"ipsec_spi"`
 	IpsecSpiVariable           types.String `tfsdk:"ipsec_spi_variable"`
 }
-type CiscoOSPFv3AreasIpv4Ranges struct {
+type CiscoOSPFv3Ipv4AreasRanges struct {
 	Optional            types.Bool   `tfsdk:"optional"`
 	Address             types.String `tfsdk:"address"`
 	AddressVariable     types.String `tfsdk:"address_variable"`
@@ -207,7 +207,7 @@ type CiscoOSPFv3AreasIpv4Ranges struct {
 	NoAdvertiseVariable types.String `tfsdk:"no_advertise_variable"`
 }
 
-type CiscoOSPFv3AreasIpv6Interfaces struct {
+type CiscoOSPFv3Ipv6AreasInterfaces struct {
 	Optional                   types.Bool   `tfsdk:"optional"`
 	Name                       types.String `tfsdk:"name"`
 	NameVariable               types.String `tfsdk:"name_variable"`
@@ -230,7 +230,7 @@ type CiscoOSPFv3AreasIpv6Interfaces struct {
 	IpsecSpi                   types.Int64  `tfsdk:"ipsec_spi"`
 	IpsecSpiVariable           types.String `tfsdk:"ipsec_spi_variable"`
 }
-type CiscoOSPFv3AreasIpv6Ranges struct {
+type CiscoOSPFv3Ipv6AreasRanges struct {
 	Optional            types.Bool   `tfsdk:"optional"`
 	Address             types.String `tfsdk:"address"`
 	AddressVariable     types.String `tfsdk:"address_variable"`
@@ -259,46 +259,46 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 
 	path := "templateDefinition."
 
-	if !data.RouterIdIpv4Variable.IsNull() {
+	if !data.Ipv4RouterIdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipVariableName", data.RouterIdIpv4Variable.ValueString())
-	} else if data.RouterIdIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipVariableName", data.Ipv4RouterIdVariable.ValueString())
+	} else if data.Ipv4RouterId.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipValue", data.RouterIdIpv4.ValueString())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.router-id."+"vipValue", data.Ipv4RouterId.ValueString())
 	}
 
-	if !data.AutoCostReferenceBandwidthIpv4Variable.IsNull() {
+	if !data.Ipv4AutoCostReferenceBandwidthVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipVariableName", data.AutoCostReferenceBandwidthIpv4Variable.ValueString())
-	} else if data.AutoCostReferenceBandwidthIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipVariableName", data.Ipv4AutoCostReferenceBandwidthVariable.ValueString())
+	} else if data.Ipv4AutoCostReferenceBandwidth.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipValue", data.AutoCostReferenceBandwidthIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.auto-cost.reference-bandwidth."+"vipValue", data.Ipv4AutoCostReferenceBandwidth.ValueInt64())
 	}
 
-	if !data.CompatibleRfc1583Ipv4Variable.IsNull() {
+	if !data.Ipv4CompatibleRfc1583Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipVariableName", data.CompatibleRfc1583Ipv4Variable.ValueString())
-	} else if data.CompatibleRfc1583Ipv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipVariableName", data.Ipv4CompatibleRfc1583Variable.ValueString())
+	} else if data.Ipv4CompatibleRfc1583.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipValue", strconv.FormatBool(data.CompatibleRfc1583Ipv4.ValueBool()))
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.compatible.rfc1583."+"vipValue", strconv.FormatBool(data.Ipv4CompatibleRfc1583.ValueBool()))
 	}
-	if !data.DefaultInformationOriginateIpv4.IsNull() {
-		if data.DefaultInformationOriginateIpv4.ValueBool() {
+	if !data.Ipv4DefaultInformationOriginate.IsNull() {
+		if data.Ipv4DefaultInformationOriginate.ValueBool() {
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate", map[string]interface{}{})
 		} else {
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate."+"vipObjectType", "node-only")
@@ -306,156 +306,156 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.DefaultInformationOriginateAlwaysIpv4Variable.IsNull() {
+	if !data.Ipv4DefaultInformationOriginateAlwaysVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipVariableName", data.DefaultInformationOriginateAlwaysIpv4Variable.ValueString())
-	} else if data.DefaultInformationOriginateAlwaysIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipVariableName", data.Ipv4DefaultInformationOriginateAlwaysVariable.ValueString())
+	} else if data.Ipv4DefaultInformationOriginateAlways.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipValue", strconv.FormatBool(data.DefaultInformationOriginateAlwaysIpv4.ValueBool()))
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.always."+"vipValue", strconv.FormatBool(data.Ipv4DefaultInformationOriginateAlways.ValueBool()))
 	}
 
-	if !data.DefaultInformationOriginateMetricIpv4Variable.IsNull() {
+	if !data.Ipv4DefaultInformationOriginateMetricVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipVariableName", data.DefaultInformationOriginateMetricIpv4Variable.ValueString())
-	} else if data.DefaultInformationOriginateMetricIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipVariableName", data.Ipv4DefaultInformationOriginateMetricVariable.ValueString())
+	} else if data.Ipv4DefaultInformationOriginateMetric.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipValue", data.DefaultInformationOriginateMetricIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric."+"vipValue", data.Ipv4DefaultInformationOriginateMetric.ValueInt64())
 	}
 
-	if !data.DefaultInformationOriginateMetricTypeIpv4Variable.IsNull() {
+	if !data.Ipv4DefaultInformationOriginateMetricTypeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipVariableName", data.DefaultInformationOriginateMetricTypeIpv4Variable.ValueString())
-	} else if data.DefaultInformationOriginateMetricTypeIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipVariableName", data.Ipv4DefaultInformationOriginateMetricTypeVariable.ValueString())
+	} else if data.Ipv4DefaultInformationOriginateMetricType.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipValue", data.DefaultInformationOriginateMetricTypeIpv4.ValueString())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate.metric-type."+"vipValue", data.Ipv4DefaultInformationOriginateMetricType.ValueString())
 	}
 
-	if !data.DistanceExternalIpv4Variable.IsNull() {
+	if !data.Ipv4DistanceExternalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipVariableName", data.DistanceExternalIpv4Variable.ValueString())
-	} else if data.DistanceExternalIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipVariableName", data.Ipv4DistanceExternalVariable.ValueString())
+	} else if data.Ipv4DistanceExternal.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipValue", data.DistanceExternalIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.external."+"vipValue", data.Ipv4DistanceExternal.ValueInt64())
 	}
 
-	if !data.DistanceInterAreaIpv4Variable.IsNull() {
+	if !data.Ipv4DistanceInterAreaVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipVariableName", data.DistanceInterAreaIpv4Variable.ValueString())
-	} else if data.DistanceInterAreaIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipVariableName", data.Ipv4DistanceInterAreaVariable.ValueString())
+	} else if data.Ipv4DistanceInterArea.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipValue", data.DistanceInterAreaIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area."+"vipValue", data.Ipv4DistanceInterArea.ValueInt64())
 	}
 
-	if !data.DistanceIntraAreaIpv4Variable.IsNull() {
+	if !data.Ipv4DistanceIntraAreaVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipVariableName", data.DistanceIntraAreaIpv4Variable.ValueString())
-	} else if data.DistanceIntraAreaIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipVariableName", data.Ipv4DistanceIntraAreaVariable.ValueString())
+	} else if data.Ipv4DistanceIntraArea.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipValue", data.DistanceIntraAreaIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area."+"vipValue", data.Ipv4DistanceIntraArea.ValueInt64())
 	}
 
-	if !data.TimersSpfDelayIpv4Variable.IsNull() {
+	if !data.Ipv4TimersSpfDelayVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipVariableName", data.TimersSpfDelayIpv4Variable.ValueString())
-	} else if data.TimersSpfDelayIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipVariableName", data.Ipv4TimersSpfDelayVariable.ValueString())
+	} else if data.Ipv4TimersSpfDelay.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipValue", data.TimersSpfDelayIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.delay."+"vipValue", data.Ipv4TimersSpfDelay.ValueInt64())
 	}
 
-	if !data.TimersSpfInitialHoldIpv4Variable.IsNull() {
+	if !data.Ipv4TimersSpfInitialHoldVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipVariableName", data.TimersSpfInitialHoldIpv4Variable.ValueString())
-	} else if data.TimersSpfInitialHoldIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipVariableName", data.Ipv4TimersSpfInitialHoldVariable.ValueString())
+	} else if data.Ipv4TimersSpfInitialHold.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipValue", data.TimersSpfInitialHoldIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold."+"vipValue", data.Ipv4TimersSpfInitialHold.ValueInt64())
 	}
 
-	if !data.TimersSpfMaxHoldIpv4Variable.IsNull() {
+	if !data.Ipv4TimersSpfMaxHoldVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipVariableName", data.TimersSpfMaxHoldIpv4Variable.ValueString())
-	} else if data.TimersSpfMaxHoldIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipVariableName", data.Ipv4TimersSpfMaxHoldVariable.ValueString())
+	} else if data.Ipv4TimersSpfMaxHold.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipValue", data.TimersSpfMaxHoldIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.timers.throttle.spf.max-hold."+"vipValue", data.Ipv4TimersSpfMaxHold.ValueInt64())
 	}
 
-	if !data.DistanceIpv4Variable.IsNull() {
+	if !data.Ipv4DistanceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipVariableName", data.DistanceIpv4Variable.ValueString())
-	} else if data.DistanceIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipVariableName", data.Ipv4DistanceVariable.ValueString())
+	} else if data.Ipv4Distance.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipValue", data.DistanceIpv4.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.distance-ipv4.distance."+"vipValue", data.Ipv4Distance.ValueInt64())
 	}
 
-	if !data.PolicyNameIpv4Variable.IsNull() {
+	if !data.Ipv4PolicyNameVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipVariableName", data.PolicyNameIpv4Variable.ValueString())
-	} else if data.PolicyNameIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipVariableName", data.Ipv4PolicyNameVariable.ValueString())
+	} else if data.Ipv4PolicyName.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipValue", data.PolicyNameIpv4.ValueString())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.name."+"vipValue", data.Ipv4PolicyName.ValueString())
 	}
 
-	if !data.FilterIpv4Variable.IsNull() {
+	if !data.Ipv4FilterVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipVariableName", data.FilterIpv4Variable.ValueString())
-	} else if data.FilterIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipVariableName", data.Ipv4FilterVariable.ValueString())
+	} else if data.Ipv4Filter.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipValue", strconv.FormatBool(data.FilterIpv4.ValueBool()))
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.table-map.filter."+"vipValue", strconv.FormatBool(data.Ipv4Filter.ValueBool()))
 	}
-	if len(data.RedistributeIpv4) > 0 {
+	if len(data.Ipv4Redistributes) > 0 {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.redistribute."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.redistribute."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.redistribute."+"vipPrimaryKey", []string{"protocol"})
@@ -466,7 +466,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.redistribute."+"vipPrimaryKey", []string{"protocol"})
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.redistribute."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.RedistributeIpv4 {
+	for _, item := range data.Ipv4Redistributes {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "protocol")
@@ -515,7 +515,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ospfv3.address-family.ipv4.redistribute."+"vipValue.-1", itemBody)
 	}
-	if len(data.MaxMetricRouterLsaIpv4) > 0 {
+	if len(data.Ipv4MaxMetricRouterLsas) > 0 {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.max-metric.router-lsa."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.max-metric.router-lsa."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.max-metric.router-lsa."+"vipPrimaryKey", []string{"ad-type"})
@@ -526,7 +526,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.max-metric.router-lsa."+"vipPrimaryKey", []string{"ad-type"})
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.max-metric.router-lsa."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.MaxMetricRouterLsaIpv4 {
+	for _, item := range data.Ipv4MaxMetricRouterLsas {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "ad-type")
@@ -554,7 +554,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ospfv3.address-family.ipv4.max-metric.router-lsa."+"vipValue.-1", itemBody)
 	}
-	if len(data.AreasIpv4) > 0 {
+	if len(data.Ipv4Areas) > 0 {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.area."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.area."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.area."+"vipPrimaryKey", []string{"a-num"})
@@ -565,7 +565,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.area."+"vipPrimaryKey", []string{"a-num"})
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.area."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.AreasIpv4 {
+	for _, item := range data.Ipv4Areas {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "a-num")
@@ -875,46 +875,46 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		body, _ = sjson.SetRaw(body, path+"ospfv3.address-family.ipv4.area."+"vipValue.-1", itemBody)
 	}
 
-	if !data.RouterIdIpv6Variable.IsNull() {
+	if !data.Ipv6RouterIdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipVariableName", data.RouterIdIpv6Variable.ValueString())
-	} else if data.RouterIdIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipVariableName", data.Ipv6RouterIdVariable.ValueString())
+	} else if data.Ipv6RouterId.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipValue", data.RouterIdIpv6.ValueString())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.router-id."+"vipValue", data.Ipv6RouterId.ValueString())
 	}
 
-	if !data.AutoCostReferenceBandwidthIpv6Variable.IsNull() {
+	if !data.Ipv6AutoCostReferenceBandwidthVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipVariableName", data.AutoCostReferenceBandwidthIpv6Variable.ValueString())
-	} else if data.AutoCostReferenceBandwidthIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipVariableName", data.Ipv6AutoCostReferenceBandwidthVariable.ValueString())
+	} else if data.Ipv6AutoCostReferenceBandwidth.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipValue", data.AutoCostReferenceBandwidthIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.auto-cost.reference-bandwidth."+"vipValue", data.Ipv6AutoCostReferenceBandwidth.ValueInt64())
 	}
 
-	if !data.CompatibleRfc1583Ipv6Variable.IsNull() {
+	if !data.Ipv6CompatibleRfc1583Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipVariableName", data.CompatibleRfc1583Ipv6Variable.ValueString())
-	} else if data.CompatibleRfc1583Ipv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipVariableName", data.Ipv6CompatibleRfc1583Variable.ValueString())
+	} else if data.Ipv6CompatibleRfc1583.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipValue", strconv.FormatBool(data.CompatibleRfc1583Ipv6.ValueBool()))
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.compatible.rfc1583."+"vipValue", strconv.FormatBool(data.Ipv6CompatibleRfc1583.ValueBool()))
 	}
-	if !data.DefaultInformationOriginateIpv6.IsNull() {
-		if data.DefaultInformationOriginateIpv6.ValueBool() {
+	if !data.Ipv6DefaultInformationOriginate.IsNull() {
+		if data.Ipv6DefaultInformationOriginate.ValueBool() {
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate", map[string]interface{}{})
 		} else {
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate."+"vipObjectType", "node-only")
@@ -922,156 +922,156 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.DefaultInformationOriginateAlwaysIpv6Variable.IsNull() {
+	if !data.Ipv6DefaultInformationOriginateAlwaysVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipVariableName", data.DefaultInformationOriginateAlwaysIpv6Variable.ValueString())
-	} else if data.DefaultInformationOriginateAlwaysIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipVariableName", data.Ipv6DefaultInformationOriginateAlwaysVariable.ValueString())
+	} else if data.Ipv6DefaultInformationOriginateAlways.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipValue", strconv.FormatBool(data.DefaultInformationOriginateAlwaysIpv6.ValueBool()))
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.always."+"vipValue", strconv.FormatBool(data.Ipv6DefaultInformationOriginateAlways.ValueBool()))
 	}
 
-	if !data.DefaultInformationOriginateMetricIpv6Variable.IsNull() {
+	if !data.Ipv6DefaultInformationOriginateMetricVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipVariableName", data.DefaultInformationOriginateMetricIpv6Variable.ValueString())
-	} else if data.DefaultInformationOriginateMetricIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipVariableName", data.Ipv6DefaultInformationOriginateMetricVariable.ValueString())
+	} else if data.Ipv6DefaultInformationOriginateMetric.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipValue", data.DefaultInformationOriginateMetricIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric."+"vipValue", data.Ipv6DefaultInformationOriginateMetric.ValueInt64())
 	}
 
-	if !data.DefaultInformationOriginateMetricTypeIpv6Variable.IsNull() {
+	if !data.Ipv6DefaultInformationOriginateMetricTypeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipVariableName", data.DefaultInformationOriginateMetricTypeIpv6Variable.ValueString())
-	} else if data.DefaultInformationOriginateMetricTypeIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipVariableName", data.Ipv6DefaultInformationOriginateMetricTypeVariable.ValueString())
+	} else if data.Ipv6DefaultInformationOriginateMetricType.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipValue", data.DefaultInformationOriginateMetricTypeIpv6.ValueString())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate.metric-type."+"vipValue", data.Ipv6DefaultInformationOriginateMetricType.ValueString())
 	}
 
-	if !data.DistanceExternalIpv6Variable.IsNull() {
+	if !data.Ipv6DistanceExternalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipVariableName", data.DistanceExternalIpv6Variable.ValueString())
-	} else if data.DistanceExternalIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipVariableName", data.Ipv6DistanceExternalVariable.ValueString())
+	} else if data.Ipv6DistanceExternal.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipValue", data.DistanceExternalIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.external."+"vipValue", data.Ipv6DistanceExternal.ValueInt64())
 	}
 
-	if !data.DistanceInterAreaIpv6Variable.IsNull() {
+	if !data.Ipv6DistanceInterAreaVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipVariableName", data.DistanceInterAreaIpv6Variable.ValueString())
-	} else if data.DistanceInterAreaIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipVariableName", data.Ipv6DistanceInterAreaVariable.ValueString())
+	} else if data.Ipv6DistanceInterArea.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipValue", data.DistanceInterAreaIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area."+"vipValue", data.Ipv6DistanceInterArea.ValueInt64())
 	}
 
-	if !data.DistanceIntraAreaIpv6Variable.IsNull() {
+	if !data.Ipv6DistanceIntraAreaVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipVariableName", data.DistanceIntraAreaIpv6Variable.ValueString())
-	} else if data.DistanceIntraAreaIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipVariableName", data.Ipv6DistanceIntraAreaVariable.ValueString())
+	} else if data.Ipv6DistanceIntraArea.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipValue", data.DistanceIntraAreaIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area."+"vipValue", data.Ipv6DistanceIntraArea.ValueInt64())
 	}
 
-	if !data.TimersSpfDelayIpv6Variable.IsNull() {
+	if !data.Ipv6TimersSpfDelayVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipVariableName", data.TimersSpfDelayIpv6Variable.ValueString())
-	} else if data.TimersSpfDelayIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipVariableName", data.Ipv6TimersSpfDelayVariable.ValueString())
+	} else if data.Ipv6TimersSpfDelay.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipValue", data.TimersSpfDelayIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.delay."+"vipValue", data.Ipv6TimersSpfDelay.ValueInt64())
 	}
 
-	if !data.TimersSpfInitialHoldIpv6Variable.IsNull() {
+	if !data.Ipv6TimersSpfInitialHoldVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipVariableName", data.TimersSpfInitialHoldIpv6Variable.ValueString())
-	} else if data.TimersSpfInitialHoldIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipVariableName", data.Ipv6TimersSpfInitialHoldVariable.ValueString())
+	} else if data.Ipv6TimersSpfInitialHold.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipValue", data.TimersSpfInitialHoldIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold."+"vipValue", data.Ipv6TimersSpfInitialHold.ValueInt64())
 	}
 
-	if !data.TimersSpfMaxHoldIpv6Variable.IsNull() {
+	if !data.Ipv6TimersSpfMaxHoldVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipVariableName", data.TimersSpfMaxHoldIpv6Variable.ValueString())
-	} else if data.TimersSpfMaxHoldIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipVariableName", data.Ipv6TimersSpfMaxHoldVariable.ValueString())
+	} else if data.Ipv6TimersSpfMaxHold.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipValue", data.TimersSpfMaxHoldIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.timers.throttle.spf.max-hold."+"vipValue", data.Ipv6TimersSpfMaxHold.ValueInt64())
 	}
 
-	if !data.DistanceIpv6Variable.IsNull() {
+	if !data.Ipv6DistanceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipVariableName", data.DistanceIpv6Variable.ValueString())
-	} else if data.DistanceIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipVariableName", data.Ipv6DistanceVariable.ValueString())
+	} else if data.Ipv6Distance.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipValue", data.DistanceIpv6.ValueInt64())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.distance-ipv6.distance."+"vipValue", data.Ipv6Distance.ValueInt64())
 	}
 
-	if !data.PolicyNameIpv6Variable.IsNull() {
+	if !data.Ipv6PolicyNameVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipVariableName", data.PolicyNameIpv6Variable.ValueString())
-	} else if data.PolicyNameIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipVariableName", data.Ipv6PolicyNameVariable.ValueString())
+	} else if data.Ipv6PolicyName.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipValue", data.PolicyNameIpv6.ValueString())
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.name."+"vipValue", data.Ipv6PolicyName.ValueString())
 	}
 
-	if !data.FilterIpv6Variable.IsNull() {
+	if !data.Ipv6FilterVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipVariableName", data.FilterIpv6Variable.ValueString())
-	} else if data.FilterIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipVariableName", data.Ipv6FilterVariable.ValueString())
+	} else if data.Ipv6Filter.IsNull() {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipValue", strconv.FormatBool(data.FilterIpv6.ValueBool()))
+		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.table-map.filter."+"vipValue", strconv.FormatBool(data.Ipv6Filter.ValueBool()))
 	}
-	if len(data.RedistributeIpv6) > 0 {
+	if len(data.Ipv6Redistributes) > 0 {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.redistribute."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.redistribute."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.redistribute."+"vipPrimaryKey", []string{"protocol"})
@@ -1082,7 +1082,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.redistribute."+"vipPrimaryKey", []string{"protocol"})
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.redistribute."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.RedistributeIpv6 {
+	for _, item := range data.Ipv6Redistributes {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "protocol")
@@ -1117,7 +1117,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ospfv3.address-family.ipv6.redistribute."+"vipValue.-1", itemBody)
 	}
-	if len(data.MaxMetricRouterLsaIpv6) > 0 {
+	if len(data.Ipv6MaxMetricRouterLsas) > 0 {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.max-metric.router-lsa."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.max-metric.router-lsa."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.max-metric.router-lsa."+"vipPrimaryKey", []string{"ad-type"})
@@ -1128,7 +1128,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.max-metric.router-lsa."+"vipPrimaryKey", []string{"ad-type"})
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.max-metric.router-lsa."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.MaxMetricRouterLsaIpv6 {
+	for _, item := range data.Ipv6MaxMetricRouterLsas {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "ad-type")
@@ -1156,7 +1156,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ospfv3.address-family.ipv6.max-metric.router-lsa."+"vipValue.-1", itemBody)
 	}
-	if len(data.AreasIpv6) > 0 {
+	if len(data.Ipv6Areas) > 0 {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.area."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.area."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.area."+"vipPrimaryKey", []string{"a-num"})
@@ -1167,7 +1167,7 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.area."+"vipPrimaryKey", []string{"a-num"})
 		body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.area."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.AreasIpv6 {
+	for _, item := range data.Ipv6Areas {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "a-num")
@@ -1504,312 +1504,312 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 	path := "templateDefinition."
 	if value := res.Get(path + "ospfv3.address-family.ipv4.router-id.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.RouterIdIpv4 = types.StringNull()
+			data.Ipv4RouterId = types.StringNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.router-id.vipVariableName")
-			data.RouterIdIpv4Variable = types.StringValue(v.String())
+			data.Ipv4RouterIdVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.RouterIdIpv4 = types.StringNull()
-			data.RouterIdIpv4Variable = types.StringNull()
+			data.Ipv4RouterId = types.StringNull()
+			data.Ipv4RouterIdVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.router-id.vipValue")
-			data.RouterIdIpv4 = types.StringValue(v.String())
-			data.RouterIdIpv4Variable = types.StringNull()
+			data.Ipv4RouterId = types.StringValue(v.String())
+			data.Ipv4RouterIdVariable = types.StringNull()
 		}
 	} else {
-		data.RouterIdIpv4 = types.StringNull()
-		data.RouterIdIpv4Variable = types.StringNull()
+		data.Ipv4RouterId = types.StringNull()
+		data.Ipv4RouterIdVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.auto-cost.reference-bandwidth.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.AutoCostReferenceBandwidthIpv4 = types.Int64Null()
+			data.Ipv4AutoCostReferenceBandwidth = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.auto-cost.reference-bandwidth.vipVariableName")
-			data.AutoCostReferenceBandwidthIpv4Variable = types.StringValue(v.String())
+			data.Ipv4AutoCostReferenceBandwidthVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AutoCostReferenceBandwidthIpv4 = types.Int64Null()
-			data.AutoCostReferenceBandwidthIpv4Variable = types.StringNull()
+			data.Ipv4AutoCostReferenceBandwidth = types.Int64Null()
+			data.Ipv4AutoCostReferenceBandwidthVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.auto-cost.reference-bandwidth.vipValue")
-			data.AutoCostReferenceBandwidthIpv4 = types.Int64Value(v.Int())
-			data.AutoCostReferenceBandwidthIpv4Variable = types.StringNull()
+			data.Ipv4AutoCostReferenceBandwidth = types.Int64Value(v.Int())
+			data.Ipv4AutoCostReferenceBandwidthVariable = types.StringNull()
 		}
 	} else {
-		data.AutoCostReferenceBandwidthIpv4 = types.Int64Null()
-		data.AutoCostReferenceBandwidthIpv4Variable = types.StringNull()
+		data.Ipv4AutoCostReferenceBandwidth = types.Int64Null()
+		data.Ipv4AutoCostReferenceBandwidthVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.compatible.rfc1583.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.CompatibleRfc1583Ipv4 = types.BoolNull()
+			data.Ipv4CompatibleRfc1583 = types.BoolNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.compatible.rfc1583.vipVariableName")
-			data.CompatibleRfc1583Ipv4Variable = types.StringValue(v.String())
+			data.Ipv4CompatibleRfc1583Variable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.CompatibleRfc1583Ipv4 = types.BoolNull()
-			data.CompatibleRfc1583Ipv4Variable = types.StringNull()
+			data.Ipv4CompatibleRfc1583 = types.BoolNull()
+			data.Ipv4CompatibleRfc1583Variable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.compatible.rfc1583.vipValue")
-			data.CompatibleRfc1583Ipv4 = types.BoolValue(v.Bool())
-			data.CompatibleRfc1583Ipv4Variable = types.StringNull()
+			data.Ipv4CompatibleRfc1583 = types.BoolValue(v.Bool())
+			data.Ipv4CompatibleRfc1583Variable = types.StringNull()
 		}
 	} else {
-		data.CompatibleRfc1583Ipv4 = types.BoolNull()
-		data.CompatibleRfc1583Ipv4Variable = types.StringNull()
+		data.Ipv4CompatibleRfc1583 = types.BoolNull()
+		data.Ipv4CompatibleRfc1583Variable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateIpv4 = types.BoolNull()
+			data.Ipv4DefaultInformationOriginate = types.BoolNull()
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateIpv4 = types.BoolValue(false)
+			data.Ipv4DefaultInformationOriginate = types.BoolValue(false)
 
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.vipValue")
-			data.DefaultInformationOriginateIpv4 = types.BoolValue(v.Bool())
+			data.Ipv4DefaultInformationOriginate = types.BoolValue(v.Bool())
 
 		}
 	} else if value := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate"); value.Exists() {
-		data.DefaultInformationOriginateIpv4 = types.BoolValue(true)
+		data.Ipv4DefaultInformationOriginate = types.BoolValue(true)
 
 	} else {
-		data.DefaultInformationOriginateIpv4 = types.BoolNull()
+		data.Ipv4DefaultInformationOriginate = types.BoolNull()
 
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.always.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateAlwaysIpv4 = types.BoolNull()
+			data.Ipv4DefaultInformationOriginateAlways = types.BoolNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.always.vipVariableName")
-			data.DefaultInformationOriginateAlwaysIpv4Variable = types.StringValue(v.String())
+			data.Ipv4DefaultInformationOriginateAlwaysVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateAlwaysIpv4 = types.BoolNull()
-			data.DefaultInformationOriginateAlwaysIpv4Variable = types.StringNull()
+			data.Ipv4DefaultInformationOriginateAlways = types.BoolNull()
+			data.Ipv4DefaultInformationOriginateAlwaysVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.always.vipValue")
-			data.DefaultInformationOriginateAlwaysIpv4 = types.BoolValue(v.Bool())
-			data.DefaultInformationOriginateAlwaysIpv4Variable = types.StringNull()
+			data.Ipv4DefaultInformationOriginateAlways = types.BoolValue(v.Bool())
+			data.Ipv4DefaultInformationOriginateAlwaysVariable = types.StringNull()
 		}
 	} else {
-		data.DefaultInformationOriginateAlwaysIpv4 = types.BoolNull()
-		data.DefaultInformationOriginateAlwaysIpv4Variable = types.StringNull()
+		data.Ipv4DefaultInformationOriginateAlways = types.BoolNull()
+		data.Ipv4DefaultInformationOriginateAlwaysVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.metric.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateMetricIpv4 = types.Int64Null()
+			data.Ipv4DefaultInformationOriginateMetric = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.metric.vipVariableName")
-			data.DefaultInformationOriginateMetricIpv4Variable = types.StringValue(v.String())
+			data.Ipv4DefaultInformationOriginateMetricVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateMetricIpv4 = types.Int64Null()
-			data.DefaultInformationOriginateMetricIpv4Variable = types.StringNull()
+			data.Ipv4DefaultInformationOriginateMetric = types.Int64Null()
+			data.Ipv4DefaultInformationOriginateMetricVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.metric.vipValue")
-			data.DefaultInformationOriginateMetricIpv4 = types.Int64Value(v.Int())
-			data.DefaultInformationOriginateMetricIpv4Variable = types.StringNull()
+			data.Ipv4DefaultInformationOriginateMetric = types.Int64Value(v.Int())
+			data.Ipv4DefaultInformationOriginateMetricVariable = types.StringNull()
 		}
 	} else {
-		data.DefaultInformationOriginateMetricIpv4 = types.Int64Null()
-		data.DefaultInformationOriginateMetricIpv4Variable = types.StringNull()
+		data.Ipv4DefaultInformationOriginateMetric = types.Int64Null()
+		data.Ipv4DefaultInformationOriginateMetricVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.metric-type.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateMetricTypeIpv4 = types.StringNull()
+			data.Ipv4DefaultInformationOriginateMetricType = types.StringNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.metric-type.vipVariableName")
-			data.DefaultInformationOriginateMetricTypeIpv4Variable = types.StringValue(v.String())
+			data.Ipv4DefaultInformationOriginateMetricTypeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateMetricTypeIpv4 = types.StringNull()
-			data.DefaultInformationOriginateMetricTypeIpv4Variable = types.StringNull()
+			data.Ipv4DefaultInformationOriginateMetricType = types.StringNull()
+			data.Ipv4DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.default-information.originate.metric-type.vipValue")
-			data.DefaultInformationOriginateMetricTypeIpv4 = types.StringValue(v.String())
-			data.DefaultInformationOriginateMetricTypeIpv4Variable = types.StringNull()
+			data.Ipv4DefaultInformationOriginateMetricType = types.StringValue(v.String())
+			data.Ipv4DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 		}
 	} else {
-		data.DefaultInformationOriginateMetricTypeIpv4 = types.StringNull()
-		data.DefaultInformationOriginateMetricTypeIpv4Variable = types.StringNull()
+		data.Ipv4DefaultInformationOriginateMetricType = types.StringNull()
+		data.Ipv4DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.external.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceExternalIpv4 = types.Int64Null()
+			data.Ipv4DistanceExternal = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.external.vipVariableName")
-			data.DistanceExternalIpv4Variable = types.StringValue(v.String())
+			data.Ipv4DistanceExternalVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceExternalIpv4 = types.Int64Null()
-			data.DistanceExternalIpv4Variable = types.StringNull()
+			data.Ipv4DistanceExternal = types.Int64Null()
+			data.Ipv4DistanceExternalVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.external.vipValue")
-			data.DistanceExternalIpv4 = types.Int64Value(v.Int())
-			data.DistanceExternalIpv4Variable = types.StringNull()
+			data.Ipv4DistanceExternal = types.Int64Value(v.Int())
+			data.Ipv4DistanceExternalVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceExternalIpv4 = types.Int64Null()
-		data.DistanceExternalIpv4Variable = types.StringNull()
+		data.Ipv4DistanceExternal = types.Int64Null()
+		data.Ipv4DistanceExternalVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceInterAreaIpv4 = types.Int64Null()
+			data.Ipv4DistanceInterArea = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area.vipVariableName")
-			data.DistanceInterAreaIpv4Variable = types.StringValue(v.String())
+			data.Ipv4DistanceInterAreaVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceInterAreaIpv4 = types.Int64Null()
-			data.DistanceInterAreaIpv4Variable = types.StringNull()
+			data.Ipv4DistanceInterArea = types.Int64Null()
+			data.Ipv4DistanceInterAreaVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.inter-area.vipValue")
-			data.DistanceInterAreaIpv4 = types.Int64Value(v.Int())
-			data.DistanceInterAreaIpv4Variable = types.StringNull()
+			data.Ipv4DistanceInterArea = types.Int64Value(v.Int())
+			data.Ipv4DistanceInterAreaVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceInterAreaIpv4 = types.Int64Null()
-		data.DistanceInterAreaIpv4Variable = types.StringNull()
+		data.Ipv4DistanceInterArea = types.Int64Null()
+		data.Ipv4DistanceInterAreaVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceIntraAreaIpv4 = types.Int64Null()
+			data.Ipv4DistanceIntraArea = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area.vipVariableName")
-			data.DistanceIntraAreaIpv4Variable = types.StringValue(v.String())
+			data.Ipv4DistanceIntraAreaVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceIntraAreaIpv4 = types.Int64Null()
-			data.DistanceIntraAreaIpv4Variable = types.StringNull()
+			data.Ipv4DistanceIntraArea = types.Int64Null()
+			data.Ipv4DistanceIntraAreaVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.ospf.intra-area.vipValue")
-			data.DistanceIntraAreaIpv4 = types.Int64Value(v.Int())
-			data.DistanceIntraAreaIpv4Variable = types.StringNull()
+			data.Ipv4DistanceIntraArea = types.Int64Value(v.Int())
+			data.Ipv4DistanceIntraAreaVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceIntraAreaIpv4 = types.Int64Null()
-		data.DistanceIntraAreaIpv4Variable = types.StringNull()
+		data.Ipv4DistanceIntraArea = types.Int64Null()
+		data.Ipv4DistanceIntraAreaVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.delay.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TimersSpfDelayIpv4 = types.Int64Null()
+			data.Ipv4TimersSpfDelay = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.delay.vipVariableName")
-			data.TimersSpfDelayIpv4Variable = types.StringValue(v.String())
+			data.Ipv4TimersSpfDelayVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TimersSpfDelayIpv4 = types.Int64Null()
-			data.TimersSpfDelayIpv4Variable = types.StringNull()
+			data.Ipv4TimersSpfDelay = types.Int64Null()
+			data.Ipv4TimersSpfDelayVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.delay.vipValue")
-			data.TimersSpfDelayIpv4 = types.Int64Value(v.Int())
-			data.TimersSpfDelayIpv4Variable = types.StringNull()
+			data.Ipv4TimersSpfDelay = types.Int64Value(v.Int())
+			data.Ipv4TimersSpfDelayVariable = types.StringNull()
 		}
 	} else {
-		data.TimersSpfDelayIpv4 = types.Int64Null()
-		data.TimersSpfDelayIpv4Variable = types.StringNull()
+		data.Ipv4TimersSpfDelay = types.Int64Null()
+		data.Ipv4TimersSpfDelayVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TimersSpfInitialHoldIpv4 = types.Int64Null()
+			data.Ipv4TimersSpfInitialHold = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold.vipVariableName")
-			data.TimersSpfInitialHoldIpv4Variable = types.StringValue(v.String())
+			data.Ipv4TimersSpfInitialHoldVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TimersSpfInitialHoldIpv4 = types.Int64Null()
-			data.TimersSpfInitialHoldIpv4Variable = types.StringNull()
+			data.Ipv4TimersSpfInitialHold = types.Int64Null()
+			data.Ipv4TimersSpfInitialHoldVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.initial-hold.vipValue")
-			data.TimersSpfInitialHoldIpv4 = types.Int64Value(v.Int())
-			data.TimersSpfInitialHoldIpv4Variable = types.StringNull()
+			data.Ipv4TimersSpfInitialHold = types.Int64Value(v.Int())
+			data.Ipv4TimersSpfInitialHoldVariable = types.StringNull()
 		}
 	} else {
-		data.TimersSpfInitialHoldIpv4 = types.Int64Null()
-		data.TimersSpfInitialHoldIpv4Variable = types.StringNull()
+		data.Ipv4TimersSpfInitialHold = types.Int64Null()
+		data.Ipv4TimersSpfInitialHoldVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.max-hold.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TimersSpfMaxHoldIpv4 = types.Int64Null()
+			data.Ipv4TimersSpfMaxHold = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.max-hold.vipVariableName")
-			data.TimersSpfMaxHoldIpv4Variable = types.StringValue(v.String())
+			data.Ipv4TimersSpfMaxHoldVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TimersSpfMaxHoldIpv4 = types.Int64Null()
-			data.TimersSpfMaxHoldIpv4Variable = types.StringNull()
+			data.Ipv4TimersSpfMaxHold = types.Int64Null()
+			data.Ipv4TimersSpfMaxHoldVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.timers.throttle.spf.max-hold.vipValue")
-			data.TimersSpfMaxHoldIpv4 = types.Int64Value(v.Int())
-			data.TimersSpfMaxHoldIpv4Variable = types.StringNull()
+			data.Ipv4TimersSpfMaxHold = types.Int64Value(v.Int())
+			data.Ipv4TimersSpfMaxHoldVariable = types.StringNull()
 		}
 	} else {
-		data.TimersSpfMaxHoldIpv4 = types.Int64Null()
-		data.TimersSpfMaxHoldIpv4Variable = types.StringNull()
+		data.Ipv4TimersSpfMaxHold = types.Int64Null()
+		data.Ipv4TimersSpfMaxHoldVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.distance.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceIpv4 = types.Int64Null()
+			data.Ipv4Distance = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.distance.vipVariableName")
-			data.DistanceIpv4Variable = types.StringValue(v.String())
+			data.Ipv4DistanceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceIpv4 = types.Int64Null()
-			data.DistanceIpv4Variable = types.StringNull()
+			data.Ipv4Distance = types.Int64Null()
+			data.Ipv4DistanceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.distance-ipv4.distance.vipValue")
-			data.DistanceIpv4 = types.Int64Value(v.Int())
-			data.DistanceIpv4Variable = types.StringNull()
+			data.Ipv4Distance = types.Int64Value(v.Int())
+			data.Ipv4DistanceVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceIpv4 = types.Int64Null()
-		data.DistanceIpv4Variable = types.StringNull()
+		data.Ipv4Distance = types.Int64Null()
+		data.Ipv4DistanceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.table-map.name.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.PolicyNameIpv4 = types.StringNull()
+			data.Ipv4PolicyName = types.StringNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.table-map.name.vipVariableName")
-			data.PolicyNameIpv4Variable = types.StringValue(v.String())
+			data.Ipv4PolicyNameVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.PolicyNameIpv4 = types.StringNull()
-			data.PolicyNameIpv4Variable = types.StringNull()
+			data.Ipv4PolicyName = types.StringNull()
+			data.Ipv4PolicyNameVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.table-map.name.vipValue")
-			data.PolicyNameIpv4 = types.StringValue(v.String())
-			data.PolicyNameIpv4Variable = types.StringNull()
+			data.Ipv4PolicyName = types.StringValue(v.String())
+			data.Ipv4PolicyNameVariable = types.StringNull()
 		}
 	} else {
-		data.PolicyNameIpv4 = types.StringNull()
-		data.PolicyNameIpv4Variable = types.StringNull()
+		data.Ipv4PolicyName = types.StringNull()
+		data.Ipv4PolicyNameVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.table-map.filter.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.FilterIpv4 = types.BoolNull()
+			data.Ipv4Filter = types.BoolNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv4.table-map.filter.vipVariableName")
-			data.FilterIpv4Variable = types.StringValue(v.String())
+			data.Ipv4FilterVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.FilterIpv4 = types.BoolNull()
-			data.FilterIpv4Variable = types.StringNull()
+			data.Ipv4Filter = types.BoolNull()
+			data.Ipv4FilterVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv4.table-map.filter.vipValue")
-			data.FilterIpv4 = types.BoolValue(v.Bool())
-			data.FilterIpv4Variable = types.StringNull()
+			data.Ipv4Filter = types.BoolValue(v.Bool())
+			data.Ipv4FilterVariable = types.StringNull()
 		}
 	} else {
-		data.FilterIpv4 = types.BoolNull()
-		data.FilterIpv4Variable = types.StringNull()
+		data.Ipv4Filter = types.BoolNull()
+		data.Ipv4FilterVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.redistribute.vipValue"); len(value.Array()) > 0 {
-		data.RedistributeIpv4 = make([]CiscoOSPFv3RedistributeIpv4, 0)
+		data.Ipv4Redistributes = make([]CiscoOSPFv3Ipv4Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoOSPFv3RedistributeIpv4{}
+			item := CiscoOSPFv3Ipv4Redistributes{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -1872,14 +1872,14 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				item.NatDia = types.BoolNull()
 				item.NatDiaVariable = types.StringNull()
 			}
-			data.RedistributeIpv4 = append(data.RedistributeIpv4, item)
+			data.Ipv4Redistributes = append(data.Ipv4Redistributes, item)
 			return true
 		})
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.max-metric.router-lsa.vipValue"); len(value.Array()) > 0 {
-		data.MaxMetricRouterLsaIpv4 = make([]CiscoOSPFv3MaxMetricRouterLsaIpv4, 0)
+		data.Ipv4MaxMetricRouterLsas = make([]CiscoOSPFv3Ipv4MaxMetricRouterLsas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoOSPFv3MaxMetricRouterLsaIpv4{}
+			item := CiscoOSPFv3Ipv4MaxMetricRouterLsas{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -1920,14 +1920,14 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				item.Time = types.Int64Null()
 				item.TimeVariable = types.StringNull()
 			}
-			data.MaxMetricRouterLsaIpv4 = append(data.MaxMetricRouterLsaIpv4, item)
+			data.Ipv4MaxMetricRouterLsas = append(data.Ipv4MaxMetricRouterLsas, item)
 			return true
 		})
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.area.vipValue"); len(value.Array()) > 0 {
-		data.AreasIpv4 = make([]CiscoOSPFv3AreasIpv4, 0)
+		data.Ipv4Areas = make([]CiscoOSPFv3Ipv4Areas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoOSPFv3AreasIpv4{}
+			item := CiscoOSPFv3Ipv4Areas{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -2067,9 +2067,9 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				item.NormalVariable = types.StringNull()
 			}
 			if cValue := v.Get("interface.vipValue"); len(cValue.Array()) > 0 {
-				item.Interfaces = make([]CiscoOSPFv3AreasIpv4Interfaces, 0)
+				item.Interfaces = make([]CiscoOSPFv3Ipv4AreasInterfaces, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CiscoOSPFv3AreasIpv4Interfaces{}
+					cItem := CiscoOSPFv3Ipv4AreasInterfaces{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -2270,9 +2270,9 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				})
 			}
 			if cValue := v.Get("range.vipValue"); len(cValue.Array()) > 0 {
-				item.Ranges = make([]CiscoOSPFv3AreasIpv4Ranges, 0)
+				item.Ranges = make([]CiscoOSPFv3Ipv4AreasRanges, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CiscoOSPFv3AreasIpv4Ranges{}
+					cItem := CiscoOSPFv3Ipv4AreasRanges{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -2339,318 +2339,318 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			}
-			data.AreasIpv4 = append(data.AreasIpv4, item)
+			data.Ipv4Areas = append(data.Ipv4Areas, item)
 			return true
 		})
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.router-id.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.RouterIdIpv6 = types.StringNull()
+			data.Ipv6RouterId = types.StringNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.router-id.vipVariableName")
-			data.RouterIdIpv6Variable = types.StringValue(v.String())
+			data.Ipv6RouterIdVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.RouterIdIpv6 = types.StringNull()
-			data.RouterIdIpv6Variable = types.StringNull()
+			data.Ipv6RouterId = types.StringNull()
+			data.Ipv6RouterIdVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.router-id.vipValue")
-			data.RouterIdIpv6 = types.StringValue(v.String())
-			data.RouterIdIpv6Variable = types.StringNull()
+			data.Ipv6RouterId = types.StringValue(v.String())
+			data.Ipv6RouterIdVariable = types.StringNull()
 		}
 	} else {
-		data.RouterIdIpv6 = types.StringNull()
-		data.RouterIdIpv6Variable = types.StringNull()
+		data.Ipv6RouterId = types.StringNull()
+		data.Ipv6RouterIdVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.auto-cost.reference-bandwidth.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.AutoCostReferenceBandwidthIpv6 = types.Int64Null()
+			data.Ipv6AutoCostReferenceBandwidth = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.auto-cost.reference-bandwidth.vipVariableName")
-			data.AutoCostReferenceBandwidthIpv6Variable = types.StringValue(v.String())
+			data.Ipv6AutoCostReferenceBandwidthVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AutoCostReferenceBandwidthIpv6 = types.Int64Null()
-			data.AutoCostReferenceBandwidthIpv6Variable = types.StringNull()
+			data.Ipv6AutoCostReferenceBandwidth = types.Int64Null()
+			data.Ipv6AutoCostReferenceBandwidthVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.auto-cost.reference-bandwidth.vipValue")
-			data.AutoCostReferenceBandwidthIpv6 = types.Int64Value(v.Int())
-			data.AutoCostReferenceBandwidthIpv6Variable = types.StringNull()
+			data.Ipv6AutoCostReferenceBandwidth = types.Int64Value(v.Int())
+			data.Ipv6AutoCostReferenceBandwidthVariable = types.StringNull()
 		}
 	} else {
-		data.AutoCostReferenceBandwidthIpv6 = types.Int64Null()
-		data.AutoCostReferenceBandwidthIpv6Variable = types.StringNull()
+		data.Ipv6AutoCostReferenceBandwidth = types.Int64Null()
+		data.Ipv6AutoCostReferenceBandwidthVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.compatible.rfc1583.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.CompatibleRfc1583Ipv6 = types.BoolNull()
+			data.Ipv6CompatibleRfc1583 = types.BoolNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.compatible.rfc1583.vipVariableName")
-			data.CompatibleRfc1583Ipv6Variable = types.StringValue(v.String())
+			data.Ipv6CompatibleRfc1583Variable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.CompatibleRfc1583Ipv6 = types.BoolNull()
-			data.CompatibleRfc1583Ipv6Variable = types.StringNull()
+			data.Ipv6CompatibleRfc1583 = types.BoolNull()
+			data.Ipv6CompatibleRfc1583Variable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.compatible.rfc1583.vipValue")
-			data.CompatibleRfc1583Ipv6 = types.BoolValue(v.Bool())
-			data.CompatibleRfc1583Ipv6Variable = types.StringNull()
+			data.Ipv6CompatibleRfc1583 = types.BoolValue(v.Bool())
+			data.Ipv6CompatibleRfc1583Variable = types.StringNull()
 		}
 	} else {
-		data.CompatibleRfc1583Ipv6 = types.BoolNull()
-		data.CompatibleRfc1583Ipv6Variable = types.StringNull()
+		data.Ipv6CompatibleRfc1583 = types.BoolNull()
+		data.Ipv6CompatibleRfc1583Variable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateIpv6 = types.BoolNull()
+			data.Ipv6DefaultInformationOriginate = types.BoolNull()
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateIpv6 = types.BoolValue(false)
+			data.Ipv6DefaultInformationOriginate = types.BoolValue(false)
 
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.vipValue")
-			data.DefaultInformationOriginateIpv6 = types.BoolValue(v.Bool())
+			data.Ipv6DefaultInformationOriginate = types.BoolValue(v.Bool())
 
 		}
 	} else if value := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate"); value.Exists() {
-		data.DefaultInformationOriginateIpv6 = types.BoolValue(true)
+		data.Ipv6DefaultInformationOriginate = types.BoolValue(true)
 
 	} else {
-		data.DefaultInformationOriginateIpv6 = types.BoolNull()
+		data.Ipv6DefaultInformationOriginate = types.BoolNull()
 
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.always.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateAlwaysIpv6 = types.BoolNull()
+			data.Ipv6DefaultInformationOriginateAlways = types.BoolNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.always.vipVariableName")
-			data.DefaultInformationOriginateAlwaysIpv6Variable = types.StringValue(v.String())
+			data.Ipv6DefaultInformationOriginateAlwaysVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateAlwaysIpv6 = types.BoolNull()
-			data.DefaultInformationOriginateAlwaysIpv6Variable = types.StringNull()
+			data.Ipv6DefaultInformationOriginateAlways = types.BoolNull()
+			data.Ipv6DefaultInformationOriginateAlwaysVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.always.vipValue")
-			data.DefaultInformationOriginateAlwaysIpv6 = types.BoolValue(v.Bool())
-			data.DefaultInformationOriginateAlwaysIpv6Variable = types.StringNull()
+			data.Ipv6DefaultInformationOriginateAlways = types.BoolValue(v.Bool())
+			data.Ipv6DefaultInformationOriginateAlwaysVariable = types.StringNull()
 		}
 	} else {
-		data.DefaultInformationOriginateAlwaysIpv6 = types.BoolNull()
-		data.DefaultInformationOriginateAlwaysIpv6Variable = types.StringNull()
+		data.Ipv6DefaultInformationOriginateAlways = types.BoolNull()
+		data.Ipv6DefaultInformationOriginateAlwaysVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.metric.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateMetricIpv6 = types.Int64Null()
+			data.Ipv6DefaultInformationOriginateMetric = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.metric.vipVariableName")
-			data.DefaultInformationOriginateMetricIpv6Variable = types.StringValue(v.String())
+			data.Ipv6DefaultInformationOriginateMetricVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateMetricIpv6 = types.Int64Null()
-			data.DefaultInformationOriginateMetricIpv6Variable = types.StringNull()
+			data.Ipv6DefaultInformationOriginateMetric = types.Int64Null()
+			data.Ipv6DefaultInformationOriginateMetricVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.metric.vipValue")
-			data.DefaultInformationOriginateMetricIpv6 = types.Int64Value(v.Int())
-			data.DefaultInformationOriginateMetricIpv6Variable = types.StringNull()
+			data.Ipv6DefaultInformationOriginateMetric = types.Int64Value(v.Int())
+			data.Ipv6DefaultInformationOriginateMetricVariable = types.StringNull()
 		}
 	} else {
-		data.DefaultInformationOriginateMetricIpv6 = types.Int64Null()
-		data.DefaultInformationOriginateMetricIpv6Variable = types.StringNull()
+		data.Ipv6DefaultInformationOriginateMetric = types.Int64Null()
+		data.Ipv6DefaultInformationOriginateMetricVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.metric-type.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DefaultInformationOriginateMetricTypeIpv6 = types.StringNull()
+			data.Ipv6DefaultInformationOriginateMetricType = types.StringNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.metric-type.vipVariableName")
-			data.DefaultInformationOriginateMetricTypeIpv6Variable = types.StringValue(v.String())
+			data.Ipv6DefaultInformationOriginateMetricTypeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DefaultInformationOriginateMetricTypeIpv6 = types.StringNull()
-			data.DefaultInformationOriginateMetricTypeIpv6Variable = types.StringNull()
+			data.Ipv6DefaultInformationOriginateMetricType = types.StringNull()
+			data.Ipv6DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.default-information.originate.metric-type.vipValue")
-			data.DefaultInformationOriginateMetricTypeIpv6 = types.StringValue(v.String())
-			data.DefaultInformationOriginateMetricTypeIpv6Variable = types.StringNull()
+			data.Ipv6DefaultInformationOriginateMetricType = types.StringValue(v.String())
+			data.Ipv6DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 		}
 	} else {
-		data.DefaultInformationOriginateMetricTypeIpv6 = types.StringNull()
-		data.DefaultInformationOriginateMetricTypeIpv6Variable = types.StringNull()
+		data.Ipv6DefaultInformationOriginateMetricType = types.StringNull()
+		data.Ipv6DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.external.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceExternalIpv6 = types.Int64Null()
+			data.Ipv6DistanceExternal = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.external.vipVariableName")
-			data.DistanceExternalIpv6Variable = types.StringValue(v.String())
+			data.Ipv6DistanceExternalVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceExternalIpv6 = types.Int64Null()
-			data.DistanceExternalIpv6Variable = types.StringNull()
+			data.Ipv6DistanceExternal = types.Int64Null()
+			data.Ipv6DistanceExternalVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.external.vipValue")
-			data.DistanceExternalIpv6 = types.Int64Value(v.Int())
-			data.DistanceExternalIpv6Variable = types.StringNull()
+			data.Ipv6DistanceExternal = types.Int64Value(v.Int())
+			data.Ipv6DistanceExternalVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceExternalIpv6 = types.Int64Null()
-		data.DistanceExternalIpv6Variable = types.StringNull()
+		data.Ipv6DistanceExternal = types.Int64Null()
+		data.Ipv6DistanceExternalVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceInterAreaIpv6 = types.Int64Null()
+			data.Ipv6DistanceInterArea = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area.vipVariableName")
-			data.DistanceInterAreaIpv6Variable = types.StringValue(v.String())
+			data.Ipv6DistanceInterAreaVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceInterAreaIpv6 = types.Int64Null()
-			data.DistanceInterAreaIpv6Variable = types.StringNull()
+			data.Ipv6DistanceInterArea = types.Int64Null()
+			data.Ipv6DistanceInterAreaVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.inter-area.vipValue")
-			data.DistanceInterAreaIpv6 = types.Int64Value(v.Int())
-			data.DistanceInterAreaIpv6Variable = types.StringNull()
+			data.Ipv6DistanceInterArea = types.Int64Value(v.Int())
+			data.Ipv6DistanceInterAreaVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceInterAreaIpv6 = types.Int64Null()
-		data.DistanceInterAreaIpv6Variable = types.StringNull()
+		data.Ipv6DistanceInterArea = types.Int64Null()
+		data.Ipv6DistanceInterAreaVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceIntraAreaIpv6 = types.Int64Null()
+			data.Ipv6DistanceIntraArea = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area.vipVariableName")
-			data.DistanceIntraAreaIpv6Variable = types.StringValue(v.String())
+			data.Ipv6DistanceIntraAreaVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceIntraAreaIpv6 = types.Int64Null()
-			data.DistanceIntraAreaIpv6Variable = types.StringNull()
+			data.Ipv6DistanceIntraArea = types.Int64Null()
+			data.Ipv6DistanceIntraAreaVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.ospf.intra-area.vipValue")
-			data.DistanceIntraAreaIpv6 = types.Int64Value(v.Int())
-			data.DistanceIntraAreaIpv6Variable = types.StringNull()
+			data.Ipv6DistanceIntraArea = types.Int64Value(v.Int())
+			data.Ipv6DistanceIntraAreaVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceIntraAreaIpv6 = types.Int64Null()
-		data.DistanceIntraAreaIpv6Variable = types.StringNull()
+		data.Ipv6DistanceIntraArea = types.Int64Null()
+		data.Ipv6DistanceIntraAreaVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.delay.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TimersSpfDelayIpv6 = types.Int64Null()
+			data.Ipv6TimersSpfDelay = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.delay.vipVariableName")
-			data.TimersSpfDelayIpv6Variable = types.StringValue(v.String())
+			data.Ipv6TimersSpfDelayVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TimersSpfDelayIpv6 = types.Int64Null()
-			data.TimersSpfDelayIpv6Variable = types.StringNull()
+			data.Ipv6TimersSpfDelay = types.Int64Null()
+			data.Ipv6TimersSpfDelayVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.delay.vipValue")
-			data.TimersSpfDelayIpv6 = types.Int64Value(v.Int())
-			data.TimersSpfDelayIpv6Variable = types.StringNull()
+			data.Ipv6TimersSpfDelay = types.Int64Value(v.Int())
+			data.Ipv6TimersSpfDelayVariable = types.StringNull()
 		}
 	} else {
-		data.TimersSpfDelayIpv6 = types.Int64Null()
-		data.TimersSpfDelayIpv6Variable = types.StringNull()
+		data.Ipv6TimersSpfDelay = types.Int64Null()
+		data.Ipv6TimersSpfDelayVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TimersSpfInitialHoldIpv6 = types.Int64Null()
+			data.Ipv6TimersSpfInitialHold = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold.vipVariableName")
-			data.TimersSpfInitialHoldIpv6Variable = types.StringValue(v.String())
+			data.Ipv6TimersSpfInitialHoldVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TimersSpfInitialHoldIpv6 = types.Int64Null()
-			data.TimersSpfInitialHoldIpv6Variable = types.StringNull()
+			data.Ipv6TimersSpfInitialHold = types.Int64Null()
+			data.Ipv6TimersSpfInitialHoldVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.initial-hold.vipValue")
-			data.TimersSpfInitialHoldIpv6 = types.Int64Value(v.Int())
-			data.TimersSpfInitialHoldIpv6Variable = types.StringNull()
+			data.Ipv6TimersSpfInitialHold = types.Int64Value(v.Int())
+			data.Ipv6TimersSpfInitialHoldVariable = types.StringNull()
 		}
 	} else {
-		data.TimersSpfInitialHoldIpv6 = types.Int64Null()
-		data.TimersSpfInitialHoldIpv6Variable = types.StringNull()
+		data.Ipv6TimersSpfInitialHold = types.Int64Null()
+		data.Ipv6TimersSpfInitialHoldVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.max-hold.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TimersSpfMaxHoldIpv6 = types.Int64Null()
+			data.Ipv6TimersSpfMaxHold = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.max-hold.vipVariableName")
-			data.TimersSpfMaxHoldIpv6Variable = types.StringValue(v.String())
+			data.Ipv6TimersSpfMaxHoldVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TimersSpfMaxHoldIpv6 = types.Int64Null()
-			data.TimersSpfMaxHoldIpv6Variable = types.StringNull()
+			data.Ipv6TimersSpfMaxHold = types.Int64Null()
+			data.Ipv6TimersSpfMaxHoldVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.timers.throttle.spf.max-hold.vipValue")
-			data.TimersSpfMaxHoldIpv6 = types.Int64Value(v.Int())
-			data.TimersSpfMaxHoldIpv6Variable = types.StringNull()
+			data.Ipv6TimersSpfMaxHold = types.Int64Value(v.Int())
+			data.Ipv6TimersSpfMaxHoldVariable = types.StringNull()
 		}
 	} else {
-		data.TimersSpfMaxHoldIpv6 = types.Int64Null()
-		data.TimersSpfMaxHoldIpv6Variable = types.StringNull()
+		data.Ipv6TimersSpfMaxHold = types.Int64Null()
+		data.Ipv6TimersSpfMaxHoldVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.distance.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.DistanceIpv6 = types.Int64Null()
+			data.Ipv6Distance = types.Int64Null()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.distance.vipVariableName")
-			data.DistanceIpv6Variable = types.StringValue(v.String())
+			data.Ipv6DistanceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.DistanceIpv6 = types.Int64Null()
-			data.DistanceIpv6Variable = types.StringNull()
+			data.Ipv6Distance = types.Int64Null()
+			data.Ipv6DistanceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.distance-ipv6.distance.vipValue")
-			data.DistanceIpv6 = types.Int64Value(v.Int())
-			data.DistanceIpv6Variable = types.StringNull()
+			data.Ipv6Distance = types.Int64Value(v.Int())
+			data.Ipv6DistanceVariable = types.StringNull()
 		}
 	} else {
-		data.DistanceIpv6 = types.Int64Null()
-		data.DistanceIpv6Variable = types.StringNull()
+		data.Ipv6Distance = types.Int64Null()
+		data.Ipv6DistanceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.table-map.name.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.PolicyNameIpv6 = types.StringNull()
+			data.Ipv6PolicyName = types.StringNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.table-map.name.vipVariableName")
-			data.PolicyNameIpv6Variable = types.StringValue(v.String())
+			data.Ipv6PolicyNameVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.PolicyNameIpv6 = types.StringNull()
-			data.PolicyNameIpv6Variable = types.StringNull()
+			data.Ipv6PolicyName = types.StringNull()
+			data.Ipv6PolicyNameVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.table-map.name.vipValue")
-			data.PolicyNameIpv6 = types.StringValue(v.String())
-			data.PolicyNameIpv6Variable = types.StringNull()
+			data.Ipv6PolicyName = types.StringValue(v.String())
+			data.Ipv6PolicyNameVariable = types.StringNull()
 		}
 	} else {
-		data.PolicyNameIpv6 = types.StringNull()
-		data.PolicyNameIpv6Variable = types.StringNull()
+		data.Ipv6PolicyName = types.StringNull()
+		data.Ipv6PolicyNameVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.table-map.filter.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.FilterIpv6 = types.BoolNull()
+			data.Ipv6Filter = types.BoolNull()
 
 			v := res.Get(path + "ospfv3.address-family.ipv6.table-map.filter.vipVariableName")
-			data.FilterIpv6Variable = types.StringValue(v.String())
+			data.Ipv6FilterVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.FilterIpv6 = types.BoolNull()
-			data.FilterIpv6Variable = types.StringNull()
+			data.Ipv6Filter = types.BoolNull()
+			data.Ipv6FilterVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ospfv3.address-family.ipv6.table-map.filter.vipValue")
-			data.FilterIpv6 = types.BoolValue(v.Bool())
-			data.FilterIpv6Variable = types.StringNull()
+			data.Ipv6Filter = types.BoolValue(v.Bool())
+			data.Ipv6FilterVariable = types.StringNull()
 		}
 	} else {
-		data.FilterIpv6 = types.BoolNull()
-		data.FilterIpv6Variable = types.StringNull()
+		data.Ipv6Filter = types.BoolNull()
+		data.Ipv6FilterVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.redistribute.vipValue"); len(value.Array()) > 0 {
-		data.RedistributeIpv6 = make([]CiscoOSPFv3RedistributeIpv6, 0)
+		data.Ipv6Redistributes = make([]CiscoOSPFv3Ipv6Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoOSPFv3RedistributeIpv6{}
+			item := CiscoOSPFv3Ipv6Redistributes{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -2694,14 +2694,14 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				item.RoutePolicy = types.StringNull()
 				item.RoutePolicyVariable = types.StringNull()
 			}
-			data.RedistributeIpv6 = append(data.RedistributeIpv6, item)
+			data.Ipv6Redistributes = append(data.Ipv6Redistributes, item)
 			return true
 		})
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.max-metric.router-lsa.vipValue"); len(value.Array()) > 0 {
-		data.MaxMetricRouterLsaIpv6 = make([]CiscoOSPFv3MaxMetricRouterLsaIpv6, 0)
+		data.Ipv6MaxMetricRouterLsas = make([]CiscoOSPFv3Ipv6MaxMetricRouterLsas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoOSPFv3MaxMetricRouterLsaIpv6{}
+			item := CiscoOSPFv3Ipv6MaxMetricRouterLsas{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -2742,14 +2742,14 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				item.Time = types.Int64Null()
 				item.TimeVariable = types.StringNull()
 			}
-			data.MaxMetricRouterLsaIpv6 = append(data.MaxMetricRouterLsaIpv6, item)
+			data.Ipv6MaxMetricRouterLsas = append(data.Ipv6MaxMetricRouterLsas, item)
 			return true
 		})
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.area.vipValue"); len(value.Array()) > 0 {
-		data.AreasIpv6 = make([]CiscoOSPFv3AreasIpv6, 0)
+		data.Ipv6Areas = make([]CiscoOSPFv3Ipv6Areas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoOSPFv3AreasIpv6{}
+			item := CiscoOSPFv3Ipv6Areas{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -2889,9 +2889,9 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				item.NormalVariable = types.StringNull()
 			}
 			if cValue := v.Get("interface.vipValue"); len(cValue.Array()) > 0 {
-				item.Interfaces = make([]CiscoOSPFv3AreasIpv6Interfaces, 0)
+				item.Interfaces = make([]CiscoOSPFv3Ipv6AreasInterfaces, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CiscoOSPFv3AreasIpv6Interfaces{}
+					cItem := CiscoOSPFv3Ipv6AreasInterfaces{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -3092,9 +3092,9 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 				})
 			}
 			if cValue := v.Get("range.vipValue"); len(cValue.Array()) > 0 {
-				item.Ranges = make([]CiscoOSPFv3AreasIpv6Ranges, 0)
+				item.Ranges = make([]CiscoOSPFv3Ipv6AreasRanges, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CiscoOSPFv3AreasIpv6Ranges{}
+					cItem := CiscoOSPFv3Ipv6AreasRanges{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -3161,7 +3161,7 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			}
-			data.AreasIpv6 = append(data.AreasIpv6, item)
+			data.Ipv6Areas = append(data.Ipv6Areas, item)
 			return true
 		})
 	}
@@ -3169,303 +3169,303 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 
 func (data *CiscoOSPFv3) hasChanges(ctx context.Context, state *CiscoOSPFv3) bool {
 	hasChanges := false
-	if !data.RouterIdIpv4.Equal(state.RouterIdIpv4) {
+	if !data.Ipv4RouterId.Equal(state.Ipv4RouterId) {
 		hasChanges = true
 	}
-	if !data.AutoCostReferenceBandwidthIpv4.Equal(state.AutoCostReferenceBandwidthIpv4) {
+	if !data.Ipv4AutoCostReferenceBandwidth.Equal(state.Ipv4AutoCostReferenceBandwidth) {
 		hasChanges = true
 	}
-	if !data.CompatibleRfc1583Ipv4.Equal(state.CompatibleRfc1583Ipv4) {
+	if !data.Ipv4CompatibleRfc1583.Equal(state.Ipv4CompatibleRfc1583) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateIpv4.Equal(state.DefaultInformationOriginateIpv4) {
+	if !data.Ipv4DefaultInformationOriginate.Equal(state.Ipv4DefaultInformationOriginate) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateAlwaysIpv4.Equal(state.DefaultInformationOriginateAlwaysIpv4) {
+	if !data.Ipv4DefaultInformationOriginateAlways.Equal(state.Ipv4DefaultInformationOriginateAlways) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateMetricIpv4.Equal(state.DefaultInformationOriginateMetricIpv4) {
+	if !data.Ipv4DefaultInformationOriginateMetric.Equal(state.Ipv4DefaultInformationOriginateMetric) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateMetricTypeIpv4.Equal(state.DefaultInformationOriginateMetricTypeIpv4) {
+	if !data.Ipv4DefaultInformationOriginateMetricType.Equal(state.Ipv4DefaultInformationOriginateMetricType) {
 		hasChanges = true
 	}
-	if !data.DistanceExternalIpv4.Equal(state.DistanceExternalIpv4) {
+	if !data.Ipv4DistanceExternal.Equal(state.Ipv4DistanceExternal) {
 		hasChanges = true
 	}
-	if !data.DistanceInterAreaIpv4.Equal(state.DistanceInterAreaIpv4) {
+	if !data.Ipv4DistanceInterArea.Equal(state.Ipv4DistanceInterArea) {
 		hasChanges = true
 	}
-	if !data.DistanceIntraAreaIpv4.Equal(state.DistanceIntraAreaIpv4) {
+	if !data.Ipv4DistanceIntraArea.Equal(state.Ipv4DistanceIntraArea) {
 		hasChanges = true
 	}
-	if !data.TimersSpfDelayIpv4.Equal(state.TimersSpfDelayIpv4) {
+	if !data.Ipv4TimersSpfDelay.Equal(state.Ipv4TimersSpfDelay) {
 		hasChanges = true
 	}
-	if !data.TimersSpfInitialHoldIpv4.Equal(state.TimersSpfInitialHoldIpv4) {
+	if !data.Ipv4TimersSpfInitialHold.Equal(state.Ipv4TimersSpfInitialHold) {
 		hasChanges = true
 	}
-	if !data.TimersSpfMaxHoldIpv4.Equal(state.TimersSpfMaxHoldIpv4) {
+	if !data.Ipv4TimersSpfMaxHold.Equal(state.Ipv4TimersSpfMaxHold) {
 		hasChanges = true
 	}
-	if !data.DistanceIpv4.Equal(state.DistanceIpv4) {
+	if !data.Ipv4Distance.Equal(state.Ipv4Distance) {
 		hasChanges = true
 	}
-	if !data.PolicyNameIpv4.Equal(state.PolicyNameIpv4) {
+	if !data.Ipv4PolicyName.Equal(state.Ipv4PolicyName) {
 		hasChanges = true
 	}
-	if !data.FilterIpv4.Equal(state.FilterIpv4) {
+	if !data.Ipv4Filter.Equal(state.Ipv4Filter) {
 		hasChanges = true
 	}
-	if len(data.RedistributeIpv4) != len(state.RedistributeIpv4) {
+	if len(data.Ipv4Redistributes) != len(state.Ipv4Redistributes) {
 		hasChanges = true
 	} else {
-		for i := range data.RedistributeIpv4 {
-			if !data.RedistributeIpv4[i].Protocol.Equal(state.RedistributeIpv4[i].Protocol) {
+		for i := range data.Ipv4Redistributes {
+			if !data.Ipv4Redistributes[i].Protocol.Equal(state.Ipv4Redistributes[i].Protocol) {
 				hasChanges = true
 			}
-			if !data.RedistributeIpv4[i].RoutePolicy.Equal(state.RedistributeIpv4[i].RoutePolicy) {
+			if !data.Ipv4Redistributes[i].RoutePolicy.Equal(state.Ipv4Redistributes[i].RoutePolicy) {
 				hasChanges = true
 			}
-			if !data.RedistributeIpv4[i].NatDia.Equal(state.RedistributeIpv4[i].NatDia) {
+			if !data.Ipv4Redistributes[i].NatDia.Equal(state.Ipv4Redistributes[i].NatDia) {
 				hasChanges = true
 			}
 		}
 	}
-	if len(data.MaxMetricRouterLsaIpv4) != len(state.MaxMetricRouterLsaIpv4) {
+	if len(data.Ipv4MaxMetricRouterLsas) != len(state.Ipv4MaxMetricRouterLsas) {
 		hasChanges = true
 	} else {
-		for i := range data.MaxMetricRouterLsaIpv4 {
-			if !data.MaxMetricRouterLsaIpv4[i].AdType.Equal(state.MaxMetricRouterLsaIpv4[i].AdType) {
+		for i := range data.Ipv4MaxMetricRouterLsas {
+			if !data.Ipv4MaxMetricRouterLsas[i].AdType.Equal(state.Ipv4MaxMetricRouterLsas[i].AdType) {
 				hasChanges = true
 			}
-			if !data.MaxMetricRouterLsaIpv4[i].Time.Equal(state.MaxMetricRouterLsaIpv4[i].Time) {
+			if !data.Ipv4MaxMetricRouterLsas[i].Time.Equal(state.Ipv4MaxMetricRouterLsas[i].Time) {
 				hasChanges = true
 			}
 		}
 	}
-	if len(data.AreasIpv4) != len(state.AreasIpv4) {
+	if len(data.Ipv4Areas) != len(state.Ipv4Areas) {
 		hasChanges = true
 	} else {
-		for i := range data.AreasIpv4 {
-			if !data.AreasIpv4[i].AreaNumber.Equal(state.AreasIpv4[i].AreaNumber) {
+		for i := range data.Ipv4Areas {
+			if !data.Ipv4Areas[i].AreaNumber.Equal(state.Ipv4Areas[i].AreaNumber) {
 				hasChanges = true
 			}
-			if !data.AreasIpv4[i].Stub.Equal(state.AreasIpv4[i].Stub) {
+			if !data.Ipv4Areas[i].Stub.Equal(state.Ipv4Areas[i].Stub) {
 				hasChanges = true
 			}
-			if !data.AreasIpv4[i].StubNoSummary.Equal(state.AreasIpv4[i].StubNoSummary) {
+			if !data.Ipv4Areas[i].StubNoSummary.Equal(state.Ipv4Areas[i].StubNoSummary) {
 				hasChanges = true
 			}
-			if !data.AreasIpv4[i].Nssa.Equal(state.AreasIpv4[i].Nssa) {
+			if !data.Ipv4Areas[i].Nssa.Equal(state.Ipv4Areas[i].Nssa) {
 				hasChanges = true
 			}
-			if !data.AreasIpv4[i].NssaNoSummary.Equal(state.AreasIpv4[i].NssaNoSummary) {
+			if !data.Ipv4Areas[i].NssaNoSummary.Equal(state.Ipv4Areas[i].NssaNoSummary) {
 				hasChanges = true
 			}
-			if !data.AreasIpv4[i].Translate.Equal(state.AreasIpv4[i].Translate) {
+			if !data.Ipv4Areas[i].Translate.Equal(state.Ipv4Areas[i].Translate) {
 				hasChanges = true
 			}
-			if !data.AreasIpv4[i].Normal.Equal(state.AreasIpv4[i].Normal) {
+			if !data.Ipv4Areas[i].Normal.Equal(state.Ipv4Areas[i].Normal) {
 				hasChanges = true
 			}
-			if len(data.AreasIpv4[i].Interfaces) != len(state.AreasIpv4[i].Interfaces) {
+			if len(data.Ipv4Areas[i].Interfaces) != len(state.Ipv4Areas[i].Interfaces) {
 				hasChanges = true
 			} else {
-				for ii := range data.AreasIpv4[i].Interfaces {
-					if !data.AreasIpv4[i].Interfaces[ii].Name.Equal(state.AreasIpv4[i].Interfaces[ii].Name) {
+				for ii := range data.Ipv4Areas[i].Interfaces {
+					if !data.Ipv4Areas[i].Interfaces[ii].Name.Equal(state.Ipv4Areas[i].Interfaces[ii].Name) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].HelloInterval.Equal(state.AreasIpv4[i].Interfaces[ii].HelloInterval) {
+					if !data.Ipv4Areas[i].Interfaces[ii].HelloInterval.Equal(state.Ipv4Areas[i].Interfaces[ii].HelloInterval) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].DeadInterval.Equal(state.AreasIpv4[i].Interfaces[ii].DeadInterval) {
+					if !data.Ipv4Areas[i].Interfaces[ii].DeadInterval.Equal(state.Ipv4Areas[i].Interfaces[ii].DeadInterval) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].RetransmitInterval.Equal(state.AreasIpv4[i].Interfaces[ii].RetransmitInterval) {
+					if !data.Ipv4Areas[i].Interfaces[ii].RetransmitInterval.Equal(state.Ipv4Areas[i].Interfaces[ii].RetransmitInterval) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].Cost.Equal(state.AreasIpv4[i].Interfaces[ii].Cost) {
+					if !data.Ipv4Areas[i].Interfaces[ii].Cost.Equal(state.Ipv4Areas[i].Interfaces[ii].Cost) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].Network.Equal(state.AreasIpv4[i].Interfaces[ii].Network) {
+					if !data.Ipv4Areas[i].Interfaces[ii].Network.Equal(state.Ipv4Areas[i].Interfaces[ii].Network) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].PassiveInterface.Equal(state.AreasIpv4[i].Interfaces[ii].PassiveInterface) {
+					if !data.Ipv4Areas[i].Interfaces[ii].PassiveInterface.Equal(state.Ipv4Areas[i].Interfaces[ii].PassiveInterface) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].AuthenticationType.Equal(state.AreasIpv4[i].Interfaces[ii].AuthenticationType) {
+					if !data.Ipv4Areas[i].Interfaces[ii].AuthenticationType.Equal(state.Ipv4Areas[i].Interfaces[ii].AuthenticationType) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].AuthenticationKey.Equal(state.AreasIpv4[i].Interfaces[ii].AuthenticationKey) {
+					if !data.Ipv4Areas[i].Interfaces[ii].AuthenticationKey.Equal(state.Ipv4Areas[i].Interfaces[ii].AuthenticationKey) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Interfaces[ii].IpsecSpi.Equal(state.AreasIpv4[i].Interfaces[ii].IpsecSpi) {
+					if !data.Ipv4Areas[i].Interfaces[ii].IpsecSpi.Equal(state.Ipv4Areas[i].Interfaces[ii].IpsecSpi) {
 						hasChanges = true
 					}
 				}
 			}
-			if len(data.AreasIpv4[i].Ranges) != len(state.AreasIpv4[i].Ranges) {
+			if len(data.Ipv4Areas[i].Ranges) != len(state.Ipv4Areas[i].Ranges) {
 				hasChanges = true
 			} else {
-				for ii := range data.AreasIpv4[i].Ranges {
-					if !data.AreasIpv4[i].Ranges[ii].Address.Equal(state.AreasIpv4[i].Ranges[ii].Address) {
+				for ii := range data.Ipv4Areas[i].Ranges {
+					if !data.Ipv4Areas[i].Ranges[ii].Address.Equal(state.Ipv4Areas[i].Ranges[ii].Address) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Ranges[ii].Cost.Equal(state.AreasIpv4[i].Ranges[ii].Cost) {
+					if !data.Ipv4Areas[i].Ranges[ii].Cost.Equal(state.Ipv4Areas[i].Ranges[ii].Cost) {
 						hasChanges = true
 					}
-					if !data.AreasIpv4[i].Ranges[ii].NoAdvertise.Equal(state.AreasIpv4[i].Ranges[ii].NoAdvertise) {
+					if !data.Ipv4Areas[i].Ranges[ii].NoAdvertise.Equal(state.Ipv4Areas[i].Ranges[ii].NoAdvertise) {
 						hasChanges = true
 					}
 				}
 			}
 		}
 	}
-	if !data.RouterIdIpv6.Equal(state.RouterIdIpv6) {
+	if !data.Ipv6RouterId.Equal(state.Ipv6RouterId) {
 		hasChanges = true
 	}
-	if !data.AutoCostReferenceBandwidthIpv6.Equal(state.AutoCostReferenceBandwidthIpv6) {
+	if !data.Ipv6AutoCostReferenceBandwidth.Equal(state.Ipv6AutoCostReferenceBandwidth) {
 		hasChanges = true
 	}
-	if !data.CompatibleRfc1583Ipv6.Equal(state.CompatibleRfc1583Ipv6) {
+	if !data.Ipv6CompatibleRfc1583.Equal(state.Ipv6CompatibleRfc1583) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateIpv6.Equal(state.DefaultInformationOriginateIpv6) {
+	if !data.Ipv6DefaultInformationOriginate.Equal(state.Ipv6DefaultInformationOriginate) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateAlwaysIpv6.Equal(state.DefaultInformationOriginateAlwaysIpv6) {
+	if !data.Ipv6DefaultInformationOriginateAlways.Equal(state.Ipv6DefaultInformationOriginateAlways) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateMetricIpv6.Equal(state.DefaultInformationOriginateMetricIpv6) {
+	if !data.Ipv6DefaultInformationOriginateMetric.Equal(state.Ipv6DefaultInformationOriginateMetric) {
 		hasChanges = true
 	}
-	if !data.DefaultInformationOriginateMetricTypeIpv6.Equal(state.DefaultInformationOriginateMetricTypeIpv6) {
+	if !data.Ipv6DefaultInformationOriginateMetricType.Equal(state.Ipv6DefaultInformationOriginateMetricType) {
 		hasChanges = true
 	}
-	if !data.DistanceExternalIpv6.Equal(state.DistanceExternalIpv6) {
+	if !data.Ipv6DistanceExternal.Equal(state.Ipv6DistanceExternal) {
 		hasChanges = true
 	}
-	if !data.DistanceInterAreaIpv6.Equal(state.DistanceInterAreaIpv6) {
+	if !data.Ipv6DistanceInterArea.Equal(state.Ipv6DistanceInterArea) {
 		hasChanges = true
 	}
-	if !data.DistanceIntraAreaIpv6.Equal(state.DistanceIntraAreaIpv6) {
+	if !data.Ipv6DistanceIntraArea.Equal(state.Ipv6DistanceIntraArea) {
 		hasChanges = true
 	}
-	if !data.TimersSpfDelayIpv6.Equal(state.TimersSpfDelayIpv6) {
+	if !data.Ipv6TimersSpfDelay.Equal(state.Ipv6TimersSpfDelay) {
 		hasChanges = true
 	}
-	if !data.TimersSpfInitialHoldIpv6.Equal(state.TimersSpfInitialHoldIpv6) {
+	if !data.Ipv6TimersSpfInitialHold.Equal(state.Ipv6TimersSpfInitialHold) {
 		hasChanges = true
 	}
-	if !data.TimersSpfMaxHoldIpv6.Equal(state.TimersSpfMaxHoldIpv6) {
+	if !data.Ipv6TimersSpfMaxHold.Equal(state.Ipv6TimersSpfMaxHold) {
 		hasChanges = true
 	}
-	if !data.DistanceIpv6.Equal(state.DistanceIpv6) {
+	if !data.Ipv6Distance.Equal(state.Ipv6Distance) {
 		hasChanges = true
 	}
-	if !data.PolicyNameIpv6.Equal(state.PolicyNameIpv6) {
+	if !data.Ipv6PolicyName.Equal(state.Ipv6PolicyName) {
 		hasChanges = true
 	}
-	if !data.FilterIpv6.Equal(state.FilterIpv6) {
+	if !data.Ipv6Filter.Equal(state.Ipv6Filter) {
 		hasChanges = true
 	}
-	if len(data.RedistributeIpv6) != len(state.RedistributeIpv6) {
+	if len(data.Ipv6Redistributes) != len(state.Ipv6Redistributes) {
 		hasChanges = true
 	} else {
-		for i := range data.RedistributeIpv6 {
-			if !data.RedistributeIpv6[i].Protocol.Equal(state.RedistributeIpv6[i].Protocol) {
+		for i := range data.Ipv6Redistributes {
+			if !data.Ipv6Redistributes[i].Protocol.Equal(state.Ipv6Redistributes[i].Protocol) {
 				hasChanges = true
 			}
-			if !data.RedistributeIpv6[i].RoutePolicy.Equal(state.RedistributeIpv6[i].RoutePolicy) {
+			if !data.Ipv6Redistributes[i].RoutePolicy.Equal(state.Ipv6Redistributes[i].RoutePolicy) {
 				hasChanges = true
 			}
 		}
 	}
-	if len(data.MaxMetricRouterLsaIpv6) != len(state.MaxMetricRouterLsaIpv6) {
+	if len(data.Ipv6MaxMetricRouterLsas) != len(state.Ipv6MaxMetricRouterLsas) {
 		hasChanges = true
 	} else {
-		for i := range data.MaxMetricRouterLsaIpv6 {
-			if !data.MaxMetricRouterLsaIpv6[i].AdType.Equal(state.MaxMetricRouterLsaIpv6[i].AdType) {
+		for i := range data.Ipv6MaxMetricRouterLsas {
+			if !data.Ipv6MaxMetricRouterLsas[i].AdType.Equal(state.Ipv6MaxMetricRouterLsas[i].AdType) {
 				hasChanges = true
 			}
-			if !data.MaxMetricRouterLsaIpv6[i].Time.Equal(state.MaxMetricRouterLsaIpv6[i].Time) {
+			if !data.Ipv6MaxMetricRouterLsas[i].Time.Equal(state.Ipv6MaxMetricRouterLsas[i].Time) {
 				hasChanges = true
 			}
 		}
 	}
-	if len(data.AreasIpv6) != len(state.AreasIpv6) {
+	if len(data.Ipv6Areas) != len(state.Ipv6Areas) {
 		hasChanges = true
 	} else {
-		for i := range data.AreasIpv6 {
-			if !data.AreasIpv6[i].AreaNumber.Equal(state.AreasIpv6[i].AreaNumber) {
+		for i := range data.Ipv6Areas {
+			if !data.Ipv6Areas[i].AreaNumber.Equal(state.Ipv6Areas[i].AreaNumber) {
 				hasChanges = true
 			}
-			if !data.AreasIpv6[i].Stub.Equal(state.AreasIpv6[i].Stub) {
+			if !data.Ipv6Areas[i].Stub.Equal(state.Ipv6Areas[i].Stub) {
 				hasChanges = true
 			}
-			if !data.AreasIpv6[i].StubNoSummary.Equal(state.AreasIpv6[i].StubNoSummary) {
+			if !data.Ipv6Areas[i].StubNoSummary.Equal(state.Ipv6Areas[i].StubNoSummary) {
 				hasChanges = true
 			}
-			if !data.AreasIpv6[i].Nssa.Equal(state.AreasIpv6[i].Nssa) {
+			if !data.Ipv6Areas[i].Nssa.Equal(state.Ipv6Areas[i].Nssa) {
 				hasChanges = true
 			}
-			if !data.AreasIpv6[i].NssaNoSummary.Equal(state.AreasIpv6[i].NssaNoSummary) {
+			if !data.Ipv6Areas[i].NssaNoSummary.Equal(state.Ipv6Areas[i].NssaNoSummary) {
 				hasChanges = true
 			}
-			if !data.AreasIpv6[i].Translate.Equal(state.AreasIpv6[i].Translate) {
+			if !data.Ipv6Areas[i].Translate.Equal(state.Ipv6Areas[i].Translate) {
 				hasChanges = true
 			}
-			if !data.AreasIpv6[i].Normal.Equal(state.AreasIpv6[i].Normal) {
+			if !data.Ipv6Areas[i].Normal.Equal(state.Ipv6Areas[i].Normal) {
 				hasChanges = true
 			}
-			if len(data.AreasIpv6[i].Interfaces) != len(state.AreasIpv6[i].Interfaces) {
+			if len(data.Ipv6Areas[i].Interfaces) != len(state.Ipv6Areas[i].Interfaces) {
 				hasChanges = true
 			} else {
-				for ii := range data.AreasIpv6[i].Interfaces {
-					if !data.AreasIpv6[i].Interfaces[ii].Name.Equal(state.AreasIpv6[i].Interfaces[ii].Name) {
+				for ii := range data.Ipv6Areas[i].Interfaces {
+					if !data.Ipv6Areas[i].Interfaces[ii].Name.Equal(state.Ipv6Areas[i].Interfaces[ii].Name) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].HelloInterval.Equal(state.AreasIpv6[i].Interfaces[ii].HelloInterval) {
+					if !data.Ipv6Areas[i].Interfaces[ii].HelloInterval.Equal(state.Ipv6Areas[i].Interfaces[ii].HelloInterval) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].DeadInterval.Equal(state.AreasIpv6[i].Interfaces[ii].DeadInterval) {
+					if !data.Ipv6Areas[i].Interfaces[ii].DeadInterval.Equal(state.Ipv6Areas[i].Interfaces[ii].DeadInterval) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].RetransmitInterval.Equal(state.AreasIpv6[i].Interfaces[ii].RetransmitInterval) {
+					if !data.Ipv6Areas[i].Interfaces[ii].RetransmitInterval.Equal(state.Ipv6Areas[i].Interfaces[ii].RetransmitInterval) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].Cost.Equal(state.AreasIpv6[i].Interfaces[ii].Cost) {
+					if !data.Ipv6Areas[i].Interfaces[ii].Cost.Equal(state.Ipv6Areas[i].Interfaces[ii].Cost) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].Network.Equal(state.AreasIpv6[i].Interfaces[ii].Network) {
+					if !data.Ipv6Areas[i].Interfaces[ii].Network.Equal(state.Ipv6Areas[i].Interfaces[ii].Network) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].PassiveInterface.Equal(state.AreasIpv6[i].Interfaces[ii].PassiveInterface) {
+					if !data.Ipv6Areas[i].Interfaces[ii].PassiveInterface.Equal(state.Ipv6Areas[i].Interfaces[ii].PassiveInterface) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].AuthenticationType.Equal(state.AreasIpv6[i].Interfaces[ii].AuthenticationType) {
+					if !data.Ipv6Areas[i].Interfaces[ii].AuthenticationType.Equal(state.Ipv6Areas[i].Interfaces[ii].AuthenticationType) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].AuthenticationKey.Equal(state.AreasIpv6[i].Interfaces[ii].AuthenticationKey) {
+					if !data.Ipv6Areas[i].Interfaces[ii].AuthenticationKey.Equal(state.Ipv6Areas[i].Interfaces[ii].AuthenticationKey) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Interfaces[ii].IpsecSpi.Equal(state.AreasIpv6[i].Interfaces[ii].IpsecSpi) {
+					if !data.Ipv6Areas[i].Interfaces[ii].IpsecSpi.Equal(state.Ipv6Areas[i].Interfaces[ii].IpsecSpi) {
 						hasChanges = true
 					}
 				}
 			}
-			if len(data.AreasIpv6[i].Ranges) != len(state.AreasIpv6[i].Ranges) {
+			if len(data.Ipv6Areas[i].Ranges) != len(state.Ipv6Areas[i].Ranges) {
 				hasChanges = true
 			} else {
-				for ii := range data.AreasIpv6[i].Ranges {
-					if !data.AreasIpv6[i].Ranges[ii].Address.Equal(state.AreasIpv6[i].Ranges[ii].Address) {
+				for ii := range data.Ipv6Areas[i].Ranges {
+					if !data.Ipv6Areas[i].Ranges[ii].Address.Equal(state.Ipv6Areas[i].Ranges[ii].Address) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Ranges[ii].Cost.Equal(state.AreasIpv6[i].Ranges[ii].Cost) {
+					if !data.Ipv6Areas[i].Ranges[ii].Cost.Equal(state.Ipv6Areas[i].Ranges[ii].Cost) {
 						hasChanges = true
 					}
-					if !data.AreasIpv6[i].Ranges[ii].NoAdvertise.Equal(state.AreasIpv6[i].Ranges[ii].NoAdvertise) {
+					if !data.Ipv6Areas[i].Ranges[ii].NoAdvertise.Equal(state.Ipv6Areas[i].Ranges[ii].NoAdvertise) {
 						hasChanges = true
 					}
 				}

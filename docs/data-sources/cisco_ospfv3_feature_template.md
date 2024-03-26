@@ -28,102 +28,102 @@ data "sdwan_cisco_ospfv3_feature_template" "example" {
 
 ### Read-Only
 
-- `areas_ipv4` (Attributes List) Configure OSPF area (see [below for nested schema](#nestedatt--areas_ipv4))
-- `areas_ipv6` (Attributes List) Configure OSPF area (see [below for nested schema](#nestedatt--areas_ipv6))
-- `auto_cost_reference_bandwidth_ipv4` (Number) Set reference bandwidth method to assign OSPF cost
-- `auto_cost_reference_bandwidth_ipv4_variable` (String) Variable name
-- `auto_cost_reference_bandwidth_ipv6` (Number) Set reference bandwidth method to assign OSPF cost
-- `auto_cost_reference_bandwidth_ipv6_variable` (String) Variable name
-- `compatible_rfc1583_ipv4` (Boolean) Calculate summary route cost based on RFC 1583
-- `compatible_rfc1583_ipv4_variable` (String) Variable name
-- `compatible_rfc1583_ipv6` (Boolean) Calculate summary route cost based on RFC 1583
-- `compatible_rfc1583_ipv6_variable` (String) Variable name
-- `default_information_originate_always_ipv4` (Boolean) Always advertise default route
-- `default_information_originate_always_ipv4_variable` (String) Variable name
-- `default_information_originate_always_ipv6` (Boolean) Always advertise default route
-- `default_information_originate_always_ipv6_variable` (String) Variable name
-- `default_information_originate_ipv4` (Boolean) Distribute default external route into OSPF
-- `default_information_originate_ipv6` (Boolean) Distribute default external route into OSPF
-- `default_information_originate_metric_ipv4` (Number) Set metric used to generate default route <0..16777214>
-- `default_information_originate_metric_ipv4_variable` (String) Variable name
-- `default_information_originate_metric_ipv6` (Number) Set metric used to generate default route <0..16777214>
-- `default_information_originate_metric_ipv6_variable` (String) Variable name
-- `default_information_originate_metric_type_ipv4` (String) Set default route type
-- `default_information_originate_metric_type_ipv4_variable` (String) Variable name
-- `default_information_originate_metric_type_ipv6` (String) Set default route type
-- `default_information_originate_metric_type_ipv6_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
-- `distance_external_ipv4` (Number) Set distance for external routes
-- `distance_external_ipv4_variable` (String) Variable name
-- `distance_external_ipv6` (Number) Set distance for external routes
-- `distance_external_ipv6_variable` (String) Variable name
-- `distance_inter_area_ipv4` (Number) Set distance for inter-area routes
-- `distance_inter_area_ipv4_variable` (String) Variable name
-- `distance_inter_area_ipv6` (Number) Set distance for inter-area routes
-- `distance_inter_area_ipv6_variable` (String) Variable name
-- `distance_intra_area_ipv4` (Number) Set distance for intra-area routes
-- `distance_intra_area_ipv4_variable` (String) Variable name
-- `distance_intra_area_ipv6` (Number) Set distance for intra-area routes
-- `distance_intra_area_ipv6_variable` (String) Variable name
-- `distance_ipv4` (Number) Distance
-- `distance_ipv4_variable` (String) Variable name
-- `distance_ipv6` (Number) Distance
-- `distance_ipv6_variable` (String) Variable name
-- `filter_ipv4` (Boolean) Filter
-- `filter_ipv4_variable` (String) Variable name
-- `filter_ipv6` (Boolean) Filter
-- `filter_ipv6_variable` (String) Variable name
-- `max_metric_router_lsa_ipv4` (Attributes List) Advertise own router LSA with infinite distance (see [below for nested schema](#nestedatt--max_metric_router_lsa_ipv4))
-- `max_metric_router_lsa_ipv6` (Attributes List) Advertise own router LSA with infinite distance (see [below for nested schema](#nestedatt--max_metric_router_lsa_ipv6))
-- `policy_name_ipv4` (String) Policy Name
-- `policy_name_ipv4_variable` (String) Variable name
-- `policy_name_ipv6` (String) Name
-- `policy_name_ipv6_variable` (String) Variable name
-- `redistribute_ipv4` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--redistribute_ipv4))
-- `redistribute_ipv6` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--redistribute_ipv6))
-- `router_id_ipv4` (String) Set OSPF router ID to override system IP address
-- `router_id_ipv4_variable` (String) Variable name
-- `router_id_ipv6` (String) Set OSPF router ID to override system IP address
-- `router_id_ipv6_variable` (String) Variable name
+- `ipv4_areas` (Attributes List) Configure OSPF area (see [below for nested schema](#nestedatt--ipv4_areas))
+- `ipv4_auto_cost_reference_bandwidth` (Number) Set reference bandwidth method to assign OSPF cost
+- `ipv4_auto_cost_reference_bandwidth_variable` (String) Variable name
+- `ipv4_compatible_rfc1583` (Boolean) Calculate summary route cost based on RFC 1583
+- `ipv4_compatible_rfc1583_variable` (String) Variable name
+- `ipv4_default_information_originate` (Boolean) Distribute default external route into OSPF
+- `ipv4_default_information_originate_always` (Boolean) Always advertise default route
+- `ipv4_default_information_originate_always_variable` (String) Variable name
+- `ipv4_default_information_originate_metric` (Number) Set metric used to generate default route <0..16777214>
+- `ipv4_default_information_originate_metric_type` (String) Set default route type
+- `ipv4_default_information_originate_metric_type_variable` (String) Variable name
+- `ipv4_default_information_originate_metric_variable` (String) Variable name
+- `ipv4_distance` (Number) Distance
+- `ipv4_distance_external` (Number) Set distance for external routes
+- `ipv4_distance_external_variable` (String) Variable name
+- `ipv4_distance_inter_area` (Number) Set distance for inter-area routes
+- `ipv4_distance_inter_area_variable` (String) Variable name
+- `ipv4_distance_intra_area` (Number) Set distance for intra-area routes
+- `ipv4_distance_intra_area_variable` (String) Variable name
+- `ipv4_distance_variable` (String) Variable name
+- `ipv4_filter` (Boolean) Filter
+- `ipv4_filter_variable` (String) Variable name
+- `ipv4_max_metric_router_lsas` (Attributes List) Advertise own router LSA with infinite distance (see [below for nested schema](#nestedatt--ipv4_max_metric_router_lsas))
+- `ipv4_policy_name` (String) Policy Name
+- `ipv4_policy_name_variable` (String) Variable name
+- `ipv4_redistributes` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--ipv4_redistributes))
+- `ipv4_router_id` (String) Set OSPF router ID to override system IP address
+- `ipv4_router_id_variable` (String) Variable name
+- `ipv4_timers_spf_delay` (Number) Set delay from first change received until performing SPF calculation
+- `ipv4_timers_spf_delay_variable` (String) Variable name
+- `ipv4_timers_spf_initial_hold` (Number) Set initial hold time between consecutive SPF calculations
+- `ipv4_timers_spf_initial_hold_variable` (String) Variable name
+- `ipv4_timers_spf_max_hold` (Number) Set maximum hold time between consecutive SPF calculations
+- `ipv4_timers_spf_max_hold_variable` (String) Variable name
+- `ipv6_areas` (Attributes List) Configure OSPF area (see [below for nested schema](#nestedatt--ipv6_areas))
+- `ipv6_auto_cost_reference_bandwidth` (Number) Set reference bandwidth method to assign OSPF cost
+- `ipv6_auto_cost_reference_bandwidth_variable` (String) Variable name
+- `ipv6_compatible_rfc1583` (Boolean) Calculate summary route cost based on RFC 1583
+- `ipv6_compatible_rfc1583_variable` (String) Variable name
+- `ipv6_default_information_originate` (Boolean) Distribute default external route into OSPF
+- `ipv6_default_information_originate_always` (Boolean) Always advertise default route
+- `ipv6_default_information_originate_always_variable` (String) Variable name
+- `ipv6_default_information_originate_metric` (Number) Set metric used to generate default route <0..16777214>
+- `ipv6_default_information_originate_metric_type` (String) Set default route type
+- `ipv6_default_information_originate_metric_type_variable` (String) Variable name
+- `ipv6_default_information_originate_metric_variable` (String) Variable name
+- `ipv6_distance` (Number) Distance
+- `ipv6_distance_external` (Number) Set distance for external routes
+- `ipv6_distance_external_variable` (String) Variable name
+- `ipv6_distance_inter_area` (Number) Set distance for inter-area routes
+- `ipv6_distance_inter_area_variable` (String) Variable name
+- `ipv6_distance_intra_area` (Number) Set distance for intra-area routes
+- `ipv6_distance_intra_area_variable` (String) Variable name
+- `ipv6_distance_variable` (String) Variable name
+- `ipv6_filter` (Boolean) Filter
+- `ipv6_filter_variable` (String) Variable name
+- `ipv6_max_metric_router_lsas` (Attributes List) Advertise own router LSA with infinite distance (see [below for nested schema](#nestedatt--ipv6_max_metric_router_lsas))
+- `ipv6_policy_name` (String) Name
+- `ipv6_policy_name_variable` (String) Variable name
+- `ipv6_redistributes` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--ipv6_redistributes))
+- `ipv6_router_id` (String) Set OSPF router ID to override system IP address
+- `ipv6_router_id_variable` (String) Variable name
+- `ipv6_timers_spf_delay` (Number) Set delay from first change received until performing SPF calculation
+- `ipv6_timers_spf_delay_variable` (String) Variable name
+- `ipv6_timers_spf_initial_hold` (Number) Set initial hold time between consecutive SPF calculations
+- `ipv6_timers_spf_initial_hold_variable` (String) Variable name
+- `ipv6_timers_spf_max_hold` (Number) Set maximum hold time between consecutive SPF calculations
+- `ipv6_timers_spf_max_hold_variable` (String) Variable name
 - `template_type` (String) The template type
-- `timers_spf_delay_ipv4` (Number) Set delay from first change received until performing SPF calculation
-- `timers_spf_delay_ipv4_variable` (String) Variable name
-- `timers_spf_delay_ipv6` (Number) Set delay from first change received until performing SPF calculation
-- `timers_spf_delay_ipv6_variable` (String) Variable name
-- `timers_spf_initial_hold_ipv4` (Number) Set initial hold time between consecutive SPF calculations
-- `timers_spf_initial_hold_ipv4_variable` (String) Variable name
-- `timers_spf_initial_hold_ipv6` (Number) Set initial hold time between consecutive SPF calculations
-- `timers_spf_initial_hold_ipv6_variable` (String) Variable name
-- `timers_spf_max_hold_ipv4` (Number) Set maximum hold time between consecutive SPF calculations
-- `timers_spf_max_hold_ipv4_variable` (String) Variable name
-- `timers_spf_max_hold_ipv6` (Number) Set maximum hold time between consecutive SPF calculations
-- `timers_spf_max_hold_ipv6_variable` (String) Variable name
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--areas_ipv4"></a>
-### Nested Schema for `areas_ipv4`
+<a id="nestedatt--ipv4_areas"></a>
+### Nested Schema for `ipv4_areas`
 
 Read-Only:
 
 - `area_number` (Number) Set OSPF area number
 - `area_number_variable` (String) Variable name
-- `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--areas_ipv4--interfaces))
+- `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--ipv4_areas--interfaces))
 - `normal` (Boolean) Area Type Normal
 - `normal_variable` (String) Variable name
 - `nssa` (Boolean) NSSA area
 - `nssa_no_summary` (Boolean) Do not inject interarea routes into NSSA
 - `nssa_no_summary_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
-- `ranges` (Attributes List) Summarize OSPF routes at an area boundary (see [below for nested schema](#nestedatt--areas_ipv4--ranges))
+- `ranges` (Attributes List) Summarize OSPF routes at an area boundary (see [below for nested schema](#nestedatt--ipv4_areas--ranges))
 - `stub` (Boolean) Stub area
 - `stub_no_summary` (Boolean) Do not inject interarea routes into stub
 - `stub_no_summary_variable` (String) Variable name
 - `translate` (String) Always Translate LSAs on this ABR
 - `translate_variable` (String) Variable name
 
-<a id="nestedatt--areas_ipv4--interfaces"></a>
-### Nested Schema for `areas_ipv4.interfaces`
+<a id="nestedatt--ipv4_areas--interfaces"></a>
+### Nested Schema for `ipv4_areas.interfaces`
 
 Read-Only:
 
@@ -150,8 +150,8 @@ Read-Only:
 - `retransmit_interval_variable` (String) Variable name
 
 
-<a id="nestedatt--areas_ipv4--ranges"></a>
-### Nested Schema for `areas_ipv4.ranges`
+<a id="nestedatt--ipv4_areas--ranges"></a>
+### Nested Schema for `ipv4_areas.ranges`
 
 Read-Only:
 
@@ -165,72 +165,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--areas_ipv6"></a>
-### Nested Schema for `areas_ipv6`
-
-Read-Only:
-
-- `area_number` (Number) Set OSPF area number
-- `area_number_variable` (String) Variable name
-- `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--areas_ipv6--interfaces))
-- `normal` (Boolean) Area Type Normal
-- `normal_variable` (String) Variable name
-- `nssa` (Boolean) NSSA area
-- `nssa_no_summary` (Boolean) Do not inject interarea routes into NSSA
-- `nssa_no_summary_variable` (String) Variable name
-- `optional` (Boolean) Indicates if list item is considered optional.
-- `ranges` (Attributes List) Summarize OSPF routes at an area boundary (see [below for nested schema](#nestedatt--areas_ipv6--ranges))
-- `stub` (Boolean) Stub area
-- `stub_no_summary` (Boolean) Do not inject interarea routes into stub
-- `stub_no_summary_variable` (String) Variable name
-- `translate` (String) Always translate LSAs on this ABR
-- `translate_variable` (String) Variable name
-
-<a id="nestedatt--areas_ipv6--interfaces"></a>
-### Nested Schema for `areas_ipv6.interfaces`
-
-Read-Only:
-
-- `authentication_key` (String) Set OSPF interface authentication key
-- `authentication_key_variable` (String) Variable name
-- `authentication_type` (String) Set OSPF interface authentication type
-- `authentication_type_variable` (String) Variable name
-- `cost` (Number) Set cost of OSPF interface
-- `cost_variable` (String) Variable name
-- `dead_interval` (Number) Set interval after which neighbor is declared to be down
-- `dead_interval_variable` (String) Variable name
-- `hello_interval` (Number) Set interval between OSPF hello packets
-- `hello_interval_variable` (String) Variable name
-- `ipsec_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
-- `ipsec_spi_variable` (String) Variable name
-- `name` (String) Set interface name
-- `name_variable` (String) Variable name
-- `network` (String) Set the OSPF network type
-- `network_variable` (String) Variable name
-- `optional` (Boolean) Indicates if list item is considered optional.
-- `passive_interface` (Boolean) Set the interface to advertise its address, but not to actively run OSPF
-- `passive_interface_variable` (String) Variable name
-- `retransmit_interval` (Number) Set time between retransmitting LSAs
-- `retransmit_interval_variable` (String) Variable name
-
-
-<a id="nestedatt--areas_ipv6--ranges"></a>
-### Nested Schema for `areas_ipv6.ranges`
-
-Read-Only:
-
-- `address` (String) Set Matching Prefix
-- `address_variable` (String) Variable name
-- `cost` (Number) Set cost for this range
-- `cost_variable` (String) Variable name
-- `no_advertise` (Boolean) Do not advertise this range
-- `no_advertise_variable` (String) Variable name
-- `optional` (Boolean) Indicates if list item is considered optional.
-
-
-
-<a id="nestedatt--max_metric_router_lsa_ipv4"></a>
-### Nested Schema for `max_metric_router_lsa_ipv4`
+<a id="nestedatt--ipv4_max_metric_router_lsas"></a>
+### Nested Schema for `ipv4_max_metric_router_lsas`
 
 Read-Only:
 
@@ -240,19 +176,8 @@ Read-Only:
 - `time_variable` (String) Variable name
 
 
-<a id="nestedatt--max_metric_router_lsa_ipv6"></a>
-### Nested Schema for `max_metric_router_lsa_ipv6`
-
-Read-Only:
-
-- `ad_type` (String) Set the router LSA advertisement type
-- `optional` (Boolean) Indicates if list item is considered optional.
-- `time` (Number) Set how long to advertise maximum metric after router starts up
-- `time_variable` (String) Variable name
-
-
-<a id="nestedatt--redistribute_ipv4"></a>
-### Nested Schema for `redistribute_ipv4`
+<a id="nestedatt--ipv4_redistributes"></a>
+### Nested Schema for `ipv4_redistributes`
 
 Read-Only:
 
@@ -265,8 +190,83 @@ Read-Only:
 - `route_policy_variable` (String) Variable name
 
 
-<a id="nestedatt--redistribute_ipv6"></a>
-### Nested Schema for `redistribute_ipv6`
+<a id="nestedatt--ipv6_areas"></a>
+### Nested Schema for `ipv6_areas`
+
+Read-Only:
+
+- `area_number` (Number) Set OSPF area number
+- `area_number_variable` (String) Variable name
+- `interfaces` (Attributes List) Set OSPF interface parameters (see [below for nested schema](#nestedatt--ipv6_areas--interfaces))
+- `normal` (Boolean) Area Type Normal
+- `normal_variable` (String) Variable name
+- `nssa` (Boolean) NSSA area
+- `nssa_no_summary` (Boolean) Do not inject interarea routes into NSSA
+- `nssa_no_summary_variable` (String) Variable name
+- `optional` (Boolean) Indicates if list item is considered optional.
+- `ranges` (Attributes List) Summarize OSPF routes at an area boundary (see [below for nested schema](#nestedatt--ipv6_areas--ranges))
+- `stub` (Boolean) Stub area
+- `stub_no_summary` (Boolean) Do not inject interarea routes into stub
+- `stub_no_summary_variable` (String) Variable name
+- `translate` (String) Always translate LSAs on this ABR
+- `translate_variable` (String) Variable name
+
+<a id="nestedatt--ipv6_areas--interfaces"></a>
+### Nested Schema for `ipv6_areas.interfaces`
+
+Read-Only:
+
+- `authentication_key` (String) Set OSPF interface authentication key
+- `authentication_key_variable` (String) Variable name
+- `authentication_type` (String) Set OSPF interface authentication type
+- `authentication_type_variable` (String) Variable name
+- `cost` (Number) Set cost of OSPF interface
+- `cost_variable` (String) Variable name
+- `dead_interval` (Number) Set interval after which neighbor is declared to be down
+- `dead_interval_variable` (String) Variable name
+- `hello_interval` (Number) Set interval between OSPF hello packets
+- `hello_interval_variable` (String) Variable name
+- `ipsec_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
+- `ipsec_spi_variable` (String) Variable name
+- `name` (String) Set interface name
+- `name_variable` (String) Variable name
+- `network` (String) Set the OSPF network type
+- `network_variable` (String) Variable name
+- `optional` (Boolean) Indicates if list item is considered optional.
+- `passive_interface` (Boolean) Set the interface to advertise its address, but not to actively run OSPF
+- `passive_interface_variable` (String) Variable name
+- `retransmit_interval` (Number) Set time between retransmitting LSAs
+- `retransmit_interval_variable` (String) Variable name
+
+
+<a id="nestedatt--ipv6_areas--ranges"></a>
+### Nested Schema for `ipv6_areas.ranges`
+
+Read-Only:
+
+- `address` (String) Set Matching Prefix
+- `address_variable` (String) Variable name
+- `cost` (Number) Set cost for this range
+- `cost_variable` (String) Variable name
+- `no_advertise` (Boolean) Do not advertise this range
+- `no_advertise_variable` (String) Variable name
+- `optional` (Boolean) Indicates if list item is considered optional.
+
+
+
+<a id="nestedatt--ipv6_max_metric_router_lsas"></a>
+### Nested Schema for `ipv6_max_metric_router_lsas`
+
+Read-Only:
+
+- `ad_type` (String) Set the router LSA advertisement type
+- `optional` (Boolean) Indicates if list item is considered optional.
+- `time` (Number) Set how long to advertise maximum metric after router starts up
+- `time_variable` (String) Variable name
+
+
+<a id="nestedatt--ipv6_redistributes"></a>
+### Nested Schema for `ipv6_redistributes`
 
 Read-Only:
 
