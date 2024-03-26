@@ -4,10 +4,10 @@ model: cellular-cedge-controller
 minimum_version: 15.0.0
 attributes:
   - model_name: id
-    tf_name: cellular_interface_name
+    tf_name: cellular_interface_id
     example: 1
   - model_name: data-profile-list
-    tf_name: data_profile_lists
+    tf_name: data_profiles
     attributes:
     - model_name: slot
       tf_name: slot_number
@@ -26,5 +26,5 @@ attributes:
     tf_name: sim_failover_timeout
     example: 3
   - model_name: auto-sim
-    tf_name: firm_auto_sim
+    tf_name: firmware_auto_sim
     example: false

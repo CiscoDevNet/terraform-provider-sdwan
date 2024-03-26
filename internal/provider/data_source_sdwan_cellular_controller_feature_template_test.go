@@ -33,14 +33,14 @@ func TestAccDataSourceSdwanCellularControllerFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanCellularControllerFeatureTemplateConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "cellular_interface_name", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "data_profile_lists.0.slot_number", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "data_profile_lists.0.data_profile", "8"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "data_profile_lists.0.attach_profile", "8"),
+					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "cellular_interface_id", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "data_profiles.0.slot_number", "1"),
+					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "data_profiles.0.data_profile", "8"),
+					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "data_profiles.0.attach_profile", "8"),
 					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "primary_sim_slot", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "sim_failover_retries", "160"),
 					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "sim_failover_timeout", "3"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "firm_auto_sim", "false"),
+					resource.TestCheckResourceAttr("data.sdwan_cellular_controller_feature_template.test", "firmware_auto_sim", "false"),
 				),
 			},
 		},
@@ -53,8 +53,8 @@ resource "sdwan_cellular_controller_feature_template" "test" {
   name = "TF_TEST_MIN"
   description = "Terraform integration test"
   device_types = ["vedge-C8000V"]
-  cellular_interface_name = "1"
-  data_profile_lists = [{
+  cellular_interface_id = "1"
+  data_profiles = [{
     slot_number = 1
     data_profile = 8
     attach_profile = 8
@@ -62,7 +62,7 @@ resource "sdwan_cellular_controller_feature_template" "test" {
   primary_sim_slot = 100
   sim_failover_retries = 160
   sim_failover_timeout = 3
-  firm_auto_sim = false
+  firmware_auto_sim = false
 }
 
 data "sdwan_cellular_controller_feature_template" "test" {

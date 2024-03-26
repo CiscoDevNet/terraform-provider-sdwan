@@ -16,11 +16,11 @@ This resource can manage a Cellular Controller feature template.
 
 ```terraform
 resource "sdwan_cellular_controller_feature_template" "example" {
-  name                    = "Example"
-  description             = "My Example"
-  device_types            = ["vedge-C8000V"]
-  cellular_interface_name = "1"
-  data_profile_lists = [
+  name                  = "Example"
+  description           = "My Example"
+  device_types          = ["vedge-C8000V"]
+  cellular_interface_id = "1"
+  data_profiles = [
     {
       slot_number    = 1
       data_profile   = 8
@@ -30,7 +30,7 @@ resource "sdwan_cellular_controller_feature_template" "example" {
   primary_sim_slot     = 100
   sim_failover_retries = 160
   sim_failover_timeout = 3
-  firm_auto_sim        = false
+  firmware_auto_sim    = false
 }
 ```
 
@@ -46,12 +46,12 @@ resource "sdwan_cellular_controller_feature_template" "example" {
 
 ### Optional
 
-- `cellular_interface_name` (String) Cellular interface name
-- `cellular_interface_name_variable` (String) Variable name
-- `data_profile_lists` (Attributes List) Data Profile List (see [below for nested schema](#nestedatt--data_profile_lists))
-- `firm_auto_sim` (Boolean) Enable/Disable Firmware Auto Sim
+- `cellular_interface_id` (String) Cellular interface name
+- `cellular_interface_id_variable` (String) Variable name
+- `data_profiles` (Attributes List) Data Profile List (see [below for nested schema](#nestedatt--data_profiles))
+- `firmware_auto_sim` (Boolean) Enable/Disable Firmware Auto Sim
   - Default value: `true`
-- `firm_auto_sim_variable` (String) Variable name
+- `firmware_auto_sim_variable` (String) Variable name
 - `primary_sim_slot` (Number) Set primary SIM slot
   - Range: `0`-`255`
 - `primary_sim_slot_variable` (String) Variable name
@@ -68,8 +68,8 @@ resource "sdwan_cellular_controller_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--data_profile_lists"></a>
-### Nested Schema for `data_profile_lists`
+<a id="nestedatt--data_profiles"></a>
+### Nested Schema for `data_profiles`
 
 Optional:
 

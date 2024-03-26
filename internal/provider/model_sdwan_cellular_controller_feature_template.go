@@ -30,26 +30,26 @@ import (
 )
 
 type CellularController struct {
-	Id                            types.String                         `tfsdk:"id"`
-	Version                       types.Int64                          `tfsdk:"version"`
-	TemplateType                  types.String                         `tfsdk:"template_type"`
-	Name                          types.String                         `tfsdk:"name"`
-	Description                   types.String                         `tfsdk:"description"`
-	DeviceTypes                   types.Set                            `tfsdk:"device_types"`
-	CellularInterfaceName         types.String                         `tfsdk:"cellular_interface_name"`
-	CellularInterfaceNameVariable types.String                         `tfsdk:"cellular_interface_name_variable"`
-	DataProfileLists              []CellularControllerDataProfileLists `tfsdk:"data_profile_lists"`
-	PrimarySimSlot                types.Int64                          `tfsdk:"primary_sim_slot"`
-	PrimarySimSlotVariable        types.String                         `tfsdk:"primary_sim_slot_variable"`
-	SimFailoverRetries            types.Int64                          `tfsdk:"sim_failover_retries"`
-	SimFailoverRetriesVariable    types.String                         `tfsdk:"sim_failover_retries_variable"`
-	SimFailoverTimeout            types.Int64                          `tfsdk:"sim_failover_timeout"`
-	SimFailoverTimeoutVariable    types.String                         `tfsdk:"sim_failover_timeout_variable"`
-	FirmAutoSim                   types.Bool                           `tfsdk:"firm_auto_sim"`
-	FirmAutoSimVariable           types.String                         `tfsdk:"firm_auto_sim_variable"`
+	Id                          types.String                     `tfsdk:"id"`
+	Version                     types.Int64                      `tfsdk:"version"`
+	TemplateType                types.String                     `tfsdk:"template_type"`
+	Name                        types.String                     `tfsdk:"name"`
+	Description                 types.String                     `tfsdk:"description"`
+	DeviceTypes                 types.Set                        `tfsdk:"device_types"`
+	CellularInterfaceId         types.String                     `tfsdk:"cellular_interface_id"`
+	CellularInterfaceIdVariable types.String                     `tfsdk:"cellular_interface_id_variable"`
+	DataProfiles                []CellularControllerDataProfiles `tfsdk:"data_profiles"`
+	PrimarySimSlot              types.Int64                      `tfsdk:"primary_sim_slot"`
+	PrimarySimSlotVariable      types.String                     `tfsdk:"primary_sim_slot_variable"`
+	SimFailoverRetries          types.Int64                      `tfsdk:"sim_failover_retries"`
+	SimFailoverRetriesVariable  types.String                     `tfsdk:"sim_failover_retries_variable"`
+	SimFailoverTimeout          types.Int64                      `tfsdk:"sim_failover_timeout"`
+	SimFailoverTimeoutVariable  types.String                     `tfsdk:"sim_failover_timeout_variable"`
+	FirmwareAutoSim             types.Bool                       `tfsdk:"firmware_auto_sim"`
+	FirmwareAutoSimVariable     types.String                     `tfsdk:"firmware_auto_sim_variable"`
 }
 
-type CellularControllerDataProfileLists struct {
+type CellularControllerDataProfiles struct {
 	Optional              types.Bool   `tfsdk:"optional"`
 	SlotNumber            types.Int64  `tfsdk:"slot_number"`
 	SlotNumberVariable    types.String `tfsdk:"slot_number_variable"`
@@ -78,17 +78,17 @@ func (data CellularController) toBody(ctx context.Context) string {
 
 	path := "templateDefinition."
 
-	if !data.CellularInterfaceNameVariable.IsNull() {
+	if !data.CellularInterfaceIdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"id."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"id."+"vipVariableName", data.CellularInterfaceNameVariable.ValueString())
-	} else if data.CellularInterfaceName.IsNull() {
+		body, _ = sjson.Set(body, path+"id."+"vipVariableName", data.CellularInterfaceIdVariable.ValueString())
+	} else if data.CellularInterfaceId.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"id."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"id."+"vipValue", data.CellularInterfaceName.ValueString())
+		body, _ = sjson.Set(body, path+"id."+"vipValue", data.CellularInterfaceId.ValueString())
 	}
-	if len(data.DataProfileLists) > 0 {
+	if len(data.DataProfiles) > 0 {
 		body, _ = sjson.Set(body, path+"lte.sim.data-profile-list."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"lte.sim.data-profile-list."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"lte.sim.data-profile-list."+"vipPrimaryKey", []string{"slot"})
@@ -99,7 +99,7 @@ func (data CellularController) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"lte.sim.data-profile-list."+"vipPrimaryKey", []string{"slot"})
 		body, _ = sjson.Set(body, path+"lte.sim.data-profile-list."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.DataProfileLists {
+	for _, item := range data.DataProfiles {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "slot")
@@ -184,17 +184,17 @@ func (data CellularController) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"lte.failovertimer."+"vipValue", data.SimFailoverTimeout.ValueInt64())
 	}
 
-	if !data.FirmAutoSimVariable.IsNull() {
+	if !data.FirmwareAutoSimVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipVariableName", data.FirmAutoSimVariable.ValueString())
-	} else if data.FirmAutoSim.IsNull() {
+		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipVariableName", data.FirmwareAutoSimVariable.ValueString())
+	} else if data.FirmwareAutoSim.IsNull() {
 		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipValue", strconv.FormatBool(data.FirmAutoSim.ValueBool()))
+		body, _ = sjson.Set(body, path+"lte.firmware.auto-sim."+"vipValue", strconv.FormatBool(data.FirmwareAutoSim.ValueBool()))
 	}
 	return body
 }
@@ -224,27 +224,27 @@ func (data *CellularController) fromBody(ctx context.Context, res gjson.Result) 
 	path := "templateDefinition."
 	if value := res.Get(path + "id.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.CellularInterfaceName = types.StringNull()
+			data.CellularInterfaceId = types.StringNull()
 
 			v := res.Get(path + "id.vipVariableName")
-			data.CellularInterfaceNameVariable = types.StringValue(v.String())
+			data.CellularInterfaceIdVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.CellularInterfaceName = types.StringNull()
-			data.CellularInterfaceNameVariable = types.StringNull()
+			data.CellularInterfaceId = types.StringNull()
+			data.CellularInterfaceIdVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "id.vipValue")
-			data.CellularInterfaceName = types.StringValue(v.String())
-			data.CellularInterfaceNameVariable = types.StringNull()
+			data.CellularInterfaceId = types.StringValue(v.String())
+			data.CellularInterfaceIdVariable = types.StringNull()
 		}
 	} else {
-		data.CellularInterfaceName = types.StringNull()
-		data.CellularInterfaceNameVariable = types.StringNull()
+		data.CellularInterfaceId = types.StringNull()
+		data.CellularInterfaceIdVariable = types.StringNull()
 	}
 	if value := res.Get(path + "lte.sim.data-profile-list.vipValue"); len(value.Array()) > 0 {
-		data.DataProfileLists = make([]CellularControllerDataProfileLists, 0)
+		data.DataProfiles = make([]CellularControllerDataProfiles, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CellularControllerDataProfileLists{}
+			item := CellularControllerDataProfiles{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -307,7 +307,7 @@ func (data *CellularController) fromBody(ctx context.Context, res gjson.Result) 
 				item.AttachProfile = types.Int64Null()
 				item.AttachProfileVariable = types.StringNull()
 			}
-			data.DataProfileLists = append(data.DataProfileLists, item)
+			data.DataProfiles = append(data.DataProfiles, item)
 			return true
 		})
 	}
@@ -370,41 +370,41 @@ func (data *CellularController) fromBody(ctx context.Context, res gjson.Result) 
 	}
 	if value := res.Get(path + "lte.firmware.auto-sim.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.FirmAutoSim = types.BoolNull()
+			data.FirmwareAutoSim = types.BoolNull()
 
 			v := res.Get(path + "lte.firmware.auto-sim.vipVariableName")
-			data.FirmAutoSimVariable = types.StringValue(v.String())
+			data.FirmwareAutoSimVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.FirmAutoSim = types.BoolNull()
-			data.FirmAutoSimVariable = types.StringNull()
+			data.FirmwareAutoSim = types.BoolNull()
+			data.FirmwareAutoSimVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "lte.firmware.auto-sim.vipValue")
-			data.FirmAutoSim = types.BoolValue(v.Bool())
-			data.FirmAutoSimVariable = types.StringNull()
+			data.FirmwareAutoSim = types.BoolValue(v.Bool())
+			data.FirmwareAutoSimVariable = types.StringNull()
 		}
 	} else {
-		data.FirmAutoSim = types.BoolNull()
-		data.FirmAutoSimVariable = types.StringNull()
+		data.FirmwareAutoSim = types.BoolNull()
+		data.FirmwareAutoSimVariable = types.StringNull()
 	}
 }
 
 func (data *CellularController) hasChanges(ctx context.Context, state *CellularController) bool {
 	hasChanges := false
-	if !data.CellularInterfaceName.Equal(state.CellularInterfaceName) {
+	if !data.CellularInterfaceId.Equal(state.CellularInterfaceId) {
 		hasChanges = true
 	}
-	if len(data.DataProfileLists) != len(state.DataProfileLists) {
+	if len(data.DataProfiles) != len(state.DataProfiles) {
 		hasChanges = true
 	} else {
-		for i := range data.DataProfileLists {
-			if !data.DataProfileLists[i].SlotNumber.Equal(state.DataProfileLists[i].SlotNumber) {
+		for i := range data.DataProfiles {
+			if !data.DataProfiles[i].SlotNumber.Equal(state.DataProfiles[i].SlotNumber) {
 				hasChanges = true
 			}
-			if !data.DataProfileLists[i].DataProfile.Equal(state.DataProfileLists[i].DataProfile) {
+			if !data.DataProfiles[i].DataProfile.Equal(state.DataProfiles[i].DataProfile) {
 				hasChanges = true
 			}
-			if !data.DataProfileLists[i].AttachProfile.Equal(state.DataProfileLists[i].AttachProfile) {
+			if !data.DataProfiles[i].AttachProfile.Equal(state.DataProfiles[i].AttachProfile) {
 				hasChanges = true
 			}
 		}
@@ -418,7 +418,7 @@ func (data *CellularController) hasChanges(ctx context.Context, state *CellularC
 	if !data.SimFailoverTimeout.Equal(state.SimFailoverTimeout) {
 		hasChanges = true
 	}
-	if !data.FirmAutoSim.Equal(state.FirmAutoSim) {
+	if !data.FirmwareAutoSim.Equal(state.FirmwareAutoSim) {
 		hasChanges = true
 	}
 	return hasChanges

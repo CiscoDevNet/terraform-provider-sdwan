@@ -86,15 +86,15 @@ func (d *CellularControllerFeatureTemplateDataSource) Schema(ctx context.Context
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"cellular_interface_name": schema.StringAttribute{
+			"cellular_interface_id": schema.StringAttribute{
 				MarkdownDescription: "Cellular interface name",
 				Computed:            true,
 			},
-			"cellular_interface_name_variable": schema.StringAttribute{
+			"cellular_interface_id_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"data_profile_lists": schema.ListNestedAttribute{
+			"data_profiles": schema.ListNestedAttribute{
 				MarkdownDescription: "Data Profile List",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -154,11 +154,11 @@ func (d *CellularControllerFeatureTemplateDataSource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"firm_auto_sim": schema.BoolAttribute{
+			"firmware_auto_sim": schema.BoolAttribute{
 				MarkdownDescription: "Enable/Disable Firmware Auto Sim",
 				Computed:            true,
 			},
-			"firm_auto_sim_variable": schema.StringAttribute{
+			"firmware_auto_sim_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

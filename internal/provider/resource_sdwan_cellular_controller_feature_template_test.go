@@ -33,20 +33,20 @@ func TestAccSdwanCellularControllerFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanCellularControllerFeatureTemplateConfig_minimum(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "cellular_interface_name", "1"),
+					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "cellular_interface_id", "1"),
 				),
 			},
 			{
 				Config: testAccSdwanCellularControllerFeatureTemplateConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "cellular_interface_name", "1"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profile_lists.0.slot_number", "1"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profile_lists.0.data_profile", "8"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profile_lists.0.attach_profile", "8"),
+					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "cellular_interface_id", "1"),
+					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.slot_number", "1"),
+					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.data_profile", "8"),
+					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.attach_profile", "8"),
 					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "primary_sim_slot", "100"),
 					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "sim_failover_retries", "160"),
 					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "sim_failover_timeout", "3"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "firm_auto_sim", "false"),
+					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "firmware_auto_sim", "false"),
 				),
 			},
 		},
@@ -59,7 +59,7 @@ func testAccSdwanCellularControllerFeatureTemplateConfig_minimum() string {
 		name = "TF_TEST_MIN"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		cellular_interface_name = "1"
+		cellular_interface_id = "1"
 	}
 	`
 }
@@ -70,8 +70,8 @@ func testAccSdwanCellularControllerFeatureTemplateConfig_all() string {
 		name = "TF_TEST_ALL"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		cellular_interface_name = "1"
-		data_profile_lists = [{
+		cellular_interface_id = "1"
+		data_profiles = [{
 			slot_number = 1
 			data_profile = 8
 			attach_profile = 8
@@ -79,7 +79,7 @@ func testAccSdwanCellularControllerFeatureTemplateConfig_all() string {
 		primary_sim_slot = 100
 		sim_failover_retries = 160
 		sim_failover_timeout = 3
-		firm_auto_sim = false
+		firmware_auto_sim = false
 	}
 	`
 }

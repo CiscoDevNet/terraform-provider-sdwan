@@ -93,18 +93,18 @@ func (r *CellularControllerFeatureTemplateResource) Schema(ctx context.Context, 
 				ElementType:         types.StringType,
 				Required:            true,
 			},
-			"cellular_interface_name": schema.StringAttribute{
+			"cellular_interface_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Cellular interface name").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 5),
 				},
 			},
-			"cellular_interface_name_variable": schema.StringAttribute{
+			"cellular_interface_id_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"data_profile_lists": schema.ListNestedAttribute{
+			"data_profiles": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Data Profile List").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -182,11 +182,11 @@ func (r *CellularControllerFeatureTemplateResource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"firm_auto_sim": schema.BoolAttribute{
+			"firmware_auto_sim": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable/Disable Firmware Auto Sim").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"firm_auto_sim_variable": schema.StringAttribute{
+			"firmware_auto_sim_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

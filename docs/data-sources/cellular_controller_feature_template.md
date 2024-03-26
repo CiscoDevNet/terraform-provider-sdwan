@@ -28,13 +28,13 @@ data "sdwan_cellular_controller_feature_template" "example" {
 
 ### Read-Only
 
-- `cellular_interface_name` (String) Cellular interface name
-- `cellular_interface_name_variable` (String) Variable name
-- `data_profile_lists` (Attributes List) Data Profile List (see [below for nested schema](#nestedatt--data_profile_lists))
+- `cellular_interface_id` (String) Cellular interface name
+- `cellular_interface_id_variable` (String) Variable name
+- `data_profiles` (Attributes List) Data Profile List (see [below for nested schema](#nestedatt--data_profiles))
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
-- `firm_auto_sim` (Boolean) Enable/Disable Firmware Auto Sim
-- `firm_auto_sim_variable` (String) Variable name
+- `firmware_auto_sim` (Boolean) Enable/Disable Firmware Auto Sim
+- `firmware_auto_sim_variable` (String) Variable name
 - `primary_sim_slot` (Number) Set primary SIM slot
 - `primary_sim_slot_variable` (String) Variable name
 - `sim_failover_retries` (Number) Set SIM failover retries
@@ -44,8 +44,8 @@ data "sdwan_cellular_controller_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--data_profile_lists"></a>
-### Nested Schema for `data_profile_lists`
+<a id="nestedatt--data_profiles"></a>
+### Nested Schema for `data_profiles`
 
 Read-Only:
 
