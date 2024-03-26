@@ -22,6 +22,7 @@ description: |-
 - Add `sdwan_cisco_ospfv3_feature_template` resource and data source
 - Add `sdwan_security_app_hosting_feature_template` resource and data source
 - Add `sdwan_cellular_cedge_profile_feature_template` resource and data source
+- Add `sdwan_vpn_interface_cellular_feature_template` resource and data source
 - Add `sdwan_vpn_interface_dsl_pppoa_feature_template` resource and data source
 - Add `sdwan_vpn_interface_dsl_pppoe_feature_template` resource and data source
 - Add `sdwan_vpn_interface_ethernet_pppoe_feature_template` resource and data source
