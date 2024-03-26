@@ -19,12 +19,12 @@ resource "sdwan_cedge_igmp_feature_template" "example" {
   name         = "Example"
   description  = "My Example"
   device_types = ["vedge-C8000V"]
-  interface = [
+  interfaces = [
     {
-      name = "example"
-      join_group = [
+      name = "Ethernet0"
+      join_groups = [
         {
-          group_address = "1.2.3.4"
+          group_address = "235.1.1.1"
           source        = "1.2.3.4"
         }
       ]
@@ -45,7 +45,7 @@ resource "sdwan_cedge_igmp_feature_template" "example" {
 
 ### Optional
 
-- `interface` (Attributes List) Set IGMP interface parameters (see [below for nested schema](#nestedatt--interface))
+- `interfaces` (Attributes List) Set IGMP interface parameters (see [below for nested schema](#nestedatt--interfaces))
 
 ### Read-Only
 
@@ -53,18 +53,18 @@ resource "sdwan_cedge_igmp_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--interface"></a>
-### Nested Schema for `interface`
+<a id="nestedatt--interfaces"></a>
+### Nested Schema for `interfaces`
 
 Optional:
 
-- `join_group` (Attributes List) Configure static joins (see [below for nested schema](#nestedatt--interface--join_group))
+- `join_groups` (Attributes List) Configure static joins (see [below for nested schema](#nestedatt--interfaces--join_groups))
 - `name` (String) Set interface name
 - `name_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 
-<a id="nestedatt--interface--join_group"></a>
-### Nested Schema for `interface.join_group`
+<a id="nestedatt--interfaces--join_groups"></a>
+### Nested Schema for `interfaces.join_groups`
 
 Optional:
 

@@ -3,12 +3,14 @@ name: cEdge IGMP
 minimum_version: 15.0.0
 attributes:
   - model_name: interface
+    tf_name: interfaces
     attributes:
     - model_name: name
-      example: example
+      example: Ethernet0
     - model_name: join-group
+      tf_name: join_groups
       attributes:
       - model_name: group-address
-        example: 1.2.3.4
+        example: 235.1.1.1
       - model_name: source
         example: 1.2.3.4

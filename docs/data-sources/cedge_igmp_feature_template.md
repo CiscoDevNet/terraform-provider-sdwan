@@ -30,22 +30,22 @@ data "sdwan_cedge_igmp_feature_template" "example" {
 
 - `description` (String) The description of the feature template
 - `device_types` (Set of String) List of supported device types
-- `interface` (Attributes List) Set IGMP interface parameters (see [below for nested schema](#nestedatt--interface))
+- `interfaces` (Attributes List) Set IGMP interface parameters (see [below for nested schema](#nestedatt--interfaces))
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--interface"></a>
-### Nested Schema for `interface`
+<a id="nestedatt--interfaces"></a>
+### Nested Schema for `interfaces`
 
 Read-Only:
 
-- `join_group` (Attributes List) Configure static joins (see [below for nested schema](#nestedatt--interface--join_group))
+- `join_groups` (Attributes List) Configure static joins (see [below for nested schema](#nestedatt--interfaces--join_groups))
 - `name` (String) Set interface name
 - `name_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
 
-<a id="nestedatt--interface--join_group"></a>
-### Nested Schema for `interface.join_group`
+<a id="nestedatt--interfaces--join_groups"></a>
+### Nested Schema for `interfaces.join_groups`
 
 Read-Only:
 

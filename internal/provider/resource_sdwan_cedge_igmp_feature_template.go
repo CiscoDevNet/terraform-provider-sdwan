@@ -90,7 +90,7 @@ func (r *CEdgeIGMPFeatureTemplateResource) Schema(ctx context.Context, req resou
 				ElementType:         types.StringType,
 				Required:            true,
 			},
-			"interface": schema.ListNestedAttribute{
+			"interfaces": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set IGMP interface parameters").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -103,7 +103,7 @@ func (r *CEdgeIGMPFeatureTemplateResource) Schema(ctx context.Context, req resou
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"join_group": schema.ListNestedAttribute{
+						"join_groups": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure static joins").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

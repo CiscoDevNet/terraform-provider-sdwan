@@ -37,9 +37,9 @@ func TestAccSdwanCEdgeIGMPFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanCEdgeIGMPFeatureTemplateConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interface.0.name", "example"),
-					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interface.0.join_group.0.group_address", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interface.0.join_group.0.source", "1.2.3.4"),
+					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.name", "Ethernet0"),
+					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.join_groups.0.group_address", "235.1.1.1"),
+					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.join_groups.0.source", "1.2.3.4"),
 				),
 			},
 		},
@@ -62,10 +62,10 @@ func testAccSdwanCEdgeIGMPFeatureTemplateConfig_all() string {
 		name = "TF_TEST_ALL"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		interface = [{
-			name = "example"
-			join_group = [{
-				group_address = "1.2.3.4"
+		interfaces = [{
+			name = "Ethernet0"
+			join_groups = [{
+				group_address = "235.1.1.1"
 				source = "1.2.3.4"
 			}]
 		}]

@@ -29,23 +29,23 @@ import (
 )
 
 type CEdgeIGMP struct {
-	Id           types.String         `tfsdk:"id"`
-	Version      types.Int64          `tfsdk:"version"`
-	TemplateType types.String         `tfsdk:"template_type"`
-	Name         types.String         `tfsdk:"name"`
-	Description  types.String         `tfsdk:"description"`
-	DeviceTypes  types.Set            `tfsdk:"device_types"`
-	Interface    []CEdgeIGMPInterface `tfsdk:"interface"`
+	Id           types.String          `tfsdk:"id"`
+	Version      types.Int64           `tfsdk:"version"`
+	TemplateType types.String          `tfsdk:"template_type"`
+	Name         types.String          `tfsdk:"name"`
+	Description  types.String          `tfsdk:"description"`
+	DeviceTypes  types.Set             `tfsdk:"device_types"`
+	Interfaces   []CEdgeIGMPInterfaces `tfsdk:"interfaces"`
 }
 
-type CEdgeIGMPInterface struct {
-	Optional     types.Bool                    `tfsdk:"optional"`
-	Name         types.String                  `tfsdk:"name"`
-	NameVariable types.String                  `tfsdk:"name_variable"`
-	JoinGroup    []CEdgeIGMPInterfaceJoinGroup `tfsdk:"join_group"`
+type CEdgeIGMPInterfaces struct {
+	Optional     types.Bool                      `tfsdk:"optional"`
+	Name         types.String                    `tfsdk:"name"`
+	NameVariable types.String                    `tfsdk:"name_variable"`
+	JoinGroups   []CEdgeIGMPInterfacesJoinGroups `tfsdk:"join_groups"`
 }
 
-type CEdgeIGMPInterfaceJoinGroup struct {
+type CEdgeIGMPInterfacesJoinGroups struct {
 	Optional             types.Bool   `tfsdk:"optional"`
 	GroupAddress         types.String `tfsdk:"group_address"`
 	GroupAddressVariable types.String `tfsdk:"group_address_variable"`
@@ -71,7 +71,7 @@ func (data CEdgeIGMP) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "templateDefinition", map[string]interface{}{})
 
 	path := "templateDefinition."
-	if len(data.Interface) > 0 {
+	if len(data.Interfaces) > 0 {
 		body, _ = sjson.Set(body, path+"igmp.interface."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"igmp.interface."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"igmp.interface."+"vipPrimaryKey", []string{"name"})
@@ -82,7 +82,7 @@ func (data CEdgeIGMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"igmp.interface."+"vipPrimaryKey", []string{"name"})
 		body, _ = sjson.Set(body, path+"igmp.interface."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Interface {
+	for _, item := range data.Interfaces {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "name")
@@ -98,7 +98,7 @@ func (data CEdgeIGMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "name."+"vipValue", item.Name.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "join-group")
-		if len(item.JoinGroup) > 0 {
+		if len(item.JoinGroups) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "join-group."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "join-group."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "join-group."+"vipPrimaryKey", []string{"group-address", "source"})
@@ -109,7 +109,7 @@ func (data CEdgeIGMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "join-group."+"vipPrimaryKey", []string{"group-address", "source"})
 			itemBody, _ = sjson.Set(itemBody, "join-group."+"vipValue", []interface{}{})
 		}
-		for _, childItem := range item.JoinGroup {
+		for _, childItem := range item.JoinGroups {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			itemChildAttributes = append(itemChildAttributes, "group-address")
@@ -177,9 +177,9 @@ func (data *CEdgeIGMP) fromBody(ctx context.Context, res gjson.Result) {
 
 	path := "templateDefinition."
 	if value := res.Get(path + "igmp.interface.vipValue"); len(value.Array()) > 0 {
-		data.Interface = make([]CEdgeIGMPInterface, 0)
+		data.Interfaces = make([]CEdgeIGMPInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CEdgeIGMPInterface{}
+			item := CEdgeIGMPInterfaces{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -205,9 +205,9 @@ func (data *CEdgeIGMP) fromBody(ctx context.Context, res gjson.Result) {
 				item.NameVariable = types.StringNull()
 			}
 			if cValue := v.Get("join-group.vipValue"); len(cValue.Array()) > 0 {
-				item.JoinGroup = make([]CEdgeIGMPInterfaceJoinGroup, 0)
+				item.JoinGroups = make([]CEdgeIGMPInterfacesJoinGroups, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := CEdgeIGMPInterfaceJoinGroup{}
+					cItem := CEdgeIGMPInterfacesJoinGroups{}
 					if ccValue := cv.Get("vipOptional"); ccValue.Exists() {
 						cItem.Optional = types.BoolValue(ccValue.Bool())
 					} else {
@@ -251,11 +251,11 @@ func (data *CEdgeIGMP) fromBody(ctx context.Context, res gjson.Result) {
 						cItem.Source = types.StringNull()
 						cItem.SourceVariable = types.StringNull()
 					}
-					item.JoinGroup = append(item.JoinGroup, cItem)
+					item.JoinGroups = append(item.JoinGroups, cItem)
 					return true
 				})
 			}
-			data.Interface = append(data.Interface, item)
+			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
 	}
@@ -263,21 +263,21 @@ func (data *CEdgeIGMP) fromBody(ctx context.Context, res gjson.Result) {
 
 func (data *CEdgeIGMP) hasChanges(ctx context.Context, state *CEdgeIGMP) bool {
 	hasChanges := false
-	if len(data.Interface) != len(state.Interface) {
+	if len(data.Interfaces) != len(state.Interfaces) {
 		hasChanges = true
 	} else {
-		for i := range data.Interface {
-			if !data.Interface[i].Name.Equal(state.Interface[i].Name) {
+		for i := range data.Interfaces {
+			if !data.Interfaces[i].Name.Equal(state.Interfaces[i].Name) {
 				hasChanges = true
 			}
-			if len(data.Interface[i].JoinGroup) != len(state.Interface[i].JoinGroup) {
+			if len(data.Interfaces[i].JoinGroups) != len(state.Interfaces[i].JoinGroups) {
 				hasChanges = true
 			} else {
-				for ii := range data.Interface[i].JoinGroup {
-					if !data.Interface[i].JoinGroup[ii].GroupAddress.Equal(state.Interface[i].JoinGroup[ii].GroupAddress) {
+				for ii := range data.Interfaces[i].JoinGroups {
+					if !data.Interfaces[i].JoinGroups[ii].GroupAddress.Equal(state.Interfaces[i].JoinGroups[ii].GroupAddress) {
 						hasChanges = true
 					}
-					if !data.Interface[i].JoinGroup[ii].Source.Equal(state.Interface[i].JoinGroup[ii].Source) {
+					if !data.Interfaces[i].JoinGroups[ii].Source.Equal(state.Interfaces[i].JoinGroups[ii].Source) {
 						hasChanges = true
 					}
 				}
