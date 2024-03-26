@@ -206,56 +206,56 @@ func (d *CiscoTrustSecFeatureTemplateDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"sxp_connection_list": schema.ListNestedAttribute{
+			"sxp_connections": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure SXP Connections",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"connection_peer_ip": schema.StringAttribute{
+						"peer_ip": schema.StringAttribute{
 							MarkdownDescription: "Configure SXP Peer IP address (IPv4)",
 							Computed:            true,
 						},
-						"connection_source_ip": schema.StringAttribute{
+						"source_ip": schema.StringAttribute{
 							MarkdownDescription: "Configure SXP Source IP address (IPv4)",
 							Computed:            true,
 						},
-						"connection_source_ip_variable": schema.StringAttribute{
+						"source_ip_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"connection_preshared_key": schema.StringAttribute{
+						"preshared_key": schema.StringAttribute{
 							MarkdownDescription: "Define Preshared Key type",
 							Computed:            true,
 						},
-						"connection_mode": schema.StringAttribute{
+						"mode": schema.StringAttribute{
 							MarkdownDescription: "Define Mode of connection",
 							Computed:            true,
 						},
-						"connection_mode_type": schema.StringAttribute{
+						"mode_type": schema.StringAttribute{
 							MarkdownDescription: "Define Role of a device <speaker/listener/both>",
 							Computed:            true,
 						},
-						"connection_min_hold_time": schema.Int64Attribute{
+						"minimum_hold_time": schema.Int64Attribute{
 							MarkdownDescription: "Configure Connection Minimum hold time <0..65535>",
 							Computed:            true,
 						},
-						"connection_min_hold_time_variable": schema.StringAttribute{
+						"minimum_hold_time_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"connection_max_hold_time": schema.Int64Attribute{
+						"maximum_hold_time": schema.Int64Attribute{
 							MarkdownDescription: "Configure Connection Maximum hold time <0..65535>",
 							Computed:            true,
 						},
-						"connection_max_hold_time_variable": schema.StringAttribute{
+						"maximum_hold_time_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"connection_vpn_id": schema.Int64Attribute{
+						"vpn_id": schema.Int64Attribute{
 							MarkdownDescription: "Configure Connection VPN (VRF) ID",
 							Computed:            true,
 						},
-						"connection_vpn_id_variable": schema.StringAttribute{
+						"vpn_id_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

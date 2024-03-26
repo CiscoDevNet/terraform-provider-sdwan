@@ -45,7 +45,7 @@ data "sdwan_cisco_trustsec_feature_template" "example" {
 - `listener_hold_time_min_variable` (String) Variable name
 - `speaker_hold_time` (Number) Configure Speaker hold-time in seconds <1..65534>
 - `speaker_hold_time_variable` (String) Variable name
-- `sxp_connection_list` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connection_list))
+- `sxp_connections` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connections))
 - `sxp_default_password` (String) Configure SXP default password
 - `sxp_default_password_variable` (String) Variable name
 - `sxp_key_chain` (String) Configure SXP key-chain
@@ -64,21 +64,21 @@ data "sdwan_cisco_trustsec_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--sxp_connection_list"></a>
-### Nested Schema for `sxp_connection_list`
+<a id="nestedatt--sxp_connections"></a>
+### Nested Schema for `sxp_connections`
 
 Read-Only:
 
-- `connection_max_hold_time` (Number) Configure Connection Maximum hold time <0..65535>
-- `connection_max_hold_time_variable` (String) Variable name
-- `connection_min_hold_time` (Number) Configure Connection Minimum hold time <0..65535>
-- `connection_min_hold_time_variable` (String) Variable name
-- `connection_mode` (String) Define Mode of connection
-- `connection_mode_type` (String) Define Role of a device <speaker/listener/both>
-- `connection_peer_ip` (String) Configure SXP Peer IP address (IPv4)
-- `connection_preshared_key` (String) Define Preshared Key type
-- `connection_source_ip` (String) Configure SXP Source IP address (IPv4)
-- `connection_source_ip_variable` (String) Variable name
-- `connection_vpn_id` (Number) Configure Connection VPN (VRF) ID
-- `connection_vpn_id_variable` (String) Variable name
+- `maximum_hold_time` (Number) Configure Connection Maximum hold time <0..65535>
+- `maximum_hold_time_variable` (String) Variable name
+- `minimum_hold_time` (Number) Configure Connection Minimum hold time <0..65535>
+- `minimum_hold_time_variable` (String) Variable name
+- `mode` (String) Define Mode of connection
+- `mode_type` (String) Define Role of a device <speaker/listener/both>
 - `optional` (Boolean) Indicates if list item is considered optional.
+- `peer_ip` (String) Configure SXP Peer IP address (IPv4)
+- `preshared_key` (String) Define Preshared Key type
+- `source_ip` (String) Configure SXP Source IP address (IPv4)
+- `source_ip_variable` (String) Variable name
+- `vpn_id` (Number) Configure Connection VPN (VRF) ID
+- `vpn_id_variable` (String) Variable name

@@ -20,13 +20,13 @@ resource "sdwan_cisco_trustsec_feature_template" "example" {
   description               = "My Example"
   device_types              = ["vedge-C8000V"]
   device_sgt                = 100
-  credentials_id            = "example"
+  credentials_id            = "user1"
   credentials_password      = "MyPassword"
   enable_enforcement        = true
   enable_sxp                = true
   sxp_source_ip             = "1.2.3.4"
   sxp_default_password      = "MyPassword"
-  sxp_key_chain             = "example"
+  sxp_key_chain             = "keychain1"
   sxp_log_binding_changes   = false
   sxp_reconciliation_period = 120
   sxp_retry_period          = 120
@@ -35,16 +35,16 @@ resource "sdwan_cisco_trustsec_feature_template" "example" {
   listener_hold_time_max    = 180
   sxp_node_id_type          = "interface-name"
   sxp_node_id               = "VirtualPortGroup"
-  sxp_connection_list = [
+  sxp_connections = [
     {
-      connection_peer_ip       = "1.2.3.4"
-      connection_source_ip     = "2.3.4.5"
-      connection_preshared_key = "default"
-      connection_mode          = "local"
-      connection_mode_type     = "listener"
-      connection_min_hold_time = 0
-      connection_max_hold_time = 0
-      connection_vpn_id        = 0
+      peer_ip           = "1.2.3.4"
+      source_ip         = "2.3.4.5"
+      preshared_key     = "default"
+      mode              = "local"
+      mode_type         = "listener"
+      minimum_hold_time = 100
+      maximum_hold_time = 200
+      vpn_id            = 0
     }
   ]
 }
@@ -86,7 +86,7 @@ resource "sdwan_cisco_trustsec_feature_template" "example" {
   - Range: `1`-`65534`
   - Default value: `120`
 - `speaker_hold_time_variable` (String) Variable name
-- `sxp_connection_list` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connection_list))
+- `sxp_connections` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connections))
 - `sxp_default_password` (String) Configure SXP default password
 - `sxp_default_password_variable` (String) Variable name
 - `sxp_key_chain` (String) Configure SXP key-chain
@@ -116,36 +116,36 @@ resource "sdwan_cisco_trustsec_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--sxp_connection_list"></a>
-### Nested Schema for `sxp_connection_list`
+<a id="nestedatt--sxp_connections"></a>
+### Nested Schema for `sxp_connections`
 
 Optional:
 
-- `connection_max_hold_time` (Number) Configure Connection Maximum hold time <0..65535>
+- `maximum_hold_time` (Number) Configure Connection Maximum hold time <0..65535>
   - Range: `0`-`65535`
   - Default value: `0`
-- `connection_max_hold_time_variable` (String) Variable name
-- `connection_min_hold_time` (Number) Configure Connection Minimum hold time <0..65535>
+- `maximum_hold_time_variable` (String) Variable name
+- `minimum_hold_time` (Number) Configure Connection Minimum hold time <0..65535>
   - Range: `0`-`65535`
   - Default value: `0`
-- `connection_min_hold_time_variable` (String) Variable name
-- `connection_mode` (String) Define Mode of connection
+- `minimum_hold_time_variable` (String) Variable name
+- `mode` (String) Define Mode of connection
   - Choices: `local`, `peer`
   - Default value: `local`
-- `connection_mode_type` (String) Define Role of a device <speaker/listener/both>
+- `mode_type` (String) Define Role of a device <speaker/listener/both>
   - Choices: `listener`, `speaker`, `both`
   - Default value: `speaker`
-- `connection_peer_ip` (String) Configure SXP Peer IP address (IPv4)
-- `connection_preshared_key` (String) Define Preshared Key type
+- `optional` (Boolean) Indicates if list item is considered optional.
+- `peer_ip` (String) Configure SXP Peer IP address (IPv4)
+- `preshared_key` (String) Define Preshared Key type
   - Choices: `default`, `key-chain`, `none`
   - Default value: `none`
-- `connection_source_ip` (String) Configure SXP Source IP address (IPv4)
-- `connection_source_ip_variable` (String) Variable name
-- `connection_vpn_id` (Number) Configure Connection VPN (VRF) ID
+- `source_ip` (String) Configure SXP Source IP address (IPv4)
+- `source_ip_variable` (String) Variable name
+- `vpn_id` (Number) Configure Connection VPN (VRF) ID
   - Range: `0`-`65527`
   - Default value: `0`
-- `connection_vpn_id_variable` (String) Variable name
-- `optional` (Boolean) Indicates if list item is considered optional.
+- `vpn_id_variable` (String) Variable name
 
 ## Import
 

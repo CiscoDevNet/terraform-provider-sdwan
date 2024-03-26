@@ -5,7 +5,7 @@ attributes:
   - model_name: device-sgt
     example: 100
   - model_name: credentials-id
-    example: example
+    example: user1
   - model_name: credentials-password
     example: MyPassword
   - model_name: enable-enforcement
@@ -17,7 +17,7 @@ attributes:
   - model_name: sxp-default-password
     example: MyPassword
   - model_name: sxp-key-chain
-    example: example
+    example: keychain1
   - model_name: sxp-log-binding-changes
     example: false
   - model_name: sxp-reconciliation-period
@@ -27,29 +27,40 @@ attributes:
   - model_name: speaker-hold-time
     example: 120
   - model_name: listener-hold-time-min
+    tf_name: minimum_listener_hold_time
     example: 90
   - model_name: listener-hold-time-max
+    tf_name: maximum_listener_hold_time
     example: 180
   - model_name: sxp-node-id-type
     example: interface-name
   - model_name: sxp-node-id
     example: VirtualPortGroup
   - model_name: sxp-connection-list
+    tf_name: sxp_connections
     attributes:
     - model_name: connection-peer-ip
+      tf_name: peer_ip
       example: 1.2.3.4
     - model_name: connection-source-ip
+      tf_name: source_ip
       example: 2.3.4.5
     - model_name: connection-preshared-key
+      tf_name: preshared_key
       example: default
     - model_name: connection-mode
+      tf_name: mode
       example: local
     - model_name: connection-mode-type
+      tf_name: mode_type
       example: listener
     - model_name: connection-min-hold-time
-      example: 0
+      tf_name: minimum_hold_time
+      example: 100
     - model_name: connection-max-hold-time
-      example: 0
+      tf_name: maximum_hold_time
+      example: 200
     - model_name: connection-vpn-id
+      tf_name: vpn_id
       example: 0
 

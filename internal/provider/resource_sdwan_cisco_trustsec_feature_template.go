@@ -240,74 +240,74 @@ func (r *CiscoTrustSecFeatureTemplateResource) Schema(ctx context.Context, req r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"sxp_connection_list": schema.ListNestedAttribute{
+			"sxp_connections": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure SXP Connections").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"connection_peer_ip": schema.StringAttribute{
+						"peer_ip": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure SXP Peer IP address (IPv4)").String,
 							Optional:            true,
 						},
-						"connection_source_ip": schema.StringAttribute{
+						"source_ip": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure SXP Source IP address (IPv4)").String,
 							Optional:            true,
 						},
-						"connection_source_ip_variable": schema.StringAttribute{
+						"source_ip_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"connection_preshared_key": schema.StringAttribute{
+						"preshared_key": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define Preshared Key type").AddStringEnumDescription("default", "key-chain", "none").AddDefaultValueDescription("none").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("default", "key-chain", "none"),
 							},
 						},
-						"connection_mode": schema.StringAttribute{
+						"mode": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define Mode of connection").AddStringEnumDescription("local", "peer").AddDefaultValueDescription("local").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("local", "peer"),
 							},
 						},
-						"connection_mode_type": schema.StringAttribute{
+						"mode_type": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define Role of a device <speaker/listener/both>").AddStringEnumDescription("listener", "speaker", "both").AddDefaultValueDescription("speaker").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("listener", "speaker", "both"),
 							},
 						},
-						"connection_min_hold_time": schema.Int64Attribute{
+						"minimum_hold_time": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Connection Minimum hold time <0..65535>").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(0, 65535),
 							},
 						},
-						"connection_min_hold_time_variable": schema.StringAttribute{
+						"minimum_hold_time_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"connection_max_hold_time": schema.Int64Attribute{
+						"maximum_hold_time": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Connection Maximum hold time <0..65535>").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(0, 65535),
 							},
 						},
-						"connection_max_hold_time_variable": schema.StringAttribute{
+						"maximum_hold_time_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"connection_vpn_id": schema.Int64Attribute{
+						"vpn_id": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Connection VPN (VRF) ID").AddIntegerRangeDescription(0, 65527).AddDefaultValueDescription("0").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(0, 65527),
 							},
 						},
-						"connection_vpn_id_variable": schema.StringAttribute{
+						"vpn_id_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

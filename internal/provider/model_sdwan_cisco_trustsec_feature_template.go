@@ -30,59 +30,59 @@ import (
 )
 
 type CiscoTrustSec struct {
-	Id                              types.String                     `tfsdk:"id"`
-	Version                         types.Int64                      `tfsdk:"version"`
-	TemplateType                    types.String                     `tfsdk:"template_type"`
-	Name                            types.String                     `tfsdk:"name"`
-	Description                     types.String                     `tfsdk:"description"`
-	DeviceTypes                     types.Set                        `tfsdk:"device_types"`
-	DeviceSgt                       types.Int64                      `tfsdk:"device_sgt"`
-	DeviceSgtVariable               types.String                     `tfsdk:"device_sgt_variable"`
-	CredentialsId                   types.String                     `tfsdk:"credentials_id"`
-	CredentialsIdVariable           types.String                     `tfsdk:"credentials_id_variable"`
-	CredentialsPassword             types.String                     `tfsdk:"credentials_password"`
-	CredentialsPasswordVariable     types.String                     `tfsdk:"credentials_password_variable"`
-	EnableEnforcement               types.Bool                       `tfsdk:"enable_enforcement"`
-	EnableEnforcementVariable       types.String                     `tfsdk:"enable_enforcement_variable"`
-	EnableSxp                       types.Bool                       `tfsdk:"enable_sxp"`
-	SxpSourceIp                     types.String                     `tfsdk:"sxp_source_ip"`
-	SxpSourceIpVariable             types.String                     `tfsdk:"sxp_source_ip_variable"`
-	SxpDefaultPassword              types.String                     `tfsdk:"sxp_default_password"`
-	SxpDefaultPasswordVariable      types.String                     `tfsdk:"sxp_default_password_variable"`
-	SxpKeyChain                     types.String                     `tfsdk:"sxp_key_chain"`
-	SxpKeyChainVariable             types.String                     `tfsdk:"sxp_key_chain_variable"`
-	SxpLogBindingChanges            types.Bool                       `tfsdk:"sxp_log_binding_changes"`
-	SxpLogBindingChangesVariable    types.String                     `tfsdk:"sxp_log_binding_changes_variable"`
-	SxpReconciliationPeriod         types.Int64                      `tfsdk:"sxp_reconciliation_period"`
-	SxpReconciliationPeriodVariable types.String                     `tfsdk:"sxp_reconciliation_period_variable"`
-	SxpRetryPeriod                  types.Int64                      `tfsdk:"sxp_retry_period"`
-	SxpRetryPeriodVariable          types.String                     `tfsdk:"sxp_retry_period_variable"`
-	SpeakerHoldTime                 types.Int64                      `tfsdk:"speaker_hold_time"`
-	SpeakerHoldTimeVariable         types.String                     `tfsdk:"speaker_hold_time_variable"`
-	ListenerHoldTimeMin             types.Int64                      `tfsdk:"listener_hold_time_min"`
-	ListenerHoldTimeMinVariable     types.String                     `tfsdk:"listener_hold_time_min_variable"`
-	ListenerHoldTimeMax             types.Int64                      `tfsdk:"listener_hold_time_max"`
-	ListenerHoldTimeMaxVariable     types.String                     `tfsdk:"listener_hold_time_max_variable"`
-	SxpNodeIdType                   types.String                     `tfsdk:"sxp_node_id_type"`
-	SxpNodeId                       types.String                     `tfsdk:"sxp_node_id"`
-	SxpNodeIdVariable               types.String                     `tfsdk:"sxp_node_id_variable"`
-	SxpConnectionList               []CiscoTrustSecSxpConnectionList `tfsdk:"sxp_connection_list"`
+	Id                              types.String                  `tfsdk:"id"`
+	Version                         types.Int64                   `tfsdk:"version"`
+	TemplateType                    types.String                  `tfsdk:"template_type"`
+	Name                            types.String                  `tfsdk:"name"`
+	Description                     types.String                  `tfsdk:"description"`
+	DeviceTypes                     types.Set                     `tfsdk:"device_types"`
+	DeviceSgt                       types.Int64                   `tfsdk:"device_sgt"`
+	DeviceSgtVariable               types.String                  `tfsdk:"device_sgt_variable"`
+	CredentialsId                   types.String                  `tfsdk:"credentials_id"`
+	CredentialsIdVariable           types.String                  `tfsdk:"credentials_id_variable"`
+	CredentialsPassword             types.String                  `tfsdk:"credentials_password"`
+	CredentialsPasswordVariable     types.String                  `tfsdk:"credentials_password_variable"`
+	EnableEnforcement               types.Bool                    `tfsdk:"enable_enforcement"`
+	EnableEnforcementVariable       types.String                  `tfsdk:"enable_enforcement_variable"`
+	EnableSxp                       types.Bool                    `tfsdk:"enable_sxp"`
+	SxpSourceIp                     types.String                  `tfsdk:"sxp_source_ip"`
+	SxpSourceIpVariable             types.String                  `tfsdk:"sxp_source_ip_variable"`
+	SxpDefaultPassword              types.String                  `tfsdk:"sxp_default_password"`
+	SxpDefaultPasswordVariable      types.String                  `tfsdk:"sxp_default_password_variable"`
+	SxpKeyChain                     types.String                  `tfsdk:"sxp_key_chain"`
+	SxpKeyChainVariable             types.String                  `tfsdk:"sxp_key_chain_variable"`
+	SxpLogBindingChanges            types.Bool                    `tfsdk:"sxp_log_binding_changes"`
+	SxpLogBindingChangesVariable    types.String                  `tfsdk:"sxp_log_binding_changes_variable"`
+	SxpReconciliationPeriod         types.Int64                   `tfsdk:"sxp_reconciliation_period"`
+	SxpReconciliationPeriodVariable types.String                  `tfsdk:"sxp_reconciliation_period_variable"`
+	SxpRetryPeriod                  types.Int64                   `tfsdk:"sxp_retry_period"`
+	SxpRetryPeriodVariable          types.String                  `tfsdk:"sxp_retry_period_variable"`
+	SpeakerHoldTime                 types.Int64                   `tfsdk:"speaker_hold_time"`
+	SpeakerHoldTimeVariable         types.String                  `tfsdk:"speaker_hold_time_variable"`
+	ListenerHoldTimeMin             types.Int64                   `tfsdk:"listener_hold_time_min"`
+	ListenerHoldTimeMinVariable     types.String                  `tfsdk:"listener_hold_time_min_variable"`
+	ListenerHoldTimeMax             types.Int64                   `tfsdk:"listener_hold_time_max"`
+	ListenerHoldTimeMaxVariable     types.String                  `tfsdk:"listener_hold_time_max_variable"`
+	SxpNodeIdType                   types.String                  `tfsdk:"sxp_node_id_type"`
+	SxpNodeId                       types.String                  `tfsdk:"sxp_node_id"`
+	SxpNodeIdVariable               types.String                  `tfsdk:"sxp_node_id_variable"`
+	SxpConnections                  []CiscoTrustSecSxpConnections `tfsdk:"sxp_connections"`
 }
 
-type CiscoTrustSecSxpConnectionList struct {
-	Optional                      types.Bool   `tfsdk:"optional"`
-	ConnectionPeerIp              types.String `tfsdk:"connection_peer_ip"`
-	ConnectionSourceIp            types.String `tfsdk:"connection_source_ip"`
-	ConnectionSourceIpVariable    types.String `tfsdk:"connection_source_ip_variable"`
-	ConnectionPresharedKey        types.String `tfsdk:"connection_preshared_key"`
-	ConnectionMode                types.String `tfsdk:"connection_mode"`
-	ConnectionModeType            types.String `tfsdk:"connection_mode_type"`
-	ConnectionMinHoldTime         types.Int64  `tfsdk:"connection_min_hold_time"`
-	ConnectionMinHoldTimeVariable types.String `tfsdk:"connection_min_hold_time_variable"`
-	ConnectionMaxHoldTime         types.Int64  `tfsdk:"connection_max_hold_time"`
-	ConnectionMaxHoldTimeVariable types.String `tfsdk:"connection_max_hold_time_variable"`
-	ConnectionVpnId               types.Int64  `tfsdk:"connection_vpn_id"`
-	ConnectionVpnIdVariable       types.String `tfsdk:"connection_vpn_id_variable"`
+type CiscoTrustSecSxpConnections struct {
+	Optional                types.Bool   `tfsdk:"optional"`
+	PeerIp                  types.String `tfsdk:"peer_ip"`
+	SourceIp                types.String `tfsdk:"source_ip"`
+	SourceIpVariable        types.String `tfsdk:"source_ip_variable"`
+	PresharedKey            types.String `tfsdk:"preshared_key"`
+	Mode                    types.String `tfsdk:"mode"`
+	ModeType                types.String `tfsdk:"mode_type"`
+	MinimumHoldTime         types.Int64  `tfsdk:"minimum_hold_time"`
+	MinimumHoldTimeVariable types.String `tfsdk:"minimum_hold_time_variable"`
+	MaximumHoldTime         types.Int64  `tfsdk:"maximum_hold_time"`
+	MaximumHoldTimeVariable types.String `tfsdk:"maximum_hold_time_variable"`
+	VpnId                   types.Int64  `tfsdk:"vpn_id"`
+	VpnIdVariable           types.String `tfsdk:"vpn_id_variable"`
 }
 
 func (data CiscoTrustSec) getModel() string {
@@ -299,7 +299,7 @@ func (data CiscoTrustSec) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id."+"vipValue", data.SxpNodeId.ValueString())
 	}
-	if len(data.SxpConnectionList) > 0 {
+	if len(data.SxpConnections) > 0 {
 		body, _ = sjson.Set(body, path+"sxp-connection-list."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"sxp-connection-list."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"sxp-connection-list."+"vipPrimaryKey", []string{"connection-peer-ip"})
@@ -310,92 +310,92 @@ func (data CiscoTrustSec) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"sxp-connection-list."+"vipPrimaryKey", []string{"connection-peer-ip"})
 		body, _ = sjson.Set(body, path+"sxp-connection-list."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.SxpConnectionList {
+	for _, item := range data.SxpConnections {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "connection-peer-ip")
-		if item.ConnectionPeerIp.IsNull() {
+		if item.PeerIp.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-peer-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-peer-ip."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-peer-ip."+"vipValue", item.ConnectionPeerIp.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "connection-peer-ip."+"vipValue", item.PeerIp.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "connection-source-ip")
 
-		if !item.ConnectionSourceIpVariable.IsNull() {
+		if !item.SourceIpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipVariableName", item.ConnectionSourceIpVariable.ValueString())
-		} else if item.ConnectionSourceIp.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipVariableName", item.SourceIpVariable.ValueString())
+		} else if item.SourceIp.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipValue", item.ConnectionSourceIp.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "connection-source-ip."+"vipValue", item.SourceIp.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "connection-preshared-key")
-		if item.ConnectionPresharedKey.IsNull() {
+		if item.PresharedKey.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-preshared-key."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-preshared-key."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-preshared-key."+"vipValue", item.ConnectionPresharedKey.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "connection-preshared-key."+"vipValue", item.PresharedKey.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "connection-mode")
-		if item.ConnectionMode.IsNull() {
+		if item.Mode.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-mode."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-mode."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-mode."+"vipValue", item.ConnectionMode.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "connection-mode."+"vipValue", item.Mode.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "connection-mode-type")
-		if item.ConnectionModeType.IsNull() {
+		if item.ModeType.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-mode-type."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-mode-type."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-mode-type."+"vipValue", item.ConnectionModeType.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "connection-mode-type."+"vipValue", item.ModeType.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "connection-min-hold-time")
 
-		if !item.ConnectionMinHoldTimeVariable.IsNull() {
+		if !item.MinimumHoldTimeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipVariableName", item.ConnectionMinHoldTimeVariable.ValueString())
-		} else if item.ConnectionMinHoldTime.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipVariableName", item.MinimumHoldTimeVariable.ValueString())
+		} else if item.MinimumHoldTime.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipValue", item.ConnectionMinHoldTime.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "connection-min-hold-time."+"vipValue", item.MinimumHoldTime.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "connection-max-hold-time")
 
-		if !item.ConnectionMaxHoldTimeVariable.IsNull() {
+		if !item.MaximumHoldTimeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipVariableName", item.ConnectionMaxHoldTimeVariable.ValueString())
-		} else if item.ConnectionMaxHoldTime.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipVariableName", item.MaximumHoldTimeVariable.ValueString())
+		} else if item.MaximumHoldTime.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipValue", item.ConnectionMaxHoldTime.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "connection-max-hold-time."+"vipValue", item.MaximumHoldTime.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "connection-vpn-id")
 
-		if !item.ConnectionVpnIdVariable.IsNull() {
+		if !item.VpnIdVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipVariableName", item.ConnectionVpnIdVariable.ValueString())
-		} else if item.ConnectionVpnId.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipVariableName", item.VpnIdVariable.ValueString())
+		} else if item.VpnId.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipValue", item.ConnectionVpnId.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "connection-vpn-id."+"vipValue", item.VpnId.ValueInt64())
 		}
 		if !item.Optional.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
@@ -728,9 +728,9 @@ func (data *CiscoTrustSec) fromBody(ctx context.Context, res gjson.Result) {
 		data.SxpNodeIdVariable = types.StringNull()
 	}
 	if value := res.Get(path + "sxp-connection-list.vipValue"); len(value.Array()) > 0 {
-		data.SxpConnectionList = make([]CiscoTrustSecSxpConnectionList, 0)
+		data.SxpConnections = make([]CiscoTrustSecSxpConnections, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoTrustSecSxpConnectionList{}
+			item := CiscoTrustSecSxpConnections{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -738,145 +738,145 @@ func (data *CiscoTrustSec) fromBody(ctx context.Context, res gjson.Result) {
 			}
 			if cValue := v.Get("connection-peer-ip.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionPeerIp = types.StringNull()
+					item.PeerIp = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionPeerIp = types.StringNull()
+					item.PeerIp = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-peer-ip.vipValue")
-					item.ConnectionPeerIp = types.StringValue(cv.String())
+					item.PeerIp = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.ConnectionPeerIp = types.StringNull()
+				item.PeerIp = types.StringNull()
 
 			}
 			if cValue := v.Get("connection-source-ip.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionSourceIp = types.StringNull()
+					item.SourceIp = types.StringNull()
 
 					cv := v.Get("connection-source-ip.vipVariableName")
-					item.ConnectionSourceIpVariable = types.StringValue(cv.String())
+					item.SourceIpVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionSourceIp = types.StringNull()
-					item.ConnectionSourceIpVariable = types.StringNull()
+					item.SourceIp = types.StringNull()
+					item.SourceIpVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-source-ip.vipValue")
-					item.ConnectionSourceIp = types.StringValue(cv.String())
-					item.ConnectionSourceIpVariable = types.StringNull()
+					item.SourceIp = types.StringValue(cv.String())
+					item.SourceIpVariable = types.StringNull()
 				}
 			} else {
-				item.ConnectionSourceIp = types.StringNull()
-				item.ConnectionSourceIpVariable = types.StringNull()
+				item.SourceIp = types.StringNull()
+				item.SourceIpVariable = types.StringNull()
 			}
 			if cValue := v.Get("connection-preshared-key.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionPresharedKey = types.StringNull()
+					item.PresharedKey = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionPresharedKey = types.StringNull()
+					item.PresharedKey = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-preshared-key.vipValue")
-					item.ConnectionPresharedKey = types.StringValue(cv.String())
+					item.PresharedKey = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.ConnectionPresharedKey = types.StringNull()
+				item.PresharedKey = types.StringNull()
 
 			}
 			if cValue := v.Get("connection-mode.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionMode = types.StringNull()
+					item.Mode = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionMode = types.StringNull()
+					item.Mode = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-mode.vipValue")
-					item.ConnectionMode = types.StringValue(cv.String())
+					item.Mode = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.ConnectionMode = types.StringNull()
+				item.Mode = types.StringNull()
 
 			}
 			if cValue := v.Get("connection-mode-type.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionModeType = types.StringNull()
+					item.ModeType = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionModeType = types.StringNull()
+					item.ModeType = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-mode-type.vipValue")
-					item.ConnectionModeType = types.StringValue(cv.String())
+					item.ModeType = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.ConnectionModeType = types.StringNull()
+				item.ModeType = types.StringNull()
 
 			}
 			if cValue := v.Get("connection-min-hold-time.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionMinHoldTime = types.Int64Null()
+					item.MinimumHoldTime = types.Int64Null()
 
 					cv := v.Get("connection-min-hold-time.vipVariableName")
-					item.ConnectionMinHoldTimeVariable = types.StringValue(cv.String())
+					item.MinimumHoldTimeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionMinHoldTime = types.Int64Null()
-					item.ConnectionMinHoldTimeVariable = types.StringNull()
+					item.MinimumHoldTime = types.Int64Null()
+					item.MinimumHoldTimeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-min-hold-time.vipValue")
-					item.ConnectionMinHoldTime = types.Int64Value(cv.Int())
-					item.ConnectionMinHoldTimeVariable = types.StringNull()
+					item.MinimumHoldTime = types.Int64Value(cv.Int())
+					item.MinimumHoldTimeVariable = types.StringNull()
 				}
 			} else {
-				item.ConnectionMinHoldTime = types.Int64Null()
-				item.ConnectionMinHoldTimeVariable = types.StringNull()
+				item.MinimumHoldTime = types.Int64Null()
+				item.MinimumHoldTimeVariable = types.StringNull()
 			}
 			if cValue := v.Get("connection-max-hold-time.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionMaxHoldTime = types.Int64Null()
+					item.MaximumHoldTime = types.Int64Null()
 
 					cv := v.Get("connection-max-hold-time.vipVariableName")
-					item.ConnectionMaxHoldTimeVariable = types.StringValue(cv.String())
+					item.MaximumHoldTimeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionMaxHoldTime = types.Int64Null()
-					item.ConnectionMaxHoldTimeVariable = types.StringNull()
+					item.MaximumHoldTime = types.Int64Null()
+					item.MaximumHoldTimeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-max-hold-time.vipValue")
-					item.ConnectionMaxHoldTime = types.Int64Value(cv.Int())
-					item.ConnectionMaxHoldTimeVariable = types.StringNull()
+					item.MaximumHoldTime = types.Int64Value(cv.Int())
+					item.MaximumHoldTimeVariable = types.StringNull()
 				}
 			} else {
-				item.ConnectionMaxHoldTime = types.Int64Null()
-				item.ConnectionMaxHoldTimeVariable = types.StringNull()
+				item.MaximumHoldTime = types.Int64Null()
+				item.MaximumHoldTimeVariable = types.StringNull()
 			}
 			if cValue := v.Get("connection-vpn-id.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.ConnectionVpnId = types.Int64Null()
+					item.VpnId = types.Int64Null()
 
 					cv := v.Get("connection-vpn-id.vipVariableName")
-					item.ConnectionVpnIdVariable = types.StringValue(cv.String())
+					item.VpnIdVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.ConnectionVpnId = types.Int64Null()
-					item.ConnectionVpnIdVariable = types.StringNull()
+					item.VpnId = types.Int64Null()
+					item.VpnIdVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("connection-vpn-id.vipValue")
-					item.ConnectionVpnId = types.Int64Value(cv.Int())
-					item.ConnectionVpnIdVariable = types.StringNull()
+					item.VpnId = types.Int64Value(cv.Int())
+					item.VpnIdVariable = types.StringNull()
 				}
 			} else {
-				item.ConnectionVpnId = types.Int64Null()
-				item.ConnectionVpnIdVariable = types.StringNull()
+				item.VpnId = types.Int64Null()
+				item.VpnIdVariable = types.StringNull()
 			}
-			data.SxpConnectionList = append(data.SxpConnectionList, item)
+			data.SxpConnections = append(data.SxpConnections, item)
 			return true
 		})
 	}
@@ -932,32 +932,32 @@ func (data *CiscoTrustSec) hasChanges(ctx context.Context, state *CiscoTrustSec)
 	if !data.SxpNodeId.Equal(state.SxpNodeId) {
 		hasChanges = true
 	}
-	if len(data.SxpConnectionList) != len(state.SxpConnectionList) {
+	if len(data.SxpConnections) != len(state.SxpConnections) {
 		hasChanges = true
 	} else {
-		for i := range data.SxpConnectionList {
-			if !data.SxpConnectionList[i].ConnectionPeerIp.Equal(state.SxpConnectionList[i].ConnectionPeerIp) {
+		for i := range data.SxpConnections {
+			if !data.SxpConnections[i].PeerIp.Equal(state.SxpConnections[i].PeerIp) {
 				hasChanges = true
 			}
-			if !data.SxpConnectionList[i].ConnectionSourceIp.Equal(state.SxpConnectionList[i].ConnectionSourceIp) {
+			if !data.SxpConnections[i].SourceIp.Equal(state.SxpConnections[i].SourceIp) {
 				hasChanges = true
 			}
-			if !data.SxpConnectionList[i].ConnectionPresharedKey.Equal(state.SxpConnectionList[i].ConnectionPresharedKey) {
+			if !data.SxpConnections[i].PresharedKey.Equal(state.SxpConnections[i].PresharedKey) {
 				hasChanges = true
 			}
-			if !data.SxpConnectionList[i].ConnectionMode.Equal(state.SxpConnectionList[i].ConnectionMode) {
+			if !data.SxpConnections[i].Mode.Equal(state.SxpConnections[i].Mode) {
 				hasChanges = true
 			}
-			if !data.SxpConnectionList[i].ConnectionModeType.Equal(state.SxpConnectionList[i].ConnectionModeType) {
+			if !data.SxpConnections[i].ModeType.Equal(state.SxpConnections[i].ModeType) {
 				hasChanges = true
 			}
-			if !data.SxpConnectionList[i].ConnectionMinHoldTime.Equal(state.SxpConnectionList[i].ConnectionMinHoldTime) {
+			if !data.SxpConnections[i].MinimumHoldTime.Equal(state.SxpConnections[i].MinimumHoldTime) {
 				hasChanges = true
 			}
-			if !data.SxpConnectionList[i].ConnectionMaxHoldTime.Equal(state.SxpConnectionList[i].ConnectionMaxHoldTime) {
+			if !data.SxpConnections[i].MaximumHoldTime.Equal(state.SxpConnections[i].MaximumHoldTime) {
 				hasChanges = true
 			}
-			if !data.SxpConnectionList[i].ConnectionVpnId.Equal(state.SxpConnectionList[i].ConnectionVpnId) {
+			if !data.SxpConnections[i].VpnId.Equal(state.SxpConnections[i].VpnId) {
 				hasChanges = true
 			}
 		}
