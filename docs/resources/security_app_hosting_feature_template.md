@@ -19,7 +19,7 @@ resource "sdwan_security_app_hosting_feature_template" "example" {
   name         = "Example"
   description  = "My Example"
   device_types = ["vedge-C8000V"]
-  virtual_application = [
+  virtual_applications = [
     {
       instance_id        = "2e89c1fe-440a-43f5-9f3a-54a9836fdbb5"
       application_type   = "utd"
@@ -27,9 +27,9 @@ resource "sdwan_security_app_hosting_feature_template" "example" {
       database_url       = false
       resource_profile   = "low"
       service_gateway_ip = "1.2.3.4/24"
-      service_ip         = "1.2.3.4/24"
+      service_ip         = "1.2.3.5/24"
       data_gateway_ip    = "192.0.2.1/24"
-      data_service_ip    = "192.0.2.1/24"
+      data_service_ip    = "192.0.2.2/24"
     }
   ]
 }
@@ -47,7 +47,7 @@ resource "sdwan_security_app_hosting_feature_template" "example" {
 
 ### Optional
 
-- `virtual_application` (Attributes List) Virtual application Instance (see [below for nested schema](#nestedatt--virtual_application))
+- `virtual_applications` (Attributes List) Virtual application Instance (see [below for nested schema](#nestedatt--virtual_applications))
 
 ### Read-Only
 
@@ -55,8 +55,8 @@ resource "sdwan_security_app_hosting_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--virtual_application"></a>
-### Nested Schema for `virtual_application`
+<a id="nestedatt--virtual_applications"></a>
+### Nested Schema for `virtual_applications`
 
 Optional:
 

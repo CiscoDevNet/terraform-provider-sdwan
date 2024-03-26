@@ -32,10 +32,10 @@ data "sdwan_security_app_hosting_feature_template" "example" {
 - `device_types` (Set of String) List of supported device types
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
-- `virtual_application` (Attributes List) Virtual application Instance (see [below for nested schema](#nestedatt--virtual_application))
+- `virtual_applications` (Attributes List) Virtual application Instance (see [below for nested schema](#nestedatt--virtual_applications))
 
-<a id="nestedatt--virtual_application"></a>
-### Nested Schema for `virtual_application`
+<a id="nestedatt--virtual_applications"></a>
+### Nested Schema for `virtual_applications`
 
 Read-Only:
 

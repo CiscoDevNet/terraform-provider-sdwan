@@ -86,7 +86,7 @@ func (d *SecurityAppHostingFeatureTemplateDataSource) Schema(ctx context.Context
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"virtual_application": schema.ListNestedAttribute{
+			"virtual_applications": schema.ListNestedAttribute{
 				MarkdownDescription: "Virtual application Instance",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

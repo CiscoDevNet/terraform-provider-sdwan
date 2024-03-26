@@ -30,16 +30,16 @@ import (
 )
 
 type SecurityAppHosting struct {
-	Id                 types.String                           `tfsdk:"id"`
-	Version            types.Int64                            `tfsdk:"version"`
-	TemplateType       types.String                           `tfsdk:"template_type"`
-	Name               types.String                           `tfsdk:"name"`
-	Description        types.String                           `tfsdk:"description"`
-	DeviceTypes        types.Set                              `tfsdk:"device_types"`
-	VirtualApplication []SecurityAppHostingVirtualApplication `tfsdk:"virtual_application"`
+	Id                  types.String                            `tfsdk:"id"`
+	Version             types.Int64                             `tfsdk:"version"`
+	TemplateType        types.String                            `tfsdk:"template_type"`
+	Name                types.String                            `tfsdk:"name"`
+	Description         types.String                            `tfsdk:"description"`
+	DeviceTypes         types.Set                               `tfsdk:"device_types"`
+	VirtualApplications []SecurityAppHostingVirtualApplications `tfsdk:"virtual_applications"`
 }
 
-type SecurityAppHostingVirtualApplication struct {
+type SecurityAppHostingVirtualApplications struct {
 	Optional                 types.Bool   `tfsdk:"optional"`
 	InstanceId               types.String `tfsdk:"instance_id"`
 	ApplicationType          types.String `tfsdk:"application_type"`
@@ -77,7 +77,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "templateDefinition", map[string]interface{}{})
 
 	path := "templateDefinition."
-	if len(data.VirtualApplication) > 0 {
+	if len(data.VirtualApplications) > 0 {
 		body, _ = sjson.Set(body, path+"virtual-application."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"virtual-application."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"virtual-application."+"vipPrimaryKey", []string{"instance-id"})
@@ -88,7 +88,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"virtual-application."+"vipPrimaryKey", []string{"instance-id"})
 		body, _ = sjson.Set(body, path+"virtual-application."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.VirtualApplication {
+	for _, item := range data.VirtualApplications {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "instance-id")
@@ -235,9 +235,9 @@ func (data *SecurityAppHosting) fromBody(ctx context.Context, res gjson.Result) 
 
 	path := "templateDefinition."
 	if value := res.Get(path + "virtual-application.vipValue"); len(value.Array()) > 0 {
-		data.VirtualApplication = make([]SecurityAppHostingVirtualApplication, 0)
+		data.VirtualApplications = make([]SecurityAppHostingVirtualApplications, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := SecurityAppHostingVirtualApplication{}
+			item := SecurityAppHostingVirtualApplications{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -408,7 +408,7 @@ func (data *SecurityAppHosting) fromBody(ctx context.Context, res gjson.Result) 
 				item.DataServiceIp = types.StringNull()
 				item.DataServiceIpVariable = types.StringNull()
 			}
-			data.VirtualApplication = append(data.VirtualApplication, item)
+			data.VirtualApplications = append(data.VirtualApplications, item)
 			return true
 		})
 	}
@@ -416,35 +416,35 @@ func (data *SecurityAppHosting) fromBody(ctx context.Context, res gjson.Result) 
 
 func (data *SecurityAppHosting) hasChanges(ctx context.Context, state *SecurityAppHosting) bool {
 	hasChanges := false
-	if len(data.VirtualApplication) != len(state.VirtualApplication) {
+	if len(data.VirtualApplications) != len(state.VirtualApplications) {
 		hasChanges = true
 	} else {
-		for i := range data.VirtualApplication {
-			if !data.VirtualApplication[i].InstanceId.Equal(state.VirtualApplication[i].InstanceId) {
+		for i := range data.VirtualApplications {
+			if !data.VirtualApplications[i].InstanceId.Equal(state.VirtualApplications[i].InstanceId) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].ApplicationType.Equal(state.VirtualApplication[i].ApplicationType) {
+			if !data.VirtualApplications[i].ApplicationType.Equal(state.VirtualApplications[i].ApplicationType) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].Nat.Equal(state.VirtualApplication[i].Nat) {
+			if !data.VirtualApplications[i].Nat.Equal(state.VirtualApplications[i].Nat) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].DatabaseUrl.Equal(state.VirtualApplication[i].DatabaseUrl) {
+			if !data.VirtualApplications[i].DatabaseUrl.Equal(state.VirtualApplications[i].DatabaseUrl) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].ResourceProfile.Equal(state.VirtualApplication[i].ResourceProfile) {
+			if !data.VirtualApplications[i].ResourceProfile.Equal(state.VirtualApplications[i].ResourceProfile) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].ServiceGatewayIp.Equal(state.VirtualApplication[i].ServiceGatewayIp) {
+			if !data.VirtualApplications[i].ServiceGatewayIp.Equal(state.VirtualApplications[i].ServiceGatewayIp) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].ServiceIp.Equal(state.VirtualApplication[i].ServiceIp) {
+			if !data.VirtualApplications[i].ServiceIp.Equal(state.VirtualApplications[i].ServiceIp) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].DataGatewayIp.Equal(state.VirtualApplication[i].DataGatewayIp) {
+			if !data.VirtualApplications[i].DataGatewayIp.Equal(state.VirtualApplications[i].DataGatewayIp) {
 				hasChanges = true
 			}
-			if !data.VirtualApplication[i].DataServiceIp.Equal(state.VirtualApplication[i].DataServiceIp) {
+			if !data.VirtualApplications[i].DataServiceIp.Equal(state.VirtualApplications[i].DataServiceIp) {
 				hasChanges = true
 			}
 		}

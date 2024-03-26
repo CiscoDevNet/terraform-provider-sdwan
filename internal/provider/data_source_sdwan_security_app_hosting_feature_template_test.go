@@ -33,15 +33,15 @@ func TestAccDataSourceSdwanSecurityAppHostingFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccDataSourceSdwanSecurityAppHostingFeatureTemplateConfig,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.instance_id", "2e89c1fe-440a-43f5-9f3a-54a9836fdbb5"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.application_type", "utd"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.nat", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.database_url", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.resource_profile", "low"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.service_gateway_ip", "1.2.3.4/24"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.service_ip", "1.2.3.4/24"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.data_gateway_ip", "192.0.2.1/24"),
-					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_application.0.data_service_ip", "192.0.2.1/24"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.instance_id", "2e89c1fe-440a-43f5-9f3a-54a9836fdbb5"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.application_type", "utd"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.nat", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.database_url", "false"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.resource_profile", "low"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.service_gateway_ip", "1.2.3.4/24"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.service_ip", "1.2.3.5/24"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.data_gateway_ip", "192.0.2.1/24"),
+					resource.TestCheckResourceAttr("data.sdwan_security_app_hosting_feature_template.test", "virtual_applications.0.data_service_ip", "192.0.2.2/24"),
 				),
 			},
 		},
@@ -54,16 +54,16 @@ resource "sdwan_security_app_hosting_feature_template" "test" {
   name = "TF_TEST_MIN"
   description = "Terraform integration test"
   device_types = ["vedge-C8000V"]
-  virtual_application = [{
+  virtual_applications = [{
     instance_id = "2e89c1fe-440a-43f5-9f3a-54a9836fdbb5"
     application_type = "utd"
     nat = true
     database_url = false
     resource_profile = "low"
     service_gateway_ip = "1.2.3.4/24"
-    service_ip = "1.2.3.4/24"
+    service_ip = "1.2.3.5/24"
     data_gateway_ip = "192.0.2.1/24"
-    data_service_ip = "192.0.2.1/24"
+    data_service_ip = "192.0.2.2/24"
   }]
 }
 
