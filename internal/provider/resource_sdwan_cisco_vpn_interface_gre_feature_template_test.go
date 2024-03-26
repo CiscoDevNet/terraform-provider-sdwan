@@ -55,9 +55,9 @@ func TestAccSdwanCiscoVPNInterfaceGREFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "ip_mtu", "1500"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tcp_mss_adjust", "1400"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "clear_dont_fragment", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "rule_name", "test"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_list.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_list.0.acl_name", "test"),
+					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "rewrite_rule", "ACL1"),
+					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_lists.0.direction", "in"),
+					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_lists.0.acl_name", "ACL2"),
 					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_route_via", "g0/0"),
 				),
 			},
@@ -98,10 +98,10 @@ func testAccSdwanCiscoVPNInterfaceGREFeatureTemplateConfig_all() string {
 		ip_mtu = 1500
 		tcp_mss_adjust = 1400
 		clear_dont_fragment = true
-		rule_name = "test"
-		access_list = [{
+		rewrite_rule = "ACL1"
+		access_lists = [{
 			direction = "in"
-			acl_name = "test"
+			acl_name = "ACL2"
 		}]
 		tracker = ["TRACKER1"]
 		tunnel_route_via = "g0/0"

@@ -45,8 +45,8 @@ func TestAccDataSourceSdwanCiscoTrustSecFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "sxp_reconciliation_period", "120"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "sxp_retry_period", "120"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "speaker_hold_time", "120"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "listener_hold_time_min", "90"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "listener_hold_time_max", "180"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "minimum_listener_hold_time", "90"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "maximum_listener_hold_time", "180"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "sxp_node_id_type", "interface-name"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "sxp_node_id", "VirtualPortGroup"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.peer_ip", "1.2.3.4"),
@@ -81,8 +81,8 @@ resource "sdwan_cisco_trustsec_feature_template" "test" {
   sxp_reconciliation_period = 120
   sxp_retry_period = 120
   speaker_hold_time = 120
-  listener_hold_time_min = 90
-  listener_hold_time_max = 180
+  minimum_listener_hold_time = 90
+  maximum_listener_hold_time = 180
   sxp_node_id_type = "interface-name"
   sxp_node_id = "VirtualPortGroup"
   sxp_connections = [{

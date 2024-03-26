@@ -30,44 +30,44 @@ import (
 )
 
 type CiscoVPNInterfaceGRE struct {
-	Id                            types.String                     `tfsdk:"id"`
-	Version                       types.Int64                      `tfsdk:"version"`
-	TemplateType                  types.String                     `tfsdk:"template_type"`
-	Name                          types.String                     `tfsdk:"name"`
-	Description                   types.String                     `tfsdk:"description"`
-	DeviceTypes                   types.Set                        `tfsdk:"device_types"`
-	InterfaceName                 types.String                     `tfsdk:"interface_name"`
-	InterfaceNameVariable         types.String                     `tfsdk:"interface_name_variable"`
-	InterfaceDescription          types.String                     `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable  types.String                     `tfsdk:"interface_description_variable"`
-	IpAddress                     types.String                     `tfsdk:"ip_address"`
-	IpAddressVariable             types.String                     `tfsdk:"ip_address_variable"`
-	TunnelSource                  types.String                     `tfsdk:"tunnel_source"`
-	TunnelSourceVariable          types.String                     `tfsdk:"tunnel_source_variable"`
-	Shutdown                      types.Bool                       `tfsdk:"shutdown"`
-	ShutdownVariable              types.String                     `tfsdk:"shutdown_variable"`
-	TunnelSourceInterface         types.String                     `tfsdk:"tunnel_source_interface"`
-	TunnelSourceInterfaceVariable types.String                     `tfsdk:"tunnel_source_interface_variable"`
-	TunnelDestination             types.String                     `tfsdk:"tunnel_destination"`
-	TunnelDestinationVariable     types.String                     `tfsdk:"tunnel_destination_variable"`
-	Application                   types.String                     `tfsdk:"application"`
-	ApplicationVariable           types.String                     `tfsdk:"application_variable"`
-	IpMtu                         types.Int64                      `tfsdk:"ip_mtu"`
-	IpMtuVariable                 types.String                     `tfsdk:"ip_mtu_variable"`
-	TcpMssAdjust                  types.Int64                      `tfsdk:"tcp_mss_adjust"`
-	TcpMssAdjustVariable          types.String                     `tfsdk:"tcp_mss_adjust_variable"`
-	ClearDontFragment             types.Bool                       `tfsdk:"clear_dont_fragment"`
-	ClearDontFragmentVariable     types.String                     `tfsdk:"clear_dont_fragment_variable"`
-	RuleName                      types.String                     `tfsdk:"rule_name"`
-	RuleNameVariable              types.String                     `tfsdk:"rule_name_variable"`
-	AccessList                    []CiscoVPNInterfaceGREAccessList `tfsdk:"access_list"`
-	Tracker                       types.Set                        `tfsdk:"tracker"`
-	TrackerVariable               types.String                     `tfsdk:"tracker_variable"`
-	TunnelRouteVia                types.String                     `tfsdk:"tunnel_route_via"`
-	TunnelRouteViaVariable        types.String                     `tfsdk:"tunnel_route_via_variable"`
+	Id                            types.String                      `tfsdk:"id"`
+	Version                       types.Int64                       `tfsdk:"version"`
+	TemplateType                  types.String                      `tfsdk:"template_type"`
+	Name                          types.String                      `tfsdk:"name"`
+	Description                   types.String                      `tfsdk:"description"`
+	DeviceTypes                   types.Set                         `tfsdk:"device_types"`
+	InterfaceName                 types.String                      `tfsdk:"interface_name"`
+	InterfaceNameVariable         types.String                      `tfsdk:"interface_name_variable"`
+	InterfaceDescription          types.String                      `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable  types.String                      `tfsdk:"interface_description_variable"`
+	IpAddress                     types.String                      `tfsdk:"ip_address"`
+	IpAddressVariable             types.String                      `tfsdk:"ip_address_variable"`
+	TunnelSource                  types.String                      `tfsdk:"tunnel_source"`
+	TunnelSourceVariable          types.String                      `tfsdk:"tunnel_source_variable"`
+	Shutdown                      types.Bool                        `tfsdk:"shutdown"`
+	ShutdownVariable              types.String                      `tfsdk:"shutdown_variable"`
+	TunnelSourceInterface         types.String                      `tfsdk:"tunnel_source_interface"`
+	TunnelSourceInterfaceVariable types.String                      `tfsdk:"tunnel_source_interface_variable"`
+	TunnelDestination             types.String                      `tfsdk:"tunnel_destination"`
+	TunnelDestinationVariable     types.String                      `tfsdk:"tunnel_destination_variable"`
+	Application                   types.String                      `tfsdk:"application"`
+	ApplicationVariable           types.String                      `tfsdk:"application_variable"`
+	IpMtu                         types.Int64                       `tfsdk:"ip_mtu"`
+	IpMtuVariable                 types.String                      `tfsdk:"ip_mtu_variable"`
+	TcpMssAdjust                  types.Int64                       `tfsdk:"tcp_mss_adjust"`
+	TcpMssAdjustVariable          types.String                      `tfsdk:"tcp_mss_adjust_variable"`
+	ClearDontFragment             types.Bool                        `tfsdk:"clear_dont_fragment"`
+	ClearDontFragmentVariable     types.String                      `tfsdk:"clear_dont_fragment_variable"`
+	RewriteRule                   types.String                      `tfsdk:"rewrite_rule"`
+	RewriteRuleVariable           types.String                      `tfsdk:"rewrite_rule_variable"`
+	AccessLists                   []CiscoVPNInterfaceGREAccessLists `tfsdk:"access_lists"`
+	Tracker                       types.Set                         `tfsdk:"tracker"`
+	TrackerVariable               types.String                      `tfsdk:"tracker_variable"`
+	TunnelRouteVia                types.String                      `tfsdk:"tunnel_route_via"`
+	TunnelRouteViaVariable        types.String                      `tfsdk:"tunnel_route_via_variable"`
 }
 
-type CiscoVPNInterfaceGREAccessList struct {
+type CiscoVPNInterfaceGREAccessLists struct {
 	Optional        types.Bool   `tfsdk:"optional"`
 	Direction       types.String `tfsdk:"direction"`
 	AclName         types.String `tfsdk:"acl_name"`
@@ -226,19 +226,19 @@ func (data CiscoVPNInterfaceGRE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"clear-dont-fragment."+"vipValue", strconv.FormatBool(data.ClearDontFragment.ValueBool()))
 	}
 
-	if !data.RuleNameVariable.IsNull() {
+	if !data.RewriteRuleVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipVariableName", data.RuleNameVariable.ValueString())
-	} else if data.RuleName.IsNull() {
+		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipVariableName", data.RewriteRuleVariable.ValueString())
+	} else if data.RewriteRule.IsNull() {
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipValue", data.RuleName.ValueString())
+		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipValue", data.RewriteRule.ValueString())
 	}
-	if len(data.AccessList) > 0 {
+	if len(data.AccessLists) > 0 {
 		body, _ = sjson.Set(body, path+"access-list."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"access-list."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
@@ -249,7 +249,7 @@ func (data CiscoVPNInterfaceGRE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
 		body, _ = sjson.Set(body, path+"access-list."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.AccessList {
+	for _, item := range data.AccessLists {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "direction")
@@ -540,27 +540,27 @@ func (data *CiscoVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.Result
 	}
 	if value := res.Get(path + "rewrite-rule.rule-name.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.RuleName = types.StringNull()
+			data.RewriteRule = types.StringNull()
 
 			v := res.Get(path + "rewrite-rule.rule-name.vipVariableName")
-			data.RuleNameVariable = types.StringValue(v.String())
+			data.RewriteRuleVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.RuleName = types.StringNull()
-			data.RuleNameVariable = types.StringNull()
+			data.RewriteRule = types.StringNull()
+			data.RewriteRuleVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "rewrite-rule.rule-name.vipValue")
-			data.RuleName = types.StringValue(v.String())
-			data.RuleNameVariable = types.StringNull()
+			data.RewriteRule = types.StringValue(v.String())
+			data.RewriteRuleVariable = types.StringNull()
 		}
 	} else {
-		data.RuleName = types.StringNull()
-		data.RuleNameVariable = types.StringNull()
+		data.RewriteRule = types.StringNull()
+		data.RewriteRuleVariable = types.StringNull()
 	}
 	if value := res.Get(path + "access-list.vipValue"); len(value.Array()) > 0 {
-		data.AccessList = make([]CiscoVPNInterfaceGREAccessList, 0)
+		data.AccessLists = make([]CiscoVPNInterfaceGREAccessLists, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := CiscoVPNInterfaceGREAccessList{}
+			item := CiscoVPNInterfaceGREAccessLists{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -601,7 +601,7 @@ func (data *CiscoVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.Result
 				item.AclName = types.StringNull()
 				item.AclNameVariable = types.StringNull()
 			}
-			data.AccessList = append(data.AccessList, item)
+			data.AccessLists = append(data.AccessLists, item)
 			return true
 		})
 	}
@@ -680,17 +680,17 @@ func (data *CiscoVPNInterfaceGRE) hasChanges(ctx context.Context, state *CiscoVP
 	if !data.ClearDontFragment.Equal(state.ClearDontFragment) {
 		hasChanges = true
 	}
-	if !data.RuleName.Equal(state.RuleName) {
+	if !data.RewriteRule.Equal(state.RewriteRule) {
 		hasChanges = true
 	}
-	if len(data.AccessList) != len(state.AccessList) {
+	if len(data.AccessLists) != len(state.AccessLists) {
 		hasChanges = true
 	} else {
-		for i := range data.AccessList {
-			if !data.AccessList[i].Direction.Equal(state.AccessList[i].Direction) {
+		for i := range data.AccessLists {
+			if !data.AccessLists[i].Direction.Equal(state.AccessLists[i].Direction) {
 				hasChanges = true
 			}
-			if !data.AccessList[i].AclName.Equal(state.AccessList[i].AclName) {
+			if !data.AccessLists[i].AclName.Equal(state.AccessLists[i].AclName) {
 				hasChanges = true
 			}
 		}

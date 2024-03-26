@@ -13,11 +13,11 @@ resource "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
   ip_mtu                  = 1500
   tcp_mss_adjust          = 1400
   clear_dont_fragment     = true
-  rule_name               = "test"
-  access_list = [
+  rewrite_rule            = "ACL1"
+  access_lists = [
     {
       direction = "in"
-      acl_name  = "test"
+      acl_name  = "ACL2"
     }
   ]
   tracker          = ["TRACKER1"]

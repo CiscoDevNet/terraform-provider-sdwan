@@ -203,25 +203,25 @@ func (r *CiscoTrustSecFeatureTemplateResource) Schema(ctx context.Context, req r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"listener_hold_time_min": schema.Int64Attribute{
+			"minimum_listener_hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Minimum allowed hold-time for listener in seconds <1..65534>").AddIntegerRangeDescription(1, 65534).AddDefaultValueDescription("90").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65534),
 				},
 			},
-			"listener_hold_time_min_variable": schema.StringAttribute{
+			"minimum_listener_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"listener_hold_time_max": schema.Int64Attribute{
+			"maximum_listener_hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure Maximum allowed hold-time for listener in seconds <1..65534>").AddIntegerRangeDescription(1, 65534).AddDefaultValueDescription("180").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65534),
 				},
 			},
-			"listener_hold_time_max_variable": schema.StringAttribute{
+			"maximum_listener_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

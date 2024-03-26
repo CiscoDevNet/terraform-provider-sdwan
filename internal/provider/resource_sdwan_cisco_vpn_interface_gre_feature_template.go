@@ -199,18 +199,18 @@ func (r *CiscoVPNInterfaceGREFeatureTemplateResource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"rule_name": schema.StringAttribute{
+			"rewrite_rule": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Name of rewrite rule").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
-			"rule_name_variable": schema.StringAttribute{
+			"rewrite_rule_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"access_list": schema.ListNestedAttribute{
+			"access_lists": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Apply ACL").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{

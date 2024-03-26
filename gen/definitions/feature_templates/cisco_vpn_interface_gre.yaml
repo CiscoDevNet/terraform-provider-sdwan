@@ -29,13 +29,15 @@ attributes:
   - model_name: clear-dont-fragment
     example: true
   - model_name: rule-name
-    example: test
+    tf_name: rewrite_rule
+    example: ACL1
   - model_name: access-list
+    tf_name: access_lists
     attributes:
     - model_name: direction
       example: in
     - model_name: acl-name
-      example: test
+      example: ACL2
   - model_name: tracker
     example: TRACKER1
   - model_name: tunnel-route-via

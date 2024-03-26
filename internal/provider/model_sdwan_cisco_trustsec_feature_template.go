@@ -59,10 +59,10 @@ type CiscoTrustSec struct {
 	SxpRetryPeriodVariable          types.String                  `tfsdk:"sxp_retry_period_variable"`
 	SpeakerHoldTime                 types.Int64                   `tfsdk:"speaker_hold_time"`
 	SpeakerHoldTimeVariable         types.String                  `tfsdk:"speaker_hold_time_variable"`
-	ListenerHoldTimeMin             types.Int64                   `tfsdk:"listener_hold_time_min"`
-	ListenerHoldTimeMinVariable     types.String                  `tfsdk:"listener_hold_time_min_variable"`
-	ListenerHoldTimeMax             types.Int64                   `tfsdk:"listener_hold_time_max"`
-	ListenerHoldTimeMaxVariable     types.String                  `tfsdk:"listener_hold_time_max_variable"`
+	MinimumListenerHoldTime         types.Int64                   `tfsdk:"minimum_listener_hold_time"`
+	MinimumListenerHoldTimeVariable types.String                  `tfsdk:"minimum_listener_hold_time_variable"`
+	MaximumListenerHoldTime         types.Int64                   `tfsdk:"maximum_listener_hold_time"`
+	MaximumListenerHoldTimeVariable types.String                  `tfsdk:"maximum_listener_hold_time_variable"`
 	SxpNodeIdType                   types.String                  `tfsdk:"sxp_node_id_type"`
 	SxpNodeId                       types.String                  `tfsdk:"sxp_node_id"`
 	SxpNodeIdVariable               types.String                  `tfsdk:"sxp_node_id_variable"`
@@ -255,30 +255,30 @@ func (data CiscoTrustSec) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"sxp-default.speaker-hold-time."+"vipValue", data.SpeakerHoldTime.ValueInt64())
 	}
 
-	if !data.ListenerHoldTimeMinVariable.IsNull() {
+	if !data.MinimumListenerHoldTimeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipVariableName", data.ListenerHoldTimeMinVariable.ValueString())
-	} else if data.ListenerHoldTimeMin.IsNull() {
+		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipVariableName", data.MinimumListenerHoldTimeVariable.ValueString())
+	} else if data.MinimumListenerHoldTime.IsNull() {
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipValue", data.ListenerHoldTimeMin.ValueInt64())
+		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-min."+"vipValue", data.MinimumListenerHoldTime.ValueInt64())
 	}
 
-	if !data.ListenerHoldTimeMaxVariable.IsNull() {
+	if !data.MaximumListenerHoldTimeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipVariableName", data.ListenerHoldTimeMaxVariable.ValueString())
-	} else if data.ListenerHoldTimeMax.IsNull() {
+		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipVariableName", data.MaximumListenerHoldTimeVariable.ValueString())
+	} else if data.MaximumListenerHoldTime.IsNull() {
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipValue", data.ListenerHoldTimeMax.ValueInt64())
+		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipValue", data.MaximumListenerHoldTime.ValueInt64())
 	}
 	if data.SxpNodeIdType.IsNull() {
 		body, _ = sjson.Set(body, path+"sxp-default", map[string]interface{}{})
@@ -656,41 +656,41 @@ func (data *CiscoTrustSec) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "sxp-default.listener-hold-time-min.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ListenerHoldTimeMin = types.Int64Null()
+			data.MinimumListenerHoldTime = types.Int64Null()
 
 			v := res.Get(path + "sxp-default.listener-hold-time-min.vipVariableName")
-			data.ListenerHoldTimeMinVariable = types.StringValue(v.String())
+			data.MinimumListenerHoldTimeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ListenerHoldTimeMin = types.Int64Null()
-			data.ListenerHoldTimeMinVariable = types.StringNull()
+			data.MinimumListenerHoldTime = types.Int64Null()
+			data.MinimumListenerHoldTimeVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "sxp-default.listener-hold-time-min.vipValue")
-			data.ListenerHoldTimeMin = types.Int64Value(v.Int())
-			data.ListenerHoldTimeMinVariable = types.StringNull()
+			data.MinimumListenerHoldTime = types.Int64Value(v.Int())
+			data.MinimumListenerHoldTimeVariable = types.StringNull()
 		}
 	} else {
-		data.ListenerHoldTimeMin = types.Int64Null()
-		data.ListenerHoldTimeMinVariable = types.StringNull()
+		data.MinimumListenerHoldTime = types.Int64Null()
+		data.MinimumListenerHoldTimeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "sxp-default.listener-hold-time-max.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ListenerHoldTimeMax = types.Int64Null()
+			data.MaximumListenerHoldTime = types.Int64Null()
 
 			v := res.Get(path + "sxp-default.listener-hold-time-max.vipVariableName")
-			data.ListenerHoldTimeMaxVariable = types.StringValue(v.String())
+			data.MaximumListenerHoldTimeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ListenerHoldTimeMax = types.Int64Null()
-			data.ListenerHoldTimeMaxVariable = types.StringNull()
+			data.MaximumListenerHoldTime = types.Int64Null()
+			data.MaximumListenerHoldTimeVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "sxp-default.listener-hold-time-max.vipValue")
-			data.ListenerHoldTimeMax = types.Int64Value(v.Int())
-			data.ListenerHoldTimeMaxVariable = types.StringNull()
+			data.MaximumListenerHoldTime = types.Int64Value(v.Int())
+			data.MaximumListenerHoldTimeVariable = types.StringNull()
 		}
 	} else {
-		data.ListenerHoldTimeMax = types.Int64Null()
-		data.ListenerHoldTimeMaxVariable = types.StringNull()
+		data.MaximumListenerHoldTime = types.Int64Null()
+		data.MaximumListenerHoldTimeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "sxp-default.sxp-node-id-type.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -920,10 +920,10 @@ func (data *CiscoTrustSec) hasChanges(ctx context.Context, state *CiscoTrustSec)
 	if !data.SpeakerHoldTime.Equal(state.SpeakerHoldTime) {
 		hasChanges = true
 	}
-	if !data.ListenerHoldTimeMin.Equal(state.ListenerHoldTimeMin) {
+	if !data.MinimumListenerHoldTime.Equal(state.MinimumListenerHoldTime) {
 		hasChanges = true
 	}
-	if !data.ListenerHoldTimeMax.Equal(state.ListenerHoldTimeMax) {
+	if !data.MaximumListenerHoldTime.Equal(state.MaximumListenerHoldTime) {
 		hasChanges = true
 	}
 	if !data.SxpNodeIdType.Equal(state.SxpNodeIdType) {

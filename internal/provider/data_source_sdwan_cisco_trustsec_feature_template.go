@@ -178,19 +178,19 @@ func (d *CiscoTrustSecFeatureTemplateDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"listener_hold_time_min": schema.Int64Attribute{
+			"minimum_listener_hold_time": schema.Int64Attribute{
 				MarkdownDescription: "Configure Minimum allowed hold-time for listener in seconds <1..65534>",
 				Computed:            true,
 			},
-			"listener_hold_time_min_variable": schema.StringAttribute{
+			"minimum_listener_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"listener_hold_time_max": schema.Int64Attribute{
+			"maximum_listener_hold_time": schema.Int64Attribute{
 				MarkdownDescription: "Configure Maximum allowed hold-time for listener in seconds <1..65534>",
 				Computed:            true,
 			},
-			"listener_hold_time_max_variable": schema.StringAttribute{
+			"maximum_listener_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

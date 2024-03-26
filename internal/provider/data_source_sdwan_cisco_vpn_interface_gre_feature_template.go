@@ -174,15 +174,15 @@ func (d *CiscoVPNInterfaceGREFeatureTemplateDataSource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"rule_name": schema.StringAttribute{
+			"rewrite_rule": schema.StringAttribute{
 				MarkdownDescription: "Name of rewrite rule",
 				Computed:            true,
 			},
-			"rule_name_variable": schema.StringAttribute{
+			"rewrite_rule_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"access_list": schema.ListNestedAttribute{
+			"access_lists": schema.ListNestedAttribute{
 				MarkdownDescription: "Apply ACL",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

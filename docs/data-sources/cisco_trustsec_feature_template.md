@@ -39,10 +39,10 @@ data "sdwan_cisco_trustsec_feature_template" "example" {
 - `enable_enforcement` (Boolean) Enable Role-based Access Control enforcement
 - `enable_enforcement_variable` (String) Variable name
 - `enable_sxp` (Boolean) Enable CTS SXP support
-- `listener_hold_time_max` (Number) Configure Maximum allowed hold-time for listener in seconds <1..65534>
-- `listener_hold_time_max_variable` (String) Variable name
-- `listener_hold_time_min` (Number) Configure Minimum allowed hold-time for listener in seconds <1..65534>
-- `listener_hold_time_min_variable` (String) Variable name
+- `maximum_listener_hold_time` (Number) Configure Maximum allowed hold-time for listener in seconds <1..65534>
+- `maximum_listener_hold_time_variable` (String) Variable name
+- `minimum_listener_hold_time` (Number) Configure Minimum allowed hold-time for listener in seconds <1..65534>
+- `minimum_listener_hold_time_variable` (String) Variable name
 - `speaker_hold_time` (Number) Configure Speaker hold-time in seconds <1..65534>
 - `speaker_hold_time_variable` (String) Variable name
 - `sxp_connections` (Attributes List) Configure SXP Connections (see [below for nested schema](#nestedatt--sxp_connections))

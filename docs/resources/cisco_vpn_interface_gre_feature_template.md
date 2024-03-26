@@ -30,11 +30,11 @@ resource "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
   ip_mtu                  = 1500
   tcp_mss_adjust          = 1400
   clear_dont_fragment     = true
-  rule_name               = "test"
-  access_list = [
+  rewrite_rule            = "ACL1"
+  access_lists = [
     {
       direction = "in"
-      acl_name  = "test"
+      acl_name  = "ACL2"
     }
   ]
   tracker          = ["TRACKER1"]
@@ -54,7 +54,7 @@ resource "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
 
 ### Optional
 
-- `access_list` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_list))
+- `access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_lists))
 - `application` (String) Enable Application Tunnel Type
   - Choices: `none`, `sig`
   - Default value: `none`
@@ -72,8 +72,8 @@ resource "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
   - Range: `64`-`18000`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
-- `rule_name` (String) Name of rewrite rule
-- `rule_name_variable` (String) Variable name
+- `rewrite_rule` (String) Name of rewrite rule
+- `rewrite_rule_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
@@ -97,8 +97,8 @@ resource "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--access_list"></a>
-### Nested Schema for `access_list`
+<a id="nestedatt--access_lists"></a>
+### Nested Schema for `access_lists`
 
 Optional:
 

@@ -16,25 +16,25 @@ This resource can manage a Cisco TrustSec feature template.
 
 ```terraform
 resource "sdwan_cisco_trustsec_feature_template" "example" {
-  name                      = "Example"
-  description               = "My Example"
-  device_types              = ["vedge-C8000V"]
-  device_sgt                = 100
-  credentials_id            = "user1"
-  credentials_password      = "MyPassword"
-  enable_enforcement        = true
-  enable_sxp                = true
-  sxp_source_ip             = "1.2.3.4"
-  sxp_default_password      = "MyPassword"
-  sxp_key_chain             = "keychain1"
-  sxp_log_binding_changes   = false
-  sxp_reconciliation_period = 120
-  sxp_retry_period          = 120
-  speaker_hold_time         = 120
-  listener_hold_time_min    = 90
-  listener_hold_time_max    = 180
-  sxp_node_id_type          = "interface-name"
-  sxp_node_id               = "VirtualPortGroup"
+  name                       = "Example"
+  description                = "My Example"
+  device_types               = ["vedge-C8000V"]
+  device_sgt                 = 100
+  credentials_id             = "user1"
+  credentials_password       = "MyPassword"
+  enable_enforcement         = true
+  enable_sxp                 = true
+  sxp_source_ip              = "1.2.3.4"
+  sxp_default_password       = "MyPassword"
+  sxp_key_chain              = "keychain1"
+  sxp_log_binding_changes    = false
+  sxp_reconciliation_period  = 120
+  sxp_retry_period           = 120
+  speaker_hold_time          = 120
+  minimum_listener_hold_time = 90
+  maximum_listener_hold_time = 180
+  sxp_node_id_type           = "interface-name"
+  sxp_node_id                = "VirtualPortGroup"
   sxp_connections = [
     {
       peer_ip           = "1.2.3.4"
@@ -74,14 +74,14 @@ resource "sdwan_cisco_trustsec_feature_template" "example" {
 - `enable_enforcement_variable` (String) Variable name
 - `enable_sxp` (Boolean) Enable CTS SXP support
   - Default value: `false`
-- `listener_hold_time_max` (Number) Configure Maximum allowed hold-time for listener in seconds <1..65534>
+- `maximum_listener_hold_time` (Number) Configure Maximum allowed hold-time for listener in seconds <1..65534>
   - Range: `1`-`65534`
   - Default value: `180`
-- `listener_hold_time_max_variable` (String) Variable name
-- `listener_hold_time_min` (Number) Configure Minimum allowed hold-time for listener in seconds <1..65534>
+- `maximum_listener_hold_time_variable` (String) Variable name
+- `minimum_listener_hold_time` (Number) Configure Minimum allowed hold-time for listener in seconds <1..65534>
   - Range: `1`-`65534`
   - Default value: `90`
-- `listener_hold_time_min_variable` (String) Variable name
+- `minimum_listener_hold_time_variable` (String) Variable name
 - `speaker_hold_time` (Number) Configure Speaker hold-time in seconds <1..65534>
   - Range: `1`-`65534`
   - Default value: `120`

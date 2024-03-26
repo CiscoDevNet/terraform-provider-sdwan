@@ -28,7 +28,7 @@ data "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
 
 ### Read-Only
 
-- `access_list` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_list))
+- `access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_lists))
 - `application` (String) Enable Application Tunnel Type
 - `application_variable` (String) Variable name
 - `clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)
@@ -43,8 +43,8 @@ data "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
 - `ip_address_variable` (String) Variable name
 - `ip_mtu` (Number) Interface MTU <576..2000>, in bytes
 - `ip_mtu_variable` (String) Variable name
-- `rule_name` (String) Name of rewrite rule
-- `rule_name_variable` (String) Variable name
+- `rewrite_rule` (String) Name of rewrite rule
+- `rewrite_rule_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
 - `tcp_mss_adjust` (Number) TCP MSS on SYN packets, in bytes
@@ -62,8 +62,8 @@ data "sdwan_cisco_vpn_interface_gre_feature_template" "example" {
 - `tunnel_source_variable` (String) Variable name
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--access_list"></a>
-### Nested Schema for `access_list`
+<a id="nestedatt--access_lists"></a>
+### Nested Schema for `access_lists`
 
 Read-Only:
 
