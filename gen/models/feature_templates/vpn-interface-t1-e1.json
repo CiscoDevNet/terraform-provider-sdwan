@@ -1324,7 +1324,7 @@
                     "end": 4294967295, 
                     "start": 0
                 }, 
-                "type": "number", 
+                "type": "bandwidth", 
                 "values": [
                     "inherit", 
                     "qos-reference", 
