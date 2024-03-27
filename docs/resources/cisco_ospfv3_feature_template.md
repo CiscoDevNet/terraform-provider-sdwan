@@ -66,7 +66,7 @@ resource "sdwan_cisco_ospfv3_feature_template" "example" {
           cost                = 100
           network             = "point-to-point"
           passive_interface   = true
-          authentication_type = "message-digest"
+          authentication_type = "md5"
           authentication_key  = "authenticationKey"
           ipsec_spi           = 256
         }
@@ -126,7 +126,7 @@ resource "sdwan_cisco_ospfv3_feature_template" "example" {
           cost                = 100
           network             = "point-to-point"
           passive_interface   = true
-          authentication_type = "message-digest"
+          authentication_type = "md5"
           authentication_key  = "authenticationKey"
           ipsec_spi           = 256
         }

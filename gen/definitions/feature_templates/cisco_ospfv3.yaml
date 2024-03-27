@@ -145,7 +145,7 @@ attributes:
             example: true
           - model_name: type
             tf_name: authentication_type
-            example: message-digest
+            example: md5
           - model_name: authentication-key
             example: authenticationKey
           - model_name: spi
@@ -300,7 +300,7 @@ attributes:
             example: true
           - model_name: type
             tf_name: authentication_type
-            example: message-digest
+            example: md5
           - model_name: authentication-key
             example: authenticationKey
           - model_name: spi

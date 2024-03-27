@@ -68,7 +68,7 @@ func TestAccDataSourceSdwanCiscoOSPFv3FeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.cost", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.network", "point-to-point"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.passive_interface", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.authentication_type", "message-digest"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.authentication_type", "md5"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.authentication_key", "authenticationKey"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.interfaces.0.ipsec_spi", "256"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv4_areas.0.ranges.0.address", "1.1.1.0/24"),
@@ -108,7 +108,7 @@ func TestAccDataSourceSdwanCiscoOSPFv3FeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.cost", "100"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.network", "point-to-point"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.passive_interface", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.authentication_type", "message-digest"),
+					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.authentication_type", "md5"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.authentication_key", "authenticationKey"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.interfaces.0.ipsec_spi", "256"),
 					resource.TestCheckResourceAttr("data.sdwan_cisco_ospfv3_feature_template.test", "ipv6_areas.0.ranges.0.address", "2001::/48"),
@@ -167,7 +167,7 @@ resource "sdwan_cisco_ospfv3_feature_template" "test" {
 		cost = 100
 		network = "point-to-point"
 		passive_interface = true
-		authentication_type = "message-digest"
+		authentication_type = "md5"
 		authentication_key = "authenticationKey"
 		ipsec_spi = 256
 	}]
@@ -217,7 +217,7 @@ resource "sdwan_cisco_ospfv3_feature_template" "test" {
 		cost = 100
 		network = "point-to-point"
 		passive_interface = true
-		authentication_type = "message-digest"
+		authentication_type = "md5"
 		authentication_key = "authenticationKey"
 		ipsec_spi = 256
 	}]
