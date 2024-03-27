@@ -33,74 +33,68 @@ func TestAccSdwanVPNInterfaceCellularFeatureTemplate(t *testing.T) {
 			{
 				Config: testAccSdwanVPNInterfaceCellularFeatureTemplateConfig_minimum(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "cellular_interface_name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "cellular_interface_name", "Cellular1"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "per_tunnel_qos", "true"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "per_tunnel_qos_aggregator", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "adaptive_qos_downstream_default", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "downstream_min_bandwidth_limit", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "downstream_max_bandwidth_limit", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "adaptive_qos_upstream_default", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "upstream_min_bandwidth_limit", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "upstream_max_bandwidth_limit", "10000000"),
 				),
 			},
 			{
 				Config: testAccSdwanVPNInterfaceCellularFeatureTemplateConfig_all(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "cellular_interface_name", "Example"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "cellular_interface_name", "Cellular1"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "interface_description", "My Description"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ipv6_access_lists.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ipv6_access_lists.0.acl_name", "Egress ACL - IPv6"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ipv6_access_lists.0.acl_name", "ACL1"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "refresh_mode", "outbound"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "udp_timeout", "1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tcp_timeout", "60"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "block_icmp_error", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "respond_to_ping", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "port_forward.0.port_start_range", "0"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "port_forward.0.port_end_range", "65530"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "port_forward.0.protocol", "tcp"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "port_forward.0.private_vpn", "65530"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "port_forward.0.private_ip_address", "1.2.3.4"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_refresh_mode", "outbound"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_udp_timeout", "1"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_tcp_timeout", "60"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_block_icmp_error", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_response_to_ping", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_port_forwards.0.port_start_range", "0"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_port_forwards.0.port_end_range", "65530"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_port_forwards.0.protocol", "tcp"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_port_forwards.0.private_vpn", "65530"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_port_forwards.0.private_ip_address", "1.2.3.4"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "enable_core_region", "true"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "core_region", "core"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "secondary_region", "off"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "encapsulation.0.encapsulation_type", "gre"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "encapsulation.0.preference", "4294967"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "encapsulation.0.weight", "250"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "border", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_encapsulations.0.encapsulation", "gre"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_encapsulations.0.preference", "4294967"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_encapsulations.0.weight", "250"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_border", "true"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "per_tunnel_qos", "true"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "per_tunnel_qos_aggregator", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "color", "custom1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "last_resort_circuit", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "low_bandwidth_link", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_tcp_mss", "1460"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "enable_clear_dont_fragment", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "network_broadcast_1", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "max_control_connections", "8"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "control_connections", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "vbond_as_stun_server", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "vmanage_connection_preference", "5"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "port_hop", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "restrict", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "carrier", "carrier1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "nat_refresh_interval", "15"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "hello_interval", "1000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "hello_tolerance", "12"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "bind_loopback_tunnel", "12"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "all", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "network_broadcast_2", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "bgp", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "dhcp", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "dns", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "icmp", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ssh", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ntp", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "netconf", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ospf", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "stun", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "snmp", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "https", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_qos_mode", "spoke"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_color", "custom1"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_last_resort_circuit", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_low_bandwidth_link", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_tunnel_tcp_mss", "1460"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_clear_dont_fragment", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_network_broadcast", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_max_control_connections", "8"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_control_connections", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_vbond_as_stun_server", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_vmanage_connection_preference", "5"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_port_hop", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_color_restrict", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_carrier", "carrier1"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_nat_refresh_interval", "15"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_hello_interval", "1000"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_hello_tolerance", "12"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_bind_loopback_tunnel", "12"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_all", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_bgp", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_dhcp", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_dns", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_icmp", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_ssh", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_ntp", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_netconf", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_ospf", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_stun", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_snmp", "false"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tunnel_interface_allow_https", "true"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "clear_dont_fragment_bit", "false"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "pmtu_discovery", "false"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ip_mtu", "1500"),
@@ -108,28 +102,27 @@ func TestAccSdwanVPNInterfaceCellularFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tcp_mss", "720"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "tloc_extension", "tloc"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ip_directed_broadcast", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "administrative_shutdown", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "link_autonegotiate", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "adaptive_qos", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "adapt_period", "15"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "adaptive_qos_downstream_default", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "downstream_min_bandwidth_limit", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "downstream_max_bandwidth_limit", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "adaptive_qos_upstream_default", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "upstream_min_bandwidth_limit", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "upstream_max_bandwidth_limit", "10000000"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "shutdown", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "autonegotiate", "true"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_adaptive_period", "15"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_adaptive_bandwidth_downstream", "10000"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_adaptive_min_downstream", "100"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_adaptive_max_downstream", "100000"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_adaptive_bandwidth_upstream", "10000"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_adaptive_min_upstream", "100"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_adaptive_max_upstream", "100000"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "shaping_rate", "10000000"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_map", "test"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "vpn_qos_map", "test"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "qos_map_vpn", "test"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "bandwidth_upstream", "214748300"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "bandwidth_downstream", "214748300"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "write_rule", "test_rule"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "access_list.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "access_list.0.acl_name", "Egress ACL - IPv4"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "policer.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "policer.0.policer_name", "example"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "static_arp_entries.0.ip_address", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "static_arp_entries.0.mac_address", "00-B0-D0-63-C2-26"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "write_rule", "RULE1"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ipv4_access_lists.0.direction", "in"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "ipv4_access_lists.0.acl_name", "ACL2"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "policers.0.direction", "in"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "policers.0.policer_name", "example"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "static_arps.0.ip_address", "1.2.3.4"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_cellular_feature_template.test", "static_arps.0.mac", "00-B0-D0-63-C2-26"),
 				),
 			},
 		},
@@ -142,15 +135,9 @@ func testAccSdwanVPNInterfaceCellularFeatureTemplateConfig_minimum() string {
 		name = "TF_TEST_MIN"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		cellular_interface_name = "Example"
+		cellular_interface_name = "Cellular1"
 		per_tunnel_qos = true
 		per_tunnel_qos_aggregator = false
-		adaptive_qos_downstream_default = 10000000
-		downstream_min_bandwidth_limit = 10000000
-		downstream_max_bandwidth_limit = 10000000
-		adaptive_qos_upstream_default = 10000000
-		upstream_min_bandwidth_limit = 10000000
-		upstream_max_bandwidth_limit = 10000000
 	}
 	`
 }
@@ -161,21 +148,21 @@ func testAccSdwanVPNInterfaceCellularFeatureTemplateConfig_all() string {
 		name = "TF_TEST_ALL"
 		description = "Terraform integration test"
 		device_types = ["vedge-C8000V"]
-		cellular_interface_name = "Example"
+		cellular_interface_name = "Cellular1"
 		interface_description = "My Description"
 		ipv6_access_lists = [{
 			direction = "in"
-			acl_name = "Egress ACL - IPv6"
+			acl_name = "ACL1"
 		}]
-		ipv4_dhcp_helper = ["6"]
+		ipv4_dhcp_helper = ["6.6.6.6"]
 		tracker = ["tracker1"]
 		nat = true
-		refresh_mode = "outbound"
-		udp_timeout = 1
-		tcp_timeout = 60
-		block_icmp_error = true
-		respond_to_ping = false
-		port_forward = [{
+		nat_refresh_mode = "outbound"
+		nat_udp_timeout = 1
+		nat_tcp_timeout = 60
+		nat_block_icmp_error = true
+		nat_response_to_ping = false
+		nat_port_forwards = [{
 			port_start_range = 0
 			port_end_range = 65530
 			protocol = "tcp"
@@ -185,46 +172,46 @@ func testAccSdwanVPNInterfaceCellularFeatureTemplateConfig_all() string {
 		enable_core_region = true
 		core_region = "core"
 		secondary_region = "off"
-		encapsulation = [{
-			encapsulation_type = "gre"
+		tunnel_interface_encapsulations = [{
+			encapsulation = "gre"
 			preference = 4294967
 			weight = 250
 		}]
-		groups = [42949672]
-		border = true
+		tunnel_interface_groups = [42949672]
+		tunnel_interface_border = true
 		per_tunnel_qos = true
 		per_tunnel_qos_aggregator = false
-		color = "custom1"
-		last_resort_circuit = false
-		low_bandwidth_link = false
-		tunnel_tcp_mss = 1460
-		enable_clear_dont_fragment = false
-		network_broadcast_1 = false
-		max_control_connections = 8
-		control_connections = true
-		vbond_as_stun_server = false
-		exclude_controller_group_list = [100]
-		vmanage_connection_preference = 5
-		port_hop = false
-		restrict = false
-		carrier = "carrier1"
-		nat_refresh_interval = 15
-		hello_interval = 1000
-		hello_tolerance = 12
-		bind_loopback_tunnel = "12"
-		all = false
-		network_broadcast_2 = false
-		bgp = false
-		dhcp = true
-		dns = true
-		icmp = true
-		ssh = false
-		ntp = false
-		netconf = false
-		ospf = false
-		stun = false
-		snmp = false
-		https = true
+		tunnel_qos_mode = "spoke"
+		tunnel_interface_color = "custom1"
+		tunnel_interface_last_resort_circuit = false
+		tunnel_interface_low_bandwidth_link = false
+		tunnel_interface_tunnel_tcp_mss = 1460
+		tunnel_interface_clear_dont_fragment = false
+		tunnel_interface_network_broadcast = false
+		tunnel_interface_max_control_connections = 8
+		tunnel_interface_control_connections = true
+		tunnel_interface_vbond_as_stun_server = false
+		tunnel_interface_exclude_controller_group_list = [100]
+		tunnel_interface_vmanage_connection_preference = 5
+		tunnel_interface_port_hop = false
+		tunnel_interface_color_restrict = false
+		tunnel_interface_carrier = "carrier1"
+		tunnel_interface_nat_refresh_interval = 15
+		tunnel_interface_hello_interval = 1000
+		tunnel_interface_hello_tolerance = 12
+		tunnel_interface_bind_loopback_tunnel = "12"
+		tunnel_interface_allow_all = false
+		tunnel_interface_allow_bgp = false
+		tunnel_interface_allow_dhcp = true
+		tunnel_interface_allow_dns = true
+		tunnel_interface_allow_icmp = true
+		tunnel_interface_allow_ssh = false
+		tunnel_interface_allow_ntp = false
+		tunnel_interface_allow_netconf = false
+		tunnel_interface_allow_ospf = false
+		tunnel_interface_allow_stun = false
+		tunnel_interface_allow_snmp = false
+		tunnel_interface_allow_https = true
 		clear_dont_fragment_bit = false
 		pmtu_discovery = false
 		ip_mtu = 1500
@@ -232,33 +219,32 @@ func testAccSdwanVPNInterfaceCellularFeatureTemplateConfig_all() string {
 		tcp_mss = 720
 		tloc_extension = "tloc"
 		ip_directed_broadcast = true
-		administrative_shutdown = true
-		link_autonegotiate = true
-		adaptive_qos = true
-		adapt_period = 15
-		adaptive_qos_downstream_default = 10000000
-		downstream_min_bandwidth_limit = 10000000
-		downstream_max_bandwidth_limit = 10000000
-		adaptive_qos_upstream_default = 10000000
-		upstream_min_bandwidth_limit = 10000000
-		upstream_max_bandwidth_limit = 10000000
+		shutdown = true
+		autonegotiate = true
+		qos_adaptive_period = 15
+		qos_adaptive_bandwidth_downstream = 10000
+		qos_adaptive_min_downstream = 100
+		qos_adaptive_max_downstream = 100000
+		qos_adaptive_bandwidth_upstream = 10000
+		qos_adaptive_min_upstream = 100
+		qos_adaptive_max_upstream = 100000
 		shaping_rate = 10000000
 		qos_map = "test"
-		vpn_qos_map = "test"
+		qos_map_vpn = "test"
 		bandwidth_upstream = 214748300
 		bandwidth_downstream = 214748300
-		write_rule = "test_rule"
-		access_list = [{
+		write_rule = "RULE1"
+		ipv4_access_lists = [{
 			direction = "in"
-			acl_name = "Egress ACL - IPv4"
+			acl_name = "ACL2"
 		}]
-		policer = [{
+		policers = [{
 			direction = "in"
 			policer_name = "example"
 		}]
-		static_arp_entries = [{
+		static_arps = [{
 			ip_address = "1.2.3.4"
-			mac_address = "00-B0-D0-63-C2-26"
+			mac = "00-B0-D0-63-C2-26"
 		}]
 	}
 	`
