@@ -5,7 +5,7 @@ minimum_version: 15.0.0
 attributes:
   - model_name: if-name
     tf_name: serial_interface_name
-    example: Example
+    example: SERIAL1
   - model_name: description
     tf_name: interface_description
     example: My description
@@ -25,101 +25,163 @@ attributes:
         example: in
       - model_name: acl-name
         example: ACL1
+    
   - model_name: enable-core-region
+    exclude_ignore: true
     example: true
   - model_name: core-region
+    exclude_ignore: true
     example: core
   - model_name: secondary-region
+    exclude_ignore: true
     example: off
   - model_name: encapsulation
-    tf_name: encapsulation_for_tloc
+    tf_name: tunnel_interface_encapsulations
     attributes:
     - model_name: encap
-      tf_name: encapsulation_type
+      tf_name: encapsulation
       example: gre
     - model_name: preference
       example: 4294967
     - model_name: weight
       example: 250
+
+
   - model_name: group
-    tf_name: groups
+    tf_name: tunnel_interface_groups
     example: 42949672
   - model_name: border
+    tf_name: tunnel_interface_border
+    exclude_ignore: true
     example: true
   - model_name: per-tunnel-qos
     example: true
   - model_name: per-tunnel-qos-aggregator
     example: false
+  - model_name: mode
+    tf_name: tunnel_qos_mode
+    exclude_ignore: true
+    example: spoke
   - model_name: value
-    tf_name: color
+    tf_name: tunnel_interface_color
+    exclude_ignore: true
     example: custom1
   - model_name: last-resort-circuit
+    tf_name: tunnel_interface_last_resort_circuit
+    exclude_ignore: true
     example: false
   - model_name: low-bandwidth-link
+    tf_name: tunnel_interface_low_bandwidth_link
+    exclude_ignore: true
     example: false
   - model_name: tunnel-tcp-mss-adjust
-    tf_name: tunnel_tcp_mss
+    tf_name: tunnel_interface_tunnel_tcp_mss
+    exclude_ignore: true
     example: 1460
   - model_name: clear-dont-fragment
     data_path: [tunnel-interface]
-    tf_name: enable_clear_don
+    tf_name: tunnel_interface_clear_dont_fragment
+    exclude_ignore: true
     example: false
   - model_name: network-broadcast
-    tf_name: network_broadcast_1
+    tf_name: tunnel_interface_network_broadcast
+    exclude_ignore: true
     data_path: [tunnel-interface]
     example: false
   - model_name: max-control-connections
+    tf_name: tunnel_interface_control_connections
+    exclude_ignore: true
     example: 8
   - model_name: vbond-as-stun-server
+    tf_name: tunnel_interface_vbond_as_stun_server
+    exclude_ignore: true
     example: false
   - model_name: exclude-controller-group-list
+    tf_name: tunnel_interface_exclude_controller_group_list
+    exclude_ignore: true
     example: 100
   - model_name: vmanage-connection-preference
+    tf_name: tunnel_interface_vmanage_connection_preference
+    exclude_ignore: true
     example: 5
   - model_name: port-hop
+    tf_name: tunnel_interface_port_hop
+    exclude_ignore: true
     example: false
   - model_name: restrict
+    tf_name: tunnel_interface_restrict
+    exclude_ignore: true
     example: false
   - model_name: carrier
+    tf_name: tunnel_interface_carrier
+    exclude_ignore: true
     example: carrier1
   - model_name: nat-refresh-interval
+    tf_name: tunnel_interface_nat_refresh_interval
+    exclude_ignore: true
     example: 15
   - model_name: hello-interval
+    tf_name: tunnel_interface_hello_interval
+    exclude_ignore: true
     example: 1000
   - model_name: hello-tolerance
+    tf_name: tunnel_interface_hello_tolerance
+    exclude_ignore: true
     example: 12
   - model_name: bind
-    tf_name: bind_loopback_tunnel
+    tf_name: tunnel_interface_bind_loopback_tunnel
+    exclude_ignore: true
     example: 12
+
   - model_name: all
-    example: false
-  - model_name: network-broadcast
-    tf_name: network_broadcast_2
-    data_path: [tunnel-interface]
+    tf_name: tunnel_interface_allow_all
+    exclude_ignore: true
     example: false
   - model_name: bgp
+    tf_name: tunnel_interface_allow_bgp
+    exclude_ignore: true
     example: false
   - model_name: dhcp
+    tf_name: tunnel_interface_allow_dhcp
+    exclude_ignore: true
     example: true
   - model_name: dns
+    tf_name: tunnel_interface_allow_dns
+    exclude_ignore: true
     example: true
   - model_name: icmp
+    tf_name: tunnel_interface_allow_icmp
+    exclude_ignore: true
     example: true
   - model_name: sshd
-    tf_name: ssh
+    tf_name: tunnel_interface_allow_ssh
+    exclude_ignore: true
     example: false
   - model_name: ntp
+    tf_name: tunnel_interface_allow_ntp
+    exclude_ignore: true
     example: false
   - model_name: netconf
+    tf_name: tunnel_interface_allow_netconf
+    exclude_ignore: true
     example: false
   - model_name: ospf
+    tf_name: tunnel_interface_allow_ospf
+    exclude_ignore: true
     example: false
   - model_name: stun
+    tf_name: tunnel_interface_allow_stun
+    exclude_ignore: true
     example: false
   - model_name: snmp
+    tf_name: tunnel_interface_allow_snmp
+    exclude_ignore: true
     example: false
   - model_name: https
+    tf_name: tunnel_interface_allow_https
+    exclude_ignore: true
     example: true
+
   - model_name: clear-dont-fragment
     tf_name: clear_dont_fragment_bit
     example: false
@@ -137,17 +199,15 @@ attributes:
   - model_name: tloc-extension
     example: tloc
   - model_name: shutdown
-    tf_name: administrative_shutdown
+    tf_name: shutdown
     example: true
   - model_name: autonegotiate
-    tf_name: link_autonegotiate
     example: true
   - model_name: shaping-rate
     example: 10000000
   - model_name: qos-map
     example: test
   - model_name: qos-map-vpn
-    tf_name: vpn_qos_map
     example: test
   - model_name: bandwidth
     tf_name: interface_bandwidth_capacity
@@ -162,10 +222,11 @@ attributes:
     example: 10000000
   - model_name: rule-name
     tf_name: write_rule
-    example: test_rule
+    example: RULE1
   - model_name: access-list
+    tf_name: ipv4_access_lists
     attributes:
     - model_name: direction
       example: in
     - model_name: acl-name
-      example: Egress ACL - IPv4
+      example: ACL2
