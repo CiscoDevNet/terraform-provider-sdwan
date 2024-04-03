@@ -59,6 +59,8 @@ func TestAccDataSourceSdwanSystemOMPProfileParcel(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_eigrp", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_lisp", "true"),
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_isis", "true"),
+					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "ignore_region_path_length", "false"),
+					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "transport_gateway", "prefer"),
 				),
 			},
 		},
@@ -101,6 +103,9 @@ resource "sdwan_system_omp_profile_parcel" "test" {
   advertise_ipv6_eigrp = true
   advertise_ipv6_lisp = true
   advertise_ipv6_isis = true
+  ignore_region_path_length = false
+  transport_gateway = "prefer"
+  site_types = ["type-1"]
 }
 
 data "sdwan_system_omp_profile_parcel" "test" {

@@ -28,4 +28,7 @@ resource "sdwan_system_omp_profile_parcel" "example" {
   advertise_ipv6_eigrp        = true
   advertise_ipv6_lisp         = true
   advertise_ipv6_isis         = true
+  ignore_region_path_length   = false
+  transport_gateway           = "prefer"
+  site_types                  = ["type-1"]
 }

@@ -24,6 +24,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -87,6 +88,12 @@ type SystemOMP struct {
 	AdvertiseIpv6LispVariable        types.String `tfsdk:"advertise_ipv6_lisp_variable"`
 	AdvertiseIpv6Isis                types.Bool   `tfsdk:"advertise_ipv6_isis"`
 	AdvertiseIpv6IsisVariable        types.String `tfsdk:"advertise_ipv6_isis_variable"`
+	IgnoreRegionPathLength           types.Bool   `tfsdk:"ignore_region_path_length"`
+	IgnoreRegionPathLengthVariable   types.String `tfsdk:"ignore_region_path_length_variable"`
+	TransportGateway                 types.String `tfsdk:"transport_gateway"`
+	TransportGatewayVariable         types.String `tfsdk:"transport_gateway_variable"`
+	SiteTypes                        types.Set    `tfsdk:"site_types"`
+	SiteTypesVariable                types.String `tfsdk:"site_types_variable"`
 }
 
 func (data SystemOMP) getModel() string {
@@ -163,7 +170,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4Variable.ValueString())
 	} else if data.OmpAdminDistanceIpv4.IsNull() {
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "default")
-
+		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", 251)
 	} else {
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4.ValueInt64())
@@ -174,7 +181,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6Variable.ValueString())
 	} else if data.OmpAdminDistanceIpv6.IsNull() {
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "default")
-
+		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", 251)
 	} else {
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6.ValueInt64())
@@ -262,7 +269,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4ConnectedVariable.ValueString())
 	} else if data.AdvertiseIpv4Connected.IsNull() {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", false)
+		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "global")
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4Connected.ValueBool())
@@ -273,7 +280,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4StaticVariable.ValueString())
 	} else if data.AdvertiseIpv4Static.IsNull() {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", false)
+		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "global")
 		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4Static.ValueBool())
@@ -387,6 +394,41 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	} else {
 		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "global")
 		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", data.AdvertiseIpv6Isis.ValueBool())
+	}
+
+	if !data.IgnoreRegionPathLengthVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "variable")
+		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLengthVariable.ValueString())
+	} else if data.IgnoreRegionPathLength.IsNull() {
+		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "default")
+		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", false)
+	} else {
+		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "global")
+		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLength.ValueBool())
+	}
+
+	if !data.TransportGatewayVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"transportGateway.optionType", "variable")
+		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGatewayVariable.ValueString())
+	} else if data.TransportGateway.IsNull() {
+		body, _ = sjson.Set(body, path+"transportGateway.optionType", "default")
+
+	} else {
+		body, _ = sjson.Set(body, path+"transportGateway.optionType", "global")
+		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueString())
+	}
+
+	if !data.SiteTypesVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"siteTypes.optionType", "variable")
+		body, _ = sjson.Set(body, path+"siteTypes.value", data.SiteTypesVariable.ValueString())
+	} else if data.SiteTypes.IsNull() {
+		body, _ = sjson.Set(body, path+"siteTypes.optionType", "default")
+
+	} else {
+		body, _ = sjson.Set(body, path+"siteTypes.optionType", "global")
+		var values []string
+		data.SiteTypes.ElementsAs(ctx, &values, false)
+		body, _ = sjson.Set(body, path+"siteTypes.value", values)
 	}
 	return body
 }
@@ -659,6 +701,36 @@ func (data *SystemOMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv6Isis = types.BoolValue(va.Bool())
 		}
 	}
+	data.IgnoreRegionPathLength = types.BoolNull()
+	data.IgnoreRegionPathLengthVariable = types.StringNull()
+	if t := res.Get(path + "ignoreRegionPathLength.optionType"); t.Exists() {
+		va := res.Get(path + "ignoreRegionPathLength.value")
+		if t.String() == "variable" {
+			data.IgnoreRegionPathLengthVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.IgnoreRegionPathLength = types.BoolValue(va.Bool())
+		}
+	}
+	data.TransportGateway = types.StringNull()
+	data.TransportGatewayVariable = types.StringNull()
+	if t := res.Get(path + "transportGateway.optionType"); t.Exists() {
+		va := res.Get(path + "transportGateway.value")
+		if t.String() == "variable" {
+			data.TransportGatewayVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TransportGateway = types.StringValue(va.String())
+		}
+	}
+	data.SiteTypes = types.SetNull(types.StringType)
+	data.SiteTypesVariable = types.StringNull()
+	if t := res.Get(path + "siteTypes.optionType"); t.Exists() {
+		va := res.Get(path + "siteTypes.value")
+		if t.String() == "variable" {
+			data.SiteTypesVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SiteTypes = helpers.GetStringSet(va.Array())
+		}
+	}
 }
 
 func (data *SystemOMP) updateFromBody(ctx context.Context, res gjson.Result) {
@@ -929,6 +1001,36 @@ func (data *SystemOMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv6Isis = types.BoolValue(va.Bool())
 		}
 	}
+	data.IgnoreRegionPathLength = types.BoolNull()
+	data.IgnoreRegionPathLengthVariable = types.StringNull()
+	if t := res.Get(path + "ignoreRegionPathLength.optionType"); t.Exists() {
+		va := res.Get(path + "ignoreRegionPathLength.value")
+		if t.String() == "variable" {
+			data.IgnoreRegionPathLengthVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.IgnoreRegionPathLength = types.BoolValue(va.Bool())
+		}
+	}
+	data.TransportGateway = types.StringNull()
+	data.TransportGatewayVariable = types.StringNull()
+	if t := res.Get(path + "transportGateway.optionType"); t.Exists() {
+		va := res.Get(path + "transportGateway.value")
+		if t.String() == "variable" {
+			data.TransportGatewayVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TransportGateway = types.StringValue(va.String())
+		}
+	}
+	data.SiteTypes = types.SetNull(types.StringType)
+	data.SiteTypesVariable = types.StringNull()
+	if t := res.Get(path + "siteTypes.optionType"); t.Exists() {
+		va := res.Get(path + "siteTypes.value")
+		if t.String() == "variable" {
+			data.SiteTypesVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.SiteTypes = helpers.GetStringSet(va.Array())
+		}
+	}
 }
 
 func (data *SystemOMP) isNull(ctx context.Context, res gjson.Result) bool {
@@ -1089,6 +1191,24 @@ func (data *SystemOMP) isNull(ctx context.Context, res gjson.Result) bool {
 		return false
 	}
 	if !data.AdvertiseIpv6IsisVariable.IsNull() {
+		return false
+	}
+	if !data.IgnoreRegionPathLength.IsNull() {
+		return false
+	}
+	if !data.IgnoreRegionPathLengthVariable.IsNull() {
+		return false
+	}
+	if !data.TransportGateway.IsNull() {
+		return false
+	}
+	if !data.TransportGatewayVariable.IsNull() {
+		return false
+	}
+	if !data.SiteTypes.IsNull() {
+		return false
+	}
+	if !data.SiteTypesVariable.IsNull() {
 		return false
 	}
 	return true

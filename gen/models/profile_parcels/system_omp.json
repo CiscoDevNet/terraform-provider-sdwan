@@ -9,7 +9,9 @@
             "name": {
                 "description": "Set the parcel name",
                 "type": "string",
-                "pattern": "(?=^.{1,128}$)[^&<>! \"]+$"
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
             },
             "description": {
                 "description": "Set the parcel description",
@@ -32,7 +34,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -98,7 +100,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -159,7 +161,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -227,7 +229,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -295,7 +297,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -361,7 +363,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -381,6 +383,7 @@
                                         ]
                                     },
                                     "value": {
+                                        "default": 251,
                                         "maximum": 255,
                                         "minimum": 1,
                                         "type": "integer"
@@ -399,6 +402,11 @@
                                         "enum": [
                                             "default"
                                         ]
+                                    },
+                                    "value": {
+                                        "maximum": 251,
+                                        "minimum": 251,
+                                        "type": "integer"
                                     }
                                 },
                                 "required": [
@@ -422,7 +430,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -442,6 +450,7 @@
                                         ]
                                     },
                                     "value": {
+                                        "default": 251,
                                         "maximum": 255,
                                         "minimum": 1,
                                         "type": "integer"
@@ -460,6 +469,11 @@
                                         "enum": [
                                             "default"
                                         ]
+                                    },
+                                    "value": {
+                                        "maximum": 251,
+                                        "minimum": 251,
+                                        "type": "integer"
                                     }
                                 },
                                 "required": [
@@ -483,7 +497,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -551,7 +565,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -619,7 +633,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -687,7 +701,7 @@
                                     },
                                     "value": {
                                         "type": "string",
-                                        "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                         "minLength": 1,
                                         "maxLength": 64
                                     }
@@ -758,7 +772,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -824,7 +838,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -890,7 +904,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -956,7 +970,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -996,13 +1010,13 @@
                                             "value": {
                                                 "type": "boolean",
                                                 "enum": [
+                                                    true,
                                                     false
                                                 ]
                                             }
                                         },
                                         "required": [
-                                            "optionType",
-                                            "value"
+                                            "optionType"
                                         ],
                                         "additionalProperties": false
                                     }
@@ -1022,7 +1036,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1062,13 +1076,13 @@
                                             "value": {
                                                 "type": "boolean",
                                                 "enum": [
+                                                    true,
                                                     false
                                                 ]
                                             }
                                         },
                                         "required": [
-                                            "optionType",
-                                            "value"
+                                            "optionType"
                                         ],
                                         "additionalProperties": false
                                     }
@@ -1088,7 +1102,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1154,7 +1168,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1220,7 +1234,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1302,7 +1316,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1368,7 +1382,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1434,7 +1448,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1500,7 +1514,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1566,7 +1580,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1632,7 +1646,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1698,7 +1712,7 @@
                                             },
                                             "value": {
                                                 "type": "string",
-                                                "pattern": "^\\{\\{[a-zA-Z0-9_-]+\\}\\}$",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
                                                 "minLength": 1,
                                                 "maxLength": 64
                                             }
@@ -1761,6 +1775,209 @@
                             "isis"
                         ],
                         "additionalProperties": false
+                    },
+                    "ignoreRegionPathLength": {
+                        "description": "Treat hierarchical and direct (secondary region) paths equally",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "boolean",
+                                        "enum": [
+                                            false
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "transportGateway": {
+                        "description": "Transport Gateway Path Behavior",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "enum": [
+                                            "prefer",
+                                            "ecmp-with-direct-path"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "siteTypes": {
+                        "description": "Site Types",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "variable"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "array",
+                                        "uniqueItems": true,
+                                        "minItems": 1,
+                                        "maxItems": 4,
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "type-1",
+                                                "type-2",
+                                                "type-3",
+                                                "cloud",
+                                                "branch",
+                                                "br",
+                                                "spoke"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
                     }
                 },
                 "required": [

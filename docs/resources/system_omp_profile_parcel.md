@@ -45,6 +45,9 @@ resource "sdwan_system_omp_profile_parcel" "example" {
   advertise_ipv6_eigrp        = true
   advertise_ipv6_lisp         = true
   advertise_ipv6_isis         = true
+  ignore_region_path_length   = false
+  transport_gateway           = "prefer"
+  site_types                  = ["type-1"]
 }
 ```
 
@@ -62,7 +65,7 @@ resource "sdwan_system_omp_profile_parcel" "example" {
   - Default value: `false`
 - `advertise_ipv4_bgp_variable` (String) Variable name
 - `advertise_ipv4_connected` (Boolean) Connected
-  - Default value: `false`
+  - Default value: `true`
 - `advertise_ipv4_connected_variable` (String) Variable name
 - `advertise_ipv4_eigrp` (Boolean) EIGRP
   - Default value: `false`
@@ -80,7 +83,7 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 - `advertise_ipv4_ospf_v3_variable` (String) Variable name
 - `advertise_ipv4_ospf_variable` (String) Variable name
 - `advertise_ipv4_static` (Boolean) Static
-  - Default value: `false`
+  - Default value: `true`
 - `advertise_ipv4_static_variable` (String) Variable name
 - `advertise_ipv6_bgp` (Boolean) BGP
   - Default value: `false`
@@ -126,11 +129,16 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 - `holdtime` (Number) Hold Time (seconds)
   - Default value: `60`
 - `holdtime_variable` (String) Variable name
+- `ignore_region_path_length` (Boolean) Treat hierarchical and direct (secondary region) paths equally
+  - Default value: `false`
+- `ignore_region_path_length_variable` (String) Variable name
 - `omp_admin_distance_ipv4` (Number) OMP Admin Distance IPv4
   - Range: `1`-`255`
+  - Default value: `251`
 - `omp_admin_distance_ipv4_variable` (String) Variable name
 - `omp_admin_distance_ipv6` (Number) OMP Admin Distance IPv6
   - Range: `1`-`255`
+  - Default value: `251`
 - `omp_admin_distance_ipv6_variable` (String) Variable name
 - `overlay_as` (Number) Overlay AS Number
   - Range: `1`-`4294967295`
@@ -142,6 +150,11 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 - `shutdown` (Boolean) Shutdown
   - Default value: `false`
 - `shutdown_variable` (String) Variable name
+- `site_types` (Set of String) Site Types
+- `site_types_variable` (String) Variable name
+- `transport_gateway` (String) Transport Gateway Path Behavior
+  - Choices: `prefer`, `ecmp-with-direct-path`
+- `transport_gateway_variable` (String) Variable name
 
 ### Read-Only
 

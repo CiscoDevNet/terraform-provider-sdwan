@@ -93,13 +93,12 @@ attributes:
     tf_name: advertise_ipv6_isis
     data_path: [advertiseIpv6]
     example: true
-  ### NOT AVAILABLE IN 10.09 ###
-  # - model_name: ignoreRegionPathLength
-  #   example: false
-  # - model_name: transportGateway
-  #   example: prefer
-  # - model_name: siteTypes
-  #   example: type-1
+  - model_name: ignoreRegionPathLength
+    example: false
+  - model_name: transportGateway
+    example: prefer
+  - model_name: siteTypes
+    example: type-1
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {

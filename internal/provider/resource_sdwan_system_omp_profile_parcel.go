@@ -27,6 +27,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -131,7 +132,7 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"omp_admin_distance_ipv4": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("OMP Admin Distance IPv4").AddIntegerRangeDescription(1, 255).String,
+				MarkdownDescription: helpers.NewAttributeDescription("OMP Admin Distance IPv4").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("251").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 255),
@@ -142,7 +143,7 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"omp_admin_distance_ipv6": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("OMP Admin Distance IPv6").AddIntegerRangeDescription(1, 255).String,
+				MarkdownDescription: helpers.NewAttributeDescription("OMP Admin Distance IPv6").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("251").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 255),
@@ -215,7 +216,7 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"advertise_ipv4_connected": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Connected").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Connected").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"advertise_ipv4_connected_variable": schema.StringAttribute{
@@ -223,7 +224,7 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"advertise_ipv4_static": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Static").AddDefaultValueDescription("false").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Static").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
 			"advertise_ipv4_static_variable": schema.StringAttribute{
@@ -307,6 +308,34 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"advertise_ipv6_isis_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"ignore_region_path_length": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Treat hierarchical and direct (secondary region) paths equally").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"ignore_region_path_length_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"transport_gateway": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Transport Gateway Path Behavior").AddStringEnumDescription("prefer", "ecmp-with-direct-path").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("prefer", "ecmp-with-direct-path"),
+				},
+			},
+			"transport_gateway_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"site_types": schema.SetAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Site Types").String,
+				ElementType:         types.StringType,
+				Optional:            true,
+			},
+			"site_types_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
