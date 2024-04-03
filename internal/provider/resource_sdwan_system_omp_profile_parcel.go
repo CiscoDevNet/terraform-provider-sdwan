@@ -214,11 +214,11 @@ func (r *SystemOMPProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"advertise_ipv4_cpnnected": schema.BoolAttribute{
+			"advertise_ipv4_connected": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Connected").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"advertise_ipv4_cpnnected_variable": schema.StringAttribute{
+			"advertise_ipv4_connected_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

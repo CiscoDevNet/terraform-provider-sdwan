@@ -47,7 +47,7 @@ func TestAccDataSourceSdwanSystemOMPProfileParcel(t *testing.T) {
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_bgp", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf_v3", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_cpnnected", "false"),
+					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_connected", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_static", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_eigrp", "false"),
 					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_lisp", "false"),
@@ -89,7 +89,7 @@ resource "sdwan_system_omp_profile_parcel" "test" {
   advertise_ipv4_bgp = false
   advertise_ipv4_ospf = false
   advertise_ipv4_ospf_v3 = false
-  advertise_ipv4_cpnnected = false
+  advertise_ipv4_connected = false
   advertise_ipv4_static = false
   advertise_ipv4_eigrp = false
   advertise_ipv4_lisp = false

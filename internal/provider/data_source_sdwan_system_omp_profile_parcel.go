@@ -187,11 +187,11 @@ func (d *SystemOMPProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advertise_ipv4_cpnnected": schema.BoolAttribute{
+			"advertise_ipv4_connected": schema.BoolAttribute{
 				MarkdownDescription: "Connected",
 				Computed:            true,
 			},
-			"advertise_ipv4_cpnnected_variable": schema.StringAttribute{
+			"advertise_ipv4_connected_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

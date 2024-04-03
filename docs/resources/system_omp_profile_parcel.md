@@ -33,7 +33,7 @@ resource "sdwan_system_omp_profile_parcel" "example" {
   advertise_ipv4_bgp          = false
   advertise_ipv4_ospf         = false
   advertise_ipv4_ospf_v3      = false
-  advertise_ipv4_cpnnected    = false
+  advertise_ipv4_connected    = false
   advertise_ipv4_static       = false
   advertise_ipv4_eigrp        = false
   advertise_ipv4_lisp         = false
@@ -61,9 +61,9 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 - `advertise_ipv4_bgp` (Boolean) BGP
   - Default value: `false`
 - `advertise_ipv4_bgp_variable` (String) Variable name
-- `advertise_ipv4_cpnnected` (Boolean) Connected
+- `advertise_ipv4_connected` (Boolean) Connected
   - Default value: `false`
-- `advertise_ipv4_cpnnected_variable` (String) Variable name
+- `advertise_ipv4_connected_variable` (String) Variable name
 - `advertise_ipv4_eigrp` (Boolean) EIGRP
   - Default value: `false`
 - `advertise_ipv4_eigrp_variable` (String) Variable name

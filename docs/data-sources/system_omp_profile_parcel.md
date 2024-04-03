@@ -31,8 +31,8 @@ data "sdwan_system_omp_profile_parcel" "example" {
 
 - `advertise_ipv4_bgp` (Boolean) BGP
 - `advertise_ipv4_bgp_variable` (String) Variable name
-- `advertise_ipv4_cpnnected` (Boolean) Connected
-- `advertise_ipv4_cpnnected_variable` (String) Variable name
+- `advertise_ipv4_connected` (Boolean) Connected
+- `advertise_ipv4_connected_variable` (String) Variable name
 - `advertise_ipv4_eigrp` (Boolean) EIGRP
 - `advertise_ipv4_eigrp_variable` (String) Variable name
 - `advertise_ipv4_isis` (Boolean) ISIS

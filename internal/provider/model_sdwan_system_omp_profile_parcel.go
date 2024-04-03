@@ -63,8 +63,8 @@ type SystemOMP struct {
 	AdvertiseIpv4OspfVariable        types.String `tfsdk:"advertise_ipv4_ospf_variable"`
 	AdvertiseIpv4OspfV3              types.Bool   `tfsdk:"advertise_ipv4_ospf_v3"`
 	AdvertiseIpv4OspfV3Variable      types.String `tfsdk:"advertise_ipv4_ospf_v3_variable"`
-	AdvertiseIpv4Cpnnected           types.Bool   `tfsdk:"advertise_ipv4_cpnnected"`
-	AdvertiseIpv4CpnnectedVariable   types.String `tfsdk:"advertise_ipv4_cpnnected_variable"`
+	AdvertiseIpv4Connected           types.Bool   `tfsdk:"advertise_ipv4_connected"`
+	AdvertiseIpv4ConnectedVariable   types.String `tfsdk:"advertise_ipv4_connected_variable"`
 	AdvertiseIpv4Static              types.Bool   `tfsdk:"advertise_ipv4_static"`
 	AdvertiseIpv4StaticVariable      types.String `tfsdk:"advertise_ipv4_static_variable"`
 	AdvertiseIpv4Eigrp               types.Bool   `tfsdk:"advertise_ipv4_eigrp"`
@@ -257,15 +257,15 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3.ValueBool())
 	}
 
-	if !data.AdvertiseIpv4CpnnectedVariable.IsNull() {
+	if !data.AdvertiseIpv4ConnectedVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4CpnnectedVariable.ValueString())
-	} else if data.AdvertiseIpv4Cpnnected.IsNull() {
+		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4ConnectedVariable.ValueString())
+	} else if data.AdvertiseIpv4Connected.IsNull() {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "default")
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4Cpnnected.ValueBool())
+		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4Connected.ValueBool())
 	}
 
 	if !data.AdvertiseIpv4StaticVariable.IsNull() {
@@ -539,14 +539,14 @@ func (data *SystemOMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv4OspfV3 = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvertiseIpv4Cpnnected = types.BoolNull()
-	data.AdvertiseIpv4CpnnectedVariable = types.StringNull()
+	data.AdvertiseIpv4Connected = types.BoolNull()
+	data.AdvertiseIpv4ConnectedVariable = types.StringNull()
 	if t := res.Get(path + "advertiseIpv4.connected.optionType"); t.Exists() {
 		va := res.Get(path + "advertiseIpv4.connected.value")
 		if t.String() == "variable" {
-			data.AdvertiseIpv4CpnnectedVariable = types.StringValue(va.String())
+			data.AdvertiseIpv4ConnectedVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvertiseIpv4Cpnnected = types.BoolValue(va.Bool())
+			data.AdvertiseIpv4Connected = types.BoolValue(va.Bool())
 		}
 	}
 	data.AdvertiseIpv4Static = types.BoolNull()
@@ -809,14 +809,14 @@ func (data *SystemOMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv4OspfV3 = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvertiseIpv4Cpnnected = types.BoolNull()
-	data.AdvertiseIpv4CpnnectedVariable = types.StringNull()
+	data.AdvertiseIpv4Connected = types.BoolNull()
+	data.AdvertiseIpv4ConnectedVariable = types.StringNull()
 	if t := res.Get(path + "advertiseIpv4.connected.optionType"); t.Exists() {
 		va := res.Get(path + "advertiseIpv4.connected.value")
 		if t.String() == "variable" {
-			data.AdvertiseIpv4CpnnectedVariable = types.StringValue(va.String())
+			data.AdvertiseIpv4ConnectedVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvertiseIpv4Cpnnected = types.BoolValue(va.Bool())
+			data.AdvertiseIpv4Connected = types.BoolValue(va.Bool())
 		}
 	}
 	data.AdvertiseIpv4Static = types.BoolNull()
@@ -1019,10 +1019,10 @@ func (data *SystemOMP) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.AdvertiseIpv4OspfV3Variable.IsNull() {
 		return false
 	}
-	if !data.AdvertiseIpv4Cpnnected.IsNull() {
+	if !data.AdvertiseIpv4Connected.IsNull() {
 		return false
 	}
-	if !data.AdvertiseIpv4CpnnectedVariable.IsNull() {
+	if !data.AdvertiseIpv4ConnectedVariable.IsNull() {
 		return false
 	}
 	if !data.AdvertiseIpv4Static.IsNull() {
