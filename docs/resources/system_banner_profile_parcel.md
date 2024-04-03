@@ -29,12 +29,12 @@ resource "sdwan_system_banner_profile_parcel" "example" {
 
 ### Required
 
-- `description` (String) The description of the profile parcel
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
 ### Optional
 
+- `description` (String) The description of the profile parcel
 - `login` (String)
 - `login_variable` (String) Variable name
 - `motd` (String)

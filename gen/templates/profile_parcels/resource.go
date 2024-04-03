@@ -79,7 +79,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"description": schema.StringAttribute{
 				MarkdownDescription: "The description of the profile parcel",
-				Required:            true,
+				Optional:            true,
 			},
 			{{- range  .Attributes}}
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{

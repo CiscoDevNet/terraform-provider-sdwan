@@ -53,7 +53,6 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 
 ### Required
 
-- `description` (String) The description of the profile parcel
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
@@ -108,6 +107,7 @@ resource "sdwan_system_omp_profile_parcel" "example" {
   - Range: `0`-`65535`
   - Default value: `1`
 - `advertisement_interval_variable` (String) Variable name
+- `description` (String) The description of the profile parcel
 - `ecmp_limit` (Number) Set maximum number of OMP paths to install in cEdge route table
   - Range: `1`-`0`
   - Default value: `4`

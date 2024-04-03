@@ -50,7 +50,6 @@ resource "sdwan_system_global_profile_parcel" "example" {
 
 ### Required
 
-- `description` (String) The description of the profile parcel
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
@@ -65,6 +64,7 @@ resource "sdwan_system_global_profile_parcel" "example" {
 - `console_logging` (Boolean) Configure Console Logging
   - Default value: `true`
 - `console_logging_variable` (String) Variable name
+- `description` (String) The description of the profile parcel
 - `domain_lookup` (Boolean) Configure Domain-Lookup
   - Default value: `false`
 - `domain_lookup_variable` (String) Variable name
