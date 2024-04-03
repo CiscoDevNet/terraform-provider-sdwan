@@ -26,7 +26,7 @@ attributes:
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: ADC5837E
+        example: 8420F3EE
       - model_name: host-name
         tf_name: hostname
         type: String
