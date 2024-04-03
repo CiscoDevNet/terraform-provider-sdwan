@@ -83,7 +83,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"authentication_group": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Authentication configurations parameters").AddDefaultValueDescription("false").String,
@@ -104,7 +104,7 @@ func (r *SystemAAAProfileParcelResource) Schema(ctx context.Context, req resourc
 			"server_auth_order": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("ServerGroups priority order").String,
 				ElementType:         types.StringType,
-				Optional:            true,
+				Required:            true,
 			},
 			"users": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Create local login account").String,

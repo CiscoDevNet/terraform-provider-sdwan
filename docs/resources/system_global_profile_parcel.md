@@ -51,6 +51,7 @@ resource "sdwan_system_global_profile_parcel" "example" {
 ### Required
 
 - `description` (String) The description of the profile parcel
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
 ### Optional
@@ -67,7 +68,6 @@ resource "sdwan_system_global_profile_parcel" "example" {
 - `domain_lookup` (Boolean) Configure Domain-Lookup
   - Default value: `false`
 - `domain_lookup_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `ftp_passive` (Boolean) Set Passive FTP
   - Default value: `false`
 - `ftp_passive_variable` (String) Variable name

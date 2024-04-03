@@ -54,6 +54,7 @@ resource "sdwan_system_omp_profile_parcel" "example" {
 ### Required
 
 - `description` (String) The description of the profile parcel
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
 ### Optional
@@ -115,7 +116,6 @@ resource "sdwan_system_omp_profile_parcel" "example" {
   - Range: `1`-`3600`
   - Default value: `300`
 - `eor_timer_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
 - `graceful_restart` (Boolean) Graceful Restart for OMP
   - Default value: `true`
 - `graceful_restart_timer` (Number) Graceful Restart Timer (seconds)

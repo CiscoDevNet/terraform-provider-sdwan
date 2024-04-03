@@ -100,7 +100,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
 				{{- end}}
+				{{- if .Mandatory}}
+				Required:            true,
+				{{- else}}
 				Optional:            true,
+				{{- end}}
 				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),

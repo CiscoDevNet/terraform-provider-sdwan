@@ -82,7 +82,7 @@ func (r *SystemBannerProfileParcelResource) Schema(ctx context.Context, req reso
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"login": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,

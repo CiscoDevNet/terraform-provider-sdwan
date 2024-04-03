@@ -84,7 +84,7 @@ func (r *SystemGlobalProfileParcelResource) Schema(ctx context.Context, req reso
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"http_server": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set a HTTP Server").AddDefaultValueDescription("false").String,

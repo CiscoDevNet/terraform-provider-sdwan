@@ -83,7 +83,7 @@ func (r *SystemBFDProfileParcelResource) Schema(ctx context.Context, req resourc
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"multiplier": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(1, 6).AddDefaultValueDescription("6").String,

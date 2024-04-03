@@ -101,7 +101,9 @@ resource "sdwan_system_aaa_profile_parcel" "example" {
 ### Required
 
 - `description` (String) The description of the profile parcel
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
+- `server_auth_order` (Set of String) ServerGroups priority order
 
 ### Optional
 
@@ -119,9 +121,7 @@ resource "sdwan_system_aaa_profile_parcel" "example" {
   - Default value: `false`
 - `authorization_console_variable` (String) Variable name
 - `authorization_rules` (Attributes List) Configure the Authorization Rules (see [below for nested schema](#nestedatt--authorization_rules))
-- `feature_profile_id` (String) Feature Profile ID
 - `radius_groups` (Attributes List) Configure the Radius serverGroup (see [below for nested schema](#nestedatt--radius_groups))
-- `server_auth_order` (Set of String) ServerGroups priority order
 - `tacacs_groups` (Attributes List) Configure the TACACS serverGroup (see [below for nested schema](#nestedatt--tacacs_groups))
 - `users` (Attributes List) Create local login account (see [below for nested schema](#nestedatt--users))
 
