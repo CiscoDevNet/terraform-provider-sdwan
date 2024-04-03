@@ -4,13 +4,13 @@ page_title: "sdwan_system_omp_profile_parcel Resource - terraform-provider-sdwan
 subcategory: "Profile Parcels"
 description: |-
   This resource can manage a System OMP profile parcel.
-    - Minimum SD-WAN Manager version: 20.9.0
+    - Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_system_omp_profile_parcel (Resource)
 
 This resource can manage a System OMP profile parcel.
-  - Minimum SD-WAN Manager version: `20.9.0`
+  - Minimum SD-WAN Manager version: `20.12.0`
 
 ## Example Usage
 
