@@ -26,37 +26,42 @@ import (
 )
 
 func TestAccDataSourceSdwanSystemBannerProfileParcel(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_banner_profile_parcel.test", "login", "My login banner"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_banner_profile_parcel.test", "motd", "My motd banner"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanSystemBannerProfileParcelConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_system_banner_profile_parcel.test", "login", "My login banner"),
-					resource.TestCheckResourceAttr("data.sdwan_system_banner_profile_parcel.test", "motd", "My motd banner"),
-				),
+				Config: testAccDataSourceSdwanSystemBannerPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBannerProfileParcelConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanSystemBannerProfileParcelConfig = `
+const testAccDataSourceSdwanSystemBannerPrerequisitesProfileParcelConfig = `
 resource "sdwan_system_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
-
-resource "sdwan_system_banner_profile_parcel" "test" {
-  name = "TF_TEST"
-  description = "Terraform integration test"
-  feature_profile_id = sdwan_system_feature_profile.test.id
-  login = "My login banner"
-  motd = "My motd banner"
-}
-
-data "sdwan_system_banner_profile_parcel" "test" {
-  id = sdwan_system_banner_profile_parcel.test.id
-  feature_profile_id = sdwan_system_feature_profile.test.id
-}
 `
+
+func testAccDataSourceSdwanSystemBannerProfileParcelConfig() string {
+	config := `resource "sdwan_system_banner_profile_parcel" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	login = "My login banner"` + "\n"
+	config += `	motd = "My motd banner"` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_banner_profile_parcel" "test" {
+			id = sdwan_system_banner_profile_parcel.test.id
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}

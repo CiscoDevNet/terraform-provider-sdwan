@@ -201,6 +201,7 @@ type YamlConfig struct {
 	FeatureTemplateIsGlobal  bool                  `yaml:"feature_template_is_global"`
 	SkipTemplates            []string              `yaml:"skip_templates"`
 	Attributes               []YamlConfigAttribute `yaml:"attributes"`
+	TestTags                 []string              `yaml:"test_tags"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 }
@@ -249,6 +250,7 @@ type YamlConfigAttribute struct {
 	ConditionalAttribute YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
 	QueryParam           bool                           `yaml:"query_param"`
 	NoAugmentConfig      bool                           `yaml:"no_augment_config"`
+	TestTags             []string                       `yaml:"test_tags"`
 }
 
 type YamlConfigConditionalAttribute struct {
