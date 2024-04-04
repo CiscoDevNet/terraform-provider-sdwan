@@ -20,12 +20,16 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccDataSourceSdwanServiceFeatureProfile(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_feature_profile.test", "name", "SERVICE_FP_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_feature_profile.test", "description", "My service feature profile 1"))

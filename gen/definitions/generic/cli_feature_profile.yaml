@@ -3,6 +3,7 @@ name: CLI Feature Profile
 rest_endpoint: /v1/feature-profile/sdwan/cli/
 id_attribute: id
 doc_category: Feature Profiles
+test_tags: [SDWAN_2012]
 attributes:
   - model_name: name
     response_model_name: profileName

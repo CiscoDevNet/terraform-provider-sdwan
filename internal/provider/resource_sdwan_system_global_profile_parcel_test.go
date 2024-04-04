@@ -20,12 +20,16 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemGlobalProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "http_server", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_global_profile_parcel.test", "https_server", "false"))
