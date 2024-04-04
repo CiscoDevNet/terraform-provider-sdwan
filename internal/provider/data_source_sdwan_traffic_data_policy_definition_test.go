@@ -63,7 +63,8 @@ resource "sdwan_application_list_policy_object" "test" {
 `
 
 func testAccDataSourceSdwanTrafficDataPolicyDefinitionConfig() string {
-	config := `resource "sdwan_traffic_data_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_traffic_data_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	default_action = "drop"` + "\n"

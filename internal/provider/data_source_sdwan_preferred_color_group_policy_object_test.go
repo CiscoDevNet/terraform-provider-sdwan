@@ -47,7 +47,8 @@ func TestAccDataSourceSdwanPreferredColorGroupPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanPreferredColorGroupPolicyObjectConfig() string {
-	config := `resource "sdwan_preferred_color_group_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_preferred_color_group_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	primary_color_preference = "blue bronze"` + "\n"
 	config += `	primary_path_preference = "direct-path"` + "\n"

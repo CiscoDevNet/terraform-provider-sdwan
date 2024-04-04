@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanASPathListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanASPathListPolicyObjectConfig() string {
-	config := `resource "sdwan_as_path_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_as_path_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  as_path = "^1239_[0-9]*$"` + "\n"

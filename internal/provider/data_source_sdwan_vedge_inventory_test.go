@@ -43,13 +43,7 @@ func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
 }
 
 func testAccDataSourceSdwanVEdgeInventoryConfig() string {
-	config := `resource "sdwan_vedge_inventory" "test" {` + "\n"
-	config += `	devices = [{` + "\n"
-	config += `	  chassis_number = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
-	config += `	  serial_number = "8420F3EE"` + "\n"
-	config += `	  device_type = "vedge"` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
+	config := ""
 
 	config += `
 		data "sdwan_vedge_inventory" "test" {

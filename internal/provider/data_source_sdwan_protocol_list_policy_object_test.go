@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanProtocolListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanProtocolListPolicyObjectConfig() string {
-	config := `resource "sdwan_protocol_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_protocol_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  protocol = "cifs"` + "\n"

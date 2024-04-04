@@ -64,7 +64,8 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
 `
 
 func testAccDataSourceSdwanHubAndSpokeTopologyPolicyDefinitionConfig() string {
-	config := `resource "sdwan_hub_and_spoke_topology_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_hub_and_spoke_topology_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id` + "\n"

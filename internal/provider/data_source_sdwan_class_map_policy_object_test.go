@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanClassMapPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanClassMapPolicyObjectConfig() string {
-	config := `resource "sdwan_class_map_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_class_map_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	queue = 2` + "\n"
 	config += `}` + "\n"

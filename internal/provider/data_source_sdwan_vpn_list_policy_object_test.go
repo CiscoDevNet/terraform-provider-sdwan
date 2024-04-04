@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanVPNListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanVPNListPolicyObjectConfig() string {
-	config := `resource "sdwan_vpn_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_vpn_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  vpn_id = "100-200"` + "\n"

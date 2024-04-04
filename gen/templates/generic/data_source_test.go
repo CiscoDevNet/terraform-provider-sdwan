@@ -127,7 +127,9 @@ const testAccDataSourceSdwan{{camelCase .Name}}PrerequisitesConfig = `
 {{- end}}
 
 func testAccDataSourceSdwan{{camelCase .Name}}Config() string {
-	config := `resource "sdwan_{{snakeCase $name}}" "test" {` + "\n"
+	config := ""
+	{{- if not (contains .SkipTemplates "resource.go")}}
+	config += `resource "sdwan_{{snakeCase $name}}" "test" {` + "\n"
 	{{- range  .Attributes}}
 	{{- if and (not .ExcludeTest) (not .TfOnly) (not .Value)}}
 	{{- if isNestedListSet .}}
@@ -206,6 +208,7 @@ func testAccDataSourceSdwan{{camelCase .Name}}Config() string {
 	{{- end}}
 	{{- end}}
 	config += `}` + "\n"
+	{{- end}}
 
 	config += `
 		data "sdwan_{{snakeCase .Name}}" "test" {

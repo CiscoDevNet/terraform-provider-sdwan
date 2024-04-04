@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanSiteListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanSiteListPolicyObjectConfig() string {
-	config := `resource "sdwan_site_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_site_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  site_id = "100-200"` + "\n"

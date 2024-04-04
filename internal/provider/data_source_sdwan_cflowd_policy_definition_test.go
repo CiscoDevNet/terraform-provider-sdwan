@@ -55,7 +55,8 @@ func TestAccDataSourceSdwanCflowdPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanCflowdPolicyDefinitionConfig() string {
-	config := `resource "sdwan_cflowd_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_cflowd_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	active_flow_timeout = 100` + "\n"

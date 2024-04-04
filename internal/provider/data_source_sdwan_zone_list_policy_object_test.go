@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanZoneListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanZoneListPolicyObjectConfig() string {
-	config := `resource "sdwan_zone_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_zone_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  vpn = "1"` + "\n"

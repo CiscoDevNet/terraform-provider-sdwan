@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanDataIPv4PrefixListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanDataIPv4PrefixListPolicyObjectConfig() string {
-	config := `resource "sdwan_data_ipv4_prefix_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_data_ipv4_prefix_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  prefix = "10.0.0.0/12"` + "\n"

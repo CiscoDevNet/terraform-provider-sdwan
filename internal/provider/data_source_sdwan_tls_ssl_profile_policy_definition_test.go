@@ -46,7 +46,8 @@ func TestAccDataSourceSdwanTLSSSLProfilePolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanTLSSSLProfilePolicyDefinitionConfig() string {
-	config := `resource "sdwan_tls_ssl_profile_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_tls_ssl_profile_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	mode = "security"` + "\n"

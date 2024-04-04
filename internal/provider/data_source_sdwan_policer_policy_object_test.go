@@ -44,7 +44,8 @@ func TestAccDataSourceSdwanPolicerPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanPolicerPolicyObjectConfig() string {
-	config := `resource "sdwan_policer_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_policer_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	burst = 100000` + "\n"
 	config += `	exceed_action = "remark"` + "\n"

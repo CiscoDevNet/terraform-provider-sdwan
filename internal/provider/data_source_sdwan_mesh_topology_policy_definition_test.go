@@ -64,7 +64,8 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
 `
 
 func testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig() string {
-	config := `resource "sdwan_mesh_topology_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_mesh_topology_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id` + "\n"

@@ -59,7 +59,8 @@ resource "sdwan_domain_list_policy_object" "test" {
 `
 
 func testAccDataSourceSdwanDNSSecurityPolicyDefinitionConfig() string {
-	config := `resource "sdwan_dns_security_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_dns_security_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "Example"` + "\n"
 	config += `	domain_list_id = sdwan_domain_list_policy_object.test.id` + "\n"

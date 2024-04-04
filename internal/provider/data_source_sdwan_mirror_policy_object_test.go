@@ -43,7 +43,8 @@ func TestAccDataSourceSdwanMirrorPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanMirrorPolicyObjectConfig() string {
-	config := `resource "sdwan_mirror_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_mirror_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	remote_destination_ip = "10.1.1.1"` + "\n"
 	config += `	source_ip = "10.2.1.1"` + "\n"

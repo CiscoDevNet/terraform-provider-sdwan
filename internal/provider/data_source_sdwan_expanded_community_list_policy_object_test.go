@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanExpandedCommunityListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanExpandedCommunityListPolicyObjectConfig() string {
-	config := `resource "sdwan_expanded_community_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_expanded_community_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  community = "100:1000"` + "\n"

@@ -46,7 +46,8 @@ func TestAccDataSourceSdwanSystemFeatureProfile(t *testing.T) {
 }
 
 func testAccDataSourceSdwanSystemFeatureProfileConfig() string {
-	config := `resource "sdwan_system_feature_profile" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_system_feature_profile" "test" {` + "\n"
 	config += `	name = "SYSTEM_FP_1"` + "\n"
 	config += `	description = "My system feature profile 1"` + "\n"
 	config += `}` + "\n"

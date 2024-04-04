@@ -56,7 +56,8 @@ resource "sdwan_class_map_policy_object" "test" {
 `
 
 func testAccDataSourceSdwanQoSMapPolicyDefinitionConfig() string {
-	config := `resource "sdwan_qos_map_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_qos_map_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	qos_schedulers = [{` + "\n"

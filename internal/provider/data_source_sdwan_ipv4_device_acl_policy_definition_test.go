@@ -50,7 +50,8 @@ func TestAccDataSourceSdwanIPv4DeviceACLPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanIPv4DeviceACLPolicyDefinitionConfig() string {
-	config := `resource "sdwan_ipv4_device_acl_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_ipv4_device_acl_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	default_action = "drop"` + "\n"

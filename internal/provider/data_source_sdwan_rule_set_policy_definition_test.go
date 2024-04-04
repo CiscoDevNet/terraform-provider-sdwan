@@ -53,7 +53,8 @@ func TestAccDataSourceSdwanRuleSetPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanRuleSetPolicyDefinitionConfig() string {
-	config := `resource "sdwan_rule_set_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_rule_set_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	rules = [{` + "\n"

@@ -46,7 +46,8 @@ func TestAccDataSourceSdwanObjectGroupPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanObjectGroupPolicyDefinitionConfig() string {
-	config := `resource "sdwan_object_group_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_object_group_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	ipv4_prefix = "10.1.1.0/24"` + "\n"

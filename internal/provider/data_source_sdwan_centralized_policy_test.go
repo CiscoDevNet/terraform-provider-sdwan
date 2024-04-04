@@ -85,7 +85,8 @@ resource "sdwan_traffic_data_policy_definition" "data1" {
 `
 
 func testAccDataSourceSdwanCentralizedPolicyConfig() string {
-	config := `resource "sdwan_centralized_policy" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_centralized_policy" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	definitions = [{` + "\n"

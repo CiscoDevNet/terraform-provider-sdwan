@@ -46,7 +46,8 @@ func TestAccDataSourceSdwanIntrusionPreventionPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig() string {
-	config := `resource "sdwan_intrusion_prevention_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_intrusion_prevention_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	mode = "security"` + "\n"

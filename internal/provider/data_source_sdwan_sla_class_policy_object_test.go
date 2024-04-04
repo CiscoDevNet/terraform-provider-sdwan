@@ -48,7 +48,8 @@ func TestAccDataSourceSdwanSLAClassPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanSLAClassPolicyObjectConfig() string {
-	config := `resource "sdwan_sla_class_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_sla_class_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	jitter = 100` + "\n"
 	config += `	latency = 10` + "\n"

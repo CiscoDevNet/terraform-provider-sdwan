@@ -51,7 +51,8 @@ func TestAccDataSourceSdwanIPv6ACLPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanIPv6ACLPolicyDefinitionConfig() string {
-	config := `resource "sdwan_ipv6_acl_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_ipv6_acl_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	default_action = "drop"` + "\n"

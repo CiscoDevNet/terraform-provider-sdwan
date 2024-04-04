@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanRegionListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanRegionListPolicyObjectConfig() string {
-	config := `resource "sdwan_region_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_region_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  region_id = "1-2"` + "\n"

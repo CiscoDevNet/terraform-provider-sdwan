@@ -44,7 +44,8 @@ func TestAccDataSourceSdwanAppProbeClassPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanAppProbeClassPolicyObjectConfig() string {
-	config := `resource "sdwan_app_probe_class_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_app_probe_class_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	forwarding_class = "FC1"` + "\n"
 	config += `	mappings = [{` + "\n"

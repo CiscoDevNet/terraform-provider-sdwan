@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanLocalApplicationListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanLocalApplicationListPolicyObjectConfig() string {
-	config := `resource "sdwan_local_application_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_local_application_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  application = "cisco-collab-video"` + "\n"

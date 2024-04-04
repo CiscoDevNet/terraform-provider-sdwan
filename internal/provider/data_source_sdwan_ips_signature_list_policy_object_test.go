@@ -43,7 +43,8 @@ func TestAccDataSourceSdwanIPSSignatureListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanIPSSignatureListPolicyObjectConfig() string {
-	config := `resource "sdwan_ips_signature_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_ips_signature_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  generator_id = 1111` + "\n"

@@ -59,7 +59,8 @@ resource "sdwan_application_list_policy_object" "test" {
 `
 
 func testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig() string {
-	config := `resource "sdwan_application_aware_routing_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_application_aware_routing_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	sequences = [{` + "\n"

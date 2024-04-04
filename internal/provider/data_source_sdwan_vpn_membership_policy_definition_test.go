@@ -63,7 +63,8 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
 `
 
 func testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig() string {
-	config := `resource "sdwan_vpn_membership_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_vpn_membership_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	sites = [{` + "\n"

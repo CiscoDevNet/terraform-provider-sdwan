@@ -52,7 +52,8 @@ func TestAccDataSourceSdwanRoutePolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanRoutePolicyDefinitionConfig() string {
-	config := `resource "sdwan_route_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_route_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	default_action = "reject"` + "\n"

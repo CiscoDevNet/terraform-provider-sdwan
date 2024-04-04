@@ -58,7 +58,8 @@ resource "sdwan_cisco_system_feature_template" "system" {
 `
 
 func testAccDataSourceSdwanFeatureDeviceTemplateConfig() string {
-	config := `resource "sdwan_feature_device_template" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_feature_device_template" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	device_type = "vedge-ISR-4331"` + "\n"

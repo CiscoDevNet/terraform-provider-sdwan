@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanColorListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanColorListPolicyObjectConfig() string {
-	config := `resource "sdwan_color_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_color_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  color = "blue"` + "\n"

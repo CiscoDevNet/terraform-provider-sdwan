@@ -45,7 +45,8 @@ func TestAccDataSourceSdwanCLIDeviceTemplate(t *testing.T) {
 }
 
 func testAccDataSourceSdwanCLIDeviceTemplateConfig() string {
-	config := `resource "sdwan_cli_device_template" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_cli_device_template" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	device_type = "vedge-ISR-4331"` + "\n"

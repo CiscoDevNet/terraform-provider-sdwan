@@ -45,7 +45,8 @@ func TestAccDataSourceSdwanTLOCListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanTLOCListPolicyObjectConfig() string {
-	config := `resource "sdwan_tloc_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_tloc_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  tloc_ip = "1.1.1.2"` + "\n"

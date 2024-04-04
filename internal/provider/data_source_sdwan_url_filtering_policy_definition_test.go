@@ -47,7 +47,8 @@ func TestAccDataSourceSdwanURLFilteringPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanURLFilteringPolicyDefinitionConfig() string {
-	config := `resource "sdwan_url_filtering_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_url_filtering_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	mode = "security"` + "\n"

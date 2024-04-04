@@ -43,7 +43,8 @@ func TestAccDataSourceSdwanGeoLocationListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanGeoLocationListPolicyObjectConfig() string {
-	config := `resource "sdwan_geo_location_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_geo_location_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  country = "USA"` + "\n"

@@ -46,7 +46,8 @@ func TestAccDataSourceSdwanCLIFeatureProfile(t *testing.T) {
 }
 
 func testAccDataSourceSdwanCLIFeatureProfileConfig() string {
-	config := `resource "sdwan_cli_feature_profile" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_cli_feature_profile" "test" {` + "\n"
 	config += `	name = "CLI_FP_1"` + "\n"
 	config += `	description = "My cli feature profile 1"` + "\n"
 	config += `}` + "\n"

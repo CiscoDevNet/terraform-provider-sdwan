@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanApplicationListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanApplicationListPolicyObjectConfig() string {
-	config := `resource "sdwan_application_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_application_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  application = "netflix"` + "\n"

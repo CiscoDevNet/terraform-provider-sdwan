@@ -87,7 +87,8 @@ resource "sdwan_ipv4_acl_policy_definition" "test" {
 `
 
 func testAccDataSourceSdwanLocalizedPolicyConfig() string {
-	config := `resource "sdwan_localized_policy" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_localized_policy" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	flow_visibility_ipv4 = true` + "\n"

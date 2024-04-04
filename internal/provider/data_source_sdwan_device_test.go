@@ -48,20 +48,7 @@ func TestAccDataSourceSdwanDevice(t *testing.T) {
 }
 
 func testAccDataSourceSdwanDeviceConfig() string {
-	config := `resource "sdwan_device" "test" {` + "\n"
-	config += `	serial_number = "0DFF93B792354B08ABE5E43566347F09"` + "\n"
-	config += `	name = "Controller01"` + "\n"
-	config += `	devices = [{` + "\n"
-	config += `	  device_id = "100.0.0.101"` + "\n"
-	config += `	  uuid = "103989be-2fa6-4afc-bfa8-179c4ed63f39"` + "\n"
-	config += `	  site_id = "100"` + "\n"
-	config += `	  serial_number = "0DFF93B792354B08ABE5E43566347F09"` + "\n"
-	config += `	  hostname = "Controller01"` + "\n"
-	config += `	  reachability = "reachable"` + "\n"
-	config += `	  status = "normal"` + "\n"
-	config += `	  state = "green"` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
+	config := ""
 
 	config += `
 		data "sdwan_device" "test" {

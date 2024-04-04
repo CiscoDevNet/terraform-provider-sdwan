@@ -64,7 +64,8 @@ resource "sdwan_url_filtering_policy_definition" "test" {
 `
 
 func testAccDataSourceSdwanSecurityPolicyConfig() string {
-	config := `resource "sdwan_security_policy" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_security_policy" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "Example"` + "\n"
 	config += `	mode = "security"` + "\n"

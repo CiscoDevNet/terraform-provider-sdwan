@@ -59,7 +59,8 @@ resource "sdwan_url_filtering_policy_definition" "test" {
 `
 
 func testAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinitionConfig() string {
-	config := `resource "sdwan_advanced_inspection_profile_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_advanced_inspection_profile_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	tls_action = "decrypt"` + "\n"

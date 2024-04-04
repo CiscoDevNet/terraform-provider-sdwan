@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanDataIPv6PrefixListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanDataIPv6PrefixListPolicyObjectConfig() string {
-	config := `resource "sdwan_data_ipv6_prefix_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_data_ipv6_prefix_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  prefix = "2001:0:0:1::/64"` + "\n"

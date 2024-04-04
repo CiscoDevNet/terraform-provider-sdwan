@@ -42,7 +42,8 @@ func TestAccDataSourceSdwanBlockURLListPolicyObject(t *testing.T) {
 }
 
 func testAccDataSourceSdwanBlockURLListPolicyObjectConfig() string {
-	config := `resource "sdwan_block_url_list_policy_object" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_block_url_list_policy_object" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  url = "cisco.com"` + "\n"

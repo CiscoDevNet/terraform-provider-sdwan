@@ -53,7 +53,8 @@ resource "sdwan_class_map_policy_object" "test" {
 `
 
 func testAccDataSourceSdwanRewriteRulePolicyDefinitionConfig() string {
-	config := `resource "sdwan_rewrite_rule_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_rewrite_rule_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	rules = [{` + "\n"

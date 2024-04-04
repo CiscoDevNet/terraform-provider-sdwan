@@ -46,7 +46,8 @@ func TestAccDataSourceSdwanTransportFeatureProfile(t *testing.T) {
 }
 
 func testAccDataSourceSdwanTransportFeatureProfileConfig() string {
-	config := `resource "sdwan_transport_feature_profile" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_transport_feature_profile" "test" {` + "\n"
 	config += `	name = "TRANSPORT_FP_1"` + "\n"
 	config += `	description = "My transport feature profile 1"` + "\n"
 	config += `}` + "\n"

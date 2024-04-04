@@ -53,7 +53,8 @@ func TestAccDataSourceSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
 }
 
 func testAccDataSourceSdwanCustomControlTopologyPolicyDefinitionConfig() string {
-	config := `resource "sdwan_custom_control_topology_policy_definition" "test" {` + "\n"
+	config := ""
+	config += `resource "sdwan_custom_control_topology_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	default_action = "reject"` + "\n"
