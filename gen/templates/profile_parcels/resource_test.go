@@ -36,7 +36,7 @@ func TestAccSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					{{- $name := .Name }}
 					{{- range  .Attributes}}
-					{{- if and (.Mandatory) (not (isListSet .))}}
+					{{- if and (.Mandatory) (not .TestValue) (not (isListSet .))}}
 					resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{.TfName}}", "{{.Example}}"),
 					{{- end}}
 					{{- end}}

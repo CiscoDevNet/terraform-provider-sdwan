@@ -32,9 +32,7 @@ func TestAccSdwanSystemBannerProfileParcel(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanSystemBannerProfileParcelConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_system_banner_profile_parcel.test", "feature_profile_id", "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"),
-				),
+				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanSystemBannerProfileParcelConfig_all(),
