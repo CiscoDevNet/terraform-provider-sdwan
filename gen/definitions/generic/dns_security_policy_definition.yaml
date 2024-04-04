@@ -4,6 +4,7 @@ rest_endpoint: /template/policy/definition/dnssecurity/
 has_version: true
 id_attribute: definitionId
 doc_category: Security Policies
+test_tags: [SDWAN_209]
 attributes:
   - model_name: type
     type: String

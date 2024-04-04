@@ -4,6 +4,7 @@ rest_endpoint: /device
 doc_category: Inventory
 remove_id: true
 skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
+test_tags: [SDWAN_209]
 attributes:
   - model_name: board-serial
     tf_name: serial_number
