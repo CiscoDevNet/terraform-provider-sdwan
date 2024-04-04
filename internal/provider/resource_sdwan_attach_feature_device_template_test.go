@@ -19,12 +19,16 @@ package provider
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanAttachFeatureDeviceTemplate(t *testing.T) {
+	if os.Getenv("SDWAN_209") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_209")
+	}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
