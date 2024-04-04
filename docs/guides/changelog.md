@@ -30,6 +30,7 @@ description: |-
 - Add `sdwan_vpn_interface_multilink_feature_template` resource and data source
 - Add `sdwan_vpn_interface_t1_e1_serial_feature_template` resource and data source
 - Add `sdwan_cellular_controller_feature_template` resource and data source
+- BREAKING CHANGE: Increases the minimum version for all profile parcel resource and data sources to 20.12.0
 
 ## 0.3.6
 
