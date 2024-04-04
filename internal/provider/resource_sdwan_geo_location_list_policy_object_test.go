@@ -26,30 +26,29 @@ import (
 )
 
 func TestAccSdwanGeoLocationListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_geo_location_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_geo_location_list_policy_object.test", "entries.0.country", "USA"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_geo_location_list_policy_object.test", "entries.0.continent", "AS"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanGeoLocationListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_geo_location_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_geo_location_list_policy_object.test", "entries.0.country", "USA"),
-					resource.TestCheckResourceAttr("sdwan_geo_location_list_policy_object.test", "entries.0.continent", "AS"),
-				),
+				Config: testAccSdwanGeoLocationListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanGeoLocationListPolicyObjectConfig = `
-
-
-resource "sdwan_geo_location_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		country = "USA"
-		continent = "AS"
-	}]
+func testAccSdwanGeoLocationListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_geo_location_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  country = "USA"` + "\n"
+	config += `	  continent = "AS"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

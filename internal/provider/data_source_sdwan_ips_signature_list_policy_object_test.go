@@ -26,33 +26,35 @@ import (
 )
 
 func TestAccDataSourceSdwanIPSSignatureListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ips_signature_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ips_signature_list_policy_object.test", "entries.0.generator_id", "1111"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ips_signature_list_policy_object.test", "entries.0.signature_id", "2222"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanIPSSignatureListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_ips_signature_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_ips_signature_list_policy_object.test", "entries.0.generator_id", "1111"),
-					resource.TestCheckResourceAttr("data.sdwan_ips_signature_list_policy_object.test", "entries.0.signature_id", "2222"),
-				),
+				Config: testAccDataSourceSdwanIPSSignatureListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanIPSSignatureListPolicyObjectConfig = `
+func testAccDataSourceSdwanIPSSignatureListPolicyObjectConfig() string {
+	config := `resource "sdwan_ips_signature_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  generator_id = 1111` + "\n"
+	config += `	  signature_id = 2222` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_ips_signature_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    generator_id = 1111
-    signature_id = 2222
-  }]
+	config += `
+		data "sdwan_ips_signature_list_policy_object" "test" {
+			id = sdwan_ips_signature_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_ips_signature_list_policy_object" "test" {
-  id = sdwan_ips_signature_list_policy_object.test.id
-}
-`

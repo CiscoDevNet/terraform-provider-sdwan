@@ -26,38 +26,40 @@ import (
 )
 
 func TestAccDataSourceSdwanIntrusionPreventionPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "mode", "security"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "inspection_mode", "protection"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "log_level", "alert"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "signature_set", "connectivity"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "mode", "security"),
-					resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "inspection_mode", "protection"),
-					resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "log_level", "alert"),
-					resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "signature_set", "connectivity"),
-				),
+				Config: testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig = `
+func testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig() string {
+	config := `resource "sdwan_intrusion_prevention_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	mode = "security"` + "\n"
+	config += `	inspection_mode = "protection"` + "\n"
+	config += `	log_level = "alert"` + "\n"
+	config += `	signature_set = "connectivity"` + "\n"
+	config += `	target_vpns = ["1"]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_intrusion_prevention_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  mode = "security"
-  inspection_mode = "protection"
-  log_level = "alert"
-  signature_set = "connectivity"
-  target_vpns = ["1"]
+	config += `
+		data "sdwan_intrusion_prevention_policy_definition" "test" {
+			id = sdwan_intrusion_prevention_policy_definition.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_intrusion_prevention_policy_definition" "test" {
-  id = sdwan_intrusion_prevention_policy_definition.test.id
-}
-`

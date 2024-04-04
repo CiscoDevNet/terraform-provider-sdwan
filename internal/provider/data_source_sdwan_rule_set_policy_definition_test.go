@@ -26,53 +26,55 @@ import (
 )
 
 func TestAccDataSourceSdwanRuleSetPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.name", "Rule1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.order", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_ipv4_prefix", "10.1.1.0/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_fqdn", "cisco.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_port", "80-90"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_geo_location", "AF"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_ipv4_prefix", "10.1.1.0/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_fqdn", "cisco.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_port", "80-90"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_geo_location", "AF"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.protocol", "cifs"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanRuleSetPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.name", "Rule1"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.order", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_ipv4_prefix", "10.1.1.0/24"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_fqdn", "cisco.com"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_port", "80-90"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.source_geo_location", "AF"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_ipv4_prefix", "10.1.1.0/24"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_fqdn", "cisco.com"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_port", "80-90"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.destination_geo_location", "AF"),
-					resource.TestCheckResourceAttr("data.sdwan_rule_set_policy_definition.test", "rules.0.protocol", "cifs"),
-				),
+				Config: testAccDataSourceSdwanRuleSetPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanRuleSetPolicyDefinitionConfig = `
+func testAccDataSourceSdwanRuleSetPolicyDefinitionConfig() string {
+	config := `resource "sdwan_rule_set_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	rules = [{` + "\n"
+	config += `	  name = "Rule1"` + "\n"
+	config += `	  order = 1` + "\n"
+	config += `	  source_ipv4_prefix = "10.1.1.0/24"` + "\n"
+	config += `	  source_fqdn = "cisco.com"` + "\n"
+	config += `	  source_port = "80-90"` + "\n"
+	config += `	  source_geo_location = "AF"` + "\n"
+	config += `	  destination_ipv4_prefix = "10.1.1.0/24"` + "\n"
+	config += `	  destination_fqdn = "cisco.com"` + "\n"
+	config += `	  destination_port = "80-90"` + "\n"
+	config += `	  destination_geo_location = "AF"` + "\n"
+	config += `	  protocol = "cifs"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_rule_set_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  rules = [{
-    name = "Rule1"
-    order = 1
-    source_ipv4_prefix = "10.1.1.0/24"
-    source_fqdn = "cisco.com"
-    source_port = "80-90"
-    source_geo_location = "AF"
-    destination_ipv4_prefix = "10.1.1.0/24"
-    destination_fqdn = "cisco.com"
-    destination_port = "80-90"
-    destination_geo_location = "AF"
-    protocol = "cifs"
-  }]
+	config += `
+		data "sdwan_rule_set_policy_definition" "test" {
+			id = sdwan_rule_set_policy_definition.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_rule_set_policy_definition" "test" {
-  id = sdwan_rule_set_policy_definition.test.id
-}
-`

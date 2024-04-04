@@ -26,24 +26,24 @@ import (
 )
 
 func TestAccDataSourceSdwanFeatureDeviceTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "device_type", "vedge-ISR-4331"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "general_templates.0.type", "cisco_system"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanFeatureDeviceTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "device_type", "vedge-ISR-4331"),
-					resource.TestCheckResourceAttr("data.sdwan_feature_device_template.test", "general_templates.0.type", "cisco_system"),
-				),
+				Config: testAccDataSourceSdwanFeatureDeviceTemplatePrerequisitesConfig + testAccDataSourceSdwanFeatureDeviceTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanFeatureDeviceTemplateConfig = `
+const testAccDataSourceSdwanFeatureDeviceTemplatePrerequisitesConfig = `
 resource "sdwan_cisco_system_feature_template" "system" {
   name = "TF_SYSTEM_1"
   description = "Terraform integration test"
@@ -55,17 +55,23 @@ resource "sdwan_cisco_system_feature_template" "system" {
   multi_tenant = true
 }
 
-resource "sdwan_feature_device_template" "test" {
-  name = "Example"
-  description = "My description"
-  device_type = "vedge-ISR-4331"
-  general_templates = [{
-    id = sdwan_cisco_system_feature_template.system.id
-    type = "cisco_system"
-  }]
-}
-
-data "sdwan_feature_device_template" "test" {
-  id = sdwan_feature_device_template.test.id
-}
 `
+
+func testAccDataSourceSdwanFeatureDeviceTemplateConfig() string {
+	config := `resource "sdwan_feature_device_template" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	device_type = "vedge-ISR-4331"` + "\n"
+	config += `	general_templates = [{` + "\n"
+	config += `	  id = sdwan_cisco_system_feature_template.system.id` + "\n"
+	config += `	  type = "cisco_system"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_feature_device_template" "test" {
+			id = sdwan_feature_device_template.test.id
+		}
+	`
+	return config
+}

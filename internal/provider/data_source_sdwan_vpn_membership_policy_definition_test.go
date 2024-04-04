@@ -26,22 +26,22 @@ import (
 )
 
 func TestAccDataSourceSdwanVPNMembershipPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_membership_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_membership_policy_definition.test", "description", "My description"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_vpn_membership_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_vpn_membership_policy_definition.test", "description", "My description"),
-				),
+				Config: testAccDataSourceSdwanVPNMembershipPolicyDefinitionPrerequisitesConfig + testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig = `
+const testAccDataSourceSdwanVPNMembershipPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_site_list_policy_object" "sites1" {
   name = "TF_TEST"
   entries = [
@@ -60,16 +60,22 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
   ]
 }
 
-resource "sdwan_vpn_membership_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  sites = [{
-    site_list_id = sdwan_site_list_policy_object.sites1.id
-    vpn_list_ids = [sdwan_vpn_list_policy_object.vpns1.id]
-  }]
-}
-
-data "sdwan_vpn_membership_policy_definition" "test" {
-  id = sdwan_vpn_membership_policy_definition.test.id
-}
 `
+
+func testAccDataSourceSdwanVPNMembershipPolicyDefinitionConfig() string {
+	config := `resource "sdwan_vpn_membership_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	sites = [{` + "\n"
+	config += `	  site_list_id = sdwan_site_list_policy_object.sites1.id` + "\n"
+	config += `	  vpn_list_ids = [sdwan_vpn_list_policy_object.vpns1.id]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_vpn_membership_policy_definition" "test" {
+			id = sdwan_vpn_membership_policy_definition.test.id
+		}
+	`
+	return config
+}

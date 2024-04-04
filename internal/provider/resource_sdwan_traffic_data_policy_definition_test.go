@@ -26,31 +26,31 @@ import (
 )
 
 func TestAccSdwanTrafficDataPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "default_action", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.name", "Seq1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.type", "applicationFirewall"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.ip_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.match_entries.0.type", "appList"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.action_entries.0.type", "log"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.action_entries.0.log", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanTrafficDataPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "default_action", "drop"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.id", "1"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.name", "Seq1"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.type", "applicationFirewall"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.ip_type", "ipv4"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.base_action", "accept"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.match_entries.0.type", "appList"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.action_entries.0.type", "log"),
-					resource.TestCheckResourceAttr("sdwan_traffic_data_policy_definition.test", "sequences.0.action_entries.0.log", "true"),
-				),
+				Config: testAccSdwanTrafficDataPolicyDefinitionPrerequisitesConfig + testAccSdwanTrafficDataPolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanTrafficDataPolicyDefinitionConfig = `
+const testAccSdwanTrafficDataPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_application_list_policy_object" "test" {
   name = "TF_TEST"
   entries = [
@@ -60,25 +60,28 @@ resource "sdwan_application_list_policy_object" "test" {
   ]
 }
 
-
-resource "sdwan_traffic_data_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	default_action = "drop"
-	sequences = [{
-		id = 1
-		name = "Seq1"
-		type = "applicationFirewall"
-		ip_type = "ipv4"
-		base_action = "accept"
-		match_entries = [{
-			type = "appList"
-			application_list_id = sdwan_application_list_policy_object.test.id
-		}]
-		action_entries = [{
-			type = "log"
-			log = true
-		}]
-	}]
-}
 `
+
+func testAccSdwanTrafficDataPolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_traffic_data_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	default_action = "drop"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 1` + "\n"
+	config += `	  name = "Seq1"` + "\n"
+	config += `	  type = "applicationFirewall"` + "\n"
+	config += `	  ip_type = "ipv4"` + "\n"
+	config += `	  base_action = "accept"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		type = "appList"` + "\n"
+	config += `		application_list_id = sdwan_application_list_policy_object.test.id` + "\n"
+	config += `	}]` + "\n"
+	config += `	  action_entries = [{` + "\n"
+	config += `		type = "log"` + "\n"
+	config += `		log = true` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}

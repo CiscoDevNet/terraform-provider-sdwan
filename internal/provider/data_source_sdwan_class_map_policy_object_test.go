@@ -26,29 +26,31 @@ import (
 )
 
 func TestAccDataSourceSdwanClassMapPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_class_map_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_class_map_policy_object.test", "queue", "2"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanClassMapPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_class_map_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_class_map_policy_object.test", "queue", "2"),
-				),
+				Config: testAccDataSourceSdwanClassMapPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanClassMapPolicyObjectConfig = `
+func testAccDataSourceSdwanClassMapPolicyObjectConfig() string {
+	config := `resource "sdwan_class_map_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	queue = 2` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_class_map_policy_object" "test" {
-  name = "Example"
-  queue = 2
+	config += `
+		data "sdwan_class_map_policy_object" "test" {
+			id = sdwan_class_map_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_class_map_policy_object" "test" {
-  id = sdwan_class_map_policy_object.test.id
-}
-`

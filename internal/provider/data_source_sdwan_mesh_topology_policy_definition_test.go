@@ -26,23 +26,23 @@ import (
 )
 
 func TestAccDataSourceSdwanMeshTopologyPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "regions.0.name", "Region1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_mesh_topology_policy_definition.test", "regions.0.name", "Region1"),
-				),
+				Config: testAccDataSourceSdwanMeshTopologyPolicyDefinitionPrerequisitesConfig + testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig = `
+const testAccDataSourceSdwanMeshTopologyPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_site_list_policy_object" "sites1" {
   name = "TF_TEST"
   entries = [
@@ -61,17 +61,23 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
   ]
 }
 
-resource "sdwan_mesh_topology_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id
-  regions = [{
-    name = "Region1"
-    site_list_ids = [sdwan_site_list_policy_object.sites1.id]
-  }]
-}
-
-data "sdwan_mesh_topology_policy_definition" "test" {
-  id = sdwan_mesh_topology_policy_definition.test.id
-}
 `
+
+func testAccDataSourceSdwanMeshTopologyPolicyDefinitionConfig() string {
+	config := `resource "sdwan_mesh_topology_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id` + "\n"
+	config += `	regions = [{` + "\n"
+	config += `	  name = "Region1"` + "\n"
+	config += `	  site_list_ids = [sdwan_site_list_policy_object.sites1.id]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_mesh_topology_policy_definition" "test" {
+			id = sdwan_mesh_topology_policy_definition.test.id
+		}
+	`
+	return config
+}

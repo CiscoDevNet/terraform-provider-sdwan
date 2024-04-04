@@ -26,32 +26,31 @@ import (
 )
 
 func TestAccSdwanAppProbeClassPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "forwarding_class", "FC1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "mappings.0.color", "blue"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "mappings.0.dscp", "8"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanAppProbeClassPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "forwarding_class", "FC1"),
-					resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "mappings.0.color", "blue"),
-					resource.TestCheckResourceAttr("sdwan_app_probe_class_policy_object.test", "mappings.0.dscp", "8"),
-				),
+				Config: testAccSdwanAppProbeClassPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanAppProbeClassPolicyObjectConfig = `
-
-
-resource "sdwan_app_probe_class_policy_object" "test" {
-	name = "Example"
-	forwarding_class = "FC1"
-	mappings = [{
-		color = "blue"
-		dscp = 8
-	}]
+func testAccSdwanAppProbeClassPolicyObjectConfig_all() string {
+	config := `resource "sdwan_app_probe_class_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	forwarding_class = "FC1"` + "\n"
+	config += `	mappings = [{` + "\n"
+	config += `	  color = "blue"` + "\n"
+	config += `	  dscp = 8` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

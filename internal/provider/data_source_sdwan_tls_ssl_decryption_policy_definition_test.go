@@ -26,75 +26,77 @@ import (
 )
 
 func TestAccDataSourceSdwanTLSSSLDecryptionPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "mode", "security"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "default_action", "noIntent"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.base_action", "doNotDecrypt"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.rule_id", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.rule_name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.rule_type", "sslDecryption"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.source_and_destination_configuration.0.option", "destinationIp"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.source_and_destination_configuration.0.value", "10.0.0.0/12"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "ssl_decryption_enabled", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "expired_certificate", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "untrusted_certificate", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "certificate_revocation_status", "none"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "unknown_revocation_status", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "unsupported_protocol_versions", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "unsupported_cipher_suites", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "failure_mode", "close"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "rsa_key_pair_modulus", "2048"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "ec_key_type", "P384"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "certificate_lifetime_in_days", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "minimal_tls_version", "TLSv1.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "use_default_ca_cert_bundle", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanTLSSSLDecryptionPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "mode", "security"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "default_action", "noIntent"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.base_action", "doNotDecrypt"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.rule_id", "4"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.rule_name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.rule_type", "sslDecryption"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.source_and_destination_configuration.0.option", "destinationIp"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "network_rules.0.source_and_destination_configuration.0.value", "10.0.0.0/12"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "ssl_decryption_enabled", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "expired_certificate", "drop"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "untrusted_certificate", "drop"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "certificate_revocation_status", "none"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "unknown_revocation_status", "drop"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "unsupported_protocol_versions", "drop"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "unsupported_cipher_suites", "drop"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "failure_mode", "close"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "rsa_key_pair_modulus", "2048"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "ec_key_type", "P384"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "certificate_lifetime_in_days", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "minimal_tls_version", "TLSv1.2"),
-					resource.TestCheckResourceAttr("data.sdwan_tls_ssl_decryption_policy_definition.test", "use_default_ca_cert_bundle", "true"),
-				),
+				Config: testAccDataSourceSdwanTLSSSLDecryptionPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanTLSSSLDecryptionPolicyDefinitionConfig = `
+func testAccDataSourceSdwanTLSSSLDecryptionPolicyDefinitionConfig() string {
+	config := `resource "sdwan_tls_ssl_decryption_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	mode = "security"` + "\n"
+	config += `	default_action = "noIntent"` + "\n"
+	config += `	network_rules = [{` + "\n"
+	config += `	  base_action = "doNotDecrypt"` + "\n"
+	config += `	  rule_id = 4` + "\n"
+	config += `	  rule_name = "Example"` + "\n"
+	config += `	  rule_type = "sslDecryption"` + "\n"
+	config += `	  source_and_destination_configuration = [{` + "\n"
+	config += `		option = "destinationIp"` + "\n"
+	config += `		value = "10.0.0.0/12"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ssl_decryption_enabled = "true"` + "\n"
+	config += `	expired_certificate = "drop"` + "\n"
+	config += `	untrusted_certificate = "drop"` + "\n"
+	config += `	certificate_revocation_status = "none"` + "\n"
+	config += `	unknown_revocation_status = "drop"` + "\n"
+	config += `	unsupported_protocol_versions = "drop"` + "\n"
+	config += `	unsupported_cipher_suites = "drop"` + "\n"
+	config += `	failure_mode = "close"` + "\n"
+	config += `	rsa_key_pair_modulus = "2048"` + "\n"
+	config += `	ec_key_type = "P384"` + "\n"
+	config += `	certificate_lifetime_in_days = 1` + "\n"
+	config += `	minimal_tls_version = "TLSv1.2"` + "\n"
+	config += `	use_default_ca_cert_bundle = true` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_tls_ssl_decryption_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  mode = "security"
-  default_action = "noIntent"
-  network_rules = [{
-    base_action = "doNotDecrypt"
-    rule_id = 4
-    rule_name = "Example"
-    rule_type = "sslDecryption"
-	source_and_destination_configuration = [{
-		option = "destinationIp"
-		value = "10.0.0.0/12"
-	}]
-  }]
-  ssl_decryption_enabled = "true"
-  expired_certificate = "drop"
-  untrusted_certificate = "drop"
-  certificate_revocation_status = "none"
-  unknown_revocation_status = "drop"
-  unsupported_protocol_versions = "drop"
-  unsupported_cipher_suites = "drop"
-  failure_mode = "close"
-  rsa_key_pair_modulus = "2048"
-  ec_key_type = "P384"
-  certificate_lifetime_in_days = 1
-  minimal_tls_version = "TLSv1.2"
-  use_default_ca_cert_bundle = true
+	config += `
+		data "sdwan_tls_ssl_decryption_policy_definition" "test" {
+			id = sdwan_tls_ssl_decryption_policy_definition.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_tls_ssl_decryption_policy_definition" "test" {
-  id = sdwan_tls_ssl_decryption_policy_definition.test.id
-}
-`

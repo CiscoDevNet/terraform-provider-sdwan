@@ -26,33 +26,35 @@ import (
 )
 
 func TestAccDataSourceSdwanPolicerPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "burst", "100000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "exceed_action", "remark"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "rate", "100"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanPolicerPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "burst", "100000"),
-					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "exceed_action", "remark"),
-					resource.TestCheckResourceAttr("data.sdwan_policer_policy_object.test", "rate", "100"),
-				),
+				Config: testAccDataSourceSdwanPolicerPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanPolicerPolicyObjectConfig = `
+func testAccDataSourceSdwanPolicerPolicyObjectConfig() string {
+	config := `resource "sdwan_policer_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	burst = 100000` + "\n"
+	config += `	exceed_action = "remark"` + "\n"
+	config += `	rate = 100` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_policer_policy_object" "test" {
-  name = "Example"
-  burst = 100000
-  exceed_action = "remark"
-  rate = 100
+	config += `
+		data "sdwan_policer_policy_object" "test" {
+			id = sdwan_policer_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_policer_policy_object" "test" {
-  id = sdwan_policer_policy_object.test.id
-}
-`

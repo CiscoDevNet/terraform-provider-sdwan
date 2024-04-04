@@ -26,25 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "8420F3EE"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.device_type", "vedge"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanVEdgeInventoryConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "8420F3EE"),
-					resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.device_type", "vedge"),
-				),
+				Config: testAccDataSourceSdwanVEdgeInventoryConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanVEdgeInventoryConfig = `
+func testAccDataSourceSdwanVEdgeInventoryConfig() string {
+	config := `resource "sdwan_vedge_inventory" "test" {` + "\n"
+	config += `	devices = [{` + "\n"
+	config += `	  chassis_number = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"` + "\n"
+	config += `	  serial_number = "8420F3EE"` + "\n"
+	config += `	  device_type = "vedge"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-
-data "sdwan_vedge_inventory" "test" {
+	config += `
+		data "sdwan_vedge_inventory" "test" {
+		}
+	`
+	return config
 }
-`

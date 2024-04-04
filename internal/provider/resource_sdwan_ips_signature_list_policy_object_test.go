@@ -26,30 +26,29 @@ import (
 )
 
 func TestAccSdwanIPSSignatureListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ips_signature_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ips_signature_list_policy_object.test", "entries.0.generator_id", "1111"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ips_signature_list_policy_object.test", "entries.0.signature_id", "2222"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanIPSSignatureListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_ips_signature_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_ips_signature_list_policy_object.test", "entries.0.generator_id", "1111"),
-					resource.TestCheckResourceAttr("sdwan_ips_signature_list_policy_object.test", "entries.0.signature_id", "2222"),
-				),
+				Config: testAccSdwanIPSSignatureListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanIPSSignatureListPolicyObjectConfig = `
-
-
-resource "sdwan_ips_signature_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		generator_id = 1111
-		signature_id = 2222
-	}]
+func testAccSdwanIPSSignatureListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_ips_signature_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  generator_id = 1111` + "\n"
+	config += `	  signature_id = 2222` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

@@ -26,31 +26,33 @@ import (
 )
 
 func TestAccDataSourceSdwanRegionListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_region_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_region_list_policy_object.test", "entries.0.region_id", "1-2"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanRegionListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_region_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_region_list_policy_object.test", "entries.0.region_id", "1-2"),
-				),
+				Config: testAccDataSourceSdwanRegionListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanRegionListPolicyObjectConfig = `
+func testAccDataSourceSdwanRegionListPolicyObjectConfig() string {
+	config := `resource "sdwan_region_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  region_id = "1-2"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_region_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    region_id = "1-2"
-  }]
+	config += `
+		data "sdwan_region_list_policy_object" "test" {
+			id = sdwan_region_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_region_list_policy_object" "test" {
-  id = sdwan_region_list_policy_object.test.id
-}
-`

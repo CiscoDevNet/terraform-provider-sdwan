@@ -26,28 +26,28 @@ import (
 )
 
 func TestAccDataSourceSdwanApplicationAwareRoutingPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.name", "Region1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.ip_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.match_entries.0.type", "appList"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.action_entries.0.type", "backupSlaPreferredColor"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.action_entries.0.backup_sla_preferred_color", "bronze"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.name", "Region1"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.ip_type", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.match_entries.0.type", "appList"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.action_entries.0.type", "backupSlaPreferredColor"),
-					resource.TestCheckResourceAttr("data.sdwan_application_aware_routing_policy_definition.test", "sequences.0.action_entries.0.backup_sla_preferred_color", "bronze"),
-				),
+				Config: testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionPrerequisitesConfig + testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig = `
+const testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_application_list_policy_object" "test" {
   name = "TF_TEST"
   entries = [
@@ -56,25 +56,31 @@ resource "sdwan_application_list_policy_object" "test" {
     }
   ]
 }
-resource "sdwan_application_aware_routing_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  sequences = [{
-    id = 1
-    name = "Region1"
-    ip_type = "ipv4"
-	match_entries = [{
-		type = "appList"
-		application_list_id = sdwan_application_list_policy_object.test.id
-	}]
-	action_entries = [{
-		type = "backupSlaPreferredColor"
-		backup_sla_preferred_color = "bronze"
-	}]
-  }]
-}
-
-data "sdwan_application_aware_routing_policy_definition" "test" {
-  id = sdwan_application_aware_routing_policy_definition.test.id
-}
 `
+
+func testAccDataSourceSdwanApplicationAwareRoutingPolicyDefinitionConfig() string {
+	config := `resource "sdwan_application_aware_routing_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 1` + "\n"
+	config += `	  name = "Region1"` + "\n"
+	config += `	  ip_type = "ipv4"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		type = "appList"` + "\n"
+	config += `		application_list_id = sdwan_application_list_policy_object.test.id` + "\n"
+	config += `	}]` + "\n"
+	config += `	  action_entries = [{` + "\n"
+	config += `		type = "backupSlaPreferredColor"` + "\n"
+	config += `		backup_sla_preferred_color = "bronze"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_application_aware_routing_policy_definition" "test" {
+			id = sdwan_application_aware_routing_policy_definition.test.id
+		}
+	`
+	return config
+}

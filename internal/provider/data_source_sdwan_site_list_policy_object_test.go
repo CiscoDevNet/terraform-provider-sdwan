@@ -26,31 +26,33 @@ import (
 )
 
 func TestAccDataSourceSdwanSiteListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_site_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_site_list_policy_object.test", "entries.0.site_id", "100-200"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanSiteListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_site_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_site_list_policy_object.test", "entries.0.site_id", "100-200"),
-				),
+				Config: testAccDataSourceSdwanSiteListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanSiteListPolicyObjectConfig = `
+func testAccDataSourceSdwanSiteListPolicyObjectConfig() string {
+	config := `resource "sdwan_site_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  site_id = "100-200"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_site_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    site_id = "100-200"
-  }]
+	config += `
+		data "sdwan_site_list_policy_object" "test" {
+			id = sdwan_site_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_site_list_policy_object" "test" {
-  id = sdwan_site_list_policy_object.test.id
-}
-`

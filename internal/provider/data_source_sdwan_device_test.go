@@ -26,32 +26,48 @@ import (
 )
 
 func TestAccDataSourceSdwanDevice(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.device_id", "100.0.0.101"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "103989be-2fa6-4afc-bfa8-179c4ed63f39"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.site_id", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "0DFF93B792354B08ABE5E43566347F09"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.hostname", "Controller01"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.reachability", "reachable"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.status", "normal"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.state", "green"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanDeviceConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.device_id", "100.0.0.101"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "103989be-2fa6-4afc-bfa8-179c4ed63f39"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.site_id", "100"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "0DFF93B792354B08ABE5E43566347F09"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.hostname", "Controller01"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.reachability", "reachable"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.status", "normal"),
-					resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.state", "green"),
-				),
+				Config: testAccDataSourceSdwanDeviceConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanDeviceConfig = `
+func testAccDataSourceSdwanDeviceConfig() string {
+	config := `resource "sdwan_device" "test" {` + "\n"
+	config += `	serial_number = "0DFF93B792354B08ABE5E43566347F09"` + "\n"
+	config += `	name = "Controller01"` + "\n"
+	config += `	devices = [{` + "\n"
+	config += `	  device_id = "100.0.0.101"` + "\n"
+	config += `	  uuid = "103989be-2fa6-4afc-bfa8-179c4ed63f39"` + "\n"
+	config += `	  site_id = "100"` + "\n"
+	config += `	  serial_number = "0DFF93B792354B08ABE5E43566347F09"` + "\n"
+	config += `	  hostname = "Controller01"` + "\n"
+	config += `	  reachability = "reachable"` + "\n"
+	config += `	  status = "normal"` + "\n"
+	config += `	  state = "green"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-
-data "sdwan_device" "test" {
-  serial_number = "0DFF93B792354B08ABE5E43566347F09"
-  name = "Controller01"
+	config += `
+		data "sdwan_device" "test" {
+			serial_number = "0DFF93B792354B08ABE5E43566347F09"
+			name = "Controller01"
+		}
+	`
+	return config
 }
-`

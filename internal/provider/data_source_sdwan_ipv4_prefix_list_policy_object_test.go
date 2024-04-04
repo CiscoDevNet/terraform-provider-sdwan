@@ -26,35 +26,37 @@ import (
 )
 
 func TestAccDataSourceSdwanIPv4PrefixListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.prefix", "10.0.0.0/12"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.le", "32"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.ge", "24"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanIPv4PrefixListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.prefix", "10.0.0.0/12"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.le", "32"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv4_prefix_list_policy_object.test", "entries.0.ge", "24"),
-				),
+				Config: testAccDataSourceSdwanIPv4PrefixListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanIPv4PrefixListPolicyObjectConfig = `
+func testAccDataSourceSdwanIPv4PrefixListPolicyObjectConfig() string {
+	config := `resource "sdwan_ipv4_prefix_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  prefix = "10.0.0.0/12"` + "\n"
+	config += `	  le = 32` + "\n"
+	config += `	  ge = 24` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_ipv4_prefix_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    prefix = "10.0.0.0/12"
-    le = 32
-    ge = 24
-  }]
+	config += `
+		data "sdwan_ipv4_prefix_list_policy_object" "test" {
+			id = sdwan_ipv4_prefix_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_ipv4_prefix_list_policy_object" "test" {
-  id = sdwan_ipv4_prefix_list_policy_object.test.id
-}
-`

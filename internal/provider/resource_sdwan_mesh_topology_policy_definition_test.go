@@ -26,23 +26,23 @@ import (
 )
 
 func TestAccSdwanMeshTopologyPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_mesh_topology_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_mesh_topology_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_mesh_topology_policy_definition.test", "regions.0.name", "Region1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanMeshTopologyPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_mesh_topology_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_mesh_topology_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_mesh_topology_policy_definition.test", "regions.0.name", "Region1"),
-				),
+				Config: testAccSdwanMeshTopologyPolicyDefinitionPrerequisitesConfig + testAccSdwanMeshTopologyPolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanMeshTopologyPolicyDefinitionConfig = `
+const testAccSdwanMeshTopologyPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_site_list_policy_object" "sites1" {
   name = "TF_TEST"
   entries = [
@@ -61,14 +61,17 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
   ]
 }
 
-
-resource "sdwan_mesh_topology_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id
-	regions = [{
-		name = "Region1"
-		site_list_ids = [sdwan_site_list_policy_object.sites1.id]
-	}]
-}
 `
+
+func testAccSdwanMeshTopologyPolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_mesh_topology_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id` + "\n"
+	config += `	regions = [{` + "\n"
+	config += `	  name = "Region1"` + "\n"
+	config += `	  site_list_ids = [sdwan_site_list_policy_object.sites1.id]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}

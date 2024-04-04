@@ -26,28 +26,27 @@ import (
 )
 
 func TestAccSdwanLocalApplicationListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_local_application_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_local_application_list_policy_object.test", "entries.0.application", "cisco-collab-video"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanLocalApplicationListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_local_application_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_local_application_list_policy_object.test", "entries.0.application", "cisco-collab-video"),
-				),
+				Config: testAccSdwanLocalApplicationListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanLocalApplicationListPolicyObjectConfig = `
-
-
-resource "sdwan_local_application_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		application = "cisco-collab-video"
-	}]
+func testAccSdwanLocalApplicationListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_local_application_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  application = "cisco-collab-video"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

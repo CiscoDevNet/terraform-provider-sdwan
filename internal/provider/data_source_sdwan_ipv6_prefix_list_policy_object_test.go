@@ -26,35 +26,37 @@ import (
 )
 
 func TestAccDataSourceSdwanIPv6PrefixListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "entries.0.prefix", "2001:1:1:2::/64"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "entries.0.le", "80"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "entries.0.ge", "128"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanIPv6PrefixListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "entries.0.prefix", "2001:1:1:2::/64"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "entries.0.le", "80"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_prefix_list_policy_object.test", "entries.0.ge", "128"),
-				),
+				Config: testAccDataSourceSdwanIPv6PrefixListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanIPv6PrefixListPolicyObjectConfig = `
+func testAccDataSourceSdwanIPv6PrefixListPolicyObjectConfig() string {
+	config := `resource "sdwan_ipv6_prefix_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  prefix = "2001:1:1:2::/64"` + "\n"
+	config += `	  le = 80` + "\n"
+	config += `	  ge = 128` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_ipv6_prefix_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    prefix = "2001:1:1:2::/64"
-    le = 80
-    ge = 128
-  }]
+	config += `
+		data "sdwan_ipv6_prefix_list_policy_object" "test" {
+			id = sdwan_ipv6_prefix_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_ipv6_prefix_list_policy_object" "test" {
-  id = sdwan_ipv6_prefix_list_policy_object.test.id
-}
-`

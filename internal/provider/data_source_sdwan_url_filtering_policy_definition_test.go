@@ -26,42 +26,44 @@ import (
 )
 
 func TestAccDataSourceSdwanURLFilteringPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "mode", "security"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "web_categories_action", "allow"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "web_reputation", "moderate-risk"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "block_page_action", "text"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "block_page_contents", "Access to the requested page has been denied. Please contact your Network Administrator"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanURLFilteringPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "mode", "security"),
-					resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "web_categories_action", "allow"),
-					resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "web_reputation", "moderate-risk"),
-					resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "block_page_action", "text"),
-					resource.TestCheckResourceAttr("data.sdwan_url_filtering_policy_definition.test", "block_page_contents", "Access to the requested page has been denied. Please contact your Network Administrator"),
-				),
+				Config: testAccDataSourceSdwanURLFilteringPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanURLFilteringPolicyDefinitionConfig = `
+func testAccDataSourceSdwanURLFilteringPolicyDefinitionConfig() string {
+	config := `resource "sdwan_url_filtering_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	mode = "security"` + "\n"
+	config += `	alerts = ["blacklist"]` + "\n"
+	config += `	web_categories = ["alcohol-and-tobacco"]` + "\n"
+	config += `	web_categories_action = "allow"` + "\n"
+	config += `	web_reputation = "moderate-risk"` + "\n"
+	config += `	target_vpns = ["1"]` + "\n"
+	config += `	block_page_action = "text"` + "\n"
+	config += `	block_page_contents = "Access to the requested page has been denied. Please contact your Network Administrator"` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_url_filtering_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  mode = "security"
-  alerts = ["blacklist"]
-  web_categories = ["alcohol-and-tobacco"]
-  web_categories_action = "allow"
-  web_reputation = "moderate-risk"
-  target_vpns = ["1"]
-  block_page_action = "text"
-  block_page_contents = "Access to the requested page has been denied. Please contact your Network Administrator"
+	config += `
+		data "sdwan_url_filtering_policy_definition" "test" {
+			id = sdwan_url_filtering_policy_definition.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_url_filtering_policy_definition" "test" {
-  id = sdwan_url_filtering_policy_definition.test.id
-}
-`

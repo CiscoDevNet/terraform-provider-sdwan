@@ -26,28 +26,27 @@ import (
 )
 
 func TestAccSdwanASPathListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_as_path_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_as_path_list_policy_object.test", "entries.0.as_path", "^1239_[0-9]*$"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanASPathListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_as_path_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_as_path_list_policy_object.test", "entries.0.as_path", "^1239_[0-9]*$"),
-				),
+				Config: testAccSdwanASPathListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanASPathListPolicyObjectConfig = `
-
-
-resource "sdwan_as_path_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		as_path = "^1239_[0-9]*$"
-	}]
+func testAccSdwanASPathListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_as_path_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  as_path = "^1239_[0-9]*$"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

@@ -26,32 +26,31 @@ import (
 )
 
 func TestAccSdwanCLIDeviceTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "device_type", "vedge-ISR-4331"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "cli_type", "device"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "cli_configuration", " system\n host-name             R1-ISR4331-1200-1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanCLIDeviceTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "device_type", "vedge-ISR-4331"),
-					resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "cli_type", "device"),
-					resource.TestCheckResourceAttr("sdwan_cli_device_template.test", "cli_configuration", " system\n host-name             R1-ISR4331-1200-1"),
-				),
+				Config: testAccSdwanCLIDeviceTemplateConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanCLIDeviceTemplateConfig = `
-
-
-resource "sdwan_cli_device_template" "test" {
-	name = "Example"
-	description = "My description"
-	device_type = "vedge-ISR-4331"
-	cli_type = "device"
-	cli_configuration = " system\n host-name             R1-ISR4331-1200-1"
+func testAccSdwanCLIDeviceTemplateConfig_all() string {
+	config := `resource "sdwan_cli_device_template" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	device_type = "vedge-ISR-4331"` + "\n"
+	config += `	cli_type = "device"` + "\n"
+	config += `	cli_configuration = " system\n host-name             R1-ISR4331-1200-1"` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

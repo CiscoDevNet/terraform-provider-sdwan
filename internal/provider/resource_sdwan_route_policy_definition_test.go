@@ -26,52 +26,51 @@ import (
 )
 
 func TestAccSdwanRoutePolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "default_action", "reject"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.id", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.ip_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.name", "Sequence 10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.match_entries.0.type", "metric"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.match_entries.0.metric", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.type", "aggregator"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.aggregator", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.aggregator_ip_address", "10.1.2.3"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanRoutePolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "default_action", "reject"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.id", "10"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.ip_type", "ipv4"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.name", "Sequence 10"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.base_action", "accept"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.match_entries.0.type", "metric"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.match_entries.0.metric", "100"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.type", "aggregator"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.aggregator", "10"),
-					resource.TestCheckResourceAttr("sdwan_route_policy_definition.test", "sequences.0.action_entries.0.aggregator_ip_address", "10.1.2.3"),
-				),
+				Config: testAccSdwanRoutePolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanRoutePolicyDefinitionConfig = `
-
-
-resource "sdwan_route_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	default_action = "reject"
-	sequences = [{
-		id = 10
-		ip_type = "ipv4"
-		name = "Sequence 10"
-		base_action = "accept"
-		match_entries = [{
-			type = "metric"
-			metric = 100
-		}]
-		action_entries = [{
-			type = "aggregator"
-			aggregator = 10
-			aggregator_ip_address = "10.1.2.3"
-		}]
-	}]
+func testAccSdwanRoutePolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_route_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	default_action = "reject"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 10` + "\n"
+	config += `	  ip_type = "ipv4"` + "\n"
+	config += `	  name = "Sequence 10"` + "\n"
+	config += `	  base_action = "accept"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		type = "metric"` + "\n"
+	config += `		metric = 100` + "\n"
+	config += `	}]` + "\n"
+	config += `	  action_entries = [{` + "\n"
+	config += `		type = "aggregator"` + "\n"
+	config += `		aggregator = 10` + "\n"
+	config += `		aggregator_ip_address = "10.1.2.3"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

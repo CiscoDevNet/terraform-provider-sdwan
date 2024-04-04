@@ -26,31 +26,33 @@ import (
 )
 
 func TestAccDataSourceSdwanExpandedCommunityListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_expanded_community_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_expanded_community_list_policy_object.test", "entries.0.community", "100:1000"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanExpandedCommunityListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_expanded_community_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_expanded_community_list_policy_object.test", "entries.0.community", "100:1000"),
-				),
+				Config: testAccDataSourceSdwanExpandedCommunityListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanExpandedCommunityListPolicyObjectConfig = `
+func testAccDataSourceSdwanExpandedCommunityListPolicyObjectConfig() string {
+	config := `resource "sdwan_expanded_community_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  community = "100:1000"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_expanded_community_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    community = "100:1000"
-  }]
+	config += `
+		data "sdwan_expanded_community_list_policy_object" "test" {
+			id = sdwan_expanded_community_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_expanded_community_list_policy_object" "test" {
-  id = sdwan_expanded_community_list_policy_object.test.id
-}
-`

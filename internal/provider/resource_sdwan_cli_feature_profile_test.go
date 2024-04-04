@@ -26,26 +26,25 @@ import (
 )
 
 func TestAccSdwanCLIFeatureProfile(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_feature_profile.test", "name", "CLI_FP_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_feature_profile.test", "description", "My cli feature profile 1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanCLIFeatureProfileConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cli_feature_profile.test", "name", "CLI_FP_1"),
-					resource.TestCheckResourceAttr("sdwan_cli_feature_profile.test", "description", "My cli feature profile 1"),
-				),
+				Config: testAccSdwanCLIFeatureProfileConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanCLIFeatureProfileConfig = `
-
-
-resource "sdwan_cli_feature_profile" "test" {
-	name = "CLI_FP_1"
-	description = "My cli feature profile 1"
+func testAccSdwanCLIFeatureProfileConfig_all() string {
+	config := `resource "sdwan_cli_feature_profile" "test" {` + "\n"
+	config += `	name = "CLI_FP_1"` + "\n"
+	config += `	description = "My cli feature profile 1"` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

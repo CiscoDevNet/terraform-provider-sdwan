@@ -26,31 +26,33 @@ import (
 )
 
 func TestAccDataSourceSdwanDomainListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_domain_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_domain_list_policy_object.test", "entries.0.domain", ".*.cisco.com"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanDomainListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_domain_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_domain_list_policy_object.test", "entries.0.domain", ".*.cisco.com"),
-				),
+				Config: testAccDataSourceSdwanDomainListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanDomainListPolicyObjectConfig = `
+func testAccDataSourceSdwanDomainListPolicyObjectConfig() string {
+	config := `resource "sdwan_domain_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  domain = ".*.cisco.com"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_domain_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    domain = ".*.cisco.com"
-  }]
+	config += `
+		data "sdwan_domain_list_policy_object" "test" {
+			id = sdwan_domain_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_domain_list_policy_object" "test" {
-  id = sdwan_domain_list_policy_object.test.id
-}
-`
