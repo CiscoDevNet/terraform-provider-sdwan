@@ -26,40 +26,42 @@ import (
 )
 
 func TestAccDataSourceSdwanGpsFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "gps_mode", "ms-based"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "nmea", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "source_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "destination_address", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "destination_port", "1234"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanGpsFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "enable", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "gps_mode", "ms-based"),
-					resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "nmea", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "source_address", "1.2.3.4"),
-					resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "destination_address", "2.3.4.5"),
-					resource.TestCheckResourceAttr("data.sdwan_gps_feature_template.test", "destination_port", "1234"),
-				),
+				Config: testAccDataSourceSdwanGpsFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanGpsFeatureTemplateConfig = `
+func testAccDataSourceSdwanGpsFeatureTemplateConfig() string {
+	config := `resource "sdwan_gps_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	enable = true` + "\n"
+	config += `	gps_mode = "ms-based"` + "\n"
+	config += `	nmea = true` + "\n"
+	config += `	source_address = "1.2.3.4"` + "\n"
+	config += `	destination_address = "2.3.4.5"` + "\n"
+	config += `	destination_port = 1234` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_gps_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  enable = true
-  gps_mode = "ms-based"
-  nmea = true
-  source_address = "1.2.3.4"
-  destination_address = "2.3.4.5"
-  destination_port = 1234
+	config += `
+		data "sdwan_gps_feature_template" "test" {
+			id = sdwan_gps_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_gps_feature_template" "test" {
-  id = sdwan_gps_feature_template.test.id
-}
-`

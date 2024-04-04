@@ -26,178 +26,171 @@ import (
 )
 
 func TestAccSdwanVPNInterfaceT1E1SerialFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "serial_interface_name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "interface_description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv4_address", "1.2.3.4/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv6_address", "2001:0:0:1::/64"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv6_access_lists.0.direction", "in"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv6_access_lists.0.acl_name", "ACL1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "enable_core_region", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "core_region", "core"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "secondary_region", "off"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation_for_tloc.0.encapsulation_type", "gre"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation_for_tloc.0.preference", "4294967"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation_for_tloc.0.weight", "250"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "border", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "per_tunnel_qos", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "per_tunnel_qos_aggregator", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "color", "custom1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "last_resort_circuit", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "low_bandwidth_link", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "tunnel_tcp_mss", "1460"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "enable_clear_don", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "network_broadcast_1", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "max_control_connections", "8"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "vbond_as_stun_server", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "vmanage_connection_preference", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "port_hop", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "restrict", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "carrier", "carrier1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "nat_refresh_interval", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "hello_interval", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "hello_tolerance", "12"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "bind_loopback_tunnel", "12"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "all", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "network_broadcast_2", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "bgp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "dhcp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "dns", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "icmp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ssh", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ntp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "netconf", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ospf", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "stun", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "snmp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "https", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "clear_dont_fragment_bit", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "pmtu_discovery", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "static_ingress_qos", "6"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "tcp_mss", "720"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "tloc_extension", "tloc"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "administrative_shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "link_autonegotiate", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "shaping_rate", "10000000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "qos_map", "test"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "vpn_qos_map", "test"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "interface_bandwidth_capacity", "128"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "clock_rate", "5300000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation", "hdlc"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "interface_downstream_bandwidth_capacity", "10000000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "write_rule", "test_rule"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "access_list.0.direction", "in"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "access_list.0.acl_name", "Egress ACL - IPv4"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanVPNInterfaceT1E1SerialFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "serial_interface_name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "per_tunnel_qos", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "per_tunnel_qos_aggregator", "false"),
-				),
 			},
 			{
 				Config: testAccSdwanVPNInterfaceT1E1SerialFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "serial_interface_name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "interface_description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv4_address", "1.2.3.4/24"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv6_address", "2001:0:0:1::/64"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv6_access_lists.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv6_access_lists.0.acl_name", "ACL1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "enable_core_region", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "core_region", "core"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "secondary_region", "off"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation_for_tloc.0.encapsulation_type", "gre"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation_for_tloc.0.preference", "4294967"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation_for_tloc.0.weight", "250"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "border", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "per_tunnel_qos", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "per_tunnel_qos_aggregator", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "color", "custom1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "last_resort_circuit", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "low_bandwidth_link", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "tunnel_tcp_mss", "1460"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "enable_clear_don", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "network_broadcast_1", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "max_control_connections", "8"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "vbond_as_stun_server", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "vmanage_connection_preference", "5"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "port_hop", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "restrict", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "carrier", "carrier1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "nat_refresh_interval", "15"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "hello_interval", "1000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "hello_tolerance", "12"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "bind_loopback_tunnel", "12"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "all", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "network_broadcast_2", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "bgp", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "dhcp", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "dns", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "icmp", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ssh", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ntp", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "netconf", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ospf", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "stun", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "snmp", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "https", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "clear_dont_fragment_bit", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "pmtu_discovery", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ip_mtu", "1500"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "static_ingress_qos", "6"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "tcp_mss", "720"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "tloc_extension", "tloc"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "administrative_shutdown", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "link_autonegotiate", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "shaping_rate", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "qos_map", "test"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "vpn_qos_map", "test"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "interface_bandwidth_capacity", "128"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "clock_rate", "5300000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation", "hdlc"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "interface_downstream_bandwidth_capacity", "10000000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "write_rule", "test_rule"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "access_list.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "access_list.0.acl_name", "Egress ACL - IPv4"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanVPNInterfaceT1E1SerialFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		serial_interface_name = "Example"
-		per_tunnel_qos = true
-		per_tunnel_qos_aggregator = false
-	}
-	`
+	config := `resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	serial_interface_name = "Example"` + "\n"
+	config += `	per_tunnel_qos = true` + "\n"
+	config += `	per_tunnel_qos_aggregator = false` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanVPNInterfaceT1E1SerialFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		serial_interface_name = "Example"
-		interface_description = "My description"
-		ipv4_address = "1.2.3.4/24"
-		ipv6_address = "2001:0:0:1::/64"
-		ipv6_access_lists = [{
-			direction = "in"
-			acl_name = "ACL1"
-		}]
-		enable_core_region = true
-		core_region = "core"
-		secondary_region = "off"
-		encapsulation_for_tloc = [{
-			encapsulation_type = "gre"
-			preference = 4294967
-			weight = 250
-		}]
-		groups = [42949672]
-		border = true
-		per_tunnel_qos = true
-		per_tunnel_qos_aggregator = false
-		color = "custom1"
-		last_resort_circuit = false
-		low_bandwidth_link = false
-		tunnel_tcp_mss = 1460
-		enable_clear_don = false
-		network_broadcast_1 = false
-		max_control_connections = 8
-		vbond_as_stun_server = false
-		exclude_controller_group_list = [100]
-		vmanage_connection_preference = 5
-		port_hop = false
-		restrict = false
-		carrier = "carrier1"
-		nat_refresh_interval = 15
-		hello_interval = 1000
-		hello_tolerance = 12
-		bind_loopback_tunnel = "12"
-		all = false
-		network_broadcast_2 = false
-		bgp = false
-		dhcp = true
-		dns = true
-		icmp = true
-		ssh = false
-		ntp = false
-		netconf = false
-		ospf = false
-		stun = false
-		snmp = false
-		https = true
-		clear_dont_fragment_bit = false
-		pmtu_discovery = false
-		ip_mtu = 1500
-		static_ingress_qos = 6
-		tcp_mss = 720
-		tloc_extension = "tloc"
-		administrative_shutdown = true
-		link_autonegotiate = true
-		shaping_rate = 10000000
-		qos_map = "test"
-		vpn_qos_map = "test"
-		interface_bandwidth_capacity = 128
-		clock_rate = "5300000"
-		encapsulation = "hdlc"
-		interface_downstream_bandwidth_capacity = 10000000
-		write_rule = "test_rule"
-		access_list = [{
-			direction = "in"
-			acl_name = "Egress ACL - IPv4"
-		}]
-	}
-	`
+	config := `resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	serial_interface_name = "Example"` + "\n"
+	config += `	interface_description = "My description"` + "\n"
+	config += `	ipv4_address = "1.2.3.4/24"` + "\n"
+	config += `	ipv6_address = "2001:0:0:1::/64"` + "\n"
+	config += `	ipv6_access_lists = [{` + "\n"
+	config += `	  direction = "in"` + "\n"
+	config += `	  acl_name = "ACL1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	enable_core_region = true` + "\n"
+	config += `	core_region = "core"` + "\n"
+	config += `	secondary_region = "off"` + "\n"
+	config += `	encapsulation_for_tloc = [{` + "\n"
+	config += `	  encapsulation_type = "gre"` + "\n"
+	config += `	  preference = 4294967` + "\n"
+	config += `	  weight = 250` + "\n"
+	config += `	}]` + "\n"
+	config += `	groups = [42949672]` + "\n"
+	config += `	border = true` + "\n"
+	config += `	per_tunnel_qos = true` + "\n"
+	config += `	per_tunnel_qos_aggregator = false` + "\n"
+	config += `	color = "custom1"` + "\n"
+	config += `	last_resort_circuit = false` + "\n"
+	config += `	low_bandwidth_link = false` + "\n"
+	config += `	tunnel_tcp_mss = 1460` + "\n"
+	config += `	enable_clear_don = false` + "\n"
+	config += `	network_broadcast_1 = false` + "\n"
+	config += `	max_control_connections = 8` + "\n"
+	config += `	vbond_as_stun_server = false` + "\n"
+	config += `	exclude_controller_group_list = [100]` + "\n"
+	config += `	vmanage_connection_preference = 5` + "\n"
+	config += `	port_hop = false` + "\n"
+	config += `	restrict = false` + "\n"
+	config += `	carrier = "carrier1"` + "\n"
+	config += `	nat_refresh_interval = 15` + "\n"
+	config += `	hello_interval = 1000` + "\n"
+	config += `	hello_tolerance = 12` + "\n"
+	config += `	bind_loopback_tunnel = "12"` + "\n"
+	config += `	all = false` + "\n"
+	config += `	network_broadcast_2 = false` + "\n"
+	config += `	bgp = false` + "\n"
+	config += `	dhcp = true` + "\n"
+	config += `	dns = true` + "\n"
+	config += `	icmp = true` + "\n"
+	config += `	ssh = false` + "\n"
+	config += `	ntp = false` + "\n"
+	config += `	netconf = false` + "\n"
+	config += `	ospf = false` + "\n"
+	config += `	stun = false` + "\n"
+	config += `	snmp = false` + "\n"
+	config += `	https = true` + "\n"
+	config += `	clear_dont_fragment_bit = false` + "\n"
+	config += `	pmtu_discovery = false` + "\n"
+	config += `	ip_mtu = 1500` + "\n"
+	config += `	static_ingress_qos = 6` + "\n"
+	config += `	tcp_mss = 720` + "\n"
+	config += `	tloc_extension = "tloc"` + "\n"
+	config += `	administrative_shutdown = true` + "\n"
+	config += `	link_autonegotiate = true` + "\n"
+	config += `	shaping_rate = 10000000` + "\n"
+	config += `	qos_map = "test"` + "\n"
+	config += `	vpn_qos_map = "test"` + "\n"
+	config += `	interface_bandwidth_capacity = 128` + "\n"
+	config += `	clock_rate = "5300000"` + "\n"
+	config += `	encapsulation = "hdlc"` + "\n"
+	config += `	interface_downstream_bandwidth_capacity = 10000000` + "\n"
+	config += `	write_rule = "test_rule"` + "\n"
+	config += `	access_list = [{` + "\n"
+	config += `	  direction = "in"` + "\n"
+	config += `	  acl_name = "Egress ACL - IPv4"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

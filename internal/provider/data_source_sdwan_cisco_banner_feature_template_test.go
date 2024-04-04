@@ -26,32 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanCiscoBannerFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_banner_feature_template.test", "login", "My Login Banner"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_banner_feature_template.test", "motd", "My MOTD Banner"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCiscoBannerFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cisco_banner_feature_template.test", "login", "My Login Banner"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_banner_feature_template.test", "motd", "My MOTD Banner"),
-				),
+				Config: testAccDataSourceSdwanCiscoBannerFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCiscoBannerFeatureTemplateConfig = `
+func testAccDataSourceSdwanCiscoBannerFeatureTemplateConfig() string {
+	config := `resource "sdwan_cisco_banner_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	login = "My Login Banner"` + "\n"
+	config += `	motd = "My MOTD Banner"` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cisco_banner_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  login = "My Login Banner"
-  motd = "My MOTD Banner"
+	config += `
+		data "sdwan_cisco_banner_feature_template" "test" {
+			id = sdwan_cisco_banner_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cisco_banner_feature_template" "test" {
-  id = sdwan_cisco_banner_feature_template.test.id
-}
-`

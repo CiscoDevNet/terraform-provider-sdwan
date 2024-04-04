@@ -26,86 +26,79 @@ import (
 )
 
 func TestAccSdwanCiscoWirelessLANFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "shutdown_2_4ghz", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "shutdown_5ghz", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.wireless_network_name", "WLAN1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.admin_state", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.broadcast_ssid", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.vlan_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radio_type", "24ghz"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.security_type", "enterprise"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_port", "1812"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_secret", "MySecret1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.passphrase", "passphrase"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.qos_profile", "silver"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "country", "AE"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "username", "user1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "password", "myPassword01"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_ip_address", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_default_gateway", "0.0.0.0"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoWirelessLANFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "country", "AE"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "username", "user1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "password", "myPassword01"),
-				),
 			},
 			{
 				Config: testAccSdwanCiscoWirelessLANFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "shutdown_2_4ghz", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "shutdown_5ghz", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.wireless_network_name", "WLAN1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.admin_state", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.broadcast_ssid", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.vlan_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radio_type", "24ghz"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.security_type", "enterprise"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_ip", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_port", "1812"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.radius_server_secret", "MySecret1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.passphrase", "passphrase"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "ssids.0.qos_profile", "silver"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "country", "AE"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "username", "user1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "password", "myPassword01"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_ip_address", "0.0.0.0"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_subnet_mask", "0.0.0.0"),
-					resource.TestCheckResourceAttr("sdwan_cisco_wireless_lan_feature_template.test", "controller_default_gateway", "0.0.0.0"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoWirelessLANFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_wireless_lan_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		country = "AE"
-		username = "user1"
-		password = "myPassword01"
-	}
-	`
+	config := `resource "sdwan_cisco_wireless_lan_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	country = "AE"` + "\n"
+	config += `	username = "user1"` + "\n"
+	config += `	password = "myPassword01"` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoWirelessLANFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_wireless_lan_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		shutdown_2_4ghz = false
-		shutdown_5ghz = false
-		ssids = [{
-			wireless_network_name = "WLAN1"
-			admin_state = false
-			broadcast_ssid = true
-			vlan_id = 1
-			radio_type = "24ghz"
-			security_type = "enterprise"
-			radius_server_ip = "1.2.3.4"
-			radius_server_port = 1812
-			radius_server_secret = "MySecret1"
-			passphrase = "passphrase"
-			qos_profile = "silver"
-		}]
-		country = "AE"
-		username = "user1"
-		password = "myPassword01"
-		controller_ip_address = "0.0.0.0"
-		controller_subnet_mask = "0.0.0.0"
-		controller_default_gateway = "0.0.0.0"
-	}
-	`
+	config := `resource "sdwan_cisco_wireless_lan_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	shutdown_2_4ghz = false` + "\n"
+	config += `	shutdown_5ghz = false` + "\n"
+	config += `	ssids = [{` + "\n"
+	config += `	  wireless_network_name = "WLAN1"` + "\n"
+	config += `	  admin_state = false` + "\n"
+	config += `	  broadcast_ssid = true` + "\n"
+	config += `	  vlan_id = 1` + "\n"
+	config += `	  radio_type = "24ghz"` + "\n"
+	config += `	  security_type = "enterprise"` + "\n"
+	config += `	  radius_server_ip = "1.2.3.4"` + "\n"
+	config += `	  radius_server_port = 1812` + "\n"
+	config += `	  radius_server_secret = "MySecret1"` + "\n"
+	config += `	  passphrase = "passphrase"` + "\n"
+	config += `	  qos_profile = "silver"` + "\n"
+	config += `	}]` + "\n"
+	config += `	country = "AE"` + "\n"
+	config += `	username = "user1"` + "\n"
+	config += `	password = "myPassword01"` + "\n"
+	config += `	controller_ip_address = "0.0.0.0"` + "\n"
+	config += `	controller_subnet_mask = "0.0.0.0"` + "\n"
+	config += `	controller_default_gateway = "0.0.0.0"` + "\n"
+	config += `}` + "\n"
+	return config
 }

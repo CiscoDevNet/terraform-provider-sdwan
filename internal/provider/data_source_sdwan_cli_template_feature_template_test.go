@@ -26,30 +26,32 @@ import (
 )
 
 func TestAccDataSourceSdwanCLITemplateFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cli_template_feature_template.test", "cli_config", "! Enable new BGP community format\nip bgp-community new-format\n"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCLITemplateFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cli_template_feature_template.test", "cli_config", "! Enable new BGP community format\nip bgp-community new-format\n"),
-				),
+				Config: testAccDataSourceSdwanCLITemplateFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCLITemplateFeatureTemplateConfig = `
+func testAccDataSourceSdwanCLITemplateFeatureTemplateConfig() string {
+	config := `resource "sdwan_cli_template_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	cli_config = "! Enable new BGP community format\nip bgp-community new-format\n"` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cli_template_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  cli_config = "! Enable new BGP community format\nip bgp-community new-format\n"
+	config += `
+		data "sdwan_cli_template_feature_template" "test" {
+			id = sdwan_cli_template_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cli_template_feature_template" "test" {
-  id = sdwan_cli_template_feature_template.test.id
-}
-`

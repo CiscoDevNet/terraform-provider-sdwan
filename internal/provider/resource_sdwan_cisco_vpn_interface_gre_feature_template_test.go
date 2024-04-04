@@ -26,85 +26,75 @@ import (
 )
 
 func TestAccSdwanCiscoVPNInterfaceGREFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "interface_name", "gre0/0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "interface_description", "My Description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "ip_address", "1.1.1.1/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_source", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_source_interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_destination", "3.4.5.6"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "application", "sig"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tcp_mss_adjust", "1400"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "clear_dont_fragment", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "rewrite_rule", "ACL1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_lists.0.direction", "in"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_lists.0.acl_name", "ACL2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_route_via", "g0/0"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoVPNInterfaceGREFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "interface_name", "gre0/0"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_source", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_destination", "3.4.5.6"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "application", "sig"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_route_via", "g0/0"),
-				),
 			},
 			{
 				Config: testAccSdwanCiscoVPNInterfaceGREFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "interface_name", "gre0/0"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "interface_description", "My Description"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "ip_address", "1.1.1.1/24"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_source", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "shutdown", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_destination", "3.4.5.6"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "application", "sig"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "ip_mtu", "1500"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tcp_mss_adjust", "1400"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "clear_dont_fragment", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "rewrite_rule", "ACL1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_lists.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "access_lists.0.acl_name", "ACL2"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_gre_feature_template.test", "tunnel_route_via", "g0/0"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoVPNInterfaceGREFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_vpn_interface_gre_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		interface_name = "gre0/0"
-		tunnel_source = "1.2.3.4"
-		tunnel_source_interface = "e1"
-		tunnel_destination = "3.4.5.6"
-		application = "sig"
-		tunnel_route_via = "g0/0"
-	}
-	`
+	config := `resource "sdwan_cisco_vpn_interface_gre_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	interface_name = "gre0/0"` + "\n"
+	config += `	tunnel_source = "1.2.3.4"` + "\n"
+	config += `	tunnel_source_interface = "e1"` + "\n"
+	config += `	tunnel_destination = "3.4.5.6"` + "\n"
+	config += `	application = "sig"` + "\n"
+	config += `	tunnel_route_via = "g0/0"` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoVPNInterfaceGREFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_vpn_interface_gre_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		interface_name = "gre0/0"
-		interface_description = "My Description"
-		ip_address = "1.1.1.1/24"
-		tunnel_source = "1.2.3.4"
-		shutdown = true
-		tunnel_source_interface = "e1"
-		tunnel_destination = "3.4.5.6"
-		application = "sig"
-		ip_mtu = 1500
-		tcp_mss_adjust = 1400
-		clear_dont_fragment = true
-		rewrite_rule = "ACL1"
-		access_lists = [{
-			direction = "in"
-			acl_name = "ACL2"
-		}]
-		tracker = ["TRACKER1"]
-		tunnel_route_via = "g0/0"
-	}
-	`
+	config := `resource "sdwan_cisco_vpn_interface_gre_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	interface_name = "gre0/0"` + "\n"
+	config += `	interface_description = "My Description"` + "\n"
+	config += `	ip_address = "1.1.1.1/24"` + "\n"
+	config += `	tunnel_source = "1.2.3.4"` + "\n"
+	config += `	shutdown = true` + "\n"
+	config += `	tunnel_source_interface = "e1"` + "\n"
+	config += `	tunnel_destination = "3.4.5.6"` + "\n"
+	config += `	application = "sig"` + "\n"
+	config += `	ip_mtu = 1500` + "\n"
+	config += `	tcp_mss_adjust = 1400` + "\n"
+	config += `	clear_dont_fragment = true` + "\n"
+	config += `	rewrite_rule = "ACL1"` + "\n"
+	config += `	access_lists = [{` + "\n"
+	config += `	  direction = "in"` + "\n"
+	config += `	  acl_name = "ACL2"` + "\n"
+	config += `	}]` + "\n"
+	config += `	tracker = ["TRACKER1"]` + "\n"
+	config += `	tunnel_route_via = "g0/0"` + "\n"
+	config += `}` + "\n"
+	return config
 }

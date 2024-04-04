@@ -26,66 +26,68 @@ import (
 )
 
 func TestAccDataSourceSdwanEigrpFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "as_number", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.redistributes.0.protocol", "bgp"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.redistributes.0.route_policy", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.networks.0.prefix", "1.2.3.4/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hello_interval", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hold_time", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "route_policy_name", "RP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "filter", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "authentication_type", "hmac-sha-256"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hmac_authentication_key", "myAuthKey"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.interface_name", "Ethernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.summary_addresses.0.prefix", "1.2.3.4/24"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanEigrpFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "as_number", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.type", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.redistributes.0.protocol", "bgp"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.redistributes.0.route_policy", "1.2.3.4"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "address_families.0.networks.0.prefix", "1.2.3.4/24"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hello_interval", "5"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hold_time", "15"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "route_policy_name", "RP1"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "filter", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "authentication_type", "hmac-sha-256"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "hmac_authentication_key", "myAuthKey"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.interface_name", "Ethernet1"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.shutdown", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_eigrp_feature_template.test", "interfaces.0.summary_addresses.0.prefix", "1.2.3.4/24"),
-				),
+				Config: testAccDataSourceSdwanEigrpFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanEigrpFeatureTemplateConfig = `
+func testAccDataSourceSdwanEigrpFeatureTemplateConfig() string {
+	config := `resource "sdwan_eigrp_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	as_number = 1` + "\n"
+	config += `	address_families = [{` + "\n"
+	config += `	  type = "ipv4"` + "\n"
+	config += `	  redistributes = [{` + "\n"
+	config += `		protocol = "bgp"` + "\n"
+	config += `		route_policy = "1.2.3.4"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  networks = [{` + "\n"
+	config += `		prefix = "1.2.3.4/24"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	hello_interval = 5` + "\n"
+	config += `	hold_time = 15` + "\n"
+	config += `	route_policy_name = "RP1"` + "\n"
+	config += `	filter = false` + "\n"
+	config += `	authentication_type = "hmac-sha-256"` + "\n"
+	config += `	hmac_authentication_key = "myAuthKey"` + "\n"
+	config += `	interfaces = [{` + "\n"
+	config += `	  interface_name = "Ethernet1"` + "\n"
+	config += `	  shutdown = false` + "\n"
+	config += `	  summary_addresses = [{` + "\n"
+	config += `		prefix = "1.2.3.4/24"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_eigrp_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  as_number = 1
-  address_families = [{
-    type = "ipv4"
-	redistributes = [{
-		protocol = "bgp"
-		route_policy = "1.2.3.4"
-	}]
-	networks = [{
-		prefix = "1.2.3.4/24"
-	}]
-  }]
-  hello_interval = 5
-  hold_time = 15
-  route_policy_name = "RP1"
-  filter = false
-  authentication_type = "hmac-sha-256"
-  hmac_authentication_key = "myAuthKey"
-  interfaces = [{
-    interface_name = "Ethernet1"
-    shutdown = false
-	summary_addresses = [{
-		prefix = "1.2.3.4/24"
-	}]
-  }]
+	config += `
+		data "sdwan_eigrp_feature_template" "test" {
+			id = sdwan_eigrp_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_eigrp_feature_template" "test" {
-  id = sdwan_eigrp_feature_template.test.id
-}
-`

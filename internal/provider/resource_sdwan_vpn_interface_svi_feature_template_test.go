@@ -26,159 +26,154 @@ import (
 )
 
 func TestAccSdwanVPNInterfaceSVIFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "if_name", "Vlan100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "interface_description", "VPN Interface SVI"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_address", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_secondary_addresses.0.ipv4_address", "4.5.6.7"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_address", "2001:db8:85a3::8a2e:370:7334"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_client", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_distance", "101"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_rapid_commit", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_secondary_addresses.0.ipv6_address", "2001:db8:85a3::8a2e:370:7334"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_helpers.0.address", "2001:db8:85a3::8a2e:370:7334"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_helpers.0.vpn_id", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ip_directed_broadcast", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "tcp_mss_adjust", "1400"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "arp_timeout", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_access_lists.0.direction", "in"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_access_lists.0.acl_name", "ACL1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_access_lists.0.direction", "in"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_access_lists.0.acl_name", "ACL2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "policers.0.direction", "in"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "policers.0.policer_name", "POLICER1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "static_arp_entries.0.ipv4_address", "3.4.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "static_arp_entries.0.mac_address", "00:00:00:00:00:00"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.group_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.priority", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.timer", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.track_omp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.track_prefix_list", "TRACK1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.ipv4_address", "5.6.7.8"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.ipv4_secondary_addresses.0.ipv4_address", "8.8.8.8"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tloc_preference_change", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tloc_preference_change_value", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tracking_objects.0.name", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tracking_objects.0.track_action", "decrement"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tracking_objects.0.decrement_value", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.group_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.priority", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.timer", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.track_omp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.track_prefix_list", "TRACK1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.ipv6_addresses.0.link_local_address", "FE80::1/64"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.ipv6_addresses.0.prefix", "2001:db8:85a3::8a2e:370:7335"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.ipv6_secondary_addresses.0.prefix", "2001:db8:85a3::8a2e:370:7336"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanVPNInterfaceSVIFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "if_name", "Vlan100"),
-				),
 			},
 			{
 				Config: testAccSdwanVPNInterfaceSVIFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "if_name", "Vlan100"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "interface_description", "VPN Interface SVI"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_address", "2.3.4.5"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_secondary_addresses.0.ipv4_address", "4.5.6.7"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_address", "2001:db8:85a3::8a2e:370:7334"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_client", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_distance", "101"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_rapid_commit", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_secondary_addresses.0.ipv6_address", "2001:db8:85a3::8a2e:370:7334"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_helpers.0.address", "2001:db8:85a3::8a2e:370:7334"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_dhcp_helpers.0.vpn_id", "100"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ip_directed_broadcast", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "mtu", "1500"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ip_mtu", "1500"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "tcp_mss_adjust", "1400"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "shutdown", "false"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "arp_timeout", "100"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_access_lists.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_access_lists.0.acl_name", "ACL1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_access_lists.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_access_lists.0.acl_name", "ACL2"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "policers.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "policers.0.policer_name", "POLICER1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "static_arp_entries.0.ipv4_address", "3.4.4.5"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "static_arp_entries.0.mac_address", "00:00:00:00:00:00"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.group_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.priority", "100"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.timer", "1000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.track_omp", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.track_prefix_list", "TRACK1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.ipv4_address", "5.6.7.8"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.ipv4_secondary_addresses.0.ipv4_address", "8.8.8.8"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tloc_preference_change", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tloc_preference_change_value", "100"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tracking_objects.0.name", "100"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tracking_objects.0.track_action", "decrement"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv4_vrrps.0.tracking_objects.0.decrement_value", "10"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.group_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.priority", "100"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.timer", "1000"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.track_omp", "true"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.track_prefix_list", "TRACK1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.ipv6_addresses.0.link_local_address", "FE80::1/64"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.ipv6_addresses.0.prefix", "2001:db8:85a3::8a2e:370:7335"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_svi_feature_template.test", "ipv6_vrrps.0.ipv6_secondary_addresses.0.prefix", "2001:db8:85a3::8a2e:370:7336"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanVPNInterfaceSVIFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_vpn_interface_svi_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		if_name = "Vlan100"
-	}
-	`
+	config := `resource "sdwan_vpn_interface_svi_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	if_name = "Vlan100"` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanVPNInterfaceSVIFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_vpn_interface_svi_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		if_name = "Vlan100"
-		interface_description = "VPN Interface SVI"
-		ipv4_address = "2.3.4.5"
-		ipv4_secondary_addresses = [{
-			ipv4_address = "4.5.6.7"
-		}]
-		ipv6_address = "2001:db8:85a3::8a2e:370:7334"
-		ipv6_dhcp_client = false
-		ipv6_dhcp_distance = 101
-		ipv6_dhcp_rapid_commit = false
-		ipv6_secondary_addresses = [{
-			ipv6_address = "2001:db8:85a3::8a2e:370:7334"
-		}]
-		ipv4_dhcp_helper = ["7.7.7.7"]
-		ipv6_dhcp_helpers = [{
-			address = "2001:db8:85a3::8a2e:370:7334"
-			vpn_id = 100
-		}]
-		ip_directed_broadcast = true
-		mtu = 1500
-		ip_mtu = 1500
-		tcp_mss_adjust = 1400
-		shutdown = false
-		arp_timeout = 100
-		ipv4_access_lists = [{
-			direction = "in"
-			acl_name = "ACL1"
-		}]
-		ipv6_access_lists = [{
-			direction = "in"
-			acl_name = "ACL2"
-		}]
-		policers = [{
-			direction = "in"
-			policer_name = "POLICER1"
-		}]
-		static_arp_entries = [{
-			ipv4_address = "3.4.4.5"
-			mac_address = "00:00:00:00:00:00"
-		}]
-		ipv4_vrrps = [{
-			group_id = 1
-			priority = 100
-			timer = 1000
-			track_omp = true
-			track_prefix_list = "TRACK1"
-			ipv4_address = "5.6.7.8"
-			ipv4_secondary_addresses = [{
-				ipv4_address = "8.8.8.8"
-			}]
-			tloc_preference_change = true
-			tloc_preference_change_value = 100
-			tracking_objects = [{
-				name = 100
-				track_action = "decrement"
-				decrement_value = 10
-			}]
-		}]
-		ipv6_vrrps = [{
-			group_id = 1
-			priority = 100
-			timer = 1000
-			track_omp = true
-			track_prefix_list = "TRACK1"
-			ipv6_addresses = [{
-				link_local_address = "FE80::1/64"
-				prefix = "2001:db8:85a3::8a2e:370:7335"
-			}]
-			ipv6_secondary_addresses = [{
-				prefix = "2001:db8:85a3::8a2e:370:7336"
-			}]
-		}]
-	}
-	`
+	config := `resource "sdwan_vpn_interface_svi_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	if_name = "Vlan100"` + "\n"
+	config += `	interface_description = "VPN Interface SVI"` + "\n"
+	config += `	ipv4_address = "2.3.4.5"` + "\n"
+	config += `	ipv4_secondary_addresses = [{` + "\n"
+	config += `	  ipv4_address = "4.5.6.7"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
+	config += `	ipv6_dhcp_client = false` + "\n"
+	config += `	ipv6_dhcp_distance = 101` + "\n"
+	config += `	ipv6_dhcp_rapid_commit = false` + "\n"
+	config += `	ipv6_secondary_addresses = [{` + "\n"
+	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_dhcp_helper = ["7.7.7.7"]` + "\n"
+	config += `	ipv6_dhcp_helpers = [{` + "\n"
+	config += `	  address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
+	config += `	  vpn_id = 100` + "\n"
+	config += `	}]` + "\n"
+	config += `	ip_directed_broadcast = true` + "\n"
+	config += `	mtu = 1500` + "\n"
+	config += `	ip_mtu = 1500` + "\n"
+	config += `	tcp_mss_adjust = 1400` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	arp_timeout = 100` + "\n"
+	config += `	ipv4_access_lists = [{` + "\n"
+	config += `	  direction = "in"` + "\n"
+	config += `	  acl_name = "ACL1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_access_lists = [{` + "\n"
+	config += `	  direction = "in"` + "\n"
+	config += `	  acl_name = "ACL2"` + "\n"
+	config += `	}]` + "\n"
+	config += `	policers = [{` + "\n"
+	config += `	  direction = "in"` + "\n"
+	config += `	  policer_name = "POLICER1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	static_arp_entries = [{` + "\n"
+	config += `	  ipv4_address = "3.4.4.5"` + "\n"
+	config += `	  mac_address = "00:00:00:00:00:00"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_vrrps = [{` + "\n"
+	config += `	  group_id = 1` + "\n"
+	config += `	  priority = 100` + "\n"
+	config += `	  timer = 1000` + "\n"
+	config += `	  track_omp = true` + "\n"
+	config += `	  track_prefix_list = "TRACK1"` + "\n"
+	config += `	  ipv4_address = "5.6.7.8"` + "\n"
+	config += `	  ipv4_secondary_addresses = [{` + "\n"
+	config += `		ipv4_address = "8.8.8.8"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  tloc_preference_change = true` + "\n"
+	config += `	  tloc_preference_change_value = 100` + "\n"
+	config += `	  tracking_objects = [{` + "\n"
+	config += `		name = 100` + "\n"
+	config += `		track_action = "decrement"` + "\n"
+	config += `		decrement_value = 10` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_vrrps = [{` + "\n"
+	config += `	  group_id = 1` + "\n"
+	config += `	  priority = 100` + "\n"
+	config += `	  timer = 1000` + "\n"
+	config += `	  track_omp = true` + "\n"
+	config += `	  track_prefix_list = "TRACK1"` + "\n"
+	config += `	  ipv6_addresses = [{` + "\n"
+	config += `		link_local_address = "FE80::1/64"` + "\n"
+	config += `		prefix = "2001:db8:85a3::8a2e:370:7335"` + "\n"
+	config += `	}]` + "\n"
+	config += `	  ipv6_secondary_addresses = [{` + "\n"
+	config += `		prefix = "2001:db8:85a3::8a2e:370:7336"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

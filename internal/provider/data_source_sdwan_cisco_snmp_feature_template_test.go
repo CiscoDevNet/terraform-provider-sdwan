@@ -26,88 +26,90 @@ import (
 )
 
 func TestAccDataSourceSdwanCiscoSNMPFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "contact", "Max"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "location", "Building 1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "views.0.name", "VIEW1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "views.0.object_identifiers.0.id", "1.2.3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "views.0.object_identifiers.0.exclude", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "communities.0.name", "community1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "communities.0.view", "VIEW1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "communities.0.authorization", "read-only"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "groups.0.name", "GROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "groups.0.security_level", "auth-priv"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "groups.0.view", "VIEW1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.name", "user1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.authentication_protocol", "sha"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.authentication_password", "password123"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.privacy_protocol", "aes-cfb-128"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.privacy_password", "password123"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.group", "GROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.ip", "1.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.udp_port", "12345"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.community_name", "community1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.user", "user1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.source_interface", "e1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCiscoSNMPFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "shutdown", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "contact", "Max"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "location", "Building 1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "views.0.name", "VIEW1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "views.0.object_identifiers.0.id", "1.2.3"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "views.0.object_identifiers.0.exclude", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "communities.0.name", "community1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "communities.0.view", "VIEW1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "communities.0.authorization", "read-only"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "groups.0.name", "GROUP1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "groups.0.security_level", "auth-priv"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "groups.0.view", "VIEW1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.name", "user1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.authentication_protocol", "sha"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.authentication_password", "password123"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.privacy_protocol", "aes-cfb-128"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.privacy_password", "password123"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "users.0.group", "GROUP1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.vpn_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.ip", "1.1.1.1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.udp_port", "12345"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.community_name", "community1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.user", "user1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_snmp_feature_template.test", "trap_targets.0.source_interface", "e1"),
-				),
+				Config: testAccDataSourceSdwanCiscoSNMPFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCiscoSNMPFeatureTemplateConfig = `
+func testAccDataSourceSdwanCiscoSNMPFeatureTemplateConfig() string {
+	config := `resource "sdwan_cisco_snmp_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	contact = "Max"` + "\n"
+	config += `	location = "Building 1"` + "\n"
+	config += `	views = [{` + "\n"
+	config += `	  name = "VIEW1"` + "\n"
+	config += `	  object_identifiers = [{` + "\n"
+	config += `		id = "1.2.3"` + "\n"
+	config += `		exclude = true` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	communities = [{` + "\n"
+	config += `	  name = "community1"` + "\n"
+	config += `	  view = "VIEW1"` + "\n"
+	config += `	  authorization = "read-only"` + "\n"
+	config += `	}]` + "\n"
+	config += `	groups = [{` + "\n"
+	config += `	  name = "GROUP1"` + "\n"
+	config += `	  security_level = "auth-priv"` + "\n"
+	config += `	  view = "VIEW1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	users = [{` + "\n"
+	config += `	  name = "user1"` + "\n"
+	config += `	  authentication_protocol = "sha"` + "\n"
+	config += `	  authentication_password = "password123"` + "\n"
+	config += `	  privacy_protocol = "aes-cfb-128"` + "\n"
+	config += `	  privacy_password = "password123"` + "\n"
+	config += `	  group = "GROUP1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	trap_targets = [{` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  ip = "1.1.1.1"` + "\n"
+	config += `	  udp_port = 12345` + "\n"
+	config += `	  community_name = "community1"` + "\n"
+	config += `	  user = "user1"` + "\n"
+	config += `	  source_interface = "e1"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cisco_snmp_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  shutdown = false
-  contact = "Max"
-  location = "Building 1"
-  views = [{
-    name = "VIEW1"
-	object_identifiers = [{
-		id = "1.2.3"
-		exclude = true
-	}]
-  }]
-  communities = [{
-    name = "community1"
-    view = "VIEW1"
-    authorization = "read-only"
-  }]
-  groups = [{
-    name = "GROUP1"
-    security_level = "auth-priv"
-    view = "VIEW1"
-  }]
-  users = [{
-    name = "user1"
-    authentication_protocol = "sha"
-    authentication_password = "password123"
-    privacy_protocol = "aes-cfb-128"
-    privacy_password = "password123"
-    group = "GROUP1"
-  }]
-  trap_targets = [{
-    vpn_id = 1
-    ip = "1.1.1.1"
-    udp_port = 12345
-    community_name = "community1"
-    user = "user1"
-    source_interface = "e1"
-  }]
+	config += `
+		data "sdwan_cisco_snmp_feature_template" "test" {
+			id = sdwan_cisco_snmp_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cisco_snmp_feature_template" "test" {
-  id = sdwan_cisco_snmp_feature_template.test.id
-}
-`

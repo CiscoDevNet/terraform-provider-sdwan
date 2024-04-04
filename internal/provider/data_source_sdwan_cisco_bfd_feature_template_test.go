@@ -26,46 +26,48 @@ import (
 )
 
 func TestAccDataSourceSdwanCiscoBFDFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "poll_interval", "800000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "default_dscp", "48"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.color", "private5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.hello_interval", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.multiplier", "7"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.pmtu_discovery", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.dscp", "46"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCiscoBFDFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "multiplier", "3"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "poll_interval", "800000"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "default_dscp", "48"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.color", "private5"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.hello_interval", "1000"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.multiplier", "7"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.pmtu_discovery", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_bfd_feature_template.test", "colors.0.dscp", "46"),
-				),
+				Config: testAccDataSourceSdwanCiscoBFDFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCiscoBFDFeatureTemplateConfig = `
+func testAccDataSourceSdwanCiscoBFDFeatureTemplateConfig() string {
+	config := `resource "sdwan_cisco_bfd_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	multiplier = 3` + "\n"
+	config += `	poll_interval = 800000` + "\n"
+	config += `	default_dscp = 48` + "\n"
+	config += `	colors = [{` + "\n"
+	config += `	  color = "private5"` + "\n"
+	config += `	  hello_interval = 1000` + "\n"
+	config += `	  multiplier = 7` + "\n"
+	config += `	  pmtu_discovery = true` + "\n"
+	config += `	  dscp = 46` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cisco_bfd_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  multiplier = 3
-  poll_interval = 800000
-  default_dscp = 48
-  colors = [{
-    color = "private5"
-    hello_interval = 1000
-    multiplier = 7
-    pmtu_discovery = true
-    dscp = 46
-  }]
+	config += `
+		data "sdwan_cisco_bfd_feature_template" "test" {
+			id = sdwan_cisco_bfd_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cisco_bfd_feature_template" "test" {
-  id = sdwan_cisco_bfd_feature_template.test.id
-}
-`

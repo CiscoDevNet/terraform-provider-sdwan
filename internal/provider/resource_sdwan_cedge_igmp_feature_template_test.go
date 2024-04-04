@@ -26,49 +26,46 @@ import (
 )
 
 func TestAccSdwanCEdgeIGMPFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.name", "Ethernet0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.join_groups.0.group_address", "235.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.join_groups.0.source", "1.2.3.4"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCEdgeIGMPFeatureTemplateConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanCEdgeIGMPFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.name", "Ethernet0"),
-					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.join_groups.0.group_address", "235.1.1.1"),
-					resource.TestCheckResourceAttr("sdwan_cedge_igmp_feature_template.test", "interfaces.0.join_groups.0.source", "1.2.3.4"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCEdgeIGMPFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cedge_igmp_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-	}
-	`
+	config := `resource "sdwan_cedge_igmp_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCEdgeIGMPFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cedge_igmp_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		interfaces = [{
-			name = "Ethernet0"
-			join_groups = [{
-				group_address = "235.1.1.1"
-				source = "1.2.3.4"
-			}]
-		}]
-	}
-	`
+	config := `resource "sdwan_cedge_igmp_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	interfaces = [{` + "\n"
+	config += `	  name = "Ethernet0"` + "\n"
+	config += `	  join_groups = [{` + "\n"
+	config += `		group_address = "235.1.1.1"` + "\n"
+	config += `		source = "1.2.3.4"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

@@ -26,60 +26,55 @@ import (
 )
 
 func TestAccSdwanCellularControllerFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "cellular_interface_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.slot_number", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.data_profile", "8"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.attach_profile", "8"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "primary_sim_slot", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "sim_failover_retries", "160"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "sim_failover_timeout", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "firmware_auto_sim", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCellularControllerFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "cellular_interface_id", "1"),
-				),
 			},
 			{
 				Config: testAccSdwanCellularControllerFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "cellular_interface_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.slot_number", "1"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.data_profile", "8"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "data_profiles.0.attach_profile", "8"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "primary_sim_slot", "100"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "sim_failover_retries", "160"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "sim_failover_timeout", "3"),
-					resource.TestCheckResourceAttr("sdwan_cellular_controller_feature_template.test", "firmware_auto_sim", "false"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCellularControllerFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cellular_controller_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		cellular_interface_id = "1"
-	}
-	`
+	config := `resource "sdwan_cellular_controller_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	cellular_interface_id = "1"` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCellularControllerFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cellular_controller_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		cellular_interface_id = "1"
-		data_profiles = [{
-			slot_number = 1
-			data_profile = 8
-			attach_profile = 8
-		}]
-		primary_sim_slot = 100
-		sim_failover_retries = 160
-		sim_failover_timeout = 3
-		firmware_auto_sim = false
-	}
-	`
+	config := `resource "sdwan_cellular_controller_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	cellular_interface_id = "1"` + "\n"
+	config += `	data_profiles = [{` + "\n"
+	config += `	  slot_number = 1` + "\n"
+	config += `	  data_profile = 8` + "\n"
+	config += `	  attach_profile = 8` + "\n"
+	config += `	}]` + "\n"
+	config += `	primary_sim_slot = 100` + "\n"
+	config += `	sim_failover_retries = 160` + "\n"
+	config += `	sim_failover_timeout = 3` + "\n"
+	config += `	firmware_auto_sim = false` + "\n"
+	config += `}` + "\n"
+	return config
 }

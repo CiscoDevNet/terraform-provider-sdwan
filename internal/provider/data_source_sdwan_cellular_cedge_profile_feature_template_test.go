@@ -26,42 +26,44 @@ import (
 )
 
 func TestAccDataSourceSdwanCellularCEdgeProfileFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "APN1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "authentication_type", "chap"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "packet_data_network_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_username", "MyUsername"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_password", "MyPassword"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "no_overwrite", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCellularCEdgeProfileFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "access_point_name", "APN1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "authentication_type", "chap"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "packet_data_network_type", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_username", "MyUsername"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "profile_password", "MyPassword"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_cedge_profile_feature_template.test", "no_overwrite", "false"),
-				),
+				Config: testAccDataSourceSdwanCellularCEdgeProfileFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCellularCEdgeProfileFeatureTemplateConfig = `
+func testAccDataSourceSdwanCellularCEdgeProfileFeatureTemplateConfig() string {
+	config := `resource "sdwan_cellular_cedge_profile_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	profile_id = 1` + "\n"
+	config += `	access_point_name = "APN1"` + "\n"
+	config += `	authentication_type = "chap"` + "\n"
+	config += `	packet_data_network_type = "ipv4"` + "\n"
+	config += `	profile_username = "MyUsername"` + "\n"
+	config += `	profile_password = "MyPassword"` + "\n"
+	config += `	no_overwrite = false` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cellular_cedge_profile_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  profile_id = 1
-  access_point_name = "APN1"
-  authentication_type = "chap"
-  packet_data_network_type = "ipv4"
-  profile_username = "MyUsername"
-  profile_password = "MyPassword"
-  no_overwrite = false
+	config += `
+		data "sdwan_cellular_cedge_profile_feature_template" "test" {
+			id = sdwan_cellular_cedge_profile_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cellular_cedge_profile_feature_template" "test" {
-  id = sdwan_cellular_cedge_profile_feature_template.test.id
-}
-`

@@ -26,43 +26,40 @@ import (
 )
 
 func TestAccSdwanCiscoBannerFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_banner_feature_template.test", "login", "My Login Banner"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_banner_feature_template.test", "motd", "My MOTD Banner"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoBannerFeatureTemplateConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanCiscoBannerFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_banner_feature_template.test", "login", "My Login Banner"),
-					resource.TestCheckResourceAttr("sdwan_cisco_banner_feature_template.test", "motd", "My MOTD Banner"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoBannerFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_banner_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-	}
-	`
+	config := `resource "sdwan_cisco_banner_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoBannerFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_banner_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		login = "My Login Banner"
-		motd = "My MOTD Banner"
-	}
-	`
+	config := `resource "sdwan_cisco_banner_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	login = "My Login Banner"` + "\n"
+	config += `	motd = "My MOTD Banner"` + "\n"
+	config += `}` + "\n"
+	return config
 }

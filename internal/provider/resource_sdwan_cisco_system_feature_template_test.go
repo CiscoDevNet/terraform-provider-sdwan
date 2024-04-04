@@ -26,156 +26,147 @@ import (
 )
 
 func TestAccSdwanCiscoSystemFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "timezone", "UTC"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "hostname", "Router1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "system_description", "My Description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "location", "Building 1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "latitude", "40"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "longitude", "50"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing_range", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing_sms", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing_sms_phone_numbers.0.number", "+1234567"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "system_ip", "5.5.5.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "overlay_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "site_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "port_offset", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "port_hopping", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "control_session_pps", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "track_transport", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "track_interface_tag", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "console_baud_rate", "115200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "max_omp_sessions", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "multi_tenant", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "track_default_gateway", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "admin_tech_on_failure", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "idle_timeout", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.name", "tracker1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_ip", "5.6.7.8"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_dns_name", "abc.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_api_url", "https://1.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.boolean", "or"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.threshold", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.interval", "60"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.type", "interface"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.object_number", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.sig", "sig1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.ip", "6.6.6.6"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.group_tracks_ids.0.track_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.boolean", "and"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "on_demand_tunnel", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "on_demand_tunnel_idle_timeout", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "affinity_group_number", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "transport_gateway", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "enable_mrf_migration", "enabled"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "migration_bgp_community", "100"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoSystemFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "hostname", "Router1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "system_ip", "5.5.5.5"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "site_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "console_baud_rate", "115200"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "multi_tenant", "true"),
-				),
 			},
 			{
 				Config: testAccSdwanCiscoSystemFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "timezone", "UTC"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "hostname", "Router1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "system_description", "My Description"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "location", "Building 1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "latitude", "40"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "longitude", "50"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing_range", "1000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing_sms", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "geo_fencing_sms_phone_numbers.0.number", "+1234567"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "system_ip", "5.5.5.5"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "overlay_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "site_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "port_offset", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "port_hopping", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "control_session_pps", "300"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "track_transport", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "track_interface_tag", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "console_baud_rate", "115200"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "max_omp_sessions", "5"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "multi_tenant", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "track_default_gateway", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "admin_tech_on_failure", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "idle_timeout", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.name", "tracker1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_ip", "5.6.7.8"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_dns_name", "abc.com"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.endpoint_api_url", "https://1.1.1.1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.boolean", "or"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.threshold", "300"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.interval", "60"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.multiplier", "3"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "trackers.0.type", "interface"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.object_number", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.sig", "sig1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.ip", "6.6.6.6"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.mask", "0.0.0.0"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.vpn_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.group_tracks_ids.0.track_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "object_trackers.0.boolean", "and"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "on_demand_tunnel", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "on_demand_tunnel_idle_timeout", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "affinity_group_number", "5"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "transport_gateway", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "enable_mrf_migration", "enabled"),
-					resource.TestCheckResourceAttr("sdwan_cisco_system_feature_template.test", "migration_bgp_community", "100"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoSystemFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_system_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		hostname = "Router1"
-		system_ip = "5.5.5.5"
-		site_id = 1
-		console_baud_rate = "115200"
-		multi_tenant = true
-	}
-	`
+	config := `resource "sdwan_cisco_system_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	hostname = "Router1"` + "\n"
+	config += `	system_ip = "5.5.5.5"` + "\n"
+	config += `	site_id = 1` + "\n"
+	config += `	console_baud_rate = "115200"` + "\n"
+	config += `	multi_tenant = true` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoSystemFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_system_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		timezone = "UTC"
-		hostname = "Router1"
-		system_description = "My Description"
-		location = "Building 1"
-		latitude = 40
-		longitude = 50
-		geo_fencing = true
-		geo_fencing_range = 1000
-		geo_fencing_sms = true
-		geo_fencing_sms_phone_numbers = [{
-			number = "+1234567"
-		}]
-		device_groups = ["group1"]
-		controller_group_list = [1]
-		system_ip = "5.5.5.5"
-		overlay_id = 1
-		site_id = 1
-		port_offset = 1
-		port_hopping = true
-		control_session_pps = 300
-		track_transport = true
-		track_interface_tag = 1
-		console_baud_rate = "115200"
-		max_omp_sessions = 5
-		multi_tenant = true
-		track_default_gateway = true
-		admin_tech_on_failure = true
-		idle_timeout = 100
-		trackers = [{
-			name = "tracker1"
-			endpoint_ip = "5.6.7.8"
-			endpoint_dns_name = "abc.com"
-			endpoint_api_url = "https://1.1.1.1"
-			elements = ["abc", "def"]
-			boolean = "or"
-			threshold = 300
-			interval = 60
-			multiplier = 3
-			type = "interface"
-		}]
-		object_trackers = [{
-			object_number = 1
-			interface = "e1"
-			sig = "sig1"
-			ip = "6.6.6.6"
-			mask = "0.0.0.0"
-			vpn_id = 1
-			group_tracks_ids = [{
-				track_id = 1
-			}]
-			boolean = "and"
-		}]
-		on_demand_tunnel = true
-		on_demand_tunnel_idle_timeout = 10
-		affinity_group_number = 5
-		affinity_group_preference = [1]
-		transport_gateway = true
-		enable_mrf_migration = "enabled"
-		migration_bgp_community = 100
-	}
-	`
+	config := `resource "sdwan_cisco_system_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	timezone = "UTC"` + "\n"
+	config += `	hostname = "Router1"` + "\n"
+	config += `	system_description = "My Description"` + "\n"
+	config += `	location = "Building 1"` + "\n"
+	config += `	latitude = 40` + "\n"
+	config += `	longitude = 50` + "\n"
+	config += `	geo_fencing = true` + "\n"
+	config += `	geo_fencing_range = 1000` + "\n"
+	config += `	geo_fencing_sms = true` + "\n"
+	config += `	geo_fencing_sms_phone_numbers = [{` + "\n"
+	config += `	  number = "+1234567"` + "\n"
+	config += `	}]` + "\n"
+	config += `	device_groups = ["group1"]` + "\n"
+	config += `	controller_group_list = [1]` + "\n"
+	config += `	system_ip = "5.5.5.5"` + "\n"
+	config += `	overlay_id = 1` + "\n"
+	config += `	site_id = 1` + "\n"
+	config += `	port_offset = 1` + "\n"
+	config += `	port_hopping = true` + "\n"
+	config += `	control_session_pps = 300` + "\n"
+	config += `	track_transport = true` + "\n"
+	config += `	track_interface_tag = 1` + "\n"
+	config += `	console_baud_rate = "115200"` + "\n"
+	config += `	max_omp_sessions = 5` + "\n"
+	config += `	multi_tenant = true` + "\n"
+	config += `	track_default_gateway = true` + "\n"
+	config += `	admin_tech_on_failure = true` + "\n"
+	config += `	idle_timeout = 100` + "\n"
+	config += `	trackers = [{` + "\n"
+	config += `	  name = "tracker1"` + "\n"
+	config += `	  endpoint_ip = "5.6.7.8"` + "\n"
+	config += `	  endpoint_dns_name = "abc.com"` + "\n"
+	config += `	  endpoint_api_url = "https://1.1.1.1"` + "\n"
+	config += `	  elements = ["abc", "def"]` + "\n"
+	config += `	  boolean = "or"` + "\n"
+	config += `	  threshold = 300` + "\n"
+	config += `	  interval = 60` + "\n"
+	config += `	  multiplier = 3` + "\n"
+	config += `	  type = "interface"` + "\n"
+	config += `	}]` + "\n"
+	config += `	object_trackers = [{` + "\n"
+	config += `	  object_number = 1` + "\n"
+	config += `	  interface = "e1"` + "\n"
+	config += `	  sig = "sig1"` + "\n"
+	config += `	  ip = "6.6.6.6"` + "\n"
+	config += `	  mask = "0.0.0.0"` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  group_tracks_ids = [{` + "\n"
+	config += `		track_id = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	  boolean = "and"` + "\n"
+	config += `	}]` + "\n"
+	config += `	on_demand_tunnel = true` + "\n"
+	config += `	on_demand_tunnel_idle_timeout = 10` + "\n"
+	config += `	affinity_group_number = 5` + "\n"
+	config += `	affinity_group_preference = [1]` + "\n"
+	config += `	transport_gateway = true` + "\n"
+	config += `	enable_mrf_migration = "enabled"` + "\n"
+	config += `	migration_bgp_community = 100` + "\n"
+	config += `}` + "\n"
+	return config
 }
