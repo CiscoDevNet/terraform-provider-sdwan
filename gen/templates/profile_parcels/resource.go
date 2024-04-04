@@ -79,7 +79,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"description": schema.StringAttribute{
 				MarkdownDescription: "The description of the profile parcel",
-				Required:            true,
+				Optional:            true,
 			},
 			{{- range  .Attributes}}
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
@@ -100,7 +100,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
 				{{- end}}
+				{{- if .Mandatory}}
+				Required:            true,
+				{{- else}}
 				Optional:            true,
+				{{- end}}
 				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),

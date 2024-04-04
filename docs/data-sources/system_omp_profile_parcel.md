@@ -31,8 +31,8 @@ data "sdwan_system_omp_profile_parcel" "example" {
 
 - `advertise_ipv4_bgp` (Boolean) BGP
 - `advertise_ipv4_bgp_variable` (String) Variable name
-- `advertise_ipv4_cpnnected` (Boolean) Connected
-- `advertise_ipv4_cpnnected_variable` (String) Variable name
+- `advertise_ipv4_connected` (Boolean) Connected
+- `advertise_ipv4_connected_variable` (String) Variable name
 - `advertise_ipv4_eigrp` (Boolean) EIGRP
 - `advertise_ipv4_eigrp_variable` (String) Variable name
 - `advertise_ipv4_isis` (Boolean) ISIS
@@ -72,6 +72,8 @@ data "sdwan_system_omp_profile_parcel" "example" {
 - `graceful_restart_variable` (String) Variable name
 - `holdtime` (Number) Hold Time (seconds)
 - `holdtime_variable` (String) Variable name
+- `ignore_region_path_length` (Boolean) Treat hierarchical and direct (secondary region) paths equally
+- `ignore_region_path_length_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
 - `omp_admin_distance_ipv4` (Number) OMP Admin Distance IPv4
 - `omp_admin_distance_ipv4_variable` (String) Variable name
@@ -83,4 +85,8 @@ data "sdwan_system_omp_profile_parcel" "example" {
 - `paths_advertised_per_prefix_variable` (String) Variable name
 - `shutdown` (Boolean) Shutdown
 - `shutdown_variable` (String) Variable name
+- `site_types` (Set of String) Site Types
+- `site_types_variable` (String) Variable name
+- `transport_gateway` (String) Transport Gateway Path Behavior
+- `transport_gateway_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel

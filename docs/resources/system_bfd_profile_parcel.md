@@ -4,13 +4,13 @@ page_title: "sdwan_system_bfd_profile_parcel Resource - terraform-provider-sdwan
 subcategory: "Profile Parcels"
 description: |-
   This resource can manage a System BFD profile parcel.
-    - Minimum SD-WAN Manager version: 20.9.0
+    - Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_system_bfd_profile_parcel (Resource)
 
 This resource can manage a System BFD profile parcel.
-  - Minimum SD-WAN Manager version: `20.9.0`
+  - Minimum SD-WAN Manager version: `20.12.0`
 
 ## Example Usage
 
@@ -39,7 +39,7 @@ resource "sdwan_system_bfd_profile_parcel" "example" {
 
 ### Required
 
-- `description` (String) The description of the profile parcel
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
 ### Optional
@@ -48,7 +48,7 @@ resource "sdwan_system_bfd_profile_parcel" "example" {
 - `default_dscp` (Number) - Range: `0`-`63`
   - Default value: `48`
 - `default_dscp_variable` (String) Variable name
-- `feature_profile_id` (String) Feature Profile ID
+- `description` (String) The description of the profile parcel
 - `multiplier` (Number) - Range: `1`-`6`
   - Default value: `6`
 - `multiplier_variable` (String) Variable name
