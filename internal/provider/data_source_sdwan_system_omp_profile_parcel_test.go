@@ -41,7 +41,7 @@ func TestAccDataSourceSdwanSystemOMPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_bgp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf_v3", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_cpnnected", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_connected", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_static", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_eigrp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_lisp", "false"))
@@ -53,6 +53,8 @@ func TestAccDataSourceSdwanSystemOMPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_eigrp", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_lisp", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_isis", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "ignore_region_path_length", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "transport_gateway", "prefer"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -91,7 +93,7 @@ func testAccDataSourceSdwanSystemOMPProfileParcelConfig() string {
 	config += `	advertise_ipv4_bgp = false` + "\n"
 	config += `	advertise_ipv4_ospf = false` + "\n"
 	config += `	advertise_ipv4_ospf_v3 = false` + "\n"
-	config += `	advertise_ipv4_cpnnected = false` + "\n"
+	config += `	advertise_ipv4_connected = false` + "\n"
 	config += `	advertise_ipv4_static = false` + "\n"
 	config += `	advertise_ipv4_eigrp = false` + "\n"
 	config += `	advertise_ipv4_lisp = false` + "\n"
@@ -103,6 +105,9 @@ func testAccDataSourceSdwanSystemOMPProfileParcelConfig() string {
 	config += `	advertise_ipv6_eigrp = true` + "\n"
 	config += `	advertise_ipv6_lisp = true` + "\n"
 	config += `	advertise_ipv6_isis = true` + "\n"
+	config += `	ignore_region_path_length = false` + "\n"
+	config += `	transport_gateway = "prefer"` + "\n"
+	config += `	site_types = ["type-1"]` + "\n"
 	config += `}` + "\n"
 
 	config += `
