@@ -1,0 +1,28 @@
+---
+name: System MRF
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/mrf
+minimum_version: 20.12.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: regionId
+    id: true
+    example: 1
+  - model_name: secondaryRegion
+    example: 2
+  - model_name: role
+    example: edge-router
+  - model_name: enableMrfMigration
+    example: enabled
+  - model_name: migrationBgpCommunity
+    example: 100
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
