@@ -1,0 +1,20 @@
+---
+name: System Flexible Port Speed
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/flexible-port-speed
+minimum_version: 20.12.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: portType
+    example: "12 ports of 1/10GE + 3 ports 40GE"
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

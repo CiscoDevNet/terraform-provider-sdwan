@@ -1,4 +1,8 @@
-## 0.3.7 (unreleased)
+## 0.3.8 (unreleased)
+
+- Add `sdwan_system_flexible_port_speed_profile_parcel` resource and data source
+
+## 0.3.7
 
 - Add `tracker`, `interval`, `interval_variable` and `zscaler_surrogate_refresh_time` to `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source
 - Add `sdwan_cisco_trustsec_feature_template` resource and data source
