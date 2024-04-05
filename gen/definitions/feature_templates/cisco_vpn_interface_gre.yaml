@@ -37,6 +37,7 @@ attributes:
     - model_name: direction
       example: in
     - model_name: acl-name
+      string_max_length: 127
       example: ACL2
   - model_name: tracker
     example: TRACKER1

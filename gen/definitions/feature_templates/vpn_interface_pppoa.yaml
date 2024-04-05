@@ -265,6 +265,7 @@ attributes:
     - model_name: direction
       example: in
     - model_name: acl-name
+      string_max_length: 127
       example: Egress ACL - IPv4
   - model_name: policer
     attributes:

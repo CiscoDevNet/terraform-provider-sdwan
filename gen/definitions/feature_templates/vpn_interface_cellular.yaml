@@ -16,6 +16,7 @@ attributes:
     - model_name: direction
       example: in
     - model_name: acl-name
+      string_max_length: 127
       example: ACL1
   - model_name: dhcp-helper
     tf_name: ipv4_dhcp_helper
@@ -288,6 +289,7 @@ attributes:
     - model_name: direction
       example: in
     - model_name: acl-name
+      string_max_length: 127
       example: ACL2
   - model_name: policer
     tf_name: policers
