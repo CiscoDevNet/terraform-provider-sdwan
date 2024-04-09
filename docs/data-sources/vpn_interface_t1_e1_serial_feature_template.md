@@ -28,7 +28,6 @@ data "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
 
 ### Read-Only
 
-- `access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_lists))
 - `autonegotiate` (Boolean) Link autonegotiation
 - `autonegotiate_variable` (String) Variable name
 - `clear_dont_fragment_bit` (Boolean) Clear don't fragment bit
@@ -51,6 +50,7 @@ data "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
 - `interface_downstream_bandwidth_capacity_variable` (String) Variable name
 - `ip_mtu` (Number) Interface MTU <68...2000>, in bytes
 - `ip_mtu_variable` (String) Variable name
+- `ipv4_access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--ipv4_access_lists))
 - `ipv4_address` (String) Assign IPv4 address
 - `ipv4_address_variable` (String) Variable name
 - `ipv6_access_lists` (Attributes List) Apply IPv6 access list (see [below for nested schema](#nestedatt--ipv6_access_lists))
@@ -150,8 +150,8 @@ data "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
 - `write_rule` (String) Name of rewrite rule
 - `write_rule_variable` (String) Variable name
 
-<a id="nestedatt--access_lists"></a>
-### Nested Schema for `access_lists`
+<a id="nestedatt--ipv4_access_lists"></a>
+### Nested Schema for `ipv4_access_lists`
 
 Read-Only:
 

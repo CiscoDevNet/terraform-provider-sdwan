@@ -152,7 +152,7 @@ type VPNInterfaceT1E1Serial struct {
 	InterfaceDownstreamBandwidthCapacityVariable       types.String                                          `tfsdk:"interface_downstream_bandwidth_capacity_variable"`
 	WriteRule                                          types.String                                          `tfsdk:"write_rule"`
 	WriteRuleVariable                                  types.String                                          `tfsdk:"write_rule_variable"`
-	AccessLists                                        []VPNInterfaceT1E1SerialAccessLists                   `tfsdk:"access_lists"`
+	Ipv4AccessLists                                    []VPNInterfaceT1E1SerialIpv4AccessLists               `tfsdk:"ipv4_access_lists"`
 }
 
 type VPNInterfaceT1E1SerialIpv6AccessLists struct {
@@ -171,7 +171,7 @@ type VPNInterfaceT1E1SerialTunnelInterfaceEncapsulations struct {
 	WeightVariable     types.String `tfsdk:"weight_variable"`
 }
 
-type VPNInterfaceT1E1SerialAccessLists struct {
+type VPNInterfaceT1E1SerialIpv4AccessLists struct {
 	Optional        types.Bool   `tfsdk:"optional"`
 	Direction       types.String `tfsdk:"direction"`
 	AclName         types.String `tfsdk:"acl_name"`
@@ -961,7 +961,7 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipValue", data.WriteRule.ValueString())
 	}
-	if len(data.AccessLists) > 0 {
+	if len(data.Ipv4AccessLists) > 0 {
 		body, _ = sjson.Set(body, path+"access-list."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"access-list."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
@@ -972,7 +972,7 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
 		body, _ = sjson.Set(body, path+"access-list."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.AccessLists {
+	for _, item := range data.Ipv4AccessLists {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "direction")
@@ -2225,9 +2225,9 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 		data.WriteRuleVariable = types.StringNull()
 	}
 	if value := res.Get(path + "access-list.vipValue"); len(value.Array()) > 0 {
-		data.AccessLists = make([]VPNInterfaceT1E1SerialAccessLists, 0)
+		data.Ipv4AccessLists = make([]VPNInterfaceT1E1SerialIpv4AccessLists, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceT1E1SerialAccessLists{}
+			item := VPNInterfaceT1E1SerialIpv4AccessLists{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -2268,7 +2268,7 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 				item.AclName = types.StringNull()
 				item.AclNameVariable = types.StringNull()
 			}
-			data.AccessLists = append(data.AccessLists, item)
+			data.Ipv4AccessLists = append(data.Ipv4AccessLists, item)
 			return true
 		})
 	}
@@ -2474,14 +2474,14 @@ func (data *VPNInterfaceT1E1Serial) hasChanges(ctx context.Context, state *VPNIn
 	if !data.WriteRule.Equal(state.WriteRule) {
 		hasChanges = true
 	}
-	if len(data.AccessLists) != len(state.AccessLists) {
+	if len(data.Ipv4AccessLists) != len(state.Ipv4AccessLists) {
 		hasChanges = true
 	} else {
-		for i := range data.AccessLists {
-			if !data.AccessLists[i].Direction.Equal(state.AccessLists[i].Direction) {
+		for i := range data.Ipv4AccessLists {
+			if !data.Ipv4AccessLists[i].Direction.Equal(state.Ipv4AccessLists[i].Direction) {
 				hasChanges = true
 			}
-			if !data.AccessLists[i].AclName.Equal(state.AccessLists[i].AclName) {
+			if !data.Ipv4AccessLists[i].AclName.Equal(state.Ipv4AccessLists[i].AclName) {
 				hasChanges = true
 			}
 		}

@@ -72,7 +72,7 @@ resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
   encapsulation                                  = "hdlc"
   interface_downstream_bandwidth_capacity        = 10000000
   write_rule                                     = "RULE1"
-  access_lists = [
+  ipv4_access_lists = [
     {
       direction = "in"
       acl_name  = "ACL2"
