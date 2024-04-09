@@ -1278,8 +1278,8 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	} else {
-		if len(data.EncapsulationForTloc) > 0 {
-			data.EncapsulationForTloc = []VPNInterfaceT1E1SerialEncapsulationForTloc{}
+		if len(data.TunnelInterfaceEncapsulations) > 0 {
+			data.TunnelInterfaceEncapsulations = []VPNInterfaceT1E1SerialTunnelInterfaceEncapsulations{}
 		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
@@ -2280,8 +2280,8 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	} else {
-		if len(data.AccessList) > 0 {
-			data.AccessList = []VPNInterfaceT1E1SerialAccessList{}
+		if len(data.Ipv4AccessLists) > 0 {
+			data.Ipv4AccessLists = []VPNInterfaceT1E1SerialIpv4AccessLists{}
 		}
 	}
 }

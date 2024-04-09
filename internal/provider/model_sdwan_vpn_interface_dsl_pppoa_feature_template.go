@@ -1783,8 +1783,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.Vdsl) > 0 {
-			data.Vdsl = []VPNInterfaceDSLPPPoAVdsl{}
+		if len(data.VdslConfiguration) > 0 {
+			data.VdslConfiguration = []VPNInterfaceDSLPPPoAVdslConfiguration{}
 		}
 	}
 	if value := res.Get(path + "pvc.vipValue"); len(value.Array()) > 0 {
@@ -2286,8 +2286,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.Encapsulation) > 0 {
-			data.Encapsulation = []VPNInterfaceDSLPPPoAEncapsulation{}
+		if len(data.TunnelInterfaceEncapsulations) > 0 {
+			data.TunnelInterfaceEncapsulations = []VPNInterfaceDSLPPPoATunnelInterfaceEncapsulations{}
 		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
@@ -3168,8 +3168,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.PortForward) > 0 {
-			data.PortForward = []VPNInterfaceDSLPPPoAPortForward{}
+		if len(data.NatPortForwards) > 0 {
+			data.NatPortForwards = []VPNInterfaceDSLPPPoANatPortForwards{}
 		}
 	}
 	if value := res.Get(path + "qos-adaptive.period.vipType"); value.Exists() {
@@ -3467,8 +3467,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.AccessList) > 0 {
-			data.AccessList = []VPNInterfaceDSLPPPoAAccessList{}
+		if len(data.AccessLists) > 0 {
+			data.AccessLists = []VPNInterfaceDSLPPPoAAccessLists{}
 		}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
@@ -3516,8 +3516,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.Policer) > 0 {
-			data.Policer = []VPNInterfaceDSLPPPoAPolicer{}
+		if len(data.Policers) > 0 {
+			data.Policers = []VPNInterfaceDSLPPPoAPolicers{}
 		}
 	}
 	if value := res.Get(path + "mtu.vipType"); value.Exists() {

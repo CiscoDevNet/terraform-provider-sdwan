@@ -1676,8 +1676,8 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.Vdsl) > 0 {
-			data.Vdsl = []VPNInterfaceDSLPPPoEVdsl{}
+		if len(data.VdslConfiguration) > 0 {
+			data.VdslConfiguration = []VPNInterfaceDSLPPPoEVdslConfiguration{}
 		}
 	}
 	if value := res.Get(path + "bridge-dot1q.encap.vipType"); value.Exists() {
@@ -2048,8 +2048,8 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.Encapsulation) > 0 {
-			data.Encapsulation = []VPNInterfaceDSLPPPoEEncapsulation{}
+		if len(data.TunnelInterfaceEncapsulations) > 0 {
+			data.TunnelInterfaceEncapsulations = []VPNInterfaceDSLPPPoETunnelInterfaceEncapsulations{}
 		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
@@ -2930,8 +2930,8 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.PortForward) > 0 {
-			data.PortForward = []VPNInterfaceDSLPPPoEPortForward{}
+		if len(data.NatPortForwards) > 0 {
+			data.NatPortForwards = []VPNInterfaceDSLPPPoENatPortForwards{}
 		}
 	}
 	if value := res.Get(path + "qos-adaptive.period.vipType"); value.Exists() {
@@ -3229,8 +3229,8 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.AccessList) > 0 {
-			data.AccessList = []VPNInterfaceDSLPPPoEAccessList{}
+		if len(data.AccessLists) > 0 {
+			data.AccessLists = []VPNInterfaceDSLPPPoEAccessLists{}
 		}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
@@ -3278,8 +3278,8 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		if len(data.Policer) > 0 {
-			data.Policer = []VPNInterfaceDSLPPPoEPolicer{}
+		if len(data.Policers) > 0 {
+			data.Policers = []VPNInterfaceDSLPPPoEPolicers{}
 		}
 	}
 	if value := res.Get(path + "mtu.vipType"); value.Exists() {
