@@ -101,8 +101,8 @@ func TestAccSdwanVPNInterfaceT1E1SerialFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "encapsulation", "hdlc"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "interface_downstream_bandwidth_capacity", "10000000"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "write_rule", "RULE1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv4_access_lists.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "ipv4_access_lists.0.acl_name", "ACL2"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "access_lists.0.direction", "in"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_t1_e1_serial_feature_template.test", "access_lists.0.acl_name", "ACL2"),
 				),
 			},
 		},
@@ -194,7 +194,7 @@ func testAccSdwanVPNInterfaceT1E1SerialFeatureTemplateConfig_all() string {
 		encapsulation = "hdlc"
 		interface_downstream_bandwidth_capacity = 10000000
 		write_rule = "RULE1"
-		ipv4_access_lists = [{
+		access_lists = [{
 			direction = "in"
 			acl_name = "ACL2"
 		}]

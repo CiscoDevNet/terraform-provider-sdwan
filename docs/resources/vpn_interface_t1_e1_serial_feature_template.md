@@ -89,7 +89,7 @@ resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
   encapsulation                                  = "hdlc"
   interface_downstream_bandwidth_capacity        = 10000000
   write_rule                                     = "RULE1"
-  ipv4_access_lists = [
+  access_lists = [
     {
       direction = "in"
       acl_name  = "ACL2"
@@ -110,6 +110,7 @@ resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
 
 ### Optional
 
+- `access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_lists))
 - `autonegotiate` (Boolean) Link autonegotiation
   - Default value: `true`
 - `autonegotiate_variable` (String) Variable name
@@ -141,7 +142,6 @@ resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
   - Range: `68`-`2000`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
-- `ipv4_access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--ipv4_access_lists))
 - `ipv4_address` (String) Assign IPv4 address
 - `ipv4_address_variable` (String) Variable name
 - `ipv6_access_lists` (Attributes List) Apply IPv6 access list (see [below for nested schema](#nestedatt--ipv6_access_lists))
@@ -289,8 +289,8 @@ resource "sdwan_vpn_interface_t1_e1_serial_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--ipv4_access_lists"></a>
-### Nested Schema for `ipv4_access_lists`
+<a id="nestedatt--access_lists"></a>
+### Nested Schema for `access_lists`
 
 Optional:
 

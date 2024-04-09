@@ -357,7 +357,7 @@ attributes:
     tf_name: write_rule
     example: RULE1
   - model_name: access-list
-    tf_name: ipv4_access_lists
+    tf_name: access_lists
     attributes:
     - model_name: direction
       example: in

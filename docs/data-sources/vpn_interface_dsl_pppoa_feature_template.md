@@ -28,6 +28,7 @@ data "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
 
 ### Read-Only
 
+- `access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_lists))
 - `atm_description` (String) Interface description
 - `atm_description_variable` (String) Variable name
 - `atm_sub_interface_name` (String) ATM Sub interface Name
@@ -50,7 +51,6 @@ data "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
 - `ip_directed_broadcast_variable` (String) Variable name
 - `ip_mtu` (Number) Interface MTU <576..2000>, in bytes
 - `ip_mtu_variable` (String) Variable name
-- `ipv4_access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--ipv4_access_lists))
 - `nat` (Boolean) Network Address Translation on this interface
 - `nat_block_icmp_error` (Boolean) Block inbound ICMP error messages
 - `nat_block_icmp_error_variable` (String) Variable name
@@ -180,8 +180,8 @@ data "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
 - `write_rule` (String) Name of rewrite rule
 - `write_rule_variable` (String) Variable name
 
-<a id="nestedatt--ipv4_access_lists"></a>
-### Nested Schema for `ipv4_access_lists`
+<a id="nestedatt--access_lists"></a>
+### Nested Schema for `access_lists`
 
 Read-Only:
 

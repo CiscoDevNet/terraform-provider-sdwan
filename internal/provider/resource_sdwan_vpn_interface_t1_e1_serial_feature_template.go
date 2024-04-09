@@ -697,7 +697,7 @@ func (r *VPNInterfaceT1E1SerialFeatureTemplateResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ipv4_access_lists": schema.ListNestedAttribute{
+			"access_lists": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Apply ACL").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{

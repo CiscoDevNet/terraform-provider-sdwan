@@ -25,7 +25,6 @@ attributes:
         example: in
       - model_name: acl-name
         example: ACL1
-    
   - model_name: enable-core-region
     exclude_ignore: true
     example: true
@@ -45,8 +44,6 @@ attributes:
       example: 4294967
     - model_name: weight
       example: 250
-
-
   - model_name: group
     tf_name: tunnel_interface_groups
     example: 42949672
@@ -132,7 +129,6 @@ attributes:
     tf_name: tunnel_interface_bind_loopback_tunnel
     exclude_ignore: true
     example: 12
-
   - model_name: all
     tf_name: tunnel_interface_allow_all
     exclude_ignore: true
@@ -181,7 +177,6 @@ attributes:
     tf_name: tunnel_interface_allow_https
     exclude_ignore: true
     example: true
-
   - model_name: clear-dont-fragment
     tf_name: clear_dont_fragment_bit
     example: false
@@ -224,7 +219,7 @@ attributes:
     tf_name: write_rule
     example: RULE1
   - model_name: access-list
-    tf_name: ipv4_access_lists
+    tf_name: access_lists
     attributes:
     - model_name: direction
       example: in

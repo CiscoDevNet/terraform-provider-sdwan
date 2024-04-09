@@ -141,8 +141,8 @@ func TestAccSdwanVPNInterfaceDSLPPPoAFeatureTemplate(t *testing.T) {
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "bandwidth_upstream", "214748300"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "bandwidth_downstream", "214748300"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "write_rule", "RULE1"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "ipv4_access_lists.0.direction", "in"),
-					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "ipv4_access_lists.0.acl_name", "ACL1"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "access_lists.0.direction", "in"),
+					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "access_lists.0.acl_name", "ACL1"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "policers.0.direction", "in"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "policers.0.policer_name", "example"),
 					resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "ip_mtu", "1500"),
@@ -284,7 +284,7 @@ func testAccSdwanVPNInterfaceDSLPPPoAFeatureTemplateConfig_all() string {
 		bandwidth_upstream = 214748300
 		bandwidth_downstream = 214748300
 		write_rule = "RULE1"
-		ipv4_access_lists = [{
+		access_lists = [{
 			direction = "in"
 			acl_name = "ACL1"
 		}]

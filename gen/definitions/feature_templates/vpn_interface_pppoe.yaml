@@ -43,8 +43,6 @@ attributes:
     - model_name: modem
       tf_name: vdsl_modem_configuration
       example: 100
-
-
   - model_name: encap
     tf_name: ethernet_vlan_id
     example: 4094
@@ -200,7 +198,6 @@ attributes:
     tf_name: tunnel_interface_bind_loopback_tunnel
     exclude_ignore: true
     example: 12
-
   - model_name: all
     tf_name: tunnel_interface_allow_all
     exclude_ignore: true
@@ -332,7 +329,7 @@ attributes:
     tf_name: write_rule
     example: RULE1
   - model_name: access-list
-    tf_name: ipv4_access_lists
+    tf_name: access_lists
     attributes:
     - model_name: direction
       example: in

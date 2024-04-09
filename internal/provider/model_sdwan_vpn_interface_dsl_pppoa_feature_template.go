@@ -171,7 +171,7 @@ type VPNInterfaceDSLPPPoA struct {
 	BandwidthDownstreamVariable                        types.String                                        `tfsdk:"bandwidth_downstream_variable"`
 	WriteRule                                          types.String                                        `tfsdk:"write_rule"`
 	WriteRuleVariable                                  types.String                                        `tfsdk:"write_rule_variable"`
-	Ipv4AccessLists                                    []VPNInterfaceDSLPPPoAIpv4AccessLists               `tfsdk:"ipv4_access_lists"`
+	AccessLists                                        []VPNInterfaceDSLPPPoAAccessLists                   `tfsdk:"access_lists"`
 	Policers                                           []VPNInterfaceDSLPPPoAPolicers                      `tfsdk:"policers"`
 	IpMtu                                              types.Int64                                         `tfsdk:"ip_mtu"`
 	IpMtuVariable                                      types.String                                        `tfsdk:"ip_mtu_variable"`
@@ -242,7 +242,7 @@ type VPNInterfaceDSLPPPoANatPortForwards struct {
 	PrivateIpAddressVariable types.String `tfsdk:"private_ip_address_variable"`
 }
 
-type VPNInterfaceDSLPPPoAIpv4AccessLists struct {
+type VPNInterfaceDSLPPPoAAccessLists struct {
 	Optional        types.Bool   `tfsdk:"optional"`
 	Direction       types.String `tfsdk:"direction"`
 	AclName         types.String `tfsdk:"acl_name"`
@@ -1395,7 +1395,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipValue", data.WriteRule.ValueString())
 	}
-	if len(data.Ipv4AccessLists) > 0 {
+	if len(data.AccessLists) > 0 {
 		body, _ = sjson.Set(body, path+"access-list."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"access-list."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
@@ -1406,7 +1406,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
 		body, _ = sjson.Set(body, path+"access-list."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Ipv4AccessLists {
+	for _, item := range data.AccessLists {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "direction")
@@ -3404,9 +3404,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 		data.WriteRuleVariable = types.StringNull()
 	}
 	if value := res.Get(path + "access-list.vipValue"); len(value.Array()) > 0 {
-		data.Ipv4AccessLists = make([]VPNInterfaceDSLPPPoAIpv4AccessLists, 0)
+		data.AccessLists = make([]VPNInterfaceDSLPPPoAAccessLists, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLPPPoAIpv4AccessLists{}
+			item := VPNInterfaceDSLPPPoAAccessLists{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -3447,7 +3447,7 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				item.AclName = types.StringNull()
 				item.AclNameVariable = types.StringNull()
 			}
-			data.Ipv4AccessLists = append(data.Ipv4AccessLists, item)
+			data.AccessLists = append(data.AccessLists, item)
 			return true
 		})
 	}
@@ -3904,14 +3904,14 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 	if !data.WriteRule.Equal(state.WriteRule) {
 		hasChanges = true
 	}
-	if len(data.Ipv4AccessLists) != len(state.Ipv4AccessLists) {
+	if len(data.AccessLists) != len(state.AccessLists) {
 		hasChanges = true
 	} else {
-		for i := range data.Ipv4AccessLists {
-			if !data.Ipv4AccessLists[i].Direction.Equal(state.Ipv4AccessLists[i].Direction) {
+		for i := range data.AccessLists {
+			if !data.AccessLists[i].Direction.Equal(state.AccessLists[i].Direction) {
 				hasChanges = true
 			}
-			if !data.Ipv4AccessLists[i].AclName.Equal(state.Ipv4AccessLists[i].AclName) {
+			if !data.AccessLists[i].AclName.Equal(state.AccessLists[i].AclName) {
 				hasChanges = true
 			}
 		}

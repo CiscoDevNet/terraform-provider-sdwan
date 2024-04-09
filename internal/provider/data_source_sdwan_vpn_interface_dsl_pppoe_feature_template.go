@@ -772,7 +772,7 @@ func (d *VPNInterfaceDSLPPPoEFeatureTemplateDataSource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ipv4_access_lists": schema.ListNestedAttribute{
+			"access_lists": schema.ListNestedAttribute{
 				MarkdownDescription: "Apply ACL",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

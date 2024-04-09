@@ -120,7 +120,7 @@ resource "sdwan_vpn_interface_dsl_pppoe_feature_template" "example" {
   bandwidth_upstream                = 214748300
   bandwidth_downstream              = 214748300
   write_rule                        = "RULE1"
-  ipv4_access_lists = [
+  access_lists = [
     {
       direction = "in"
       acl_name  = "ACL1"
@@ -152,6 +152,7 @@ resource "sdwan_vpn_interface_dsl_pppoe_feature_template" "example" {
 
 ### Optional
 
+- `access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_lists))
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
 - `bandwidth_downstream_variable` (String) Variable name
@@ -193,7 +194,6 @@ resource "sdwan_vpn_interface_dsl_pppoe_feature_template" "example" {
   - Range: `576`-`2000`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
-- `ipv4_access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--ipv4_access_lists))
 - `nat` (Boolean) Network Address Translation on this interface
   - Default value: `false`
 - `nat_block_icmp_error` (Boolean) Block inbound ICMP error messages
@@ -390,8 +390,8 @@ resource "sdwan_vpn_interface_dsl_pppoe_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--ipv4_access_lists"></a>
-### Nested Schema for `ipv4_access_lists`
+<a id="nestedatt--access_lists"></a>
+### Nested Schema for `access_lists`
 
 Optional:
 

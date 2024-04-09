@@ -113,7 +113,7 @@ resource "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
   bandwidth_upstream                = 214748300
   bandwidth_downstream              = 214748300
   write_rule                        = "RULE1"
-  ipv4_access_lists = [
+  access_lists = [
     {
       direction = "in"
       acl_name  = "ACL1"
