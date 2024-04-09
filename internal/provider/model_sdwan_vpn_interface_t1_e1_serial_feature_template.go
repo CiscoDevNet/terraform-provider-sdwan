@@ -30,129 +30,129 @@ import (
 )
 
 type VPNInterfaceT1E1Serial struct {
-	Id                                           types.String                                 `tfsdk:"id"`
-	Version                                      types.Int64                                  `tfsdk:"version"`
-	TemplateType                                 types.String                                 `tfsdk:"template_type"`
-	Name                                         types.String                                 `tfsdk:"name"`
-	Description                                  types.String                                 `tfsdk:"description"`
-	DeviceTypes                                  types.Set                                    `tfsdk:"device_types"`
-	SerialInterfaceName                          types.String                                 `tfsdk:"serial_interface_name"`
-	SerialInterfaceNameVariable                  types.String                                 `tfsdk:"serial_interface_name_variable"`
-	InterfaceDescription                         types.String                                 `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable                 types.String                                 `tfsdk:"interface_description_variable"`
-	Ipv4Address                                  types.String                                 `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable                          types.String                                 `tfsdk:"ipv4_address_variable"`
-	Ipv6Address                                  types.String                                 `tfsdk:"ipv6_address"`
-	Ipv6AddressVariable                          types.String                                 `tfsdk:"ipv6_address_variable"`
-	Ipv6AccessLists                              []VPNInterfaceT1E1SerialIpv6AccessLists      `tfsdk:"ipv6_access_lists"`
-	EnableCoreRegion                             types.Bool                                   `tfsdk:"enable_core_region"`
-	EnableCoreRegionVariable                     types.String                                 `tfsdk:"enable_core_region_variable"`
-	CoreRegion                                   types.String                                 `tfsdk:"core_region"`
-	CoreRegionVariable                           types.String                                 `tfsdk:"core_region_variable"`
-	SecondaryRegion                              types.String                                 `tfsdk:"secondary_region"`
-	SecondaryRegionVariable                      types.String                                 `tfsdk:"secondary_region_variable"`
-	EncapsulationForTloc                         []VPNInterfaceT1E1SerialEncapsulationForTloc `tfsdk:"encapsulation_for_tloc"`
-	Groups                                       types.Set                                    `tfsdk:"groups"`
-	GroupsVariable                               types.String                                 `tfsdk:"groups_variable"`
-	Border                                       types.Bool                                   `tfsdk:"border"`
-	BorderVariable                               types.String                                 `tfsdk:"border_variable"`
-	PerTunnelQos                                 types.Bool                                   `tfsdk:"per_tunnel_qos"`
-	PerTunnelQosVariable                         types.String                                 `tfsdk:"per_tunnel_qos_variable"`
-	PerTunnelQosAggregator                       types.Bool                                   `tfsdk:"per_tunnel_qos_aggregator"`
-	PerTunnelQosAggregatorVariable               types.String                                 `tfsdk:"per_tunnel_qos_aggregator_variable"`
-	Color                                        types.String                                 `tfsdk:"color"`
-	ColorVariable                                types.String                                 `tfsdk:"color_variable"`
-	LastResortCircuit                            types.Bool                                   `tfsdk:"last_resort_circuit"`
-	LastResortCircuitVariable                    types.String                                 `tfsdk:"last_resort_circuit_variable"`
-	LowBandwidthLink                             types.Bool                                   `tfsdk:"low_bandwidth_link"`
-	LowBandwidthLinkVariable                     types.String                                 `tfsdk:"low_bandwidth_link_variable"`
-	TunnelTcpMss                                 types.Int64                                  `tfsdk:"tunnel_tcp_mss"`
-	TunnelTcpMssVariable                         types.String                                 `tfsdk:"tunnel_tcp_mss_variable"`
-	EnableClearDon                               types.Bool                                   `tfsdk:"enable_clear_don"`
-	EnableClearDonVariable                       types.String                                 `tfsdk:"enable_clear_don_variable"`
-	NetworkBroadcast1                            types.Bool                                   `tfsdk:"network_broadcast_1"`
-	NetworkBroadcast1Variable                    types.String                                 `tfsdk:"network_broadcast_1_variable"`
-	MaxControlConnections                        types.Int64                                  `tfsdk:"max_control_connections"`
-	MaxControlConnectionsVariable                types.String                                 `tfsdk:"max_control_connections_variable"`
-	VbondAsStunServer                            types.Bool                                   `tfsdk:"vbond_as_stun_server"`
-	VbondAsStunServerVariable                    types.String                                 `tfsdk:"vbond_as_stun_server_variable"`
-	ExcludeControllerGroupList                   types.Set                                    `tfsdk:"exclude_controller_group_list"`
-	ExcludeControllerGroupListVariable           types.String                                 `tfsdk:"exclude_controller_group_list_variable"`
-	VmanageConnectionPreference                  types.Int64                                  `tfsdk:"vmanage_connection_preference"`
-	VmanageConnectionPreferenceVariable          types.String                                 `tfsdk:"vmanage_connection_preference_variable"`
-	PortHop                                      types.Bool                                   `tfsdk:"port_hop"`
-	PortHopVariable                              types.String                                 `tfsdk:"port_hop_variable"`
-	Restrict                                     types.Bool                                   `tfsdk:"restrict"`
-	RestrictVariable                             types.String                                 `tfsdk:"restrict_variable"`
-	Carrier                                      types.String                                 `tfsdk:"carrier"`
-	CarrierVariable                              types.String                                 `tfsdk:"carrier_variable"`
-	NatRefreshInterval                           types.Int64                                  `tfsdk:"nat_refresh_interval"`
-	NatRefreshIntervalVariable                   types.String                                 `tfsdk:"nat_refresh_interval_variable"`
-	HelloInterval                                types.Int64                                  `tfsdk:"hello_interval"`
-	HelloIntervalVariable                        types.String                                 `tfsdk:"hello_interval_variable"`
-	HelloTolerance                               types.Int64                                  `tfsdk:"hello_tolerance"`
-	HelloToleranceVariable                       types.String                                 `tfsdk:"hello_tolerance_variable"`
-	BindLoopbackTunnel                           types.String                                 `tfsdk:"bind_loopback_tunnel"`
-	BindLoopbackTunnelVariable                   types.String                                 `tfsdk:"bind_loopback_tunnel_variable"`
-	All                                          types.Bool                                   `tfsdk:"all"`
-	AllVariable                                  types.String                                 `tfsdk:"all_variable"`
-	NetworkBroadcast2                            types.Bool                                   `tfsdk:"network_broadcast_2"`
-	NetworkBroadcast2Variable                    types.String                                 `tfsdk:"network_broadcast_2_variable"`
-	Bgp                                          types.Bool                                   `tfsdk:"bgp"`
-	BgpVariable                                  types.String                                 `tfsdk:"bgp_variable"`
-	Dhcp                                         types.Bool                                   `tfsdk:"dhcp"`
-	DhcpVariable                                 types.String                                 `tfsdk:"dhcp_variable"`
-	Dns                                          types.Bool                                   `tfsdk:"dns"`
-	DnsVariable                                  types.String                                 `tfsdk:"dns_variable"`
-	Icmp                                         types.Bool                                   `tfsdk:"icmp"`
-	IcmpVariable                                 types.String                                 `tfsdk:"icmp_variable"`
-	Ssh                                          types.Bool                                   `tfsdk:"ssh"`
-	SshVariable                                  types.String                                 `tfsdk:"ssh_variable"`
-	Ntp                                          types.Bool                                   `tfsdk:"ntp"`
-	NtpVariable                                  types.String                                 `tfsdk:"ntp_variable"`
-	Netconf                                      types.Bool                                   `tfsdk:"netconf"`
-	NetconfVariable                              types.String                                 `tfsdk:"netconf_variable"`
-	Ospf                                         types.Bool                                   `tfsdk:"ospf"`
-	OspfVariable                                 types.String                                 `tfsdk:"ospf_variable"`
-	Stun                                         types.Bool                                   `tfsdk:"stun"`
-	StunVariable                                 types.String                                 `tfsdk:"stun_variable"`
-	Snmp                                         types.Bool                                   `tfsdk:"snmp"`
-	SnmpVariable                                 types.String                                 `tfsdk:"snmp_variable"`
-	Https                                        types.Bool                                   `tfsdk:"https"`
-	HttpsVariable                                types.String                                 `tfsdk:"https_variable"`
-	ClearDontFragmentBit                         types.Bool                                   `tfsdk:"clear_dont_fragment_bit"`
-	ClearDontFragmentBitVariable                 types.String                                 `tfsdk:"clear_dont_fragment_bit_variable"`
-	PmtuDiscovery                                types.Bool                                   `tfsdk:"pmtu_discovery"`
-	PmtuDiscoveryVariable                        types.String                                 `tfsdk:"pmtu_discovery_variable"`
-	IpMtu                                        types.Int64                                  `tfsdk:"ip_mtu"`
-	IpMtuVariable                                types.String                                 `tfsdk:"ip_mtu_variable"`
-	StaticIngressQos                             types.Int64                                  `tfsdk:"static_ingress_qos"`
-	StaticIngressQosVariable                     types.String                                 `tfsdk:"static_ingress_qos_variable"`
-	TcpMss                                       types.Int64                                  `tfsdk:"tcp_mss"`
-	TcpMssVariable                               types.String                                 `tfsdk:"tcp_mss_variable"`
-	TlocExtension                                types.String                                 `tfsdk:"tloc_extension"`
-	TlocExtensionVariable                        types.String                                 `tfsdk:"tloc_extension_variable"`
-	AdministrativeShutdown                       types.Bool                                   `tfsdk:"administrative_shutdown"`
-	AdministrativeShutdownVariable               types.String                                 `tfsdk:"administrative_shutdown_variable"`
-	LinkAutonegotiate                            types.Bool                                   `tfsdk:"link_autonegotiate"`
-	LinkAutonegotiateVariable                    types.String                                 `tfsdk:"link_autonegotiate_variable"`
-	ShapingRate                                  types.Int64                                  `tfsdk:"shaping_rate"`
-	ShapingRateVariable                          types.String                                 `tfsdk:"shaping_rate_variable"`
-	QosMap                                       types.String                                 `tfsdk:"qos_map"`
-	QosMapVariable                               types.String                                 `tfsdk:"qos_map_variable"`
-	VpnQosMap                                    types.String                                 `tfsdk:"vpn_qos_map"`
-	VpnQosMapVariable                            types.String                                 `tfsdk:"vpn_qos_map_variable"`
-	InterfaceBandwidthCapacity                   types.Int64                                  `tfsdk:"interface_bandwidth_capacity"`
-	InterfaceBandwidthCapacityVariable           types.String                                 `tfsdk:"interface_bandwidth_capacity_variable"`
-	ClockRate                                    types.String                                 `tfsdk:"clock_rate"`
-	ClockRateVariable                            types.String                                 `tfsdk:"clock_rate_variable"`
-	Encapsulation                                types.String                                 `tfsdk:"encapsulation"`
-	EncapsulationVariable                        types.String                                 `tfsdk:"encapsulation_variable"`
-	InterfaceDownstreamBandwidthCapacity         types.Int64                                  `tfsdk:"interface_downstream_bandwidth_capacity"`
-	InterfaceDownstreamBandwidthCapacityVariable types.String                                 `tfsdk:"interface_downstream_bandwidth_capacity_variable"`
-	WriteRule                                    types.String                                 `tfsdk:"write_rule"`
-	WriteRuleVariable                            types.String                                 `tfsdk:"write_rule_variable"`
-	AccessList                                   []VPNInterfaceT1E1SerialAccessList           `tfsdk:"access_list"`
+	Id                                                 types.String                                          `tfsdk:"id"`
+	Version                                            types.Int64                                           `tfsdk:"version"`
+	TemplateType                                       types.String                                          `tfsdk:"template_type"`
+	Name                                               types.String                                          `tfsdk:"name"`
+	Description                                        types.String                                          `tfsdk:"description"`
+	DeviceTypes                                        types.Set                                             `tfsdk:"device_types"`
+	SerialInterfaceName                                types.String                                          `tfsdk:"serial_interface_name"`
+	SerialInterfaceNameVariable                        types.String                                          `tfsdk:"serial_interface_name_variable"`
+	InterfaceDescription                               types.String                                          `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable                       types.String                                          `tfsdk:"interface_description_variable"`
+	Ipv4Address                                        types.String                                          `tfsdk:"ipv4_address"`
+	Ipv4AddressVariable                                types.String                                          `tfsdk:"ipv4_address_variable"`
+	Ipv6Address                                        types.String                                          `tfsdk:"ipv6_address"`
+	Ipv6AddressVariable                                types.String                                          `tfsdk:"ipv6_address_variable"`
+	Ipv6AccessLists                                    []VPNInterfaceT1E1SerialIpv6AccessLists               `tfsdk:"ipv6_access_lists"`
+	EnableCoreRegion                                   types.Bool                                            `tfsdk:"enable_core_region"`
+	EnableCoreRegionVariable                           types.String                                          `tfsdk:"enable_core_region_variable"`
+	CoreRegion                                         types.String                                          `tfsdk:"core_region"`
+	CoreRegionVariable                                 types.String                                          `tfsdk:"core_region_variable"`
+	SecondaryRegion                                    types.String                                          `tfsdk:"secondary_region"`
+	SecondaryRegionVariable                            types.String                                          `tfsdk:"secondary_region_variable"`
+	TunnelInterfaceEncapsulations                      []VPNInterfaceT1E1SerialTunnelInterfaceEncapsulations `tfsdk:"tunnel_interface_encapsulations"`
+	TunnelInterfaceGroups                              types.Set                                             `tfsdk:"tunnel_interface_groups"`
+	TunnelInterfaceGroupsVariable                      types.String                                          `tfsdk:"tunnel_interface_groups_variable"`
+	TunnelInterfaceBorder                              types.Bool                                            `tfsdk:"tunnel_interface_border"`
+	TunnelInterfaceBorderVariable                      types.String                                          `tfsdk:"tunnel_interface_border_variable"`
+	PerTunnelQos                                       types.Bool                                            `tfsdk:"per_tunnel_qos"`
+	PerTunnelQosVariable                               types.String                                          `tfsdk:"per_tunnel_qos_variable"`
+	PerTunnelQosAggregator                             types.Bool                                            `tfsdk:"per_tunnel_qos_aggregator"`
+	PerTunnelQosAggregatorVariable                     types.String                                          `tfsdk:"per_tunnel_qos_aggregator_variable"`
+	TunnelQosMode                                      types.String                                          `tfsdk:"tunnel_qos_mode"`
+	TunnelQosModeVariable                              types.String                                          `tfsdk:"tunnel_qos_mode_variable"`
+	TunnelInterfaceColor                               types.String                                          `tfsdk:"tunnel_interface_color"`
+	TunnelInterfaceColorVariable                       types.String                                          `tfsdk:"tunnel_interface_color_variable"`
+	TunnelInterfaceLastResortCircuit                   types.Bool                                            `tfsdk:"tunnel_interface_last_resort_circuit"`
+	TunnelInterfaceLastResortCircuitVariable           types.String                                          `tfsdk:"tunnel_interface_last_resort_circuit_variable"`
+	TunnelInterfaceLowBandwidthLink                    types.Bool                                            `tfsdk:"tunnel_interface_low_bandwidth_link"`
+	TunnelInterfaceLowBandwidthLinkVariable            types.String                                          `tfsdk:"tunnel_interface_low_bandwidth_link_variable"`
+	TunnelInterfaceTunnelTcpMss                        types.Int64                                           `tfsdk:"tunnel_interface_tunnel_tcp_mss"`
+	TunnelInterfaceTunnelTcpMssVariable                types.String                                          `tfsdk:"tunnel_interface_tunnel_tcp_mss_variable"`
+	TunnelInterfaceClearDontFragment                   types.Bool                                            `tfsdk:"tunnel_interface_clear_dont_fragment"`
+	TunnelInterfaceClearDontFragmentVariable           types.String                                          `tfsdk:"tunnel_interface_clear_dont_fragment_variable"`
+	TunnelInterfaceNetworkBroadcast                    types.Bool                                            `tfsdk:"tunnel_interface_network_broadcast"`
+	TunnelInterfaceNetworkBroadcastVariable            types.String                                          `tfsdk:"tunnel_interface_network_broadcast_variable"`
+	TunnelInterfaceControlConnections                  types.Int64                                           `tfsdk:"tunnel_interface_control_connections"`
+	TunnelInterfaceControlConnectionsVariable          types.String                                          `tfsdk:"tunnel_interface_control_connections_variable"`
+	TunnelInterfaceVbondAsStunServer                   types.Bool                                            `tfsdk:"tunnel_interface_vbond_as_stun_server"`
+	TunnelInterfaceVbondAsStunServerVariable           types.String                                          `tfsdk:"tunnel_interface_vbond_as_stun_server_variable"`
+	TunnelInterfaceExcludeControllerGroupList          types.Set                                             `tfsdk:"tunnel_interface_exclude_controller_group_list"`
+	TunnelInterfaceExcludeControllerGroupListVariable  types.String                                          `tfsdk:"tunnel_interface_exclude_controller_group_list_variable"`
+	TunnelInterfaceVmanageConnectionPreference         types.Int64                                           `tfsdk:"tunnel_interface_vmanage_connection_preference"`
+	TunnelInterfaceVmanageConnectionPreferenceVariable types.String                                          `tfsdk:"tunnel_interface_vmanage_connection_preference_variable"`
+	TunnelInterfacePortHop                             types.Bool                                            `tfsdk:"tunnel_interface_port_hop"`
+	TunnelInterfacePortHopVariable                     types.String                                          `tfsdk:"tunnel_interface_port_hop_variable"`
+	TunnelInterfaceRestrict                            types.Bool                                            `tfsdk:"tunnel_interface_restrict"`
+	TunnelInterfaceRestrictVariable                    types.String                                          `tfsdk:"tunnel_interface_restrict_variable"`
+	TunnelInterfaceCarrier                             types.String                                          `tfsdk:"tunnel_interface_carrier"`
+	TunnelInterfaceCarrierVariable                     types.String                                          `tfsdk:"tunnel_interface_carrier_variable"`
+	TunnelInterfaceNatRefreshInterval                  types.Int64                                           `tfsdk:"tunnel_interface_nat_refresh_interval"`
+	TunnelInterfaceNatRefreshIntervalVariable          types.String                                          `tfsdk:"tunnel_interface_nat_refresh_interval_variable"`
+	TunnelInterfaceHelloInterval                       types.Int64                                           `tfsdk:"tunnel_interface_hello_interval"`
+	TunnelInterfaceHelloIntervalVariable               types.String                                          `tfsdk:"tunnel_interface_hello_interval_variable"`
+	TunnelInterfaceHelloTolerance                      types.Int64                                           `tfsdk:"tunnel_interface_hello_tolerance"`
+	TunnelInterfaceHelloToleranceVariable              types.String                                          `tfsdk:"tunnel_interface_hello_tolerance_variable"`
+	TunnelInterfaceBindLoopbackTunnel                  types.String                                          `tfsdk:"tunnel_interface_bind_loopback_tunnel"`
+	TunnelInterfaceBindLoopbackTunnelVariable          types.String                                          `tfsdk:"tunnel_interface_bind_loopback_tunnel_variable"`
+	TunnelInterfaceAllowAll                            types.Bool                                            `tfsdk:"tunnel_interface_allow_all"`
+	TunnelInterfaceAllowAllVariable                    types.String                                          `tfsdk:"tunnel_interface_allow_all_variable"`
+	TunnelInterfaceAllowBgp                            types.Bool                                            `tfsdk:"tunnel_interface_allow_bgp"`
+	TunnelInterfaceAllowBgpVariable                    types.String                                          `tfsdk:"tunnel_interface_allow_bgp_variable"`
+	TunnelInterfaceAllowDhcp                           types.Bool                                            `tfsdk:"tunnel_interface_allow_dhcp"`
+	TunnelInterfaceAllowDhcpVariable                   types.String                                          `tfsdk:"tunnel_interface_allow_dhcp_variable"`
+	TunnelInterfaceAllowDns                            types.Bool                                            `tfsdk:"tunnel_interface_allow_dns"`
+	TunnelInterfaceAllowDnsVariable                    types.String                                          `tfsdk:"tunnel_interface_allow_dns_variable"`
+	TunnelInterfaceAllowIcmp                           types.Bool                                            `tfsdk:"tunnel_interface_allow_icmp"`
+	TunnelInterfaceAllowIcmpVariable                   types.String                                          `tfsdk:"tunnel_interface_allow_icmp_variable"`
+	TunnelInterfaceAllowSsh                            types.Bool                                            `tfsdk:"tunnel_interface_allow_ssh"`
+	TunnelInterfaceAllowSshVariable                    types.String                                          `tfsdk:"tunnel_interface_allow_ssh_variable"`
+	TunnelInterfaceAllowNtp                            types.Bool                                            `tfsdk:"tunnel_interface_allow_ntp"`
+	TunnelInterfaceAllowNtpVariable                    types.String                                          `tfsdk:"tunnel_interface_allow_ntp_variable"`
+	TunnelInterfaceAllowNetconf                        types.Bool                                            `tfsdk:"tunnel_interface_allow_netconf"`
+	TunnelInterfaceAllowNetconfVariable                types.String                                          `tfsdk:"tunnel_interface_allow_netconf_variable"`
+	TunnelInterfaceAllowOspf                           types.Bool                                            `tfsdk:"tunnel_interface_allow_ospf"`
+	TunnelInterfaceAllowOspfVariable                   types.String                                          `tfsdk:"tunnel_interface_allow_ospf_variable"`
+	TunnelInterfaceAllowStun                           types.Bool                                            `tfsdk:"tunnel_interface_allow_stun"`
+	TunnelInterfaceAllowStunVariable                   types.String                                          `tfsdk:"tunnel_interface_allow_stun_variable"`
+	TunnelInterfaceAllowSnmp                           types.Bool                                            `tfsdk:"tunnel_interface_allow_snmp"`
+	TunnelInterfaceAllowSnmpVariable                   types.String                                          `tfsdk:"tunnel_interface_allow_snmp_variable"`
+	TunnelInterfaceAllowHttps                          types.Bool                                            `tfsdk:"tunnel_interface_allow_https"`
+	TunnelInterfaceAllowHttpsVariable                  types.String                                          `tfsdk:"tunnel_interface_allow_https_variable"`
+	ClearDontFragmentBit                               types.Bool                                            `tfsdk:"clear_dont_fragment_bit"`
+	ClearDontFragmentBitVariable                       types.String                                          `tfsdk:"clear_dont_fragment_bit_variable"`
+	PmtuDiscovery                                      types.Bool                                            `tfsdk:"pmtu_discovery"`
+	PmtuDiscoveryVariable                              types.String                                          `tfsdk:"pmtu_discovery_variable"`
+	IpMtu                                              types.Int64                                           `tfsdk:"ip_mtu"`
+	IpMtuVariable                                      types.String                                          `tfsdk:"ip_mtu_variable"`
+	StaticIngressQos                                   types.Int64                                           `tfsdk:"static_ingress_qos"`
+	StaticIngressQosVariable                           types.String                                          `tfsdk:"static_ingress_qos_variable"`
+	TcpMss                                             types.Int64                                           `tfsdk:"tcp_mss"`
+	TcpMssVariable                                     types.String                                          `tfsdk:"tcp_mss_variable"`
+	TlocExtension                                      types.String                                          `tfsdk:"tloc_extension"`
+	TlocExtensionVariable                              types.String                                          `tfsdk:"tloc_extension_variable"`
+	Shutdown                                           types.Bool                                            `tfsdk:"shutdown"`
+	ShutdownVariable                                   types.String                                          `tfsdk:"shutdown_variable"`
+	Autonegotiate                                      types.Bool                                            `tfsdk:"autonegotiate"`
+	AutonegotiateVariable                              types.String                                          `tfsdk:"autonegotiate_variable"`
+	ShapingRate                                        types.Int64                                           `tfsdk:"shaping_rate"`
+	ShapingRateVariable                                types.String                                          `tfsdk:"shaping_rate_variable"`
+	QosMap                                             types.String                                          `tfsdk:"qos_map"`
+	QosMapVariable                                     types.String                                          `tfsdk:"qos_map_variable"`
+	QosMapVpn                                          types.String                                          `tfsdk:"qos_map_vpn"`
+	QosMapVpnVariable                                  types.String                                          `tfsdk:"qos_map_vpn_variable"`
+	InterfaceBandwidthCapacity                         types.Int64                                           `tfsdk:"interface_bandwidth_capacity"`
+	InterfaceBandwidthCapacityVariable                 types.String                                          `tfsdk:"interface_bandwidth_capacity_variable"`
+	ClockRate                                          types.String                                          `tfsdk:"clock_rate"`
+	ClockRateVariable                                  types.String                                          `tfsdk:"clock_rate_variable"`
+	Encapsulation                                      types.String                                          `tfsdk:"encapsulation"`
+	EncapsulationVariable                              types.String                                          `tfsdk:"encapsulation_variable"`
+	InterfaceDownstreamBandwidthCapacity               types.Int64                                           `tfsdk:"interface_downstream_bandwidth_capacity"`
+	InterfaceDownstreamBandwidthCapacityVariable       types.String                                          `tfsdk:"interface_downstream_bandwidth_capacity_variable"`
+	WriteRule                                          types.String                                          `tfsdk:"write_rule"`
+	WriteRuleVariable                                  types.String                                          `tfsdk:"write_rule_variable"`
+	Ipv4AccessLists                                    []VPNInterfaceT1E1SerialIpv4AccessLists               `tfsdk:"ipv4_access_lists"`
 }
 
 type VPNInterfaceT1E1SerialIpv6AccessLists struct {
@@ -162,16 +162,16 @@ type VPNInterfaceT1E1SerialIpv6AccessLists struct {
 	AclNameVariable types.String `tfsdk:"acl_name_variable"`
 }
 
-type VPNInterfaceT1E1SerialEncapsulationForTloc struct {
+type VPNInterfaceT1E1SerialTunnelInterfaceEncapsulations struct {
 	Optional           types.Bool   `tfsdk:"optional"`
-	EncapsulationType  types.String `tfsdk:"encapsulation_type"`
+	Encapsulation      types.String `tfsdk:"encapsulation"`
 	Preference         types.Int64  `tfsdk:"preference"`
 	PreferenceVariable types.String `tfsdk:"preference_variable"`
 	Weight             types.Int64  `tfsdk:"weight"`
 	WeightVariable     types.String `tfsdk:"weight_variable"`
 }
 
-type VPNInterfaceT1E1SerialAccessList struct {
+type VPNInterfaceT1E1SerialIpv4AccessLists struct {
 	Optional        types.Bool   `tfsdk:"optional"`
 	Direction       types.String `tfsdk:"direction"`
 	AclName         types.String `tfsdk:"acl_name"`
@@ -291,8 +291,6 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipVariableName", data.EnableCoreRegionVariable.ValueString())
 	} else if data.EnableCoreRegion.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipType", "constant")
@@ -304,8 +302,6 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipVariableName", data.CoreRegionVariable.ValueString())
 	} else if data.CoreRegion.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipType", "constant")
@@ -317,14 +313,12 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipVariableName", data.SecondaryRegionVariable.ValueString())
 	} else if data.SecondaryRegion.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipValue", data.SecondaryRegion.ValueString())
 	}
-	if len(data.EncapsulationForTloc) > 0 {
+	if len(data.TunnelInterfaceEncapsulations) > 0 {
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipPrimaryKey", []string{"encap"})
@@ -335,15 +329,15 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipPrimaryKey", []string{"encap"})
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.EncapsulationForTloc {
+	for _, item := range data.TunnelInterfaceEncapsulations {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "encap")
-		if item.EncapsulationType.IsNull() {
+		if item.Encapsulation.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "encap."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "encap."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "encap."+"vipValue", item.EncapsulationType.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "encap."+"vipValue", item.Encapsulation.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "preference")
 
@@ -380,32 +374,30 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.SetRaw(body, path+"tunnel-interface.encapsulation."+"vipValue.-1", itemBody)
 	}
 
-	if !data.GroupsVariable.IsNull() {
+	if !data.TunnelInterfaceGroupsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipVariableName", data.GroupsVariable.ValueString())
-	} else if data.Groups.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipVariableName", data.TunnelInterfaceGroupsVariable.ValueString())
+	} else if data.TunnelInterfaceGroups.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipType", "constant")
 		var values []int64
-		data.Groups.ElementsAs(ctx, &values, false)
+		data.TunnelInterfaceGroups.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipValue", values)
 	}
 
-	if !data.BorderVariable.IsNull() {
+	if !data.TunnelInterfaceBorderVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipVariableName", data.BorderVariable.ValueString())
-	} else if data.Border.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipVariableName", data.TunnelInterfaceBorderVariable.ValueString())
+	} else if data.TunnelInterfaceBorder.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipValue", strconv.FormatBool(data.Border.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipValue", strconv.FormatBool(data.TunnelInterfaceBorder.ValueBool()))
 	}
 
 	if !data.PerTunnelQosVariable.IsNull() {
@@ -430,396 +422,336 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"per-tunnel-qos-aggregator."+"vipValue", strconv.FormatBool(data.PerTunnelQosAggregator.ValueBool()))
 	}
 
-	if !data.ColorVariable.IsNull() {
+	if !data.TunnelQosModeVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipVariableName", data.TunnelQosModeVariable.ValueString())
+	} else if data.TunnelQosMode.IsNull() {
+	} else {
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipValue", data.TunnelQosMode.ValueString())
+	}
+
+	if !data.TunnelInterfaceColorVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipVariableName", data.ColorVariable.ValueString())
-	} else if data.Color.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipVariableName", data.TunnelInterfaceColorVariable.ValueString())
+	} else if data.TunnelInterfaceColor.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipValue", data.Color.ValueString())
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipValue", data.TunnelInterfaceColor.ValueString())
 	}
 
-	if !data.LastResortCircuitVariable.IsNull() {
+	if !data.TunnelInterfaceLastResortCircuitVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipVariableName", data.LastResortCircuitVariable.ValueString())
-	} else if data.LastResortCircuit.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipVariableName", data.TunnelInterfaceLastResortCircuitVariable.ValueString())
+	} else if data.TunnelInterfaceLastResortCircuit.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipValue", strconv.FormatBool(data.LastResortCircuit.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipValue", strconv.FormatBool(data.TunnelInterfaceLastResortCircuit.ValueBool()))
 	}
 
-	if !data.LowBandwidthLinkVariable.IsNull() {
+	if !data.TunnelInterfaceLowBandwidthLinkVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipVariableName", data.LowBandwidthLinkVariable.ValueString())
-	} else if data.LowBandwidthLink.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipVariableName", data.TunnelInterfaceLowBandwidthLinkVariable.ValueString())
+	} else if data.TunnelInterfaceLowBandwidthLink.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipValue", strconv.FormatBool(data.LowBandwidthLink.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipValue", strconv.FormatBool(data.TunnelInterfaceLowBandwidthLink.ValueBool()))
 	}
 
-	if !data.TunnelTcpMssVariable.IsNull() {
+	if !data.TunnelInterfaceTunnelTcpMssVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipVariableName", data.TunnelTcpMssVariable.ValueString())
-	} else if data.TunnelTcpMss.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipVariableName", data.TunnelInterfaceTunnelTcpMssVariable.ValueString())
+	} else if data.TunnelInterfaceTunnelTcpMss.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipValue", data.TunnelTcpMss.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipValue", data.TunnelInterfaceTunnelTcpMss.ValueInt64())
 	}
 
-	if !data.EnableClearDonVariable.IsNull() {
+	if !data.TunnelInterfaceClearDontFragmentVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipVariableName", data.EnableClearDonVariable.ValueString())
-	} else if data.EnableClearDon.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipVariableName", data.TunnelInterfaceClearDontFragmentVariable.ValueString())
+	} else if data.TunnelInterfaceClearDontFragment.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipValue", strconv.FormatBool(data.EnableClearDon.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipValue", strconv.FormatBool(data.TunnelInterfaceClearDontFragment.ValueBool()))
 	}
 
-	if !data.NetworkBroadcast1Variable.IsNull() {
+	if !data.TunnelInterfaceNetworkBroadcastVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipVariableName", data.NetworkBroadcast1Variable.ValueString())
-	} else if data.NetworkBroadcast1.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipVariableName", data.TunnelInterfaceNetworkBroadcastVariable.ValueString())
+	} else if data.TunnelInterfaceNetworkBroadcast.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipValue", strconv.FormatBool(data.NetworkBroadcast1.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipValue", strconv.FormatBool(data.TunnelInterfaceNetworkBroadcast.ValueBool()))
 	}
 
-	if !data.MaxControlConnectionsVariable.IsNull() {
+	if !data.TunnelInterfaceControlConnectionsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipVariableName", data.MaxControlConnectionsVariable.ValueString())
-	} else if data.MaxControlConnections.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipVariableName", data.TunnelInterfaceControlConnectionsVariable.ValueString())
+	} else if data.TunnelInterfaceControlConnections.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipValue", data.MaxControlConnections.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipValue", data.TunnelInterfaceControlConnections.ValueInt64())
 	}
 
-	if !data.VbondAsStunServerVariable.IsNull() {
+	if !data.TunnelInterfaceVbondAsStunServerVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipVariableName", data.VbondAsStunServerVariable.ValueString())
-	} else if data.VbondAsStunServer.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipVariableName", data.TunnelInterfaceVbondAsStunServerVariable.ValueString())
+	} else if data.TunnelInterfaceVbondAsStunServer.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipValue", strconv.FormatBool(data.VbondAsStunServer.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipValue", strconv.FormatBool(data.TunnelInterfaceVbondAsStunServer.ValueBool()))
 	}
 
-	if !data.ExcludeControllerGroupListVariable.IsNull() {
+	if !data.TunnelInterfaceExcludeControllerGroupListVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipVariableName", data.ExcludeControllerGroupListVariable.ValueString())
-	} else if data.ExcludeControllerGroupList.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipObjectType", "list")
-		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipVariableName", data.TunnelInterfaceExcludeControllerGroupListVariable.ValueString())
+	} else if data.TunnelInterfaceExcludeControllerGroupList.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipType", "constant")
 		var values []int64
-		data.ExcludeControllerGroupList.ElementsAs(ctx, &values, false)
+		data.TunnelInterfaceExcludeControllerGroupList.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipValue", values)
 	}
 
-	if !data.VmanageConnectionPreferenceVariable.IsNull() {
+	if !data.TunnelInterfaceVmanageConnectionPreferenceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipVariableName", data.VmanageConnectionPreferenceVariable.ValueString())
-	} else if data.VmanageConnectionPreference.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipVariableName", data.TunnelInterfaceVmanageConnectionPreferenceVariable.ValueString())
+	} else if data.TunnelInterfaceVmanageConnectionPreference.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipValue", data.VmanageConnectionPreference.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipValue", data.TunnelInterfaceVmanageConnectionPreference.ValueInt64())
 	}
 
-	if !data.PortHopVariable.IsNull() {
+	if !data.TunnelInterfacePortHopVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipVariableName", data.PortHopVariable.ValueString())
-	} else if data.PortHop.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipVariableName", data.TunnelInterfacePortHopVariable.ValueString())
+	} else if data.TunnelInterfacePortHop.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipValue", strconv.FormatBool(data.PortHop.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipValue", strconv.FormatBool(data.TunnelInterfacePortHop.ValueBool()))
 	}
 
-	if !data.RestrictVariable.IsNull() {
+	if !data.TunnelInterfaceRestrictVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipVariableName", data.RestrictVariable.ValueString())
-	} else if data.Restrict.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipVariableName", data.TunnelInterfaceRestrictVariable.ValueString())
+	} else if data.TunnelInterfaceRestrict.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipValue", strconv.FormatBool(data.Restrict.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipValue", strconv.FormatBool(data.TunnelInterfaceRestrict.ValueBool()))
 	}
 
-	if !data.CarrierVariable.IsNull() {
+	if !data.TunnelInterfaceCarrierVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipVariableName", data.CarrierVariable.ValueString())
-	} else if data.Carrier.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipVariableName", data.TunnelInterfaceCarrierVariable.ValueString())
+	} else if data.TunnelInterfaceCarrier.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipValue", data.Carrier.ValueString())
+		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipValue", data.TunnelInterfaceCarrier.ValueString())
 	}
 
-	if !data.NatRefreshIntervalVariable.IsNull() {
+	if !data.TunnelInterfaceNatRefreshIntervalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipVariableName", data.NatRefreshIntervalVariable.ValueString())
-	} else if data.NatRefreshInterval.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipVariableName", data.TunnelInterfaceNatRefreshIntervalVariable.ValueString())
+	} else if data.TunnelInterfaceNatRefreshInterval.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipValue", data.NatRefreshInterval.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipValue", data.TunnelInterfaceNatRefreshInterval.ValueInt64())
 	}
 
-	if !data.HelloIntervalVariable.IsNull() {
+	if !data.TunnelInterfaceHelloIntervalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipVariableName", data.HelloIntervalVariable.ValueString())
-	} else if data.HelloInterval.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipVariableName", data.TunnelInterfaceHelloIntervalVariable.ValueString())
+	} else if data.TunnelInterfaceHelloInterval.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipValue", data.HelloInterval.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipValue", data.TunnelInterfaceHelloInterval.ValueInt64())
 	}
 
-	if !data.HelloToleranceVariable.IsNull() {
+	if !data.TunnelInterfaceHelloToleranceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipVariableName", data.HelloToleranceVariable.ValueString())
-	} else if data.HelloTolerance.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipVariableName", data.TunnelInterfaceHelloToleranceVariable.ValueString())
+	} else if data.TunnelInterfaceHelloTolerance.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipValue", data.HelloTolerance.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipValue", data.TunnelInterfaceHelloTolerance.ValueInt64())
 	}
 
-	if !data.BindLoopbackTunnelVariable.IsNull() {
+	if !data.TunnelInterfaceBindLoopbackTunnelVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipVariableName", data.BindLoopbackTunnelVariable.ValueString())
-	} else if data.BindLoopbackTunnel.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipVariableName", data.TunnelInterfaceBindLoopbackTunnelVariable.ValueString())
+	} else if data.TunnelInterfaceBindLoopbackTunnel.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipValue", data.BindLoopbackTunnel.ValueString())
+		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipValue", data.TunnelInterfaceBindLoopbackTunnel.ValueString())
 	}
 
-	if !data.AllVariable.IsNull() {
+	if !data.TunnelInterfaceAllowAllVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipVariableName", data.AllVariable.ValueString())
-	} else if data.All.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipVariableName", data.TunnelInterfaceAllowAllVariable.ValueString())
+	} else if data.TunnelInterfaceAllowAll.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipValue", strconv.FormatBool(data.All.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowAll.ValueBool()))
 	}
 
-	if !data.NetworkBroadcast2Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipVariableName", data.NetworkBroadcast2Variable.ValueString())
-	} else if data.NetworkBroadcast2.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipValue", strconv.FormatBool(data.NetworkBroadcast2.ValueBool()))
-	}
-
-	if !data.BgpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowBgpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipVariableName", data.BgpVariable.ValueString())
-	} else if data.Bgp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipVariableName", data.TunnelInterfaceAllowBgpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowBgp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipValue", strconv.FormatBool(data.Bgp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowBgp.ValueBool()))
 	}
 
-	if !data.DhcpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDhcpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipVariableName", data.DhcpVariable.ValueString())
-	} else if data.Dhcp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipVariableName", data.TunnelInterfaceAllowDhcpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowDhcp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipValue", strconv.FormatBool(data.Dhcp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowDhcp.ValueBool()))
 	}
 
-	if !data.DnsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDnsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipVariableName", data.DnsVariable.ValueString())
-	} else if data.Dns.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipVariableName", data.TunnelInterfaceAllowDnsVariable.ValueString())
+	} else if data.TunnelInterfaceAllowDns.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipValue", strconv.FormatBool(data.Dns.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowDns.ValueBool()))
 	}
 
-	if !data.IcmpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowIcmpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipVariableName", data.IcmpVariable.ValueString())
-	} else if data.Icmp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipVariableName", data.TunnelInterfaceAllowIcmpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowIcmp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipValue", strconv.FormatBool(data.Icmp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowIcmp.ValueBool()))
 	}
 
-	if !data.SshVariable.IsNull() {
+	if !data.TunnelInterfaceAllowSshVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipVariableName", data.SshVariable.ValueString())
-	} else if data.Ssh.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipVariableName", data.TunnelInterfaceAllowSshVariable.ValueString())
+	} else if data.TunnelInterfaceAllowSsh.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipValue", strconv.FormatBool(data.Ssh.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowSsh.ValueBool()))
 	}
 
-	if !data.NtpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowNtpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipVariableName", data.NtpVariable.ValueString())
-	} else if data.Ntp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipVariableName", data.TunnelInterfaceAllowNtpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowNtp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipValue", strconv.FormatBool(data.Ntp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowNtp.ValueBool()))
 	}
 
-	if !data.NetconfVariable.IsNull() {
+	if !data.TunnelInterfaceAllowNetconfVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipVariableName", data.NetconfVariable.ValueString())
-	} else if data.Netconf.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipVariableName", data.TunnelInterfaceAllowNetconfVariable.ValueString())
+	} else if data.TunnelInterfaceAllowNetconf.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipValue", strconv.FormatBool(data.Netconf.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowNetconf.ValueBool()))
 	}
 
-	if !data.OspfVariable.IsNull() {
+	if !data.TunnelInterfaceAllowOspfVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipVariableName", data.OspfVariable.ValueString())
-	} else if data.Ospf.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipVariableName", data.TunnelInterfaceAllowOspfVariable.ValueString())
+	} else if data.TunnelInterfaceAllowOspf.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipValue", strconv.FormatBool(data.Ospf.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowOspf.ValueBool()))
 	}
 
-	if !data.StunVariable.IsNull() {
+	if !data.TunnelInterfaceAllowStunVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipVariableName", data.StunVariable.ValueString())
-	} else if data.Stun.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipVariableName", data.TunnelInterfaceAllowStunVariable.ValueString())
+	} else if data.TunnelInterfaceAllowStun.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipValue", strconv.FormatBool(data.Stun.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowStun.ValueBool()))
 	}
 
-	if !data.SnmpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowSnmpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipVariableName", data.SnmpVariable.ValueString())
-	} else if data.Snmp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipVariableName", data.TunnelInterfaceAllowSnmpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowSnmp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipValue", strconv.FormatBool(data.Snmp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowSnmp.ValueBool()))
 	}
 
-	if !data.HttpsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowHttpsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipVariableName", data.HttpsVariable.ValueString())
-	} else if data.Https.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipVariableName", data.TunnelInterfaceAllowHttpsVariable.ValueString())
+	} else if data.TunnelInterfaceAllowHttps.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipValue", strconv.FormatBool(data.Https.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowHttps.ValueBool()))
 	}
 
 	if !data.ClearDontFragmentBitVariable.IsNull() {
@@ -900,30 +832,30 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tloc-extension."+"vipValue", data.TlocExtension.ValueString())
 	}
 
-	if !data.AdministrativeShutdownVariable.IsNull() {
+	if !data.ShutdownVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"shutdown."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"shutdown."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"shutdown."+"vipVariableName", data.AdministrativeShutdownVariable.ValueString())
-	} else if data.AdministrativeShutdown.IsNull() {
+		body, _ = sjson.Set(body, path+"shutdown."+"vipVariableName", data.ShutdownVariable.ValueString())
+	} else if data.Shutdown.IsNull() {
 		body, _ = sjson.Set(body, path+"shutdown."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"shutdown."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"shutdown."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"shutdown."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"shutdown."+"vipValue", strconv.FormatBool(data.AdministrativeShutdown.ValueBool()))
+		body, _ = sjson.Set(body, path+"shutdown."+"vipValue", strconv.FormatBool(data.Shutdown.ValueBool()))
 	}
 
-	if !data.LinkAutonegotiateVariable.IsNull() {
+	if !data.AutonegotiateVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"autonegotiate."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"autonegotiate."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"autonegotiate."+"vipVariableName", data.LinkAutonegotiateVariable.ValueString())
-	} else if data.LinkAutonegotiate.IsNull() {
+		body, _ = sjson.Set(body, path+"autonegotiate."+"vipVariableName", data.AutonegotiateVariable.ValueString())
+	} else if data.Autonegotiate.IsNull() {
 		body, _ = sjson.Set(body, path+"autonegotiate."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"autonegotiate."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"autonegotiate."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"autonegotiate."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"autonegotiate."+"vipValue", strconv.FormatBool(data.LinkAutonegotiate.ValueBool()))
+		body, _ = sjson.Set(body, path+"autonegotiate."+"vipValue", strconv.FormatBool(data.Autonegotiate.ValueBool()))
 	}
 
 	if !data.ShapingRateVariable.IsNull() {
@@ -952,17 +884,17 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"qos-map."+"vipValue", data.QosMap.ValueString())
 	}
 
-	if !data.VpnQosMapVariable.IsNull() {
+	if !data.QosMapVpnVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipVariableName", data.VpnQosMapVariable.ValueString())
-	} else if data.VpnQosMap.IsNull() {
+		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipVariableName", data.QosMapVpnVariable.ValueString())
+	} else if data.QosMapVpn.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipValue", data.VpnQosMap.ValueString())
+		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipValue", data.QosMapVpn.ValueString())
 	}
 
 	if !data.InterfaceBandwidthCapacityVariable.IsNull() {
@@ -1029,7 +961,7 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipValue", data.WriteRule.ValueString())
 	}
-	if len(data.AccessList) > 0 {
+	if len(data.Ipv4AccessLists) > 0 {
 		body, _ = sjson.Set(body, path+"access-list."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"access-list."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
@@ -1040,7 +972,7 @@ func (data VPNInterfaceT1E1Serial) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
 		body, _ = sjson.Set(body, path+"access-list."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.AccessList {
+	for _, item := range data.Ipv4AccessLists {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "direction")
@@ -1280,9 +1212,9 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 		data.SecondaryRegionVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.encapsulation.vipValue"); len(value.Array()) > 0 {
-		data.EncapsulationForTloc = make([]VPNInterfaceT1E1SerialEncapsulationForTloc, 0)
+		data.TunnelInterfaceEncapsulations = make([]VPNInterfaceT1E1SerialTunnelInterfaceEncapsulations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceT1E1SerialEncapsulationForTloc{}
+			item := VPNInterfaceT1E1SerialTunnelInterfaceEncapsulations{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -1290,18 +1222,18 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 			}
 			if cValue := v.Get("encap.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.EncapsulationType = types.StringNull()
+					item.Encapsulation = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.EncapsulationType = types.StringNull()
+					item.Encapsulation = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("encap.vipValue")
-					item.EncapsulationType = types.StringValue(cv.String())
+					item.Encapsulation = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.EncapsulationType = types.StringNull()
+				item.Encapsulation = types.StringNull()
 
 			}
 			if cValue := v.Get("preference.vipType"); cValue.Exists() {
@@ -1342,7 +1274,7 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 				item.Weight = types.Int64Null()
 				item.WeightVariable = types.StringNull()
 			}
-			data.EncapsulationForTloc = append(data.EncapsulationForTloc, item)
+			data.TunnelInterfaceEncapsulations = append(data.TunnelInterfaceEncapsulations, item)
 			return true
 		})
 	} else {
@@ -1352,41 +1284,41 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.Groups = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.group.vipVariableName")
-			data.GroupsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceGroupsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Groups = types.SetNull(types.Int64Type)
-			data.GroupsVariable = types.StringNull()
+			data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.group.vipValue")
-			data.Groups = helpers.GetInt64Set(v.Array())
-			data.GroupsVariable = types.StringNull()
+			data.TunnelInterfaceGroups = helpers.GetInt64Set(v.Array())
+			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		}
 	} else {
-		data.Groups = types.SetNull(types.Int64Type)
-		data.GroupsVariable = types.StringNull()
+		data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
+		data.TunnelInterfaceGroupsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.border.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Border = types.BoolNull()
+			data.TunnelInterfaceBorder = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.border.vipVariableName")
-			data.BorderVariable = types.StringValue(v.String())
+			data.TunnelInterfaceBorderVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Border = types.BoolNull()
-			data.BorderVariable = types.StringNull()
+			data.TunnelInterfaceBorder = types.BoolNull()
+			data.TunnelInterfaceBorderVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.border.vipValue")
-			data.Border = types.BoolValue(v.Bool())
-			data.BorderVariable = types.StringNull()
+			data.TunnelInterfaceBorder = types.BoolValue(v.Bool())
+			data.TunnelInterfaceBorderVariable = types.StringNull()
 		}
 	} else {
-		data.Border = types.BoolNull()
-		data.BorderVariable = types.StringNull()
+		data.TunnelInterfaceBorder = types.BoolNull()
+		data.TunnelInterfaceBorderVariable = types.StringNull()
 	}
 	if value := res.Get(path + "per-tunnel-qos.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1426,575 +1358,575 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 		data.PerTunnelQosAggregator = types.BoolNull()
 		data.PerTunnelQosAggregatorVariable = types.StringNull()
 	}
-	if value := res.Get(path + "tunnel-interface.color.value.vipType"); value.Exists() {
+	if value := res.Get(path + "tunnel-interface.tunnel-qos.mode.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Color = types.StringNull()
+			data.TunnelQosMode = types.StringNull()
 
-			v := res.Get(path + "tunnel-interface.color.value.vipVariableName")
-			data.ColorVariable = types.StringValue(v.String())
+			v := res.Get(path + "tunnel-interface.tunnel-qos.mode.vipVariableName")
+			data.TunnelQosModeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Color = types.StringNull()
-			data.ColorVariable = types.StringNull()
+			data.TunnelQosMode = types.StringNull()
+			data.TunnelQosModeVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "tunnel-interface.color.value.vipValue")
-			data.Color = types.StringValue(v.String())
-			data.ColorVariable = types.StringNull()
+			v := res.Get(path + "tunnel-interface.tunnel-qos.mode.vipValue")
+			data.TunnelQosMode = types.StringValue(v.String())
+			data.TunnelQosModeVariable = types.StringNull()
 		}
 	} else {
-		data.Color = types.StringNull()
-		data.ColorVariable = types.StringNull()
+		data.TunnelQosMode = types.StringNull()
+		data.TunnelQosModeVariable = types.StringNull()
+	}
+	if value := res.Get(path + "tunnel-interface.color.value.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.TunnelInterfaceColor = types.StringNull()
+
+			v := res.Get(path + "tunnel-interface.color.value.vipVariableName")
+			data.TunnelInterfaceColorVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.TunnelInterfaceColor = types.StringNull()
+			data.TunnelInterfaceColorVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "tunnel-interface.color.value.vipValue")
+			data.TunnelInterfaceColor = types.StringValue(v.String())
+			data.TunnelInterfaceColorVariable = types.StringNull()
+		}
+	} else {
+		data.TunnelInterfaceColor = types.StringNull()
+		data.TunnelInterfaceColorVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.last-resort-circuit.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.LastResortCircuit = types.BoolNull()
+			data.TunnelInterfaceLastResortCircuit = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.last-resort-circuit.vipVariableName")
-			data.LastResortCircuitVariable = types.StringValue(v.String())
+			data.TunnelInterfaceLastResortCircuitVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.LastResortCircuit = types.BoolNull()
-			data.LastResortCircuitVariable = types.StringNull()
+			data.TunnelInterfaceLastResortCircuit = types.BoolNull()
+			data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.last-resort-circuit.vipValue")
-			data.LastResortCircuit = types.BoolValue(v.Bool())
-			data.LastResortCircuitVariable = types.StringNull()
+			data.TunnelInterfaceLastResortCircuit = types.BoolValue(v.Bool())
+			data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
 		}
 	} else {
-		data.LastResortCircuit = types.BoolNull()
-		data.LastResortCircuitVariable = types.StringNull()
+		data.TunnelInterfaceLastResortCircuit = types.BoolNull()
+		data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.low-bandwidth-link.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.LowBandwidthLink = types.BoolNull()
+			data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.low-bandwidth-link.vipVariableName")
-			data.LowBandwidthLinkVariable = types.StringValue(v.String())
+			data.TunnelInterfaceLowBandwidthLinkVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.LowBandwidthLink = types.BoolNull()
-			data.LowBandwidthLinkVariable = types.StringNull()
+			data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
+			data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.low-bandwidth-link.vipValue")
-			data.LowBandwidthLink = types.BoolValue(v.Bool())
-			data.LowBandwidthLinkVariable = types.StringNull()
+			data.TunnelInterfaceLowBandwidthLink = types.BoolValue(v.Bool())
+			data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
 		}
 	} else {
-		data.LowBandwidthLink = types.BoolNull()
-		data.LowBandwidthLinkVariable = types.StringNull()
+		data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
+		data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.tunnel-tcp-mss-adjust.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TunnelTcpMss = types.Int64Null()
+			data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.tunnel-tcp-mss-adjust.vipVariableName")
-			data.TunnelTcpMssVariable = types.StringValue(v.String())
+			data.TunnelInterfaceTunnelTcpMssVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TunnelTcpMss = types.Int64Null()
-			data.TunnelTcpMssVariable = types.StringNull()
+			data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
+			data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.tunnel-tcp-mss-adjust.vipValue")
-			data.TunnelTcpMss = types.Int64Value(v.Int())
-			data.TunnelTcpMssVariable = types.StringNull()
+			data.TunnelInterfaceTunnelTcpMss = types.Int64Value(v.Int())
+			data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
 		}
 	} else {
-		data.TunnelTcpMss = types.Int64Null()
-		data.TunnelTcpMssVariable = types.StringNull()
+		data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
+		data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.clear-dont-fragment.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.EnableClearDon = types.BoolNull()
+			data.TunnelInterfaceClearDontFragment = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.clear-dont-fragment.vipVariableName")
-			data.EnableClearDonVariable = types.StringValue(v.String())
+			data.TunnelInterfaceClearDontFragmentVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.EnableClearDon = types.BoolNull()
-			data.EnableClearDonVariable = types.StringNull()
+			data.TunnelInterfaceClearDontFragment = types.BoolNull()
+			data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.clear-dont-fragment.vipValue")
-			data.EnableClearDon = types.BoolValue(v.Bool())
-			data.EnableClearDonVariable = types.StringNull()
+			data.TunnelInterfaceClearDontFragment = types.BoolValue(v.Bool())
+			data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
 		}
 	} else {
-		data.EnableClearDon = types.BoolNull()
-		data.EnableClearDonVariable = types.StringNull()
+		data.TunnelInterfaceClearDontFragment = types.BoolNull()
+		data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.network-broadcast.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.NetworkBroadcast1 = types.BoolNull()
+			data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.network-broadcast.vipVariableName")
-			data.NetworkBroadcast1Variable = types.StringValue(v.String())
+			data.TunnelInterfaceNetworkBroadcastVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.NetworkBroadcast1 = types.BoolNull()
-			data.NetworkBroadcast1Variable = types.StringNull()
+			data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
+			data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.network-broadcast.vipValue")
-			data.NetworkBroadcast1 = types.BoolValue(v.Bool())
-			data.NetworkBroadcast1Variable = types.StringNull()
+			data.TunnelInterfaceNetworkBroadcast = types.BoolValue(v.Bool())
+			data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
 		}
 	} else {
-		data.NetworkBroadcast1 = types.BoolNull()
-		data.NetworkBroadcast1Variable = types.StringNull()
+		data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
+		data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.max-control-connections.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.MaxControlConnections = types.Int64Null()
+			data.TunnelInterfaceControlConnections = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.max-control-connections.vipVariableName")
-			data.MaxControlConnectionsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceControlConnectionsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.MaxControlConnections = types.Int64Null()
-			data.MaxControlConnectionsVariable = types.StringNull()
+			data.TunnelInterfaceControlConnections = types.Int64Null()
+			data.TunnelInterfaceControlConnectionsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.max-control-connections.vipValue")
-			data.MaxControlConnections = types.Int64Value(v.Int())
-			data.MaxControlConnectionsVariable = types.StringNull()
+			data.TunnelInterfaceControlConnections = types.Int64Value(v.Int())
+			data.TunnelInterfaceControlConnectionsVariable = types.StringNull()
 		}
 	} else {
-		data.MaxControlConnections = types.Int64Null()
-		data.MaxControlConnectionsVariable = types.StringNull()
+		data.TunnelInterfaceControlConnections = types.Int64Null()
+		data.TunnelInterfaceControlConnectionsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.vbond-as-stun-server.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.VbondAsStunServer = types.BoolNull()
+			data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.vbond-as-stun-server.vipVariableName")
-			data.VbondAsStunServerVariable = types.StringValue(v.String())
+			data.TunnelInterfaceVbondAsStunServerVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.VbondAsStunServer = types.BoolNull()
-			data.VbondAsStunServerVariable = types.StringNull()
+			data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
+			data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.vbond-as-stun-server.vipValue")
-			data.VbondAsStunServer = types.BoolValue(v.Bool())
-			data.VbondAsStunServerVariable = types.StringNull()
+			data.TunnelInterfaceVbondAsStunServer = types.BoolValue(v.Bool())
+			data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
 		}
 	} else {
-		data.VbondAsStunServer = types.BoolNull()
-		data.VbondAsStunServerVariable = types.StringNull()
+		data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
+		data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.ExcludeControllerGroupList = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipVariableName")
-			data.ExcludeControllerGroupListVariable = types.StringValue(v.String())
+			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ExcludeControllerGroupList = types.SetNull(types.Int64Type)
-			data.ExcludeControllerGroupListVariable = types.StringNull()
+			data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipValue")
-			data.ExcludeControllerGroupList = helpers.GetInt64Set(v.Array())
-			data.ExcludeControllerGroupListVariable = types.StringNull()
+			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64Set(v.Array())
+			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		}
 	} else {
-		data.ExcludeControllerGroupList = types.SetNull(types.Int64Type)
-		data.ExcludeControllerGroupListVariable = types.StringNull()
+		data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
+		data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.VmanageConnectionPreference = types.Int64Null()
+			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipVariableName")
-			data.VmanageConnectionPreferenceVariable = types.StringValue(v.String())
+			data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.VmanageConnectionPreference = types.Int64Null()
-			data.VmanageConnectionPreferenceVariable = types.StringNull()
+			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
+			data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipValue")
-			data.VmanageConnectionPreference = types.Int64Value(v.Int())
-			data.VmanageConnectionPreferenceVariable = types.StringNull()
+			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Value(v.Int())
+			data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
 		}
 	} else {
-		data.VmanageConnectionPreference = types.Int64Null()
-		data.VmanageConnectionPreferenceVariable = types.StringNull()
+		data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
+		data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.port-hop.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.PortHop = types.BoolNull()
+			data.TunnelInterfacePortHop = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.port-hop.vipVariableName")
-			data.PortHopVariable = types.StringValue(v.String())
+			data.TunnelInterfacePortHopVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.PortHop = types.BoolNull()
-			data.PortHopVariable = types.StringNull()
+			data.TunnelInterfacePortHop = types.BoolNull()
+			data.TunnelInterfacePortHopVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.port-hop.vipValue")
-			data.PortHop = types.BoolValue(v.Bool())
-			data.PortHopVariable = types.StringNull()
+			data.TunnelInterfacePortHop = types.BoolValue(v.Bool())
+			data.TunnelInterfacePortHopVariable = types.StringNull()
 		}
 	} else {
-		data.PortHop = types.BoolNull()
-		data.PortHopVariable = types.StringNull()
+		data.TunnelInterfacePortHop = types.BoolNull()
+		data.TunnelInterfacePortHopVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.color.restrict.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Restrict = types.BoolNull()
+			data.TunnelInterfaceRestrict = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.color.restrict.vipVariableName")
-			data.RestrictVariable = types.StringValue(v.String())
+			data.TunnelInterfaceRestrictVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Restrict = types.BoolNull()
-			data.RestrictVariable = types.StringNull()
+			data.TunnelInterfaceRestrict = types.BoolNull()
+			data.TunnelInterfaceRestrictVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.color.restrict.vipValue")
-			data.Restrict = types.BoolValue(v.Bool())
-			data.RestrictVariable = types.StringNull()
+			data.TunnelInterfaceRestrict = types.BoolValue(v.Bool())
+			data.TunnelInterfaceRestrictVariable = types.StringNull()
 		}
 	} else {
-		data.Restrict = types.BoolNull()
-		data.RestrictVariable = types.StringNull()
+		data.TunnelInterfaceRestrict = types.BoolNull()
+		data.TunnelInterfaceRestrictVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.carrier.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Carrier = types.StringNull()
+			data.TunnelInterfaceCarrier = types.StringNull()
 
 			v := res.Get(path + "tunnel-interface.carrier.vipVariableName")
-			data.CarrierVariable = types.StringValue(v.String())
+			data.TunnelInterfaceCarrierVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Carrier = types.StringNull()
-			data.CarrierVariable = types.StringNull()
+			data.TunnelInterfaceCarrier = types.StringNull()
+			data.TunnelInterfaceCarrierVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.carrier.vipValue")
-			data.Carrier = types.StringValue(v.String())
-			data.CarrierVariable = types.StringNull()
+			data.TunnelInterfaceCarrier = types.StringValue(v.String())
+			data.TunnelInterfaceCarrierVariable = types.StringNull()
 		}
 	} else {
-		data.Carrier = types.StringNull()
-		data.CarrierVariable = types.StringNull()
+		data.TunnelInterfaceCarrier = types.StringNull()
+		data.TunnelInterfaceCarrierVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.nat-refresh-interval.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.NatRefreshInterval = types.Int64Null()
+			data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.nat-refresh-interval.vipVariableName")
-			data.NatRefreshIntervalVariable = types.StringValue(v.String())
+			data.TunnelInterfaceNatRefreshIntervalVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.NatRefreshInterval = types.Int64Null()
-			data.NatRefreshIntervalVariable = types.StringNull()
+			data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
+			data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.nat-refresh-interval.vipValue")
-			data.NatRefreshInterval = types.Int64Value(v.Int())
-			data.NatRefreshIntervalVariable = types.StringNull()
+			data.TunnelInterfaceNatRefreshInterval = types.Int64Value(v.Int())
+			data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
 		}
 	} else {
-		data.NatRefreshInterval = types.Int64Null()
-		data.NatRefreshIntervalVariable = types.StringNull()
+		data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
+		data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.hello-interval.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.HelloInterval = types.Int64Null()
+			data.TunnelInterfaceHelloInterval = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.hello-interval.vipVariableName")
-			data.HelloIntervalVariable = types.StringValue(v.String())
+			data.TunnelInterfaceHelloIntervalVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.HelloInterval = types.Int64Null()
-			data.HelloIntervalVariable = types.StringNull()
+			data.TunnelInterfaceHelloInterval = types.Int64Null()
+			data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.hello-interval.vipValue")
-			data.HelloInterval = types.Int64Value(v.Int())
-			data.HelloIntervalVariable = types.StringNull()
+			data.TunnelInterfaceHelloInterval = types.Int64Value(v.Int())
+			data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
 		}
 	} else {
-		data.HelloInterval = types.Int64Null()
-		data.HelloIntervalVariable = types.StringNull()
+		data.TunnelInterfaceHelloInterval = types.Int64Null()
+		data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.hello-tolerance.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.HelloTolerance = types.Int64Null()
+			data.TunnelInterfaceHelloTolerance = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.hello-tolerance.vipVariableName")
-			data.HelloToleranceVariable = types.StringValue(v.String())
+			data.TunnelInterfaceHelloToleranceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.HelloTolerance = types.Int64Null()
-			data.HelloToleranceVariable = types.StringNull()
+			data.TunnelInterfaceHelloTolerance = types.Int64Null()
+			data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.hello-tolerance.vipValue")
-			data.HelloTolerance = types.Int64Value(v.Int())
-			data.HelloToleranceVariable = types.StringNull()
+			data.TunnelInterfaceHelloTolerance = types.Int64Value(v.Int())
+			data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
 		}
 	} else {
-		data.HelloTolerance = types.Int64Null()
-		data.HelloToleranceVariable = types.StringNull()
+		data.TunnelInterfaceHelloTolerance = types.Int64Null()
+		data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.bind.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.BindLoopbackTunnel = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
 
 			v := res.Get(path + "tunnel-interface.bind.vipVariableName")
-			data.BindLoopbackTunnelVariable = types.StringValue(v.String())
+			data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.BindLoopbackTunnel = types.StringNull()
-			data.BindLoopbackTunnelVariable = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.bind.vipValue")
-			data.BindLoopbackTunnel = types.StringValue(v.String())
-			data.BindLoopbackTunnelVariable = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnel = types.StringValue(v.String())
+			data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
 		}
 	} else {
-		data.BindLoopbackTunnel = types.StringNull()
-		data.BindLoopbackTunnelVariable = types.StringNull()
+		data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
+		data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.all.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.All = types.BoolNull()
+			data.TunnelInterfaceAllowAll = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.all.vipVariableName")
-			data.AllVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowAllVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.All = types.BoolNull()
-			data.AllVariable = types.StringNull()
+			data.TunnelInterfaceAllowAll = types.BoolNull()
+			data.TunnelInterfaceAllowAllVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.all.vipValue")
-			data.All = types.BoolValue(v.Bool())
-			data.AllVariable = types.StringNull()
+			data.TunnelInterfaceAllowAll = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowAllVariable = types.StringNull()
 		}
 	} else {
-		data.All = types.BoolNull()
-		data.AllVariable = types.StringNull()
-	}
-	if value := res.Get(path + "tunnel-interface.network-broadcast.vipType"); value.Exists() {
-		if value.String() == "variableName" {
-			data.NetworkBroadcast2 = types.BoolNull()
-
-			v := res.Get(path + "tunnel-interface.network-broadcast.vipVariableName")
-			data.NetworkBroadcast2Variable = types.StringValue(v.String())
-
-		} else if value.String() == "ignore" {
-			data.NetworkBroadcast2 = types.BoolNull()
-			data.NetworkBroadcast2Variable = types.StringNull()
-		} else if value.String() == "constant" {
-			v := res.Get(path + "tunnel-interface.network-broadcast.vipValue")
-			data.NetworkBroadcast2 = types.BoolValue(v.Bool())
-			data.NetworkBroadcast2Variable = types.StringNull()
-		}
-	} else {
-		data.NetworkBroadcast2 = types.BoolNull()
-		data.NetworkBroadcast2Variable = types.StringNull()
+		data.TunnelInterfaceAllowAll = types.BoolNull()
+		data.TunnelInterfaceAllowAllVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.bgp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Bgp = types.BoolNull()
+			data.TunnelInterfaceAllowBgp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.bgp.vipVariableName")
-			data.BgpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowBgpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Bgp = types.BoolNull()
-			data.BgpVariable = types.StringNull()
+			data.TunnelInterfaceAllowBgp = types.BoolNull()
+			data.TunnelInterfaceAllowBgpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.bgp.vipValue")
-			data.Bgp = types.BoolValue(v.Bool())
-			data.BgpVariable = types.StringNull()
+			data.TunnelInterfaceAllowBgp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowBgpVariable = types.StringNull()
 		}
 	} else {
-		data.Bgp = types.BoolNull()
-		data.BgpVariable = types.StringNull()
+		data.TunnelInterfaceAllowBgp = types.BoolNull()
+		data.TunnelInterfaceAllowBgpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.dhcp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Dhcp = types.BoolNull()
+			data.TunnelInterfaceAllowDhcp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.dhcp.vipVariableName")
-			data.DhcpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowDhcpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Dhcp = types.BoolNull()
-			data.DhcpVariable = types.StringNull()
+			data.TunnelInterfaceAllowDhcp = types.BoolNull()
+			data.TunnelInterfaceAllowDhcpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.dhcp.vipValue")
-			data.Dhcp = types.BoolValue(v.Bool())
-			data.DhcpVariable = types.StringNull()
+			data.TunnelInterfaceAllowDhcp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowDhcpVariable = types.StringNull()
 		}
 	} else {
-		data.Dhcp = types.BoolNull()
-		data.DhcpVariable = types.StringNull()
+		data.TunnelInterfaceAllowDhcp = types.BoolNull()
+		data.TunnelInterfaceAllowDhcpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.dns.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Dns = types.BoolNull()
+			data.TunnelInterfaceAllowDns = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.dns.vipVariableName")
-			data.DnsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowDnsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Dns = types.BoolNull()
-			data.DnsVariable = types.StringNull()
+			data.TunnelInterfaceAllowDns = types.BoolNull()
+			data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.dns.vipValue")
-			data.Dns = types.BoolValue(v.Bool())
-			data.DnsVariable = types.StringNull()
+			data.TunnelInterfaceAllowDns = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 		}
 	} else {
-		data.Dns = types.BoolNull()
-		data.DnsVariable = types.StringNull()
+		data.TunnelInterfaceAllowDns = types.BoolNull()
+		data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.icmp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Icmp = types.BoolNull()
+			data.TunnelInterfaceAllowIcmp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.icmp.vipVariableName")
-			data.IcmpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowIcmpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Icmp = types.BoolNull()
-			data.IcmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowIcmp = types.BoolNull()
+			data.TunnelInterfaceAllowIcmpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.icmp.vipValue")
-			data.Icmp = types.BoolValue(v.Bool())
-			data.IcmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowIcmp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowIcmpVariable = types.StringNull()
 		}
 	} else {
-		data.Icmp = types.BoolNull()
-		data.IcmpVariable = types.StringNull()
+		data.TunnelInterfaceAllowIcmp = types.BoolNull()
+		data.TunnelInterfaceAllowIcmpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.sshd.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Ssh = types.BoolNull()
+			data.TunnelInterfaceAllowSsh = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.sshd.vipVariableName")
-			data.SshVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowSshVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Ssh = types.BoolNull()
-			data.SshVariable = types.StringNull()
+			data.TunnelInterfaceAllowSsh = types.BoolNull()
+			data.TunnelInterfaceAllowSshVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.sshd.vipValue")
-			data.Ssh = types.BoolValue(v.Bool())
-			data.SshVariable = types.StringNull()
+			data.TunnelInterfaceAllowSsh = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowSshVariable = types.StringNull()
 		}
 	} else {
-		data.Ssh = types.BoolNull()
-		data.SshVariable = types.StringNull()
+		data.TunnelInterfaceAllowSsh = types.BoolNull()
+		data.TunnelInterfaceAllowSshVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.ntp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Ntp = types.BoolNull()
+			data.TunnelInterfaceAllowNtp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.ntp.vipVariableName")
-			data.NtpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowNtpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Ntp = types.BoolNull()
-			data.NtpVariable = types.StringNull()
+			data.TunnelInterfaceAllowNtp = types.BoolNull()
+			data.TunnelInterfaceAllowNtpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.ntp.vipValue")
-			data.Ntp = types.BoolValue(v.Bool())
-			data.NtpVariable = types.StringNull()
+			data.TunnelInterfaceAllowNtp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowNtpVariable = types.StringNull()
 		}
 	} else {
-		data.Ntp = types.BoolNull()
-		data.NtpVariable = types.StringNull()
+		data.TunnelInterfaceAllowNtp = types.BoolNull()
+		data.TunnelInterfaceAllowNtpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.netconf.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Netconf = types.BoolNull()
+			data.TunnelInterfaceAllowNetconf = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.netconf.vipVariableName")
-			data.NetconfVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowNetconfVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Netconf = types.BoolNull()
-			data.NetconfVariable = types.StringNull()
+			data.TunnelInterfaceAllowNetconf = types.BoolNull()
+			data.TunnelInterfaceAllowNetconfVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.netconf.vipValue")
-			data.Netconf = types.BoolValue(v.Bool())
-			data.NetconfVariable = types.StringNull()
+			data.TunnelInterfaceAllowNetconf = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowNetconfVariable = types.StringNull()
 		}
 	} else {
-		data.Netconf = types.BoolNull()
-		data.NetconfVariable = types.StringNull()
+		data.TunnelInterfaceAllowNetconf = types.BoolNull()
+		data.TunnelInterfaceAllowNetconfVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.ospf.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Ospf = types.BoolNull()
+			data.TunnelInterfaceAllowOspf = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.ospf.vipVariableName")
-			data.OspfVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowOspfVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Ospf = types.BoolNull()
-			data.OspfVariable = types.StringNull()
+			data.TunnelInterfaceAllowOspf = types.BoolNull()
+			data.TunnelInterfaceAllowOspfVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.ospf.vipValue")
-			data.Ospf = types.BoolValue(v.Bool())
-			data.OspfVariable = types.StringNull()
+			data.TunnelInterfaceAllowOspf = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowOspfVariable = types.StringNull()
 		}
 	} else {
-		data.Ospf = types.BoolNull()
-		data.OspfVariable = types.StringNull()
+		data.TunnelInterfaceAllowOspf = types.BoolNull()
+		data.TunnelInterfaceAllowOspfVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.stun.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Stun = types.BoolNull()
+			data.TunnelInterfaceAllowStun = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.stun.vipVariableName")
-			data.StunVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowStunVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Stun = types.BoolNull()
-			data.StunVariable = types.StringNull()
+			data.TunnelInterfaceAllowStun = types.BoolNull()
+			data.TunnelInterfaceAllowStunVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.stun.vipValue")
-			data.Stun = types.BoolValue(v.Bool())
-			data.StunVariable = types.StringNull()
+			data.TunnelInterfaceAllowStun = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowStunVariable = types.StringNull()
 		}
 	} else {
-		data.Stun = types.BoolNull()
-		data.StunVariable = types.StringNull()
+		data.TunnelInterfaceAllowStun = types.BoolNull()
+		data.TunnelInterfaceAllowStunVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.snmp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Snmp = types.BoolNull()
+			data.TunnelInterfaceAllowSnmp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.snmp.vipVariableName")
-			data.SnmpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowSnmpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Snmp = types.BoolNull()
-			data.SnmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowSnmp = types.BoolNull()
+			data.TunnelInterfaceAllowSnmpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.snmp.vipValue")
-			data.Snmp = types.BoolValue(v.Bool())
-			data.SnmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowSnmp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowSnmpVariable = types.StringNull()
 		}
 	} else {
-		data.Snmp = types.BoolNull()
-		data.SnmpVariable = types.StringNull()
+		data.TunnelInterfaceAllowSnmp = types.BoolNull()
+		data.TunnelInterfaceAllowSnmpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.https.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Https = types.BoolNull()
+			data.TunnelInterfaceAllowHttps = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.https.vipVariableName")
-			data.HttpsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowHttpsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Https = types.BoolNull()
-			data.HttpsVariable = types.StringNull()
+			data.TunnelInterfaceAllowHttps = types.BoolNull()
+			data.TunnelInterfaceAllowHttpsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.https.vipValue")
-			data.Https = types.BoolValue(v.Bool())
-			data.HttpsVariable = types.StringNull()
+			data.TunnelInterfaceAllowHttps = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowHttpsVariable = types.StringNull()
 		}
 	} else {
-		data.Https = types.BoolNull()
-		data.HttpsVariable = types.StringNull()
+		data.TunnelInterfaceAllowHttps = types.BoolNull()
+		data.TunnelInterfaceAllowHttpsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "clear-dont-fragment.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2112,41 +2044,41 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 	}
 	if value := res.Get(path + "shutdown.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.AdministrativeShutdown = types.BoolNull()
+			data.Shutdown = types.BoolNull()
 
 			v := res.Get(path + "shutdown.vipVariableName")
-			data.AdministrativeShutdownVariable = types.StringValue(v.String())
+			data.ShutdownVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AdministrativeShutdown = types.BoolNull()
-			data.AdministrativeShutdownVariable = types.StringNull()
+			data.Shutdown = types.BoolNull()
+			data.ShutdownVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "shutdown.vipValue")
-			data.AdministrativeShutdown = types.BoolValue(v.Bool())
-			data.AdministrativeShutdownVariable = types.StringNull()
+			data.Shutdown = types.BoolValue(v.Bool())
+			data.ShutdownVariable = types.StringNull()
 		}
 	} else {
-		data.AdministrativeShutdown = types.BoolNull()
-		data.AdministrativeShutdownVariable = types.StringNull()
+		data.Shutdown = types.BoolNull()
+		data.ShutdownVariable = types.StringNull()
 	}
 	if value := res.Get(path + "autonegotiate.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.LinkAutonegotiate = types.BoolNull()
+			data.Autonegotiate = types.BoolNull()
 
 			v := res.Get(path + "autonegotiate.vipVariableName")
-			data.LinkAutonegotiateVariable = types.StringValue(v.String())
+			data.AutonegotiateVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.LinkAutonegotiate = types.BoolNull()
-			data.LinkAutonegotiateVariable = types.StringNull()
+			data.Autonegotiate = types.BoolNull()
+			data.AutonegotiateVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "autonegotiate.vipValue")
-			data.LinkAutonegotiate = types.BoolValue(v.Bool())
-			data.LinkAutonegotiateVariable = types.StringNull()
+			data.Autonegotiate = types.BoolValue(v.Bool())
+			data.AutonegotiateVariable = types.StringNull()
 		}
 	} else {
-		data.LinkAutonegotiate = types.BoolNull()
-		data.LinkAutonegotiateVariable = types.StringNull()
+		data.Autonegotiate = types.BoolNull()
+		data.AutonegotiateVariable = types.StringNull()
 	}
 	if value := res.Get(path + "shaping-rate.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2188,22 +2120,22 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 	}
 	if value := res.Get(path + "qos-map-vpn.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.VpnQosMap = types.StringNull()
+			data.QosMapVpn = types.StringNull()
 
 			v := res.Get(path + "qos-map-vpn.vipVariableName")
-			data.VpnQosMapVariable = types.StringValue(v.String())
+			data.QosMapVpnVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.VpnQosMap = types.StringNull()
-			data.VpnQosMapVariable = types.StringNull()
+			data.QosMapVpn = types.StringNull()
+			data.QosMapVpnVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-map-vpn.vipValue")
-			data.VpnQosMap = types.StringValue(v.String())
-			data.VpnQosMapVariable = types.StringNull()
+			data.QosMapVpn = types.StringValue(v.String())
+			data.QosMapVpnVariable = types.StringNull()
 		}
 	} else {
-		data.VpnQosMap = types.StringNull()
-		data.VpnQosMapVariable = types.StringNull()
+		data.QosMapVpn = types.StringNull()
+		data.QosMapVpnVariable = types.StringNull()
 	}
 	if value := res.Get(path + "bandwidth.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2301,9 +2233,9 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 		data.WriteRuleVariable = types.StringNull()
 	}
 	if value := res.Get(path + "access-list.vipValue"); len(value.Array()) > 0 {
-		data.AccessList = make([]VPNInterfaceT1E1SerialAccessList, 0)
+		data.Ipv4AccessLists = make([]VPNInterfaceT1E1SerialIpv4AccessLists, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceT1E1SerialAccessList{}
+			item := VPNInterfaceT1E1SerialIpv4AccessLists{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -2344,7 +2276,7 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 				item.AclName = types.StringNull()
 				item.AclNameVariable = types.StringNull()
 			}
-			data.AccessList = append(data.AccessList, item)
+			data.Ipv4AccessLists = append(data.Ipv4AccessLists, item)
 			return true
 		})
 	} else {
@@ -2389,25 +2321,25 @@ func (data *VPNInterfaceT1E1Serial) hasChanges(ctx context.Context, state *VPNIn
 	if !data.SecondaryRegion.Equal(state.SecondaryRegion) {
 		hasChanges = true
 	}
-	if len(data.EncapsulationForTloc) != len(state.EncapsulationForTloc) {
+	if len(data.TunnelInterfaceEncapsulations) != len(state.TunnelInterfaceEncapsulations) {
 		hasChanges = true
 	} else {
-		for i := range data.EncapsulationForTloc {
-			if !data.EncapsulationForTloc[i].EncapsulationType.Equal(state.EncapsulationForTloc[i].EncapsulationType) {
+		for i := range data.TunnelInterfaceEncapsulations {
+			if !data.TunnelInterfaceEncapsulations[i].Encapsulation.Equal(state.TunnelInterfaceEncapsulations[i].Encapsulation) {
 				hasChanges = true
 			}
-			if !data.EncapsulationForTloc[i].Preference.Equal(state.EncapsulationForTloc[i].Preference) {
+			if !data.TunnelInterfaceEncapsulations[i].Preference.Equal(state.TunnelInterfaceEncapsulations[i].Preference) {
 				hasChanges = true
 			}
-			if !data.EncapsulationForTloc[i].Weight.Equal(state.EncapsulationForTloc[i].Weight) {
+			if !data.TunnelInterfaceEncapsulations[i].Weight.Equal(state.TunnelInterfaceEncapsulations[i].Weight) {
 				hasChanges = true
 			}
 		}
 	}
-	if !data.Groups.Equal(state.Groups) {
+	if !data.TunnelInterfaceGroups.Equal(state.TunnelInterfaceGroups) {
 		hasChanges = true
 	}
-	if !data.Border.Equal(state.Border) {
+	if !data.TunnelInterfaceBorder.Equal(state.TunnelInterfaceBorder) {
 		hasChanges = true
 	}
 	if !data.PerTunnelQos.Equal(state.PerTunnelQos) {
@@ -2416,94 +2348,94 @@ func (data *VPNInterfaceT1E1Serial) hasChanges(ctx context.Context, state *VPNIn
 	if !data.PerTunnelQosAggregator.Equal(state.PerTunnelQosAggregator) {
 		hasChanges = true
 	}
-	if !data.Color.Equal(state.Color) {
+	if !data.TunnelQosMode.Equal(state.TunnelQosMode) {
 		hasChanges = true
 	}
-	if !data.LastResortCircuit.Equal(state.LastResortCircuit) {
+	if !data.TunnelInterfaceColor.Equal(state.TunnelInterfaceColor) {
 		hasChanges = true
 	}
-	if !data.LowBandwidthLink.Equal(state.LowBandwidthLink) {
+	if !data.TunnelInterfaceLastResortCircuit.Equal(state.TunnelInterfaceLastResortCircuit) {
 		hasChanges = true
 	}
-	if !data.TunnelTcpMss.Equal(state.TunnelTcpMss) {
+	if !data.TunnelInterfaceLowBandwidthLink.Equal(state.TunnelInterfaceLowBandwidthLink) {
 		hasChanges = true
 	}
-	if !data.EnableClearDon.Equal(state.EnableClearDon) {
+	if !data.TunnelInterfaceTunnelTcpMss.Equal(state.TunnelInterfaceTunnelTcpMss) {
 		hasChanges = true
 	}
-	if !data.NetworkBroadcast1.Equal(state.NetworkBroadcast1) {
+	if !data.TunnelInterfaceClearDontFragment.Equal(state.TunnelInterfaceClearDontFragment) {
 		hasChanges = true
 	}
-	if !data.MaxControlConnections.Equal(state.MaxControlConnections) {
+	if !data.TunnelInterfaceNetworkBroadcast.Equal(state.TunnelInterfaceNetworkBroadcast) {
 		hasChanges = true
 	}
-	if !data.VbondAsStunServer.Equal(state.VbondAsStunServer) {
+	if !data.TunnelInterfaceControlConnections.Equal(state.TunnelInterfaceControlConnections) {
 		hasChanges = true
 	}
-	if !data.ExcludeControllerGroupList.Equal(state.ExcludeControllerGroupList) {
+	if !data.TunnelInterfaceVbondAsStunServer.Equal(state.TunnelInterfaceVbondAsStunServer) {
 		hasChanges = true
 	}
-	if !data.VmanageConnectionPreference.Equal(state.VmanageConnectionPreference) {
+	if !data.TunnelInterfaceExcludeControllerGroupList.Equal(state.TunnelInterfaceExcludeControllerGroupList) {
 		hasChanges = true
 	}
-	if !data.PortHop.Equal(state.PortHop) {
+	if !data.TunnelInterfaceVmanageConnectionPreference.Equal(state.TunnelInterfaceVmanageConnectionPreference) {
 		hasChanges = true
 	}
-	if !data.Restrict.Equal(state.Restrict) {
+	if !data.TunnelInterfacePortHop.Equal(state.TunnelInterfacePortHop) {
 		hasChanges = true
 	}
-	if !data.Carrier.Equal(state.Carrier) {
+	if !data.TunnelInterfaceRestrict.Equal(state.TunnelInterfaceRestrict) {
 		hasChanges = true
 	}
-	if !data.NatRefreshInterval.Equal(state.NatRefreshInterval) {
+	if !data.TunnelInterfaceCarrier.Equal(state.TunnelInterfaceCarrier) {
 		hasChanges = true
 	}
-	if !data.HelloInterval.Equal(state.HelloInterval) {
+	if !data.TunnelInterfaceNatRefreshInterval.Equal(state.TunnelInterfaceNatRefreshInterval) {
 		hasChanges = true
 	}
-	if !data.HelloTolerance.Equal(state.HelloTolerance) {
+	if !data.TunnelInterfaceHelloInterval.Equal(state.TunnelInterfaceHelloInterval) {
 		hasChanges = true
 	}
-	if !data.BindLoopbackTunnel.Equal(state.BindLoopbackTunnel) {
+	if !data.TunnelInterfaceHelloTolerance.Equal(state.TunnelInterfaceHelloTolerance) {
 		hasChanges = true
 	}
-	if !data.All.Equal(state.All) {
+	if !data.TunnelInterfaceBindLoopbackTunnel.Equal(state.TunnelInterfaceBindLoopbackTunnel) {
 		hasChanges = true
 	}
-	if !data.NetworkBroadcast2.Equal(state.NetworkBroadcast2) {
+	if !data.TunnelInterfaceAllowAll.Equal(state.TunnelInterfaceAllowAll) {
 		hasChanges = true
 	}
-	if !data.Bgp.Equal(state.Bgp) {
+	if !data.TunnelInterfaceAllowBgp.Equal(state.TunnelInterfaceAllowBgp) {
 		hasChanges = true
 	}
-	if !data.Dhcp.Equal(state.Dhcp) {
+	if !data.TunnelInterfaceAllowDhcp.Equal(state.TunnelInterfaceAllowDhcp) {
 		hasChanges = true
 	}
-	if !data.Dns.Equal(state.Dns) {
+	if !data.TunnelInterfaceAllowDns.Equal(state.TunnelInterfaceAllowDns) {
 		hasChanges = true
 	}
-	if !data.Icmp.Equal(state.Icmp) {
+	if !data.TunnelInterfaceAllowIcmp.Equal(state.TunnelInterfaceAllowIcmp) {
 		hasChanges = true
 	}
-	if !data.Ssh.Equal(state.Ssh) {
+	if !data.TunnelInterfaceAllowSsh.Equal(state.TunnelInterfaceAllowSsh) {
 		hasChanges = true
 	}
-	if !data.Ntp.Equal(state.Ntp) {
+	if !data.TunnelInterfaceAllowNtp.Equal(state.TunnelInterfaceAllowNtp) {
 		hasChanges = true
 	}
-	if !data.Netconf.Equal(state.Netconf) {
+	if !data.TunnelInterfaceAllowNetconf.Equal(state.TunnelInterfaceAllowNetconf) {
 		hasChanges = true
 	}
-	if !data.Ospf.Equal(state.Ospf) {
+	if !data.TunnelInterfaceAllowOspf.Equal(state.TunnelInterfaceAllowOspf) {
 		hasChanges = true
 	}
-	if !data.Stun.Equal(state.Stun) {
+	if !data.TunnelInterfaceAllowStun.Equal(state.TunnelInterfaceAllowStun) {
 		hasChanges = true
 	}
-	if !data.Snmp.Equal(state.Snmp) {
+	if !data.TunnelInterfaceAllowSnmp.Equal(state.TunnelInterfaceAllowSnmp) {
 		hasChanges = true
 	}
-	if !data.Https.Equal(state.Https) {
+	if !data.TunnelInterfaceAllowHttps.Equal(state.TunnelInterfaceAllowHttps) {
 		hasChanges = true
 	}
 	if !data.ClearDontFragmentBit.Equal(state.ClearDontFragmentBit) {
@@ -2524,10 +2456,10 @@ func (data *VPNInterfaceT1E1Serial) hasChanges(ctx context.Context, state *VPNIn
 	if !data.TlocExtension.Equal(state.TlocExtension) {
 		hasChanges = true
 	}
-	if !data.AdministrativeShutdown.Equal(state.AdministrativeShutdown) {
+	if !data.Shutdown.Equal(state.Shutdown) {
 		hasChanges = true
 	}
-	if !data.LinkAutonegotiate.Equal(state.LinkAutonegotiate) {
+	if !data.Autonegotiate.Equal(state.Autonegotiate) {
 		hasChanges = true
 	}
 	if !data.ShapingRate.Equal(state.ShapingRate) {
@@ -2536,7 +2468,7 @@ func (data *VPNInterfaceT1E1Serial) hasChanges(ctx context.Context, state *VPNIn
 	if !data.QosMap.Equal(state.QosMap) {
 		hasChanges = true
 	}
-	if !data.VpnQosMap.Equal(state.VpnQosMap) {
+	if !data.QosMapVpn.Equal(state.QosMapVpn) {
 		hasChanges = true
 	}
 	if !data.InterfaceBandwidthCapacity.Equal(state.InterfaceBandwidthCapacity) {
@@ -2554,14 +2486,14 @@ func (data *VPNInterfaceT1E1Serial) hasChanges(ctx context.Context, state *VPNIn
 	if !data.WriteRule.Equal(state.WriteRule) {
 		hasChanges = true
 	}
-	if len(data.AccessList) != len(state.AccessList) {
+	if len(data.Ipv4AccessLists) != len(state.Ipv4AccessLists) {
 		hasChanges = true
 	} else {
-		for i := range data.AccessList {
-			if !data.AccessList[i].Direction.Equal(state.AccessList[i].Direction) {
+		for i := range data.Ipv4AccessLists {
+			if !data.Ipv4AccessLists[i].Direction.Equal(state.Ipv4AccessLists[i].Direction) {
 				hasChanges = true
 			}
-			if !data.AccessList[i].AclName.Equal(state.AccessList[i].AclName) {
+			if !data.Ipv4AccessLists[i].AclName.Equal(state.Ipv4AccessLists[i].AclName) {
 				hasChanges = true
 			}
 		}
