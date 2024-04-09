@@ -25,6 +25,7 @@
 - Fix issue when changing multiple already deployed templates including device templates
 - Fix error when refreshing state of `sdwan_attach_feature_device_template` resource and device template does no longer exist
 - Fix refreshing state of empty lists in responses
+- Fix issue with empty `action_entries` list in `sdwan_route_policy_definition` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/186)
 
 ## 0.3.6
 

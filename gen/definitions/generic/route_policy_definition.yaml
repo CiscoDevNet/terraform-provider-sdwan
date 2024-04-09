@@ -254,12 +254,14 @@ attributes:
       - model_name: type
         data_path: [actions.0]
         type: String
+        conditional_list_length: action_entries
         value: set
       - model_name: parameter
         data_path: [actions.0]
         tf_name: action_entries
         type: List
         description: List of action entries
+        conditional_list_length: action_entries
         attributes:
           - model_name: field
             tf_name: type

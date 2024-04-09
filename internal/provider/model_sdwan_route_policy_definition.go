@@ -173,10 +173,10 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
-			if true {
+			if true && len(item.ActionEntries) > 0 {
 				itemBody, _ = sjson.Set(itemBody, "actions.0.type", "set")
 			}
-			if true {
+			if true && len(item.ActionEntries) > 0 {
 				itemBody, _ = sjson.Set(itemBody, "actions.0.parameter", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
@@ -371,7 +371,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					item.MatchEntries = []RoutePolicyDefinitionSequencesMatchEntries{}
 				}
 			}
-			if cValue := v.Get("actions.0.parameter"); cValue.Exists() && len(cValue.Array()) > 0 {
+			if cValue := v.Get("actions.0.parameter"); cValue.Exists() && len(cValue.Array()) > 0 && len(item.ActionEntries) > 0 {
 				item.ActionEntries = make([]RoutePolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := RoutePolicyDefinitionSequencesActionEntries{}
