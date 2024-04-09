@@ -73,7 +73,7 @@ func (r *CLIFeatureProfileResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"description": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Description").String,
-				Optional:            true,
+				Required:            true,
 			},
 		},
 	}

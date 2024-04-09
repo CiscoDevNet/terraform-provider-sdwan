@@ -73,7 +73,7 @@ func (r *SystemFeatureProfileResource) Schema(ctx context.Context, req resource.
 			},
 			"description": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Description").String,
-				Optional:            true,
+				Required:            true,
 			},
 		},
 	}

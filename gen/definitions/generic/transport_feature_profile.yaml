@@ -13,5 +13,6 @@ attributes:
     example: TRANSPORT_FP_1
   - model_name: description
     type: String
+    mandatory: true
     description: Description
     example: My transport feature profile 1

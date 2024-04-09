@@ -24,11 +24,8 @@ resource "sdwan_cli_feature_profile" "example" {
 
 ### Required
 
-- `name` (String) The name of the cli feature profile
-
-### Optional
-
 - `description` (String) Description
+- `name` (String) The name of the cli feature profile
 
 ### Read-Only
 
