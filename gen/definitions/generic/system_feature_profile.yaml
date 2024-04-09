@@ -13,6 +13,5 @@ attributes:
     example: SYSTEM_FP_1
   - model_name: description
     type: String
-    mandatory: true
     description: Description
     example: My system feature profile 1

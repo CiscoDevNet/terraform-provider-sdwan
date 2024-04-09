@@ -13,6 +13,5 @@ attributes:
     example: SERVICE_FP_1
   - model_name: description
     type: String
-    mandatory: true
     description: Description
     example: My service feature profile 1
