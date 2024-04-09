@@ -6,7 +6,6 @@ attributes:
   - model_name: if-name
     tf_name: ethernet_interface_name
     example: Example
-
   - model_name: address
     tf_name: ethernet_ipv4_address
     example: 1.2.3.4/24
@@ -27,7 +26,6 @@ attributes:
   - model_name: description
     tf_name: ethernet_description
     example: My Description
-
   - model_name: vdsl
     tf_name: vdsl_configuration
     attributes: 
@@ -60,7 +58,6 @@ attributes:
     - model_name: modem
       tf_name: vdsl_modem_configuration
       example: 100
-
   - model_name: encap
     example: 4094
   - model_name: dial-pool-number
@@ -75,7 +72,6 @@ attributes:
   - model_name: unnumbered
     tf_name: unnumbered_loopback_interface
     example: example
-
   - model_name: method
     tf_name: ppp_authentication_protocol
     example: chap
@@ -101,7 +97,6 @@ attributes:
     tf_name: pap_ppp_auth_password
     data_path: [ppp, pap, sent-username, username]
     example: myPassword
-
   - model_name: encapsulation
     tf_name: tunnel_interface_encapsulations
     exclude_ignore: true
@@ -113,7 +108,6 @@ attributes:
       example: 4294967
     - model_name: weight
       example: 250
-
   - model_name: group
     tf_name: tunnel_interface_groups
     example: 42949672
@@ -204,7 +198,6 @@ attributes:
     tf_name: tunnel_interface_bind_loopback_tunnel
     exclude_ignore: true
     example: 12
-
   - model_name: all
     tf_name: tunnel_interface_allow_all
     exclude_ignore: true
@@ -253,7 +246,6 @@ attributes:
     tf_name: tunnel_interface_allow_https
     exclude_ignore: true
     example: true
-
   - model_name: nat
     node_only_container: true
     example: true
@@ -277,7 +269,6 @@ attributes:
     tf_name: nat_response_to_ping
     exclude_ignore: true
     example: false
-
   - model_name: port-forward
     tf_name: nat_port_forwards
     exclude_ignore: true
@@ -333,7 +324,6 @@ attributes:
     example: 214748300
   - model_name: bandwidth-downstream
     example: 214748300
-
   - model_name: rule-name
     tf_name: write_rule
     example: RULE1

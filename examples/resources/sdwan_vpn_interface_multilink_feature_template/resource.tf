@@ -91,7 +91,7 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
   ]
   multilink_interfaces = [
     {
-      card_type            = "E1"
+      interface_type       = "E1"
       slot                 = "interface-t1"
       framing              = "example-framing"
       line_mode            = "primary"
@@ -110,9 +110,9 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
   ]
   nim_interface_list = [
     {
-      nim_serial_interface_type = "2t"
+      nim_serial_interface_type = "2T"
       interface_name            = "nim-interface"
-      interface_description     = "interface description"
+      interface_description     = "My Description"
       bandwidth                 = 21474836
       clock_rate                = 120000
       encapsulation_serial      = "hdlc"

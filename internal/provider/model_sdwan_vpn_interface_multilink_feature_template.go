@@ -197,7 +197,7 @@ type VPNInterfaceMultilinkAccessLists struct {
 
 type VPNInterfaceMultilinkMultilinkInterfaces struct {
 	Optional            types.Bool                                                 `tfsdk:"optional"`
-	CardType            types.String                                               `tfsdk:"card_type"`
+	InterfaceType       types.String                                               `tfsdk:"interface_type"`
 	Slot                types.String                                               `tfsdk:"slot"`
 	Framing             types.String                                               `tfsdk:"framing"`
 	FramingVariable     types.String                                               `tfsdk:"framing_variable"`
@@ -1171,11 +1171,11 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "name")
-		if item.CardType.IsNull() {
+		if item.InterfaceType.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "name."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "name."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "name."+"vipValue", item.CardType.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "name."+"vipValue", item.InterfaceType.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "number")
 		if item.Slot.IsNull() {
@@ -2922,18 +2922,18 @@ func (data *VPNInterfaceMultilink) fromBody(ctx context.Context, res gjson.Resul
 			}
 			if cValue := v.Get("name.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.CardType = types.StringNull()
+					item.InterfaceType = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.CardType = types.StringNull()
+					item.InterfaceType = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("name.vipValue")
-					item.CardType = types.StringValue(cv.String())
+					item.InterfaceType = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.CardType = types.StringNull()
+				item.InterfaceType = types.StringNull()
 
 			}
 			if cValue := v.Get("number.vipType"); cValue.Exists() {
@@ -3524,7 +3524,7 @@ func (data *VPNInterfaceMultilink) hasChanges(ctx context.Context, state *VPNInt
 		hasChanges = true
 	} else {
 		for i := range data.MultilinkInterfaces {
-			if !data.MultilinkInterfaces[i].CardType.Equal(state.MultilinkInterfaces[i].CardType) {
+			if !data.MultilinkInterfaces[i].InterfaceType.Equal(state.MultilinkInterfaces[i].InterfaceType) {
 				hasChanges = true
 			}
 			if !data.MultilinkInterfaces[i].Slot.Equal(state.MultilinkInterfaces[i].Slot) {

@@ -100,7 +100,7 @@ func TestAccDataSourceSdwanVPNInterfaceMultilinkFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "write_rule", "RULE1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "access_lists.0.direction", "in"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "access_lists.0.acl_name", "ACL2"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.card_type", "E1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.interface_type", "E1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.slot", "interface-t1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.framing", "example-framing"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.line_mode", "primary"))
@@ -110,9 +110,9 @@ func TestAccDataSourceSdwanVPNInterfaceMultilinkFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.set_length_for_long", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.set_length_for_short", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "multilink_interfaces.0.channel_group_list.0.channel_group", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.nim_serial_interface_type", "2t"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.nim_serial_interface_type", "2T"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.interface_name", "nim-interface"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.interface_description", "interface description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.interface_description", "My Description"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.bandwidth", "21474836"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.clock_rate", "120000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_interface_multilink_feature_template.test", "nim_interface_list.0.encapsulation_serial", "hdlc"))
@@ -215,7 +215,7 @@ func testAccDataSourceSdwanVPNInterfaceMultilinkFeatureTemplateConfig() string {
 	config += `	  acl_name = "ACL2"` + "\n"
 	config += `	}]` + "\n"
 	config += `	multilink_interfaces = [{` + "\n"
-	config += `	  card_type = "E1"` + "\n"
+	config += `	  interface_type = "E1"` + "\n"
 	config += `	  slot = "interface-t1"` + "\n"
 	config += `	  framing = "example-framing"` + "\n"
 	config += `	  line_mode = "primary"` + "\n"
@@ -230,9 +230,9 @@ func testAccDataSourceSdwanVPNInterfaceMultilinkFeatureTemplateConfig() string {
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	nim_interface_list = [{` + "\n"
-	config += `	  nim_serial_interface_type = "2t"` + "\n"
+	config += `	  nim_serial_interface_type = "2T"` + "\n"
 	config += `	  interface_name = "nim-interface"` + "\n"
-	config += `	  interface_description = "interface description"` + "\n"
+	config += `	  interface_description = "My Description"` + "\n"
 	config += `	  bandwidth = 21474836` + "\n"
 	config += `	  clock_rate = 120000` + "\n"
 	config += `	  encapsulation_serial = "hdlc"` + "\n"

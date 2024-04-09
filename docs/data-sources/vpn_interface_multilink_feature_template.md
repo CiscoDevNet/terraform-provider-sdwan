@@ -194,12 +194,12 @@ Read-Only:
 
 Read-Only:
 
-- `card_type` (String) Card Type
 - `channel_group_list` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--multilink_interfaces--channel_group_list))
 - `description` (String) Description
 - `description_variable` (String) Variable name
 - `framing` (String) Framing
 - `framing_variable` (String) Variable name
+- `interface_type` (String) Card Type
 - `internal` (Boolean) Internal
 - `line_mode` (String) Line Mode
 - `line_mode_variable` (String) Variable name

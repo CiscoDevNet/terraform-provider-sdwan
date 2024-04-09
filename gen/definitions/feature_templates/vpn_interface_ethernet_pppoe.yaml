@@ -6,7 +6,6 @@ attributes:
   - model_name: if-name
     tf_name: ethernet_interface_name
     example: Example
-  
   - model_name: shutdown
     example: true
   - model_name: description
@@ -28,7 +27,6 @@ attributes:
   - model_name: unnumbered
     tf_name: unnumbered_loopback_interface
     example: example
-  
   - model_name: method
     tf_name: ppp_authentication_protocol
     example: chap
@@ -58,7 +56,6 @@ attributes:
     tf_name: ppp_authentication_type
     node_only_container: true
     example: callin
-  
   - model_name: enable-core-region
     exclude_ignore: true
     example: true
@@ -68,7 +65,6 @@ attributes:
   - model_name: secondary-region
     exclude_ignore: true
     example: off
-
   - model_name: encapsulation
     tf_name: tunnel_interface_encapsulations
     exclude_ignore: true
@@ -80,7 +76,6 @@ attributes:
       example: 4294967
     - model_name: weight
       example: 250
-  
   - model_name: group
     tf_name: tunnel_interface_groups
     example: 42949672
@@ -171,7 +166,6 @@ attributes:
     tf_name: tunnel_interface_bind_loopback_tunnel
     exclude_ignore: true
     example: 12
-
   - model_name: all
     tf_name: tunnel_interface_allow_all
     exclude_ignore: true
@@ -220,7 +214,6 @@ attributes:
     tf_name: tunnel_interface_allow_https
     exclude_ignore: true
     example: true
-  
   - model_name: nat
     node_only_container: true
     example: true
@@ -291,7 +284,6 @@ attributes:
     example: 100000
   - model_name: shaping-rate
     example: 10000000
-
   - model_name: qos-map
     example: test
   - model_name: qos-map-vpn
@@ -303,7 +295,6 @@ attributes:
   - model_name: rule-name
     tf_name: write_rule
     example: RULE1
-  
   - model_name: access-list
     tf_name: access_lists
     attributes:
@@ -312,7 +303,6 @@ attributes:
       example: in
     - model_name: acl-name
       example: ACL1
-  
   - model_name: policer
     tf_name: policers
     attributes:
@@ -320,14 +310,12 @@ attributes:
       example: in
     - model_name: policer-name
       example: example
-
   - model_name: dialer-ip-mtu
     tf_name: ip_mtu_for_dialer_interface
     example: 1500
   - model_name: dialer-tcp-mss-adjust
     tf_name: dialer_tcp_mss
     example: 720
-
   - model_name: tloc-extension
     example: tloc
   - model_name: tracker

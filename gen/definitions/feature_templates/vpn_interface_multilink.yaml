@@ -21,7 +21,6 @@ attributes:
     data_path: [ipv6]
     tf_name: ipv6_address
     example: 2001:0:0:1::/64
-  
   - model_name: access-list
     data_path: [ipv6]
     tf_name: ipv6_access_lists
@@ -31,7 +30,6 @@ attributes:
       - model_name: acl-name
         string_max_length: 127
         example: ACL1
-
   - model_name: method
     tf_name: ppp_authentication_protocol
     example: chap
@@ -61,7 +59,6 @@ attributes:
     tf_name: ppp_authentication_type
     node_only_container: true
     example: callin
-
   - model_name: enable-core-region
     exclude_ignore: true
     example: true
@@ -71,7 +68,6 @@ attributes:
   - model_name: secondary-region
     exclude_ignore: true
     example: off
-
   - model_name: encapsulation
     tf_name: tunnel_interface_encapsulations
     exclude_ignore: true
@@ -83,7 +79,6 @@ attributes:
       example: 4294967
     - model_name: weight
       example: 250
-
   - model_name: group
     data_path: [tunnel-interface]
     tf_name: tunnel_interface_groups
@@ -96,7 +91,6 @@ attributes:
     example: true
   - model_name: per-tunnel-qos-aggregator
     example: false
-
   - model_name: mode
     tf_name: tunnel_qos_mode
     exclude_ignore: true
@@ -147,7 +141,6 @@ attributes:
     tf_name: tunnel_interface_vmanage_connection_preference
     exclude_ignore: true
     example: 5
-
   - model_name: port-hop
     tf_name: tunnel_interface_port_hop
     exclude_ignore: true
@@ -177,7 +170,6 @@ attributes:
     tf_name: tunnel_interface_bind_loopback_tunnel
     exclude_ignore: true
     example: 12
-
   - model_name: all
     tf_name: tunnel_interface_allow_all
     exclude_ignore: true
@@ -226,7 +218,6 @@ attributes:
     tf_name: tunnel_interface_allow_https
     exclude_ignore: true
     example: true
-
   - model_name: disable
     tf_name: disable_fragmentation
     node_only_container: true
@@ -238,7 +229,6 @@ attributes:
     tf_name: interleaving_fragment
     node_only_container: true
     example: false
-
   - model_name: clear-dont-fragment
     tf_name: clear_dont_fragment_bit
     example: false
@@ -260,7 +250,6 @@ attributes:
     example: true
   - model_name: autonegotiate
     example: true
-
   - model_name: shaping-rate
     example: 10000000
   - model_name: qos-map
@@ -274,7 +263,6 @@ attributes:
   - model_name: rule-name
     tf_name: write_rule
     example: RULE1
-
   - model_name: access-list
     tf_name: access_lists
     attributes:
@@ -283,12 +271,11 @@ attributes:
     - model_name: acl-name
       string_max_length: 127
       example: ACL2
-
   - model_name: controller-tx-ex-list
     tf_name: multilink_interfaces
     attributes:
     - model_name: name
-      tf_name: card_type
+      tf_name: interface_type
       example: E1
     - model_name: number
       tf_name: slot
@@ -319,20 +306,19 @@ attributes:
         - model_name: timeslots
           tf_name: time_slot
           example: example
-
   - model_name: nim-list
     data_path: [controller]
     tf_name: nim_interface_list
     attributes:
     - model_name: nim
       tf_name: nim_serial_interface_type
-      example: 2t
+      example: 2T
     - model_name: if-name
       tf_name: interface_name
       example: nim-interface
     - model_name: description
       tf_name: interface_description
-      example: interface description
+      example: My Description
     - model_name: bandwidth
       example: 21474836
     - model_name: clock-rate

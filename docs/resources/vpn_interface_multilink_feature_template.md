@@ -108,7 +108,7 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
   ]
   multilink_interfaces = [
     {
-      card_type            = "E1"
+      interface_type       = "E1"
       slot                 = "interface-t1"
       framing              = "example-framing"
       line_mode            = "primary"
@@ -127,9 +127,9 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
   ]
   nim_interface_list = [
     {
-      nim_serial_interface_type = "2t"
+      nim_serial_interface_type = "2T"
       interface_name            = "nim-interface"
-      interface_description     = "interface description"
+      interface_description     = "My Description"
       bandwidth                 = 21474836
       clock_rate                = 120000
       encapsulation_serial      = "hdlc"
@@ -382,13 +382,13 @@ Optional:
 
 Optional:
 
-- `card_type` (String) Card Type
-  - Choices: `E1`, `T1`, `NIM-2T`, `NIM-4T`
 - `channel_group_list` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--multilink_interfaces--channel_group_list))
 - `description` (String) Description
 - `description_variable` (String) Variable name
 - `framing` (String) Framing
 - `framing_variable` (String) Variable name
+- `interface_type` (String) Card Type
+  - Choices: `E1`, `T1`, `NIM-2T`, `NIM-4T`
 - `internal` (Boolean) Internal
   - Default value: `false`
 - `line_mode` (String) Line Mode

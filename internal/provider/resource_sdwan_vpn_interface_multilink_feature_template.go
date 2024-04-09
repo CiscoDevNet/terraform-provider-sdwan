@@ -798,7 +798,7 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"card_type": schema.StringAttribute{
+						"interface_type": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Card Type").AddStringEnumDescription("E1", "T1", "NIM-2T", "NIM-4T").String,
 							Optional:            true,
 							Validators: []validator.String{

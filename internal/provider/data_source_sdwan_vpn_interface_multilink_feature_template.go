@@ -689,7 +689,7 @@ func (d *VPNInterfaceMultilinkFeatureTemplateDataSource) Schema(ctx context.Cont
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"card_type": schema.StringAttribute{
+						"interface_type": schema.StringAttribute{
 							MarkdownDescription: "Card Type",
 							Computed:            true,
 						},
