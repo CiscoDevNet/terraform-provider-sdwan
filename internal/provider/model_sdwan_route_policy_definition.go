@@ -371,7 +371,7 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					item.MatchEntries = []RoutePolicyDefinitionSequencesMatchEntries{}
 				}
 			}
-			if cValue := v.Get("actions.0.parameter"); cValue.Exists() && len(cValue.Array()) > 0 && len(item.ActionEntries) > 0 {
+			if cValue := v.Get("actions.0.parameter"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]RoutePolicyDefinitionSequencesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := RoutePolicyDefinitionSequencesActionEntries{}
