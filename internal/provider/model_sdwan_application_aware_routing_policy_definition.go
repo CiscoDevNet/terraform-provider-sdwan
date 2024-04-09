@@ -326,6 +326,8 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
+			} else {
+				item.MatchEntries = []ApplicationAwareRoutingPolicyDefinitionSequencesMatchEntries{}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries, 0)
@@ -387,14 +389,20 @@ func (data *ApplicationAwareRoutingPolicyDefinition) fromBody(ctx context.Contex
 							cItem.SlaClassParameters = append(cItem.SlaClassParameters, ccItem)
 							return true
 						})
+					} else {
+						cItem.SlaClassParameters = []ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParameters{}
 					}
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
 				})
+			} else {
+				item.ActionEntries = []ApplicationAwareRoutingPolicyDefinitionSequencesActionEntries{}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = []ApplicationAwareRoutingPolicyDefinitionSequences{}
 	}
 	data.updateVersions(ctx, &state)
 }

@@ -1536,6 +1536,8 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
+	} else {
+		data.Interfaces = []CiscoSecureInternetGatewayInterfaces{}
 	}
 	if value := res.Get(path + "service.vipValue"); len(value.Array()) > 0 {
 		data.Services = make([]CiscoSecureInternetGatewayServices, 0)
@@ -1638,6 +1640,8 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 					item.InterfacePairs = append(item.InterfacePairs, cItem)
 					return true
 				})
+			} else {
+				item.InterfacePairs = []CiscoSecureInternetGatewayServicesInterfacePairs{}
 			}
 			if cValue := v.Get("zscaler-location-settings.auth-required.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1977,6 +1981,8 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 			data.Services = append(data.Services, item)
 			return true
 		})
+	} else {
+		data.Services = []CiscoSecureInternetGatewayServices{}
 	}
 	if value := res.Get(path + "tracker-src-ip.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2120,6 +2126,8 @@ func (data *CiscoSecureInternetGateway) fromBody(ctx context.Context, res gjson.
 			data.Trackers = append(data.Trackers, item)
 			return true
 		})
+	} else {
+		data.Trackers = []CiscoSecureInternetGatewayTrackers{}
 	}
 }
 

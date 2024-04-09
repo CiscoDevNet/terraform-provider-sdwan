@@ -77,6 +77,8 @@ func (data *DomainListPolicyObject) fromBody(ctx context.Context, res gjson.Resu
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []DomainListPolicyObjectEntries{}
 	}
 }
 

@@ -86,6 +86,8 @@ func (data *ZoneListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []ZoneListPolicyObjectEntries{}
 	}
 }
 

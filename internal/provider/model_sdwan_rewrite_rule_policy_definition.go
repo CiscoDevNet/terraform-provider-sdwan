@@ -116,6 +116,8 @@ func (data *RewriteRulePolicyDefinition) fromBody(ctx context.Context, res gjson
 			data.Rules = append(data.Rules, item)
 			return true
 		})
+	} else {
+		data.Rules = []RewriteRulePolicyDefinitionRules{}
 	}
 	data.updateVersions(ctx, &state)
 }

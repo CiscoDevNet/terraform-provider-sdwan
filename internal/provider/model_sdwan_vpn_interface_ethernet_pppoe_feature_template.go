@@ -1890,6 +1890,8 @@ func (data *VPNInterfaceEthernetPPPoE) fromBody(ctx context.Context, res gjson.R
 			data.Encapsulation = append(data.Encapsulation, item)
 			return true
 		})
+	} else {
+		data.Encapsulation = []VPNInterfaceEthernetPPPoEEncapsulation{}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -2749,6 +2751,8 @@ func (data *VPNInterfaceEthernetPPPoE) fromBody(ctx context.Context, res gjson.R
 			data.PortForward = append(data.PortForward, item)
 			return true
 		})
+	} else {
+		data.PortForward = []VPNInterfaceEthernetPPPoEPortForward{}
 	}
 	if value := res.Get(path + "qos-adaptive.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3060,6 +3064,8 @@ func (data *VPNInterfaceEthernetPPPoE) fromBody(ctx context.Context, res gjson.R
 			data.AccessList = append(data.AccessList, item)
 			return true
 		})
+	} else {
+		data.AccessList = []VPNInterfaceEthernetPPPoEAccessList{}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policer = make([]VPNInterfaceEthernetPPPoEPolicer, 0)
@@ -3105,6 +3111,8 @@ func (data *VPNInterfaceEthernetPPPoE) fromBody(ctx context.Context, res gjson.R
 			data.Policer = append(data.Policer, item)
 			return true
 		})
+	} else {
+		data.Policer = []VPNInterfaceEthernetPPPoEPolicer{}
 	}
 	if value := res.Get(path + "dialer-ip-mtu.vipType"); value.Exists() {
 		if value.String() == "variableName" {

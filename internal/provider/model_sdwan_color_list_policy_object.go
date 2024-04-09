@@ -77,6 +77,8 @@ func (data *ColorListPolicyObject) fromBody(ctx context.Context, res gjson.Resul
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []ColorListPolicyObjectEntries{}
 	}
 }
 

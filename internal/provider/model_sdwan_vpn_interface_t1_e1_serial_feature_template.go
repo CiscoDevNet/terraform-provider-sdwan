@@ -1217,6 +1217,8 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 			data.Ipv6AccessLists = append(data.Ipv6AccessLists, item)
 			return true
 		})
+	} else {
+		data.Ipv6AccessLists = []VPNInterfaceT1E1SerialIpv6AccessLists{}
 	}
 	if value := res.Get(path + "tunnel-interface.enable-core-region.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1341,6 +1343,8 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 			data.EncapsulationForTloc = append(data.EncapsulationForTloc, item)
 			return true
 		})
+	} else {
+		data.EncapsulationForTloc = []VPNInterfaceT1E1SerialEncapsulationForTloc{}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -2339,6 +2343,8 @@ func (data *VPNInterfaceT1E1Serial) fromBody(ctx context.Context, res gjson.Resu
 			data.AccessList = append(data.AccessList, item)
 			return true
 		})
+	} else {
+		data.AccessList = []VPNInterfaceT1E1SerialAccessList{}
 	}
 }
 

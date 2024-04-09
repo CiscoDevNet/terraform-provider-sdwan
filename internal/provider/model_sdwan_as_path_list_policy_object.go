@@ -77,6 +77,8 @@ func (data *ASPathListPolicyObject) fromBody(ctx context.Context, res gjson.Resu
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []ASPathListPolicyObjectEntries{}
 	}
 }
 

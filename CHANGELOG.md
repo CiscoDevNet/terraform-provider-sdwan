@@ -24,6 +24,7 @@
 - BREAKING CHANGE: Increases the minimum version for all profile parcel resource and data sources to 20.12.0
 - Fix issue when changing multiple already deployed templates including device templates
 - Fix error when refreshing state of `sdwan_attach_feature_device_template` resource and device template does no longer exist
+- Fix refreshing state of empty lists in responses
 
 ## 0.3.6
 

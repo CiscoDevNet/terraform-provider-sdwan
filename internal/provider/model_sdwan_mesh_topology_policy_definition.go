@@ -111,6 +111,8 @@ func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjso
 			data.Regions = append(data.Regions, item)
 			return true
 		})
+	} else {
+		data.Regions = []MeshTopologyPolicyDefinitionRegions{}
 	}
 	data.updateVersions(ctx, &state)
 }

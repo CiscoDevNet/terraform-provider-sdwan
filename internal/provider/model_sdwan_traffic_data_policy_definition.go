@@ -538,6 +538,8 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
+			} else {
+				item.MatchEntries = []TrafficDataPolicyDefinitionSequencesMatchEntries{}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]TrafficDataPolicyDefinitionSequencesActionEntries, 0)
@@ -772,6 +774,8 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							cItem.SetParameters = append(cItem.SetParameters, ccItem)
 							return true
 						})
+					} else {
+						cItem.SetParameters = []TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters{}
 					}
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "nat" {
 						cItem.NatParameters = make([]TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters, 0)
@@ -799,14 +803,20 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							cItem.NatParameters = append(cItem.NatParameters, ccItem)
 							return true
 						})
+					} else {
+						cItem.NatParameters = []TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters{}
 					}
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
 				})
+			} else {
+				item.ActionEntries = []TrafficDataPolicyDefinitionSequencesActionEntries{}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = []TrafficDataPolicyDefinitionSequences{}
 	}
 	data.updateVersions(ctx, &state)
 }

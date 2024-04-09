@@ -148,14 +148,20 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 							cItem.Hubs = append(cItem.Hubs, ccItem)
 							return true
 						})
+					} else {
+						cItem.Hubs = []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs{}
 					}
 					item.Spokes = append(item.Spokes, cItem)
 					return true
 				})
+			} else {
+				item.Spokes = []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes{}
 			}
 			data.Topologies = append(data.Topologies, item)
 			return true
 		})
+	} else {
+		data.Topologies = []HubAndSpokeTopologyPolicyDefinitionTopologies{}
 	}
 	data.updateVersions(ctx, &state)
 }

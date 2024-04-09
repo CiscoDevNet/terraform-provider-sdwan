@@ -1153,6 +1153,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4SecondaryAddresses = append(data.Ipv4SecondaryAddresses, item)
 			return true
 		})
+	} else {
+		data.Ipv4SecondaryAddresses = []VPNInterfaceSVIIpv4SecondaryAddresses{}
 	}
 	if value := res.Get(path + "ipv6.address.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1261,6 +1263,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6SecondaryAddresses = append(data.Ipv6SecondaryAddresses, item)
 			return true
 		})
+	} else {
+		data.Ipv6SecondaryAddresses = []VPNInterfaceSVIIpv6SecondaryAddresses{}
 	}
 	if value := res.Get(path + "dhcp-helper.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -1331,6 +1335,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6DhcpHelpers = append(data.Ipv6DhcpHelpers, item)
 			return true
 		})
+	} else {
+		data.Ipv6DhcpHelpers = []VPNInterfaceSVIIpv6DhcpHelpers{}
 	}
 	if value := res.Get(path + "ip-directed-broadcast.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1493,6 +1499,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4AccessLists = append(data.Ipv4AccessLists, item)
 			return true
 		})
+	} else {
+		data.Ipv4AccessLists = []VPNInterfaceSVIIpv4AccessLists{}
 	}
 	if value := res.Get(path + "ipv6.access-list.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6AccessLists = make([]VPNInterfaceSVIIpv6AccessLists, 0)
@@ -1541,6 +1549,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6AccessLists = append(data.Ipv6AccessLists, item)
 			return true
 		})
+	} else {
+		data.Ipv6AccessLists = []VPNInterfaceSVIIpv6AccessLists{}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policers = make([]VPNInterfaceSVIPolicers, 0)
@@ -1586,6 +1596,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 			data.Policers = append(data.Policers, item)
 			return true
 		})
+	} else {
+		data.Policers = []VPNInterfaceSVIPolicers{}
 	}
 	if value := res.Get(path + "arp.ip.vipValue"); len(value.Array()) > 0 {
 		data.StaticArpEntries = make([]VPNInterfaceSVIStaticArpEntries, 0)
@@ -1637,6 +1649,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticArpEntries = append(data.StaticArpEntries, item)
 			return true
 		})
+	} else {
+		data.StaticArpEntries = []VPNInterfaceSVIStaticArpEntries{}
 	}
 	if value := res.Get(path + "vrrp.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4Vrrps = make([]VPNInterfaceSVIIpv4Vrrps, 0)
@@ -1792,6 +1806,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ipv4SecondaryAddresses = append(item.Ipv4SecondaryAddresses, cItem)
 					return true
 				})
+			} else {
+				item.Ipv4SecondaryAddresses = []VPNInterfaceSVIIpv4VrrpsIpv4SecondaryAddresses{}
 			}
 			if cValue := v.Get("tloc-change-pref.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1897,10 +1913,14 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 					item.TrackingObjects = append(item.TrackingObjects, cItem)
 					return true
 				})
+			} else {
+				item.TrackingObjects = []VPNInterfaceSVIIpv4VrrpsTrackingObjects{}
 			}
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
 			return true
 		})
+	} else {
+		data.Ipv4Vrrps = []VPNInterfaceSVIIpv4Vrrps{}
 	}
 	if value := res.Get(path + "ipv6-vrrp.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6Vrrps = make([]VPNInterfaceSVIIpv6Vrrps, 0)
@@ -2056,6 +2076,8 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ipv6Addresses = append(item.Ipv6Addresses, cItem)
 					return true
 				})
+			} else {
+				item.Ipv6Addresses = []VPNInterfaceSVIIpv6VrrpsIpv6Addresses{}
 			}
 			if cValue := v.Get("ipv6-secondary.vipValue"); len(cValue.Array()) > 0 {
 				item.Ipv6SecondaryAddresses = make([]VPNInterfaceSVIIpv6VrrpsIpv6SecondaryAddresses, 0)
@@ -2088,10 +2110,14 @@ func (data *VPNInterfaceSVI) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ipv6SecondaryAddresses = append(item.Ipv6SecondaryAddresses, cItem)
 					return true
 				})
+			} else {
+				item.Ipv6SecondaryAddresses = []VPNInterfaceSVIIpv6VrrpsIpv6SecondaryAddresses{}
 			}
 			data.Ipv6Vrrps = append(data.Ipv6Vrrps, item)
 			return true
 		})
+	} else {
+		data.Ipv6Vrrps = []VPNInterfaceSVIIpv6Vrrps{}
 	}
 }
 

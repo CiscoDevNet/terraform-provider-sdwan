@@ -77,6 +77,8 @@ func (data *ExtendedCommunityListPolicyObject) fromBody(ctx context.Context, res
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []ExtendedCommunityListPolicyObjectEntries{}
 	}
 }
 

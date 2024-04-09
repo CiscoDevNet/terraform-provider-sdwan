@@ -254,10 +254,14 @@ func (data *CEdgeIGMP) fromBody(ctx context.Context, res gjson.Result) {
 					item.JoinGroups = append(item.JoinGroups, cItem)
 					return true
 				})
+			} else {
+				item.JoinGroups = []CEdgeIGMPInterfacesJoinGroups{}
 			}
 			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
+	} else {
+		data.Interfaces = []CEdgeIGMPInterfaces{}
 	}
 }
 

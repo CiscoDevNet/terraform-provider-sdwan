@@ -96,6 +96,8 @@ func (data *IPv6PrefixListPolicyObject) fromBody(ctx context.Context, res gjson.
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []IPv6PrefixListPolicyObjectEntries{}
 	}
 }
 

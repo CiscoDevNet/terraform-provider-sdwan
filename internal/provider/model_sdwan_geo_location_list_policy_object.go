@@ -86,6 +86,8 @@ func (data *GeoLocationListPolicyObject) fromBody(ctx context.Context, res gjson
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []GeoLocationListPolicyObjectEntries{}
 	}
 }
 

@@ -87,6 +87,8 @@ func (data *IPSSignatureListPolicyObject) fromBody(ctx context.Context, res gjso
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []IPSSignatureListPolicyObjectEntries{}
 	}
 }
 

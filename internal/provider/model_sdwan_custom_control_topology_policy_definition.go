@@ -447,6 +447,8 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
+			} else {
+				item.MatchEntries = []CustomControlTopologyPolicyDefinitionSequencesMatchEntries{}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]CustomControlTopologyPolicyDefinitionSequencesActionEntries, 0)
@@ -548,6 +550,8 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 							cItem.SetParameters = append(cItem.SetParameters, ccItem)
 							return true
 						})
+					} else {
+						cItem.SetParameters = []CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters{}
 					}
 					if ccValue := cv.Get("parameter.ref"); ccValue.Exists() && cItem.Type.ValueString() == "exportTo" {
 						cItem.ExportToVpnListId = types.StringValue(ccValue.String())
@@ -557,10 +561,14 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
 				})
+			} else {
+				item.ActionEntries = []CustomControlTopologyPolicyDefinitionSequencesActionEntries{}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = []CustomControlTopologyPolicyDefinitionSequences{}
 	}
 	data.updateVersions(ctx, &state)
 }

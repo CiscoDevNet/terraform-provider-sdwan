@@ -1106,6 +1106,8 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			data.Redistribute = append(data.Redistribute, item)
 			return true
 		})
+	} else {
+		data.Redistribute = []CiscoOSPFRedistribute{}
 	}
 	if value := res.Get(path + "ospf.max-metric.router-lsa.vipValue"); len(value.Array()) > 0 {
 		data.MaxMetricRouterLsa = make([]CiscoOSPFMaxMetricRouterLsa, 0)
@@ -1154,6 +1156,8 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			data.MaxMetricRouterLsa = append(data.MaxMetricRouterLsa, item)
 			return true
 		})
+	} else {
+		data.MaxMetricRouterLsa = []CiscoOSPFMaxMetricRouterLsa{}
 	}
 	if value := res.Get(path + "ospf.route-policy.vipValue"); len(value.Array()) > 0 {
 		data.RoutePolicies = make([]CiscoOSPFRoutePolicies, 0)
@@ -1205,6 +1209,8 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			data.RoutePolicies = append(data.RoutePolicies, item)
 			return true
 		})
+	} else {
+		data.RoutePolicies = []CiscoOSPFRoutePolicies{}
 	}
 	if value := res.Get(path + "ospf.area.vipValue"); len(value.Array()) > 0 {
 		data.Areas = make([]CiscoOSPFAreas, 0)
@@ -1531,6 +1537,8 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 					item.Interfaces = append(item.Interfaces, cItem)
 					return true
 				})
+			} else {
+				item.Interfaces = []CiscoOSPFAreasInterfaces{}
 			}
 			if cValue := v.Get("range.vipValue"); len(cValue.Array()) > 0 {
 				item.Ranges = make([]CiscoOSPFAreasRanges, 0)
@@ -1601,10 +1609,14 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ranges = append(item.Ranges, cItem)
 					return true
 				})
+			} else {
+				item.Ranges = []CiscoOSPFAreasRanges{}
 			}
 			data.Areas = append(data.Areas, item)
 			return true
 		})
+	} else {
+		data.Areas = []CiscoOSPFAreas{}
 	}
 }
 

@@ -1946,6 +1946,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			data.Vdsl = append(data.Vdsl, item)
 			return true
 		})
+	} else {
+		data.Vdsl = []VPNInterfaceDSLPPPoAVdsl{}
 	}
 	if value := res.Get(path + "pvc.vipValue"); len(value.Array()) > 0 {
 		data.Pvc = make([]VPNInterfaceDSLPPPoAPvc, 0)
@@ -2168,6 +2170,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			data.Pvc = append(data.Pvc, item)
 			return true
 		})
+	} else {
+		data.Pvc = []VPNInterfaceDSLPPPoAPvc{}
 	}
 	if value := res.Get(path + "ppp.authentication.method.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2441,6 +2445,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			data.Encapsulation = append(data.Encapsulation, item)
 			return true
 		})
+	} else {
+		data.Encapsulation = []VPNInterfaceDSLPPPoAEncapsulation{}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -3300,6 +3306,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			data.PortForward = append(data.PortForward, item)
 			return true
 		})
+	} else {
+		data.PortForward = []VPNInterfaceDSLPPPoAPortForward{}
 	}
 	if value := res.Get(path + "qos-adaptive.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3611,6 +3619,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			data.AccessList = append(data.AccessList, item)
 			return true
 		})
+	} else {
+		data.AccessList = []VPNInterfaceDSLPPPoAAccessList{}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policer = make([]VPNInterfaceDSLPPPoAPolicer, 0)
@@ -3656,6 +3666,8 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			data.Policer = append(data.Policer, item)
 			return true
 		})
+	} else {
+		data.Policer = []VPNInterfaceDSLPPPoAPolicer{}
 	}
 	if value := res.Get(path + "mtu.vipType"); value.Exists() {
 		if value.String() == "variableName" {

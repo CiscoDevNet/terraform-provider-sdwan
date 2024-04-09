@@ -1441,6 +1441,8 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			data.Ipv6AccessLists = append(data.Ipv6AccessLists, item)
 			return true
 		})
+	} else {
+		data.Ipv6AccessLists = []VPNInterfaceCellularIpv6AccessLists{}
 	}
 	if value := res.Get(path + "dhcp-helper.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -1692,6 +1694,8 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			data.NatPortForwards = append(data.NatPortForwards, item)
 			return true
 		})
+	} else {
+		data.NatPortForwards = []VPNInterfaceCellularNatPortForwards{}
 	}
 	if value := res.Get(path + "tunnel-interface.enable-core-region.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1816,6 +1820,8 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			data.TunnelInterfaceEncapsulations = append(data.TunnelInterfaceEncapsulations, item)
 			return true
 		})
+	} else {
+		data.TunnelInterfaceEncapsulations = []VPNInterfaceCellularTunnelInterfaceEncapsulations{}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -2947,6 +2953,8 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			data.Ipv4AccessLists = append(data.Ipv4AccessLists, item)
 			return true
 		})
+	} else {
+		data.Ipv4AccessLists = []VPNInterfaceCellularIpv4AccessLists{}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policers = make([]VPNInterfaceCellularPolicers, 0)
@@ -2992,6 +3000,8 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			data.Policers = append(data.Policers, item)
 			return true
 		})
+	} else {
+		data.Policers = []VPNInterfaceCellularPolicers{}
 	}
 	if value := res.Get(path + "arp.ip.vipValue"); len(value.Array()) > 0 {
 		data.StaticArps = make([]VPNInterfaceCellularStaticArps, 0)
@@ -3043,6 +3053,8 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			data.StaticArps = append(data.StaticArps, item)
 			return true
 		})
+	} else {
+		data.StaticArps = []VPNInterfaceCellularStaticArps{}
 	}
 }
 

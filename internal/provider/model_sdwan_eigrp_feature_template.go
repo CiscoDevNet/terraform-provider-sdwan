@@ -562,6 +562,8 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 					item.Redistributes = append(item.Redistributes, cItem)
 					return true
 				})
+			} else {
+				item.Redistributes = []EigrpAddressFamiliesRedistributes{}
 			}
 			if cValue := v.Get("network.vipValue"); len(cValue.Array()) > 0 {
 				item.Networks = make([]EigrpAddressFamiliesNetworks, 0)
@@ -594,10 +596,14 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 					item.Networks = append(item.Networks, cItem)
 					return true
 				})
+			} else {
+				item.Networks = []EigrpAddressFamiliesNetworks{}
 			}
 			data.AddressFamilies = append(data.AddressFamilies, item)
 			return true
 		})
+	} else {
+		data.AddressFamilies = []EigrpAddressFamilies{}
 	}
 	if value := res.Get(path + "eigrp.hello-interval.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -763,6 +769,8 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 			data.Keys = append(data.Keys, item)
 			return true
 		})
+	} else {
+		data.Keys = []EigrpKeys{}
 	}
 	if value := res.Get(path + "eigrp.af-interface.vipValue"); len(value.Array()) > 0 {
 		data.Interfaces = make([]EigrpInterfaces, 0)
@@ -842,10 +850,14 @@ func (data *Eigrp) fromBody(ctx context.Context, res gjson.Result) {
 					item.SummaryAddresses = append(item.SummaryAddresses, cItem)
 					return true
 				})
+			} else {
+				item.SummaryAddresses = []EigrpInterfacesSummaryAddresses{}
 			}
 			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
+	} else {
+		data.Interfaces = []EigrpInterfaces{}
 	}
 }
 

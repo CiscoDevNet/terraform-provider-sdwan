@@ -77,6 +77,8 @@ func (data *ProtocolListPolicyObject) fromBody(ctx context.Context, res gjson.Re
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []ProtocolListPolicyObjectEntries{}
 	}
 }
 

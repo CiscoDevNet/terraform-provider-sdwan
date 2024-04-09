@@ -109,6 +109,8 @@ func (data *VEdgeInventory) fromBody(ctx context.Context, res gjson.Result) {
 			data.Devices = append(data.Devices, item)
 			return true
 		})
+	} else {
+		data.Devices = []VEdgeInventoryDevices{}
 	}
 }
 

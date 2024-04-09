@@ -143,6 +143,8 @@ func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 			data.QosSchedulers = append(data.QosSchedulers, item)
 			return true
 		})
+	} else {
+		data.QosSchedulers = []QoSMapPolicyDefinitionQosSchedulers{}
 	}
 	data.updateVersions(ctx, &state)
 }

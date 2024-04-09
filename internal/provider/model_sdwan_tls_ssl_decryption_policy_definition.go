@@ -248,10 +248,14 @@ func (data *TLSSSLDecryptionPolicyDefinition) fromBody(ctx context.Context, res 
 					item.SourceAndDestinationConfiguration = append(item.SourceAndDestinationConfiguration, cItem)
 					return true
 				})
+			} else {
+				item.SourceAndDestinationConfiguration = []TLSSSLDecryptionPolicyDefinitionNetworkRulesSourceAndDestinationConfiguration{}
 			}
 			data.NetworkRules = append(data.NetworkRules, item)
 			return true
 		})
+	} else {
+		data.NetworkRules = []TLSSSLDecryptionPolicyDefinitionNetworkRules{}
 	}
 	if value := res.Get("definition.profiles"); value.Exists() && len(value.Array()) > 0 {
 		data.UrlRules = make([]TLSSSLDecryptionPolicyDefinitionUrlRules, 0)
@@ -275,6 +279,8 @@ func (data *TLSSSLDecryptionPolicyDefinition) fromBody(ctx context.Context, res 
 			data.UrlRules = append(data.UrlRules, item)
 			return true
 		})
+	} else {
+		data.UrlRules = []TLSSSLDecryptionPolicyDefinitionUrlRules{}
 	}
 	if value := res.Get("definition.settings.sslEnable"); value.Exists() {
 		data.SslDecryptionEnabled = types.StringValue(value.String())

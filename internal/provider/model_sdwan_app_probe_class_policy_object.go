@@ -95,6 +95,8 @@ func (data *AppProbeClassPolicyObject) fromBody(ctx context.Context, res gjson.R
 			data.Mappings = append(data.Mappings, item)
 			return true
 		})
+	} else {
+		data.Mappings = []AppProbeClassPolicyObjectMappings{}
 	}
 }
 

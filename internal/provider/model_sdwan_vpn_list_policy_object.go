@@ -77,6 +77,8 @@ func (data *VPNListPolicyObject) fromBody(ctx context.Context, res gjson.Result)
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		data.Entries = []VPNListPolicyObjectEntries{}
 	}
 }
 

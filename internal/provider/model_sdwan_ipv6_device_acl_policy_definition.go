@@ -219,6 +219,8 @@ func (data *IPv6DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjs
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
+			} else {
+				item.MatchEntries = []IPv6DeviceACLPolicyDefinitionSequencesMatchEntries{}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]IPv6DeviceACLPolicyDefinitionSequencesActionEntries, 0)
@@ -237,10 +239,14 @@ func (data *IPv6DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjs
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
 				})
+			} else {
+				item.ActionEntries = []IPv6DeviceACLPolicyDefinitionSequencesActionEntries{}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		data.Sequences = []IPv6DeviceACLPolicyDefinitionSequences{}
 	}
 	data.updateVersions(ctx, &state)
 }
