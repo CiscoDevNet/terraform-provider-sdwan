@@ -51,7 +51,7 @@ type VPNInterfaceDSLIPoE struct {
 	ShutdownVariable                                   types.String                                       `tfsdk:"shutdown_variable"`
 	EthernetDescription                                types.String                                       `tfsdk:"ethernet_description"`
 	EthernetDescriptionVariable                        types.String                                       `tfsdk:"ethernet_description_variable"`
-	VdslConfiguration                                  []VPNInterfaceDSLIPoEVdslConfiguration             `tfsdk:"vdsl_configuration"`
+	VdslConfigurations                                 []VPNInterfaceDSLIPoEVdslConfigurations            `tfsdk:"vdsl_configurations"`
 	Encap                                              types.Int64                                        `tfsdk:"encap"`
 	EncapVariable                                      types.String                                       `tfsdk:"encap_variable"`
 	DialerPoolNumber                                   types.Int64                                        `tfsdk:"dialer_pool_number"`
@@ -196,7 +196,7 @@ type VPNInterfaceDSLIPoE struct {
 	IpDirectedBroadcastVariable                        types.String                                       `tfsdk:"ip_directed_broadcast_variable"`
 }
 
-type VPNInterfaceDSLIPoEVdslConfiguration struct {
+type VPNInterfaceDSLIPoEVdslConfigurations struct {
 	Optional                       types.Bool   `tfsdk:"optional"`
 	ControllerVdslSlot             types.String `tfsdk:"controller_vdsl_slot"`
 	ControllerVdslSlotVariable     types.String `tfsdk:"controller_vdsl_slot_variable"`
@@ -358,7 +358,7 @@ func (data VPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"description."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"description."+"vipValue", data.EthernetDescription.ValueString())
 	}
-	if len(data.VdslConfiguration) > 0 {
+	if len(data.VdslConfigurations) > 0 {
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipPrimaryKey", []string{"name"})
@@ -369,7 +369,7 @@ func (data VPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipPrimaryKey", []string{"name"})
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.VdslConfiguration {
+	for _, item := range data.VdslConfigurations {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "name")
@@ -1632,9 +1632,9 @@ func (data *VPNInterfaceDSLIPoE) fromBody(ctx context.Context, res gjson.Result)
 		data.EthernetDescriptionVariable = types.StringNull()
 	}
 	if value := res.Get(path + "controller.vdsl.vipValue"); len(value.Array()) > 0 {
-		data.VdslConfiguration = make([]VPNInterfaceDSLIPoEVdslConfiguration, 0)
+		data.VdslConfigurations = make([]VPNInterfaceDSLIPoEVdslConfigurations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLIPoEVdslConfiguration{}
+			item := VPNInterfaceDSLIPoEVdslConfigurations{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -1792,12 +1792,12 @@ func (data *VPNInterfaceDSLIPoE) fromBody(ctx context.Context, res gjson.Result)
 				item.VdslModemConfiguration = types.StringNull()
 				item.VdslModemConfigurationVariable = types.StringNull()
 			}
-			data.VdslConfiguration = append(data.VdslConfiguration, item)
+			data.VdslConfigurations = append(data.VdslConfigurations, item)
 			return true
 		})
 	} else {
-		if len(data.VdslConfiguration) > 0 {
-			data.VdslConfiguration = []VPNInterfaceDSLIPoEVdslConfiguration{}
+		if len(data.VdslConfigurations) > 0 {
+			data.VdslConfigurations = []VPNInterfaceDSLIPoEVdslConfigurations{}
 		}
 	}
 	if value := res.Get(path + "bridge-dot1q.encap.vipType"); value.Exists() {
@@ -3452,32 +3452,32 @@ func (data *VPNInterfaceDSLIPoE) hasChanges(ctx context.Context, state *VPNInter
 	if !data.EthernetDescription.Equal(state.EthernetDescription) {
 		hasChanges = true
 	}
-	if len(data.VdslConfiguration) != len(state.VdslConfiguration) {
+	if len(data.VdslConfigurations) != len(state.VdslConfigurations) {
 		hasChanges = true
 	} else {
-		for i := range data.VdslConfiguration {
-			if !data.VdslConfiguration[i].ControllerVdslSlot.Equal(state.VdslConfiguration[i].ControllerVdslSlot) {
+		for i := range data.VdslConfigurations {
+			if !data.VdslConfigurations[i].ControllerVdslSlot.Equal(state.VdslConfigurations[i].ControllerVdslSlot) {
 				hasChanges = true
 			}
-			if !data.VdslConfiguration[i].Sra.Equal(state.VdslConfiguration[i].Sra) {
+			if !data.VdslConfigurations[i].Sra.Equal(state.VdslConfigurations[i].Sra) {
 				hasChanges = true
 			}
-			if !data.VdslConfiguration[i].ModeAdsl1.Equal(state.VdslConfiguration[i].ModeAdsl1) {
+			if !data.VdslConfigurations[i].ModeAdsl1.Equal(state.VdslConfigurations[i].ModeAdsl1) {
 				hasChanges = true
 			}
-			if !data.VdslConfiguration[i].ModeAdsl2.Equal(state.VdslConfiguration[i].ModeAdsl2) {
+			if !data.VdslConfigurations[i].ModeAdsl2.Equal(state.VdslConfigurations[i].ModeAdsl2) {
 				hasChanges = true
 			}
-			if !data.VdslConfiguration[i].ModeAdsl2plus.Equal(state.VdslConfiguration[i].ModeAdsl2plus) {
+			if !data.VdslConfigurations[i].ModeAdsl2plus.Equal(state.VdslConfigurations[i].ModeAdsl2plus) {
 				hasChanges = true
 			}
-			if !data.VdslConfiguration[i].ModeVdsl2.Equal(state.VdslConfiguration[i].ModeVdsl2) {
+			if !data.VdslConfigurations[i].ModeVdsl2.Equal(state.VdslConfigurations[i].ModeVdsl2) {
 				hasChanges = true
 			}
-			if !data.VdslConfiguration[i].ModeAnsi.Equal(state.VdslConfiguration[i].ModeAnsi) {
+			if !data.VdslConfigurations[i].ModeAnsi.Equal(state.VdslConfigurations[i].ModeAnsi) {
 				hasChanges = true
 			}
-			if !data.VdslConfiguration[i].VdslModemConfiguration.Equal(state.VdslConfiguration[i].VdslModemConfiguration) {
+			if !data.VdslConfigurations[i].VdslModemConfiguration.Equal(state.VdslConfigurations[i].VdslModemConfiguration) {
 				hasChanges = true
 			}
 		}

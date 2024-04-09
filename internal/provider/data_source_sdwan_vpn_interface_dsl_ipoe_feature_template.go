@@ -147,7 +147,7 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"vdsl_configuration": schema.ListNestedAttribute{
+			"vdsl_configurations": schema.ListNestedAttribute{
 				MarkdownDescription: "vdsl",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

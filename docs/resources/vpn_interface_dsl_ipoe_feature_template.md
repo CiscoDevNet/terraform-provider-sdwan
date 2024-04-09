@@ -27,7 +27,7 @@ resource "sdwan_vpn_interface_dsl_ipoe_feature_template" "example" {
   internal_controller_type = "ipoe"
   shutdown                 = true
   ethernet_description     = "My Description"
-  vdsl_configuration = [
+  vdsl_configurations = [
     {
       controller_vdsl_slot     = "Example"
       sra                      = true
@@ -382,7 +382,7 @@ resource "sdwan_vpn_interface_dsl_ipoe_feature_template" "example" {
 - `tunnel_qos_mode_variable` (String) Variable name
 - `unnumbered_loopback_interface` (String) Dialer IP Unnumbered Loopback interface name
 - `unnumbered_loopback_interface_variable` (String) Variable name
-- `vdsl_configuration` (Attributes List) vdsl (see [below for nested schema](#nestedatt--vdsl_configuration))
+- `vdsl_configurations` (Attributes List) vdsl (see [below for nested schema](#nestedatt--vdsl_configurations))
 - `write_rule` (String) Name of rewrite rule
 - `write_rule_variable` (String) Variable name
 
@@ -451,8 +451,8 @@ Optional:
 - `weight_variable` (String) Variable name
 
 
-<a id="nestedatt--vdsl_configuration"></a>
-### Nested Schema for `vdsl_configuration`
+<a id="nestedatt--vdsl_configurations"></a>
+### Nested Schema for `vdsl_configurations`
 
 Optional:
 

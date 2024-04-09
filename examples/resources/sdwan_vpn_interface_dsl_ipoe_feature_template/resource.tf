@@ -10,7 +10,7 @@ resource "sdwan_vpn_interface_dsl_ipoe_feature_template" "example" {
   internal_controller_type = "ipoe"
   shutdown                 = true
   ethernet_description     = "My Description"
-  vdsl_configuration = [
+  vdsl_configurations = [
     {
       controller_vdsl_slot     = "Example"
       sra                      = true

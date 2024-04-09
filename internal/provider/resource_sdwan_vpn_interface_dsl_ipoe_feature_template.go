@@ -163,7 +163,7 @@ func (r *VPNInterfaceDSLIPoEFeatureTemplateResource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"vdsl_configuration": schema.ListNestedAttribute{
+			"vdsl_configurations": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("vdsl").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{

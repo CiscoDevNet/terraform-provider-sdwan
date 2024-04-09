@@ -186,7 +186,7 @@ data "sdwan_vpn_interface_dsl_ipoe_feature_template" "example" {
 - `tunnel_qos_mode_variable` (String) Variable name
 - `unnumbered_loopback_interface` (String) Dialer IP Unnumbered Loopback interface name
 - `unnumbered_loopback_interface_variable` (String) Variable name
-- `vdsl_configuration` (Attributes List) vdsl (see [below for nested schema](#nestedatt--vdsl_configuration))
+- `vdsl_configurations` (Attributes List) vdsl (see [below for nested schema](#nestedatt--vdsl_configurations))
 - `version` (Number) The version of the feature template
 - `write_rule` (String) Name of rewrite rule
 - `write_rule_variable` (String) Variable name
@@ -240,8 +240,8 @@ Read-Only:
 - `weight_variable` (String) Variable name
 
 
-<a id="nestedatt--vdsl_configuration"></a>
-### Nested Schema for `vdsl_configuration`
+<a id="nestedatt--vdsl_configurations"></a>
+### Nested Schema for `vdsl_configurations`
 
 Read-Only:
 

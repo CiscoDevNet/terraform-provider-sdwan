@@ -34,14 +34,14 @@ func TestAccSdwanVPNInterfaceDSLIPoEFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "internal_controller_type", "ipoe"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "ethernet_description", "My Description"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.controller_vdsl_slot", "Example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.sra", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.mode_adsl1", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.mode_adsl2", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.mode_adsl2plus", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.mode_vdsl2", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.mode_ansi", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configuration.0.vdsl_modem_configuration", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.controller_vdsl_slot", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.sra", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.mode_adsl1", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.mode_adsl2", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.mode_adsl2plus", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.mode_vdsl2", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.mode_ansi", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "vdsl_configurations.0.vdsl_modem_configuration", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "encap", "4094"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "dialer_pool_number", "255"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_ipoe_feature_template.test", "ppp_maximum_payload", "1790"))
@@ -170,7 +170,7 @@ func testAccSdwanVPNInterfaceDSLIPoEFeatureTemplateConfig_all() string {
 	config += `	internal_controller_type = "ipoe"` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	ethernet_description = "My Description"` + "\n"
-	config += `	vdsl_configuration = [{` + "\n"
+	config += `	vdsl_configurations = [{` + "\n"
 	config += `	  controller_vdsl_slot = "Example"` + "\n"
 	config += `	  sra = true` + "\n"
 	config += `	  mode_adsl1 = false` + "\n"
