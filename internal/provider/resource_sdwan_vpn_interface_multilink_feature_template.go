@@ -140,7 +140,7 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				Optional:            true,
 			},
 			"ipv6_access_lists": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Apply ACL").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Apply IPv6 access list").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -180,21 +180,6 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("PPP Authentication Protocol PAP").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"ppp_authentication_protocol_pap_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"authentication_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Authenticate remote on incoming call only").AddStringEnumDescription("callin", "false").AddDefaultValueDescription("callin").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("callin", "false"),
-				},
-			},
-			"authentication_type_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
 			"chap_hostname": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("CHAP Hostname").String,
 				Optional:            true,
@@ -231,6 +216,13 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"ppp_authentication_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Authenticate remote on incoming call only").AddStringEnumDescription("callin", "false").AddDefaultValueDescription("callin").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("callin", "false"),
+				},
+			},
 			"enable_core_region": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable core region").AddDefaultValueDescription("false").String,
 				Optional:            true,
@@ -261,12 +253,12 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"encapsulation": schema.ListNestedAttribute{
+			"tunnel_interface_encapsulations": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Encapsulation for TLOC").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"encapsulation_type": schema.StringAttribute{
+						"encapsulation": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Encapsulation").AddStringEnumDescription("gre", "ipsec").String,
 							Optional:            true,
 							Validators: []validator.String{
@@ -302,20 +294,20 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 					},
 				},
 			},
-			"groups": schema.SetAttribute{
+			"tunnel_interface_groups": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of groups").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
-			"groups_variable": schema.StringAttribute{
+			"tunnel_interface_groups_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"border": schema.BoolAttribute{
+			"tunnel_interface_border": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as border TLOC").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"border_variable": schema.StringAttribute{
+			"tunnel_interface_border_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -335,280 +327,283 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"color": schema.StringAttribute{
+			"tunnel_qos_mode": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set tunnel QoS mode").AddStringEnumDescription("spoke").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("spoke"),
+				},
+			},
+			"tunnel_qos_mode_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_interface_color": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set color for TLOC").AddStringEnumDescription("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6").AddDefaultValueDescription("default").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "mpls", "metro-ethernet", "biz-internet", "public-internet", "lte", "3g", "red", "green", "blue", "gold", "silver", "bronze", "custom1", "custom2", "custom3", "private1", "private2", "private3", "private4", "private5", "private6"),
 				},
 			},
-			"color_variable": schema.StringAttribute{
+			"tunnel_interface_color_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"last_resort_circuit": schema.BoolAttribute{
+			"tunnel_interface_last_resort_circuit": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set TLOC as last resort").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"last_resort_circuit_variable": schema.StringAttribute{
+			"tunnel_interface_last_resort_circuit_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"low_bandwidth_link": schema.BoolAttribute{
+			"tunnel_interface_low_bandwidth_link": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the interface as a low-bandwidth circuit").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"low_bandwidth_link_variable": schema.StringAttribute{
+			"tunnel_interface_low_bandwidth_link_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tunnel_tcp_mss": schema.Int64Attribute{
+			"tunnel_interface_tunnel_tcp_mss": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tunnel TCP MSS on SYN packets, in bytes").AddIntegerRangeDescription(500, 1460).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(500, 1460),
 				},
 			},
-			"tunnel_tcp_mss_variable": schema.StringAttribute{
+			"tunnel_interface_tunnel_tcp_mss_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"enable_clear_dont_fragment": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Clear don't fragment bit").AddDefaultValueDescription("false").String,
+			"tunnel_interface_clear_dont_fragment": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"enable_clear_dont_fragment_variable": schema.StringAttribute{
+			"tunnel_interface_clear_dont_fragment_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"network_broadcast_1": schema.BoolAttribute{
+			"tunnel_interface_network_broadcast": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Accept and respond to network-prefix-directed broadcasts)").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"network_broadcast_1_variable": schema.StringAttribute{
+			"tunnel_interface_network_broadcast_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"max_control_connections": schema.Int64Attribute{
+			"tunnel_interface_max_control_connections": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the maximum number of control connections for this TLOC").AddIntegerRangeDescription(0, 8).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 8),
 				},
 			},
-			"max_control_connections_variable": schema.StringAttribute{
+			"tunnel_interface_max_control_connections_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"control_connections": schema.BoolAttribute{
+			"tunnel_interface_control_connections": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow Control Connection").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"control_connections_variable": schema.StringAttribute{
+			"tunnel_interface_control_connections_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"vbond_as_stun_server": schema.BoolAttribute{
+			"tunnel_interface_vbond_as_stun_server": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Put this wan interface in STUN mode only").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"vbond_as_stun_server_variable": schema.StringAttribute{
+			"tunnel_interface_vbond_as_stun_server_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"exclude_controller_group_list": schema.SetAttribute{
+			"tunnel_interface_exclude_controller_group_list": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Exclude the following controller groups defined in this list").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
-			"exclude_controller_group_list_variable": schema.StringAttribute{
+			"tunnel_interface_exclude_controller_group_list_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"vmanage_connection_preference": schema.Int64Attribute{
+			"tunnel_interface_vmanage_connection_preference": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set interface preference for control connection to vManage <0..8>").AddIntegerRangeDescription(0, 8).AddDefaultValueDescription("5").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(0, 8),
 				},
 			},
-			"vmanage_connection_preference_variable": schema.StringAttribute{
+			"tunnel_interface_vmanage_connection_preference_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"port_hop": schema.BoolAttribute{
+			"tunnel_interface_port_hop": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Disallow port hopping on the tunnel interface").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"port_hop_variable": schema.StringAttribute{
+			"tunnel_interface_port_hop_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"restrict": schema.BoolAttribute{
+			"tunnel_interface_color_restrict": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Restrict this TLOC behavior").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"restrict_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"carrier": schema.StringAttribute{
+			"tunnel_interface_carrier": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set carrier for TLOC").AddStringEnumDescription("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8").AddDefaultValueDescription("default").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("default", "carrier1", "carrier2", "carrier3", "carrier4", "carrier5", "carrier6", "carrier7", "carrier8"),
 				},
 			},
-			"carrier_variable": schema.StringAttribute{
+			"tunnel_interface_carrier_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"nat_refresh_interval": schema.Int64Attribute{
+			"tunnel_interface_nat_refresh_interval": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set time period of nat refresh packets <1...60> seconds").AddIntegerRangeDescription(1, 60).AddDefaultValueDescription("5").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 60),
 				},
 			},
-			"nat_refresh_interval_variable": schema.StringAttribute{
+			"tunnel_interface_nat_refresh_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"hello_interval": schema.Int64Attribute{
+			"tunnel_interface_hello_interval": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set time period of control hello packets <100..600000> milli seconds").AddIntegerRangeDescription(100, 600000).AddDefaultValueDescription("1000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 600000),
 				},
 			},
-			"hello_interval_variable": schema.StringAttribute{
+			"tunnel_interface_hello_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"hello_tolerance": schema.Int64Attribute{
+			"tunnel_interface_hello_tolerance": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set tolerance of control hello packets <12..6000> seconds").AddIntegerRangeDescription(12, 6000).AddDefaultValueDescription("12").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(12, 6000),
 				},
 			},
-			"hello_tolerance_variable": schema.StringAttribute{
+			"tunnel_interface_hello_tolerance_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"bind_loopback_tunnel": schema.StringAttribute{
+			"tunnel_interface_bind_loopback_tunnel": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Bind loopback tunnel interface to a physical interface").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
 				},
 			},
-			"bind_loopback_tunnel_variable": schema.StringAttribute{
+			"tunnel_interface_bind_loopback_tunnel_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"all": schema.BoolAttribute{
+			"tunnel_interface_allow_all": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow all traffic. Overrides all other allow-service options if allow-service all is set").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"all_variable": schema.StringAttribute{
+			"tunnel_interface_allow_all_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"network_broadcast_2": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Accept and respond to network-prefix-directed broadcasts)").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"network_broadcast_2_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"bgp": schema.BoolAttribute{
+			"tunnel_interface_allow_bgp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/deny BGP").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"bgp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_bgp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"dhcp": schema.BoolAttribute{
+			"tunnel_interface_allow_dhcp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny DHCP").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"dhcp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_dhcp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"dns": schema.BoolAttribute{
+			"tunnel_interface_allow_dns": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny DNS").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"dns_variable": schema.StringAttribute{
+			"tunnel_interface_allow_dns_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"icmp": schema.BoolAttribute{
+			"tunnel_interface_allow_icmp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny ICMP").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"icmp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_icmp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ssh": schema.BoolAttribute{
+			"tunnel_interface_allow_ssh": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny SSH").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"ssh_variable": schema.StringAttribute{
+			"tunnel_interface_allow_ssh_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"netconf": schema.BoolAttribute{
+			"tunnel_interface_allow_ntp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny NTP").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"tunnel_interface_allow_ntp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_interface_allow_netconf": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny NETCONF").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"netconf_variable": schema.StringAttribute{
+			"tunnel_interface_allow_netconf_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ospf": schema.BoolAttribute{
+			"tunnel_interface_allow_ospf": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny OSPF").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"ospf_variable": schema.StringAttribute{
+			"tunnel_interface_allow_ospf_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"stun": schema.BoolAttribute{
+			"tunnel_interface_allow_stun": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny STUN").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"stun_variable": schema.StringAttribute{
+			"tunnel_interface_allow_stun_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"snmp": schema.BoolAttribute{
+			"tunnel_interface_allow_snmp": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny SNMP").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"snmp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_snmp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"https": schema.BoolAttribute{
+			"tunnel_interface_allow_https": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny Https").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"https_variable": schema.StringAttribute{
+			"tunnel_interface_allow_https_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
 			"disable_fragmentation": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Suppresss multilink fragmentation").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"disable_fragmentation_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
 			"fragment_max_delay": schema.Int64Attribute{
@@ -624,10 +619,6 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 			},
 			"interleaving_fragment": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow interleaving of packets with fragments").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"interleaving_fragment_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
 			"clear_dont_fragment_bit": schema.BoolAttribute{
@@ -679,14 +670,6 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ip_directed_broadcast": schema.BoolAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("IP Directed-Broadcast").AddDefaultValueDescription("false").String,
-				Optional:            true,
-			},
-			"ip_directed_broadcast_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
 			"tloc_extension": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Extends a local TLOC to a remote node only for vpn 0").String,
 				Optional:            true,
@@ -698,19 +681,19 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"administrative_shutdown": schema.BoolAttribute{
+			"shutdown": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Administrative state").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"administrative_shutdown_variable": schema.StringAttribute{
+			"shutdown_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"link_autonegotiate": schema.BoolAttribute{
+			"autonegotiate": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Link autonegotiation").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"link_autonegotiate_variable": schema.StringAttribute{
+			"autonegotiate_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -736,14 +719,14 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"vpn_qos_map": schema.StringAttribute{
+			"qos_map_vpn": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Name of VPN QoS map").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
 				},
 			},
-			"vpn_qos_map_variable": schema.StringAttribute{
+			"qos_map_vpn_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -780,7 +763,7 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"access_list": schema.ListNestedAttribute{
+			"access_lists": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Apply ACL").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -810,7 +793,7 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 					},
 				},
 			},
-			"controller_tx_ex_list": schema.ListNestedAttribute{
+			"multilink_interfaces": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Controller tx-ex List").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -847,10 +830,6 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 						},
 						"internal": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Internal").AddDefaultValueDescription("false").String,
-							Optional:            true,
-						},
-						"internal_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
 						"description": schema.StringAttribute{
@@ -899,12 +878,12 @@ func (r *VPNInterfaceMultilinkFeatureTemplateResource) Schema(ctx context.Contex
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"timeslots": schema.SetAttribute{
+									"time_slot": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Time slots").String,
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"timeslots_variable": schema.StringAttribute{
+									"time_slot_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
