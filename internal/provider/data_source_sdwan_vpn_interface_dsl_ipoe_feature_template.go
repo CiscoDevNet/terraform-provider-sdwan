@@ -94,36 +94,36 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ipv4_address": schema.StringAttribute{
+			"ethernet_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "Assign IPv4 address",
 				Computed:            true,
 			},
-			"ipv4_address_variable": schema.StringAttribute{
+			"ethernet_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"enable_dhcp": schema.BoolAttribute{
+			"ethernet_enable_dhcp": schema.BoolAttribute{
 				MarkdownDescription: "Enable DHCP",
 				Computed:            true,
 			},
-			"enable_dhcp_variable": schema.StringAttribute{
+			"ethernet_enable_dhcp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"dhcp_distance": schema.Int64Attribute{
+			"ethernet_dhcp_distance": schema.Int64Attribute{
 				MarkdownDescription: "Set administrative distance for DHCP default route",
 				Computed:            true,
 			},
-			"dhcp_distance_variable": schema.StringAttribute{
+			"ethernet_dhcp_distance_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"dhcp_helper": schema.SetAttribute{
+			"ethernet_dhcp_helper": schema.SetAttribute{
 				MarkdownDescription: "List of DHCP IPv4 helper addresses",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"dhcp_helper_variable": schema.StringAttribute{
+			"ethernet_dhcp_helper_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -139,15 +139,15 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"interface_description": schema.StringAttribute{
+			"ethernet_description": schema.StringAttribute{
 				MarkdownDescription: "Interface description",
 				Computed:            true,
 			},
-			"interface_description_variable": schema.StringAttribute{
+			"ethernet_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"vdsl": schema.ListNestedAttribute{
+			"vdsl_configuration": schema.ListNestedAttribute{
 				MarkdownDescription: "vdsl",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -164,48 +164,24 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 							MarkdownDescription: "Seamless rate adaption",
 							Computed:            true,
 						},
-						"sra_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
 						"mode_adsl1": schema.BoolAttribute{
 							MarkdownDescription: "Set VDSL operating mode to adsl1",
-							Computed:            true,
-						},
-						"mode_adsl1_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"mode_adsl2": schema.BoolAttribute{
 							MarkdownDescription: "Set VDSL operating mode to adsl2",
 							Computed:            true,
 						},
-						"mode_adsl2_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
 						"mode_adsl2plus": schema.BoolAttribute{
 							MarkdownDescription: "Set VDSL operating mode to adsl2plus",
-							Computed:            true,
-						},
-						"mode_adsl2plus_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"mode_vdsl2": schema.BoolAttribute{
 							MarkdownDescription: "Set VDSL operating mode to vdsl2",
 							Computed:            true,
 						},
-						"mode_vdsl2_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
 						"mode_ansi": schema.BoolAttribute{
 							MarkdownDescription: "Set VDSL operating mode to ansi",
-							Computed:            true,
-						},
-						"mode_ansi_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"vdsl_modem_configuration": schema.StringAttribute{
@@ -275,10 +251,6 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: "PPP Authentication Protocol PAP",
 				Computed:            true,
 			},
-			"ppp_authentication_protocol_pap_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"chap_hostname": schema.StringAttribute{
 				MarkdownDescription: "CHAP Hostname",
 				Computed:            true,
@@ -287,11 +259,11 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"chap_password": schema.StringAttribute{
+			"chap_ppp_auth_password": schema.StringAttribute{
 				MarkdownDescription: "Specify ppp chap authentication Password",
 				Computed:            true,
 			},
-			"chap_password_variable": schema.StringAttribute{
+			"chap_ppp_auth_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -307,20 +279,20 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: "PAP outbound Password",
 				Computed:            true,
 			},
-			"pap_outbound_password": schema.StringAttribute{
+			"pap_ppp_auth_password": schema.StringAttribute{
 				MarkdownDescription: "Specify ppp pap authentication Password",
 				Computed:            true,
 			},
-			"pap_outbound_password_variable": schema.StringAttribute{
+			"pap_ppp_auth_password_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"encapsulation": schema.ListNestedAttribute{
+			"tunnel_interface_encapsulations": schema.ListNestedAttribute{
 				MarkdownDescription: "Encapsulation for TLOC",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"encapsulation_type": schema.StringAttribute{
+						"encapsulation": schema.StringAttribute{
 							MarkdownDescription: "Encapsulation",
 							Computed:            true,
 						},
@@ -347,20 +319,20 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 					},
 				},
 			},
-			"groups": schema.SetAttribute{
+			"tunnel_interface_groups": schema.SetAttribute{
 				MarkdownDescription: "List of groups",
 				ElementType:         types.Int64Type,
 				Computed:            true,
 			},
-			"groups_variable": schema.StringAttribute{
+			"tunnel_interface_groups_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"border": schema.BoolAttribute{
+			"tunnel_interface_border": schema.BoolAttribute{
 				MarkdownDescription: "Set TLOC as border TLOC",
 				Computed:            true,
 			},
-			"border_variable": schema.StringAttribute{
+			"tunnel_interface_border_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -380,244 +352,248 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"color": schema.StringAttribute{
+			"tunnel_qos_mode": schema.StringAttribute{
+				MarkdownDescription: "Set tunnel QoS mode",
+				Computed:            true,
+			},
+			"tunnel_qos_mode_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_interface_color": schema.StringAttribute{
 				MarkdownDescription: "Set color for TLOC",
 				Computed:            true,
 			},
-			"color_variable": schema.StringAttribute{
+			"tunnel_interface_color_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"last_resort_circuit": schema.BoolAttribute{
+			"tunnel_interface_last_resort_circuit": schema.BoolAttribute{
 				MarkdownDescription: "Set TLOC as last resort",
 				Computed:            true,
 			},
-			"last_resort_circuit_variable": schema.StringAttribute{
+			"tunnel_interface_last_resort_circuit_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"low_bandwidth_link": schema.BoolAttribute{
+			"tunnel_interface_low_bandwidth_link": schema.BoolAttribute{
 				MarkdownDescription: "Set the interface as a low-bandwidth circuit",
 				Computed:            true,
 			},
-			"low_bandwidth_link_variable": schema.StringAttribute{
+			"tunnel_interface_low_bandwidth_link_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_tcp_mss": schema.Int64Attribute{
+			"tunnel_interface_tunnel_tcp_mss": schema.Int64Attribute{
 				MarkdownDescription: "Tunnel TCP MSS on SYN packets, in bytes",
 				Computed:            true,
 			},
-			"tunnel_tcp_mss_variable": schema.StringAttribute{
+			"tunnel_interface_tunnel_tcp_mss_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"clear_dont_fragment": schema.BoolAttribute{
+			"tunnel_interface_clear_dont_fragment": schema.BoolAttribute{
 				MarkdownDescription: "Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)",
 				Computed:            true,
 			},
-			"clear_dont_fragment_variable": schema.StringAttribute{
+			"tunnel_interface_clear_dont_fragment_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"network_broadcast_1": schema.BoolAttribute{
+			"tunnel_interface_network_broadcast": schema.BoolAttribute{
 				MarkdownDescription: "Accept and respond to network-prefix-directed broadcasts)",
 				Computed:            true,
 			},
-			"network_broadcast_1_variable": schema.StringAttribute{
+			"tunnel_interface_network_broadcast_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"max_control_connections": schema.Int64Attribute{
+			"tunnel_interface_max_control_connections": schema.Int64Attribute{
 				MarkdownDescription: "Set the maximum number of control connections for this TLOC",
 				Computed:            true,
 			},
-			"max_control_connections_variable": schema.StringAttribute{
+			"tunnel_interface_max_control_connections_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"control_connections": schema.BoolAttribute{
+			"tunnel_interface_control_connections": schema.BoolAttribute{
 				MarkdownDescription: "Allow Control Connection",
 				Computed:            true,
 			},
-			"control_connections_variable": schema.StringAttribute{
+			"tunnel_interface_control_connections_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"vbond_as_stun_server": schema.BoolAttribute{
+			"tunnel_interface_vbond_as_stun_server": schema.BoolAttribute{
 				MarkdownDescription: "Put this wan interface in STUN mode only",
 				Computed:            true,
 			},
-			"vbond_as_stun_server_variable": schema.StringAttribute{
+			"tunnel_interface_vbond_as_stun_server_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"exclude_controller_group_list": schema.SetAttribute{
+			"tunnel_interface_exclude_controller_group_list": schema.SetAttribute{
 				MarkdownDescription: "Exclude the following controller groups defined in this list",
 				ElementType:         types.Int64Type,
 				Computed:            true,
 			},
-			"exclude_controller_group_list_variable": schema.StringAttribute{
+			"tunnel_interface_exclude_controller_group_list_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"vmanage_connection_preference": schema.Int64Attribute{
+			"tunnel_interface_vmanage_connection_preference": schema.Int64Attribute{
 				MarkdownDescription: "Set interface preference for control connection to vManage <0..8>",
 				Computed:            true,
 			},
-			"vmanage_connection_preference_variable": schema.StringAttribute{
+			"tunnel_interface_vmanage_connection_preference_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"port_hop": schema.BoolAttribute{
+			"tunnel_interface_port_hop": schema.BoolAttribute{
 				MarkdownDescription: "Disallow port hopping on the tunnel interface",
 				Computed:            true,
 			},
-			"port_hop_variable": schema.StringAttribute{
+			"tunnel_interface_port_hop_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"restrict": schema.BoolAttribute{
+			"tunnel_interface_color_restrict": schema.BoolAttribute{
 				MarkdownDescription: "Restrict this TLOC behavior",
 				Computed:            true,
 			},
-			"restrict_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
-			"carrier": schema.StringAttribute{
+			"tunnel_interface_carrier": schema.StringAttribute{
 				MarkdownDescription: "Set carrier for TLOC",
 				Computed:            true,
 			},
-			"carrier_variable": schema.StringAttribute{
+			"tunnel_interface_carrier_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"nat_refresh_interval": schema.Int64Attribute{
+			"tunnel_interface_nat_refresh_interval": schema.Int64Attribute{
 				MarkdownDescription: "Set time period of nat refresh packets <1...60> seconds",
 				Computed:            true,
 			},
-			"nat_refresh_interval_variable": schema.StringAttribute{
+			"tunnel_interface_nat_refresh_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"hello_interval": schema.Int64Attribute{
+			"tunnel_interface_hello_interval": schema.Int64Attribute{
 				MarkdownDescription: "Set time period of control hello packets <100..600000> milli seconds",
 				Computed:            true,
 			},
-			"hello_interval_variable": schema.StringAttribute{
+			"tunnel_interface_hello_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"hello_tolerance": schema.Int64Attribute{
+			"tunnel_interface_hello_tolerance": schema.Int64Attribute{
 				MarkdownDescription: "Set tolerance of control hello packets <12..6000> seconds",
 				Computed:            true,
 			},
-			"hello_tolerance_variable": schema.StringAttribute{
+			"tunnel_interface_hello_tolerance_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"bind_loopback_tunnel": schema.StringAttribute{
+			"tunnel_interface_bind_loopback_tunnel": schema.StringAttribute{
 				MarkdownDescription: "Bind loopback tunnel interface to a physical interface",
 				Computed:            true,
 			},
-			"bind_loopback_tunnel_variable": schema.StringAttribute{
+			"tunnel_interface_bind_loopback_tunnel_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"all": schema.BoolAttribute{
+			"tunnel_interface_allow_all": schema.BoolAttribute{
 				MarkdownDescription: "Allow all traffic. Overrides all other allow-service options if allow-service all is set",
 				Computed:            true,
 			},
-			"all_variable": schema.StringAttribute{
+			"tunnel_interface_allow_all_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"network_broadcast_2": schema.BoolAttribute{
-				MarkdownDescription: "Accept and respond to network-prefix-directed broadcasts)",
-				Computed:            true,
-			},
-			"network_broadcast_2_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
-			"bgp": schema.BoolAttribute{
+			"tunnel_interface_allow_bgp": schema.BoolAttribute{
 				MarkdownDescription: "Allow/deny BGP",
 				Computed:            true,
 			},
-			"bgp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_bgp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"dhcp": schema.BoolAttribute{
+			"tunnel_interface_allow_dhcp": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny DHCP",
 				Computed:            true,
 			},
-			"dhcp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_dhcp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"dns": schema.BoolAttribute{
+			"tunnel_interface_allow_dns": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny DNS",
 				Computed:            true,
 			},
-			"dns_variable": schema.StringAttribute{
+			"tunnel_interface_allow_dns_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"icmp": schema.BoolAttribute{
+			"tunnel_interface_allow_icmp": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny ICMP",
 				Computed:            true,
 			},
-			"icmp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_icmp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ssh": schema.BoolAttribute{
+			"tunnel_interface_allow_ssh": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny SSH",
 				Computed:            true,
 			},
-			"ssh_variable": schema.StringAttribute{
+			"tunnel_interface_allow_ssh_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"netconf": schema.BoolAttribute{
+			"tunnel_interface_allow_ntp": schema.BoolAttribute{
+				MarkdownDescription: "Allow/Deny NTP",
+				Computed:            true,
+			},
+			"tunnel_interface_allow_ntp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_interface_allow_netconf": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny NETCONF",
 				Computed:            true,
 			},
-			"netconf_variable": schema.StringAttribute{
+			"tunnel_interface_allow_netconf_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ospf": schema.BoolAttribute{
+			"tunnel_interface_allow_ospf": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny OSPF",
 				Computed:            true,
 			},
-			"ospf_variable": schema.StringAttribute{
+			"tunnel_interface_allow_ospf_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"stun": schema.BoolAttribute{
+			"tunnel_interface_allow_stun": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny STUN",
 				Computed:            true,
 			},
-			"stun_variable": schema.StringAttribute{
+			"tunnel_interface_allow_stun_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"snmp": schema.BoolAttribute{
+			"tunnel_interface_allow_snmp": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny SNMP",
 				Computed:            true,
 			},
-			"snmp_variable": schema.StringAttribute{
+			"tunnel_interface_allow_snmp_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"https": schema.BoolAttribute{
+			"tunnel_interface_allow_https": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny Https",
 				Computed:            true,
 			},
-			"https_variable": schema.StringAttribute{
+			"tunnel_interface_allow_https_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -625,51 +601,47 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: "Network Address Translation on this interface",
 				Computed:            true,
 			},
-			"nat_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
-			"refresh_mode": schema.StringAttribute{
+			"nat_refresh_mode": schema.StringAttribute{
 				MarkdownDescription: "Set NAT refresh mode",
 				Computed:            true,
 			},
-			"refresh_mode_variable": schema.StringAttribute{
+			"nat_refresh_mode_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"udp_timeout": schema.Int64Attribute{
+			"nat_udp_timeout": schema.Int64Attribute{
 				MarkdownDescription: "Set NAT UDP session timeout, in minutes",
 				Computed:            true,
 			},
-			"udp_timeout_variable": schema.StringAttribute{
+			"nat_udp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tcp_timeout": schema.Int64Attribute{
+			"nat_tcp_timeout": schema.Int64Attribute{
 				MarkdownDescription: "Set NAT TCP session timeout, in minutes",
 				Computed:            true,
 			},
-			"tcp_timeout_variable": schema.StringAttribute{
+			"nat_tcp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"block_icmp_error": schema.BoolAttribute{
+			"nat_block_icmp_error": schema.BoolAttribute{
 				MarkdownDescription: "Block inbound ICMP error messages",
 				Computed:            true,
 			},
-			"block_icmp_error_variable": schema.StringAttribute{
+			"nat_block_icmp_error_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"respond_to_ping": schema.BoolAttribute{
+			"nat_response_to_ping": schema.BoolAttribute{
 				MarkdownDescription: "Respond to ping requests to NAT interface ip address from the public side",
 				Computed:            true,
 			},
-			"respond_to_ping_variable": schema.StringAttribute{
+			"nat_response_to_ping_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"port_forward": schema.ListNestedAttribute{
+			"nat_port_forwards": schema.ListNestedAttribute{
 				MarkdownDescription: "Set port-forwarding rules for NAT on this interface",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -709,63 +681,59 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 					},
 				},
 			},
-			"adaptive_qos": schema.BoolAttribute{
-				MarkdownDescription: "Adaptive QoS",
-				Computed:            true,
-			},
-			"adapt_period": schema.Int64Attribute{
+			"qos_adaptive_period": schema.Int64Attribute{
 				MarkdownDescription: "Periodic timer for adaptive QoS in minutes",
 				Computed:            true,
 			},
-			"adapt_period_variable": schema.StringAttribute{
+			"qos_adaptive_period_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"shaping_rate_downstream_default": schema.Int64Attribute{
+			"qos_adaptive_bandwidth_downstream": schema.Int64Attribute{
 				MarkdownDescription: "Adaptive QoS default downstream bandwidth",
 				Computed:            true,
 			},
-			"shaping_rate_downstream_default_variable": schema.StringAttribute{
+			"qos_adaptive_bandwidth_downstream_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"shaping_rate_downstream_min": schema.Int64Attribute{
+			"qos_adaptive_min_downstream": schema.Int64Attribute{
 				MarkdownDescription: "Downstream min bandwidth limit",
 				Computed:            true,
 			},
-			"shaping_rate_downstream_min_variable": schema.StringAttribute{
+			"qos_adaptive_min_downstream_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"shaping_rate_downstream_max": schema.Int64Attribute{
+			"qos_adaptive_max_downstream": schema.Int64Attribute{
 				MarkdownDescription: "Downstream max bandwidth limit",
 				Computed:            true,
 			},
-			"shaping_rate_downstream_max_variable": schema.StringAttribute{
+			"qos_adaptive_max_downstream_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"shaping_rate_upstream_default": schema.Int64Attribute{
+			"qos_adaptive_bandwidth_upstream": schema.Int64Attribute{
 				MarkdownDescription: "Adaptive QoS default upstream bandwidth",
 				Computed:            true,
 			},
-			"shaping_rate_upstream_default_variable": schema.StringAttribute{
+			"qos_adaptive_bandwidth_upstream_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"shaping_rate_upstream_min": schema.Int64Attribute{
+			"qos_adaptive_min_upstream": schema.Int64Attribute{
 				MarkdownDescription: "Upstream min bandwidth limit",
 				Computed:            true,
 			},
-			"shaping_rate_upstream_min_variable": schema.StringAttribute{
+			"qos_adaptive_min_upstream_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"shaping_rate_upstream_max": schema.Int64Attribute{
+			"qos_adaptive_max_upstream": schema.Int64Attribute{
 				MarkdownDescription: "Upstream max bandwidth limit",
 				Computed:            true,
 			},
-			"shaping_rate_upstream_max_variable": schema.StringAttribute{
+			"qos_adaptive_max_upstream_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -785,11 +753,11 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"vpn_qos_map": schema.StringAttribute{
+			"qos_map_vpn": schema.StringAttribute{
 				MarkdownDescription: "Name of VPN QoS map",
 				Computed:            true,
 			},
-			"vpn_qos_map_variable": schema.StringAttribute{
+			"qos_map_vpn_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -817,7 +785,7 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"access_list": schema.ListNestedAttribute{
+			"access_lists": schema.ListNestedAttribute{
 				MarkdownDescription: "Apply ACL",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -841,7 +809,7 @@ func (d *VPNInterfaceDSLIPoEFeatureTemplateDataSource) Schema(ctx context.Contex
 					},
 				},
 			},
-			"policer": schema.ListNestedAttribute{
+			"policers": schema.ListNestedAttribute{
 				MarkdownDescription: "Enable policer",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
