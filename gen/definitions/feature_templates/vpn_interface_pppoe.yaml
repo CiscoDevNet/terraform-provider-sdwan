@@ -9,61 +9,70 @@ attributes:
   - model_name: shutdown
     example: true
   - model_name: description
-    tf_name: interface_description
+    tf_name: ethernet_description
     example: My Description
   - model_name: vdsl
+    tf_name: vdsl_configuration
     attributes: 
     - model_name: name
       tf_name: controller_vdsl_slot
       example: Example
     - model_name: sra
+      node_only_container: true
       example: true
     - model_name: adsl1
       tf_name: mode_adsl1
+      node_only_container: true
       example: false
     - model_name: adsl2
       tf_name: mode_adsl2
+      node_only_container: true
       example: false
     - model_name: adsl2plus
       tf_name: mode_adsl2plus
+      node_only_container: true
       example: false
     - model_name: vdsl2
       tf_name: mode_vdsl2
+      node_only_container: true
       example: false
     - model_name: ansi
       tf_name: mode_ansi
+      node_only_container: true
       example: false
     - model_name: modem
       tf_name: vdsl_modem_configuration
       example: 100
+
+
   - model_name: encap
+    tf_name: ethernet_vlan_id
     example: 4094
   - model_name: dial-pool-number
-    tf_name: dialer_pool_number
+    tf_name: ethernet_dialer_pool_number
     example: 255
   - model_name: ppp-max-payload
-    tf_name: ppp_maximum_payload
+    tf_name: ethernet_ppp_maximum_payload
     example: 1790
   - model_name: address-negotiated
-    tf_name: dialer_address_negotiated
+    tf_name: ethernet_dialer_address_negotiated
+    node_only_container: true
     example: false
   - model_name: unnumbered
-    tf_name: unnumbered_loopback_interface
+    tf_name: ethernet_unnumbered_loopback_interface
     example: example
   - model_name: method
     tf_name: ppp_authentication_protocol
     example: chap
   - model_name: pap
     tf_name: ppp_authentication_protocol_pap
+    node_only_container: true
     example: false
-  - model_name: callin
-    tf_name: authentication_type
-    example: callin
   - model_name: hostname
     tf_name: chap_hostname
     example: chap-example
   - model_name: ppp-auth-password
-    tf_name: chap_password
+    tf_name: chap_ppp_auth_password
     data_path: [ppp, chap, password]
     example: myPassword
   - model_name: username-string
@@ -71,117 +80,201 @@ attributes:
     example: pap-username
   - model_name: password
     tf_name: pap_password
+    node_only_container: true
     example: true
   - model_name: ppp-auth-password
-    tf_name: pap_outbound_password
+    tf_name: pap_ppp_auth_password
     data_path: [ppp, pap, sent-username, username]
     example: myPassword
+  - model_name: callin
+    tf_name: ppp_authentication_type
+    node_only_container: true
+    example: callin
   - model_name: enable-core-region
+    exclude_ignore: true
     example: true
   - model_name: core-region
+    exclude_ignore: true
     example: core
   - model_name: secondary-region
+    exclude_ignore: true
     example: off
   - model_name: encapsulation
+    tf_name: tunnel_interface_encapsulations
+    exclude_ignore: true
     attributes:
     - model_name: encap
-      tf_name: encapsulation_type
+      tf_name: encapsulation
       example: gre
     - model_name: preference
       example: 4294967
     - model_name: weight
       example: 250
   - model_name: group
-    tf_name: groups
+    tf_name: tunnel_interface_groups
     example: 42949672
   - model_name: border
+    tf_name: tunnel_interface_border
+    exclude_ignore: true
     example: true
   - model_name: per-tunnel-qos
     example: true
   - model_name: per-tunnel-qos-aggregator
     example: false
+  - model_name: mode
+    tf_name: tunnel_qos_mode
+    exclude_ignore: true
+    example: spoke
   - model_name: value
-    tf_name: color
+    tf_name: tunnel_interface_color
+    exclude_ignore: true
     example: custom1
   - model_name: last-resort-circuit
+    tf_name: tunnel_interface_last_resort_circuit
+    exclude_ignore: true
     example: false
   - model_name: low-bandwidth-link
+    tf_name: tunnel_interface_low_bandwidth_link
+    exclude_ignore: true
     example: false
   - model_name: tunnel-tcp-mss-adjust
-    tf_name: tunnel_tcp_mss
+    tf_name: tunnel_interface_tunnel_tcp_mss
+    exclude_ignore: true
     example: 1460
   - model_name: clear-dont-fragment
+    data_path: [tunnel-interface]
+    tf_name: tunnel_interface_clear_dont_fragment
+    exclude_ignore: true
     example: false
   - model_name: network-broadcast
-    tf_name: network_broadcast_1
+    tf_name: tunnel_interface_network_broadcast
+    exclude_ignore: true
     data_path: [tunnel-interface]
     example: false
   - model_name: max-control-connections
+    tf_name: tunnel_interface_max_control_connections
+    exclude_ignore: true
     example: 8
-  - model_name: control-connections
+  - model_name: control-connections 
+    tf_name: tunnel_interface_control_connections
+    exclude_ignore: true
     example: true
   - model_name: vbond-as-stun-server
+    tf_name: tunnel_interface_vbond_as_stun_server
+    exclude_ignore: true
     example: false
   - model_name: exclude-controller-group-list
+    tf_name: tunnel_interface_exclude_controller_group_list
+    exclude_ignore: true
     example: 100
   - model_name: vmanage-connection-preference
+    tf_name: tunnel_interface_vmanage_connection_preference
+    exclude_ignore: true
     example: 5
   - model_name: port-hop
+    tf_name: tunnel_interface_port_hop
+    exclude_ignore: true
     example: false
   - model_name: restrict
+    tf_name: tunnel_interface_color_restrict
+    node_only_container: true
+    exclude_ignore: true
     example: false
   - model_name: carrier
+    tf_name: tunnel_interface_carrier
+    exclude_ignore: true
     example: carrier1
   - model_name: nat-refresh-interval
+    tf_name: tunnel_interface_nat_refresh_interval
+    exclude_ignore: true
     example: 15
   - model_name: hello-interval
+    tf_name: tunnel_interface_hello_interval
+    exclude_ignore: true
     example: 1000
   - model_name: hello-tolerance
+    tf_name: tunnel_interface_hello_tolerance
+    exclude_ignore: true
     example: 12
   - model_name: bind
-    tf_name: bind_loopback_tunnel
+    tf_name: tunnel_interface_bind_loopback_tunnel
+    exclude_ignore: true
     example: 12
+
   - model_name: all
-    example: false
-  - model_name: network-broadcast
-    tf_name: network_broadcast_2
-    data_path: [tunnel-interface]
+    tf_name: tunnel_interface_allow_all
+    exclude_ignore: true
     example: false
   - model_name: bgp
+    tf_name: tunnel_interface_allow_bgp
+    exclude_ignore: true
     example: false
   - model_name: dhcp
+    tf_name: tunnel_interface_allow_dhcp
+    exclude_ignore: true
     example: true
   - model_name: dns
+    tf_name: tunnel_interface_allow_dns
+    exclude_ignore: true
     example: true
   - model_name: icmp
+    tf_name: tunnel_interface_allow_icmp
+    exclude_ignore: true
     example: true
   - model_name: sshd
-    tf_name: ssh
+    tf_name: tunnel_interface_allow_ssh
+    exclude_ignore: true
+    example: false
+  - model_name: ntp
+    tf_name: tunnel_interface_allow_ntp
+    exclude_ignore: true
     example: false
   - model_name: netconf
+    tf_name: tunnel_interface_allow_netconf
+    exclude_ignore: true
     example: false
   - model_name: ospf
+    tf_name: tunnel_interface_allow_ospf
+    exclude_ignore: true
     example: false
   - model_name: stun
+    tf_name: tunnel_interface_allow_stun
+    exclude_ignore: true
     example: false
   - model_name: snmp
+    tf_name: tunnel_interface_allow_snmp
+    exclude_ignore: true
     example: false
   - model_name: https
+    tf_name: tunnel_interface_allow_https
+    exclude_ignore: true
     example: true
   - model_name: nat
+    node_only_container: true
     example: true
   - model_name: refresh
-    tf_name: refresh_mode
+    tf_name: nat_refresh_mode
+    exclude_ignore: true
     example: outbound
   - model_name: udp-timeout
+    tf_name: nat_udp_timeout
+    exclude_ignore: true
     example: 1
   - model_name: tcp-timeout
+    tf_name: nat_tcp_timeout
+    exclude_ignore: true
     example: 60
   - model_name: block-icmp-error
+    tf_name: nat_block_icmp_error
+    exclude_ignore: true
     example: true
   - model_name: respond-to-ping
+    tf_name: nat_response_to_ping
+    exclude_ignore: true
     example: false
   - model_name: port-forward
+    tf_name: nat_port_forwards
+    exclude_ignore: true
     attributes:
     - model_name: port-start
       tf_name: port_start_range
@@ -196,30 +289,34 @@ attributes:
       example: 65530
     - model_name: private-ip-address
       example: 1.2.3.4
-  - model_name: qos-adaptive
-    tf_name: adaptive_qos
-    example: true
   - model_name: period
-    tf_name: adapt_period
+    tf_name: qos_adaptive_period
+    exclude_ignore: true
     example: 15
   - model_name: bandwidth-down
-    tf_name: shaping_rate_downstream_default
-    example: 10000000
+    tf_name: qos_adaptive_bandwidth_downstream
+    exclude_ignore: true
+    example: 10000
   - model_name: dmin
-    tf_name: shaping_rate_downstream_min
-    example: 10000000
+    tf_name: qos_adaptive_min_downstream
+    exclude_ignore: true
+    example: 100
   - model_name: dmax
-    tf_name: shaping_rate_downstream_max
-    example: 10000000
+    tf_name: qos_adaptive_max_downstream
+    exclude_ignore: true
+    example: 100000
   - model_name: bandwidth-up
-    tf_name: shaping_rate_upstream_default
-    example: 10000000
+    tf_name: qos_adaptive_bandwidth_upstream
+    exclude_ignore: true
+    example: 10000
   - model_name: umin
-    tf_name: shaping_rate_upstream_min
-    example: 10000000
+    tf_name: qos_adaptive_min_upstream
+    exclude_ignore: true
+    example: 100
   - model_name: umax
-    tf_name: shaping_rate_upstream_max
-    example: 10000000
+    tf_name: qos_adaptive_max_upstream
+    exclude_ignore: true
+    example: 100000
   - model_name: shaping-rate
     example: 10000000
   - model_name: qos-map
@@ -233,14 +330,16 @@ attributes:
     example: 214748300
   - model_name: rule-name
     tf_name: write_rule
-    example: test_rule
+    example: RULE1
   - model_name: access-list
+    tf_name: ipv4_access_lists
     attributes:
     - model_name: direction
       example: in
     - model_name: acl-name
-      example: Egress ACL - IPv4
+      example: ACL1
   - model_name: policer
+    tf_name: policers
     attributes:
     - model_name: direction
       example: in
