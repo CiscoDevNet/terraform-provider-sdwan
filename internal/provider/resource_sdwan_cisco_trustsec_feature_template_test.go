@@ -26,94 +26,88 @@ import (
 )
 
 func TestAccSdwanCiscoTrustSecFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "device_sgt", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "credentials_id", "user1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "credentials_password", "MyPassword"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "enable_enforcement", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "enable_sxp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_source_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_default_password", "MyPassword"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_key_chain", "keychain1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_log_binding_changes", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_reconciliation_period", "120"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_retry_period", "120"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "speaker_hold_time", "120"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "minimum_listener_hold_time", "90"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "maximum_listener_hold_time", "180"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_node_id_type", "interface-name"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_node_id", "VirtualPortGroup"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.peer_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.source_ip", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.preshared_key", "default"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.mode", "local"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.mode_type", "listener"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.minimum_hold_time", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.maximum_hold_time", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.vpn_id", "0"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoTrustSecFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_node_id_type", "interface-name"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_node_id", "VirtualPortGroup"),
-				),
 			},
 			{
 				Config: testAccSdwanCiscoTrustSecFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "device_sgt", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "credentials_id", "user1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "credentials_password", "MyPassword"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "enable_enforcement", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "enable_sxp", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_source_ip", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_default_password", "MyPassword"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_key_chain", "keychain1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_log_binding_changes", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_reconciliation_period", "120"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_retry_period", "120"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "speaker_hold_time", "120"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "minimum_listener_hold_time", "90"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "maximum_listener_hold_time", "180"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_node_id_type", "interface-name"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_node_id", "VirtualPortGroup"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.peer_ip", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.source_ip", "2.3.4.5"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.preshared_key", "default"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.mode", "local"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.mode_type", "listener"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.minimum_hold_time", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.maximum_hold_time", "200"),
-					resource.TestCheckResourceAttr("sdwan_cisco_trustsec_feature_template.test", "sxp_connections.0.vpn_id", "0"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoTrustSecFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_trustsec_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		sxp_node_id_type = "interface-name"
-		sxp_node_id = "VirtualPortGroup"
-	}
-	`
+	config := `resource "sdwan_cisco_trustsec_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	sxp_node_id_type = "interface-name"` + "\n"
+	config += `	sxp_node_id = "VirtualPortGroup"` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoTrustSecFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_trustsec_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		device_sgt = 100
-		credentials_id = "user1"
-		credentials_password = "MyPassword"
-		enable_enforcement = true
-		enable_sxp = true
-		sxp_source_ip = "1.2.3.4"
-		sxp_default_password = "MyPassword"
-		sxp_key_chain = "keychain1"
-		sxp_log_binding_changes = false
-		sxp_reconciliation_period = 120
-		sxp_retry_period = 120
-		speaker_hold_time = 120
-		minimum_listener_hold_time = 90
-		maximum_listener_hold_time = 180
-		sxp_node_id_type = "interface-name"
-		sxp_node_id = "VirtualPortGroup"
-		sxp_connections = [{
-			peer_ip = "1.2.3.4"
-			source_ip = "2.3.4.5"
-			preshared_key = "default"
-			mode = "local"
-			mode_type = "listener"
-			minimum_hold_time = 100
-			maximum_hold_time = 200
-			vpn_id = 0
-		}]
-	}
-	`
+	config := `resource "sdwan_cisco_trustsec_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	device_sgt = 100` + "\n"
+	config += `	credentials_id = "user1"` + "\n"
+	config += `	credentials_password = "MyPassword"` + "\n"
+	config += `	enable_enforcement = true` + "\n"
+	config += `	enable_sxp = true` + "\n"
+	config += `	sxp_source_ip = "1.2.3.4"` + "\n"
+	config += `	sxp_default_password = "MyPassword"` + "\n"
+	config += `	sxp_key_chain = "keychain1"` + "\n"
+	config += `	sxp_log_binding_changes = false` + "\n"
+	config += `	sxp_reconciliation_period = 120` + "\n"
+	config += `	sxp_retry_period = 120` + "\n"
+	config += `	speaker_hold_time = 120` + "\n"
+	config += `	minimum_listener_hold_time = 90` + "\n"
+	config += `	maximum_listener_hold_time = 180` + "\n"
+	config += `	sxp_node_id_type = "interface-name"` + "\n"
+	config += `	sxp_node_id = "VirtualPortGroup"` + "\n"
+	config += `	sxp_connections = [{` + "\n"
+	config += `	  peer_ip = "1.2.3.4"` + "\n"
+	config += `	  source_ip = "2.3.4.5"` + "\n"
+	config += `	  preshared_key = "default"` + "\n"
+	config += `	  mode = "local"` + "\n"
+	config += `	  mode_type = "listener"` + "\n"
+	config += `	  minimum_hold_time = 100` + "\n"
+	config += `	  maximum_hold_time = 200` + "\n"
+	config += `	  vpn_id = 0` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

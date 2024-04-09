@@ -164,6 +164,10 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 			data.Definitions = append(data.Definitions, item)
 			return true
 		})
+	} else {
+		if len(data.Definitions) > 0 {
+			data.Definitions = []SecurityPolicyDefinitions{}
+		}
 	}
 	if value := res.Get("policyDefinition.settings.zoneToNozoneInternet"); value.Exists() {
 		data.DirectInternetApplications = types.StringValue(value.String())
@@ -222,6 +226,10 @@ func (data *SecurityPolicy) fromBody(ctx context.Context, res gjson.Result) {
 			data.Logging = append(data.Logging, item)
 			return true
 		})
+	} else {
+		if len(data.Logging) > 0 {
+			data.Logging = []SecurityPolicyLogging{}
+		}
 	}
 }
 

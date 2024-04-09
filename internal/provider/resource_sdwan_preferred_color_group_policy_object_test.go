@@ -26,36 +26,35 @@ import (
 )
 
 func TestAccSdwanPreferredColorGroupPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "primary_color_preference", "blue bronze"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "primary_path_preference", "direct-path"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "secondary_color_preference", "3g"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "secondary_path_preference", "multi-hop-path"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "tertiary_color_preference", "custom1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "tertiary_path_preference", "all-paths"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPreferredColorGroupPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "primary_color_preference", "blue bronze"),
-					resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "primary_path_preference", "direct-path"),
-					resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "secondary_color_preference", "3g"),
-					resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "secondary_path_preference", "multi-hop-path"),
-					resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "tertiary_color_preference", "custom1"),
-					resource.TestCheckResourceAttr("sdwan_preferred_color_group_policy_object.test", "tertiary_path_preference", "all-paths"),
-				),
+				Config: testAccSdwanPreferredColorGroupPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanPreferredColorGroupPolicyObjectConfig = `
-
-
-resource "sdwan_preferred_color_group_policy_object" "test" {
-	name = "Example"
-	primary_color_preference = "blue bronze"
-	primary_path_preference = "direct-path"
-	secondary_color_preference = "3g"
-	secondary_path_preference = "multi-hop-path"
-	tertiary_color_preference = "custom1"
-	tertiary_path_preference = "all-paths"
+func testAccSdwanPreferredColorGroupPolicyObjectConfig_all() string {
+	config := `resource "sdwan_preferred_color_group_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	primary_color_preference = "blue bronze"` + "\n"
+	config += `	primary_path_preference = "direct-path"` + "\n"
+	config += `	secondary_color_preference = "3g"` + "\n"
+	config += `	secondary_path_preference = "multi-hop-path"` + "\n"
+	config += `	tertiary_color_preference = "custom1"` + "\n"
+	config += `	tertiary_path_preference = "all-paths"` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

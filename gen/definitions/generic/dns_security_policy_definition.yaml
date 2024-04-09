@@ -4,6 +4,7 @@ rest_endpoint: /template/policy/definition/dnssecurity/
 has_version: true
 id_attribute: definitionId
 doc_category: Security Policies
+test_tags: [SDWAN_209]
 attributes:
   - model_name: type
     type: String
@@ -102,7 +103,7 @@ attributes:
     id: true
     mandatory: true
     description: Credentials feature template ID
-    example: "87300138-ac72-4251-b9cf-7a6c89adf060"
+    example: "22e8bd63-df16-4487-bf49-745064b941ee"
   - tf_name: cisco_sig_credentials_feature_template_version
     tf_only: true
     type: Version

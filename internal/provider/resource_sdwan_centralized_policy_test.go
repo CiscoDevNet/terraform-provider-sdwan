@@ -26,24 +26,24 @@ import (
 )
 
 func TestAccSdwanCentralizedPolicy(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "definitions.0.type", "data"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "definitions.0.entries.0.direction", "service"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanCentralizedPolicyConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "definitions.0.type", "data"),
-					resource.TestCheckResourceAttr("sdwan_centralized_policy.test", "definitions.0.entries.0.direction", "service"),
-				),
+				Config: testAccSdwanCentralizedPolicyPrerequisitesConfig + testAccSdwanCentralizedPolicyConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanCentralizedPolicyConfig = `
+const testAccSdwanCentralizedPolicyPrerequisitesConfig = `
 resource "sdwan_site_list_policy_object" "sites1" {
   name = "TF_TEST"
   entries = [
@@ -82,18 +82,21 @@ resource "sdwan_traffic_data_policy_definition" "data1" {
   ]
 }
 
-
-resource "sdwan_centralized_policy" "test" {
-	name = "Example"
-	description = "My description"
-	definitions = [{
-		id = sdwan_traffic_data_policy_definition.data1.id
-		type = "data"
-		entries = [{
-			site_list_ids = [sdwan_site_list_policy_object.sites1.id]
-			vpn_list_ids = [sdwan_vpn_list_policy_object.vpns1.id]
-			direction = "service"
-		}]
-	}]
-}
 `
+
+func testAccSdwanCentralizedPolicyConfig_all() string {
+	config := `resource "sdwan_centralized_policy" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	definitions = [{` + "\n"
+	config += `	  id = sdwan_traffic_data_policy_definition.data1.id` + "\n"
+	config += `	  type = "data"` + "\n"
+	config += `	  entries = [{` + "\n"
+	config += `		site_list_ids = [sdwan_site_list_policy_object.sites1.id]` + "\n"
+	config += `		vpn_list_ids = [sdwan_vpn_list_policy_object.vpns1.id]` + "\n"
+	config += `		direction = "service"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}

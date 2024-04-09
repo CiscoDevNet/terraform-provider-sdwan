@@ -20,32 +20,35 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanTransportFeatureProfile(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_feature_profile.test", "name", "TRANSPORT_FP_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_feature_profile.test", "description", "My transport feature profile 1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanTransportFeatureProfileConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_transport_feature_profile.test", "name", "TRANSPORT_FP_1"),
-					resource.TestCheckResourceAttr("sdwan_transport_feature_profile.test", "description", "My transport feature profile 1"),
-				),
+				Config: testAccSdwanTransportFeatureProfileConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanTransportFeatureProfileConfig = `
-
-
-resource "sdwan_transport_feature_profile" "test" {
-	name = "TRANSPORT_FP_1"
-	description = "My transport feature profile 1"
+func testAccSdwanTransportFeatureProfileConfig_all() string {
+	config := `resource "sdwan_transport_feature_profile" "test" {` + "\n"
+	config += `	name = "TRANSPORT_FP_1"` + "\n"
+	config += `	description = "My transport feature profile 1"` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

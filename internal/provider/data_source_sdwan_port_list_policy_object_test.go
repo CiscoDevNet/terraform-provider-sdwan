@@ -26,31 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanPortListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_port_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_port_list_policy_object.test", "entries.0.port", "80"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanPortListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_port_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_port_list_policy_object.test", "entries.0.port", "80"),
-				),
+				Config: testAccDataSourceSdwanPortListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanPortListPolicyObjectConfig = `
+func testAccDataSourceSdwanPortListPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_port_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  port = 80` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_port_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    port = 80
-  }]
+	config += `
+		data "sdwan_port_list_policy_object" "test" {
+			id = sdwan_port_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_port_list_policy_object" "test" {
-  id = sdwan_port_list_policy_object.test.id
-}
-`

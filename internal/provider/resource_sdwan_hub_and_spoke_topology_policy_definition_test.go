@@ -26,23 +26,23 @@ import (
 )
 
 func TestAccSdwanHubAndSpokeTopologyPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.name", "Topology1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.name", "Topology1"),
-				),
+				Config: testAccSdwanHubAndSpokeTopologyPolicyDefinitionPrerequisitesConfig + testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig = `
+const testAccSdwanHubAndSpokeTopologyPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_site_list_policy_object" "sites1" {
   name = "TF_TEST"
   entries = [
@@ -61,19 +61,22 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
   ]
 }
 
-
-resource "sdwan_hub_and_spoke_topology_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id
-	topologies = [{
-		name = "Topology1"
-		spokes = [{
-			site_list_id = sdwan_site_list_policy_object.sites1.id
-			hubs = [{
-				site_list_id = sdwan_site_list_policy_object.sites1.id
-			}]
-		}]
-	}]
-}
 `
+
+func testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_hub_and_spoke_topology_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id` + "\n"
+	config += `	topologies = [{` + "\n"
+	config += `	  name = "Topology1"` + "\n"
+	config += `	  spokes = [{` + "\n"
+	config += `		site_list_id = sdwan_site_list_policy_object.sites1.id` + "\n"
+	config += `      hubs = [{` + "\n"
+	config += `			site_list_id = sdwan_site_list_policy_object.sites1.id` + "\n"
+	config += `		}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}

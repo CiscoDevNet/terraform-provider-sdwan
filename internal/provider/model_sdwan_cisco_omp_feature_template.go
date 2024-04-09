@@ -653,6 +653,10 @@ func (data *CiscoOMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv4Routes = append(data.AdvertiseIpv4Routes, item)
 			return true
 		})
+	} else {
+		if len(data.AdvertiseIpv4Routes) > 0 {
+			data.AdvertiseIpv4Routes = []CiscoOMPAdvertiseIpv4Routes{}
+		}
 	}
 	if value := res.Get(path + "ipv6-advertise.vipValue"); len(value.Array()) > 0 {
 		data.AdvertiseIpv6Routes = make([]CiscoOMPAdvertiseIpv6Routes, 0)
@@ -682,6 +686,10 @@ func (data *CiscoOMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.AdvertiseIpv6Routes = append(data.AdvertiseIpv6Routes, item)
 			return true
 		})
+	} else {
+		if len(data.AdvertiseIpv6Routes) > 0 {
+			data.AdvertiseIpv6Routes = []CiscoOMPAdvertiseIpv6Routes{}
+		}
 	}
 }
 

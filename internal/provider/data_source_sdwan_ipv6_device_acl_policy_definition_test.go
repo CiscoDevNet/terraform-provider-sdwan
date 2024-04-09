@@ -26,51 +26,54 @@ import (
 )
 
 func TestAccDataSourceSdwanIPv6DeviceACLPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "default_action", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.id", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.name", "Sequence 10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.match_entries.0.type", "destinationPort"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.match_entries.0.destination_port", "22"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.action_entries.0.type", "count"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.action_entries.0.counter_name", "count1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanIPv6DeviceACLPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "default_action", "drop"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.id", "10"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.name", "Sequence 10"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.base_action", "accept"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.match_entries.0.type", "destinationPort"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.match_entries.0.destination_port", "22"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.action_entries.0.type", "count"),
-					resource.TestCheckResourceAttr("data.sdwan_ipv6_device_acl_policy_definition.test", "sequences.0.action_entries.0.counter_name", "count1"),
-				),
+				Config: testAccDataSourceSdwanIPv6DeviceACLPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanIPv6DeviceACLPolicyDefinitionConfig = `
+func testAccDataSourceSdwanIPv6DeviceACLPolicyDefinitionConfig() string {
+	config := ""
+	config += `resource "sdwan_ipv6_device_acl_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	default_action = "drop"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 10` + "\n"
+	config += `	  name = "Sequence 10"` + "\n"
+	config += `	  base_action = "accept"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		type = "destinationPort"` + "\n"
+	config += `		destination_port = 22` + "\n"
+	config += `	}]` + "\n"
+	config += `	  action_entries = [{` + "\n"
+	config += `		type = "count"` + "\n"
+	config += `		counter_name = "count1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_ipv6_device_acl_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  default_action = "drop"
-  sequences = [{
-    id = 10
-    name = "Sequence 10"
-    base_action = "accept"
-	match_entries = [{
-		type = "destinationPort"
-		destination_port = 22
-	}]
-	action_entries = [{
-		type = "count"
-		counter_name = "count1"
-	}]
-  }]
+	config += `
+		data "sdwan_ipv6_device_acl_policy_definition" "test" {
+			id = sdwan_ipv6_device_acl_policy_definition.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_ipv6_device_acl_policy_definition" "test" {
-  id = sdwan_ipv6_device_acl_policy_definition.test.id
-}
-`

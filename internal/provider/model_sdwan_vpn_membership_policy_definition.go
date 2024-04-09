@@ -102,6 +102,10 @@ func (data *VPNMembershipPolicyDefinition) fromBody(ctx context.Context, res gjs
 			data.Sites = append(data.Sites, item)
 			return true
 		})
+	} else {
+		if len(data.Sites) > 0 {
+			data.Sites = []VPNMembershipPolicyDefinitionSites{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

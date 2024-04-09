@@ -26,105 +26,95 @@ import (
 )
 
 func TestAccSdwanCiscoVPNInterfaceIPSecFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "interface_name", "ipsec1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "interface_description", "My Description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ip_address", "1.1.1.1/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_source", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_source_interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_destination", "3.4.5.6"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "application", "sig"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tcp_mss_adjust", "1400"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "clear_dont_fragment", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "dead_peer_detection_interval", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "dead_peer_detection_retries", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_version", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_mode", "main"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_rekey_interval", "20000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_ciphersuite", "aes256-cbc-sha1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_group", "20"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key", "cisco123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key_local_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key_remote_id", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_rekey_interval", "7200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_replay_window", "128"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_ciphersuite", "aes256-cbc-sha256"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_perfect_forward_secrecy", "group-20"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_route_via", "g0/0"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoVPNInterfaceIPSecFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "interface_name", "ipsec1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_source", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_destination", "3.4.5.6"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "application", "sig"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_route_via", "g0/0"),
-				),
 			},
 			{
 				Config: testAccSdwanCiscoVPNInterfaceIPSecFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "interface_name", "ipsec1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "shutdown", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "interface_description", "My Description"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ip_address", "1.1.1.1/24"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_source", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_destination", "3.4.5.6"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "application", "sig"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tcp_mss_adjust", "1400"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "clear_dont_fragment", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "mtu", "1500"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "dead_peer_detection_interval", "100"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "dead_peer_detection_retries", "4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_version", "2"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_mode", "main"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_rekey_interval", "20000"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_ciphersuite", "aes256-cbc-sha1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_group", "20"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key", "cisco123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key_local_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ike_pre_shared_key_remote_id", "2"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_rekey_interval", "7200"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_replay_window", "128"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_ciphersuite", "aes256-cbc-sha256"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "ipsec_perfect_forward_secrecy", "group-20"),
-					resource.TestCheckResourceAttr("sdwan_cisco_vpn_interface_ipsec_feature_template.test", "tunnel_route_via", "g0/0"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoVPNInterfaceIPSecFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_vpn_interface_ipsec_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		interface_name = "ipsec1"
-		tunnel_source = "1.2.3.4"
-		tunnel_source_interface = "e1"
-		tunnel_destination = "3.4.5.6"
-		application = "sig"
-		tunnel_route_via = "g0/0"
-	}
-	`
+	config := `resource "sdwan_cisco_vpn_interface_ipsec_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	interface_name = "ipsec1"` + "\n"
+	config += `	tunnel_source = "1.2.3.4"` + "\n"
+	config += `	tunnel_source_interface = "e1"` + "\n"
+	config += `	tunnel_destination = "3.4.5.6"` + "\n"
+	config += `	application = "sig"` + "\n"
+	config += `	tunnel_route_via = "g0/0"` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoVPNInterfaceIPSecFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_vpn_interface_ipsec_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		interface_name = "ipsec1"
-		shutdown = false
-		interface_description = "My Description"
-		ip_address = "1.1.1.1/24"
-		tunnel_source = "1.2.3.4"
-		tunnel_source_interface = "e1"
-		tunnel_destination = "3.4.5.6"
-		application = "sig"
-		tcp_mss_adjust = 1400
-		clear_dont_fragment = true
-		mtu = 1500
-		dead_peer_detection_interval = 100
-		dead_peer_detection_retries = 4
-		ike_version = 2
-		ike_mode = "main"
-		ike_rekey_interval = 20000
-		ike_ciphersuite = "aes256-cbc-sha1"
-		ike_group = "20"
-		ike_pre_shared_key = "cisco123"
-		ike_pre_shared_key_local_id = "1"
-		ike_pre_shared_key_remote_id = "2"
-		ipsec_rekey_interval = 7200
-		ipsec_replay_window = 128
-		ipsec_ciphersuite = "aes256-cbc-sha256"
-		ipsec_perfect_forward_secrecy = "group-20"
-		tracker = ["TRACKER1"]
-		tunnel_route_via = "g0/0"
-	}
-	`
+	config := `resource "sdwan_cisco_vpn_interface_ipsec_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	interface_name = "ipsec1"` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	interface_description = "My Description"` + "\n"
+	config += `	ip_address = "1.1.1.1/24"` + "\n"
+	config += `	tunnel_source = "1.2.3.4"` + "\n"
+	config += `	tunnel_source_interface = "e1"` + "\n"
+	config += `	tunnel_destination = "3.4.5.6"` + "\n"
+	config += `	application = "sig"` + "\n"
+	config += `	tcp_mss_adjust = 1400` + "\n"
+	config += `	clear_dont_fragment = true` + "\n"
+	config += `	mtu = 1500` + "\n"
+	config += `	dead_peer_detection_interval = 100` + "\n"
+	config += `	dead_peer_detection_retries = 4` + "\n"
+	config += `	ike_version = 2` + "\n"
+	config += `	ike_mode = "main"` + "\n"
+	config += `	ike_rekey_interval = 20000` + "\n"
+	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
+	config += `	ike_group = "20"` + "\n"
+	config += `	ike_pre_shared_key = "cisco123"` + "\n"
+	config += `	ike_pre_shared_key_local_id = "1"` + "\n"
+	config += `	ike_pre_shared_key_remote_id = "2"` + "\n"
+	config += `	ipsec_rekey_interval = 7200` + "\n"
+	config += `	ipsec_replay_window = 128` + "\n"
+	config += `	ipsec_ciphersuite = "aes256-cbc-sha256"` + "\n"
+	config += `	ipsec_perfect_forward_secrecy = "group-20"` + "\n"
+	config += `	tracker = ["TRACKER1"]` + "\n"
+	config += `	tunnel_route_via = "g0/0"` + "\n"
+	config += `}` + "\n"
+	return config
 }

@@ -26,50 +26,52 @@ import (
 )
 
 func TestAccDataSourceSdwanCellularProfileFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "if_name", "Ethernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "access_point_name", "APN1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "authentication_type", "CHAP"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "ip_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_name", "PROFILE1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "packet_data_network_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_username", "MyUsername"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_password", "MyPassword"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "primary_dns_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "secondary_dns_address", "1.2.3.5"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCellularProfileFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "if_name", "Ethernet1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "access_point_name", "APN1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "authentication_type", "CHAP"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "ip_address", "1.2.3.4"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_name", "PROFILE1"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "packet_data_network_type", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_username", "MyUsername"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "profile_password", "MyPassword"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "primary_dns_address", "1.2.3.4"),
-					resource.TestCheckResourceAttr("data.sdwan_cellular_profile_feature_template.test", "secondary_dns_address", "1.2.3.5"),
-				),
+				Config: testAccDataSourceSdwanCellularProfileFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCellularProfileFeatureTemplateConfig = `
+func testAccDataSourceSdwanCellularProfileFeatureTemplateConfig() string {
+	config := `resource "sdwan_cellular_profile_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	if_name = "Ethernet1"` + "\n"
+	config += `	profile_id = 1` + "\n"
+	config += `	access_point_name = "APN1"` + "\n"
+	config += `	authentication_type = "CHAP"` + "\n"
+	config += `	ip_address = "1.2.3.4"` + "\n"
+	config += `	profile_name = "PROFILE1"` + "\n"
+	config += `	packet_data_network_type = "ipv4"` + "\n"
+	config += `	profile_username = "MyUsername"` + "\n"
+	config += `	profile_password = "MyPassword"` + "\n"
+	config += `	primary_dns_address = "1.2.3.4"` + "\n"
+	config += `	secondary_dns_address = "1.2.3.5"` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cellular_profile_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  if_name = "Ethernet1"
-  profile_id = 1
-  access_point_name = "APN1"
-  authentication_type = "CHAP"
-  ip_address = "1.2.3.4"
-  profile_name = "PROFILE1"
-  packet_data_network_type = "ipv4"
-  profile_username = "MyUsername"
-  profile_password = "MyPassword"
-  primary_dns_address = "1.2.3.4"
-  secondary_dns_address = "1.2.3.5"
+	config += `
+		data "sdwan_cellular_profile_feature_template" "test" {
+			id = sdwan_cellular_profile_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cellular_profile_feature_template" "test" {
-  id = sdwan_cellular_profile_feature_template.test.id
-}
-`

@@ -26,33 +26,36 @@ import (
 )
 
 func TestAccDataSourceSdwanGeoLocationListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_geo_location_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_geo_location_list_policy_object.test", "entries.0.country", "USA"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_geo_location_list_policy_object.test", "entries.0.continent", "AS"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanGeoLocationListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_geo_location_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_geo_location_list_policy_object.test", "entries.0.country", "USA"),
-					resource.TestCheckResourceAttr("data.sdwan_geo_location_list_policy_object.test", "entries.0.continent", "AS"),
-				),
+				Config: testAccDataSourceSdwanGeoLocationListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanGeoLocationListPolicyObjectConfig = `
+func testAccDataSourceSdwanGeoLocationListPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_geo_location_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  country = "USA"` + "\n"
+	config += `	  continent = "AS"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_geo_location_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    country = "USA"
-    continent = "AS"
-  }]
+	config += `
+		data "sdwan_geo_location_list_policy_object" "test" {
+			id = sdwan_geo_location_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_geo_location_list_policy_object" "test" {
-  id = sdwan_geo_location_list_policy_object.test.id
-}
-`

@@ -170,10 +170,18 @@ func (data *CentralizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 					item.Entries = append(item.Entries, cItem)
 					return true
 				})
+			} else {
+				if len(item.Entries) > 0 {
+					item.Entries = []CentralizedPolicyDefinitionsEntries{}
+				}
 			}
 			data.Definitions = append(data.Definitions, item)
 			return true
 		})
+	} else {
+		if len(data.Definitions) > 0 {
+			data.Definitions = []CentralizedPolicyDefinitions{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

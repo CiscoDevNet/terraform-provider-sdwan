@@ -26,28 +26,27 @@ import (
 )
 
 func TestAccSdwanSiteListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_site_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_site_list_policy_object.test", "entries.0.site_id", "100-200"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanSiteListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_site_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_site_list_policy_object.test", "entries.0.site_id", "100-200"),
-				),
+				Config: testAccSdwanSiteListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanSiteListPolicyObjectConfig = `
-
-
-resource "sdwan_site_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		site_id = "100-200"
-	}]
+func testAccSdwanSiteListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_site_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  site_id = "100-200"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

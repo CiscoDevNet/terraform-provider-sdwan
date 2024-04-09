@@ -26,69 +26,64 @@ import (
 )
 
 func TestAccSdwanCiscoDHCPServerFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "address_pool", "10.1.1.0/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "lease_time", "600"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "interface_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "domain_name", "cisco.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "default_gateway", "10.1.1.254"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "static_leases.0.mac_address", "11:11:11:11:11:11"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "static_leases.0.ip_address", "10.1.1.10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "static_leases.0.hostname", "HOST1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "options.0.option_code", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "options.0.ascii", "abc"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoDHCPServerFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "address_pool", "10.1.1.0/24"),
-				),
 			},
 			{
 				Config: testAccSdwanCiscoDHCPServerFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "address_pool", "10.1.1.0/24"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "lease_time", "600"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "interface_mtu", "1500"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "domain_name", "cisco.com"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "default_gateway", "10.1.1.254"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "static_leases.0.mac_address", "11:11:11:11:11:11"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "static_leases.0.ip_address", "10.1.1.10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "static_leases.0.hostname", "HOST1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "options.0.option_code", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_dhcp_server_feature_template.test", "options.0.ascii", "abc"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoDHCPServerFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_dhcp_server_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		address_pool = "10.1.1.0/24"
-	}
-	`
+	config := `resource "sdwan_cisco_dhcp_server_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	address_pool = "10.1.1.0/24"` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoDHCPServerFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_dhcp_server_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		address_pool = "10.1.1.0/24"
-		exclude_addresses = ["10.1.1.1-10.1.1.5", "10.1.1.254"]
-		lease_time = 600
-		interface_mtu = 1500
-		domain_name = "cisco.com"
-		default_gateway = "10.1.1.254"
-		dns_servers = ["1.2.3.4"]
-		tftp_servers = ["1.2.3.4"]
-		static_leases = [{
-			mac_address = "11:11:11:11:11:11"
-			ip_address = "10.1.1.10"
-			hostname = "HOST1"
-		}]
-		options = [{
-			option_code = 10
-			ascii = "abc"
-		}]
-	}
-	`
+	config := `resource "sdwan_cisco_dhcp_server_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	address_pool = "10.1.1.0/24"` + "\n"
+	config += `	exclude_addresses = ["10.1.1.1-10.1.1.5", "10.1.1.254"]` + "\n"
+	config += `	lease_time = 600` + "\n"
+	config += `	interface_mtu = 1500` + "\n"
+	config += `	domain_name = "cisco.com"` + "\n"
+	config += `	default_gateway = "10.1.1.254"` + "\n"
+	config += `	dns_servers = ["1.2.3.4"]` + "\n"
+	config += `	tftp_servers = ["1.2.3.4"]` + "\n"
+	config += `	static_leases = [{` + "\n"
+	config += `	  mac_address = "11:11:11:11:11:11"` + "\n"
+	config += `	  ip_address = "10.1.1.10"` + "\n"
+	config += `	  hostname = "HOST1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	options = [{` + "\n"
+	config += `	  option_code = 10` + "\n"
+	config += `	  ascii = "abc"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

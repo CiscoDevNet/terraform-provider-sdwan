@@ -676,10 +676,18 @@ func (data *CiscoSNMP) fromBody(ctx context.Context, res gjson.Result) {
 					item.ObjectIdentifiers = append(item.ObjectIdentifiers, cItem)
 					return true
 				})
+			} else {
+				if len(item.ObjectIdentifiers) > 0 {
+					item.ObjectIdentifiers = []CiscoSNMPViewsObjectIdentifiers{}
+				}
 			}
 			data.Views = append(data.Views, item)
 			return true
 		})
+	} else {
+		if len(data.Views) > 0 {
+			data.Views = []CiscoSNMPViews{}
+		}
 	}
 	if value := res.Get(path + "community.vipValue"); len(value.Array()) > 0 {
 		data.Communities = make([]CiscoSNMPCommunities, 0)
@@ -747,6 +755,10 @@ func (data *CiscoSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.Communities = append(data.Communities, item)
 			return true
 		})
+	} else {
+		if len(data.Communities) > 0 {
+			data.Communities = []CiscoSNMPCommunities{}
+		}
 	}
 	if value := res.Get(path + "group.vipValue"); len(value.Array()) > 0 {
 		data.Groups = make([]CiscoSNMPGroups, 0)
@@ -811,6 +823,10 @@ func (data *CiscoSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.Groups = append(data.Groups, item)
 			return true
 		})
+	} else {
+		if len(data.Groups) > 0 {
+			data.Groups = []CiscoSNMPGroups{}
+		}
 	}
 	if value := res.Get(path + "user.vipValue"); len(value.Array()) > 0 {
 		data.Users = make([]CiscoSNMPUsers, 0)
@@ -935,6 +951,10 @@ func (data *CiscoSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.Users = append(data.Users, item)
 			return true
 		})
+	} else {
+		if len(data.Users) > 0 {
+			data.Users = []CiscoSNMPUsers{}
+		}
 	}
 	if value := res.Get(path + "trap.target.vipValue"); len(value.Array()) > 0 {
 		data.TrapTargets = make([]CiscoSNMPTrapTargets, 0)
@@ -1062,6 +1082,10 @@ func (data *CiscoSNMP) fromBody(ctx context.Context, res gjson.Result) {
 			data.TrapTargets = append(data.TrapTargets, item)
 			return true
 		})
+	} else {
+		if len(data.TrapTargets) > 0 {
+			data.TrapTargets = []CiscoSNMPTrapTargets{}
+		}
 	}
 }
 

@@ -26,33 +26,33 @@ import (
 )
 
 func TestAccDataSourceSdwanLocalizedPolicy(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "flow_visibility_ipv4", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "flow_visibility_ipv6", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "application_visibility_ipv4", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "application_visibility_ipv6", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "cloud_qos", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "cloud_qos_service_side", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "implicit_acl_logging", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "log_frequency", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "ipv4_visibility_cache_entries", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "ipv6_visibility_cache_entries", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "definitions.0.type", "acl"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanLocalizedPolicyConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "flow_visibility_ipv4", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "flow_visibility_ipv6", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "application_visibility_ipv4", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "application_visibility_ipv6", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "cloud_qos", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "cloud_qos_service_side", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "implicit_acl_logging", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "log_frequency", "1000"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "ipv4_visibility_cache_entries", "1000"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "ipv6_visibility_cache_entries", "1000"),
-					resource.TestCheckResourceAttr("data.sdwan_localized_policy.test", "definitions.0.type", "acl"),
-				),
+				Config: testAccDataSourceSdwanLocalizedPolicyPrerequisitesConfig + testAccDataSourceSdwanLocalizedPolicyConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanLocalizedPolicyConfig = `
+const testAccDataSourceSdwanLocalizedPolicyPrerequisitesConfig = `
 resource "sdwan_ipv4_acl_policy_definition" "test" {
   name           = "TF_TEST"
   description    = "Terraform test"
@@ -84,26 +84,33 @@ resource "sdwan_ipv4_acl_policy_definition" "test" {
   ]
 }
 
-resource "sdwan_localized_policy" "test" {
-  name = "Example"
-  description = "My description"
-  flow_visibility_ipv4 = true
-  flow_visibility_ipv6 = true
-  application_visibility_ipv4 = true
-  application_visibility_ipv6 = true
-  cloud_qos = true
-  cloud_qos_service_side = true
-  implicit_acl_logging = true
-  log_frequency = 1000
-  ipv4_visibility_cache_entries = 1000
-  ipv6_visibility_cache_entries = 1000
-  definitions = [{
-    id = sdwan_ipv4_acl_policy_definition.test.id
-    type = "acl"
-  }]
-}
-
-data "sdwan_localized_policy" "test" {
-  id = sdwan_localized_policy.test.id
-}
 `
+
+func testAccDataSourceSdwanLocalizedPolicyConfig() string {
+	config := ""
+	config += `resource "sdwan_localized_policy" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	flow_visibility_ipv4 = true` + "\n"
+	config += `	flow_visibility_ipv6 = true` + "\n"
+	config += `	application_visibility_ipv4 = true` + "\n"
+	config += `	application_visibility_ipv6 = true` + "\n"
+	config += `	cloud_qos = true` + "\n"
+	config += `	cloud_qos_service_side = true` + "\n"
+	config += `	implicit_acl_logging = true` + "\n"
+	config += `	log_frequency = 1000` + "\n"
+	config += `	ipv4_visibility_cache_entries = 1000` + "\n"
+	config += `	ipv6_visibility_cache_entries = 1000` + "\n"
+	config += `	definitions = [{` + "\n"
+	config += `	  id = sdwan_ipv4_acl_policy_definition.test.id` + "\n"
+	config += `	  type = "acl"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_localized_policy" "test" {
+			id = sdwan_localized_policy.test.id
+		}
+	`
+	return config
+}

@@ -26,41 +26,44 @@ import (
 )
 
 func TestAccDataSourceSdwanSLAClassPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "jitter", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "latency", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "loss", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_criteria", "jitter-loss-latency"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_jitter", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_latency", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_loss", "1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanSLAClassPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "jitter", "100"),
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "latency", "10"),
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "loss", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_criteria", "jitter-loss-latency"),
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_jitter", "100"),
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_latency", "10"),
-					resource.TestCheckResourceAttr("data.sdwan_sla_class_policy_object.test", "fallback_best_tunnel_loss", "1"),
-				),
+				Config: testAccDataSourceSdwanSLAClassPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanSLAClassPolicyObjectConfig = `
+func testAccDataSourceSdwanSLAClassPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_sla_class_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	jitter = 100` + "\n"
+	config += `	latency = 10` + "\n"
+	config += `	loss = 1` + "\n"
+	config += `	fallback_best_tunnel_criteria = "jitter-loss-latency"` + "\n"
+	config += `	fallback_best_tunnel_jitter = 100` + "\n"
+	config += `	fallback_best_tunnel_latency = 10` + "\n"
+	config += `	fallback_best_tunnel_loss = 1` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_sla_class_policy_object" "test" {
-  name = "Example"
-  jitter = 100
-  latency = 10
-  loss = 1
-  fallback_best_tunnel_criteria = "jitter-loss-latency"
-  fallback_best_tunnel_jitter = 100
-  fallback_best_tunnel_latency = 10
-  fallback_best_tunnel_loss = 1
+	config += `
+		data "sdwan_sla_class_policy_object" "test" {
+			id = sdwan_sla_class_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_sla_class_policy_object" "test" {
-  id = sdwan_sla_class_policy_object.test.id
-}
-`

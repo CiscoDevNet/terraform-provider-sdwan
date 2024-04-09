@@ -883,7 +883,7 @@ func (r *VPNInterfaceEthernetPPPoEFeatureTemplateResource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("Name of access list").String,
 							Optional:            true,
 							Validators: []validator.String{
-								stringvalidator.LengthBetween(1, 32),
+								stringvalidator.LengthBetween(1, 127),
 							},
 						},
 						"acl_name_variable": schema.StringAttribute{

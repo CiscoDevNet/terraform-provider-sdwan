@@ -26,86 +26,88 @@ import (
 )
 
 func TestAccDataSourceSdwanCiscoSecurityFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "rekey_interval", "86400"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "replay_window", "64"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "extended_ar_window", "256"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "pairwise_keying", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keychains.0.name", "CHAIN1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keychains.0.key_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.chain_name", "CHAIN1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_id", "0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.receive_id", "0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.crypto_algorithm", "hmac-sha-256"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.key_string", "abc123"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_local", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_start_time", "2022-12-31T23:59"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_end_time_format", "infinite"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_duration", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_end_time", "2032-12-31T23:59"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_infinite", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_local", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_start_time", "2022-12-31T23:59"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_end_time_format", "infinite"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_duration", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_end_time", "2032-12-31T23:59"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_infinite", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.include_tcp_options", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_ao_mismatch", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCiscoSecurityFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "rekey_interval", "86400"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "replay_window", "64"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "extended_ar_window", "256"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "pairwise_keying", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keychains.0.name", "CHAIN1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keychains.0.key_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.chain_name", "CHAIN1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_id", "0"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.receive_id", "0"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.crypto_algorithm", "hmac-sha-256"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.key_string", "abc123"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_local", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_start_time", "2022-12-31T23:59"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_end_time_format", "infinite"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_duration", "1000"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_end_time", "2032-12-31T23:59"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.send_lifetime_infinite", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_local", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_start_time", "2022-12-31T23:59"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_end_time_format", "infinite"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_duration", "1000"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_end_time", "2032-12-31T23:59"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_lifetime_infinite", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.include_tcp_options", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_security_feature_template.test", "keys.0.accept_ao_mismatch", "true"),
-				),
+				Config: testAccDataSourceSdwanCiscoSecurityFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCiscoSecurityFeatureTemplateConfig = `
+func testAccDataSourceSdwanCiscoSecurityFeatureTemplateConfig() string {
+	config := `resource "sdwan_cisco_security_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	rekey_interval = 86400` + "\n"
+	config += `	replay_window = "64"` + "\n"
+	config += `	extended_ar_window = 256` + "\n"
+	config += `	authentication_type = ["none"]` + "\n"
+	config += `	integrity_type = ["none"]` + "\n"
+	config += `	pairwise_keying = true` + "\n"
+	config += `	keychains = [{` + "\n"
+	config += `	  name = "CHAIN1"` + "\n"
+	config += `	  key_id = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `	keys = [{` + "\n"
+	config += `	  id = "1"` + "\n"
+	config += `	  chain_name = "CHAIN1"` + "\n"
+	config += `	  send_id = 0` + "\n"
+	config += `	  receive_id = 0` + "\n"
+	config += `	  crypto_algorithm = "hmac-sha-256"` + "\n"
+	config += `	  key_string = "abc123"` + "\n"
+	config += `	  send_lifetime_local = true` + "\n"
+	config += `	  send_lifetime_start_time = "2022-12-31T23:59"` + "\n"
+	config += `	  send_lifetime_end_time_format = "infinite"` + "\n"
+	config += `	  send_lifetime_duration = 1000` + "\n"
+	config += `	  send_lifetime_end_time = "2032-12-31T23:59"` + "\n"
+	config += `	  send_lifetime_infinite = true` + "\n"
+	config += `	  accept_lifetime_local = true` + "\n"
+	config += `	  accept_lifetime_start_time = "2022-12-31T23:59"` + "\n"
+	config += `	  accept_lifetime_end_time_format = "infinite"` + "\n"
+	config += `	  accept_lifetime_duration = 1000` + "\n"
+	config += `	  accept_lifetime_end_time = "2032-12-31T23:59"` + "\n"
+	config += `	  accept_lifetime_infinite = true` + "\n"
+	config += `	  include_tcp_options = false` + "\n"
+	config += `	  accept_ao_mismatch = true` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cisco_security_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  rekey_interval = 86400
-  replay_window = "64"
-  extended_ar_window = 256
-  authentication_type = ["none"]
-  integrity_type = ["none"]
-  pairwise_keying = true
-  keychains = [{
-    name = "CHAIN1"
-    key_id = 1
-  }]
-  keys = [{
-    id = "1"
-    chain_name = "CHAIN1"
-    send_id = 0
-    receive_id = 0
-    crypto_algorithm = "hmac-sha-256"
-    key_string = "abc123"
-    send_lifetime_local = true
-    send_lifetime_start_time = "2022-12-31T23:59"
-    send_lifetime_end_time_format = "infinite"
-    send_lifetime_duration = 1000
-    send_lifetime_end_time = "2032-12-31T23:59"
-    send_lifetime_infinite = true
-    accept_lifetime_local = true
-    accept_lifetime_start_time = "2022-12-31T23:59"
-    accept_lifetime_end_time_format = "infinite"
-    accept_lifetime_duration = 1000
-    accept_lifetime_end_time = "2032-12-31T23:59"
-    accept_lifetime_infinite = true
-    include_tcp_options = false
-    accept_ao_mismatch = true
-  }]
+	config += `
+		data "sdwan_cisco_security_feature_template" "test" {
+			id = sdwan_cisco_security_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cisco_security_feature_template" "test" {
-  id = sdwan_cisco_security_feature_template.test.id
-}
-`

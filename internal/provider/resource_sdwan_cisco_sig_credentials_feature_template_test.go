@@ -26,61 +26,58 @@ import (
 )
 
 func TestAccSdwanCiscoSIGCredentialsFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_organization", "org1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_base_uri", "abc"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_username", "user1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_password", "password123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_cloud_name", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_username", "partner1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_password", "password123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_api_key", "key123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_key", "key123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_secret", "secret123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_organization_id", "org1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_organization", "org1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_base_uri", "abc"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_username", "user1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_password", "password123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_cloud_name", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_username", "partner1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_password", "password123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "zscaler_partner_api_key", "key123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_key", "key123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_api_secret", "secret123"),
-					resource.TestCheckResourceAttr("sdwan_cisco_sig_credentials_feature_template.test", "umbrella_organization_id", "org1"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_sig_credentials_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-	}
-	`
+	config := `resource "sdwan_cisco_sig_credentials_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoSIGCredentialsFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_sig_credentials_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		zscaler_organization = "org1"
-		zscaler_partner_base_uri = "abc"
-		zscaler_username = "user1"
-		zscaler_password = "password123"
-		zscaler_cloud_name = 1
-		zscaler_partner_username = "partner1"
-		zscaler_partner_password = "password123"
-		zscaler_partner_api_key = "key123"
-		umbrella_api_key = "key123"
-		umbrella_api_secret = "secret123"
-		umbrella_organization_id = "org1"
-	}
-	`
+	config := `resource "sdwan_cisco_sig_credentials_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	zscaler_organization = "org1"` + "\n"
+	config += `	zscaler_partner_base_uri = "abc"` + "\n"
+	config += `	zscaler_username = "user1"` + "\n"
+	config += `	zscaler_password = "password123"` + "\n"
+	config += `	zscaler_cloud_name = 1` + "\n"
+	config += `	zscaler_partner_username = "partner1"` + "\n"
+	config += `	zscaler_partner_password = "password123"` + "\n"
+	config += `	zscaler_partner_api_key = "key123"` + "\n"
+	config += `	umbrella_api_key = "key123"` + "\n"
+	config += `	umbrella_api_secret = "secret123"` + "\n"
+	config += `	umbrella_organization_id = "org1"` + "\n"
+	config += `}` + "\n"
+	return config
 }

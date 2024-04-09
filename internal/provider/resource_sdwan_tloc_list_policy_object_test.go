@@ -26,34 +26,33 @@ import (
 )
 
 func TestAccSdwanTLOCListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.tloc_ip", "1.1.1.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.color", "blue"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.encapsulation", "gre"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.preference", "10"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanTLOCListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.tloc_ip", "1.1.1.2"),
-					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.color", "blue"),
-					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.encapsulation", "gre"),
-					resource.TestCheckResourceAttr("sdwan_tloc_list_policy_object.test", "entries.0.preference", "10"),
-				),
+				Config: testAccSdwanTLOCListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanTLOCListPolicyObjectConfig = `
-
-
-resource "sdwan_tloc_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		tloc_ip = "1.1.1.2"
-		color = "blue"
-		encapsulation = "gre"
-		preference = 10
-	}]
+func testAccSdwanTLOCListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_tloc_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  tloc_ip = "1.1.1.2"` + "\n"
+	config += `	  color = "blue"` + "\n"
+	config += `	  encapsulation = "gre"` + "\n"
+	config += `	  preference = 10` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

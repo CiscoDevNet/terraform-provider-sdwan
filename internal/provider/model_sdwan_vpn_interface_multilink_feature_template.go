@@ -1699,6 +1699,10 @@ func (data *VPNInterfaceMultilink) fromBody(ctx context.Context, res gjson.Resul
 			data.Ipv6AccessLists = append(data.Ipv6AccessLists, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv6AccessLists) > 0 {
+			data.Ipv6AccessLists = []VPNInterfaceMultilinkIpv6AccessLists{}
+		}
 	}
 	if value := res.Get(path + "ppp.authentication.method.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1969,6 +1973,10 @@ func (data *VPNInterfaceMultilink) fromBody(ctx context.Context, res gjson.Resul
 			data.Encapsulation = append(data.Encapsulation, item)
 			return true
 		})
+	} else {
+		if len(data.Encapsulation) > 0 {
+			data.Encapsulation = []VPNInterfaceMultilinkEncapsulation{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -3005,6 +3013,10 @@ func (data *VPNInterfaceMultilink) fromBody(ctx context.Context, res gjson.Resul
 			data.AccessList = append(data.AccessList, item)
 			return true
 		})
+	} else {
+		if len(data.AccessList) > 0 {
+			data.AccessList = []VPNInterfaceMultilinkAccessList{}
+		}
 	}
 	if value := res.Get(path + "controller.controller-tx-ex-list.vipValue"); len(value.Array()) > 0 {
 		data.ControllerTxExList = make([]VPNInterfaceMultilinkControllerTxExList, 0)
@@ -3224,10 +3236,18 @@ func (data *VPNInterfaceMultilink) fromBody(ctx context.Context, res gjson.Resul
 					item.ChannelGroupList = append(item.ChannelGroupList, cItem)
 					return true
 				})
+			} else {
+				if len(item.ChannelGroupList) > 0 {
+					item.ChannelGroupList = []VPNInterfaceMultilinkControllerTxExListChannelGroupList{}
+				}
 			}
 			data.ControllerTxExList = append(data.ControllerTxExList, item)
 			return true
 		})
+	} else {
+		if len(data.ControllerTxExList) > 0 {
+			data.ControllerTxExList = []VPNInterfaceMultilinkControllerTxExList{}
+		}
 	}
 	if value := res.Get(path + "controller.nim-list.vipValue"); len(value.Array()) > 0 {
 		data.NimInterfaceList = make([]VPNInterfaceMultilinkNimInterfaceList, 0)
@@ -3355,6 +3375,10 @@ func (data *VPNInterfaceMultilink) fromBody(ctx context.Context, res gjson.Resul
 			data.NimInterfaceList = append(data.NimInterfaceList, item)
 			return true
 		})
+	} else {
+		if len(data.NimInterfaceList) > 0 {
+			data.NimInterfaceList = []VPNInterfaceMultilinkNimInterfaceList{}
+		}
 	}
 }
 

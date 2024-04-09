@@ -14,7 +14,7 @@ This data source can read the Device .
 
 ```terraform
 data "sdwan_device" "example" {
-  serial_number = "E6486A92D4404888BC795DB045AF86D1"
+  serial_number = "0DFF93B792354B08ABE5E43566347F09"
   name          = "Controller01"
 }
 ```

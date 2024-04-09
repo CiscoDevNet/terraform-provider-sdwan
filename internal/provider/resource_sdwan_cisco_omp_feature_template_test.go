@@ -26,75 +26,72 @@ import (
 )
 
 func TestAccSdwanCiscoOMPFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "graceful_restart", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "overlay_as", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "send_path_limit", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "ecmp_limit", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "omp_admin_distance_ipv4", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "omp_admin_distance_ipv6", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertisement_interval", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "graceful_restart_timer", "43200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "eor_timer", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "holdtime", "60"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "ignore_region_path_length", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "transport_gateway", "prefer"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertise_ipv4_routes.0.protocol", "ospf"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertise_ipv4_routes.0.advertise_external_ospf", "external"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertise_ipv6_routes.0.protocol", "ospf"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoOMPFeatureTemplateConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanCiscoOMPFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "graceful_restart", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "overlay_as", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "send_path_limit", "4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "ecmp_limit", "4"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "shutdown", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "omp_admin_distance_ipv4", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "omp_admin_distance_ipv6", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertisement_interval", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "graceful_restart_timer", "43200"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "eor_timer", "300"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "holdtime", "60"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "ignore_region_path_length", "false"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "transport_gateway", "prefer"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertise_ipv4_routes.0.protocol", "ospf"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertise_ipv4_routes.0.advertise_external_ospf", "external"),
-					resource.TestCheckResourceAttr("sdwan_cisco_omp_feature_template.test", "advertise_ipv6_routes.0.protocol", "ospf"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoOMPFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_omp_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-	}
-	`
+	config := `resource "sdwan_cisco_omp_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoOMPFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_omp_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		graceful_restart = true
-		overlay_as = 1
-		send_path_limit = 4
-		ecmp_limit = 4
-		shutdown = false
-		omp_admin_distance_ipv4 = 10
-		omp_admin_distance_ipv6 = 10
-		advertisement_interval = 1
-		graceful_restart_timer = 43200
-		eor_timer = 300
-		holdtime = 60
-		ignore_region_path_length = false
-		transport_gateway = "prefer"
-		advertise_ipv4_routes = [{
-			protocol = "ospf"
-			advertise_external_ospf = "external"
-		}]
-		advertise_ipv6_routes = [{
-			protocol = "ospf"
-		}]
-	}
-	`
+	config := `resource "sdwan_cisco_omp_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	graceful_restart = true` + "\n"
+	config += `	overlay_as = 1` + "\n"
+	config += `	send_path_limit = 4` + "\n"
+	config += `	ecmp_limit = 4` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	omp_admin_distance_ipv4 = 10` + "\n"
+	config += `	omp_admin_distance_ipv6 = 10` + "\n"
+	config += `	advertisement_interval = 1` + "\n"
+	config += `	graceful_restart_timer = 43200` + "\n"
+	config += `	eor_timer = 300` + "\n"
+	config += `	holdtime = 60` + "\n"
+	config += `	ignore_region_path_length = false` + "\n"
+	config += `	transport_gateway = "prefer"` + "\n"
+	config += `	advertise_ipv4_routes = [{` + "\n"
+	config += `	  protocol = "ospf"` + "\n"
+	config += `	  advertise_external_ospf = "external"` + "\n"
+	config += `	}]` + "\n"
+	config += `	advertise_ipv6_routes = [{` + "\n"
+	config += `	  protocol = "ospf"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

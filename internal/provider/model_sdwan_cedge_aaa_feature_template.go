@@ -1131,10 +1131,18 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.SshPubkeys = append(item.SshPubkeys, cItem)
 					return true
 				})
+			} else {
+				if len(item.SshPubkeys) > 0 {
+					item.SshPubkeys = []CEdgeAAAUsersSshPubkeys{}
+				}
 			}
 			data.Users = append(data.Users, item)
 			return true
 		})
+	} else {
+		if len(data.Users) > 0 {
+			data.Users = []CEdgeAAAUsers{}
+		}
 	}
 	if value := res.Get(path + "radius.vipValue"); len(value.Array()) > 0 {
 		data.RadiusServerGroups = make([]CEdgeAAARadiusServerGroups, 0)
@@ -1370,10 +1378,18 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.Servers = append(item.Servers, cItem)
 					return true
 				})
+			} else {
+				if len(item.Servers) > 0 {
+					item.Servers = []CEdgeAAARadiusServerGroupsServers{}
+				}
 			}
 			data.RadiusServerGroups = append(data.RadiusServerGroups, item)
 			return true
 		})
+	} else {
+		if len(data.RadiusServerGroups) > 0 {
+			data.RadiusServerGroups = []CEdgeAAARadiusServerGroups{}
+		}
 	}
 	if value := res.Get(path + "radius-dynamic-author.radius-client.vipValue"); len(value.Array()) > 0 {
 		data.RadiusClients = make([]CEdgeAAARadiusClients, 0)
@@ -1453,10 +1469,18 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.VpnConfigurations = append(item.VpnConfigurations, cItem)
 					return true
 				})
+			} else {
+				if len(item.VpnConfigurations) > 0 {
+					item.VpnConfigurations = []CEdgeAAARadiusClientsVpnConfigurations{}
+				}
 			}
 			data.RadiusClients = append(data.RadiusClients, item)
 			return true
 		})
+	} else {
+		if len(data.RadiusClients) > 0 {
+			data.RadiusClients = []CEdgeAAARadiusClients{}
+		}
 	}
 	if value := res.Get(path + "radius-dynamic-author.rda-server-key.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1746,10 +1770,18 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 					item.Servers = append(item.Servers, cItem)
 					return true
 				})
+			} else {
+				if len(item.Servers) > 0 {
+					item.Servers = []CEdgeAAATacacsServerGroupsServers{}
+				}
 			}
 			data.TacacsServerGroups = append(data.TacacsServerGroups, item)
 			return true
 		})
+	} else {
+		if len(data.TacacsServerGroups) > 0 {
+			data.TacacsServerGroups = []CEdgeAAATacacsServerGroups{}
+		}
 	}
 	if value := res.Get(path + "accounting.accounting-rule.vipValue"); len(value.Array()) > 0 {
 		data.AccountingRules = make([]CEdgeAAAAccountingRules, 0)
@@ -1846,6 +1878,10 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AccountingRules = append(data.AccountingRules, item)
 			return true
 		})
+	} else {
+		if len(data.AccountingRules) > 0 {
+			data.AccountingRules = []CEdgeAAAAccountingRules{}
+		}
 	}
 	if value := res.Get(path + "authorization.authorization-console.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1977,6 +2013,10 @@ func (data *CEdgeAAA) fromBody(ctx context.Context, res gjson.Result) {
 			data.AuthorizationRules = append(data.AuthorizationRules, item)
 			return true
 		})
+	} else {
+		if len(data.AuthorizationRules) > 0 {
+			data.AuthorizationRules = []CEdgeAAAAuthorizationRules{}
+		}
 	}
 }
 

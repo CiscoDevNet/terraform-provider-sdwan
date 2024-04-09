@@ -26,28 +26,27 @@ import (
 )
 
 func TestAccSdwanColorListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_color_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_color_list_policy_object.test", "entries.0.color", "blue"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanColorListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_color_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_color_list_policy_object.test", "entries.0.color", "blue"),
-				),
+				Config: testAccSdwanColorListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanColorListPolicyObjectConfig = `
-
-
-resource "sdwan_color_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		color = "blue"
-	}]
+func testAccSdwanColorListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_color_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  color = "blue"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

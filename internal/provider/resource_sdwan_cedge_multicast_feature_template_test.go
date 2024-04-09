@@ -26,50 +26,44 @@ import (
 )
 
 func TestAccSdwanCEdgeMulticastFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "spt_only", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "local_replicator", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "threshold", "200"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCEdgeMulticastFeatureTemplateConfig_minimum(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "spt_only", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "local_replicator", "true"),
-				),
 			},
 			{
 				Config: testAccSdwanCEdgeMulticastFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "spt_only", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "local_replicator", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_multicast_feature_template.test", "threshold", "200"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCEdgeMulticastFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cedge_multicast_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		spt_only = true
-		local_replicator = true
-	}
-	`
+	config := `resource "sdwan_cedge_multicast_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	spt_only = true` + "\n"
+	config += `	local_replicator = true` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCEdgeMulticastFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cedge_multicast_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		spt_only = true
-		local_replicator = true
-		threshold = 200
-	}
-	`
+	config := `resource "sdwan_cedge_multicast_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	spt_only = true` + "\n"
+	config += `	local_replicator = true` + "\n"
+	config += `	threshold = 200` + "\n"
+	config += `}` + "\n"
+	return config
 }

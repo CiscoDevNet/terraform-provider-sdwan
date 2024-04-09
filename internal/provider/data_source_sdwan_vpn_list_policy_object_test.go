@@ -26,31 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanVPNListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vpn_list_policy_object.test", "entries.0.vpn_id", "100-200"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanVPNListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_vpn_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_vpn_list_policy_object.test", "entries.0.vpn_id", "100-200"),
-				),
+				Config: testAccDataSourceSdwanVPNListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanVPNListPolicyObjectConfig = `
+func testAccDataSourceSdwanVPNListPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_vpn_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  vpn_id = "100-200"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_vpn_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    vpn_id = "100-200"
-  }]
+	config += `
+		data "sdwan_vpn_list_policy_object" "test" {
+			id = sdwan_vpn_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_vpn_list_policy_object" "test" {
-  id = sdwan_vpn_list_policy_object.test.id
-}
-`

@@ -26,35 +26,38 @@ import (
 )
 
 func TestAccDataSourceSdwanAppProbeClassPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "forwarding_class", "FC1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "mappings.0.color", "blue"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "mappings.0.dscp", "8"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanAppProbeClassPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "forwarding_class", "FC1"),
-					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "mappings.0.color", "blue"),
-					resource.TestCheckResourceAttr("data.sdwan_app_probe_class_policy_object.test", "mappings.0.dscp", "8"),
-				),
+				Config: testAccDataSourceSdwanAppProbeClassPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanAppProbeClassPolicyObjectConfig = `
+func testAccDataSourceSdwanAppProbeClassPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_app_probe_class_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	forwarding_class = "FC1"` + "\n"
+	config += `	mappings = [{` + "\n"
+	config += `	  color = "blue"` + "\n"
+	config += `	  dscp = 8` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_app_probe_class_policy_object" "test" {
-  name = "Example"
-  forwarding_class = "FC1"
-  mappings = [{
-    color = "blue"
-    dscp = 8
-  }]
+	config += `
+		data "sdwan_app_probe_class_policy_object" "test" {
+			id = sdwan_app_probe_class_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_app_probe_class_policy_object" "test" {
-  id = sdwan_app_probe_class_policy_object.test.id
-}
-`

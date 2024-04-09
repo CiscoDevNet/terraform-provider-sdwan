@@ -4,13 +4,13 @@ page_title: "sdwan_system_banner_profile_parcel Resource - terraform-provider-sd
 subcategory: "Profile Parcels"
 description: |-
   This resource can manage a System Banner profile parcel.
-    - Minimum SD-WAN Manager version: 20.9.0
+    - Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_system_banner_profile_parcel (Resource)
 
 This resource can manage a System Banner profile parcel.
-  - Minimum SD-WAN Manager version: `20.9.0`
+  - Minimum SD-WAN Manager version: `20.12.0`
 
 ## Example Usage
 
@@ -29,12 +29,12 @@ resource "sdwan_system_banner_profile_parcel" "example" {
 
 ### Required
 
-- `description` (String) The description of the profile parcel
+- `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
 ### Optional
 
-- `feature_profile_id` (String) Feature Profile ID
+- `description` (String) The description of the profile parcel
 - `login` (String)
 - `login_variable` (String) Variable name
 - `motd` (String)

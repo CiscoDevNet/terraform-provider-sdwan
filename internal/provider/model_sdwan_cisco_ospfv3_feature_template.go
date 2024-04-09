@@ -1875,6 +1875,10 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4Redistributes = append(data.Ipv4Redistributes, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4Redistributes) > 0 {
+			data.Ipv4Redistributes = []CiscoOSPFv3Ipv4Redistributes{}
+		}
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.max-metric.router-lsa.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4MaxMetricRouterLsas = make([]CiscoOSPFv3Ipv4MaxMetricRouterLsas, 0)
@@ -1923,6 +1927,10 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4MaxMetricRouterLsas = append(data.Ipv4MaxMetricRouterLsas, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4MaxMetricRouterLsas) > 0 {
+			data.Ipv4MaxMetricRouterLsas = []CiscoOSPFv3Ipv4MaxMetricRouterLsas{}
+		}
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv4.area.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4Areas = make([]CiscoOSPFv3Ipv4Areas, 0)
@@ -2268,6 +2276,10 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 					item.Interfaces = append(item.Interfaces, cItem)
 					return true
 				})
+			} else {
+				if len(item.Interfaces) > 0 {
+					item.Interfaces = []CiscoOSPFv3Ipv4AreasInterfaces{}
+				}
 			}
 			if cValue := v.Get("range.vipValue"); len(cValue.Array()) > 0 {
 				item.Ranges = make([]CiscoOSPFv3Ipv4AreasRanges, 0)
@@ -2338,10 +2350,18 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ranges = append(item.Ranges, cItem)
 					return true
 				})
+			} else {
+				if len(item.Ranges) > 0 {
+					item.Ranges = []CiscoOSPFv3Ipv4AreasRanges{}
+				}
 			}
 			data.Ipv4Areas = append(data.Ipv4Areas, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4Areas) > 0 {
+			data.Ipv4Areas = []CiscoOSPFv3Ipv4Areas{}
+		}
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.router-id.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2697,6 +2717,10 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6Redistributes = append(data.Ipv6Redistributes, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv6Redistributes) > 0 {
+			data.Ipv6Redistributes = []CiscoOSPFv3Ipv6Redistributes{}
+		}
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.max-metric.router-lsa.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6MaxMetricRouterLsas = make([]CiscoOSPFv3Ipv6MaxMetricRouterLsas, 0)
@@ -2745,6 +2769,10 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv6MaxMetricRouterLsas = append(data.Ipv6MaxMetricRouterLsas, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv6MaxMetricRouterLsas) > 0 {
+			data.Ipv6MaxMetricRouterLsas = []CiscoOSPFv3Ipv6MaxMetricRouterLsas{}
+		}
 	}
 	if value := res.Get(path + "ospfv3.address-family.ipv6.area.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6Areas = make([]CiscoOSPFv3Ipv6Areas, 0)
@@ -3090,6 +3118,10 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 					item.Interfaces = append(item.Interfaces, cItem)
 					return true
 				})
+			} else {
+				if len(item.Interfaces) > 0 {
+					item.Interfaces = []CiscoOSPFv3Ipv6AreasInterfaces{}
+				}
 			}
 			if cValue := v.Get("range.vipValue"); len(cValue.Array()) > 0 {
 				item.Ranges = make([]CiscoOSPFv3Ipv6AreasRanges, 0)
@@ -3160,10 +3192,18 @@ func (data *CiscoOSPFv3) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ranges = append(item.Ranges, cItem)
 					return true
 				})
+			} else {
+				if len(item.Ranges) > 0 {
+					item.Ranges = []CiscoOSPFv3Ipv6AreasRanges{}
+				}
 			}
 			data.Ipv6Areas = append(data.Ipv6Areas, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv6Areas) > 0 {
+			data.Ipv6Areas = []CiscoOSPFv3Ipv6Areas{}
+		}
 	}
 }
 

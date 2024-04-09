@@ -20,148 +20,146 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemAAAProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authentication_group", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_group", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.name", "User1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.privilege", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.public_keys.0.key_string", "AAAAB3NzaC1yc2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.public_keys.0.key_type", "ssh-rsa"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.group_name", "RGROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.vpn", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.source_interface", "GigabitEthernet0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.auth_port", "1812"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.acct_port", "1813"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.timeout", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.retransmit", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.secret_key", "cisco123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.key_enum", "7"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.key_type", "key"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.group_name", "TGROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.vpn", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.source_interface", "GigabitEthernet0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.port", "49"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.timeout", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.secret_key", "cisco123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.key_enum", "7"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.rule_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.method", "commands"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.level", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.start_stop", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_console", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_config_commands", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.rule_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.method", "commands"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.level", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.if_authenticated", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanSystemAAAProfileParcelConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
+				Config: testAccSdwanSystemAAAPrerequisitesProfileParcelConfig + testAccSdwanSystemAAAProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanSystemAAAProfileParcelConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authentication_group", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_group", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.name", "User1"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.privilege", "15"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.public_keys.0.key_string", "AAAAB3NzaC1yc2"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.public_keys.0.key_type", "ssh-rsa"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.group_name", "RGROUP1"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.vpn", "10"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.source_interface", "GigabitEthernet0"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.address", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.auth_port", "1812"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.acct_port", "1813"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.timeout", "5"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.retransmit", "3"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.secret_key", "cisco123"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.key_enum", "7"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.key_type", "key"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.group_name", "TGROUP1"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.vpn", "10"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.source_interface", "GigabitEthernet0"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.address", "1.2.3.4"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.port", "49"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.timeout", "5"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.secret_key", "cisco123"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.key_enum", "7"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.rule_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.method", "commands"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.level", "15"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.start_stop", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_console", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_config_commands", "true"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.rule_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.method", "commands"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.level", "15"),
-					resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.if_authenticated", "true"),
-				),
+				Config: testAccSdwanSystemAAAPrerequisitesProfileParcelConfig + testAccSdwanSystemAAAProfileParcelConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-func testAccSdwanSystemAAAProfileParcelConfig_minimum() string {
-	return `
-	resource "sdwan_system_feature_profile" "test" {
+const testAccSdwanSystemAAAPrerequisitesProfileParcelConfig = `
+resource "sdwan_system_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
+`
 
-	resource "sdwan_system_aaa_profile_parcel" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		feature_profile_id = sdwan_system_feature_profile.test.id
-		server_auth_order = ["local"]
-	}
-	`
+func testAccSdwanSystemAAAProfileParcelConfig_minimum() string {
+	config := `resource "sdwan_system_aaa_profile_parcel" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	server_auth_order = ["local"]` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanSystemAAAProfileParcelConfig_all() string {
-	return `
-	resource "sdwan_system_feature_profile" "test" {
-  name = "TF_TEST"
-  description = "Terraform test"
-}
-
-	resource "sdwan_system_aaa_profile_parcel" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		feature_profile_id = sdwan_system_feature_profile.test.id
-		authentication_group = true
-		accounting_group = true
-		server_auth_order = ["local"]
-		users = [{
-			name = "User1"
-			password = "cisco123"
-			privilege = "15"
-			public_keys = [{
-				key_string = "AAAAB3NzaC1yc2"
-				key_type = "ssh-rsa"
-			}]
-		}]
-		radius_groups = [{
-			group_name = "RGROUP1"
-			vpn = 10
-			source_interface = "GigabitEthernet0"
-			servers = [{
-				address = "1.2.3.4"
-				auth_port = 1812
-				acct_port = 1813
-				timeout = 5
-				retransmit = 3
-				key = "cisco123"
-				secret_key = "cisco123"
-				key_enum = "7"
-				key_type = "key"
-			}]
-		}]
-		tacacs_groups = [{
-			group_name = "TGROUP1"
-			vpn = 10
-			source_interface = "GigabitEthernet0"
-			servers = [{
-				address = "1.2.3.4"
-				port = 49
-				timeout = 5
-				key = "cisco123"
-				secret_key = "cisco123"
-				key_enum = "7"
-			}]
-		}]
-		accounting_rules = [{
-			rule_id = "1"
-			method = "commands"
-			level = "15"
-			start_stop = true
-			group = ["RGROUP1"]
-		}]
-		authorization_console = true
-		authorization_config_commands = true
-		authorization_rules = [{
-			rule_id = "1"
-			method = "commands"
-			level = "15"
-			group = ["RGROUP1"]
-			if_authenticated = true
-		}]
-	}
-	`
+	config := `resource "sdwan_system_aaa_profile_parcel" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	authentication_group = true` + "\n"
+	config += `	accounting_group = true` + "\n"
+	config += `	server_auth_order = ["local"]` + "\n"
+	config += `	users = [{` + "\n"
+	config += `	  name = "User1"` + "\n"
+	config += `	  password = "cisco123"` + "\n"
+	config += `	  privilege = "15"` + "\n"
+	config += `	  public_keys = [{` + "\n"
+	config += `		key_string = "AAAAB3NzaC1yc2"` + "\n"
+	config += `		key_type = "ssh-rsa"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	radius_groups = [{` + "\n"
+	config += `	  group_name = "RGROUP1"` + "\n"
+	config += `	  vpn = 10` + "\n"
+	config += `	  source_interface = "GigabitEthernet0"` + "\n"
+	config += `	  servers = [{` + "\n"
+	config += `		address = "1.2.3.4"` + "\n"
+	config += `		auth_port = 1812` + "\n"
+	config += `		acct_port = 1813` + "\n"
+	config += `		timeout = 5` + "\n"
+	config += `		retransmit = 3` + "\n"
+	config += `		key = "cisco123"` + "\n"
+	config += `		secret_key = "cisco123"` + "\n"
+	config += `		key_enum = "7"` + "\n"
+	config += `		key_type = "key"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	tacacs_groups = [{` + "\n"
+	config += `	  group_name = "TGROUP1"` + "\n"
+	config += `	  vpn = 10` + "\n"
+	config += `	  source_interface = "GigabitEthernet0"` + "\n"
+	config += `	  servers = [{` + "\n"
+	config += `		address = "1.2.3.4"` + "\n"
+	config += `		port = 49` + "\n"
+	config += `		timeout = 5` + "\n"
+	config += `		key = "cisco123"` + "\n"
+	config += `		secret_key = "cisco123"` + "\n"
+	config += `		key_enum = "7"` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	accounting_rules = [{` + "\n"
+	config += `	  rule_id = "1"` + "\n"
+	config += `	  method = "commands"` + "\n"
+	config += `	  level = "15"` + "\n"
+	config += `	  start_stop = true` + "\n"
+	config += `	  group = ["RGROUP1"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	authorization_console = true` + "\n"
+	config += `	authorization_config_commands = true` + "\n"
+	config += `	authorization_rules = [{` + "\n"
+	config += `	  rule_id = "1"` + "\n"
+	config += `	  method = "commands"` + "\n"
+	config += `	  level = "15"` + "\n"
+	config += `	  group = ["RGROUP1"]` + "\n"
+	config += `	  if_authenticated = true` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

@@ -77,6 +77,10 @@ func (data *DataIPv4PrefixListPolicyObject) fromBody(ctx context.Context, res gj
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		if len(data.Entries) > 0 {
+			data.Entries = []DataIPv4PrefixListPolicyObjectEntries{}
+		}
 	}
 }
 

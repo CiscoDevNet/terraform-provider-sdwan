@@ -26,31 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanDataFQDNPrefixListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_data_fqdn_prefix_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_data_fqdn_prefix_list_policy_object.test", "entries.0.fqdn", "cisco.com"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanDataFQDNPrefixListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_data_fqdn_prefix_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_data_fqdn_prefix_list_policy_object.test", "entries.0.fqdn", "cisco.com"),
-				),
+				Config: testAccDataSourceSdwanDataFQDNPrefixListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanDataFQDNPrefixListPolicyObjectConfig = `
+func testAccDataSourceSdwanDataFQDNPrefixListPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_data_fqdn_prefix_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  fqdn = "cisco.com"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_data_fqdn_prefix_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    fqdn = "cisco.com"
-  }]
+	config += `
+		data "sdwan_data_fqdn_prefix_list_policy_object" "test" {
+			id = sdwan_data_fqdn_prefix_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_data_fqdn_prefix_list_policy_object" "test" {
-  id = sdwan_data_fqdn_prefix_list_policy_object.test.id
-}
-`

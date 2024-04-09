@@ -26,34 +26,36 @@ import (
 )
 
 func TestAccDataSourceSdwanCEdgeMulticastFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cedge_multicast_feature_template.test", "spt_only", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cedge_multicast_feature_template.test", "local_replicator", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cedge_multicast_feature_template.test", "threshold", "200"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCEdgeMulticastFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cedge_multicast_feature_template.test", "spt_only", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cedge_multicast_feature_template.test", "local_replicator", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cedge_multicast_feature_template.test", "threshold", "200"),
-				),
+				Config: testAccDataSourceSdwanCEdgeMulticastFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCEdgeMulticastFeatureTemplateConfig = `
+func testAccDataSourceSdwanCEdgeMulticastFeatureTemplateConfig() string {
+	config := `resource "sdwan_cedge_multicast_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	spt_only = true` + "\n"
+	config += `	local_replicator = true` + "\n"
+	config += `	threshold = 200` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cedge_multicast_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  spt_only = true
-  local_replicator = true
-  threshold = 200
+	config += `
+		data "sdwan_cedge_multicast_feature_template" "test" {
+			id = sdwan_cedge_multicast_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cedge_multicast_feature_template" "test" {
-  id = sdwan_cedge_multicast_feature_template.test.id
-}
-`

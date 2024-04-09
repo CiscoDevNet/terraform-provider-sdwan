@@ -20,33 +20,37 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanDNSSecurityPolicyDefinition(t *testing.T) {
+	if os.Getenv("SDWAN_209") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_209")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "description", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "local_domain_bypass_enabled", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "match_all_vpn", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "dnscrypt", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "umbrella_dns_default", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "cisco_sig_credentials_feature_template_id", "22e8bd63-df16-4487-bf49-745064b941ee"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanDNSSecurityPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "description", "Example"),
-					resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "local_domain_bypass_enabled", "false"),
-					resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "match_all_vpn", "true"),
-					resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "dnscrypt", "true"),
-					resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "umbrella_dns_default", "true"),
-					resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "cisco_sig_credentials_feature_template_id", "87300138-ac72-4251-b9cf-7a6c89adf060"),
-				),
+				Config: testAccSdwanDNSSecurityPolicyDefinitionPrerequisitesConfig + testAccSdwanDNSSecurityPolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanDNSSecurityPolicyDefinitionConfig = `
+const testAccSdwanDNSSecurityPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_domain_list_policy_object" "test" {
   name = "TEST_TF"
   entries = [
@@ -56,15 +60,18 @@ resource "sdwan_domain_list_policy_object" "test" {
   ]
 }
 
-
-resource "sdwan_dns_security_policy_definition" "test" {
-	name = "Example"
-	description = "Example"
-	domain_list_id = sdwan_domain_list_policy_object.test.id
-	local_domain_bypass_enabled = false
-	match_all_vpn = true
-	dnscrypt = true
-	umbrella_dns_default = true
-	cisco_sig_credentials_feature_template_id = "87300138-ac72-4251-b9cf-7a6c89adf060"
-}
 `
+
+func testAccSdwanDNSSecurityPolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_dns_security_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "Example"` + "\n"
+	config += `	domain_list_id = sdwan_domain_list_policy_object.test.id` + "\n"
+	config += `	local_domain_bypass_enabled = false` + "\n"
+	config += `	match_all_vpn = true` + "\n"
+	config += `	dnscrypt = true` + "\n"
+	config += `	umbrella_dns_default = true` + "\n"
+	config += `	cisco_sig_credentials_feature_template_id = "22e8bd63-df16-4487-bf49-745064b941ee"` + "\n"
+	config += `}` + "\n"
+	return config
+}

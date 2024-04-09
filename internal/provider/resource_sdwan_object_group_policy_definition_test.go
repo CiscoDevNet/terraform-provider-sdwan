@@ -26,34 +26,33 @@ import (
 )
 
 func TestAccSdwanObjectGroupPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "ipv4_prefix", "10.1.1.0/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "fqdn", "cisco.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "port", "80-90"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "geo_location", "AF"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanObjectGroupPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "ipv4_prefix", "10.1.1.0/24"),
-					resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "fqdn", "cisco.com"),
-					resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "port", "80-90"),
-					resource.TestCheckResourceAttr("sdwan_object_group_policy_definition.test", "geo_location", "AF"),
-				),
+				Config: testAccSdwanObjectGroupPolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanObjectGroupPolicyDefinitionConfig = `
-
-
-resource "sdwan_object_group_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	ipv4_prefix = "10.1.1.0/24"
-	fqdn = "cisco.com"
-	port = "80-90"
-	geo_location = "AF"
+func testAccSdwanObjectGroupPolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_object_group_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	ipv4_prefix = "10.1.1.0/24"` + "\n"
+	config += `	fqdn = "cisco.com"` + "\n"
+	config += `	port = "80-90"` + "\n"
+	config += `	geo_location = "AF"` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

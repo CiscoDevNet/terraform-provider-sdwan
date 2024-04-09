@@ -1,11 +1,13 @@
 ---
 name: System OMP
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/omp
-minimum_version: 20.9.0
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id
     reference: true
     type: String
+    mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_system_feature_profile.test.id
@@ -45,7 +47,7 @@ attributes:
     data_path: [advertiseIpv4]
     example: false
   - model_name: connected
-    tf_name: advertise_ipv4_cpnnected
+    tf_name: advertise_ipv4_connected
     data_path: [advertiseIpv4]
     example: false
   - model_name: static
@@ -92,13 +94,12 @@ attributes:
     tf_name: advertise_ipv6_isis
     data_path: [advertiseIpv6]
     example: true
-  ### NOT AVAILABLE IN 10.09 ###
-  # - model_name: ignoreRegionPathLength
-  #   example: false
-  # - model_name: transportGateway
-  #   example: prefer
-  # - model_name: siteTypes
-  #   example: type-1
+  - model_name: ignoreRegionPathLength
+    example: false
+  - model_name: transportGateway
+    example: prefer
+  - model_name: siteTypes
+    example: type-1
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {

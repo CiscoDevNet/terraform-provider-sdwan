@@ -26,52 +26,54 @@ import (
 )
 
 func TestAccDataSourceSdwanCiscoThousandEyesFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.instance_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.application_type", "te"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_account_group_token", "1234567"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_vpn", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_agent_ip", "1.1.1.2/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_default_gateway", "1.1.1.255"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_name_server", "10.2.2.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_hostname", "agent1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_web_proxy_type", "static"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_proxy_host", "3.3.3.3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_proxy_port", "80"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCiscoThousandEyesFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.instance_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.application_type", "te"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_account_group_token", "1234567"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_vpn", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_agent_ip", "1.1.1.2/24"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_default_gateway", "1.1.1.255"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_name_server", "10.2.2.2"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_hostname", "agent1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_web_proxy_type", "static"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_proxy_host", "3.3.3.3"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_thousandeyes_feature_template.test", "virtual_applications.0.te_proxy_port", "80"),
-				),
+				Config: testAccDataSourceSdwanCiscoThousandEyesFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCiscoThousandEyesFeatureTemplateConfig = `
+func testAccDataSourceSdwanCiscoThousandEyesFeatureTemplateConfig() string {
+	config := `resource "sdwan_cisco_thousandeyes_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	virtual_applications = [{` + "\n"
+	config += `	  instance_id = "1"` + "\n"
+	config += `	  application_type = "te"` + "\n"
+	config += `	  te_account_group_token = "1234567"` + "\n"
+	config += `	  te_vpn = 1` + "\n"
+	config += `	  te_agent_ip = "1.1.1.2/24"` + "\n"
+	config += `	  te_default_gateway = "1.1.1.255"` + "\n"
+	config += `	  te_name_server = "10.2.2.2"` + "\n"
+	config += `	  te_hostname = "agent1"` + "\n"
+	config += `	  te_web_proxy_type = "static"` + "\n"
+	config += `	  te_proxy_host = "3.3.3.3"` + "\n"
+	config += `	  te_proxy_port = 80` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cisco_thousandeyes_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  virtual_applications = [{
-    instance_id = "1"
-    application_type = "te"
-    te_account_group_token = "1234567"
-    te_vpn = 1
-    te_agent_ip = "1.1.1.2/24"
-    te_default_gateway = "1.1.1.255"
-    te_name_server = "10.2.2.2"
-    te_hostname = "agent1"
-    te_web_proxy_type = "static"
-    te_proxy_host = "3.3.3.3"
-    te_proxy_port = 80
-  }]
+	config += `
+		data "sdwan_cisco_thousandeyes_feature_template" "test" {
+			id = sdwan_cisco_thousandeyes_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cisco_thousandeyes_feature_template" "test" {
-  id = sdwan_cisco_thousandeyes_feature_template.test.id
-}
-`

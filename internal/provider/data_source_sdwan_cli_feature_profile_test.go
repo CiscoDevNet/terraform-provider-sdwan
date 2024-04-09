@@ -20,35 +20,42 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccDataSourceSdwanCLIFeatureProfile(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cli_feature_profile.test", "name", "CLI_FP_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cli_feature_profile.test", "description", "My cli feature profile 1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCLIFeatureProfileConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cli_feature_profile.test", "name", "CLI_FP_1"),
-					resource.TestCheckResourceAttr("data.sdwan_cli_feature_profile.test", "description", "My cli feature profile 1"),
-				),
+				Config: testAccDataSourceSdwanCLIFeatureProfileConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCLIFeatureProfileConfig = `
+func testAccDataSourceSdwanCLIFeatureProfileConfig() string {
+	config := ""
+	config += `resource "sdwan_cli_feature_profile" "test" {` + "\n"
+	config += `	name = "CLI_FP_1"` + "\n"
+	config += `	description = "My cli feature profile 1"` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cli_feature_profile" "test" {
-  name = "CLI_FP_1"
-  description = "My cli feature profile 1"
+	config += `
+		data "sdwan_cli_feature_profile" "test" {
+			id = sdwan_cli_feature_profile.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cli_feature_profile" "test" {
-  id = sdwan_cli_feature_profile.test.id
-}
-`

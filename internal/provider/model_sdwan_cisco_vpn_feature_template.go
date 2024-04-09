@@ -2273,6 +2273,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.DnsIpv4Servers = append(data.DnsIpv4Servers, item)
 			return true
 		})
+	} else {
+		if len(data.DnsIpv4Servers) > 0 {
+			data.DnsIpv4Servers = []CiscoVPNDnsIpv4Servers{}
+		}
 	}
 	if value := res.Get(path + "dns-ipv6.vipValue"); len(value.Array()) > 0 {
 		data.DnsIpv6Servers = make([]CiscoVPNDnsIpv6Servers, 0)
@@ -2321,6 +2325,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.DnsIpv6Servers = append(data.DnsIpv6Servers, item)
 			return true
 		})
+	} else {
+		if len(data.DnsIpv6Servers) > 0 {
+			data.DnsIpv6Servers = []CiscoVPNDnsIpv6Servers{}
+		}
 	}
 	if value := res.Get(path + "host.vipValue"); len(value.Array()) > 0 {
 		data.DnsHosts = make([]CiscoVPNDnsHosts, 0)
@@ -2372,6 +2380,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.DnsHosts = append(data.DnsHosts, item)
 			return true
 		})
+	} else {
+		if len(data.DnsHosts) > 0 {
+			data.DnsHosts = []CiscoVPNDnsHosts{}
+		}
 	}
 	if value := res.Get(path + "service.vipValue"); len(value.Array()) > 0 {
 		data.Services = make([]CiscoVPNServices, 0)
@@ -2458,6 +2470,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.Services = append(data.Services, item)
 			return true
 		})
+	} else {
+		if len(data.Services) > 0 {
+			data.Services = []CiscoVPNServices{}
+		}
 	}
 	if value := res.Get(path + "ip.service-route.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4StaticServiceRoutes = make([]CiscoVPNIpv4StaticServiceRoutes, 0)
@@ -2522,6 +2538,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4StaticServiceRoutes = append(data.Ipv4StaticServiceRoutes, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4StaticServiceRoutes) > 0 {
+			data.Ipv4StaticServiceRoutes = []CiscoVPNIpv4StaticServiceRoutes{}
+		}
 	}
 	if value := res.Get(path + "ip.route.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4StaticRoutes = make([]CiscoVPNIpv4StaticRoutes, 0)
@@ -2677,6 +2697,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.NextHops = append(item.NextHops, cItem)
 					return true
 				})
+			} else {
+				if len(item.NextHops) > 0 {
+					item.NextHops = []CiscoVPNIpv4StaticRoutesNextHops{}
+				}
 			}
 			if cValue := v.Get("next-hop-with-track.vipValue"); len(cValue.Array()) > 0 {
 				item.TrackNextHops = make([]CiscoVPNIpv4StaticRoutesTrackNextHops, 0)
@@ -2747,10 +2771,18 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.TrackNextHops = append(item.TrackNextHops, cItem)
 					return true
 				})
+			} else {
+				if len(item.TrackNextHops) > 0 {
+					item.TrackNextHops = []CiscoVPNIpv4StaticRoutesTrackNextHops{}
+				}
 			}
 			data.Ipv4StaticRoutes = append(data.Ipv4StaticRoutes, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4StaticRoutes) > 0 {
+			data.Ipv4StaticRoutes = []CiscoVPNIpv4StaticRoutes{}
+		}
 	}
 	if value := res.Get(path + "ipv6.route.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6StaticRoutes = make([]CiscoVPNIpv6StaticRoutes, 0)
@@ -2887,10 +2919,18 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.NextHops = append(item.NextHops, cItem)
 					return true
 				})
+			} else {
+				if len(item.NextHops) > 0 {
+					item.NextHops = []CiscoVPNIpv6StaticRoutesNextHops{}
+				}
 			}
 			data.Ipv6StaticRoutes = append(data.Ipv6StaticRoutes, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv6StaticRoutes) > 0 {
+			data.Ipv6StaticRoutes = []CiscoVPNIpv6StaticRoutes{}
+		}
 	}
 	if value := res.Get(path + "ip.gre-route.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4StaticGreRoutes = make([]CiscoVPNIpv4StaticGreRoutes, 0)
@@ -2958,6 +2998,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4StaticGreRoutes = append(data.Ipv4StaticGreRoutes, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4StaticGreRoutes) > 0 {
+			data.Ipv4StaticGreRoutes = []CiscoVPNIpv4StaticGreRoutes{}
+		}
 	}
 	if value := res.Get(path + "ip.ipsec-route.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4StaticIpsecRoutes = make([]CiscoVPNIpv4StaticIpsecRoutes, 0)
@@ -3025,6 +3069,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.Ipv4StaticIpsecRoutes = append(data.Ipv4StaticIpsecRoutes, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4StaticIpsecRoutes) > 0 {
+			data.Ipv4StaticIpsecRoutes = []CiscoVPNIpv4StaticIpsecRoutes{}
+		}
 	}
 	if value := res.Get(path + "omp.advertise.vipValue"); len(value.Array()) > 0 {
 		data.OmpAdvertiseIpv4Routes = make([]CiscoVPNOmpAdvertiseIpv4Routes, 0)
@@ -3142,10 +3190,18 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Prefixes = append(item.Prefixes, cItem)
 					return true
 				})
+			} else {
+				if len(item.Prefixes) > 0 {
+					item.Prefixes = []CiscoVPNOmpAdvertiseIpv4RoutesPrefixes{}
+				}
 			}
 			data.OmpAdvertiseIpv4Routes = append(data.OmpAdvertiseIpv4Routes, item)
 			return true
 		})
+	} else {
+		if len(data.OmpAdvertiseIpv4Routes) > 0 {
+			data.OmpAdvertiseIpv4Routes = []CiscoVPNOmpAdvertiseIpv4Routes{}
+		}
 	}
 	if value := res.Get(path + "omp.ipv6-advertise.vipValue"); len(value.Array()) > 0 {
 		data.OmpAdvertiseIpv6Routes = make([]CiscoVPNOmpAdvertiseIpv6Routes, 0)
@@ -3263,10 +3319,18 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Prefixes = append(item.Prefixes, cItem)
 					return true
 				})
+			} else {
+				if len(item.Prefixes) > 0 {
+					item.Prefixes = []CiscoVPNOmpAdvertiseIpv6RoutesPrefixes{}
+				}
 			}
 			data.OmpAdvertiseIpv6Routes = append(data.OmpAdvertiseIpv6Routes, item)
 			return true
 		})
+	} else {
+		if len(data.OmpAdvertiseIpv6Routes) > 0 {
+			data.OmpAdvertiseIpv6Routes = []CiscoVPNOmpAdvertiseIpv6Routes{}
+		}
 	}
 	if value := res.Get(path + "nat64.v4.pool.vipValue"); len(value.Array()) > 0 {
 		data.Nat64Pools = make([]CiscoVPNNat64Pools, 0)
@@ -3401,6 +3465,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.Nat64Pools = append(data.Nat64Pools, item)
 			return true
 		})
+	} else {
+		if len(data.Nat64Pools) > 0 {
+			data.Nat64Pools = []CiscoVPNNat64Pools{}
+		}
 	}
 	if value := res.Get(path + "nat.natpool.vipValue"); len(value.Array()) > 0 {
 		data.NatPools = make([]CiscoVPNNatPools, 0)
@@ -3547,6 +3615,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.NatPools = append(data.NatPools, item)
 			return true
 		})
+	} else {
+		if len(data.NatPools) > 0 {
+			data.NatPools = []CiscoVPNNatPools{}
+		}
 	}
 	if value := res.Get(path + "nat.static.vipValue"); len(value.Array()) > 0 {
 		data.StaticNatRules = make([]CiscoVPNStaticNatRules, 0)
@@ -3655,6 +3727,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticNatRules = append(data.StaticNatRules, item)
 			return true
 		})
+	} else {
+		if len(data.StaticNatRules) > 0 {
+			data.StaticNatRules = []CiscoVPNStaticNatRules{}
+		}
 	}
 	if value := res.Get(path + "nat.subnet-static.vipValue"); len(value.Array()) > 0 {
 		data.StaticNatSubnetRules = make([]CiscoVPNStaticNatSubnetRules, 0)
@@ -3763,6 +3839,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.StaticNatSubnetRules = append(data.StaticNatSubnetRules, item)
 			return true
 		})
+	} else {
+		if len(data.StaticNatSubnetRules) > 0 {
+			data.StaticNatSubnetRules = []CiscoVPNStaticNatSubnetRules{}
+		}
 	}
 	if value := res.Get(path + "nat.port-forward.vipValue"); len(value.Array()) > 0 {
 		data.PortForwardRules = make([]CiscoVPNPortForwardRules, 0)
@@ -3890,6 +3970,10 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.PortForwardRules = append(data.PortForwardRules, item)
 			return true
 		})
+	} else {
+		if len(data.PortForwardRules) > 0 {
+			data.PortForwardRules = []CiscoVPNPortForwardRules{}
+		}
 	}
 	if value := res.Get(path + "route-import.vipValue"); len(value.Array()) > 0 {
 		data.RouteGlobalImports = make([]CiscoVPNRouteGlobalImports, 0)
@@ -4001,10 +4085,18 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Redistributes = append(item.Redistributes, cItem)
 					return true
 				})
+			} else {
+				if len(item.Redistributes) > 0 {
+					item.Redistributes = []CiscoVPNRouteGlobalImportsRedistributes{}
+				}
 			}
 			data.RouteGlobalImports = append(data.RouteGlobalImports, item)
 			return true
 		})
+	} else {
+		if len(data.RouteGlobalImports) > 0 {
+			data.RouteGlobalImports = []CiscoVPNRouteGlobalImports{}
+		}
 	}
 	if value := res.Get(path + "route-import-from.vipValue"); len(value.Array()) > 0 {
 		data.RouteVpnImports = make([]CiscoVPNRouteVpnImports, 0)
@@ -4141,10 +4233,18 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Redistributes = append(item.Redistributes, cItem)
 					return true
 				})
+			} else {
+				if len(item.Redistributes) > 0 {
+					item.Redistributes = []CiscoVPNRouteVpnImportsRedistributes{}
+				}
 			}
 			data.RouteVpnImports = append(data.RouteVpnImports, item)
 			return true
 		})
+	} else {
+		if len(data.RouteVpnImports) > 0 {
+			data.RouteVpnImports = []CiscoVPNRouteVpnImports{}
+		}
 	}
 	if value := res.Get(path + "route-export.vipValue"); len(value.Array()) > 0 {
 		data.RouteGlobalExports = make([]CiscoVPNRouteGlobalExports, 0)
@@ -4256,10 +4356,18 @@ func (data *CiscoVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Redistributes = append(item.Redistributes, cItem)
 					return true
 				})
+			} else {
+				if len(item.Redistributes) > 0 {
+					item.Redistributes = []CiscoVPNRouteGlobalExportsRedistributes{}
+				}
 			}
 			data.RouteGlobalExports = append(data.RouteGlobalExports, item)
 			return true
 		})
+	} else {
+		if len(data.RouteGlobalExports) > 0 {
+			data.RouteGlobalExports = []CiscoVPNRouteGlobalExports{}
+		}
 	}
 }
 

@@ -315,6 +315,10 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
+			} else {
+				if len(item.MatchEntries) > 0 {
+					item.MatchEntries = []IPv4ACLPolicyDefinitionSequencesMatchEntries{}
+				}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]IPv4ACLPolicyDefinitionSequencesActionEntries, 0)
@@ -374,14 +378,26 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 							cItem.SetParameters = append(cItem.SetParameters, ccItem)
 							return true
 						})
+					} else {
+						if len(cItem.SetParameters) > 0 {
+							cItem.SetParameters = []IPv4ACLPolicyDefinitionSequencesActionEntriesSetParameters{}
+						}
 					}
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
 				})
+			} else {
+				if len(item.ActionEntries) > 0 {
+					item.ActionEntries = []IPv4ACLPolicyDefinitionSequencesActionEntries{}
+				}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
+	} else {
+		if len(data.Sequences) > 0 {
+			data.Sequences = []IPv4ACLPolicyDefinitionSequences{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

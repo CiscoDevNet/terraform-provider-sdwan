@@ -26,52 +26,51 @@ import (
 )
 
 func TestAccSdwanIPv4ACLPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "default_action", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.id", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.name", "Sequence 10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.match_entries.0.type", "dscp"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.match_entries.0.dscp", "16"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.action_entries.0.type", "set"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.type", "dscp"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.dscp", "16"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanIPv4ACLPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "default_action", "drop"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.id", "10"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.name", "Sequence 10"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.base_action", "accept"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.match_entries.0.type", "dscp"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.match_entries.0.dscp", "16"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.action_entries.0.type", "set"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.type", "dscp"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_acl_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.dscp", "16"),
-				),
+				Config: testAccSdwanIPv4ACLPolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanIPv4ACLPolicyDefinitionConfig = `
-
-
-resource "sdwan_ipv4_acl_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	default_action = "drop"
-	sequences = [{
-		id = 10
-		name = "Sequence 10"
-		base_action = "accept"
-		match_entries = [{
-			type = "dscp"
-			dscp = 16
-		}]
-		action_entries = [{
-			type = "set"
-			set_parameters = [{
-				type = "dscp"
-				dscp = 16
-			}]
-		}]
-	}]
+func testAccSdwanIPv4ACLPolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_ipv4_acl_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	default_action = "drop"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 10` + "\n"
+	config += `	  name = "Sequence 10"` + "\n"
+	config += `	  base_action = "accept"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		type = "dscp"` + "\n"
+	config += `		dscp = 16` + "\n"
+	config += `	}]` + "\n"
+	config += `	  action_entries = [{` + "\n"
+	config += `		type = "set"` + "\n"
+	config += `      set_parameters = [{` + "\n"
+	config += `			type = "dscp"` + "\n"
+	config += `			dscp = 16` + "\n"
+	config += `		}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

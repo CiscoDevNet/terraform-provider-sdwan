@@ -26,37 +26,36 @@ import (
 )
 
 func TestAccSdwanTLSSSLProfilePolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "mode", "security"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "decrypt_threshold", "high-risk"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "reputation", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "fail_decrypt", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanTLSSSLProfilePolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "mode", "security"),
-					resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "decrypt_threshold", "high-risk"),
-					resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "reputation", "false"),
-					resource.TestCheckResourceAttr("sdwan_tls_ssl_profile_policy_definition.test", "fail_decrypt", "true"),
-				),
+				Config: testAccSdwanTLSSSLProfilePolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanTLSSSLProfilePolicyDefinitionConfig = `
-
-
-resource "sdwan_tls_ssl_profile_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	mode = "security"
-	decrypt_categories = ["alcohol-and-tobacco"]
-	never_decrypt_categories = ["auctions"]
-	skip_decrypt_categories = ["cdns"]
-	decrypt_threshold = "high-risk"
-	reputation = false
-	fail_decrypt = true
+func testAccSdwanTLSSSLProfilePolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_tls_ssl_profile_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	mode = "security"` + "\n"
+	config += `	decrypt_categories = ["alcohol-and-tobacco"]` + "\n"
+	config += `	never_decrypt_categories = ["auctions"]` + "\n"
+	config += `	skip_decrypt_categories = ["cdns"]` + "\n"
+	config += `	decrypt_threshold = "high-risk"` + "\n"
+	config += `	reputation = false` + "\n"
+	config += `	fail_decrypt = true` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

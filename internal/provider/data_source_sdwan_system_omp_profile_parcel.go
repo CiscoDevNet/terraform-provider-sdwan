@@ -27,6 +27,7 @@ import (
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -187,11 +188,11 @@ func (d *SystemOMPProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advertise_ipv4_cpnnected": schema.BoolAttribute{
+			"advertise_ipv4_connected": schema.BoolAttribute{
 				MarkdownDescription: "Connected",
 				Computed:            true,
 			},
-			"advertise_ipv4_cpnnected_variable": schema.StringAttribute{
+			"advertise_ipv4_connected_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -280,6 +281,31 @@ func (d *SystemOMPProfileParcelDataSource) Schema(ctx context.Context, req datas
 				Computed:            true,
 			},
 			"advertise_ipv6_isis_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ignore_region_path_length": schema.BoolAttribute{
+				MarkdownDescription: "Treat hierarchical and direct (secondary region) paths equally",
+				Computed:            true,
+			},
+			"ignore_region_path_length_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"transport_gateway": schema.StringAttribute{
+				MarkdownDescription: "Transport Gateway Path Behavior",
+				Computed:            true,
+			},
+			"transport_gateway_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"site_types": schema.SetAttribute{
+				MarkdownDescription: "Site Types",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
+			"site_types_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

@@ -26,86 +26,83 @@ import (
 )
 
 func TestAccSdwanCiscoLoggingFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "disk_logging", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "max_size", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "log_rotations", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.name", "PROF1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.version", "TLSv1.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.authentication_type", "Server"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.hostname_ip", "2.2.2.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.source_interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.logging_level", "information"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.enable_tls", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.custom_profile", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.profile", "PROF1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.hostname_ip", "2001::1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.source_interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.logging_level", "information"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.enable_tls", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.custom_profile", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.profile", "PROF1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCiscoLoggingFeatureTemplateConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanCiscoLoggingFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "disk_logging", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "max_size", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "log_rotations", "10"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.name", "PROF1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.version", "TLSv1.2"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "tls_profiles.0.authentication_type", "Server"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.hostname_ip", "2.2.2.2"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.vpn_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.logging_level", "information"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.enable_tls", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.custom_profile", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv4_servers.0.profile", "PROF1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.hostname_ip", "2001::1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.vpn_id", "1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.logging_level", "information"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.enable_tls", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.custom_profile", "true"),
-					resource.TestCheckResourceAttr("sdwan_cisco_logging_feature_template.test", "ipv6_servers.0.profile", "PROF1"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCiscoLoggingFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cisco_logging_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-	}
-	`
+	config := `resource "sdwan_cisco_logging_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCiscoLoggingFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cisco_logging_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		disk_logging = true
-		max_size = 10
-		log_rotations = 10
-		tls_profiles = [{
-			name = "PROF1"
-			version = "TLSv1.2"
-			authentication_type = "Server"
-			ciphersuite_list = ["aes-128-cbc-sha"]
-		}]
-		ipv4_servers = [{
-			hostname_ip = "2.2.2.2"
-			vpn_id = 1
-			source_interface = "e1"
-			logging_level = "information"
-			enable_tls = true
-			custom_profile = true
-			profile = "PROF1"
-		}]
-		ipv6_servers = [{
-			hostname_ip = "2001::1"
-			vpn_id = 1
-			source_interface = "e1"
-			logging_level = "information"
-			enable_tls = true
-			custom_profile = true
-			profile = "PROF1"
-		}]
-	}
-	`
+	config := `resource "sdwan_cisco_logging_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	disk_logging = true` + "\n"
+	config += `	max_size = 10` + "\n"
+	config += `	log_rotations = 10` + "\n"
+	config += `	tls_profiles = [{` + "\n"
+	config += `	  name = "PROF1"` + "\n"
+	config += `	  version = "TLSv1.2"` + "\n"
+	config += `	  authentication_type = "Server"` + "\n"
+	config += `	  ciphersuite_list = ["aes-128-cbc-sha"]` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv4_servers = [{` + "\n"
+	config += `	  hostname_ip = "2.2.2.2"` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  source_interface = "e1"` + "\n"
+	config += `	  logging_level = "information"` + "\n"
+	config += `	  enable_tls = true` + "\n"
+	config += `	  custom_profile = true` + "\n"
+	config += `	  profile = "PROF1"` + "\n"
+	config += `	}]` + "\n"
+	config += `	ipv6_servers = [{` + "\n"
+	config += `	  hostname_ip = "2001::1"` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  source_interface = "e1"` + "\n"
+	config += `	  logging_level = "information"` + "\n"
+	config += `	  enable_tls = true` + "\n"
+	config += `	  custom_profile = true` + "\n"
+	config += `	  profile = "PROF1"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }

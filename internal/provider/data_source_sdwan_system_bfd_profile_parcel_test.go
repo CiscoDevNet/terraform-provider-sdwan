@@ -20,57 +20,66 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccDataSourceSdwanSystemBFDProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "poll_interval", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "default_dscp", "8"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.color", "3g"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.hello_interval", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.pmtu_discovery", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.dscp", "16"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanSystemBFDProfileParcelConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "multiplier", "3"),
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "poll_interval", "100"),
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "default_dscp", "8"),
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.color", "3g"),
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.hello_interval", "200"),
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.multiplier", "3"),
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.pmtu_discovery", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.dscp", "16"),
-				),
+				Config: testAccDataSourceSdwanSystemBFDPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemBFDProfileParcelConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanSystemBFDProfileParcelConfig = `
+const testAccDataSourceSdwanSystemBFDPrerequisitesProfileParcelConfig = `
 resource "sdwan_system_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
-
-resource "sdwan_system_bfd_profile_parcel" "test" {
-  name = "TF_TEST"
-  description = "Terraform integration test"
-  feature_profile_id = sdwan_system_feature_profile.test.id
-  multiplier = 3
-  poll_interval = 100
-  default_dscp = 8
-  colors = [{
-    color = "3g"
-    hello_interval = 200
-    multiplier = 3
-    pmtu_discovery = true
-    dscp = 16
-  }]
-}
-
-data "sdwan_system_bfd_profile_parcel" "test" {
-  id = sdwan_system_bfd_profile_parcel.test.id
-  feature_profile_id = sdwan_system_feature_profile.test.id
-}
 `
+
+func testAccDataSourceSdwanSystemBFDProfileParcelConfig() string {
+	config := `resource "sdwan_system_bfd_profile_parcel" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	multiplier = 3` + "\n"
+	config += `	poll_interval = 100` + "\n"
+	config += `	default_dscp = 8` + "\n"
+	config += `	colors = [{` + "\n"
+	config += `	  color = "3g"` + "\n"
+	config += `	  hello_interval = 200` + "\n"
+	config += `	  multiplier = 3` + "\n"
+	config += `	  pmtu_discovery = true` + "\n"
+	config += `	  dscp = 16` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_bfd_profile_parcel" "test" {
+			id = sdwan_system_bfd_profile_parcel.test.id
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}

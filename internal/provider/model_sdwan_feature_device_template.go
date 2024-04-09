@@ -210,14 +210,26 @@ func (data *FeatureDeviceTemplate) fromBody(ctx context.Context, res gjson.Resul
 							cItem.SubTemplates = append(cItem.SubTemplates, ccItem)
 							return true
 						})
+					} else {
+						if len(cItem.SubTemplates) > 0 {
+							cItem.SubTemplates = []FeatureDeviceTemplateGeneralTemplatesSubTemplatesSubTemplates{}
+						}
 					}
 					item.SubTemplates = append(item.SubTemplates, cItem)
 					return true
 				})
+			} else {
+				if len(item.SubTemplates) > 0 {
+					item.SubTemplates = []FeatureDeviceTemplateGeneralTemplatesSubTemplates{}
+				}
 			}
 			data.GeneralTemplates = append(data.GeneralTemplates, item)
 			return true
 		})
+	} else {
+		if len(data.GeneralTemplates) > 0 {
+			data.GeneralTemplates = []FeatureDeviceTemplateGeneralTemplates{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

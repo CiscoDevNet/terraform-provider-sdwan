@@ -637,6 +637,10 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.Keychains = append(data.Keychains, item)
 			return true
 		})
+	} else {
+		if len(data.Keychains) > 0 {
+			data.Keychains = []CiscoSecurityKeychains{}
+		}
 	}
 	if value := res.Get(path + "key.vipValue"); len(value.Array()) > 0 {
 		data.Keys = make([]CiscoSecurityKeys, 0)
@@ -1003,6 +1007,10 @@ func (data *CiscoSecurity) fromBody(ctx context.Context, res gjson.Result) {
 			data.Keys = append(data.Keys, item)
 			return true
 		})
+	} else {
+		if len(data.Keys) > 0 {
+			data.Keys = []CiscoSecurityKeys{}
+		}
 	}
 }
 

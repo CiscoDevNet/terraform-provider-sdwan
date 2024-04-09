@@ -201,6 +201,7 @@ type YamlConfig struct {
 	FeatureTemplateIsGlobal  bool                  `yaml:"feature_template_is_global"`
 	SkipTemplates            []string              `yaml:"skip_templates"`
 	Attributes               []YamlConfigAttribute `yaml:"attributes"`
+	TestTags                 []string              `yaml:"test_tags"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 }
@@ -249,6 +250,7 @@ type YamlConfigAttribute struct {
 	ConditionalAttribute YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
 	QueryParam           bool                           `yaml:"query_param"`
 	NoAugmentConfig      bool                           `yaml:"no_augment_config"`
+	TestTags             []string                       `yaml:"test_tags"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -536,10 +538,10 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 		} else if contains([]string{"string", "stringList", "passphrase", "restrictedPassphrase", "datetimelocal", "ip", "ipv4", "ipv6", "ipv4-prefix", "ipv6-prefix", "dnsHostName", "interfaceList", "tlocExtension", "xConnect", "mac", "remoteAS", "ike"}, t) {
 			attr.Type = "String"
 			if t != "passphrase" && t != "restrictedPassphrase" {
-				if r.Get("dataType.minLength").Exists() {
+				if r.Get("dataType.minLength").Exists() && attr.StringMinLength == 0 {
 					attr.StringMinLength = r.Get("dataType.minLength").Int()
 				}
-				if r.Get("dataType.maxLength").Exists() {
+				if r.Get("dataType.maxLength").Exists() && attr.StringMaxLength == 0 {
 					attr.StringMaxLength = r.Get("dataType.maxLength").Int()
 				}
 			}
@@ -558,18 +560,18 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 			}
 		} else if contains([]string{"number", "numberFixedInterval", "holdTime", "bandwidth"}, t) {
 			attr.Type = "Int64"
-			if r.Get("dataType.min").Exists() {
+			if r.Get("dataType.min").Exists() && attr.MinInt == 0 {
 				attr.MinInt = r.Get("dataType.min").Int()
 			}
-			if r.Get("dataType.max").Exists() {
+			if r.Get("dataType.max").Exists() && attr.MaxInt == 0 {
 				attr.MaxInt = r.Get("dataType.max").Int()
 			}
 		} else if t == "float" {
 			attr.Type = "Float64"
-			if r.Get("dataType.min").Exists() {
+			if r.Get("dataType.min").Exists() && attr.MinFloat == 0 {
 				attr.MinFloat = r.Get("dataType.min").Float()
 			}
-			if r.Get("dataType.max").Exists() {
+			if r.Get("dataType.max").Exists() && attr.MaxFloat == 0 {
 				attr.MaxFloat = r.Get("dataType.max").Float()
 			}
 		} else if t == "boolean" {

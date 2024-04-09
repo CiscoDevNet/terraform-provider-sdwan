@@ -26,30 +26,29 @@ import (
 )
 
 func TestAccSdwanPolicerPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "burst", "100000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "exceed_action", "remark"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "rate", "100"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPolicerPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "burst", "100000"),
-					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "exceed_action", "remark"),
-					resource.TestCheckResourceAttr("sdwan_policer_policy_object.test", "rate", "100"),
-				),
+				Config: testAccSdwanPolicerPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanPolicerPolicyObjectConfig = `
-
-
-resource "sdwan_policer_policy_object" "test" {
-	name = "Example"
-	burst = 100000
-	exceed_action = "remark"
-	rate = 100
+func testAccSdwanPolicerPolicyObjectConfig_all() string {
+	config := `resource "sdwan_policer_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	burst = 100000` + "\n"
+	config += `	exceed_action = "remark"` + "\n"
+	config += `	rate = 100` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

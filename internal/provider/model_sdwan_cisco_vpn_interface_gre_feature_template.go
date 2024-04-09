@@ -604,6 +604,10 @@ func (data *CiscoVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.Result
 			data.AccessLists = append(data.AccessLists, item)
 			return true
 		})
+	} else {
+		if len(data.AccessLists) > 0 {
+			data.AccessLists = []CiscoVPNInterfaceGREAccessLists{}
+		}
 	}
 	if value := res.Get(path + "tracker.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {

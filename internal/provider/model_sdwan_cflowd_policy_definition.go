@@ -211,6 +211,10 @@ func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 			data.Collectors = append(data.Collectors, item)
 			return true
 		})
+	} else {
+		if len(data.Collectors) > 0 {
+			data.Collectors = []CflowdPolicyDefinitionCollectors{}
+		}
 	}
 }
 

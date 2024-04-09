@@ -26,31 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanAllowURLListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_allow_url_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_allow_url_list_policy_object.test", "entries.0.url", "cisco.com"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanAllowURLListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_allow_url_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_allow_url_list_policy_object.test", "entries.0.url", "cisco.com"),
-				),
+				Config: testAccDataSourceSdwanAllowURLListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanAllowURLListPolicyObjectConfig = `
+func testAccDataSourceSdwanAllowURLListPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_allow_url_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  url = "cisco.com"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_allow_url_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    url = "cisco.com"
-  }]
+	config += `
+		data "sdwan_allow_url_list_policy_object" "test" {
+			id = sdwan_allow_url_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_allow_url_list_policy_object" "test" {
-  id = sdwan_allow_url_list_policy_object.test.id
-}
-`

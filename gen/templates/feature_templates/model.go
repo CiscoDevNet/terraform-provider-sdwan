@@ -1000,18 +1000,30 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							cItem.{{toGoName .TfName}} = append(cItem.{{toGoName .TfName}}, ccItem)
 							return true
 						})
+					} else {
+						if len(cItem.{{toGoName .TfName}}) > 0 {
+							cItem.{{toGoName .TfName}} = []{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}{}
+						}
 					}
 					{{- end}}
 					{{- end}}
 					item.{{toGoName .TfName}} = append(item.{{toGoName .TfName}}, cItem)
 					return true
 				})
+			} else {
+				if len(item.{{toGoName .TfName}}) > 0 {
+					item.{{toGoName .TfName}} = []{{$name}}{{$cname}}{{toGoName .TfName}}{}
+				}
 			}
 			{{- end}}
 			{{- end}}
 			data.{{toGoName .TfName}} = append(data.{{toGoName .TfName}}, item)
 			return true
 		})
+	} else {
+		if len(data.{{toGoName .TfName}}) > 0 {
+			data.{{toGoName .TfName}} = []{{$name}}{{toGoName .TfName}}{}
+		}
 	}
 	{{- end}}
 	{{- end}}

@@ -20,91 +20,105 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccDataSourceSdwanSystemOMPProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "graceful_restart", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "overlay_as", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "paths_advertised_per_prefix", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "ecmp_limit", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "omp_admin_distance_ipv4", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "omp_admin_distance_ipv6", "20"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertisement_interval", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "graceful_restart_timer", "43200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "eor_timer", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "holdtime", "60"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_bgp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf_v3", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_connected", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_static", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_eigrp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_lisp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_isis", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_bgp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_ospf", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_connected", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_static", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_eigrp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_lisp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_isis", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "ignore_region_path_length", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "transport_gateway", "prefer"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanSystemOMPProfileParcelConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "graceful_restart", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "overlay_as", "10"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "paths_advertised_per_prefix", "4"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "ecmp_limit", "4"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "shutdown", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "omp_admin_distance_ipv4", "10"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "omp_admin_distance_ipv6", "20"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertisement_interval", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "graceful_restart_timer", "43200"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "eor_timer", "300"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "holdtime", "60"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_bgp", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_ospf_v3", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_cpnnected", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_static", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_eigrp", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_lisp", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv4_isis", "false"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_bgp", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_ospf", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_connected", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_static", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_eigrp", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_lisp", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_system_omp_profile_parcel.test", "advertise_ipv6_isis", "true"),
-				),
+				Config: testAccDataSourceSdwanSystemOMPPrerequisitesProfileParcelConfig + testAccDataSourceSdwanSystemOMPProfileParcelConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanSystemOMPProfileParcelConfig = `
+const testAccDataSourceSdwanSystemOMPPrerequisitesProfileParcelConfig = `
 resource "sdwan_system_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
-
-resource "sdwan_system_omp_profile_parcel" "test" {
-  name = "TF_TEST"
-  description = "Terraform integration test"
-  feature_profile_id = sdwan_system_feature_profile.test.id
-  graceful_restart = true
-  overlay_as = 10
-  paths_advertised_per_prefix = 4
-  ecmp_limit = 4
-  shutdown = false
-  omp_admin_distance_ipv4 = 10
-  omp_admin_distance_ipv6 = 20
-  advertisement_interval = 1
-  graceful_restart_timer = 43200
-  eor_timer = 300
-  holdtime = 60
-  advertise_ipv4_bgp = false
-  advertise_ipv4_ospf = false
-  advertise_ipv4_ospf_v3 = false
-  advertise_ipv4_cpnnected = false
-  advertise_ipv4_static = false
-  advertise_ipv4_eigrp = false
-  advertise_ipv4_lisp = false
-  advertise_ipv4_isis = false
-  advertise_ipv6_bgp = true
-  advertise_ipv6_ospf = true
-  advertise_ipv6_connected = true
-  advertise_ipv6_static = true
-  advertise_ipv6_eigrp = true
-  advertise_ipv6_lisp = true
-  advertise_ipv6_isis = true
-}
-
-data "sdwan_system_omp_profile_parcel" "test" {
-  id = sdwan_system_omp_profile_parcel.test.id
-  feature_profile_id = sdwan_system_feature_profile.test.id
-}
 `
+
+func testAccDataSourceSdwanSystemOMPProfileParcelConfig() string {
+	config := `resource "sdwan_system_omp_profile_parcel" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	graceful_restart = true` + "\n"
+	config += `	overlay_as = 10` + "\n"
+	config += `	paths_advertised_per_prefix = 4` + "\n"
+	config += `	ecmp_limit = 4` + "\n"
+	config += `	shutdown = false` + "\n"
+	config += `	omp_admin_distance_ipv4 = 10` + "\n"
+	config += `	omp_admin_distance_ipv6 = 20` + "\n"
+	config += `	advertisement_interval = 1` + "\n"
+	config += `	graceful_restart_timer = 43200` + "\n"
+	config += `	eor_timer = 300` + "\n"
+	config += `	holdtime = 60` + "\n"
+	config += `	advertise_ipv4_bgp = false` + "\n"
+	config += `	advertise_ipv4_ospf = false` + "\n"
+	config += `	advertise_ipv4_ospf_v3 = false` + "\n"
+	config += `	advertise_ipv4_connected = false` + "\n"
+	config += `	advertise_ipv4_static = false` + "\n"
+	config += `	advertise_ipv4_eigrp = false` + "\n"
+	config += `	advertise_ipv4_lisp = false` + "\n"
+	config += `	advertise_ipv4_isis = false` + "\n"
+	config += `	advertise_ipv6_bgp = true` + "\n"
+	config += `	advertise_ipv6_ospf = true` + "\n"
+	config += `	advertise_ipv6_connected = true` + "\n"
+	config += `	advertise_ipv6_static = true` + "\n"
+	config += `	advertise_ipv6_eigrp = true` + "\n"
+	config += `	advertise_ipv6_lisp = true` + "\n"
+	config += `	advertise_ipv6_isis = true` + "\n"
+	config += `	ignore_region_path_length = false` + "\n"
+	config += `	transport_gateway = "prefer"` + "\n"
+	config += `	site_types = ["type-1"]` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_system_omp_profile_parcel" "test" {
+			id = sdwan_system_omp_profile_parcel.test.id
+			feature_profile_id = sdwan_system_feature_profile.test.id
+		}
+	`
+	return config
+}

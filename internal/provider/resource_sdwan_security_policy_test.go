@@ -26,28 +26,28 @@ import (
 )
 
 func TestAccSdwanSecurityPolicy(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "description", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "mode", "security"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "use_case", "custom"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "definitions.0.type", "urlFiltering"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "failure_mode", "close"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "logging.0.external_syslog_server_ip", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_security_policy.test", "logging.0.external_syslog_server_vpn", "123"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanSecurityPolicyConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "description", "Example"),
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "mode", "security"),
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "use_case", "custom"),
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "definitions.0.type", "urlFiltering"),
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "failure_mode", "close"),
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "logging.0.external_syslog_server_ip", "10.0.0.1"),
-					resource.TestCheckResourceAttr("sdwan_security_policy.test", "logging.0.external_syslog_server_vpn", "123"),
-				),
+				Config: testAccSdwanSecurityPolicyPrerequisitesConfig + testAccSdwanSecurityPolicyConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanSecurityPolicyConfig = `
+const testAccSdwanSecurityPolicyPrerequisitesConfig = `
 resource "sdwan_url_filtering_policy_definition" "test" {
   name                  = "TEST_TF"
   description           = "Terraform test"
@@ -61,20 +61,23 @@ resource "sdwan_url_filtering_policy_definition" "test" {
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
 }
 
-
-resource "sdwan_security_policy" "test" {
-	name = "Example"
-	description = "Example"
-	mode = "security"
-	use_case = "custom"
-	definitions = [{
-		id = sdwan_url_filtering_policy_definition.test.id
-		type = "urlFiltering"
-	}]
-	failure_mode = "close"
-	logging = [{
-		external_syslog_server_ip = "10.0.0.1"
-		external_syslog_server_vpn = "123"
-	}]
-}
 `
+
+func testAccSdwanSecurityPolicyConfig_all() string {
+	config := `resource "sdwan_security_policy" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "Example"` + "\n"
+	config += `	mode = "security"` + "\n"
+	config += `	use_case = "custom"` + "\n"
+	config += `	definitions = [{` + "\n"
+	config += `	  id = sdwan_url_filtering_policy_definition.test.id` + "\n"
+	config += `	  type = "urlFiltering"` + "\n"
+	config += `	}]` + "\n"
+	config += `	failure_mode = "close"` + "\n"
+	config += `	logging = [{` + "\n"
+	config += `	  external_syslog_server_ip = "10.0.0.1"` + "\n"
+	config += `	  external_syslog_server_vpn = "123"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}

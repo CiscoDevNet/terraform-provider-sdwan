@@ -20,59 +20,57 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemBannerProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_banner_profile_parcel.test", "login", "My login banner"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_banner_profile_parcel.test", "motd", "My motd banner"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanSystemBannerProfileParcelConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
+				Config: testAccSdwanSystemBannerPrerequisitesProfileParcelConfig + testAccSdwanSystemBannerProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanSystemBannerProfileParcelConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_system_banner_profile_parcel.test", "login", "My login banner"),
-					resource.TestCheckResourceAttr("sdwan_system_banner_profile_parcel.test", "motd", "My motd banner"),
-				),
+				Config: testAccSdwanSystemBannerPrerequisitesProfileParcelConfig + testAccSdwanSystemBannerProfileParcelConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-func testAccSdwanSystemBannerProfileParcelConfig_minimum() string {
-	return `
-	resource "sdwan_system_feature_profile" "test" {
+const testAccSdwanSystemBannerPrerequisitesProfileParcelConfig = `
+resource "sdwan_system_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
+`
 
-	resource "sdwan_system_banner_profile_parcel" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		feature_profile_id = sdwan_system_feature_profile.test.id
-	}
-	`
+func testAccSdwanSystemBannerProfileParcelConfig_minimum() string {
+	config := `resource "sdwan_system_banner_profile_parcel" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanSystemBannerProfileParcelConfig_all() string {
-	return `
-	resource "sdwan_system_feature_profile" "test" {
-  name = "TF_TEST"
-  description = "Terraform test"
-}
-
-	resource "sdwan_system_banner_profile_parcel" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		feature_profile_id = sdwan_system_feature_profile.test.id
-		login = "My login banner"
-		motd = "My motd banner"
-	}
-	`
+	config := `resource "sdwan_system_banner_profile_parcel" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	login = "My login banner"` + "\n"
+	config += `	motd = "My motd banner"` + "\n"
+	config += `}` + "\n"
+	return config
 }

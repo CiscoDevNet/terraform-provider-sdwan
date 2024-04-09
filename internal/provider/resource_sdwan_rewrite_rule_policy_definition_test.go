@@ -26,39 +26,42 @@ import (
 )
 
 func TestAccSdwanRewriteRulePolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.priority", "low"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.dscp", "16"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.layer2_cos", "1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanRewriteRulePolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.priority", "low"),
-					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.dscp", "16"),
-					resource.TestCheckResourceAttr("sdwan_rewrite_rule_policy_definition.test", "rules.0.layer2_cos", "1"),
-				),
+				Config: testAccSdwanRewriteRulePolicyDefinitionPrerequisitesConfig + testAccSdwanRewriteRulePolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanRewriteRulePolicyDefinitionConfig = `
+const testAccSdwanRewriteRulePolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_class_map_policy_object" "test" {
   name = "TF_TEST_ALL"
   queue = 6
 }
 
-
-resource "sdwan_rewrite_rule_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	rules = [{
-		class_map_id = sdwan_class_map_policy_object.test.id
-		priority = "low"
-		dscp = 16
-		layer2_cos = 1
-	}]
-}
 `
+
+func testAccSdwanRewriteRulePolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_rewrite_rule_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	rules = [{` + "\n"
+	config += `	  class_map_id = sdwan_class_map_policy_object.test.id` + "\n"
+	config += `	  priority = "low"` + "\n"
+	config += `	  dscp = 16` + "\n"
+	config += `	  layer2_cos = 1` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
+}

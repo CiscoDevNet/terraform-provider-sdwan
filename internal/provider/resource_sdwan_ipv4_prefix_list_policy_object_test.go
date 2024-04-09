@@ -26,32 +26,31 @@ import (
 )
 
 func TestAccSdwanIPv4PrefixListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.prefix", "10.0.0.0/12"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.le", "32"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.ge", "24"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanIPv4PrefixListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.prefix", "10.0.0.0/12"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.le", "32"),
-					resource.TestCheckResourceAttr("sdwan_ipv4_prefix_list_policy_object.test", "entries.0.ge", "24"),
-				),
+				Config: testAccSdwanIPv4PrefixListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanIPv4PrefixListPolicyObjectConfig = `
-
-
-resource "sdwan_ipv4_prefix_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		prefix = "10.0.0.0/12"
-		le = 32
-		ge = 24
-	}]
+func testAccSdwanIPv4PrefixListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_ipv4_prefix_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  prefix = "10.0.0.0/12"` + "\n"
+	config += `	  le = 32` + "\n"
+	config += `	  ge = 24` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

@@ -86,6 +86,10 @@ func (data *ApplicationListPolicyObject) fromBody(ctx context.Context, res gjson
 			data.Entries = append(data.Entries, item)
 			return true
 		})
+	} else {
+		if len(data.Entries) > 0 {
+			data.Entries = []ApplicationListPolicyObjectEntries{}
+		}
 	}
 }
 

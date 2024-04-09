@@ -26,57 +26,60 @@ import (
 )
 
 func TestAccDataSourceSdwanCflowdPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "active_flow_timeout", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "inactive_flow_timeout", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "sampling_interval", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "flow_refresh", "120"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "protocol", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "tos", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "remarked_dscp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.ip_address", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.port", "12345"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.transport", "transport_tcp"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.source_interface", "Ethernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.export_spreading", "enable"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCflowdPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "active_flow_timeout", "100"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "inactive_flow_timeout", "10"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "sampling_interval", "10"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "flow_refresh", "120"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "protocol", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "tos", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "remarked_dscp", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.vpn_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.ip_address", "10.0.0.1"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.port", "12345"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.transport", "transport_tcp"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.source_interface", "Ethernet1"),
-					resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.export_spreading", "enable"),
-				),
+				Config: testAccDataSourceSdwanCflowdPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCflowdPolicyDefinitionConfig = `
+func testAccDataSourceSdwanCflowdPolicyDefinitionConfig() string {
+	config := ""
+	config += `resource "sdwan_cflowd_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	active_flow_timeout = 100` + "\n"
+	config += `	inactive_flow_timeout = 10` + "\n"
+	config += `	sampling_interval = 10` + "\n"
+	config += `	flow_refresh = 120` + "\n"
+	config += `	protocol = "ipv4"` + "\n"
+	config += `	tos = true` + "\n"
+	config += `	remarked_dscp = true` + "\n"
+	config += `	collectors = [{` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  ip_address = "10.0.0.1"` + "\n"
+	config += `	  port = 12345` + "\n"
+	config += `	  transport = "transport_tcp"` + "\n"
+	config += `	  source_interface = "Ethernet1"` + "\n"
+	config += `	  export_spreading = "enable"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cflowd_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  active_flow_timeout = 100
-  inactive_flow_timeout = 10
-  sampling_interval = 10
-  flow_refresh = 120
-  protocol = "ipv4"
-  tos = true
-  remarked_dscp = true
-  collectors = [{
-    vpn_id = 1
-    ip_address = "10.0.0.1"
-    port = 12345
-    transport = "transport_tcp"
-    source_interface = "Ethernet1"
-    export_spreading = "enable"
-  }]
+	config += `
+		data "sdwan_cflowd_policy_definition" "test" {
+			id = sdwan_cflowd_policy_definition.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cflowd_policy_definition" "test" {
-  id = sdwan_cflowd_policy_definition.test.id
-}
-`

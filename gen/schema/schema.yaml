@@ -16,6 +16,7 @@ id_from_query_path_attribute: str(required=False) # Specify attribute name of ID
 feature_template_is_global: bool(required=False) # Specify if "isGlobal" flag in payload should be enabled
 skip_templates: list(str(), required=False) # Skip rendering of listed templates
 attributes: list(include('attribute'), required=False) # List of attributes
+test_tags: list(str(), required=False) # List of test tags, tests are only executed if an environment variable with one of these tags is configured
 test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
 remove_id: bool(required=False) # Set to true if default ID attribute should be removed
 ---
@@ -63,6 +64,7 @@ attribute:
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true
   query_param: bool(required=False) # Set to true if attribute is a query parameter to be included in request url
   no_augment_config: bool(required=False) # If true do not augment with model data
+  test_tags: list(str(), required=False) # List of test tags, attribute is only included in acceptance tests if an environment variable with one of these tags is configured
 
 conditional_attribute:
   name: str() # Reference to other attribute

@@ -26,59 +26,62 @@ import (
 )
 
 func TestAccDataSourceSdwanCustomControlTopologyPolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "default_action", "reject"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.name", "Region1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.type", "route"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.ip_type", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.match_entries.0.type", "ompTag"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.match_entries.0.omp_tag", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.action_entries.0.type", "set"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.type", "preference"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.preference", "100"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCustomControlTopologyPolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "default_action", "reject"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.name", "Region1"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.type", "route"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.ip_type", "ipv4"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.base_action", "accept"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.match_entries.0.type", "ompTag"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.match_entries.0.omp_tag", "100"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.action_entries.0.type", "set"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.type", "preference"),
-					resource.TestCheckResourceAttr("data.sdwan_custom_control_topology_policy_definition.test", "sequences.0.action_entries.0.set_parameters.0.preference", "100"),
-				),
+				Config: testAccDataSourceSdwanCustomControlTopologyPolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCustomControlTopologyPolicyDefinitionConfig = `
+func testAccDataSourceSdwanCustomControlTopologyPolicyDefinitionConfig() string {
+	config := ""
+	config += `resource "sdwan_custom_control_topology_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	default_action = "reject"` + "\n"
+	config += `	sequences = [{` + "\n"
+	config += `	  id = 1` + "\n"
+	config += `	  name = "Region1"` + "\n"
+	config += `	  type = "route"` + "\n"
+	config += `	  ip_type = "ipv4"` + "\n"
+	config += `	  base_action = "accept"` + "\n"
+	config += `	  match_entries = [{` + "\n"
+	config += `		type = "ompTag"` + "\n"
+	config += `		omp_tag = 100` + "\n"
+	config += `	}]` + "\n"
+	config += `	  action_entries = [{` + "\n"
+	config += `		type = "set"` + "\n"
+	config += `      set_parameters = [{` + "\n"
+	config += `			type = "preference"` + "\n"
+	config += `			preference = 100` + "\n"
+	config += `		}]` + "\n"
+	config += `	}]` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_custom_control_topology_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  default_action = "reject"
-  sequences = [{
-    id = 1
-    name = "Region1"
-    type = "route"
-    ip_type = "ipv4"
-    base_action = "accept"
-	match_entries = [{
-		type = "ompTag"
-		omp_tag = 100
-	}]
-	action_entries = [{
-		type = "set"
-		set_parameters = [{
-			type = "preference"
-			preference = 100
-		}]
-	}]
-  }]
+	config += `
+		data "sdwan_custom_control_topology_policy_definition" "test" {
+			id = sdwan_custom_control_topology_policy_definition.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_custom_control_topology_policy_definition" "test" {
-  id = sdwan_custom_control_topology_policy_definition.test.id
-}
-`

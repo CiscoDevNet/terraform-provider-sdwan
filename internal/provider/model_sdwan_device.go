@@ -145,6 +145,10 @@ func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
 			data.Devices = append(data.Devices, item)
 			return true
 		})
+	} else {
+		if len(data.Devices) > 0 {
+			data.Devices = []DeviceDevices{}
+		}
 	}
 }
 

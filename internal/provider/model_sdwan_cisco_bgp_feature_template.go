@@ -1940,6 +1940,10 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Export = append(item.Export, cItem)
 					return true
 				})
+			} else {
+				if len(item.Export) > 0 {
+					item.Export = []CiscoBGPIpv4RouteTargetsExport{}
+				}
 			}
 			if cValue := v.Get("import.vipValue"); len(cValue.Array()) > 0 {
 				item.Import = make([]CiscoBGPIpv4RouteTargetsImport, 0)
@@ -1972,10 +1976,18 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Import = append(item.Import, cItem)
 					return true
 				})
+			} else {
+				if len(item.Import) > 0 {
+					item.Import = []CiscoBGPIpv4RouteTargetsImport{}
+				}
 			}
 			data.Ipv4RouteTargets = append(data.Ipv4RouteTargets, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4RouteTargets) > 0 {
+			data.Ipv4RouteTargets = []CiscoBGPIpv4RouteTargets{}
+		}
 	}
 	if value := res.Get(path + "bgp.target.route-target-ipv6.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6RouteTargets = make([]CiscoBGPIpv6RouteTargets, 0)
@@ -2036,6 +2048,10 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Export = append(item.Export, cItem)
 					return true
 				})
+			} else {
+				if len(item.Export) > 0 {
+					item.Export = []CiscoBGPIpv6RouteTargetsExport{}
+				}
 			}
 			if cValue := v.Get("import.vipValue"); len(cValue.Array()) > 0 {
 				item.Import = make([]CiscoBGPIpv6RouteTargetsImport, 0)
@@ -2068,10 +2084,18 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Import = append(item.Import, cItem)
 					return true
 				})
+			} else {
+				if len(item.Import) > 0 {
+					item.Import = []CiscoBGPIpv6RouteTargetsImport{}
+				}
 			}
 			data.Ipv6RouteTargets = append(data.Ipv6RouteTargets, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv6RouteTargets) > 0 {
+			data.Ipv6RouteTargets = []CiscoBGPIpv6RouteTargets{}
+		}
 	}
 	if value := res.Get(path + "bgp.mpls-interface.vipValue"); len(value.Array()) > 0 {
 		data.MplsInterfaces = make([]CiscoBGPMplsInterfaces, 0)
@@ -2104,6 +2128,10 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 			data.MplsInterfaces = append(data.MplsInterfaces, item)
 			return true
 		})
+	} else {
+		if len(data.MplsInterfaces) > 0 {
+			data.MplsInterfaces = []CiscoBGPMplsInterfaces{}
+		}
 	}
 	if value := res.Get(path + "bgp.distance.external.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2389,6 +2417,10 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ipv4AggregateAddresses = append(item.Ipv4AggregateAddresses, cItem)
 					return true
 				})
+			} else {
+				if len(item.Ipv4AggregateAddresses) > 0 {
+					item.Ipv4AggregateAddresses = []CiscoBGPAddressFamiliesIpv4AggregateAddresses{}
+				}
 			}
 			if cValue := v.Get("ipv6-aggregate-address.vipValue"); len(cValue.Array()) > 0 {
 				item.Ipv6AggregateAddresses = make([]CiscoBGPAddressFamiliesIpv6AggregateAddresses, 0)
@@ -2459,6 +2491,10 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ipv6AggregateAddresses = append(item.Ipv6AggregateAddresses, cItem)
 					return true
 				})
+			} else {
+				if len(item.Ipv6AggregateAddresses) > 0 {
+					item.Ipv6AggregateAddresses = []CiscoBGPAddressFamiliesIpv6AggregateAddresses{}
+				}
 			}
 			if cValue := v.Get("network.vipValue"); len(cValue.Array()) > 0 {
 				item.Ipv4Networks = make([]CiscoBGPAddressFamiliesIpv4Networks, 0)
@@ -2491,6 +2527,10 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ipv4Networks = append(item.Ipv4Networks, cItem)
 					return true
 				})
+			} else {
+				if len(item.Ipv4Networks) > 0 {
+					item.Ipv4Networks = []CiscoBGPAddressFamiliesIpv4Networks{}
+				}
 			}
 			if cValue := v.Get("ipv6-network.vipValue"); len(cValue.Array()) > 0 {
 				item.Ipv6Networks = make([]CiscoBGPAddressFamiliesIpv6Networks, 0)
@@ -2523,6 +2563,10 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.Ipv6Networks = append(item.Ipv6Networks, cItem)
 					return true
 				})
+			} else {
+				if len(item.Ipv6Networks) > 0 {
+					item.Ipv6Networks = []CiscoBGPAddressFamiliesIpv6Networks{}
+				}
 			}
 			if cValue := v.Get("maximum-paths.paths.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -2650,10 +2694,18 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 					item.RedistributeRoutes = append(item.RedistributeRoutes, cItem)
 					return true
 				})
+			} else {
+				if len(item.RedistributeRoutes) > 0 {
+					item.RedistributeRoutes = []CiscoBGPAddressFamiliesRedistributeRoutes{}
+				}
 			}
 			data.AddressFamilies = append(data.AddressFamilies, item)
 			return true
 		})
+	} else {
+		if len(data.AddressFamilies) > 0 {
+			data.AddressFamilies = []CiscoBGPAddressFamilies{}
+		}
 	}
 	if value := res.Get(path + "bgp.neighbor.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4Neighbors = make([]CiscoBGPIpv4Neighbors, 0)
@@ -3116,14 +3168,26 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.RoutePolicies = append(cItem.RoutePolicies, ccItem)
 							return true
 						})
+					} else {
+						if len(cItem.RoutePolicies) > 0 {
+							cItem.RoutePolicies = []CiscoBGPIpv4NeighborsAddressFamiliesRoutePolicies{}
+						}
 					}
 					item.AddressFamilies = append(item.AddressFamilies, cItem)
 					return true
 				})
+			} else {
+				if len(item.AddressFamilies) > 0 {
+					item.AddressFamilies = []CiscoBGPIpv4NeighborsAddressFamilies{}
+				}
 			}
 			data.Ipv4Neighbors = append(data.Ipv4Neighbors, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv4Neighbors) > 0 {
+			data.Ipv4Neighbors = []CiscoBGPIpv4Neighbors{}
+		}
 	}
 	if value := res.Get(path + "bgp.ipv6-neighbor.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6Neighbors = make([]CiscoBGPIpv6Neighbors, 0)
@@ -3586,14 +3650,26 @@ func (data *CiscoBGP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.RoutePolicies = append(cItem.RoutePolicies, ccItem)
 							return true
 						})
+					} else {
+						if len(cItem.RoutePolicies) > 0 {
+							cItem.RoutePolicies = []CiscoBGPIpv6NeighborsAddressFamiliesRoutePolicies{}
+						}
 					}
 					item.AddressFamilies = append(item.AddressFamilies, cItem)
 					return true
 				})
+			} else {
+				if len(item.AddressFamilies) > 0 {
+					item.AddressFamilies = []CiscoBGPIpv6NeighborsAddressFamilies{}
+				}
 			}
 			data.Ipv6Neighbors = append(data.Ipv6Neighbors, item)
 			return true
 		})
+	} else {
+		if len(data.Ipv6Neighbors) > 0 {
+			data.Ipv6Neighbors = []CiscoBGPIpv6Neighbors{}
+		}
 	}
 }
 

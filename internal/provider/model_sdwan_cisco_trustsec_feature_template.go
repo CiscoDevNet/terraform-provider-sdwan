@@ -879,6 +879,10 @@ func (data *CiscoTrustSec) fromBody(ctx context.Context, res gjson.Result) {
 			data.SxpConnections = append(data.SxpConnections, item)
 			return true
 		})
+	} else {
+		if len(data.SxpConnections) > 0 {
+			data.SxpConnections = []CiscoTrustSecSxpConnections{}
+		}
 	}
 }
 

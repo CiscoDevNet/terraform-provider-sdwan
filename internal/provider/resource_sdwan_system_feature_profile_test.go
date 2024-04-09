@@ -20,32 +20,35 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemFeatureProfile(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_feature_profile.test", "name", "SYSTEM_FP_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_feature_profile.test", "description", "My system feature profile 1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanSystemFeatureProfileConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_system_feature_profile.test", "name", "SYSTEM_FP_1"),
-					resource.TestCheckResourceAttr("sdwan_system_feature_profile.test", "description", "My system feature profile 1"),
-				),
+				Config: testAccSdwanSystemFeatureProfileConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanSystemFeatureProfileConfig = `
-
-
-resource "sdwan_system_feature_profile" "test" {
-	name = "SYSTEM_FP_1"
-	description = "My system feature profile 1"
+func testAccSdwanSystemFeatureProfileConfig_all() string {
+	config := `resource "sdwan_system_feature_profile" "test" {` + "\n"
+	config += `	name = "SYSTEM_FP_1"` + "\n"
+	config += `	description = "My system feature profile 1"` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

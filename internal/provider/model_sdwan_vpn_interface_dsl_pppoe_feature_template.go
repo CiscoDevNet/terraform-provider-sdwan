@@ -1675,6 +1675,10 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			data.VdslConfiguration = append(data.VdslConfiguration, item)
 			return true
 		})
+	} else {
+		if len(data.Vdsl) > 0 {
+			data.Vdsl = []VPNInterfaceDSLPPPoEVdsl{}
+		}
 	}
 	if value := res.Get(path + "bridge-dot1q.encap.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2043,6 +2047,10 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			data.TunnelInterfaceEncapsulations = append(data.TunnelInterfaceEncapsulations, item)
 			return true
 		})
+	} else {
+		if len(data.Encapsulation) > 0 {
+			data.Encapsulation = []VPNInterfaceDSLPPPoEEncapsulation{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -2921,6 +2929,10 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			data.NatPortForwards = append(data.NatPortForwards, item)
 			return true
 		})
+	} else {
+		if len(data.PortForward) > 0 {
+			data.PortForward = []VPNInterfaceDSLPPPoEPortForward{}
+		}
 	}
 	if value := res.Get(path + "qos-adaptive.period.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3216,6 +3228,10 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			data.AccessLists = append(data.AccessLists, item)
 			return true
 		})
+	} else {
+		if len(data.AccessList) > 0 {
+			data.AccessList = []VPNInterfaceDSLPPPoEAccessList{}
+		}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policers = make([]VPNInterfaceDSLPPPoEPolicers, 0)
@@ -3261,6 +3277,10 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			data.Policers = append(data.Policers, item)
 			return true
 		})
+	} else {
+		if len(data.Policer) > 0 {
+			data.Policer = []VPNInterfaceDSLPPPoEPolicer{}
+		}
 	}
 	if value := res.Get(path + "mtu.vipType"); value.Exists() {
 		if value.String() == "variableName" {

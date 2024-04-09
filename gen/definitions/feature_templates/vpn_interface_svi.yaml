@@ -70,6 +70,7 @@ attributes:
       - model_name: direction
         example: in
       - model_name: acl-name
+        string_max_length: 127
         example: ACL1
   - model_name: access-list
     data_path: [ipv6]
@@ -78,6 +79,7 @@ attributes:
       - model_name: direction
         example: in
       - model_name: acl-name
+        string_max_length: 127
         example: ACL2
   - model_name: policer
     tf_name: policers

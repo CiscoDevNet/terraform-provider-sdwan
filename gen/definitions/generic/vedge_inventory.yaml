@@ -4,6 +4,7 @@ rest_endpoint: /device/vedgeinventory/detail
 doc_category: Inventory
 remove_id: true
 skip_templates: ["resource.go", "resource_test.go", "resource.tf", "import.sh"]
+test_tags: [SDWAN_209]
 attributes:
   - model_name: data
     tf_name: devices
@@ -26,7 +27,7 @@ attributes:
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: ADC5837E
+        example: 8420F3EE
       - model_name: host-name
         tf_name: hostname
         type: String

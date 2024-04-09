@@ -26,28 +26,27 @@ import (
 )
 
 func TestAccSdwanZoneListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_list_policy_object.test", "entries.0.vpn", "1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanZoneListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_zone_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_zone_list_policy_object.test", "entries.0.vpn", "1"),
-				),
+				Config: testAccSdwanZoneListPolicyObjectConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanZoneListPolicyObjectConfig = `
-
-
-resource "sdwan_zone_list_policy_object" "test" {
-	name = "Example"
-	entries = [{
-		vpn = "1"
-	}]
+func testAccSdwanZoneListPolicyObjectConfig_all() string {
+	config := `resource "sdwan_zone_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  vpn = "1"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
+	return config
 }
-`

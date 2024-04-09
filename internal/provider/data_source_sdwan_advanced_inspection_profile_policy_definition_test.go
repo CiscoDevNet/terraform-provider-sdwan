@@ -26,23 +26,23 @@ import (
 )
 
 func TestAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_advanced_inspection_profile_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_advanced_inspection_profile_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_advanced_inspection_profile_policy_definition.test", "tls_action", "decrypt"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_advanced_inspection_profile_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_advanced_inspection_profile_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("data.sdwan_advanced_inspection_profile_policy_definition.test", "tls_action", "decrypt"),
-				),
+				Config: testAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinitionPrerequisitesConfig + testAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinitionConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinitionConfig = `
+const testAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_url_filtering_policy_definition" "test" {
   name                  = "TF_TEST"
   description           = "Terraform test"
@@ -56,14 +56,21 @@ resource "sdwan_url_filtering_policy_definition" "test" {
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
 }
 
-resource "sdwan_advanced_inspection_profile_policy_definition" "test" {
-  name = "Example"
-  description = "My description"
-  tls_action = "decrypt"
-  url_filtering_id = sdwan_url_filtering_policy_definition.test.id
-}
-
-data "sdwan_advanced_inspection_profile_policy_definition" "test" {
-  id = sdwan_advanced_inspection_profile_policy_definition.test.id
-}
 `
+
+func testAccDataSourceSdwanAdvancedInspectionProfilePolicyDefinitionConfig() string {
+	config := ""
+	config += `resource "sdwan_advanced_inspection_profile_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	tls_action = "decrypt"` + "\n"
+	config += `	url_filtering_id = sdwan_url_filtering_policy_definition.test.id` + "\n"
+	config += `}` + "\n"
+
+	config += `
+		data "sdwan_advanced_inspection_profile_policy_definition" "test" {
+			id = sdwan_advanced_inspection_profile_policy_definition.test.id
+		}
+	`
+	return config
+}

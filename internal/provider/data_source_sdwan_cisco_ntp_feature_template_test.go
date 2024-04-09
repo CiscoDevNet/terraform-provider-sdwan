@@ -26,55 +26,57 @@ import (
 )
 
 func TestAccDataSourceSdwanCiscoNTPFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master_stratum", "6"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master_source_interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.value", "12345"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.hostname_ip", "NTP_SERVER1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.authentication_key_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.version", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.source_interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.prefer", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanCiscoNTPFeatureTemplateConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master", "true"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master_stratum", "6"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "master_source_interface", "e1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "authentication_keys.0.value", "12345"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.hostname_ip", "NTP_SERVER1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.authentication_key_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.vpn_id", "1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.version", "4"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.source_interface", "e1"),
-					resource.TestCheckResourceAttr("data.sdwan_cisco_ntp_feature_template.test", "servers.0.prefer", "true"),
-				),
+				Config: testAccDataSourceSdwanCiscoNTPFeatureTemplateConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanCiscoNTPFeatureTemplateConfig = `
+func testAccDataSourceSdwanCiscoNTPFeatureTemplateConfig() string {
+	config := `resource "sdwan_cisco_ntp_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	master = true` + "\n"
+	config += `	master_stratum = 6` + "\n"
+	config += `	master_source_interface = "e1"` + "\n"
+	config += `	trusted_keys = [1]` + "\n"
+	config += `	authentication_keys = [{` + "\n"
+	config += `	  id = 1` + "\n"
+	config += `	  value = "12345"` + "\n"
+	config += `	}]` + "\n"
+	config += `	servers = [{` + "\n"
+	config += `	  hostname_ip = "NTP_SERVER1"` + "\n"
+	config += `	  authentication_key_id = 1` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  version = 4` + "\n"
+	config += `	  source_interface = "e1"` + "\n"
+	config += `	  prefer = true` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_cisco_ntp_feature_template" "test" {
-  name = "TF_TEST_MIN"
-  description = "Terraform integration test"
-  device_types = ["vedge-C8000V"]
-  master = true
-  master_stratum = 6
-  master_source_interface = "e1"
-  trusted_keys = [1]
-  authentication_keys = [{
-    id = 1
-    value = "12345"
-  }]
-  servers = [{
-    hostname_ip = "NTP_SERVER1"
-    authentication_key_id = 1
-    vpn_id = 1
-    version = 4
-    source_interface = "e1"
-    prefer = true
-  }]
+	config += `
+		data "sdwan_cisco_ntp_feature_template" "test" {
+			id = sdwan_cisco_ntp_feature_template.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_cisco_ntp_feature_template" "test" {
-  id = sdwan_cisco_ntp_feature_template.test.id
-}
-`

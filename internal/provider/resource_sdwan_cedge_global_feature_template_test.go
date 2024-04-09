@@ -26,85 +26,82 @@ import (
 )
 
 func TestAccSdwanCEdgeGlobalFeatureTemplate(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "nat64_udp_timeout", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "nat64_tcp_timeout", "3600"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "http_authentication", "local"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "ssh_version", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "http_server", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "https_server", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "source_interface", "e1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "ip_source_routing", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "arp_proxy", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "ftp_passive", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "rsh_rcp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "bootp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "domain_lookup", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "tcp_keepalives_out", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "tcp_keepalives_in", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "tcp_small_servers", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "udp_small_servers", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "lldp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "cdp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "snmp_ifindex_persist", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "console_logging", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "vty_logging", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "line_vty", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSdwanCEdgeGlobalFeatureTemplateConfig_minimum(),
-				Check:  resource.ComposeTestCheckFunc(),
 			},
 			{
 				Config: testAccSdwanCEdgeGlobalFeatureTemplateConfig_all(),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "nat64_udp_timeout", "300"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "nat64_tcp_timeout", "3600"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "http_authentication", "local"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "ssh_version", "2"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "http_server", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "https_server", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "source_interface", "e1"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "ip_source_routing", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "arp_proxy", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "ftp_passive", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "rsh_rcp", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "bootp", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "domain_lookup", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "tcp_keepalives_out", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "tcp_keepalives_in", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "tcp_small_servers", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "udp_small_servers", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "lldp", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "cdp", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "snmp_ifindex_persist", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "console_logging", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "vty_logging", "true"),
-					resource.TestCheckResourceAttr("sdwan_cedge_global_feature_template.test", "line_vty", "true"),
-				),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
 func testAccSdwanCEdgeGlobalFeatureTemplateConfig_minimum() string {
-	return `
-	resource "sdwan_cedge_global_feature_template" "test" {
-		name = "TF_TEST_MIN"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-	}
-	`
+	config := `resource "sdwan_cedge_global_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_MIN"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `}` + "\n"
+	return config
 }
 
 func testAccSdwanCEdgeGlobalFeatureTemplateConfig_all() string {
-	return `
-	resource "sdwan_cedge_global_feature_template" "test" {
-		name = "TF_TEST_ALL"
-		description = "Terraform integration test"
-		device_types = ["vedge-C8000V"]
-		nat64_udp_timeout = 300
-		nat64_tcp_timeout = 3600
-		http_authentication = "local"
-		ssh_version = 2
-		http_server = true
-		https_server = true
-		source_interface = "e1"
-		ip_source_routing = true
-		arp_proxy = true
-		ftp_passive = true
-		rsh_rcp = true
-		bootp = true
-		domain_lookup = true
-		tcp_keepalives_out = true
-		tcp_keepalives_in = true
-		tcp_small_servers = true
-		udp_small_servers = true
-		lldp = true
-		cdp = true
-		snmp_ifindex_persist = true
-		console_logging = true
-		vty_logging = true
-		line_vty = true
-	}
-	`
+	config := `resource "sdwan_cedge_global_feature_template" "test" {` + "\n"
+	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` description = "Terraform integration test"` + "\n"
+	config += ` device_types = ["vedge-C8000V"]` + "\n"
+	config += `	nat64_udp_timeout = 300` + "\n"
+	config += `	nat64_tcp_timeout = 3600` + "\n"
+	config += `	http_authentication = "local"` + "\n"
+	config += `	ssh_version = 2` + "\n"
+	config += `	http_server = true` + "\n"
+	config += `	https_server = true` + "\n"
+	config += `	source_interface = "e1"` + "\n"
+	config += `	ip_source_routing = true` + "\n"
+	config += `	arp_proxy = true` + "\n"
+	config += `	ftp_passive = true` + "\n"
+	config += `	rsh_rcp = true` + "\n"
+	config += `	bootp = true` + "\n"
+	config += `	domain_lookup = true` + "\n"
+	config += `	tcp_keepalives_out = true` + "\n"
+	config += `	tcp_keepalives_in = true` + "\n"
+	config += `	tcp_small_servers = true` + "\n"
+	config += `	udp_small_servers = true` + "\n"
+	config += `	lldp = true` + "\n"
+	config += `	cdp = true` + "\n"
+	config += `	snmp_ifindex_persist = true` + "\n"
+	config += `	console_logging = true` + "\n"
+	config += `	vty_logging = true` + "\n"
+	config += `	line_vty = true` + "\n"
+	config += `}` + "\n"
+	return config
 }

@@ -26,31 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanDataIPv6PrefixListPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_data_ipv6_prefix_list_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_data_ipv6_prefix_list_policy_object.test", "entries.0.prefix", "2001:0:0:1::/64"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanDataIPv6PrefixListPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_data_ipv6_prefix_list_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_data_ipv6_prefix_list_policy_object.test", "entries.0.prefix", "2001:0:0:1::/64"),
-				),
+				Config: testAccDataSourceSdwanDataIPv6PrefixListPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanDataIPv6PrefixListPolicyObjectConfig = `
+func testAccDataSourceSdwanDataIPv6PrefixListPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_data_ipv6_prefix_list_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  prefix = "2001:0:0:1::/64"` + "\n"
+	config += `	}]` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_data_ipv6_prefix_list_policy_object" "test" {
-  name = "Example"
-  entries = [{
-    prefix = "2001:0:0:1::/64"
-  }]
+	config += `
+		data "sdwan_data_ipv6_prefix_list_policy_object" "test" {
+			id = sdwan_data_ipv6_prefix_list_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_data_ipv6_prefix_list_policy_object" "test" {
-  id = sdwan_data_ipv6_prefix_list_policy_object.test.id
-}
-`

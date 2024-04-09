@@ -26,23 +26,23 @@ import (
 )
 
 func TestAccSdwanAdvancedInspectionProfilePolicyDefinition(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_advanced_inspection_profile_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_advanced_inspection_profile_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_advanced_inspection_profile_policy_definition.test", "tls_action", "decrypt"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanAdvancedInspectionProfilePolicyDefinitionConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("sdwan_advanced_inspection_profile_policy_definition.test", "name", "Example"),
-					resource.TestCheckResourceAttr("sdwan_advanced_inspection_profile_policy_definition.test", "description", "My description"),
-					resource.TestCheckResourceAttr("sdwan_advanced_inspection_profile_policy_definition.test", "tls_action", "decrypt"),
-				),
+				Config: testAccSdwanAdvancedInspectionProfilePolicyDefinitionPrerequisitesConfig + testAccSdwanAdvancedInspectionProfilePolicyDefinitionConfig_all(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccSdwanAdvancedInspectionProfilePolicyDefinitionConfig = `
+const testAccSdwanAdvancedInspectionProfilePolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_url_filtering_policy_definition" "test" {
   name                  = "TF_TEST"
   description           = "Terraform test"
@@ -56,11 +56,14 @@ resource "sdwan_url_filtering_policy_definition" "test" {
   block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
 }
 
-
-resource "sdwan_advanced_inspection_profile_policy_definition" "test" {
-	name = "Example"
-	description = "My description"
-	tls_action = "decrypt"
-	url_filtering_id = sdwan_url_filtering_policy_definition.test.id
-}
 `
+
+func testAccSdwanAdvancedInspectionProfilePolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_advanced_inspection_profile_policy_definition" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	description = "My description"` + "\n"
+	config += `	tls_action = "decrypt"` + "\n"
+	config += `	url_filtering_id = sdwan_url_filtering_policy_definition.test.id` + "\n"
+	config += `}` + "\n"
+	return config
+}

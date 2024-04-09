@@ -26,31 +26,34 @@ import (
 )
 
 func TestAccDataSourceSdwanMirrorPolicyObject(t *testing.T) {
+	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_mirror_policy_object.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_mirror_policy_object.test", "remote_destination_ip", "10.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_mirror_policy_object.test", "source_ip", "10.2.1.1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanMirrorPolicyObjectConfig,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.sdwan_mirror_policy_object.test", "name", "Example"),
-					resource.TestCheckResourceAttr("data.sdwan_mirror_policy_object.test", "remote_destination_ip", "10.1.1.1"),
-					resource.TestCheckResourceAttr("data.sdwan_mirror_policy_object.test", "source_ip", "10.2.1.1"),
-				),
+				Config: testAccDataSourceSdwanMirrorPolicyObjectConfig(),
+				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-const testAccDataSourceSdwanMirrorPolicyObjectConfig = `
+func testAccDataSourceSdwanMirrorPolicyObjectConfig() string {
+	config := ""
+	config += `resource "sdwan_mirror_policy_object" "test" {` + "\n"
+	config += `	name = "Example"` + "\n"
+	config += `	remote_destination_ip = "10.1.1.1"` + "\n"
+	config += `	source_ip = "10.2.1.1"` + "\n"
+	config += `}` + "\n"
 
-resource "sdwan_mirror_policy_object" "test" {
-  name = "Example"
-  remote_destination_ip = "10.1.1.1"
-  source_ip = "10.2.1.1"
+	config += `
+		data "sdwan_mirror_policy_object" "test" {
+			id = sdwan_mirror_policy_object.test.id
+		}
+	`
+	return config
 }
-
-data "sdwan_mirror_policy_object" "test" {
-  id = sdwan_mirror_policy_object.test.id
-}
-`

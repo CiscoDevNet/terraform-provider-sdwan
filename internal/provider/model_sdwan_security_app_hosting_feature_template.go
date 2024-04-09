@@ -411,6 +411,10 @@ func (data *SecurityAppHosting) fromBody(ctx context.Context, res gjson.Result) 
 			data.VirtualApplications = append(data.VirtualApplications, item)
 			return true
 		})
+	} else {
+		if len(data.VirtualApplications) > 0 {
+			data.VirtualApplications = []SecurityAppHostingVirtualApplications{}
+		}
 	}
 }
 
