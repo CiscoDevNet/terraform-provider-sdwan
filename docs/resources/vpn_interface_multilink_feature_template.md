@@ -27,88 +27,88 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
   ipv6_access_lists = [
     {
       direction = "in"
-      acl_name  = "Egress ACL - IPv4"
+      acl_name  = "ACL1"
     }
   ]
   ppp_authentication_protocol     = "chap"
   ppp_authentication_protocol_pap = false
-  authentication_type             = "callin"
   chap_hostname                   = "chap-example"
   chap_ppp_auth_password          = "myPassword"
   pap_username                    = "pap-username"
   pap_password                    = true
   pap_ppp_auth_password           = "myPassword"
+  ppp_authentication_type         = "callin"
   enable_core_region              = true
   core_region                     = "core"
   secondary_region                = "off"
-  encapsulation = [
+  tunnel_interface_encapsulations = [
     {
-      encapsulation_type = "gre"
-      preference         = 4294967
-      weight             = 250
+      encapsulation = "gre"
+      preference    = 4294967
+      weight        = 250
     }
   ]
-  groups                        = [42949672]
-  border                        = true
-  per_tunnel_qos                = true
-  per_tunnel_qos_aggregator     = false
-  color                         = "custom1"
-  last_resort_circuit           = false
-  low_bandwidth_link            = false
-  tunnel_tcp_mss                = 1460
-  enable_clear_dont_fragment    = false
-  network_broadcast_1           = false
-  max_control_connections       = 8
-  control_connections           = true
-  vbond_as_stun_server          = false
-  exclude_controller_group_list = [100]
-  vmanage_connection_preference = 5
-  port_hop                      = false
-  restrict                      = false
-  carrier                       = "carrier1"
-  nat_refresh_interval          = 15
-  hello_interval                = 1000
-  hello_tolerance               = 12
-  bind_loopback_tunnel          = "12"
-  all                           = false
-  network_broadcast_2           = false
-  bgp                           = false
-  dhcp                          = true
-  dns                           = true
-  icmp                          = true
-  ssh                           = false
-  netconf                       = false
-  ospf                          = false
-  stun                          = false
-  snmp                          = false
-  https                         = true
-  disable_fragmentation         = true
-  fragment_max_delay            = 1
-  interleaving_fragment         = false
-  clear_dont_fragment_bit       = false
-  pmtu_discovery                = false
-  ip_mtu                        = 1500
-  static_ingress_qos            = 6
-  tcp_mss                       = 720
-  ip_directed_broadcast         = true
-  tloc_extension                = "tloc"
-  administrative_shutdown       = true
-  link_autonegotiate            = true
-  shaping_rate                  = 10000000
-  qos_map                       = "test"
-  vpn_qos_map                   = "test"
-  bandwidth_upstream            = 214748300
-  bandwidth_downstream          = 214748300
-  write_rule                    = "test_rule"
-  access_list = [
+  tunnel_interface_groups                        = [42949672]
+  tunnel_interface_border                        = true
+  per_tunnel_qos                                 = true
+  per_tunnel_qos_aggregator                      = false
+  tunnel_qos_mode                                = "spoke"
+  tunnel_interface_color                         = "custom1"
+  tunnel_interface_last_resort_circuit           = false
+  tunnel_interface_low_bandwidth_link            = false
+  tunnel_interface_tunnel_tcp_mss                = 1460
+  tunnel_interface_clear_dont_fragment           = false
+  tunnel_interface_network_broadcast             = false
+  tunnel_interface_max_control_connections       = 8
+  tunnel_interface_control_connections           = true
+  tunnel_interface_vbond_as_stun_server          = false
+  tunnel_interface_exclude_controller_group_list = [100]
+  tunnel_interface_vmanage_connection_preference = 5
+  tunnel_interface_port_hop                      = false
+  tunnel_interface_color_restrict                = false
+  tunnel_interface_carrier                       = "carrier1"
+  tunnel_interface_nat_refresh_interval          = 15
+  tunnel_interface_hello_interval                = 1000
+  tunnel_interface_hello_tolerance               = 12
+  tunnel_interface_bind_loopback_tunnel          = "12"
+  tunnel_interface_allow_all                     = false
+  tunnel_interface_allow_bgp                     = false
+  tunnel_interface_allow_dhcp                    = true
+  tunnel_interface_allow_dns                     = true
+  tunnel_interface_allow_icmp                    = true
+  tunnel_interface_allow_ssh                     = false
+  tunnel_interface_allow_ntp                     = false
+  tunnel_interface_allow_netconf                 = false
+  tunnel_interface_allow_ospf                    = false
+  tunnel_interface_allow_stun                    = false
+  tunnel_interface_allow_snmp                    = false
+  tunnel_interface_allow_https                   = true
+  disable_fragmentation                          = true
+  fragment_max_delay                             = 1
+  interleaving_fragment                          = false
+  clear_dont_fragment_bit                        = false
+  pmtu_discovery                                 = false
+  ip_mtu                                         = 1500
+  static_ingress_qos                             = 6
+  tcp_mss                                        = 720
+  tloc_extension                                 = "tloc"
+  shutdown                                       = true
+  autonegotiate                                  = true
+  shaping_rate                                   = 10000000
+  qos_map                                        = "test"
+  qos_map_vpn                                    = "test"
+  bandwidth_upstream                             = 214748300
+  bandwidth_downstream                           = 214748300
+  write_rule                                     = "RULE1"
+  access_lists = [
     {
       direction = "in"
-      acl_name  = "Egress ACL - IPv4"
+      acl_name  = "ACL2"
     }
   ]
-  controller_tx_ex_list = [
+  multilink_interfaces = [
     {
-      card_type            = "E1"
+      interface_type       = "E1"
       slot                 = "interface-t1"
       framing              = "example-framing"
       line_mode            = "primary"
@@ -120,16 +120,16 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
       channel_group_list = [
         {
           channel_group = 30
-          timeslots     = ["example"]
+          time_slot     = ["example"]
         }
       ]
     }
   ]
   nim_interface_list = [
     {
-      nim_serial_interface_type = "2t"
+      nim_serial_interface_type = "2T"
       interface_name            = "nim-interface"
-      interface_description     = "interface description"
+      interface_description     = "My Description"
       bandwidth                 = 21474836
       clock_rate                = 120000
       encapsulation_serial      = "hdlc"
@@ -150,35 +150,16 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
 
 ### Optional
 
-- `access_list` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_list))
-- `administrative_shutdown` (Boolean) Administrative state
+- `access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--access_lists))
+- `autonegotiate` (Boolean) Link autonegotiation
   - Default value: `true`
-- `administrative_shutdown_variable` (String) Variable name
-- `all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
-  - Default value: `false`
-- `all_variable` (String) Variable name
-- `authentication_type` (String) Authenticate remote on incoming call only
-  - Choices: `callin`, `false`
-  - Default value: `callin`
-- `authentication_type_variable` (String) Variable name
+- `autonegotiate_variable` (String) Variable name
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
 - `bandwidth_downstream_variable` (String) Variable name
 - `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
 - `bandwidth_upstream_variable` (String) Variable name
-- `bgp` (Boolean) Allow/deny BGP
-  - Default value: `false`
-- `bgp_variable` (String) Variable name
-- `bind_loopback_tunnel` (String) Bind loopback tunnel interface to a physical interface
-- `bind_loopback_tunnel_variable` (String) Variable name
-- `border` (Boolean) Set TLOC as border TLOC
-  - Default value: `false`
-- `border_variable` (String) Variable name
-- `carrier` (String) Set carrier for TLOC
-  - Choices: `default`, `carrier1`, `carrier2`, `carrier3`, `carrier4`, `carrier5`, `carrier6`, `carrier7`, `carrier8`
-  - Default value: `default`
-- `carrier_variable` (String) Variable name
 - `chap_hostname` (String) CHAP Hostname
 - `chap_hostname_variable` (String) Variable name
 - `chap_ppp_auth_password` (String) Specify ppp authentication Password
@@ -186,106 +167,38 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
 - `clear_dont_fragment_bit` (Boolean) Clear don't fragment bit
   - Default value: `false`
 - `clear_dont_fragment_bit_variable` (String) Variable name
-- `color` (String) Set color for TLOC
-  - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
-  - Default value: `default`
-- `color_variable` (String) Variable name
-- `control_connections` (Boolean) Allow Control Connection
-  - Default value: `true`
-- `control_connections_variable` (String) Variable name
-- `controller_tx_ex_list` (Attributes List) Controller tx-ex List (see [below for nested schema](#nestedatt--controller_tx_ex_list))
 - `core_region` (String) Enable core region
   - Choices: `core`, `core-shared`
   - Default value: `core`
 - `core_region_variable` (String) Variable name
-- `dhcp` (Boolean) Allow/Deny DHCP
-  - Default value: `true`
-- `dhcp_variable` (String) Variable name
 - `disable_fragmentation` (Boolean) Suppresss multilink fragmentation
   - Default value: `false`
-- `disable_fragmentation_variable` (String) Variable name
-- `dns` (Boolean) Allow/Deny DNS
-  - Default value: `true`
-- `dns_variable` (String) Variable name
-- `enable_clear_dont_fragment` (Boolean) Clear don't fragment bit
-  - Default value: `false`
-- `enable_clear_dont_fragment_variable` (String) Variable name
 - `enable_core_region` (Boolean) Enable core region
   - Default value: `false`
 - `enable_core_region_variable` (String) Variable name
-- `encapsulation` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--encapsulation))
-- `exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list
-- `exclude_controller_group_list_variable` (String) Variable name
 - `fragment_max_delay` (Number) Maximum delay for each fragment
   - Range: `0`-`1000`
 - `fragment_max_delay_variable` (String) Variable name
-- `groups` (Set of Number) List of groups
-- `groups_variable` (String) Variable name
-- `hello_interval` (Number) Set time period of control hello packets <100..600000> milli seconds
-  - Range: `100`-`600000`
-  - Default value: `1000`
-- `hello_interval_variable` (String) Variable name
-- `hello_tolerance` (Number) Set tolerance of control hello packets <12..6000> seconds
-  - Range: `12`-`6000`
-  - Default value: `12`
-- `hello_tolerance_variable` (String) Variable name
-- `https` (Boolean) Allow/Deny Https
-  - Default value: `true`
-- `https_variable` (String) Variable name
-- `icmp` (Boolean) Allow/Deny ICMP
-  - Default value: `true`
-- `icmp_variable` (String) Variable name
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface Name
 - `interface_name_variable` (String) Variable name
 - `interleaving_fragment` (Boolean) Allow interleaving of packets with fragments
   - Default value: `false`
-- `interleaving_fragment_variable` (String) Variable name
-- `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
-  - Default value: `false`
-- `ip_directed_broadcast_variable` (String) Variable name
 - `ip_mtu` (Number) Interface MTU <68...2000>, in bytes
   - Range: `68`-`2000`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String) Assign IPv4 address
 - `ipv4_address_variable` (String) Variable name
-- `ipv6_access_lists` (Attributes List) Apply ACL (see [below for nested schema](#nestedatt--ipv6_access_lists))
+- `ipv6_access_lists` (Attributes List) Apply IPv6 access list (see [below for nested schema](#nestedatt--ipv6_access_lists))
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
-- `last_resort_circuit` (Boolean) Set TLOC as last resort
-  - Default value: `false`
-- `last_resort_circuit_variable` (String) Variable name
-- `link_autonegotiate` (Boolean) Link autonegotiation
-  - Default value: `true`
-- `link_autonegotiate_variable` (String) Variable name
-- `low_bandwidth_link` (Boolean) Set the interface as a low-bandwidth circuit
-  - Default value: `false`
-- `low_bandwidth_link_variable` (String) Variable name
-- `max_control_connections` (Number) Set the maximum number of control connections for this TLOC
-  - Range: `0`-`8`
-- `max_control_connections_variable` (String) Variable name
 - `multilink_group_number` (Number) MultiLink Group Number
   - Range: `1`-`2147483647`
 - `multilink_group_number_variable` (String) Variable name
-- `nat_refresh_interval` (Number) Set time period of nat refresh packets <1...60> seconds
-  - Range: `1`-`60`
-  - Default value: `5`
-- `nat_refresh_interval_variable` (String) Variable name
-- `netconf` (Boolean) Allow/Deny NETCONF
-  - Default value: `false`
-- `netconf_variable` (String) Variable name
-- `network_broadcast_1` (Boolean) Accept and respond to network-prefix-directed broadcasts)
-  - Default value: `false`
-- `network_broadcast_1_variable` (String) Variable name
-- `network_broadcast_2` (Boolean) Accept and respond to network-prefix-directed broadcasts)
-  - Default value: `false`
-- `network_broadcast_2_variable` (String) Variable name
+- `multilink_interfaces` (Attributes List) Controller tx-ex List (see [below for nested schema](#nestedatt--multilink_interfaces))
 - `nim_interface_list` (Attributes List) Nim Interface List (see [below for nested schema](#nestedatt--nim_interface_list))
-- `ospf` (Boolean) Allow/Deny OSPF
-  - Default value: `false`
-- `ospf_variable` (String) Variable name
 - `pap_password` (Boolean) PAP outbound Password
 - `pap_ppp_auth_password` (String) Specify ppp authentication Password
 - `pap_ppp_auth_password_variable` (String) Variable name
@@ -300,19 +213,17 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
 - `pmtu_discovery` (Boolean) Path MTU Discovery
   - Default value: `false`
 - `pmtu_discovery_variable` (String) Variable name
-- `port_hop` (Boolean) Disallow port hopping on the tunnel interface
-  - Default value: `true`
-- `port_hop_variable` (String) Variable name
 - `ppp_authentication_protocol` (String) PPP Link Authentication Protocol
   - Choices: `chap`, `pap`
 - `ppp_authentication_protocol_pap` (Boolean) PPP Authentication Protocol PAP
   - Default value: `false`
-- `ppp_authentication_protocol_pap_variable` (String) Variable name
+- `ppp_authentication_type` (String) Authenticate remote on incoming call only
+  - Choices: `callin`, `false`
+  - Default value: `callin`
 - `qos_map` (String) Name of QoS map
 - `qos_map_variable` (String) Variable name
-- `restrict` (Boolean) Restrict this TLOC behavior
-  - Default value: `false`
-- `restrict_variable` (String) Variable name
+- `qos_map_vpn` (String) Name of VPN QoS map
+- `qos_map_vpn_variable` (String) Variable name
 - `secondary_region` (String) Enable secondary region
   - Choices: `off`, `secondary-only`, `secondary-shared`
   - Default value: `off`
@@ -320,35 +231,119 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
 - `shaping_rate` (Number) 1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps
   - Range: `8`-`100000000`
 - `shaping_rate_variable` (String) Variable name
-- `snmp` (Boolean) Allow/Deny SNMP
-  - Default value: `false`
-- `snmp_variable` (String) Variable name
-- `ssh` (Boolean) Allow/Deny SSH
-  - Default value: `false`
-- `ssh_variable` (String) Variable name
+- `shutdown` (Boolean) Administrative state
+  - Default value: `true`
+- `shutdown_variable` (String) Variable name
 - `static_ingress_qos` (Number) Static ingress QoS for the port
   - Range: `0`-`7`
 - `static_ingress_qos_variable` (String) Variable name
-- `stun` (Boolean) Allow/Deny STUN
-  - Default value: `false`
-- `stun_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `552`-`1960`
 - `tcp_mss_variable` (String) Variable name
 - `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
 - `tloc_extension_variable` (String) Variable name
-- `tunnel_tcp_mss` (Number) Tunnel TCP MSS on SYN packets, in bytes
-  - Range: `500`-`1460`
-- `tunnel_tcp_mss_variable` (String) Variable name
-- `vbond_as_stun_server` (Boolean) Put this wan interface in STUN mode only
+- `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set
   - Default value: `false`
-- `vbond_as_stun_server_variable` (String) Variable name
-- `vmanage_connection_preference` (Number) Set interface preference for control connection to vManage <0..8>
+- `tunnel_interface_allow_all_variable` (String) Variable name
+- `tunnel_interface_allow_bgp` (Boolean) Allow/deny BGP
+  - Default value: `false`
+- `tunnel_interface_allow_bgp_variable` (String) Variable name
+- `tunnel_interface_allow_dhcp` (Boolean) Allow/Deny DHCP
+  - Default value: `true`
+- `tunnel_interface_allow_dhcp_variable` (String) Variable name
+- `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS
+  - Default value: `true`
+- `tunnel_interface_allow_dns_variable` (String) Variable name
+- `tunnel_interface_allow_https` (Boolean) Allow/Deny Https
+  - Default value: `true`
+- `tunnel_interface_allow_https_variable` (String) Variable name
+- `tunnel_interface_allow_icmp` (Boolean) Allow/Deny ICMP
+  - Default value: `true`
+- `tunnel_interface_allow_icmp_variable` (String) Variable name
+- `tunnel_interface_allow_netconf` (Boolean) Allow/Deny NETCONF
+  - Default value: `false`
+- `tunnel_interface_allow_netconf_variable` (String) Variable name
+- `tunnel_interface_allow_ntp` (Boolean) Allow/Deny NTP
+  - Default value: `false`
+- `tunnel_interface_allow_ntp_variable` (String) Variable name
+- `tunnel_interface_allow_ospf` (Boolean) Allow/Deny OSPF
+  - Default value: `false`
+- `tunnel_interface_allow_ospf_variable` (String) Variable name
+- `tunnel_interface_allow_snmp` (Boolean) Allow/Deny SNMP
+  - Default value: `false`
+- `tunnel_interface_allow_snmp_variable` (String) Variable name
+- `tunnel_interface_allow_ssh` (Boolean) Allow/Deny SSH
+  - Default value: `false`
+- `tunnel_interface_allow_ssh_variable` (String) Variable name
+- `tunnel_interface_allow_stun` (Boolean) Allow/Deny STUN
+  - Default value: `false`
+- `tunnel_interface_allow_stun_variable` (String) Variable name
+- `tunnel_interface_bind_loopback_tunnel` (String) Bind loopback tunnel interface to a physical interface
+- `tunnel_interface_bind_loopback_tunnel_variable` (String) Variable name
+- `tunnel_interface_border` (Boolean) Set TLOC as border TLOC
+  - Default value: `false`
+- `tunnel_interface_border_variable` (String) Variable name
+- `tunnel_interface_carrier` (String) Set carrier for TLOC
+  - Choices: `default`, `carrier1`, `carrier2`, `carrier3`, `carrier4`, `carrier5`, `carrier6`, `carrier7`, `carrier8`
+  - Default value: `default`
+- `tunnel_interface_carrier_variable` (String) Variable name
+- `tunnel_interface_clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)
+  - Default value: `false`
+- `tunnel_interface_clear_dont_fragment_variable` (String) Variable name
+- `tunnel_interface_color` (String) Set color for TLOC
+  - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
+  - Default value: `default`
+- `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior
+  - Default value: `false`
+- `tunnel_interface_color_variable` (String) Variable name
+- `tunnel_interface_control_connections` (Boolean) Allow Control Connection
+  - Default value: `true`
+- `tunnel_interface_control_connections_variable` (String) Variable name
+- `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
+- `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list
+- `tunnel_interface_exclude_controller_group_list_variable` (String) Variable name
+- `tunnel_interface_groups` (Set of Number) List of groups
+- `tunnel_interface_groups_variable` (String) Variable name
+- `tunnel_interface_hello_interval` (Number) Set time period of control hello packets <100..600000> milli seconds
+  - Range: `100`-`600000`
+  - Default value: `1000`
+- `tunnel_interface_hello_interval_variable` (String) Variable name
+- `tunnel_interface_hello_tolerance` (Number) Set tolerance of control hello packets <12..6000> seconds
+  - Range: `12`-`6000`
+  - Default value: `12`
+- `tunnel_interface_hello_tolerance_variable` (String) Variable name
+- `tunnel_interface_last_resort_circuit` (Boolean) Set TLOC as last resort
+  - Default value: `false`
+- `tunnel_interface_last_resort_circuit_variable` (String) Variable name
+- `tunnel_interface_low_bandwidth_link` (Boolean) Set the interface as a low-bandwidth circuit
+  - Default value: `false`
+- `tunnel_interface_low_bandwidth_link_variable` (String) Variable name
+- `tunnel_interface_max_control_connections` (Number) Set the maximum number of control connections for this TLOC
+  - Range: `0`-`8`
+- `tunnel_interface_max_control_connections_variable` (String) Variable name
+- `tunnel_interface_nat_refresh_interval` (Number) Set time period of nat refresh packets <1...60> seconds
+  - Range: `1`-`60`
+  - Default value: `5`
+- `tunnel_interface_nat_refresh_interval_variable` (String) Variable name
+- `tunnel_interface_network_broadcast` (Boolean) Accept and respond to network-prefix-directed broadcasts)
+  - Default value: `false`
+- `tunnel_interface_network_broadcast_variable` (String) Variable name
+- `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface
+  - Default value: `true`
+- `tunnel_interface_port_hop_variable` (String) Variable name
+- `tunnel_interface_tunnel_tcp_mss` (Number) Tunnel TCP MSS on SYN packets, in bytes
+  - Range: `500`-`1460`
+- `tunnel_interface_tunnel_tcp_mss_variable` (String) Variable name
+- `tunnel_interface_vbond_as_stun_server` (Boolean) Put this wan interface in STUN mode only
+  - Default value: `false`
+- `tunnel_interface_vbond_as_stun_server_variable` (String) Variable name
+- `tunnel_interface_vmanage_connection_preference` (Number) Set interface preference for control connection to vManage <0..8>
   - Range: `0`-`8`
   - Default value: `5`
-- `vmanage_connection_preference_variable` (String) Variable name
-- `vpn_qos_map` (String) Name of VPN QoS map
-- `vpn_qos_map_variable` (String) Variable name
+- `tunnel_interface_vmanage_connection_preference_variable` (String) Variable name
+- `tunnel_qos_mode` (String) Set tunnel QoS mode
+  - Choices: `spoke`
+- `tunnel_qos_mode_variable` (String) Variable name
 - `write_rule` (String) Name of rewrite rule
 - `write_rule_variable` (String) Variable name
 
@@ -358,8 +353,8 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
 - `template_type` (String) The template type
 - `version` (Number) The version of the feature template
 
-<a id="nestedatt--access_list"></a>
-### Nested Schema for `access_list`
+<a id="nestedatt--access_lists"></a>
+### Nested Schema for `access_lists`
 
 Optional:
 
@@ -368,63 +363,6 @@ Optional:
 - `direction` (String) Direction
   - Choices: `in`, `out`
 - `optional` (Boolean) Indicates if list item is considered optional.
-
-
-<a id="nestedatt--controller_tx_ex_list"></a>
-### Nested Schema for `controller_tx_ex_list`
-
-Optional:
-
-- `card_type` (String) Card Type
-  - Choices: `E1`, `T1`, `NIM-2T`, `NIM-4T`
-- `channel_group_list` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--controller_tx_ex_list--channel_group_list))
-- `description` (String) Description
-- `description_variable` (String) Variable name
-- `framing` (String) Framing
-- `framing_variable` (String) Variable name
-- `internal` (Boolean) Internal
-  - Default value: `false`
-- `internal_variable` (String) Variable name
-- `line_mode` (String) Line Mode
-  - Choices: `secondary`, `primary`
-- `line_mode_variable` (String) Variable name
-- `linecode` (String) LineCode
-  - Choices: `ami`, `b8zs`, `hdb3`
-- `linecode_variable` (String) Variable name
-- `optional` (Boolean) Indicates if list item is considered optional.
-- `set_length_for_long` (String) Set length for long
-- `set_length_for_short` (String) Set Length for short
-- `slot` (String) Slot number
-
-<a id="nestedatt--controller_tx_ex_list--channel_group_list"></a>
-### Nested Schema for `controller_tx_ex_list.channel_group_list`
-
-Optional:
-
-- `channel_group` (Number) Number
-  - Range: `0`-`30`
-- `channel_group_variable` (String) Variable name
-- `optional` (Boolean) Indicates if list item is considered optional.
-- `timeslots` (Set of String) Time slots
-- `timeslots_variable` (String) Variable name
-
-
-
-<a id="nestedatt--encapsulation"></a>
-### Nested Schema for `encapsulation`
-
-Optional:
-
-- `encapsulation_type` (String) Encapsulation
-  - Choices: `gre`, `ipsec`
-- `optional` (Boolean) Indicates if list item is considered optional.
-- `preference` (Number) Set preference for TLOC
-  - Range: `0`-`4294967295`
-- `preference_variable` (String) Variable name
-- `weight` (Number) Set weight for TLOC
-  - Range: `1`-`255`
-  - Default value: `1`
-- `weight_variable` (String) Variable name
 
 
 <a id="nestedatt--ipv6_access_lists"></a>
@@ -437,6 +375,45 @@ Optional:
 - `direction` (String) Direction
   - Choices: `in`, `out`
 - `optional` (Boolean) Indicates if list item is considered optional.
+
+
+<a id="nestedatt--multilink_interfaces"></a>
+### Nested Schema for `multilink_interfaces`
+
+Optional:
+
+- `channel_group_list` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--multilink_interfaces--channel_group_list))
+- `description` (String) Description
+- `description_variable` (String) Variable name
+- `framing` (String) Framing
+- `framing_variable` (String) Variable name
+- `interface_type` (String) Card Type
+  - Choices: `E1`, `T1`, `NIM-2T`, `NIM-4T`
+- `internal` (Boolean) Internal
+  - Default value: `false`
+- `line_mode` (String) Line Mode
+  - Choices: `secondary`, `primary`
+- `line_mode_variable` (String) Variable name
+- `linecode` (String) LineCode
+  - Choices: `ami`, `b8zs`, `hdb3`
+- `linecode_variable` (String) Variable name
+- `optional` (Boolean) Indicates if list item is considered optional.
+- `set_length_for_long` (String) Set length for long
+- `set_length_for_short` (String) Set Length for short
+- `slot` (String) Slot number
+
+<a id="nestedatt--multilink_interfaces--channel_group_list"></a>
+### Nested Schema for `multilink_interfaces.channel_group_list`
+
+Optional:
+
+- `channel_group` (Number) Number
+  - Range: `0`-`30`
+- `channel_group_variable` (String) Variable name
+- `optional` (Boolean) Indicates if list item is considered optional.
+- `time_slot` (Set of String) Time slots
+- `time_slot_variable` (String) Variable name
+
 
 
 <a id="nestedatt--nim_interface_list"></a>
@@ -461,6 +438,23 @@ Optional:
   - Choices: `2t`, `4t`, `2T`, `4T`
 - `nim_serial_interface_type_variable` (String) Variable name
 - `optional` (Boolean) Indicates if list item is considered optional.
+
+
+<a id="nestedatt--tunnel_interface_encapsulations"></a>
+### Nested Schema for `tunnel_interface_encapsulations`
+
+Optional:
+
+- `encapsulation` (String) Encapsulation
+  - Choices: `gre`, `ipsec`
+- `optional` (Boolean) Indicates if list item is considered optional.
+- `preference` (Number) Set preference for TLOC
+  - Range: `0`-`4294967295`
+- `preference_variable` (String) Variable name
+- `weight` (Number) Set weight for TLOC
+  - Range: `1`-`255`
+  - Default value: `1`
+- `weight_variable` (String) Variable name
 
 ## Import
 
