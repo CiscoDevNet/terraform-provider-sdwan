@@ -27,7 +27,7 @@ attributes:
     tf_name: ethernet_description
     example: My Description
   - model_name: vdsl
-    tf_name: vdsl_configuration
+    tf_name: vdsl_configurations
     attributes: 
     - model_name: name
       tf_name: controller_vdsl_slot
