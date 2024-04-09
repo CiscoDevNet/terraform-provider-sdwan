@@ -44,10 +44,10 @@ attributes:
       tf_name: vdsl_modem_configuration
       example: 100
   - model_name: pvc
+    tf_name: pvcs
     attributes:
     - model_name: local-vpi-vci
       tf_name: atm_vpi_and_vci
-      data_path: [pvc]
       example: example-vpi
     - model_name: PCR
       tf_name: atm_vbr_nrt_peak_cell_rate

@@ -43,7 +43,7 @@ type VPNInterfaceDSLPPPoA struct {
 	AtmDescription                                     types.String                                        `tfsdk:"atm_description"`
 	AtmDescriptionVariable                             types.String                                        `tfsdk:"atm_description_variable"`
 	VdslConfiguration                                  []VPNInterfaceDSLPPPoAVdslConfiguration             `tfsdk:"vdsl_configuration"`
-	Pvc                                                []VPNInterfaceDSLPPPoAPvc                           `tfsdk:"pvc"`
+	Pvcs                                               []VPNInterfaceDSLPPPoAPvcs                          `tfsdk:"pvcs"`
 	PppAuthenticationProtocol                          types.String                                        `tfsdk:"ppp_authentication_protocol"`
 	PppAuthenticationProtocolVariable                  types.String                                        `tfsdk:"ppp_authentication_protocol_variable"`
 	PppAuthenticationProtocolPap                       types.Bool                                          `tfsdk:"ppp_authentication_protocol_pap"`
@@ -199,7 +199,7 @@ type VPNInterfaceDSLPPPoAVdslConfiguration struct {
 	VdslModemConfigurationVariable types.String `tfsdk:"vdsl_modem_configuration_variable"`
 }
 
-type VPNInterfaceDSLPPPoAPvc struct {
+type VPNInterfaceDSLPPPoAPvcs struct {
 	Optional                             types.Bool   `tfsdk:"optional"`
 	AtmVpiAndVci                         types.String `tfsdk:"atm_vpi_and_vci"`
 	AtmVpiAndVciVariable                 types.String `tfsdk:"atm_vpi_and_vci_variable"`
@@ -410,7 +410,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"controller.vdsl."+"vipValue.-1", itemBody)
 	}
-	if len(data.Pvc) > 0 {
+	if len(data.Pvcs) > 0 {
 		body, _ = sjson.Set(body, path+"pvc."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"pvc."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"pvc."+"vipPrimaryKey", []string{"local-vpi-vci"})
@@ -421,21 +421,20 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"pvc."+"vipPrimaryKey", []string{"local-vpi-vci"})
 		body, _ = sjson.Set(body, path+"pvc."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Pvc {
+	for _, item := range data.Pvcs {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "local-vpi-vci")
 
 		if !item.AtmVpiAndVciVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipVariableName", item.AtmVpiAndVciVariable.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipType", "variableName")
+			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipVariableName", item.AtmVpiAndVciVariable.ValueString())
 		} else if item.AtmVpiAndVci.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "pvc", map[string]interface{}{})
 		} else {
-			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipValue", item.AtmVpiAndVci.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipType", "constant")
+			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipValue", item.AtmVpiAndVci.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "PCR")
 
@@ -1788,26 +1787,26 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 		}
 	}
 	if value := res.Get(path + "pvc.vipValue"); len(value.Array()) > 0 {
-		data.Pvc = make([]VPNInterfaceDSLPPPoAPvc, 0)
+		data.Pvcs = make([]VPNInterfaceDSLPPPoAPvcs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLPPPoAPvc{}
+			item := VPNInterfaceDSLPPPoAPvcs{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
 				item.Optional = types.BoolNull()
 			}
-			if cValue := v.Get("pvc.local-vpi-vci.vipType"); cValue.Exists() {
+			if cValue := v.Get("local-vpi-vci.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.AtmVpiAndVci = types.StringNull()
 
-					cv := v.Get("pvc.local-vpi-vci.vipVariableName")
+					cv := v.Get("local-vpi-vci.vipVariableName")
 					item.AtmVpiAndVciVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
 					item.AtmVpiAndVci = types.StringNull()
 					item.AtmVpiAndVciVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
-					cv := v.Get("pvc.local-vpi-vci.vipValue")
+					cv := v.Get("local-vpi-vci.vipValue")
 					item.AtmVpiAndVci = types.StringValue(cv.String())
 					item.AtmVpiAndVciVariable = types.StringNull()
 				}
@@ -2005,12 +2004,12 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				item.AtmDialerPoolMember = types.Int64Null()
 				item.AtmDialerPoolMemberVariable = types.StringNull()
 			}
-			data.Pvc = append(data.Pvc, item)
+			data.Pvcs = append(data.Pvcs, item)
 			return true
 		})
 	} else {
-		if len(data.Pvc) > 0 {
-			data.Pvc = []VPNInterfaceDSLPPPoAPvc{}
+		if len(data.Pvcs) > 0 {
+			data.Pvcs = []VPNInterfaceDSLPPPoAPvcs{}
 		}
 	}
 	if value := res.Get(path + "ppp.authentication.method.vipType"); value.Exists() {
@@ -3658,41 +3657,41 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 			}
 		}
 	}
-	if len(data.Pvc) != len(state.Pvc) {
+	if len(data.Pvcs) != len(state.Pvcs) {
 		hasChanges = true
 	} else {
-		for i := range data.Pvc {
-			if !data.Pvc[i].AtmVpiAndVci.Equal(state.Pvc[i].AtmVpiAndVci) {
+		for i := range data.Pvcs {
+			if !data.Pvcs[i].AtmVpiAndVci.Equal(state.Pvcs[i].AtmVpiAndVci) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmVbrNrtPeakCellRate.Equal(state.Pvc[i].AtmVbrNrtPeakCellRate) {
+			if !data.Pvcs[i].AtmVbrNrtPeakCellRate.Equal(state.Pvcs[i].AtmVbrNrtPeakCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmVbrNrtSustainableCellRate.Equal(state.Pvc[i].AtmVbrNrtSustainableCellRate) {
+			if !data.Pvcs[i].AtmVbrNrtSustainableCellRate.Equal(state.Pvcs[i].AtmVbrNrtSustainableCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmVbrNrtMaximumBurstSize.Equal(state.Pvc[i].AtmVbrNrtMaximumBurstSize) {
+			if !data.Pvcs[i].AtmVbrNrtMaximumBurstSize.Equal(state.Pvcs[i].AtmVbrNrtMaximumBurstSize) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmVbrRtPeakCellRate.Equal(state.Pvc[i].AtmVbrRtPeakCellRate) {
+			if !data.Pvcs[i].AtmVbrRtPeakCellRate.Equal(state.Pvcs[i].AtmVbrRtPeakCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmVbrRtAverageCellRate.Equal(state.Pvc[i].AtmVbrRtAverageCellRate) {
+			if !data.Pvcs[i].AtmVbrRtAverageCellRate.Equal(state.Pvcs[i].AtmVbrRtAverageCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmVbrRtMaximumBurstSize.Equal(state.Pvc[i].AtmVbrRtMaximumBurstSize) {
+			if !data.Pvcs[i].AtmVbrRtMaximumBurstSize.Equal(state.Pvcs[i].AtmVbrRtMaximumBurstSize) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmEncapsulationAal5mux.Equal(state.Pvc[i].AtmEncapsulationAal5mux) {
+			if !data.Pvcs[i].AtmEncapsulationAal5mux.Equal(state.Pvcs[i].AtmEncapsulationAal5mux) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmEncapsulationAal5nlpid.Equal(state.Pvc[i].AtmEncapsulationAal5nlpid) {
+			if !data.Pvcs[i].AtmEncapsulationAal5nlpid.Equal(state.Pvcs[i].AtmEncapsulationAal5nlpid) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmEncapsulationAal5snap.Equal(state.Pvc[i].AtmEncapsulationAal5snap) {
+			if !data.Pvcs[i].AtmEncapsulationAal5snap.Equal(state.Pvcs[i].AtmEncapsulationAal5snap) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].AtmDialerPoolMember.Equal(state.Pvc[i].AtmDialerPoolMember) {
+			if !data.Pvcs[i].AtmDialerPoolMember.Equal(state.Pvcs[i].AtmDialerPoolMember) {
 				hasChanges = true
 			}
 		}

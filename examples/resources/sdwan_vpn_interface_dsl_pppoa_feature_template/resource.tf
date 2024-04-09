@@ -17,7 +17,7 @@ resource "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
       vdsl_modem_configuration = "100"
     }
   ]
-  pvc = [
+  pvcs = [
     {
       atm_vpi_and_vci                   = "example-vpi"
       atm_vbr_nrt_peak_cell_rate        = 1010
