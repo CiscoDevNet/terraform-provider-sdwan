@@ -78,7 +78,9 @@ func (data *DataFQDNPrefixListPolicyObject) fromBody(ctx context.Context, res gj
 			return true
 		})
 	} else {
-		data.Entries = []DataFQDNPrefixListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []DataFQDNPrefixListPolicyObjectEntries{}
+		}
 	}
 }
 

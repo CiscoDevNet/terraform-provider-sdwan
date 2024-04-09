@@ -79,7 +79,9 @@ func (data *PortListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Entries = []PortListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []PortListPolicyObjectEntries{}
+		}
 	}
 }
 

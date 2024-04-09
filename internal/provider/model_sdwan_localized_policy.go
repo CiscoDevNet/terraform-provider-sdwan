@@ -245,7 +245,9 @@ func (data *LocalizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Definitions = []LocalizedPolicyDefinitions{}
+		if len(data.Definitions) > 0 {
+			data.Definitions = []LocalizedPolicyDefinitions{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

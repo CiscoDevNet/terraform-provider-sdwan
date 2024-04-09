@@ -623,7 +623,9 @@ func (data *CiscoLogging) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.TlsProfiles = []CiscoLoggingTlsProfiles{}
+		if len(data.TlsProfiles) > 0 {
+			data.TlsProfiles = []CiscoLoggingTlsProfiles{}
+		}
 	}
 	if value := res.Get(path + "server.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4Servers = make([]CiscoLoggingIpv4Servers, 0)
@@ -771,7 +773,9 @@ func (data *CiscoLogging) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Ipv4Servers = []CiscoLoggingIpv4Servers{}
+		if len(data.Ipv4Servers) > 0 {
+			data.Ipv4Servers = []CiscoLoggingIpv4Servers{}
+		}
 	}
 	if value := res.Get(path + "ipv6-server.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6Servers = make([]CiscoLoggingIpv6Servers, 0)
@@ -919,7 +923,9 @@ func (data *CiscoLogging) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Ipv6Servers = []CiscoLoggingIpv6Servers{}
+		if len(data.Ipv6Servers) > 0 {
+			data.Ipv6Servers = []CiscoLoggingIpv6Servers{}
+		}
 	}
 }
 

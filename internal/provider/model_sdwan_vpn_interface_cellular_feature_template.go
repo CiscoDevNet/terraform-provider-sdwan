@@ -1442,7 +1442,9 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Ipv6AccessLists = []VPNInterfaceCellularIpv6AccessLists{}
+		if len(data.Ipv6AccessLists) > 0 {
+			data.Ipv6AccessLists = []VPNInterfaceCellularIpv6AccessLists{}
+		}
 	}
 	if value := res.Get(path + "dhcp-helper.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -1695,7 +1697,9 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.NatPortForwards = []VPNInterfaceCellularNatPortForwards{}
+		if len(data.NatPortForwards) > 0 {
+			data.NatPortForwards = []VPNInterfaceCellularNatPortForwards{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.enable-core-region.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1821,7 +1825,9 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.TunnelInterfaceEncapsulations = []VPNInterfaceCellularTunnelInterfaceEncapsulations{}
+		if len(data.TunnelInterfaceEncapsulations) > 0 {
+			data.TunnelInterfaceEncapsulations = []VPNInterfaceCellularTunnelInterfaceEncapsulations{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -2954,7 +2960,9 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Ipv4AccessLists = []VPNInterfaceCellularIpv4AccessLists{}
+		if len(data.Ipv4AccessLists) > 0 {
+			data.Ipv4AccessLists = []VPNInterfaceCellularIpv4AccessLists{}
+		}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policers = make([]VPNInterfaceCellularPolicers, 0)
@@ -3001,7 +3009,9 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Policers = []VPNInterfaceCellularPolicers{}
+		if len(data.Policers) > 0 {
+			data.Policers = []VPNInterfaceCellularPolicers{}
+		}
 	}
 	if value := res.Get(path + "arp.ip.vipValue"); len(value.Array()) > 0 {
 		data.StaticArps = make([]VPNInterfaceCellularStaticArps, 0)
@@ -3054,7 +3064,9 @@ func (data *VPNInterfaceCellular) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.StaticArps = []VPNInterfaceCellularStaticArps{}
+		if len(data.StaticArps) > 0 {
+			data.StaticArps = []VPNInterfaceCellularStaticArps{}
+		}
 	}
 }
 

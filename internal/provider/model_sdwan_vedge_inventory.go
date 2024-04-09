@@ -110,7 +110,9 @@ func (data *VEdgeInventory) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Devices = []VEdgeInventoryDevices{}
+		if len(data.Devices) > 0 {
+			data.Devices = []VEdgeInventoryDevices{}
+		}
 	}
 }
 

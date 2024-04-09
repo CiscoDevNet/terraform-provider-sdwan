@@ -501,7 +501,9 @@ func (data *CiscoThousandEyes) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.VirtualApplications = []CiscoThousandEyesVirtualApplications{}
+		if len(data.VirtualApplications) > 0 {
+			data.VirtualApplications = []CiscoThousandEyesVirtualApplications{}
+		}
 	}
 }
 

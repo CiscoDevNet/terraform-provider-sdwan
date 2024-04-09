@@ -448,7 +448,9 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					return true
 				})
 			} else {
-				item.MatchEntries = []CustomControlTopologyPolicyDefinitionSequencesMatchEntries{}
+				if len(item.MatchEntries) > 0 {
+					item.MatchEntries = []CustomControlTopologyPolicyDefinitionSequencesMatchEntries{}
+				}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]CustomControlTopologyPolicyDefinitionSequencesActionEntries, 0)
@@ -551,7 +553,9 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 							return true
 						})
 					} else {
-						cItem.SetParameters = []CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters{}
+						if len(cItem.SetParameters) > 0 {
+							cItem.SetParameters = []CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters{}
+						}
 					}
 					if ccValue := cv.Get("parameter.ref"); ccValue.Exists() && cItem.Type.ValueString() == "exportTo" {
 						cItem.ExportToVpnListId = types.StringValue(ccValue.String())
@@ -562,13 +566,17 @@ func (data *CustomControlTopologyPolicyDefinition) fromBody(ctx context.Context,
 					return true
 				})
 			} else {
-				item.ActionEntries = []CustomControlTopologyPolicyDefinitionSequencesActionEntries{}
+				if len(item.ActionEntries) > 0 {
+					item.ActionEntries = []CustomControlTopologyPolicyDefinitionSequencesActionEntries{}
+				}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
 	} else {
-		data.Sequences = []CustomControlTopologyPolicyDefinitionSequences{}
+		if len(data.Sequences) > 0 {
+			data.Sequences = []CustomControlTopologyPolicyDefinitionSequences{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

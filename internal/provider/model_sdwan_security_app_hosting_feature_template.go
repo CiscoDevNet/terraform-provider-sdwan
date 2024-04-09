@@ -412,7 +412,9 @@ func (data *SecurityAppHosting) fromBody(ctx context.Context, res gjson.Result) 
 			return true
 		})
 	} else {
-		data.VirtualApplications = []SecurityAppHostingVirtualApplications{}
+		if len(data.VirtualApplications) > 0 {
+			data.VirtualApplications = []SecurityAppHostingVirtualApplications{}
+		}
 	}
 }
 

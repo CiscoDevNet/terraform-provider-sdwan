@@ -2538,7 +2538,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Ipv4SecondaryAddresses = []CiscoVPNInterfaceIpv4SecondaryAddresses{}
+		if len(data.Ipv4SecondaryAddresses) > 0 {
+			data.Ipv4SecondaryAddresses = []CiscoVPNInterfaceIpv4SecondaryAddresses{}
+		}
 	}
 	if value := res.Get(path + "ip.dhcp-client.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2648,7 +2650,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Ipv6SecondaryAddresses = []CiscoVPNInterfaceIpv6SecondaryAddresses{}
+		if len(data.Ipv6SecondaryAddresses) > 0 {
+			data.Ipv6SecondaryAddresses = []CiscoVPNInterfaceIpv6SecondaryAddresses{}
+		}
 	}
 	if value := res.Get(path + "ipv6.access-list.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6AccessLists = make([]CiscoVPNInterfaceIpv6AccessLists, 0)
@@ -2698,7 +2702,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Ipv6AccessLists = []CiscoVPNInterfaceIpv6AccessLists{}
+		if len(data.Ipv6AccessLists) > 0 {
+			data.Ipv6AccessLists = []CiscoVPNInterfaceIpv6AccessLists{}
+		}
 	}
 	if value := res.Get(path + "dhcp-helper.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -2770,7 +2776,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Ipv6DhcpHelpers = []CiscoVPNInterfaceIpv6DhcpHelpers{}
+		if len(data.Ipv6DhcpHelpers) > 0 {
+			data.Ipv6DhcpHelpers = []CiscoVPNInterfaceIpv6DhcpHelpers{}
+		}
 	}
 	if value := res.Get(path + "tracker.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -3127,7 +3135,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.StaticNat66Entries = []CiscoVPNInterfaceStaticNat66Entries{}
+		if len(data.StaticNat66Entries) > 0 {
+			data.StaticNat66Entries = []CiscoVPNInterfaceStaticNat66Entries{}
+		}
 	}
 	if value := res.Get(path + "nat.static.vipValue"); len(value.Array()) > 0 {
 		data.StaticNatEntries = make([]CiscoVPNInterfaceStaticNatEntries, 0)
@@ -3218,7 +3228,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.StaticNatEntries = []CiscoVPNInterfaceStaticNatEntries{}
+		if len(data.StaticNatEntries) > 0 {
+			data.StaticNatEntries = []CiscoVPNInterfaceStaticNatEntries{}
+		}
 	}
 	if value := res.Get(path + "nat.static-port-forward.vipValue"); len(value.Array()) > 0 {
 		data.StaticPortForwardEntries = make([]CiscoVPNInterfaceStaticPortForwardEntries, 0)
@@ -3366,7 +3378,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.StaticPortForwardEntries = []CiscoVPNInterfaceStaticPortForwardEntries{}
+		if len(data.StaticPortForwardEntries) > 0 {
+			data.StaticPortForwardEntries = []CiscoVPNInterfaceStaticPortForwardEntries{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.enable-core-region.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3489,7 +3503,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.TunnelInterfaceEncapsulations = []CiscoVPNInterfaceTunnelInterfaceEncapsulations{}
+		if len(data.TunnelInterfaceEncapsulations) > 0 {
+			data.TunnelInterfaceEncapsulations = []CiscoVPNInterfaceTunnelInterfaceEncapsulations{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.border.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -4793,7 +4809,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.AccessLists = []CiscoVPNInterfaceAccessLists{}
+		if len(data.AccessLists) > 0 {
+			data.AccessLists = []CiscoVPNInterfaceAccessLists{}
+		}
 	}
 	if value := res.Get(path + "arp.ip.vipValue"); len(value.Array()) > 0 {
 		data.StaticArps = make([]CiscoVPNInterfaceStaticArps, 0)
@@ -4846,7 +4864,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.StaticArps = []CiscoVPNInterfaceStaticArps{}
+		if len(data.StaticArps) > 0 {
+			data.StaticArps = []CiscoVPNInterfaceStaticArps{}
+		}
 	}
 	if value := res.Get(path + "vrrp.vipValue"); len(value.Array()) > 0 {
 		data.Ipv4Vrrps = make([]CiscoVPNInterfaceIpv4Vrrps, 0)
@@ -5000,7 +5020,9 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			} else {
-				item.Ipv4SecondaryAddresses = []CiscoVPNInterfaceIpv4VrrpsIpv4SecondaryAddresses{}
+				if len(item.Ipv4SecondaryAddresses) > 0 {
+					item.Ipv4SecondaryAddresses = []CiscoVPNInterfaceIpv4VrrpsIpv4SecondaryAddresses{}
+				}
 			}
 			if cValue := v.Get("tloc-change-pref.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -5107,13 +5129,17 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			} else {
-				item.TrackingObjects = []CiscoVPNInterfaceIpv4VrrpsTrackingObjects{}
+				if len(item.TrackingObjects) > 0 {
+					item.TrackingObjects = []CiscoVPNInterfaceIpv4VrrpsTrackingObjects{}
+				}
 			}
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
 			return true
 		})
 	} else {
-		data.Ipv4Vrrps = []CiscoVPNInterfaceIpv4Vrrps{}
+		if len(data.Ipv4Vrrps) > 0 {
+			data.Ipv4Vrrps = []CiscoVPNInterfaceIpv4Vrrps{}
+		}
 	}
 	if value := res.Get(path + "ipv6-vrrp.vipValue"); len(value.Array()) > 0 {
 		data.Ipv6Vrrps = make([]CiscoVPNInterfaceIpv6Vrrps, 0)
@@ -5270,13 +5296,17 @@ func (data *CiscoVPNInterface) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			} else {
-				item.Ipv6Addresses = []CiscoVPNInterfaceIpv6VrrpsIpv6Addresses{}
+				if len(item.Ipv6Addresses) > 0 {
+					item.Ipv6Addresses = []CiscoVPNInterfaceIpv6VrrpsIpv6Addresses{}
+				}
 			}
 			data.Ipv6Vrrps = append(data.Ipv6Vrrps, item)
 			return true
 		})
 	} else {
-		data.Ipv6Vrrps = []CiscoVPNInterfaceIpv6Vrrps{}
+		if len(data.Ipv6Vrrps) > 0 {
+			data.Ipv6Vrrps = []CiscoVPNInterfaceIpv6Vrrps{}
+		}
 	}
 	if value := res.Get(path + "trustsec.propagate.sgt.vipType"); value.Exists() {
 		if value.String() == "variableName" {

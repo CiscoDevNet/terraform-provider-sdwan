@@ -78,7 +78,9 @@ func (data *ASPathListPolicyObject) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	} else {
-		data.Entries = []ASPathListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []ASPathListPolicyObjectEntries{}
+		}
 	}
 }
 

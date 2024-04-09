@@ -212,7 +212,9 @@ func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	} else {
-		data.Collectors = []CflowdPolicyDefinitionCollectors{}
+		if len(data.Collectors) > 0 {
+			data.Collectors = []CflowdPolicyDefinitionCollectors{}
+		}
 	}
 }
 

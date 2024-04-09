@@ -1829,7 +1829,9 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Vdsl = []VPNInterfaceDSLPPPoEVdsl{}
+		if len(data.Vdsl) > 0 {
+			data.Vdsl = []VPNInterfaceDSLPPPoEVdsl{}
+		}
 	}
 	if value := res.Get(path + "bridge-dot1q.encap.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2199,7 +2201,9 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Encapsulation = []VPNInterfaceDSLPPPoEEncapsulation{}
+		if len(data.Encapsulation) > 0 {
+			data.Encapsulation = []VPNInterfaceDSLPPPoEEncapsulation{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -3060,7 +3064,9 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.PortForward = []VPNInterfaceDSLPPPoEPortForward{}
+		if len(data.PortForward) > 0 {
+			data.PortForward = []VPNInterfaceDSLPPPoEPortForward{}
+		}
 	}
 	if value := res.Get(path + "qos-adaptive.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3373,7 +3379,9 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.AccessList = []VPNInterfaceDSLPPPoEAccessList{}
+		if len(data.AccessList) > 0 {
+			data.AccessList = []VPNInterfaceDSLPPPoEAccessList{}
+		}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policer = make([]VPNInterfaceDSLPPPoEPolicer, 0)
@@ -3420,7 +3428,9 @@ func (data *VPNInterfaceDSLPPPoE) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Policer = []VPNInterfaceDSLPPPoEPolicer{}
+		if len(data.Policer) > 0 {
+			data.Policer = []VPNInterfaceDSLPPPoEPolicer{}
+		}
 	}
 	if value := res.Get(path + "mtu.vipType"); value.Exists() {
 		if value.String() == "variableName" {

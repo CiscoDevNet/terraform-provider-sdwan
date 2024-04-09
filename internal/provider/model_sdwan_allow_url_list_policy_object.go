@@ -78,7 +78,9 @@ func (data *AllowURLListPolicyObject) fromBody(ctx context.Context, res gjson.Re
 			return true
 		})
 	} else {
-		data.Entries = []AllowURLListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []AllowURLListPolicyObjectEntries{}
+		}
 	}
 }
 

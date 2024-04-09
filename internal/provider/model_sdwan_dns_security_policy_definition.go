@@ -203,7 +203,9 @@ func (data *DNSSecurityPolicyDefinition) fromBody(ctx context.Context, res gjson
 			return true
 		})
 	} else {
-		data.TargetVpns = []DNSSecurityPolicyDefinitionTargetVpns{}
+		if len(data.TargetVpns) > 0 {
+			data.TargetVpns = []DNSSecurityPolicyDefinitionTargetVpns{}
+		}
 	}
 	if value := res.Get("definition.dnsCrypt"); value.Exists() {
 		if false && value.String() == "" {

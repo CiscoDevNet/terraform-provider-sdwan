@@ -367,7 +367,9 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					return true
 				})
 			} else {
-				item.MatchEntries = []RoutePolicyDefinitionSequencesMatchEntries{}
+				if len(item.MatchEntries) > 0 {
+					item.MatchEntries = []RoutePolicyDefinitionSequencesMatchEntries{}
+				}
 			}
 			if cValue := v.Get("actions.0.parameter"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]RoutePolicyDefinitionSequencesActionEntries, 0)
@@ -470,13 +472,17 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 					return true
 				})
 			} else {
-				item.ActionEntries = []RoutePolicyDefinitionSequencesActionEntries{}
+				if len(item.ActionEntries) > 0 {
+					item.ActionEntries = []RoutePolicyDefinitionSequencesActionEntries{}
+				}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
 	} else {
-		data.Sequences = []RoutePolicyDefinitionSequences{}
+		if len(data.Sequences) > 0 {
+			data.Sequences = []RoutePolicyDefinitionSequences{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

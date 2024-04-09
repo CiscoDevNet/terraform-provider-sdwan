@@ -637,7 +637,9 @@ func (data *CiscoWirelessLAN) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Ssids = []CiscoWirelessLANSsids{}
+		if len(data.Ssids) > 0 {
+			data.Ssids = []CiscoWirelessLANSsids{}
+		}
 	}
 	if value := res.Get(path + "country.vipType"); value.Exists() {
 		if value.String() == "variableName" {

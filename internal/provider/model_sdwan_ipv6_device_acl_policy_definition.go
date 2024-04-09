@@ -220,7 +220,9 @@ func (data *IPv6DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjs
 					return true
 				})
 			} else {
-				item.MatchEntries = []IPv6DeviceACLPolicyDefinitionSequencesMatchEntries{}
+				if len(item.MatchEntries) > 0 {
+					item.MatchEntries = []IPv6DeviceACLPolicyDefinitionSequencesMatchEntries{}
+				}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]IPv6DeviceACLPolicyDefinitionSequencesActionEntries, 0)
@@ -240,13 +242,17 @@ func (data *IPv6DeviceACLPolicyDefinition) fromBody(ctx context.Context, res gjs
 					return true
 				})
 			} else {
-				item.ActionEntries = []IPv6DeviceACLPolicyDefinitionSequencesActionEntries{}
+				if len(item.ActionEntries) > 0 {
+					item.ActionEntries = []IPv6DeviceACLPolicyDefinitionSequencesActionEntries{}
+				}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
 	} else {
-		data.Sequences = []IPv6DeviceACLPolicyDefinitionSequences{}
+		if len(data.Sequences) > 0 {
+			data.Sequences = []IPv6DeviceACLPolicyDefinitionSequences{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

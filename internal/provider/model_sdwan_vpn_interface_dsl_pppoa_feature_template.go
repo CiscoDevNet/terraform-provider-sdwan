@@ -1947,7 +1947,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Vdsl = []VPNInterfaceDSLPPPoAVdsl{}
+		if len(data.Vdsl) > 0 {
+			data.Vdsl = []VPNInterfaceDSLPPPoAVdsl{}
+		}
 	}
 	if value := res.Get(path + "pvc.vipValue"); len(value.Array()) > 0 {
 		data.Pvc = make([]VPNInterfaceDSLPPPoAPvc, 0)
@@ -2171,7 +2173,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Pvc = []VPNInterfaceDSLPPPoAPvc{}
+		if len(data.Pvc) > 0 {
+			data.Pvc = []VPNInterfaceDSLPPPoAPvc{}
+		}
 	}
 	if value := res.Get(path + "ppp.authentication.method.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2446,7 +2450,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Encapsulation = []VPNInterfaceDSLPPPoAEncapsulation{}
+		if len(data.Encapsulation) > 0 {
+			data.Encapsulation = []VPNInterfaceDSLPPPoAEncapsulation{}
+		}
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -3307,7 +3313,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.PortForward = []VPNInterfaceDSLPPPoAPortForward{}
+		if len(data.PortForward) > 0 {
+			data.PortForward = []VPNInterfaceDSLPPPoAPortForward{}
+		}
 	}
 	if value := res.Get(path + "qos-adaptive.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3620,7 +3628,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.AccessList = []VPNInterfaceDSLPPPoAAccessList{}
+		if len(data.AccessList) > 0 {
+			data.AccessList = []VPNInterfaceDSLPPPoAAccessList{}
+		}
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
 		data.Policer = make([]VPNInterfaceDSLPPPoAPolicer, 0)
@@ -3667,7 +3677,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Policer = []VPNInterfaceDSLPPPoAPolicer{}
+		if len(data.Policer) > 0 {
+			data.Policer = []VPNInterfaceDSLPPPoAPolicer{}
+		}
 	}
 	if value := res.Get(path + "mtu.vipType"); value.Exists() {
 		if value.String() == "variableName" {

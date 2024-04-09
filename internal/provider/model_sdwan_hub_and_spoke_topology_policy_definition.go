@@ -149,19 +149,25 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 							return true
 						})
 					} else {
-						cItem.Hubs = []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs{}
+						if len(cItem.Hubs) > 0 {
+							cItem.Hubs = []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs{}
+						}
 					}
 					item.Spokes = append(item.Spokes, cItem)
 					return true
 				})
 			} else {
-				item.Spokes = []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes{}
+				if len(item.Spokes) > 0 {
+					item.Spokes = []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes{}
+				}
 			}
 			data.Topologies = append(data.Topologies, item)
 			return true
 		})
 	} else {
-		data.Topologies = []HubAndSpokeTopologyPolicyDefinitionTopologies{}
+		if len(data.Topologies) > 0 {
+			data.Topologies = []HubAndSpokeTopologyPolicyDefinitionTopologies{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

@@ -579,7 +579,9 @@ func (data *CEdgePIM) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.RpAnnounceFields = []CEdgePIMRpAnnounceFields{}
+		if len(data.RpAnnounceFields) > 0 {
+			data.RpAnnounceFields = []CEdgePIMRpAnnounceFields{}
+		}
 	}
 	if value := res.Get(path + "pim.send-rp-discovery.if-name.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -689,7 +691,9 @@ func (data *CEdgePIM) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.RpCandidates = []CEdgePIMRpCandidates{}
+		if len(data.RpCandidates) > 0 {
+			data.RpCandidates = []CEdgePIMRpCandidates{}
+		}
 	}
 	if value := res.Get(path + "pim.bsr-candidate.bsr-interface-name.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -894,7 +898,9 @@ func (data *CEdgePIM) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.RpAddresses = []CEdgePIMRpAddresses{}
+		if len(data.RpAddresses) > 0 {
+			data.RpAddresses = []CEdgePIMRpAddresses{}
+		}
 	}
 	if value := res.Get(path + "pim.spt-threshold.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -985,7 +991,9 @@ func (data *CEdgePIM) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Interfaces = []CEdgePIMInterfaces{}
+		if len(data.Interfaces) > 0 {
+			data.Interfaces = []CEdgePIMInterfaces{}
+		}
 	}
 }
 

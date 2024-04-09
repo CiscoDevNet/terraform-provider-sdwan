@@ -78,7 +78,9 @@ func (data *ColorListPolicyObject) fromBody(ctx context.Context, res gjson.Resul
 			return true
 		})
 	} else {
-		data.Entries = []ColorListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []ColorListPolicyObjectEntries{}
+		}
 	}
 }
 

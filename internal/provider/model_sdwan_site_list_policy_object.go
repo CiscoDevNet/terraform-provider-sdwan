@@ -78,7 +78,9 @@ func (data *SiteListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Entries = []SiteListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []SiteListPolicyObjectEntries{}
+		}
 	}
 }
 

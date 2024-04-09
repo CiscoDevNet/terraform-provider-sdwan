@@ -78,7 +78,9 @@ func (data *DataIPv6PrefixListPolicyObject) fromBody(ctx context.Context, res gj
 			return true
 		})
 	} else {
-		data.Entries = []DataIPv6PrefixListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []DataIPv6PrefixListPolicyObjectEntries{}
+		}
 	}
 }
 

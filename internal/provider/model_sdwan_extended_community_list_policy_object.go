@@ -78,7 +78,9 @@ func (data *ExtendedCommunityListPolicyObject) fromBody(ctx context.Context, res
 			return true
 		})
 	} else {
-		data.Entries = []ExtendedCommunityListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []ExtendedCommunityListPolicyObjectEntries{}
+		}
 	}
 }
 

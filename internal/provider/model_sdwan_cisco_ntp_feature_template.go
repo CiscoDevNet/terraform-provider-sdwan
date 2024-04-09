@@ -443,7 +443,9 @@ func (data *CiscoNTP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.AuthenticationKeys = []CiscoNTPAuthenticationKeys{}
+		if len(data.AuthenticationKeys) > 0 {
+			data.AuthenticationKeys = []CiscoNTPAuthenticationKeys{}
+		}
 	}
 	if value := res.Get(path + "server.vipValue"); len(value.Array()) > 0 {
 		data.Servers = make([]CiscoNTPServers, 0)
@@ -572,7 +574,9 @@ func (data *CiscoNTP) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Servers = []CiscoNTPServers{}
+		if len(data.Servers) > 0 {
+			data.Servers = []CiscoNTPServers{}
+		}
 	}
 }
 

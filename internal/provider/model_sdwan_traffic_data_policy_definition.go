@@ -539,7 +539,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					return true
 				})
 			} else {
-				item.MatchEntries = []TrafficDataPolicyDefinitionSequencesMatchEntries{}
+				if len(item.MatchEntries) > 0 {
+					item.MatchEntries = []TrafficDataPolicyDefinitionSequencesMatchEntries{}
+				}
 			}
 			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.ActionEntries = make([]TrafficDataPolicyDefinitionSequencesActionEntries, 0)
@@ -775,7 +777,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							return true
 						})
 					} else {
-						cItem.SetParameters = []TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters{}
+						if len(cItem.SetParameters) > 0 {
+							cItem.SetParameters = []TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters{}
+						}
 					}
 					if ccValue := cv.Get("parameter"); ccValue.Exists() && len(ccValue.Array()) > 0 && cItem.Type.ValueString() == "nat" {
 						cItem.NatParameters = make([]TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters, 0)
@@ -804,19 +808,25 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 							return true
 						})
 					} else {
-						cItem.NatParameters = []TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters{}
+						if len(cItem.NatParameters) > 0 {
+							cItem.NatParameters = []TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters{}
+						}
 					}
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
 				})
 			} else {
-				item.ActionEntries = []TrafficDataPolicyDefinitionSequencesActionEntries{}
+				if len(item.ActionEntries) > 0 {
+					item.ActionEntries = []TrafficDataPolicyDefinitionSequencesActionEntries{}
+				}
 			}
 			data.Sequences = append(data.Sequences, item)
 			return true
 		})
 	} else {
-		data.Sequences = []TrafficDataPolicyDefinitionSequences{}
+		if len(data.Sequences) > 0 {
+			data.Sequences = []TrafficDataPolicyDefinitionSequences{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

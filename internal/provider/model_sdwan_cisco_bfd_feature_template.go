@@ -395,7 +395,9 @@ func (data *CiscoBFD) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Colors = []CiscoBFDColors{}
+		if len(data.Colors) > 0 {
+			data.Colors = []CiscoBFDColors{}
+		}
 	}
 }
 

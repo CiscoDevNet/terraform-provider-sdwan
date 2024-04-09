@@ -78,7 +78,9 @@ func (data *VPNListPolicyObject) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	} else {
-		data.Entries = []VPNListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []VPNListPolicyObjectEntries{}
+		}
 	}
 }
 

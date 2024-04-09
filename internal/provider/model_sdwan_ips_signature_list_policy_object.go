@@ -88,7 +88,9 @@ func (data *IPSSignatureListPolicyObject) fromBody(ctx context.Context, res gjso
 			return true
 		})
 	} else {
-		data.Entries = []IPSSignatureListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []IPSSignatureListPolicyObjectEntries{}
+		}
 	}
 }
 

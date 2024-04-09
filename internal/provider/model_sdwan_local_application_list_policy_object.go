@@ -78,7 +78,9 @@ func (data *LocalApplicationListPolicyObject) fromBody(ctx context.Context, res 
 			return true
 		})
 	} else {
-		data.Entries = []LocalApplicationListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []LocalApplicationListPolicyObjectEntries{}
+		}
 	}
 }
 

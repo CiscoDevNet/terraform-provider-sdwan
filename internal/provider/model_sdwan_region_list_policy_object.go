@@ -78,7 +78,9 @@ func (data *RegionListPolicyObject) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	} else {
-		data.Entries = []RegionListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []RegionListPolicyObjectEntries{}
+		}
 	}
 }
 

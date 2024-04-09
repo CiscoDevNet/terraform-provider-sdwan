@@ -1143,7 +1143,9 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.GeoFencingSmsPhoneNumbers = []CiscoSystemGeoFencingSmsPhoneNumbers{}
+		if len(data.GeoFencingSmsPhoneNumbers) > 0 {
+			data.GeoFencingSmsPhoneNumbers = []CiscoSystemGeoFencingSmsPhoneNumbers{}
+		}
 	}
 	if value := res.Get(path + "device-groups.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
@@ -1652,7 +1654,9 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Trackers = []CiscoSystemTrackers{}
+		if len(data.Trackers) > 0 {
+			data.Trackers = []CiscoSystemTrackers{}
+		}
 	}
 	if value := res.Get(path + "object-track.vipValue"); len(value.Array()) > 0 {
 		data.ObjectTrackers = make([]CiscoSystemObjectTrackers, 0)
@@ -1806,7 +1810,9 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			} else {
-				item.GroupTracksIds = []CiscoSystemObjectTrackersGroupTracksIds{}
+				if len(item.GroupTracksIds) > 0 {
+					item.GroupTracksIds = []CiscoSystemObjectTrackersGroupTracksIds{}
+				}
 			}
 			if cValue := v.Get("boolean.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1831,7 +1837,9 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.ObjectTrackers = []CiscoSystemObjectTrackers{}
+		if len(data.ObjectTrackers) > 0 {
+			data.ObjectTrackers = []CiscoSystemObjectTrackers{}
+		}
 	}
 	if value := res.Get(path + "on-demand.enable.vipType"); value.Exists() {
 		if value.String() == "variableName" {

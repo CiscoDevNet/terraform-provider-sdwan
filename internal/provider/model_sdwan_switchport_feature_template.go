@@ -1054,7 +1054,9 @@ func (data *Switchport) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Interfaces = []SwitchportInterfaces{}
+		if len(data.Interfaces) > 0 {
+			data.Interfaces = []SwitchportInterfaces{}
+		}
 	}
 	if value := res.Get(path + "age-time.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -1145,7 +1147,9 @@ func (data *Switchport) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.StaticMacAddresses = []SwitchportStaticMacAddresses{}
+		if len(data.StaticMacAddresses) > 0 {
+			data.StaticMacAddresses = []SwitchportStaticMacAddresses{}
+		}
 	}
 }
 

@@ -78,7 +78,9 @@ func (data *BlockURLListPolicyObject) fromBody(ctx context.Context, res gjson.Re
 			return true
 		})
 	} else {
-		data.Entries = []BlockURLListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []BlockURLListPolicyObjectEntries{}
+		}
 	}
 }
 

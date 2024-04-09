@@ -1107,7 +1107,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Redistribute = []CiscoOSPFRedistribute{}
+		if len(data.Redistribute) > 0 {
+			data.Redistribute = []CiscoOSPFRedistribute{}
+		}
 	}
 	if value := res.Get(path + "ospf.max-metric.router-lsa.vipValue"); len(value.Array()) > 0 {
 		data.MaxMetricRouterLsa = make([]CiscoOSPFMaxMetricRouterLsa, 0)
@@ -1157,7 +1159,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.MaxMetricRouterLsa = []CiscoOSPFMaxMetricRouterLsa{}
+		if len(data.MaxMetricRouterLsa) > 0 {
+			data.MaxMetricRouterLsa = []CiscoOSPFMaxMetricRouterLsa{}
+		}
 	}
 	if value := res.Get(path + "ospf.route-policy.vipValue"); len(value.Array()) > 0 {
 		data.RoutePolicies = make([]CiscoOSPFRoutePolicies, 0)
@@ -1210,7 +1214,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.RoutePolicies = []CiscoOSPFRoutePolicies{}
+		if len(data.RoutePolicies) > 0 {
+			data.RoutePolicies = []CiscoOSPFRoutePolicies{}
+		}
 	}
 	if value := res.Get(path + "ospf.area.vipValue"); len(value.Array()) > 0 {
 		data.Areas = make([]CiscoOSPFAreas, 0)
@@ -1538,7 +1544,9 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			} else {
-				item.Interfaces = []CiscoOSPFAreasInterfaces{}
+				if len(item.Interfaces) > 0 {
+					item.Interfaces = []CiscoOSPFAreasInterfaces{}
+				}
 			}
 			if cValue := v.Get("range.vipValue"); len(cValue.Array()) > 0 {
 				item.Ranges = make([]CiscoOSPFAreasRanges, 0)
@@ -1610,13 +1618,17 @@ func (data *CiscoOSPF) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			} else {
-				item.Ranges = []CiscoOSPFAreasRanges{}
+				if len(item.Ranges) > 0 {
+					item.Ranges = []CiscoOSPFAreasRanges{}
+				}
 			}
 			data.Areas = append(data.Areas, item)
 			return true
 		})
 	} else {
-		data.Areas = []CiscoOSPFAreas{}
+		if len(data.Areas) > 0 {
+			data.Areas = []CiscoOSPFAreas{}
+		}
 	}
 }
 

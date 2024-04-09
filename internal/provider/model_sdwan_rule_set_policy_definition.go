@@ -319,7 +319,9 @@ func (data *RuleSetPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 			return true
 		})
 	} else {
-		data.Rules = []RuleSetPolicyDefinitionRules{}
+		if len(data.Rules) > 0 {
+			data.Rules = []RuleSetPolicyDefinitionRules{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

@@ -78,7 +78,9 @@ func (data *DomainListPolicyObject) fromBody(ctx context.Context, res gjson.Resu
 			return true
 		})
 	} else {
-		data.Entries = []DomainListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []DomainListPolicyObjectEntries{}
+		}
 	}
 }
 

@@ -106,7 +106,9 @@ func (data *TLOCListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Entries = []TLOCListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []TLOCListPolicyObjectEntries{}
+		}
 	}
 }
 

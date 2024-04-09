@@ -579,7 +579,9 @@ func (data *CiscoDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.StaticLeases = []CiscoDHCPServerStaticLeases{}
+		if len(data.StaticLeases) > 0 {
+			data.StaticLeases = []CiscoDHCPServerStaticLeases{}
+		}
 	}
 	if value := res.Get(path + "options.option-code.vipValue"); len(value.Array()) > 0 {
 		data.Options = make([]CiscoDHCPServerOptions, 0)
@@ -670,7 +672,9 @@ func (data *CiscoDHCPServer) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Options = []CiscoDHCPServerOptions{}
+		if len(data.Options) > 0 {
+			data.Options = []CiscoDHCPServerOptions{}
+		}
 	}
 }
 

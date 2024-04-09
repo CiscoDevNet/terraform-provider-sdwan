@@ -146,7 +146,9 @@ func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	} else {
-		data.Devices = []DeviceDevices{}
+		if len(data.Devices) > 0 {
+			data.Devices = []DeviceDevices{}
+		}
 	}
 }
 

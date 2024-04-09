@@ -171,13 +171,17 @@ func (data *CentralizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 					return true
 				})
 			} else {
-				item.Entries = []CentralizedPolicyDefinitionsEntries{}
+				if len(item.Entries) > 0 {
+					item.Entries = []CentralizedPolicyDefinitionsEntries{}
+				}
 			}
 			data.Definitions = append(data.Definitions, item)
 			return true
 		})
 	} else {
-		data.Definitions = []CentralizedPolicyDefinitions{}
+		if len(data.Definitions) > 0 {
+			data.Definitions = []CentralizedPolicyDefinitions{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

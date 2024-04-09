@@ -87,7 +87,9 @@ func (data *ZoneListPolicyObject) fromBody(ctx context.Context, res gjson.Result
 			return true
 		})
 	} else {
-		data.Entries = []ZoneListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []ZoneListPolicyObjectEntries{}
+		}
 	}
 }
 

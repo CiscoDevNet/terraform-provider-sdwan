@@ -458,7 +458,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 							return true
 						})
 					} else {
-						cItem.{{toGoName .TfName}} = []{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}{}
+						if len(cItem.{{toGoName .TfName}}) > 0 {
+							cItem.{{toGoName .TfName}} = []{{$name}}{{$cname}}{{$ccname}}{{toGoName .TfName}}{}
+						}
 					}
 					{{- end}}
 					{{- end}}
@@ -467,7 +469,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 					return true
 				})
 			} else {
-				item.{{toGoName .TfName}} = []{{$name}}{{$cname}}{{toGoName .TfName}}{}
+				if len(item.{{toGoName .TfName}}) > 0 {
+					item.{{toGoName .TfName}} = []{{$name}}{{$cname}}{{toGoName .TfName}}{}
+				}
 			}
 			{{- end}}
 			{{- end}}
@@ -476,7 +480,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	} else {
-		data.{{toGoName .TfName}} = []{{$name}}{{toGoName .TfName}}{}
+		if len(data.{{toGoName .TfName}}) > 0 {
+			data.{{toGoName .TfName}} = []{{$name}}{{toGoName .TfName}}{}
+		}
 	}
 	{{- end}}
 	{{- end}}

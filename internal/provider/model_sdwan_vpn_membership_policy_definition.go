@@ -103,7 +103,9 @@ func (data *VPNMembershipPolicyDefinition) fromBody(ctx context.Context, res gjs
 			return true
 		})
 	} else {
-		data.Sites = []VPNMembershipPolicyDefinitionSites{}
+		if len(data.Sites) > 0 {
+			data.Sites = []VPNMembershipPolicyDefinitionSites{}
+		}
 	}
 	data.updateVersions(ctx, &state)
 }

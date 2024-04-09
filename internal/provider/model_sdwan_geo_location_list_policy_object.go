@@ -87,7 +87,9 @@ func (data *GeoLocationListPolicyObject) fromBody(ctx context.Context, res gjson
 			return true
 		})
 	} else {
-		data.Entries = []GeoLocationListPolicyObjectEntries{}
+		if len(data.Entries) > 0 {
+			data.Entries = []GeoLocationListPolicyObjectEntries{}
+		}
 	}
 }
 

@@ -311,7 +311,9 @@ func (data *CellularController) fromBody(ctx context.Context, res gjson.Result) 
 			return true
 		})
 	} else {
-		data.DataProfiles = []CellularControllerDataProfiles{}
+		if len(data.DataProfiles) > 0 {
+			data.DataProfiles = []CellularControllerDataProfiles{}
+		}
 	}
 	if value := res.Get(path + "lte.sim.primary.slot.vipType"); value.Exists() {
 		if value.String() == "variableName" {
