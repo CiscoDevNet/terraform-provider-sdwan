@@ -30,220 +30,208 @@ import (
 )
 
 type VPNInterfaceDSLPPPoA struct {
-	Id                                   types.String                        `tfsdk:"id"`
-	Version                              types.Int64                         `tfsdk:"version"`
-	TemplateType                         types.String                        `tfsdk:"template_type"`
-	Name                                 types.String                        `tfsdk:"name"`
-	Description                          types.String                        `tfsdk:"description"`
-	DeviceTypes                          types.Set                           `tfsdk:"device_types"`
-	AtmSubInterfaceName                  types.String                        `tfsdk:"atm_sub_interface_name"`
-	AtmSubInterfaceNameVariable          types.String                        `tfsdk:"atm_sub_interface_name_variable"`
-	Shutdown                             types.Bool                          `tfsdk:"shutdown"`
-	ShutdownVariable                     types.String                        `tfsdk:"shutdown_variable"`
-	InterfaceDescription                 types.String                        `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable         types.String                        `tfsdk:"interface_description_variable"`
-	Vdsl                                 []VPNInterfaceDSLPPPoAVdsl          `tfsdk:"vdsl"`
-	Pvc                                  []VPNInterfaceDSLPPPoAPvc           `tfsdk:"pvc"`
-	PppAuthenticationProtocol            types.String                        `tfsdk:"ppp_authentication_protocol"`
-	PppAuthenticationProtocolVariable    types.String                        `tfsdk:"ppp_authentication_protocol_variable"`
-	PppAuthenticationProtocolPap         types.Bool                          `tfsdk:"ppp_authentication_protocol_pap"`
-	PppAuthenticationProtocolPapVariable types.String                        `tfsdk:"ppp_authentication_protocol_pap_variable"`
-	AuthenticationType                   types.String                        `tfsdk:"authentication_type"`
-	AuthenticationTypeVariable           types.String                        `tfsdk:"authentication_type_variable"`
-	ChapHostname                         types.String                        `tfsdk:"chap_hostname"`
-	ChapHostnameVariable                 types.String                        `tfsdk:"chap_hostname_variable"`
-	ChapPppAuthPassword                  types.String                        `tfsdk:"chap_ppp_auth_password"`
-	ChapPppAuthPasswordVariable          types.String                        `tfsdk:"chap_ppp_auth_password_variable"`
-	PapUsername                          types.String                        `tfsdk:"pap_username"`
-	PapUsernameVariable                  types.String                        `tfsdk:"pap_username_variable"`
-	PapPassword                          types.Bool                          `tfsdk:"pap_password"`
-	PapPppAuthPassword                   types.String                        `tfsdk:"pap_ppp_auth_password"`
-	PapPppAuthPasswordVariable           types.String                        `tfsdk:"pap_ppp_auth_password_variable"`
-	EnableCoreRegion                     types.Bool                          `tfsdk:"enable_core_region"`
-	EnableCoreRegionVariable             types.String                        `tfsdk:"enable_core_region_variable"`
-	CoreRegion                           types.String                        `tfsdk:"core_region"`
-	CoreRegionVariable                   types.String                        `tfsdk:"core_region_variable"`
-	SecondaryRegion                      types.String                        `tfsdk:"secondary_region"`
-	SecondaryRegionVariable              types.String                        `tfsdk:"secondary_region_variable"`
-	Encapsulation                        []VPNInterfaceDSLPPPoAEncapsulation `tfsdk:"encapsulation"`
-	Groups                               types.Set                           `tfsdk:"groups"`
-	GroupsVariable                       types.String                        `tfsdk:"groups_variable"`
-	Border                               types.Bool                          `tfsdk:"border"`
-	BorderVariable                       types.String                        `tfsdk:"border_variable"`
-	PerTunnelQos                         types.Bool                          `tfsdk:"per_tunnel_qos"`
-	PerTunnelQosVariable                 types.String                        `tfsdk:"per_tunnel_qos_variable"`
-	PerTunnelQosAggregator               types.Bool                          `tfsdk:"per_tunnel_qos_aggregator"`
-	PerTunnelQosAggregatorVariable       types.String                        `tfsdk:"per_tunnel_qos_aggregator_variable"`
-	Color                                types.String                        `tfsdk:"color"`
-	ColorVariable                        types.String                        `tfsdk:"color_variable"`
-	LastResortCircuit                    types.Bool                          `tfsdk:"last_resort_circuit"`
-	LastResortCircuitVariable            types.String                        `tfsdk:"last_resort_circuit_variable"`
-	LowBandwidthLink                     types.Bool                          `tfsdk:"low_bandwidth_link"`
-	LowBandwidthLinkVariable             types.String                        `tfsdk:"low_bandwidth_link_variable"`
-	TunnelTcpMss                         types.Int64                         `tfsdk:"tunnel_tcp_mss"`
-	TunnelTcpMssVariable                 types.String                        `tfsdk:"tunnel_tcp_mss_variable"`
-	ClearDontFragment                    types.Bool                          `tfsdk:"clear_dont_fragment"`
-	ClearDontFragmentVariable            types.String                        `tfsdk:"clear_dont_fragment_variable"`
-	NetworkBroadcast1                    types.Bool                          `tfsdk:"network_broadcast_1"`
-	NetworkBroadcast1Variable            types.String                        `tfsdk:"network_broadcast_1_variable"`
-	MaxControlConnections                types.Int64                         `tfsdk:"max_control_connections"`
-	MaxControlConnectionsVariable        types.String                        `tfsdk:"max_control_connections_variable"`
-	ControlConnections                   types.Bool                          `tfsdk:"control_connections"`
-	ControlConnectionsVariable           types.String                        `tfsdk:"control_connections_variable"`
-	VbondAsStunServer                    types.Bool                          `tfsdk:"vbond_as_stun_server"`
-	VbondAsStunServerVariable            types.String                        `tfsdk:"vbond_as_stun_server_variable"`
-	ExcludeControllerGroupList           types.Set                           `tfsdk:"exclude_controller_group_list"`
-	ExcludeControllerGroupListVariable   types.String                        `tfsdk:"exclude_controller_group_list_variable"`
-	VmanageConnectionPreference          types.Int64                         `tfsdk:"vmanage_connection_preference"`
-	VmanageConnectionPreferenceVariable  types.String                        `tfsdk:"vmanage_connection_preference_variable"`
-	PortHop                              types.Bool                          `tfsdk:"port_hop"`
-	PortHopVariable                      types.String                        `tfsdk:"port_hop_variable"`
-	Restrict                             types.Bool                          `tfsdk:"restrict"`
-	RestrictVariable                     types.String                        `tfsdk:"restrict_variable"`
-	Carrier                              types.String                        `tfsdk:"carrier"`
-	CarrierVariable                      types.String                        `tfsdk:"carrier_variable"`
-	NatRefreshInterval                   types.Int64                         `tfsdk:"nat_refresh_interval"`
-	NatRefreshIntervalVariable           types.String                        `tfsdk:"nat_refresh_interval_variable"`
-	HelloInterval                        types.Int64                         `tfsdk:"hello_interval"`
-	HelloIntervalVariable                types.String                        `tfsdk:"hello_interval_variable"`
-	HelloTolerance                       types.Int64                         `tfsdk:"hello_tolerance"`
-	HelloToleranceVariable               types.String                        `tfsdk:"hello_tolerance_variable"`
-	BindLoopbackTunnel                   types.String                        `tfsdk:"bind_loopback_tunnel"`
-	BindLoopbackTunnelVariable           types.String                        `tfsdk:"bind_loopback_tunnel_variable"`
-	All                                  types.Bool                          `tfsdk:"all"`
-	AllVariable                          types.String                        `tfsdk:"all_variable"`
-	NetworkBroadcast2                    types.Bool                          `tfsdk:"network_broadcast_2"`
-	NetworkBroadcast2Variable            types.String                        `tfsdk:"network_broadcast_2_variable"`
-	Bgp                                  types.Bool                          `tfsdk:"bgp"`
-	BgpVariable                          types.String                        `tfsdk:"bgp_variable"`
-	Dhcp                                 types.Bool                          `tfsdk:"dhcp"`
-	DhcpVariable                         types.String                        `tfsdk:"dhcp_variable"`
-	Dns                                  types.Bool                          `tfsdk:"dns"`
-	DnsVariable                          types.String                        `tfsdk:"dns_variable"`
-	Icmp                                 types.Bool                          `tfsdk:"icmp"`
-	IcmpVariable                         types.String                        `tfsdk:"icmp_variable"`
-	Ssh                                  types.Bool                          `tfsdk:"ssh"`
-	SshVariable                          types.String                        `tfsdk:"ssh_variable"`
-	Netconf                              types.Bool                          `tfsdk:"netconf"`
-	NetconfVariable                      types.String                        `tfsdk:"netconf_variable"`
-	Ospf                                 types.Bool                          `tfsdk:"ospf"`
-	OspfVariable                         types.String                        `tfsdk:"ospf_variable"`
-	Stun                                 types.Bool                          `tfsdk:"stun"`
-	StunVariable                         types.String                        `tfsdk:"stun_variable"`
-	Snmp                                 types.Bool                          `tfsdk:"snmp"`
-	SnmpVariable                         types.String                        `tfsdk:"snmp_variable"`
-	Https                                types.Bool                          `tfsdk:"https"`
-	HttpsVariable                        types.String                        `tfsdk:"https_variable"`
-	Nat                                  types.Bool                          `tfsdk:"nat"`
-	NatVariable                          types.String                        `tfsdk:"nat_variable"`
-	RefreshMode                          types.String                        `tfsdk:"refresh_mode"`
-	RefreshModeVariable                  types.String                        `tfsdk:"refresh_mode_variable"`
-	UdpTimeout                           types.Int64                         `tfsdk:"udp_timeout"`
-	UdpTimeoutVariable                   types.String                        `tfsdk:"udp_timeout_variable"`
-	TcpTimeout                           types.Int64                         `tfsdk:"tcp_timeout"`
-	TcpTimeoutVariable                   types.String                        `tfsdk:"tcp_timeout_variable"`
-	BlockIcmpError                       types.Bool                          `tfsdk:"block_icmp_error"`
-	BlockIcmpErrorVariable               types.String                        `tfsdk:"block_icmp_error_variable"`
-	RespondToPing                        types.Bool                          `tfsdk:"respond_to_ping"`
-	RespondToPingVariable                types.String                        `tfsdk:"respond_to_ping_variable"`
-	PortForward                          []VPNInterfaceDSLPPPoAPortForward   `tfsdk:"port_forward"`
-	AdaptiveQos                          types.Bool                          `tfsdk:"adaptive_qos"`
-	AdaptPeriod                          types.Int64                         `tfsdk:"adapt_period"`
-	AdaptPeriodVariable                  types.String                        `tfsdk:"adapt_period_variable"`
-	ShapingRateDownstreamDefault         types.Int64                         `tfsdk:"shaping_rate_downstream_default"`
-	ShapingRateDownstreamDefaultVariable types.String                        `tfsdk:"shaping_rate_downstream_default_variable"`
-	ShapingRateDownstreamMin             types.Int64                         `tfsdk:"shaping_rate_downstream_min"`
-	ShapingRateDownstreamMinVariable     types.String                        `tfsdk:"shaping_rate_downstream_min_variable"`
-	ShapingRateDownstreamMax             types.Int64                         `tfsdk:"shaping_rate_downstream_max"`
-	ShapingRateDownstreamMaxVariable     types.String                        `tfsdk:"shaping_rate_downstream_max_variable"`
-	ShapingRateUpstreamDefault           types.Int64                         `tfsdk:"shaping_rate_upstream_default"`
-	ShapingRateUpstreamDefaultVariable   types.String                        `tfsdk:"shaping_rate_upstream_default_variable"`
-	ShapingRateUpstreamMin               types.Int64                         `tfsdk:"shaping_rate_upstream_min"`
-	ShapingRateUpstreamMinVariable       types.String                        `tfsdk:"shaping_rate_upstream_min_variable"`
-	ShapingRateUpstreamMax               types.Int64                         `tfsdk:"shaping_rate_upstream_max"`
-	ShapingRateUpstreamMaxVariable       types.String                        `tfsdk:"shaping_rate_upstream_max_variable"`
-	ShapingRate                          types.Int64                         `tfsdk:"shaping_rate"`
-	ShapingRateVariable                  types.String                        `tfsdk:"shaping_rate_variable"`
-	QosMap                               types.String                        `tfsdk:"qos_map"`
-	QosMapVariable                       types.String                        `tfsdk:"qos_map_variable"`
-	VpnQosMap                            types.String                        `tfsdk:"vpn_qos_map"`
-	VpnQosMapVariable                    types.String                        `tfsdk:"vpn_qos_map_variable"`
-	BandwidthUpstream                    types.Int64                         `tfsdk:"bandwidth_upstream"`
-	BandwidthUpstreamVariable            types.String                        `tfsdk:"bandwidth_upstream_variable"`
-	BandwidthDownstream                  types.Int64                         `tfsdk:"bandwidth_downstream"`
-	BandwidthDownstreamVariable          types.String                        `tfsdk:"bandwidth_downstream_variable"`
-	WriteRule                            types.String                        `tfsdk:"write_rule"`
-	WriteRuleVariable                    types.String                        `tfsdk:"write_rule_variable"`
-	AccessList                           []VPNInterfaceDSLPPPoAAccessList    `tfsdk:"access_list"`
-	Policer                              []VPNInterfaceDSLPPPoAPolicer       `tfsdk:"policer"`
-	IpMtu                                types.Int64                         `tfsdk:"ip_mtu"`
-	IpMtuVariable                        types.String                        `tfsdk:"ip_mtu_variable"`
-	TcpMss                               types.Int64                         `tfsdk:"tcp_mss"`
-	TcpMssVariable                       types.String                        `tfsdk:"tcp_mss_variable"`
-	TlocExtension                        types.String                        `tfsdk:"tloc_extension"`
-	TlocExtensionVariable                types.String                        `tfsdk:"tloc_extension_variable"`
-	Tracker                              types.Set                           `tfsdk:"tracker"`
-	TrackerVariable                      types.String                        `tfsdk:"tracker_variable"`
-	IpDirectedBroadcast                  types.Bool                          `tfsdk:"ip_directed_broadcast"`
-	IpDirectedBroadcastVariable          types.String                        `tfsdk:"ip_directed_broadcast_variable"`
+	Id                                                 types.String                                        `tfsdk:"id"`
+	Version                                            types.Int64                                         `tfsdk:"version"`
+	TemplateType                                       types.String                                        `tfsdk:"template_type"`
+	Name                                               types.String                                        `tfsdk:"name"`
+	Description                                        types.String                                        `tfsdk:"description"`
+	DeviceTypes                                        types.Set                                           `tfsdk:"device_types"`
+	AtmSubInterfaceName                                types.String                                        `tfsdk:"atm_sub_interface_name"`
+	AtmSubInterfaceNameVariable                        types.String                                        `tfsdk:"atm_sub_interface_name_variable"`
+	Shutdown                                           types.Bool                                          `tfsdk:"shutdown"`
+	ShutdownVariable                                   types.String                                        `tfsdk:"shutdown_variable"`
+	AtmDescription                                     types.String                                        `tfsdk:"atm_description"`
+	AtmDescriptionVariable                             types.String                                        `tfsdk:"atm_description_variable"`
+	VdslConfiguration                                  []VPNInterfaceDSLPPPoAVdslConfiguration             `tfsdk:"vdsl_configuration"`
+	Pvc                                                []VPNInterfaceDSLPPPoAPvc                           `tfsdk:"pvc"`
+	PppAuthenticationProtocol                          types.String                                        `tfsdk:"ppp_authentication_protocol"`
+	PppAuthenticationProtocolVariable                  types.String                                        `tfsdk:"ppp_authentication_protocol_variable"`
+	PppAuthenticationProtocolPap                       types.Bool                                          `tfsdk:"ppp_authentication_protocol_pap"`
+	ChapHostname                                       types.String                                        `tfsdk:"chap_hostname"`
+	ChapHostnameVariable                               types.String                                        `tfsdk:"chap_hostname_variable"`
+	ChapPppAuthPassword                                types.String                                        `tfsdk:"chap_ppp_auth_password"`
+	ChapPppAuthPasswordVariable                        types.String                                        `tfsdk:"chap_ppp_auth_password_variable"`
+	PapUsername                                        types.String                                        `tfsdk:"pap_username"`
+	PapUsernameVariable                                types.String                                        `tfsdk:"pap_username_variable"`
+	PapPassword                                        types.Bool                                          `tfsdk:"pap_password"`
+	PapPppAuthPassword                                 types.String                                        `tfsdk:"pap_ppp_auth_password"`
+	PapPppAuthPasswordVariable                         types.String                                        `tfsdk:"pap_ppp_auth_password_variable"`
+	PppAuthenticationType                              types.String                                        `tfsdk:"ppp_authentication_type"`
+	EnableCoreRegion                                   types.Bool                                          `tfsdk:"enable_core_region"`
+	EnableCoreRegionVariable                           types.String                                        `tfsdk:"enable_core_region_variable"`
+	CoreRegion                                         types.String                                        `tfsdk:"core_region"`
+	CoreRegionVariable                                 types.String                                        `tfsdk:"core_region_variable"`
+	SecondaryRegion                                    types.String                                        `tfsdk:"secondary_region"`
+	SecondaryRegionVariable                            types.String                                        `tfsdk:"secondary_region_variable"`
+	TunnelInterfaceEncapsulations                      []VPNInterfaceDSLPPPoATunnelInterfaceEncapsulations `tfsdk:"tunnel_interface_encapsulations"`
+	TunnelInterfaceGroups                              types.Set                                           `tfsdk:"tunnel_interface_groups"`
+	TunnelInterfaceGroupsVariable                      types.String                                        `tfsdk:"tunnel_interface_groups_variable"`
+	TunnelInterfaceBorder                              types.Bool                                          `tfsdk:"tunnel_interface_border"`
+	TunnelInterfaceBorderVariable                      types.String                                        `tfsdk:"tunnel_interface_border_variable"`
+	PerTunnelQos                                       types.Bool                                          `tfsdk:"per_tunnel_qos"`
+	PerTunnelQosVariable                               types.String                                        `tfsdk:"per_tunnel_qos_variable"`
+	PerTunnelQosAggregator                             types.Bool                                          `tfsdk:"per_tunnel_qos_aggregator"`
+	PerTunnelQosAggregatorVariable                     types.String                                        `tfsdk:"per_tunnel_qos_aggregator_variable"`
+	TunnelQosMode                                      types.String                                        `tfsdk:"tunnel_qos_mode"`
+	TunnelQosModeVariable                              types.String                                        `tfsdk:"tunnel_qos_mode_variable"`
+	TunnelInterfaceColor                               types.String                                        `tfsdk:"tunnel_interface_color"`
+	TunnelInterfaceColorVariable                       types.String                                        `tfsdk:"tunnel_interface_color_variable"`
+	TunnelInterfaceLastResortCircuit                   types.Bool                                          `tfsdk:"tunnel_interface_last_resort_circuit"`
+	TunnelInterfaceLastResortCircuitVariable           types.String                                        `tfsdk:"tunnel_interface_last_resort_circuit_variable"`
+	TunnelInterfaceLowBandwidthLink                    types.Bool                                          `tfsdk:"tunnel_interface_low_bandwidth_link"`
+	TunnelInterfaceLowBandwidthLinkVariable            types.String                                        `tfsdk:"tunnel_interface_low_bandwidth_link_variable"`
+	TunnelInterfaceTunnelTcpMss                        types.Int64                                         `tfsdk:"tunnel_interface_tunnel_tcp_mss"`
+	TunnelInterfaceTunnelTcpMssVariable                types.String                                        `tfsdk:"tunnel_interface_tunnel_tcp_mss_variable"`
+	TunnelInterfaceClearDontFragment                   types.Bool                                          `tfsdk:"tunnel_interface_clear_dont_fragment"`
+	TunnelInterfaceClearDontFragmentVariable           types.String                                        `tfsdk:"tunnel_interface_clear_dont_fragment_variable"`
+	TunnelInterfaceNetworkBroadcast                    types.Bool                                          `tfsdk:"tunnel_interface_network_broadcast"`
+	TunnelInterfaceNetworkBroadcastVariable            types.String                                        `tfsdk:"tunnel_interface_network_broadcast_variable"`
+	TunnelInterfaceMaxControlConnections               types.Int64                                         `tfsdk:"tunnel_interface_max_control_connections"`
+	TunnelInterfaceMaxControlConnectionsVariable       types.String                                        `tfsdk:"tunnel_interface_max_control_connections_variable"`
+	TunnelInterfaceControlConnections                  types.Bool                                          `tfsdk:"tunnel_interface_control_connections"`
+	TunnelInterfaceControlConnectionsVariable          types.String                                        `tfsdk:"tunnel_interface_control_connections_variable"`
+	TunnelInterfaceVbondAsStunServer                   types.Bool                                          `tfsdk:"tunnel_interface_vbond_as_stun_server"`
+	TunnelInterfaceVbondAsStunServerVariable           types.String                                        `tfsdk:"tunnel_interface_vbond_as_stun_server_variable"`
+	TunnelInterfaceExcludeControllerGroupList          types.Set                                           `tfsdk:"tunnel_interface_exclude_controller_group_list"`
+	TunnelInterfaceExcludeControllerGroupListVariable  types.String                                        `tfsdk:"tunnel_interface_exclude_controller_group_list_variable"`
+	TunnelInterfaceVmanageConnectionPreference         types.Int64                                         `tfsdk:"tunnel_interface_vmanage_connection_preference"`
+	TunnelInterfaceVmanageConnectionPreferenceVariable types.String                                        `tfsdk:"tunnel_interface_vmanage_connection_preference_variable"`
+	TunnelInterfacePortHop                             types.Bool                                          `tfsdk:"tunnel_interface_port_hop"`
+	TunnelInterfacePortHopVariable                     types.String                                        `tfsdk:"tunnel_interface_port_hop_variable"`
+	TunnelInterfaceColorRestrict                       types.Bool                                          `tfsdk:"tunnel_interface_color_restrict"`
+	TunnelInterfaceCarrier                             types.String                                        `tfsdk:"tunnel_interface_carrier"`
+	TunnelInterfaceCarrierVariable                     types.String                                        `tfsdk:"tunnel_interface_carrier_variable"`
+	TunnelInterfaceNatRefreshInterval                  types.Int64                                         `tfsdk:"tunnel_interface_nat_refresh_interval"`
+	TunnelInterfaceNatRefreshIntervalVariable          types.String                                        `tfsdk:"tunnel_interface_nat_refresh_interval_variable"`
+	TunnelInterfaceHelloInterval                       types.Int64                                         `tfsdk:"tunnel_interface_hello_interval"`
+	TunnelInterfaceHelloIntervalVariable               types.String                                        `tfsdk:"tunnel_interface_hello_interval_variable"`
+	TunnelInterfaceHelloTolerance                      types.Int64                                         `tfsdk:"tunnel_interface_hello_tolerance"`
+	TunnelInterfaceHelloToleranceVariable              types.String                                        `tfsdk:"tunnel_interface_hello_tolerance_variable"`
+	TunnelInterfaceBindLoopbackTunnel                  types.String                                        `tfsdk:"tunnel_interface_bind_loopback_tunnel"`
+	TunnelInterfaceBindLoopbackTunnelVariable          types.String                                        `tfsdk:"tunnel_interface_bind_loopback_tunnel_variable"`
+	TunnelInterfaceAllowAll                            types.Bool                                          `tfsdk:"tunnel_interface_allow_all"`
+	TunnelInterfaceAllowAllVariable                    types.String                                        `tfsdk:"tunnel_interface_allow_all_variable"`
+	TunnelInterfaceAllowBgp                            types.Bool                                          `tfsdk:"tunnel_interface_allow_bgp"`
+	TunnelInterfaceAllowBgpVariable                    types.String                                        `tfsdk:"tunnel_interface_allow_bgp_variable"`
+	TunnelInterfaceAllowDhcp                           types.Bool                                          `tfsdk:"tunnel_interface_allow_dhcp"`
+	TunnelInterfaceAllowDhcpVariable                   types.String                                        `tfsdk:"tunnel_interface_allow_dhcp_variable"`
+	TunnelInterfaceAllowDns                            types.Bool                                          `tfsdk:"tunnel_interface_allow_dns"`
+	TunnelInterfaceAllowDnsVariable                    types.String                                        `tfsdk:"tunnel_interface_allow_dns_variable"`
+	TunnelInterfaceAllowIcmp                           types.Bool                                          `tfsdk:"tunnel_interface_allow_icmp"`
+	TunnelInterfaceAllowIcmpVariable                   types.String                                        `tfsdk:"tunnel_interface_allow_icmp_variable"`
+	TunnelInterfaceAllowSsh                            types.Bool                                          `tfsdk:"tunnel_interface_allow_ssh"`
+	TunnelInterfaceAllowSshVariable                    types.String                                        `tfsdk:"tunnel_interface_allow_ssh_variable"`
+	TunnelInterfaceAllowNtp                            types.Bool                                          `tfsdk:"tunnel_interface_allow_ntp"`
+	TunnelInterfaceAllowNtpVariable                    types.String                                        `tfsdk:"tunnel_interface_allow_ntp_variable"`
+	TunnelInterfaceAllowNetconf                        types.Bool                                          `tfsdk:"tunnel_interface_allow_netconf"`
+	TunnelInterfaceAllowNetconfVariable                types.String                                        `tfsdk:"tunnel_interface_allow_netconf_variable"`
+	TunnelInterfaceAllowOspf                           types.Bool                                          `tfsdk:"tunnel_interface_allow_ospf"`
+	TunnelInterfaceAllowOspfVariable                   types.String                                        `tfsdk:"tunnel_interface_allow_ospf_variable"`
+	TunnelInterfaceAllowStun                           types.Bool                                          `tfsdk:"tunnel_interface_allow_stun"`
+	TunnelInterfaceAllowStunVariable                   types.String                                        `tfsdk:"tunnel_interface_allow_stun_variable"`
+	TunnelInterfaceAllowSnmp                           types.Bool                                          `tfsdk:"tunnel_interface_allow_snmp"`
+	TunnelInterfaceAllowSnmpVariable                   types.String                                        `tfsdk:"tunnel_interface_allow_snmp_variable"`
+	TunnelInterfaceAllowHttps                          types.Bool                                          `tfsdk:"tunnel_interface_allow_https"`
+	TunnelInterfaceAllowHttpsVariable                  types.String                                        `tfsdk:"tunnel_interface_allow_https_variable"`
+	Nat                                                types.Bool                                          `tfsdk:"nat"`
+	NatRefreshMode                                     types.String                                        `tfsdk:"nat_refresh_mode"`
+	NatRefreshModeVariable                             types.String                                        `tfsdk:"nat_refresh_mode_variable"`
+	NatUdpTimeout                                      types.Int64                                         `tfsdk:"nat_udp_timeout"`
+	NatUdpTimeoutVariable                              types.String                                        `tfsdk:"nat_udp_timeout_variable"`
+	NatTcpTimeout                                      types.Int64                                         `tfsdk:"nat_tcp_timeout"`
+	NatTcpTimeoutVariable                              types.String                                        `tfsdk:"nat_tcp_timeout_variable"`
+	NatBlockIcmpError                                  types.Bool                                          `tfsdk:"nat_block_icmp_error"`
+	NatBlockIcmpErrorVariable                          types.String                                        `tfsdk:"nat_block_icmp_error_variable"`
+	NatResponseToPing                                  types.Bool                                          `tfsdk:"nat_response_to_ping"`
+	NatResponseToPingVariable                          types.String                                        `tfsdk:"nat_response_to_ping_variable"`
+	NatPortForwards                                    []VPNInterfaceDSLPPPoANatPortForwards               `tfsdk:"nat_port_forwards"`
+	QosAdaptivePeriod                                  types.Int64                                         `tfsdk:"qos_adaptive_period"`
+	QosAdaptivePeriodVariable                          types.String                                        `tfsdk:"qos_adaptive_period_variable"`
+	QosAdaptiveBandwidthDownstream                     types.Int64                                         `tfsdk:"qos_adaptive_bandwidth_downstream"`
+	QosAdaptiveBandwidthDownstreamVariable             types.String                                        `tfsdk:"qos_adaptive_bandwidth_downstream_variable"`
+	QosAdaptiveMinDownstream                           types.Int64                                         `tfsdk:"qos_adaptive_min_downstream"`
+	QosAdaptiveMinDownstreamVariable                   types.String                                        `tfsdk:"qos_adaptive_min_downstream_variable"`
+	QosAdaptiveMaxDownstream                           types.Int64                                         `tfsdk:"qos_adaptive_max_downstream"`
+	QosAdaptiveMaxDownstreamVariable                   types.String                                        `tfsdk:"qos_adaptive_max_downstream_variable"`
+	QosAdaptiveBandwidthUpstream                       types.Int64                                         `tfsdk:"qos_adaptive_bandwidth_upstream"`
+	QosAdaptiveBandwidthUpstreamVariable               types.String                                        `tfsdk:"qos_adaptive_bandwidth_upstream_variable"`
+	QosAdaptiveMinUpstream                             types.Int64                                         `tfsdk:"qos_adaptive_min_upstream"`
+	QosAdaptiveMinUpstreamVariable                     types.String                                        `tfsdk:"qos_adaptive_min_upstream_variable"`
+	QosAdaptiveMaxUpstream                             types.Int64                                         `tfsdk:"qos_adaptive_max_upstream"`
+	QosAdaptiveMaxUpstreamVariable                     types.String                                        `tfsdk:"qos_adaptive_max_upstream_variable"`
+	ShapingRate                                        types.Int64                                         `tfsdk:"shaping_rate"`
+	ShapingRateVariable                                types.String                                        `tfsdk:"shaping_rate_variable"`
+	QosMap                                             types.String                                        `tfsdk:"qos_map"`
+	QosMapVariable                                     types.String                                        `tfsdk:"qos_map_variable"`
+	QosMapVpn                                          types.String                                        `tfsdk:"qos_map_vpn"`
+	QosMapVpnVariable                                  types.String                                        `tfsdk:"qos_map_vpn_variable"`
+	BandwidthUpstream                                  types.Int64                                         `tfsdk:"bandwidth_upstream"`
+	BandwidthUpstreamVariable                          types.String                                        `tfsdk:"bandwidth_upstream_variable"`
+	BandwidthDownstream                                types.Int64                                         `tfsdk:"bandwidth_downstream"`
+	BandwidthDownstreamVariable                        types.String                                        `tfsdk:"bandwidth_downstream_variable"`
+	WriteRule                                          types.String                                        `tfsdk:"write_rule"`
+	WriteRuleVariable                                  types.String                                        `tfsdk:"write_rule_variable"`
+	Ipv4AccessLists                                    []VPNInterfaceDSLPPPoAIpv4AccessLists               `tfsdk:"ipv4_access_lists"`
+	Policers                                           []VPNInterfaceDSLPPPoAPolicers                      `tfsdk:"policers"`
+	IpMtu                                              types.Int64                                         `tfsdk:"ip_mtu"`
+	IpMtuVariable                                      types.String                                        `tfsdk:"ip_mtu_variable"`
+	TcpMss                                             types.Int64                                         `tfsdk:"tcp_mss"`
+	TcpMssVariable                                     types.String                                        `tfsdk:"tcp_mss_variable"`
+	TlocExtension                                      types.String                                        `tfsdk:"tloc_extension"`
+	TlocExtensionVariable                              types.String                                        `tfsdk:"tloc_extension_variable"`
+	Tracker                                            types.Set                                           `tfsdk:"tracker"`
+	TrackerVariable                                    types.String                                        `tfsdk:"tracker_variable"`
+	IpDirectedBroadcast                                types.Bool                                          `tfsdk:"ip_directed_broadcast"`
+	IpDirectedBroadcastVariable                        types.String                                        `tfsdk:"ip_directed_broadcast_variable"`
 }
 
-type VPNInterfaceDSLPPPoAVdsl struct {
+type VPNInterfaceDSLPPPoAVdslConfiguration struct {
 	Optional                       types.Bool   `tfsdk:"optional"`
 	ControllerVdslSlot             types.String `tfsdk:"controller_vdsl_slot"`
 	ControllerVdslSlotVariable     types.String `tfsdk:"controller_vdsl_slot_variable"`
 	Sra                            types.Bool   `tfsdk:"sra"`
-	SraVariable                    types.String `tfsdk:"sra_variable"`
 	ModeAdsl1                      types.Bool   `tfsdk:"mode_adsl1"`
-	ModeAdsl1Variable              types.String `tfsdk:"mode_adsl1_variable"`
 	ModeAdsl2                      types.Bool   `tfsdk:"mode_adsl2"`
-	ModeAdsl2Variable              types.String `tfsdk:"mode_adsl2_variable"`
 	ModeAdsl2plus                  types.Bool   `tfsdk:"mode_adsl2plus"`
-	ModeAdsl2plusVariable          types.String `tfsdk:"mode_adsl2plus_variable"`
 	ModeVdsl2                      types.Bool   `tfsdk:"mode_vdsl2"`
-	ModeVdsl2Variable              types.String `tfsdk:"mode_vdsl2_variable"`
 	ModeAnsi                       types.Bool   `tfsdk:"mode_ansi"`
-	ModeAnsiVariable               types.String `tfsdk:"mode_ansi_variable"`
 	VdslModemConfiguration         types.String `tfsdk:"vdsl_modem_configuration"`
 	VdslModemConfigurationVariable types.String `tfsdk:"vdsl_modem_configuration_variable"`
 }
 
 type VPNInterfaceDSLPPPoAPvc struct {
-	Optional                          types.Bool   `tfsdk:"optional"`
-	VpiAndVci                         types.String `tfsdk:"vpi_and_vci"`
-	VpiAndVciVariable                 types.String `tfsdk:"vpi_and_vci_variable"`
-	VbrNrtPeakCellRate                types.Int64  `tfsdk:"vbr_nrt_peak_cell_rate"`
-	VbrNrtPeakCellRateVariable        types.String `tfsdk:"vbr_nrt_peak_cell_rate_variable"`
-	VbrNrtSustainableCellRate         types.Int64  `tfsdk:"vbr_nrt_sustainable_cell_rate"`
-	VbrNrtSustainableCellRateVariable types.String `tfsdk:"vbr_nrt_sustainable_cell_rate_variable"`
-	VbrNrtMaximumBurstSize            types.Int64  `tfsdk:"vbr_nrt_maximum_burst_size"`
-	VbrNrtMaximumBurstSizeVariable    types.String `tfsdk:"vbr_nrt_maximum_burst_size_variable"`
-	VbrRtPeakCellRate                 types.Int64  `tfsdk:"vbr_rt_peak_cell_rate"`
-	VbrRtPeakCellRateVariable         types.String `tfsdk:"vbr_rt_peak_cell_rate_variable"`
-	VbrRtAverageCellRate              types.Int64  `tfsdk:"vbr_rt_average_cell_rate"`
-	VbrRtAverageCellRateVariable      types.String `tfsdk:"vbr_rt_average_cell_rate_variable"`
-	VbrRtMaximumBurstSize             types.Int64  `tfsdk:"vbr_rt_maximum_burst_size"`
-	VbrRtMaximumBurstSizeVariable     types.String `tfsdk:"vbr_rt_maximum_burst_size_variable"`
-	Dialer                            types.Bool   `tfsdk:"dialer"`
-	DialerVariable                    types.String `tfsdk:"dialer_variable"`
-	EncapsulationAal5nlpid            types.Bool   `tfsdk:"encapsulation_aal5nlpid"`
-	EncapsulationAal5nlpidVariable    types.String `tfsdk:"encapsulation_aal5nlpid_variable"`
-	EncapsulationAal5snap             types.Bool   `tfsdk:"encapsulation_aal5snap"`
-	EncapsulationAal5snapVariable     types.String `tfsdk:"encapsulation_aal5snap_variable"`
-	DialerPoolMember                  types.Int64  `tfsdk:"dialer_pool_member"`
-	DialerPoolMemberVariable          types.String `tfsdk:"dialer_pool_member_variable"`
+	Optional                             types.Bool   `tfsdk:"optional"`
+	AtmVpiAndVci                         types.String `tfsdk:"atm_vpi_and_vci"`
+	AtmVpiAndVciVariable                 types.String `tfsdk:"atm_vpi_and_vci_variable"`
+	AtmVbrNrtPeakCellRate                types.Int64  `tfsdk:"atm_vbr_nrt_peak_cell_rate"`
+	AtmVbrNrtPeakCellRateVariable        types.String `tfsdk:"atm_vbr_nrt_peak_cell_rate_variable"`
+	AtmVbrNrtSustainableCellRate         types.Int64  `tfsdk:"atm_vbr_nrt_sustainable_cell_rate"`
+	AtmVbrNrtSustainableCellRateVariable types.String `tfsdk:"atm_vbr_nrt_sustainable_cell_rate_variable"`
+	AtmVbrNrtMaximumBurstSize            types.Int64  `tfsdk:"atm_vbr_nrt_maximum_burst_size"`
+	AtmVbrNrtMaximumBurstSizeVariable    types.String `tfsdk:"atm_vbr_nrt_maximum_burst_size_variable"`
+	AtmVbrRtPeakCellRate                 types.Int64  `tfsdk:"atm_vbr_rt_peak_cell_rate"`
+	AtmVbrRtPeakCellRateVariable         types.String `tfsdk:"atm_vbr_rt_peak_cell_rate_variable"`
+	AtmVbrRtAverageCellRate              types.Int64  `tfsdk:"atm_vbr_rt_average_cell_rate"`
+	AtmVbrRtAverageCellRateVariable      types.String `tfsdk:"atm_vbr_rt_average_cell_rate_variable"`
+	AtmVbrRtMaximumBurstSize             types.Int64  `tfsdk:"atm_vbr_rt_maximum_burst_size"`
+	AtmVbrRtMaximumBurstSizeVariable     types.String `tfsdk:"atm_vbr_rt_maximum_burst_size_variable"`
+	AtmEncapsulationAal5mux              types.Bool   `tfsdk:"atm_encapsulation_aal5mux"`
+	AtmEncapsulationAal5nlpid            types.Bool   `tfsdk:"atm_encapsulation_aal5nlpid"`
+	AtmEncapsulationAal5snap             types.Bool   `tfsdk:"atm_encapsulation_aal5snap"`
+	AtmDialerPoolMember                  types.Int64  `tfsdk:"atm_dialer_pool_member"`
+	AtmDialerPoolMemberVariable          types.String `tfsdk:"atm_dialer_pool_member_variable"`
 }
 
-type VPNInterfaceDSLPPPoAEncapsulation struct {
+type VPNInterfaceDSLPPPoATunnelInterfaceEncapsulations struct {
 	Optional           types.Bool   `tfsdk:"optional"`
-	EncapsulationType  types.String `tfsdk:"encapsulation_type"`
+	Encapsulation      types.String `tfsdk:"encapsulation"`
 	Preference         types.Int64  `tfsdk:"preference"`
 	PreferenceVariable types.String `tfsdk:"preference_variable"`
 	Weight             types.Int64  `tfsdk:"weight"`
 	WeightVariable     types.String `tfsdk:"weight_variable"`
 }
 
-type VPNInterfaceDSLPPPoAPortForward struct {
+type VPNInterfaceDSLPPPoANatPortForwards struct {
 	Optional                 types.Bool   `tfsdk:"optional"`
 	PortStartRange           types.Int64  `tfsdk:"port_start_range"`
 	PortEndRange             types.Int64  `tfsdk:"port_end_range"`
@@ -254,14 +242,14 @@ type VPNInterfaceDSLPPPoAPortForward struct {
 	PrivateIpAddressVariable types.String `tfsdk:"private_ip_address_variable"`
 }
 
-type VPNInterfaceDSLPPPoAAccessList struct {
+type VPNInterfaceDSLPPPoAIpv4AccessLists struct {
 	Optional        types.Bool   `tfsdk:"optional"`
 	Direction       types.String `tfsdk:"direction"`
 	AclName         types.String `tfsdk:"acl_name"`
 	AclNameVariable types.String `tfsdk:"acl_name_variable"`
 }
 
-type VPNInterfaceDSLPPPoAPolicer struct {
+type VPNInterfaceDSLPPPoAPolicers struct {
 	Optional    types.Bool   `tfsdk:"optional"`
 	Direction   types.String `tfsdk:"direction"`
 	PolicerName types.String `tfsdk:"policer_name"`
@@ -310,19 +298,19 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"shutdown."+"vipValue", strconv.FormatBool(data.Shutdown.ValueBool()))
 	}
 
-	if !data.InterfaceDescriptionVariable.IsNull() {
+	if !data.AtmDescriptionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"description."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"description."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"description."+"vipVariableName", data.InterfaceDescriptionVariable.ValueString())
-	} else if data.InterfaceDescription.IsNull() {
+		body, _ = sjson.Set(body, path+"description."+"vipVariableName", data.AtmDescriptionVariable.ValueString())
+	} else if data.AtmDescription.IsNull() {
 		body, _ = sjson.Set(body, path+"description."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"description."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"description."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"description."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"description."+"vipValue", data.InterfaceDescription.ValueString())
+		body, _ = sjson.Set(body, path+"description."+"vipValue", data.AtmDescription.ValueString())
 	}
-	if len(data.Vdsl) > 0 {
+	if len(data.VdslConfiguration) > 0 {
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipPrimaryKey", []string{"name"})
@@ -333,7 +321,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipPrimaryKey", []string{"name"})
 		body, _ = sjson.Set(body, path+"controller.vdsl."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Vdsl {
+	for _, item := range data.VdslConfiguration {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "name")
@@ -349,88 +337,58 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "name."+"vipValue", item.ControllerVdslSlot.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "sra")
-
-		if !item.SraVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipVariableName", item.SraVariable.ValueString())
-		} else if item.Sra.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "sra."+"vipValue", strconv.FormatBool(item.Sra.ValueBool()))
+		if !item.Sra.IsNull() {
+			if item.Sra.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "sra", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "sra."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "sra."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "adsl1")
-
-		if !item.ModeAdsl1Variable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipVariableName", item.ModeAdsl1Variable.ValueString())
-		} else if item.ModeAdsl1.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipValue", strconv.FormatBool(item.ModeAdsl1.ValueBool()))
+		if !item.ModeAdsl1.IsNull() {
+			if item.ModeAdsl1.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "adsl2")
-
-		if !item.ModeAdsl2Variable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipVariableName", item.ModeAdsl2Variable.ValueString())
-		} else if item.ModeAdsl2.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipValue", strconv.FormatBool(item.ModeAdsl2.ValueBool()))
+		if !item.ModeAdsl2.IsNull() {
+			if item.ModeAdsl2.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "adsl2plus")
-
-		if !item.ModeAdsl2plusVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipVariableName", item.ModeAdsl2plusVariable.ValueString())
-		} else if item.ModeAdsl2plus.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipValue", strconv.FormatBool(item.ModeAdsl2plus.ValueBool()))
+		if !item.ModeAdsl2plus.IsNull() {
+			if item.ModeAdsl2plus.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "vdsl2")
-
-		if !item.ModeVdsl2Variable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipVariableName", item.ModeVdsl2Variable.ValueString())
-		} else if item.ModeVdsl2.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipValue", strconv.FormatBool(item.ModeVdsl2.ValueBool()))
+		if !item.ModeVdsl2.IsNull() {
+			if item.ModeVdsl2.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "ansi")
-
-		if !item.ModeAnsiVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipVariableName", item.ModeAnsiVariable.ValueString())
-		} else if item.ModeAnsi.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipValue", strconv.FormatBool(item.ModeAnsi.ValueBool()))
+		if !item.ModeAnsi.IsNull() {
+			if item.ModeAnsi.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "modem")
 
@@ -468,148 +426,134 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "local-vpi-vci")
 
-		if !item.VpiAndVciVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipVariableName", item.VpiAndVciVariable.ValueString())
-		} else if item.VpiAndVci.IsNull() {
+		if !item.AtmVpiAndVciVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipType", "variableName")
+			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipVariableName", item.AtmVpiAndVciVariable.ValueString())
+		} else if item.AtmVpiAndVci.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "pvc", map[string]interface{}{})
 		} else {
-			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipValue", item.VpiAndVci.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipObjectType", "object")
+			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipType", "constant")
+			itemBody, _ = sjson.Set(itemBody, "pvc.local-vpi-vci."+"vipValue", item.AtmVpiAndVci.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "PCR")
 
-		if !item.VbrNrtPeakCellRateVariable.IsNull() {
+		if !item.AtmVbrNrtPeakCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipVariableName", item.VbrNrtPeakCellRateVariable.ValueString())
-		} else if item.VbrNrtPeakCellRate.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipVariableName", item.AtmVbrNrtPeakCellRateVariable.ValueString())
+		} else if item.AtmVbrNrtPeakCellRate.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipValue", item.VbrNrtPeakCellRate.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipValue", item.AtmVbrNrtPeakCellRate.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "SCR")
 
-		if !item.VbrNrtSustainableCellRateVariable.IsNull() {
+		if !item.AtmVbrNrtSustainableCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipVariableName", item.VbrNrtSustainableCellRateVariable.ValueString())
-		} else if item.VbrNrtSustainableCellRate.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipVariableName", item.AtmVbrNrtSustainableCellRateVariable.ValueString())
+		} else if item.AtmVbrNrtSustainableCellRate.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipValue", item.VbrNrtSustainableCellRate.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipValue", item.AtmVbrNrtSustainableCellRate.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "MCR")
 
-		if !item.VbrNrtMaximumBurstSizeVariable.IsNull() {
+		if !item.AtmVbrNrtMaximumBurstSizeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipVariableName", item.VbrNrtMaximumBurstSizeVariable.ValueString())
-		} else if item.VbrNrtMaximumBurstSize.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipVariableName", item.AtmVbrNrtMaximumBurstSizeVariable.ValueString())
+		} else if item.AtmVbrNrtMaximumBurstSize.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipValue", item.VbrNrtMaximumBurstSize.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipValue", item.AtmVbrNrtMaximumBurstSize.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "PCR")
 
-		if !item.VbrRtPeakCellRateVariable.IsNull() {
+		if !item.AtmVbrRtPeakCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipVariableName", item.VbrRtPeakCellRateVariable.ValueString())
-		} else if item.VbrRtPeakCellRate.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipVariableName", item.AtmVbrRtPeakCellRateVariable.ValueString())
+		} else if item.AtmVbrRtPeakCellRate.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipValue", item.VbrRtPeakCellRate.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipValue", item.AtmVbrRtPeakCellRate.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "ACR")
 
-		if !item.VbrRtAverageCellRateVariable.IsNull() {
+		if !item.AtmVbrRtAverageCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipVariableName", item.VbrRtAverageCellRateVariable.ValueString())
-		} else if item.VbrRtAverageCellRate.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipVariableName", item.AtmVbrRtAverageCellRateVariable.ValueString())
+		} else if item.AtmVbrRtAverageCellRate.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipValue", item.VbrRtAverageCellRate.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipValue", item.AtmVbrRtAverageCellRate.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "Burst-cell-size")
 
-		if !item.VbrRtMaximumBurstSizeVariable.IsNull() {
+		if !item.AtmVbrRtMaximumBurstSizeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipVariableName", item.VbrRtMaximumBurstSizeVariable.ValueString())
-		} else if item.VbrRtMaximumBurstSize.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipVariableName", item.AtmVbrRtMaximumBurstSizeVariable.ValueString())
+		} else if item.AtmVbrRtMaximumBurstSize.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipValue", item.VbrRtMaximumBurstSize.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipValue", item.AtmVbrRtMaximumBurstSize.ValueInt64())
 		}
 		itemAttributes = append(itemAttributes, "dialer")
-
-		if !item.DialerVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipVariableName", item.DialerVariable.ValueString())
-		} else if item.Dialer.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipValue", strconv.FormatBool(item.Dialer.ValueBool()))
+		if !item.AtmEncapsulationAal5mux.IsNull() {
+			if item.AtmEncapsulationAal5mux.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "aal5nlpid")
-
-		if !item.EncapsulationAal5nlpidVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipVariableName", item.EncapsulationAal5nlpidVariable.ValueString())
-		} else if item.EncapsulationAal5nlpid.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipValue", strconv.FormatBool(item.EncapsulationAal5nlpid.ValueBool()))
+		if !item.AtmEncapsulationAal5nlpid.IsNull() {
+			if item.AtmEncapsulationAal5nlpid.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "aal5snap")
-
-		if !item.EncapsulationAal5snapVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipVariableName", item.EncapsulationAal5snapVariable.ValueString())
-		} else if item.EncapsulationAal5snap.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipType", "ignore")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipObjectType", "node-only")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipValue", strconv.FormatBool(item.EncapsulationAal5snap.ValueBool()))
+		if !item.AtmEncapsulationAal5snap.IsNull() {
+			if item.AtmEncapsulationAal5snap.ValueBool() {
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap", map[string]interface{}{})
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipObjectType", "node-only")
+				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipType", "ignore")
+			}
 		}
 		itemAttributes = append(itemAttributes, "pool-member")
 
-		if !item.DialerPoolMemberVariable.IsNull() {
+		if !item.AtmDialerPoolMemberVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipType", "variableName")
-			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipVariableName", item.DialerPoolMemberVariable.ValueString())
-		} else if item.DialerPoolMember.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipVariableName", item.AtmDialerPoolMemberVariable.ValueString())
+		} else if item.AtmDialerPoolMember.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dialer", map[string]interface{}{})
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipValue", item.DialerPoolMember.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipValue", item.AtmDialerPoolMember.ValueInt64())
 		}
 		if !item.Optional.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vipOptional", item.Optional.ValueBool())
@@ -629,30 +573,13 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipValue", data.PppAuthenticationProtocol.ValueString())
 	}
-
-	if !data.PppAuthenticationProtocolPapVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipVariableName", data.PppAuthenticationProtocolPapVariable.ValueString())
-	} else if data.PppAuthenticationProtocolPap.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipValue", strconv.FormatBool(data.PppAuthenticationProtocolPap.ValueBool()))
-	}
-
-	if !data.AuthenticationTypeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipVariableName", data.AuthenticationTypeVariable.ValueString())
-	} else if data.AuthenticationType.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
-	} else {
-		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipValue", data.AuthenticationType.ValueString())
+	if !data.PppAuthenticationProtocolPap.IsNull() {
+		if data.PppAuthenticationProtocolPap.ValueBool() {
+			body, _ = sjson.Set(body, path+"ppp.authentication.pap", map[string]interface{}{})
+		} else {
+			body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipObjectType", "node-only")
+			body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipType", "ignore")
+		}
 	}
 
 	if !data.ChapHostnameVariable.IsNull() {
@@ -690,12 +617,13 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipValue", data.PapUsername.ValueString())
 	}
-	if data.PapPassword.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
-	} else {
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipValue", strconv.FormatBool(data.PapPassword.ValueBool()))
+	if !data.PapPassword.IsNull() {
+		if data.PapPassword.ValueBool() {
+			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password", map[string]interface{}{})
+		} else {
+			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipObjectType", "node-only")
+			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipType", "ignore")
+		}
 	}
 
 	if !data.PapPppAuthPasswordVariable.IsNull() {
@@ -709,14 +637,19 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipValue", data.PapPppAuthPassword.ValueString())
 	}
+	if data.PppAuthenticationType.IsNull() {
+		body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+	} else {
+		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipObjectType", "node-only")
+		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipValue", data.PppAuthenticationType.ValueString())
+	}
 
 	if !data.EnableCoreRegionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipVariableName", data.EnableCoreRegionVariable.ValueString())
 	} else if data.EnableCoreRegion.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.enable-core-region."+"vipType", "constant")
@@ -728,8 +661,6 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipVariableName", data.CoreRegionVariable.ValueString())
 	} else if data.CoreRegion.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.core-region."+"vipType", "constant")
@@ -741,33 +672,27 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipVariableName", data.SecondaryRegionVariable.ValueString())
 	} else if data.SecondaryRegion.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"tunnel-interface.secondary-region."+"vipValue", data.SecondaryRegion.ValueString())
 	}
-	if len(data.Encapsulation) > 0 {
+	if len(data.TunnelInterfaceEncapsulations) > 0 {
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipPrimaryKey", []string{"encap"})
 		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipPrimaryKey", []string{"encap"})
-		body, _ = sjson.Set(body, path+"tunnel-interface.encapsulation."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Encapsulation {
+	for _, item := range data.TunnelInterfaceEncapsulations {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "encap")
-		if item.EncapsulationType.IsNull() {
+		if item.Encapsulation.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "encap."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "encap."+"vipType", "constant")
-			itemBody, _ = sjson.Set(itemBody, "encap."+"vipValue", item.EncapsulationType.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "encap."+"vipValue", item.Encapsulation.ValueString())
 		}
 		itemAttributes = append(itemAttributes, "preference")
 
@@ -804,32 +729,30 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.SetRaw(body, path+"tunnel-interface.encapsulation."+"vipValue.-1", itemBody)
 	}
 
-	if !data.GroupsVariable.IsNull() {
+	if !data.TunnelInterfaceGroupsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipVariableName", data.GroupsVariable.ValueString())
-	} else if data.Groups.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipVariableName", data.TunnelInterfaceGroupsVariable.ValueString())
+	} else if data.TunnelInterfaceGroups.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipType", "constant")
 		var values []int64
-		data.Groups.ElementsAs(ctx, &values, false)
+		data.TunnelInterfaceGroups.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"tunnel-interface.group."+"vipValue", values)
 	}
 
-	if !data.BorderVariable.IsNull() {
+	if !data.TunnelInterfaceBorderVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipVariableName", data.BorderVariable.ValueString())
-	} else if data.Border.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipVariableName", data.TunnelInterfaceBorderVariable.ValueString())
+	} else if data.TunnelInterfaceBorder.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipValue", strconv.FormatBool(data.Border.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.border."+"vipValue", strconv.FormatBool(data.TunnelInterfaceBorder.ValueBool()))
 	}
 
 	if !data.PerTunnelQosVariable.IsNull() {
@@ -854,487 +777,416 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"per-tunnel-qos-aggregator."+"vipValue", strconv.FormatBool(data.PerTunnelQosAggregator.ValueBool()))
 	}
 
-	if !data.ColorVariable.IsNull() {
+	if !data.TunnelQosModeVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipVariableName", data.TunnelQosModeVariable.ValueString())
+	} else if data.TunnelQosMode.IsNull() {
+	} else {
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-qos.mode."+"vipValue", data.TunnelQosMode.ValueString())
+	}
+
+	if !data.TunnelInterfaceColorVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipVariableName", data.ColorVariable.ValueString())
-	} else if data.Color.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipVariableName", data.TunnelInterfaceColorVariable.ValueString())
+	} else if data.TunnelInterfaceColor.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipValue", data.Color.ValueString())
+		body, _ = sjson.Set(body, path+"tunnel-interface.color.value."+"vipValue", data.TunnelInterfaceColor.ValueString())
 	}
 
-	if !data.LastResortCircuitVariable.IsNull() {
+	if !data.TunnelInterfaceLastResortCircuitVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipVariableName", data.LastResortCircuitVariable.ValueString())
-	} else if data.LastResortCircuit.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipVariableName", data.TunnelInterfaceLastResortCircuitVariable.ValueString())
+	} else if data.TunnelInterfaceLastResortCircuit.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipValue", strconv.FormatBool(data.LastResortCircuit.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.last-resort-circuit."+"vipValue", strconv.FormatBool(data.TunnelInterfaceLastResortCircuit.ValueBool()))
 	}
 
-	if !data.LowBandwidthLinkVariable.IsNull() {
+	if !data.TunnelInterfaceLowBandwidthLinkVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipVariableName", data.LowBandwidthLinkVariable.ValueString())
-	} else if data.LowBandwidthLink.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipVariableName", data.TunnelInterfaceLowBandwidthLinkVariable.ValueString())
+	} else if data.TunnelInterfaceLowBandwidthLink.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipValue", strconv.FormatBool(data.LowBandwidthLink.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.low-bandwidth-link."+"vipValue", strconv.FormatBool(data.TunnelInterfaceLowBandwidthLink.ValueBool()))
 	}
 
-	if !data.TunnelTcpMssVariable.IsNull() {
+	if !data.TunnelInterfaceTunnelTcpMssVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipVariableName", data.TunnelTcpMssVariable.ValueString())
-	} else if data.TunnelTcpMss.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipVariableName", data.TunnelInterfaceTunnelTcpMssVariable.ValueString())
+	} else if data.TunnelInterfaceTunnelTcpMss.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipValue", data.TunnelTcpMss.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.tunnel-tcp-mss-adjust."+"vipValue", data.TunnelInterfaceTunnelTcpMss.ValueInt64())
 	}
 
-	if !data.ClearDontFragmentVariable.IsNull() {
+	if !data.TunnelInterfaceClearDontFragmentVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipVariableName", data.ClearDontFragmentVariable.ValueString())
-	} else if data.ClearDontFragment.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipVariableName", data.TunnelInterfaceClearDontFragmentVariable.ValueString())
+	} else if data.TunnelInterfaceClearDontFragment.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipValue", strconv.FormatBool(data.ClearDontFragment.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.clear-dont-fragment."+"vipValue", strconv.FormatBool(data.TunnelInterfaceClearDontFragment.ValueBool()))
 	}
 
-	if !data.NetworkBroadcast1Variable.IsNull() {
+	if !data.TunnelInterfaceNetworkBroadcastVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipVariableName", data.NetworkBroadcast1Variable.ValueString())
-	} else if data.NetworkBroadcast1.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipVariableName", data.TunnelInterfaceNetworkBroadcastVariable.ValueString())
+	} else if data.TunnelInterfaceNetworkBroadcast.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipValue", strconv.FormatBool(data.NetworkBroadcast1.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipValue", strconv.FormatBool(data.TunnelInterfaceNetworkBroadcast.ValueBool()))
 	}
 
-	if !data.MaxControlConnectionsVariable.IsNull() {
+	if !data.TunnelInterfaceMaxControlConnectionsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipVariableName", data.MaxControlConnectionsVariable.ValueString())
-	} else if data.MaxControlConnections.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipVariableName", data.TunnelInterfaceMaxControlConnectionsVariable.ValueString())
+	} else if data.TunnelInterfaceMaxControlConnections.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipValue", data.MaxControlConnections.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.max-control-connections."+"vipValue", data.TunnelInterfaceMaxControlConnections.ValueInt64())
 	}
 
-	if !data.ControlConnectionsVariable.IsNull() {
+	if !data.TunnelInterfaceControlConnectionsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipVariableName", data.ControlConnectionsVariable.ValueString())
-	} else if data.ControlConnections.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipVariableName", data.TunnelInterfaceControlConnectionsVariable.ValueString())
+	} else if data.TunnelInterfaceControlConnections.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipValue", strconv.FormatBool(data.ControlConnections.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.control-connections."+"vipValue", strconv.FormatBool(data.TunnelInterfaceControlConnections.ValueBool()))
 	}
 
-	if !data.VbondAsStunServerVariable.IsNull() {
+	if !data.TunnelInterfaceVbondAsStunServerVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipVariableName", data.VbondAsStunServerVariable.ValueString())
-	} else if data.VbondAsStunServer.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipVariableName", data.TunnelInterfaceVbondAsStunServerVariable.ValueString())
+	} else if data.TunnelInterfaceVbondAsStunServer.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipValue", strconv.FormatBool(data.VbondAsStunServer.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.vbond-as-stun-server."+"vipValue", strconv.FormatBool(data.TunnelInterfaceVbondAsStunServer.ValueBool()))
 	}
 
-	if !data.ExcludeControllerGroupListVariable.IsNull() {
+	if !data.TunnelInterfaceExcludeControllerGroupListVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipVariableName", data.ExcludeControllerGroupListVariable.ValueString())
-	} else if data.ExcludeControllerGroupList.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipObjectType", "list")
-		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipVariableName", data.TunnelInterfaceExcludeControllerGroupListVariable.ValueString())
+	} else if data.TunnelInterfaceExcludeControllerGroupList.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipObjectType", "list")
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipType", "constant")
 		var values []int64
-		data.ExcludeControllerGroupList.ElementsAs(ctx, &values, false)
+		data.TunnelInterfaceExcludeControllerGroupList.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"tunnel-interface.exclude-controller-group-list."+"vipValue", values)
 	}
 
-	if !data.VmanageConnectionPreferenceVariable.IsNull() {
+	if !data.TunnelInterfaceVmanageConnectionPreferenceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipVariableName", data.VmanageConnectionPreferenceVariable.ValueString())
-	} else if data.VmanageConnectionPreference.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipVariableName", data.TunnelInterfaceVmanageConnectionPreferenceVariable.ValueString())
+	} else if data.TunnelInterfaceVmanageConnectionPreference.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipValue", data.VmanageConnectionPreference.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.vmanage-connection-preference."+"vipValue", data.TunnelInterfaceVmanageConnectionPreference.ValueInt64())
 	}
 
-	if !data.PortHopVariable.IsNull() {
+	if !data.TunnelInterfacePortHopVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipVariableName", data.PortHopVariable.ValueString())
-	} else if data.PortHop.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipVariableName", data.TunnelInterfacePortHopVariable.ValueString())
+	} else if data.TunnelInterfacePortHop.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipValue", strconv.FormatBool(data.PortHop.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.port-hop."+"vipValue", strconv.FormatBool(data.TunnelInterfacePortHop.ValueBool()))
+	}
+	if !data.TunnelInterfaceColorRestrict.IsNull() {
+		if data.TunnelInterfaceColorRestrict.ValueBool() {
+			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict", map[string]interface{}{})
+		} else {
+			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
+			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "ignore")
+		}
 	}
 
-	if !data.RestrictVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipVariableName", data.RestrictVariable.ValueString())
-	} else if data.Restrict.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipValue", strconv.FormatBool(data.Restrict.ValueBool()))
-	}
-
-	if !data.CarrierVariable.IsNull() {
+	if !data.TunnelInterfaceCarrierVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipVariableName", data.CarrierVariable.ValueString())
-	} else if data.Carrier.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipVariableName", data.TunnelInterfaceCarrierVariable.ValueString())
+	} else if data.TunnelInterfaceCarrier.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipValue", data.Carrier.ValueString())
+		body, _ = sjson.Set(body, path+"tunnel-interface.carrier."+"vipValue", data.TunnelInterfaceCarrier.ValueString())
 	}
 
-	if !data.NatRefreshIntervalVariable.IsNull() {
+	if !data.TunnelInterfaceNatRefreshIntervalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipVariableName", data.NatRefreshIntervalVariable.ValueString())
-	} else if data.NatRefreshInterval.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipVariableName", data.TunnelInterfaceNatRefreshIntervalVariable.ValueString())
+	} else if data.TunnelInterfaceNatRefreshInterval.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipValue", data.NatRefreshInterval.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.nat-refresh-interval."+"vipValue", data.TunnelInterfaceNatRefreshInterval.ValueInt64())
 	}
 
-	if !data.HelloIntervalVariable.IsNull() {
+	if !data.TunnelInterfaceHelloIntervalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipVariableName", data.HelloIntervalVariable.ValueString())
-	} else if data.HelloInterval.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipVariableName", data.TunnelInterfaceHelloIntervalVariable.ValueString())
+	} else if data.TunnelInterfaceHelloInterval.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipValue", data.HelloInterval.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-interval."+"vipValue", data.TunnelInterfaceHelloInterval.ValueInt64())
 	}
 
-	if !data.HelloToleranceVariable.IsNull() {
+	if !data.TunnelInterfaceHelloToleranceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipVariableName", data.HelloToleranceVariable.ValueString())
-	} else if data.HelloTolerance.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipVariableName", data.TunnelInterfaceHelloToleranceVariable.ValueString())
+	} else if data.TunnelInterfaceHelloTolerance.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipValue", data.HelloTolerance.ValueInt64())
+		body, _ = sjson.Set(body, path+"tunnel-interface.hello-tolerance."+"vipValue", data.TunnelInterfaceHelloTolerance.ValueInt64())
 	}
 
-	if !data.BindLoopbackTunnelVariable.IsNull() {
+	if !data.TunnelInterfaceBindLoopbackTunnelVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipVariableName", data.BindLoopbackTunnelVariable.ValueString())
-	} else if data.BindLoopbackTunnel.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipVariableName", data.TunnelInterfaceBindLoopbackTunnelVariable.ValueString())
+	} else if data.TunnelInterfaceBindLoopbackTunnel.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipValue", data.BindLoopbackTunnel.ValueString())
+		body, _ = sjson.Set(body, path+"tunnel-interface.bind."+"vipValue", data.TunnelInterfaceBindLoopbackTunnel.ValueString())
 	}
 
-	if !data.AllVariable.IsNull() {
+	if !data.TunnelInterfaceAllowAllVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipVariableName", data.AllVariable.ValueString())
-	} else if data.All.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipVariableName", data.TunnelInterfaceAllowAllVariable.ValueString())
+	} else if data.TunnelInterfaceAllowAll.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipValue", strconv.FormatBool(data.All.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.all."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowAll.ValueBool()))
 	}
 
-	if !data.NetworkBroadcast2Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipVariableName", data.NetworkBroadcast2Variable.ValueString())
-	} else if data.NetworkBroadcast2.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.network-broadcast."+"vipValue", strconv.FormatBool(data.NetworkBroadcast2.ValueBool()))
-	}
-
-	if !data.BgpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowBgpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipVariableName", data.BgpVariable.ValueString())
-	} else if data.Bgp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipVariableName", data.TunnelInterfaceAllowBgpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowBgp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipValue", strconv.FormatBool(data.Bgp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.bgp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowBgp.ValueBool()))
 	}
 
-	if !data.DhcpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDhcpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipVariableName", data.DhcpVariable.ValueString())
-	} else if data.Dhcp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipVariableName", data.TunnelInterfaceAllowDhcpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowDhcp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipValue", strconv.FormatBool(data.Dhcp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dhcp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowDhcp.ValueBool()))
 	}
 
-	if !data.DnsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDnsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipVariableName", data.DnsVariable.ValueString())
-	} else if data.Dns.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipVariableName", data.TunnelInterfaceAllowDnsVariable.ValueString())
+	} else if data.TunnelInterfaceAllowDns.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipValue", strconv.FormatBool(data.Dns.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.dns."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowDns.ValueBool()))
 	}
 
-	if !data.IcmpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowIcmpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipVariableName", data.IcmpVariable.ValueString())
-	} else if data.Icmp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipVariableName", data.TunnelInterfaceAllowIcmpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowIcmp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipValue", strconv.FormatBool(data.Icmp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.icmp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowIcmp.ValueBool()))
 	}
 
-	if !data.SshVariable.IsNull() {
+	if !data.TunnelInterfaceAllowSshVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipVariableName", data.SshVariable.ValueString())
-	} else if data.Ssh.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipVariableName", data.TunnelInterfaceAllowSshVariable.ValueString())
+	} else if data.TunnelInterfaceAllowSsh.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipValue", strconv.FormatBool(data.Ssh.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.sshd."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowSsh.ValueBool()))
 	}
 
-	if !data.NetconfVariable.IsNull() {
+	if !data.TunnelInterfaceAllowNtpVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipType", "variableName")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipVariableName", data.TunnelInterfaceAllowNtpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowNtp.IsNull() {
+	} else {
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipObjectType", "object")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipType", "constant")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ntp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowNtp.ValueBool()))
+	}
+
+	if !data.TunnelInterfaceAllowNetconfVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipVariableName", data.NetconfVariable.ValueString())
-	} else if data.Netconf.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipVariableName", data.TunnelInterfaceAllowNetconfVariable.ValueString())
+	} else if data.TunnelInterfaceAllowNetconf.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipValue", strconv.FormatBool(data.Netconf.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.netconf."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowNetconf.ValueBool()))
 	}
 
-	if !data.OspfVariable.IsNull() {
+	if !data.TunnelInterfaceAllowOspfVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipVariableName", data.OspfVariable.ValueString())
-	} else if data.Ospf.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipVariableName", data.TunnelInterfaceAllowOspfVariable.ValueString())
+	} else if data.TunnelInterfaceAllowOspf.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipValue", strconv.FormatBool(data.Ospf.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.ospf."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowOspf.ValueBool()))
 	}
 
-	if !data.StunVariable.IsNull() {
+	if !data.TunnelInterfaceAllowStunVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipVariableName", data.StunVariable.ValueString())
-	} else if data.Stun.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipVariableName", data.TunnelInterfaceAllowStunVariable.ValueString())
+	} else if data.TunnelInterfaceAllowStun.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipValue", strconv.FormatBool(data.Stun.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.stun."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowStun.ValueBool()))
 	}
 
-	if !data.SnmpVariable.IsNull() {
+	if !data.TunnelInterfaceAllowSnmpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipVariableName", data.SnmpVariable.ValueString())
-	} else if data.Snmp.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipVariableName", data.TunnelInterfaceAllowSnmpVariable.ValueString())
+	} else if data.TunnelInterfaceAllowSnmp.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipValue", strconv.FormatBool(data.Snmp.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.snmp."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowSnmp.ValueBool()))
 	}
 
-	if !data.HttpsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowHttpsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipVariableName", data.HttpsVariable.ValueString())
-	} else if data.Https.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipVariableName", data.TunnelInterfaceAllowHttpsVariable.ValueString())
+	} else if data.TunnelInterfaceAllowHttps.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipValue", strconv.FormatBool(data.Https.ValueBool()))
+		body, _ = sjson.Set(body, path+"tunnel-interface.allow-service.https."+"vipValue", strconv.FormatBool(data.TunnelInterfaceAllowHttps.ValueBool()))
+	}
+	if !data.Nat.IsNull() {
+		if data.Nat.ValueBool() {
+			body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+		} else {
+			body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
+			body, _ = sjson.Set(body, path+"nat."+"vipType", "ignore")
+		}
 	}
 
-	if !data.NatVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat."+"vipVariableName", data.NatVariable.ValueString())
-	} else if data.Nat.IsNull() {
-		body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
-		body, _ = sjson.Set(body, path+"nat."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat."+"vipValue", strconv.FormatBool(data.Nat.ValueBool()))
-	}
-
-	if !data.RefreshModeVariable.IsNull() {
+	if !data.NatRefreshModeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"nat.refresh."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.refresh."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat.refresh."+"vipVariableName", data.RefreshModeVariable.ValueString())
-	} else if data.RefreshMode.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.refresh."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.refresh."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"nat.refresh."+"vipVariableName", data.NatRefreshModeVariable.ValueString())
+	} else if data.NatRefreshMode.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"nat.refresh."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.refresh."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat.refresh."+"vipValue", data.RefreshMode.ValueString())
+		body, _ = sjson.Set(body, path+"nat.refresh."+"vipValue", data.NatRefreshMode.ValueString())
 	}
 
-	if !data.UdpTimeoutVariable.IsNull() {
+	if !data.NatUdpTimeoutVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipVariableName", data.UdpTimeoutVariable.ValueString())
-	} else if data.UdpTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipVariableName", data.NatUdpTimeoutVariable.ValueString())
+	} else if data.NatUdpTimeout.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipValue", data.UdpTimeout.ValueInt64())
+		body, _ = sjson.Set(body, path+"nat.udp-timeout."+"vipValue", data.NatUdpTimeout.ValueInt64())
 	}
 
-	if !data.TcpTimeoutVariable.IsNull() {
+	if !data.NatTcpTimeoutVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipVariableName", data.TcpTimeoutVariable.ValueString())
-	} else if data.TcpTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipVariableName", data.NatTcpTimeoutVariable.ValueString())
+	} else if data.NatTcpTimeout.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipValue", data.TcpTimeout.ValueInt64())
+		body, _ = sjson.Set(body, path+"nat.tcp-timeout."+"vipValue", data.NatTcpTimeout.ValueInt64())
 	}
 
-	if !data.BlockIcmpErrorVariable.IsNull() {
+	if !data.NatBlockIcmpErrorVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipVariableName", data.BlockIcmpErrorVariable.ValueString())
-	} else if data.BlockIcmpError.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipVariableName", data.NatBlockIcmpErrorVariable.ValueString())
+	} else if data.NatBlockIcmpError.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipValue", strconv.FormatBool(data.BlockIcmpError.ValueBool()))
+		body, _ = sjson.Set(body, path+"nat.block-icmp-error."+"vipValue", strconv.FormatBool(data.NatBlockIcmpError.ValueBool()))
 	}
 
-	if !data.RespondToPingVariable.IsNull() {
+	if !data.NatResponseToPingVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipVariableName", data.RespondToPingVariable.ValueString())
-	} else if data.RespondToPing.IsNull() {
-		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipVariableName", data.NatResponseToPingVariable.ValueString())
+	} else if data.NatResponseToPing.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipValue", strconv.FormatBool(data.RespondToPing.ValueBool()))
+		body, _ = sjson.Set(body, path+"nat.respond-to-ping."+"vipValue", strconv.FormatBool(data.NatResponseToPing.ValueBool()))
 	}
-	if len(data.PortForward) > 0 {
+	if len(data.NatPortForwards) > 0 {
 		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipPrimaryKey", []string{"port-start", "port-end", "proto"})
 		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipValue", []interface{}{})
 	} else {
-		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipObjectType", "tree")
-		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipType", "ignore")
-		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipPrimaryKey", []string{"port-start", "port-end", "proto"})
-		body, _ = sjson.Set(body, path+"nat.port-forward."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.PortForward {
+	for _, item := range data.NatPortForwards {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "port-start")
@@ -1388,98 +1240,82 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"nat.port-forward."+"vipValue.-1", itemBody)
 	}
-	if data.AdaptiveQos.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipType", "ignore")
-	} else {
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive."+"vipValue", strconv.FormatBool(data.AdaptiveQos.ValueBool()))
-	}
 
-	if !data.AdaptPeriodVariable.IsNull() {
+	if !data.QosAdaptivePeriodVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipVariableName", data.AdaptPeriodVariable.ValueString())
-	} else if data.AdaptPeriod.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipObjectType", "object")
-		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipType", "ignore")
+		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipVariableName", data.QosAdaptivePeriodVariable.ValueString())
+	} else if data.QosAdaptivePeriod.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipValue", data.AdaptPeriod.ValueInt64())
+		body, _ = sjson.Set(body, path+"qos-adaptive.period."+"vipValue", data.QosAdaptivePeriod.ValueInt64())
 	}
 
-	if !data.ShapingRateDownstreamDefaultVariable.IsNull() {
+	if !data.QosAdaptiveBandwidthDownstreamVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipVariableName", data.ShapingRateDownstreamDefaultVariable.ValueString())
-	} else if data.ShapingRateDownstreamDefault.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream", map[string]interface{}{})
+		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipVariableName", data.QosAdaptiveBandwidthDownstreamVariable.ValueString())
+	} else if data.QosAdaptiveBandwidthDownstream.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipValue", data.ShapingRateDownstreamDefault.ValueInt64())
+		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.bandwidth-down."+"vipValue", data.QosAdaptiveBandwidthDownstream.ValueInt64())
 	}
 
-	if !data.ShapingRateDownstreamMinVariable.IsNull() {
+	if !data.QosAdaptiveMinDownstreamVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipVariableName", data.ShapingRateDownstreamMinVariable.ValueString())
-	} else if data.ShapingRateDownstreamMin.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range", map[string]interface{}{})
+		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipVariableName", data.QosAdaptiveMinDownstreamVariable.ValueString())
+	} else if data.QosAdaptiveMinDownstream.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipValue", data.ShapingRateDownstreamMin.ValueInt64())
+		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmin."+"vipValue", data.QosAdaptiveMinDownstream.ValueInt64())
 	}
 
-	if !data.ShapingRateDownstreamMaxVariable.IsNull() {
+	if !data.QosAdaptiveMaxDownstreamVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipVariableName", data.ShapingRateDownstreamMaxVariable.ValueString())
-	} else if data.ShapingRateDownstreamMax.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range", map[string]interface{}{})
+		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipVariableName", data.QosAdaptiveMaxDownstreamVariable.ValueString())
+	} else if data.QosAdaptiveMaxDownstream.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipValue", data.ShapingRateDownstreamMax.ValueInt64())
+		body, _ = sjson.Set(body, path+"qos-adaptive.downstream.range.dmax."+"vipValue", data.QosAdaptiveMaxDownstream.ValueInt64())
 	}
 
-	if !data.ShapingRateUpstreamDefaultVariable.IsNull() {
+	if !data.QosAdaptiveBandwidthUpstreamVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipVariableName", data.ShapingRateUpstreamDefaultVariable.ValueString())
-	} else if data.ShapingRateUpstreamDefault.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream", map[string]interface{}{})
+		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipVariableName", data.QosAdaptiveBandwidthUpstreamVariable.ValueString())
+	} else if data.QosAdaptiveBandwidthUpstream.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipValue", data.ShapingRateUpstreamDefault.ValueInt64())
+		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.bandwidth-up."+"vipValue", data.QosAdaptiveBandwidthUpstream.ValueInt64())
 	}
 
-	if !data.ShapingRateUpstreamMinVariable.IsNull() {
+	if !data.QosAdaptiveMinUpstreamVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipVariableName", data.ShapingRateUpstreamMinVariable.ValueString())
-	} else if data.ShapingRateUpstreamMin.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range", map[string]interface{}{})
+		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipVariableName", data.QosAdaptiveMinUpstreamVariable.ValueString())
+	} else if data.QosAdaptiveMinUpstream.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipValue", data.ShapingRateUpstreamMin.ValueInt64())
+		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umin."+"vipValue", data.QosAdaptiveMinUpstream.ValueInt64())
 	}
 
-	if !data.ShapingRateUpstreamMaxVariable.IsNull() {
+	if !data.QosAdaptiveMaxUpstreamVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipVariableName", data.ShapingRateUpstreamMaxVariable.ValueString())
-	} else if data.ShapingRateUpstreamMax.IsNull() {
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range", map[string]interface{}{})
+		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipVariableName", data.QosAdaptiveMaxUpstreamVariable.ValueString())
+	} else if data.QosAdaptiveMaxUpstream.IsNull() {
 	} else {
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipValue", data.ShapingRateUpstreamMax.ValueInt64())
+		body, _ = sjson.Set(body, path+"qos-adaptive.upstream.range.umax."+"vipValue", data.QosAdaptiveMaxUpstream.ValueInt64())
 	}
 
 	if !data.ShapingRateVariable.IsNull() {
@@ -1508,17 +1344,17 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"qos-map."+"vipValue", data.QosMap.ValueString())
 	}
 
-	if !data.VpnQosMapVariable.IsNull() {
+	if !data.QosMapVpnVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipType", "variableName")
-		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipVariableName", data.VpnQosMapVariable.ValueString())
-	} else if data.VpnQosMap.IsNull() {
+		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipVariableName", data.QosMapVpnVariable.ValueString())
+	} else if data.QosMapVpn.IsNull() {
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipType", "ignore")
 	} else {
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipType", "constant")
-		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipValue", data.VpnQosMap.ValueString())
+		body, _ = sjson.Set(body, path+"qos-map-vpn."+"vipValue", data.QosMapVpn.ValueString())
 	}
 
 	if !data.BandwidthUpstreamVariable.IsNull() {
@@ -1559,7 +1395,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"rewrite-rule.rule-name."+"vipValue", data.WriteRule.ValueString())
 	}
-	if len(data.AccessList) > 0 {
+	if len(data.Ipv4AccessLists) > 0 {
 		body, _ = sjson.Set(body, path+"access-list."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"access-list."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
@@ -1570,7 +1406,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"access-list."+"vipPrimaryKey", []string{"direction"})
 		body, _ = sjson.Set(body, path+"access-list."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.AccessList {
+	for _, item := range data.Ipv4AccessLists {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "direction")
@@ -1598,7 +1434,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"access-list."+"vipValue.-1", itemBody)
 	}
-	if len(data.Policer) > 0 {
+	if len(data.Policers) > 0 {
 		body, _ = sjson.Set(body, path+"policer."+"vipObjectType", "tree")
 		body, _ = sjson.Set(body, path+"policer."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"policer."+"vipPrimaryKey", []string{"policer-name", "direction"})
@@ -1609,7 +1445,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"policer."+"vipPrimaryKey", []string{"policer-name", "direction"})
 		body, _ = sjson.Set(body, path+"policer."+"vipValue", []interface{}{})
 	}
-	for _, item := range data.Policer {
+	for _, item := range data.Policers {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		itemAttributes = append(itemAttributes, "direction")
@@ -1765,27 +1601,27 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 	}
 	if value := res.Get(path + "description.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.InterfaceDescription = types.StringNull()
+			data.AtmDescription = types.StringNull()
 
 			v := res.Get(path + "description.vipVariableName")
-			data.InterfaceDescriptionVariable = types.StringValue(v.String())
+			data.AtmDescriptionVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.InterfaceDescription = types.StringNull()
-			data.InterfaceDescriptionVariable = types.StringNull()
+			data.AtmDescription = types.StringNull()
+			data.AtmDescriptionVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "description.vipValue")
-			data.InterfaceDescription = types.StringValue(v.String())
-			data.InterfaceDescriptionVariable = types.StringNull()
+			data.AtmDescription = types.StringValue(v.String())
+			data.AtmDescriptionVariable = types.StringNull()
 		}
 	} else {
-		data.InterfaceDescription = types.StringNull()
-		data.InterfaceDescriptionVariable = types.StringNull()
+		data.AtmDescription = types.StringNull()
+		data.AtmDescriptionVariable = types.StringNull()
 	}
 	if value := res.Get(path + "controller.vdsl.vipValue"); len(value.Array()) > 0 {
-		data.Vdsl = make([]VPNInterfaceDSLPPPoAVdsl, 0)
+		data.VdslConfiguration = make([]VPNInterfaceDSLPPPoAVdslConfiguration, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLPPPoAVdsl{}
+			item := VPNInterfaceDSLPPPoAVdslConfiguration{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -1814,115 +1650,115 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				if cValue.String() == "variableName" {
 					item.Sra = types.BoolNull()
 
-					cv := v.Get("sra.vipVariableName")
-					item.SraVariable = types.StringValue(cv.String())
-
 				} else if cValue.String() == "ignore" {
-					item.Sra = types.BoolNull()
-					item.SraVariable = types.StringNull()
+					item.Sra = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("sra.vipValue")
 					item.Sra = types.BoolValue(cv.Bool())
-					item.SraVariable = types.StringNull()
+
 				}
+			} else if cValue := v.Get("sra"); cValue.Exists() {
+				item.Sra = types.BoolValue(true)
+
 			} else {
 				item.Sra = types.BoolNull()
-				item.SraVariable = types.StringNull()
+
 			}
 			if cValue := v.Get("operating.mode.auto.adsl1.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.ModeAdsl1 = types.BoolNull()
 
-					cv := v.Get("operating.mode.auto.adsl1.vipVariableName")
-					item.ModeAdsl1Variable = types.StringValue(cv.String())
-
 				} else if cValue.String() == "ignore" {
-					item.ModeAdsl1 = types.BoolNull()
-					item.ModeAdsl1Variable = types.StringNull()
+					item.ModeAdsl1 = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("operating.mode.auto.adsl1.vipValue")
 					item.ModeAdsl1 = types.BoolValue(cv.Bool())
-					item.ModeAdsl1Variable = types.StringNull()
+
 				}
+			} else if cValue := v.Get("operating.mode.auto.adsl1"); cValue.Exists() {
+				item.ModeAdsl1 = types.BoolValue(true)
+
 			} else {
 				item.ModeAdsl1 = types.BoolNull()
-				item.ModeAdsl1Variable = types.StringNull()
+
 			}
 			if cValue := v.Get("operating.mode.auto.adsl2.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.ModeAdsl2 = types.BoolNull()
 
-					cv := v.Get("operating.mode.auto.adsl2.vipVariableName")
-					item.ModeAdsl2Variable = types.StringValue(cv.String())
-
 				} else if cValue.String() == "ignore" {
-					item.ModeAdsl2 = types.BoolNull()
-					item.ModeAdsl2Variable = types.StringNull()
+					item.ModeAdsl2 = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("operating.mode.auto.adsl2.vipValue")
 					item.ModeAdsl2 = types.BoolValue(cv.Bool())
-					item.ModeAdsl2Variable = types.StringNull()
+
 				}
+			} else if cValue := v.Get("operating.mode.auto.adsl2"); cValue.Exists() {
+				item.ModeAdsl2 = types.BoolValue(true)
+
 			} else {
 				item.ModeAdsl2 = types.BoolNull()
-				item.ModeAdsl2Variable = types.StringNull()
+
 			}
 			if cValue := v.Get("operating.mode.auto.adsl2plus.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.ModeAdsl2plus = types.BoolNull()
 
-					cv := v.Get("operating.mode.auto.adsl2plus.vipVariableName")
-					item.ModeAdsl2plusVariable = types.StringValue(cv.String())
-
 				} else if cValue.String() == "ignore" {
-					item.ModeAdsl2plus = types.BoolNull()
-					item.ModeAdsl2plusVariable = types.StringNull()
+					item.ModeAdsl2plus = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("operating.mode.auto.adsl2plus.vipValue")
 					item.ModeAdsl2plus = types.BoolValue(cv.Bool())
-					item.ModeAdsl2plusVariable = types.StringNull()
+
 				}
+			} else if cValue := v.Get("operating.mode.auto.adsl2plus"); cValue.Exists() {
+				item.ModeAdsl2plus = types.BoolValue(true)
+
 			} else {
 				item.ModeAdsl2plus = types.BoolNull()
-				item.ModeAdsl2plusVariable = types.StringNull()
+
 			}
 			if cValue := v.Get("operating.mode.auto.vdsl2.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.ModeVdsl2 = types.BoolNull()
 
-					cv := v.Get("operating.mode.auto.vdsl2.vipVariableName")
-					item.ModeVdsl2Variable = types.StringValue(cv.String())
-
 				} else if cValue.String() == "ignore" {
-					item.ModeVdsl2 = types.BoolNull()
-					item.ModeVdsl2Variable = types.StringNull()
+					item.ModeVdsl2 = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("operating.mode.auto.vdsl2.vipValue")
 					item.ModeVdsl2 = types.BoolValue(cv.Bool())
-					item.ModeVdsl2Variable = types.StringNull()
+
 				}
+			} else if cValue := v.Get("operating.mode.auto.vdsl2"); cValue.Exists() {
+				item.ModeVdsl2 = types.BoolValue(true)
+
 			} else {
 				item.ModeVdsl2 = types.BoolNull()
-				item.ModeVdsl2Variable = types.StringNull()
+
 			}
 			if cValue := v.Get("operating.mode.auto.ansi.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
 					item.ModeAnsi = types.BoolNull()
 
-					cv := v.Get("operating.mode.auto.ansi.vipVariableName")
-					item.ModeAnsiVariable = types.StringValue(cv.String())
-
 				} else if cValue.String() == "ignore" {
-					item.ModeAnsi = types.BoolNull()
-					item.ModeAnsiVariable = types.StringNull()
+					item.ModeAnsi = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("operating.mode.auto.ansi.vipValue")
 					item.ModeAnsi = types.BoolValue(cv.Bool())
-					item.ModeAnsiVariable = types.StringNull()
+
 				}
+			} else if cValue := v.Get("operating.mode.auto.ansi"); cValue.Exists() {
+				item.ModeAnsi = types.BoolValue(true)
+
 			} else {
 				item.ModeAnsi = types.BoolNull()
-				item.ModeAnsiVariable = types.StringNull()
+
 			}
 			if cValue := v.Get("modem.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
@@ -1943,7 +1779,7 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				item.VdslModemConfiguration = types.StringNull()
 				item.VdslModemConfigurationVariable = types.StringNull()
 			}
-			data.Vdsl = append(data.Vdsl, item)
+			data.VdslConfiguration = append(data.VdslConfiguration, item)
 			return true
 		})
 	}
@@ -1956,214 +1792,214 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			} else {
 				item.Optional = types.BoolNull()
 			}
-			if cValue := v.Get("local-vpi-vci.vipType"); cValue.Exists() {
+			if cValue := v.Get("pvc.local-vpi-vci.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.VpiAndVci = types.StringNull()
+					item.AtmVpiAndVci = types.StringNull()
 
-					cv := v.Get("local-vpi-vci.vipVariableName")
-					item.VpiAndVciVariable = types.StringValue(cv.String())
+					cv := v.Get("pvc.local-vpi-vci.vipVariableName")
+					item.AtmVpiAndVciVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.VpiAndVci = types.StringNull()
-					item.VpiAndVciVariable = types.StringNull()
+					item.AtmVpiAndVci = types.StringNull()
+					item.AtmVpiAndVciVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
-					cv := v.Get("local-vpi-vci.vipValue")
-					item.VpiAndVci = types.StringValue(cv.String())
-					item.VpiAndVciVariable = types.StringNull()
+					cv := v.Get("pvc.local-vpi-vci.vipValue")
+					item.AtmVpiAndVci = types.StringValue(cv.String())
+					item.AtmVpiAndVciVariable = types.StringNull()
 				}
 			} else {
-				item.VpiAndVci = types.StringNull()
-				item.VpiAndVciVariable = types.StringNull()
+				item.AtmVpiAndVci = types.StringNull()
+				item.AtmVpiAndVciVariable = types.StringNull()
 			}
 			if cValue := v.Get("vbr-nrt.PCR.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.VbrNrtPeakCellRate = types.Int64Null()
+					item.AtmVbrNrtPeakCellRate = types.Int64Null()
 
 					cv := v.Get("vbr-nrt.PCR.vipVariableName")
-					item.VbrNrtPeakCellRateVariable = types.StringValue(cv.String())
+					item.AtmVbrNrtPeakCellRateVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.VbrNrtPeakCellRate = types.Int64Null()
-					item.VbrNrtPeakCellRateVariable = types.StringNull()
+					item.AtmVbrNrtPeakCellRate = types.Int64Null()
+					item.AtmVbrNrtPeakCellRateVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("vbr-nrt.PCR.vipValue")
-					item.VbrNrtPeakCellRate = types.Int64Value(cv.Int())
-					item.VbrNrtPeakCellRateVariable = types.StringNull()
+					item.AtmVbrNrtPeakCellRate = types.Int64Value(cv.Int())
+					item.AtmVbrNrtPeakCellRateVariable = types.StringNull()
 				}
 			} else {
-				item.VbrNrtPeakCellRate = types.Int64Null()
-				item.VbrNrtPeakCellRateVariable = types.StringNull()
+				item.AtmVbrNrtPeakCellRate = types.Int64Null()
+				item.AtmVbrNrtPeakCellRateVariable = types.StringNull()
 			}
 			if cValue := v.Get("vbr-nrt.SCR.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.VbrNrtSustainableCellRate = types.Int64Null()
+					item.AtmVbrNrtSustainableCellRate = types.Int64Null()
 
 					cv := v.Get("vbr-nrt.SCR.vipVariableName")
-					item.VbrNrtSustainableCellRateVariable = types.StringValue(cv.String())
+					item.AtmVbrNrtSustainableCellRateVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.VbrNrtSustainableCellRate = types.Int64Null()
-					item.VbrNrtSustainableCellRateVariable = types.StringNull()
+					item.AtmVbrNrtSustainableCellRate = types.Int64Null()
+					item.AtmVbrNrtSustainableCellRateVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("vbr-nrt.SCR.vipValue")
-					item.VbrNrtSustainableCellRate = types.Int64Value(cv.Int())
-					item.VbrNrtSustainableCellRateVariable = types.StringNull()
+					item.AtmVbrNrtSustainableCellRate = types.Int64Value(cv.Int())
+					item.AtmVbrNrtSustainableCellRateVariable = types.StringNull()
 				}
 			} else {
-				item.VbrNrtSustainableCellRate = types.Int64Null()
-				item.VbrNrtSustainableCellRateVariable = types.StringNull()
+				item.AtmVbrNrtSustainableCellRate = types.Int64Null()
+				item.AtmVbrNrtSustainableCellRateVariable = types.StringNull()
 			}
 			if cValue := v.Get("vbr-nrt.MCR.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.VbrNrtMaximumBurstSize = types.Int64Null()
+					item.AtmVbrNrtMaximumBurstSize = types.Int64Null()
 
 					cv := v.Get("vbr-nrt.MCR.vipVariableName")
-					item.VbrNrtMaximumBurstSizeVariable = types.StringValue(cv.String())
+					item.AtmVbrNrtMaximumBurstSizeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.VbrNrtMaximumBurstSize = types.Int64Null()
-					item.VbrNrtMaximumBurstSizeVariable = types.StringNull()
+					item.AtmVbrNrtMaximumBurstSize = types.Int64Null()
+					item.AtmVbrNrtMaximumBurstSizeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("vbr-nrt.MCR.vipValue")
-					item.VbrNrtMaximumBurstSize = types.Int64Value(cv.Int())
-					item.VbrNrtMaximumBurstSizeVariable = types.StringNull()
+					item.AtmVbrNrtMaximumBurstSize = types.Int64Value(cv.Int())
+					item.AtmVbrNrtMaximumBurstSizeVariable = types.StringNull()
 				}
 			} else {
-				item.VbrNrtMaximumBurstSize = types.Int64Null()
-				item.VbrNrtMaximumBurstSizeVariable = types.StringNull()
+				item.AtmVbrNrtMaximumBurstSize = types.Int64Null()
+				item.AtmVbrNrtMaximumBurstSizeVariable = types.StringNull()
 			}
 			if cValue := v.Get("vbr-rt.PCR.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.VbrRtPeakCellRate = types.Int64Null()
+					item.AtmVbrRtPeakCellRate = types.Int64Null()
 
 					cv := v.Get("vbr-rt.PCR.vipVariableName")
-					item.VbrRtPeakCellRateVariable = types.StringValue(cv.String())
+					item.AtmVbrRtPeakCellRateVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.VbrRtPeakCellRate = types.Int64Null()
-					item.VbrRtPeakCellRateVariable = types.StringNull()
+					item.AtmVbrRtPeakCellRate = types.Int64Null()
+					item.AtmVbrRtPeakCellRateVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("vbr-rt.PCR.vipValue")
-					item.VbrRtPeakCellRate = types.Int64Value(cv.Int())
-					item.VbrRtPeakCellRateVariable = types.StringNull()
+					item.AtmVbrRtPeakCellRate = types.Int64Value(cv.Int())
+					item.AtmVbrRtPeakCellRateVariable = types.StringNull()
 				}
 			} else {
-				item.VbrRtPeakCellRate = types.Int64Null()
-				item.VbrRtPeakCellRateVariable = types.StringNull()
+				item.AtmVbrRtPeakCellRate = types.Int64Null()
+				item.AtmVbrRtPeakCellRateVariable = types.StringNull()
 			}
 			if cValue := v.Get("vbr-rt.ACR.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.VbrRtAverageCellRate = types.Int64Null()
+					item.AtmVbrRtAverageCellRate = types.Int64Null()
 
 					cv := v.Get("vbr-rt.ACR.vipVariableName")
-					item.VbrRtAverageCellRateVariable = types.StringValue(cv.String())
+					item.AtmVbrRtAverageCellRateVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.VbrRtAverageCellRate = types.Int64Null()
-					item.VbrRtAverageCellRateVariable = types.StringNull()
+					item.AtmVbrRtAverageCellRate = types.Int64Null()
+					item.AtmVbrRtAverageCellRateVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("vbr-rt.ACR.vipValue")
-					item.VbrRtAverageCellRate = types.Int64Value(cv.Int())
-					item.VbrRtAverageCellRateVariable = types.StringNull()
+					item.AtmVbrRtAverageCellRate = types.Int64Value(cv.Int())
+					item.AtmVbrRtAverageCellRateVariable = types.StringNull()
 				}
 			} else {
-				item.VbrRtAverageCellRate = types.Int64Null()
-				item.VbrRtAverageCellRateVariable = types.StringNull()
+				item.AtmVbrRtAverageCellRate = types.Int64Null()
+				item.AtmVbrRtAverageCellRateVariable = types.StringNull()
 			}
 			if cValue := v.Get("vbr-rt.Burst-cell-size.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.VbrRtMaximumBurstSize = types.Int64Null()
+					item.AtmVbrRtMaximumBurstSize = types.Int64Null()
 
 					cv := v.Get("vbr-rt.Burst-cell-size.vipVariableName")
-					item.VbrRtMaximumBurstSizeVariable = types.StringValue(cv.String())
+					item.AtmVbrRtMaximumBurstSizeVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.VbrRtMaximumBurstSize = types.Int64Null()
-					item.VbrRtMaximumBurstSizeVariable = types.StringNull()
+					item.AtmVbrRtMaximumBurstSize = types.Int64Null()
+					item.AtmVbrRtMaximumBurstSizeVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("vbr-rt.Burst-cell-size.vipValue")
-					item.VbrRtMaximumBurstSize = types.Int64Value(cv.Int())
-					item.VbrRtMaximumBurstSizeVariable = types.StringNull()
+					item.AtmVbrRtMaximumBurstSize = types.Int64Value(cv.Int())
+					item.AtmVbrRtMaximumBurstSizeVariable = types.StringNull()
 				}
 			} else {
-				item.VbrRtMaximumBurstSize = types.Int64Null()
-				item.VbrRtMaximumBurstSizeVariable = types.StringNull()
+				item.AtmVbrRtMaximumBurstSize = types.Int64Null()
+				item.AtmVbrRtMaximumBurstSizeVariable = types.StringNull()
 			}
 			if cValue := v.Get("encapsulation.aal5mux.ppp.dialer.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.Dialer = types.BoolNull()
-
-					cv := v.Get("encapsulation.aal5mux.ppp.dialer.vipVariableName")
-					item.DialerVariable = types.StringValue(cv.String())
+					item.AtmEncapsulationAal5mux = types.BoolNull()
 
 				} else if cValue.String() == "ignore" {
-					item.Dialer = types.BoolNull()
-					item.DialerVariable = types.StringNull()
+					item.AtmEncapsulationAal5mux = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("encapsulation.aal5mux.ppp.dialer.vipValue")
-					item.Dialer = types.BoolValue(cv.Bool())
-					item.DialerVariable = types.StringNull()
+					item.AtmEncapsulationAal5mux = types.BoolValue(cv.Bool())
+
 				}
+			} else if cValue := v.Get("encapsulation.aal5mux.ppp.dialer"); cValue.Exists() {
+				item.AtmEncapsulationAal5mux = types.BoolValue(true)
+
 			} else {
-				item.Dialer = types.BoolNull()
-				item.DialerVariable = types.StringNull()
+				item.AtmEncapsulationAal5mux = types.BoolNull()
+
 			}
 			if cValue := v.Get("encapsulation.aal5nlpid.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.EncapsulationAal5nlpid = types.BoolNull()
-
-					cv := v.Get("encapsulation.aal5nlpid.vipVariableName")
-					item.EncapsulationAal5nlpidVariable = types.StringValue(cv.String())
+					item.AtmEncapsulationAal5nlpid = types.BoolNull()
 
 				} else if cValue.String() == "ignore" {
-					item.EncapsulationAal5nlpid = types.BoolNull()
-					item.EncapsulationAal5nlpidVariable = types.StringNull()
+					item.AtmEncapsulationAal5nlpid = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("encapsulation.aal5nlpid.vipValue")
-					item.EncapsulationAal5nlpid = types.BoolValue(cv.Bool())
-					item.EncapsulationAal5nlpidVariable = types.StringNull()
+					item.AtmEncapsulationAal5nlpid = types.BoolValue(cv.Bool())
+
 				}
+			} else if cValue := v.Get("encapsulation.aal5nlpid"); cValue.Exists() {
+				item.AtmEncapsulationAal5nlpid = types.BoolValue(true)
+
 			} else {
-				item.EncapsulationAal5nlpid = types.BoolNull()
-				item.EncapsulationAal5nlpidVariable = types.StringNull()
+				item.AtmEncapsulationAal5nlpid = types.BoolNull()
+
 			}
 			if cValue := v.Get("encapsulation.aal5snap.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.EncapsulationAal5snap = types.BoolNull()
-
-					cv := v.Get("encapsulation.aal5snap.vipVariableName")
-					item.EncapsulationAal5snapVariable = types.StringValue(cv.String())
+					item.AtmEncapsulationAal5snap = types.BoolNull()
 
 				} else if cValue.String() == "ignore" {
-					item.EncapsulationAal5snap = types.BoolNull()
-					item.EncapsulationAal5snapVariable = types.StringNull()
+					item.AtmEncapsulationAal5snap = types.BoolValue(false)
+
 				} else if cValue.String() == "constant" {
 					cv := v.Get("encapsulation.aal5snap.vipValue")
-					item.EncapsulationAal5snap = types.BoolValue(cv.Bool())
-					item.EncapsulationAal5snapVariable = types.StringNull()
+					item.AtmEncapsulationAal5snap = types.BoolValue(cv.Bool())
+
 				}
+			} else if cValue := v.Get("encapsulation.aal5snap"); cValue.Exists() {
+				item.AtmEncapsulationAal5snap = types.BoolValue(true)
+
 			} else {
-				item.EncapsulationAal5snap = types.BoolNull()
-				item.EncapsulationAal5snapVariable = types.StringNull()
+				item.AtmEncapsulationAal5snap = types.BoolNull()
+
 			}
 			if cValue := v.Get("dialer.pool-member.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.DialerPoolMember = types.Int64Null()
+					item.AtmDialerPoolMember = types.Int64Null()
 
 					cv := v.Get("dialer.pool-member.vipVariableName")
-					item.DialerPoolMemberVariable = types.StringValue(cv.String())
+					item.AtmDialerPoolMemberVariable = types.StringValue(cv.String())
 
 				} else if cValue.String() == "ignore" {
-					item.DialerPoolMember = types.Int64Null()
-					item.DialerPoolMemberVariable = types.StringNull()
+					item.AtmDialerPoolMember = types.Int64Null()
+					item.AtmDialerPoolMemberVariable = types.StringNull()
 				} else if cValue.String() == "constant" {
 					cv := v.Get("dialer.pool-member.vipValue")
-					item.DialerPoolMember = types.Int64Value(cv.Int())
-					item.DialerPoolMemberVariable = types.StringNull()
+					item.AtmDialerPoolMember = types.Int64Value(cv.Int())
+					item.AtmDialerPoolMemberVariable = types.StringNull()
 				}
 			} else {
-				item.DialerPoolMember = types.Int64Null()
-				item.DialerPoolMemberVariable = types.StringNull()
+				item.AtmDialerPoolMember = types.Int64Null()
+				item.AtmDialerPoolMemberVariable = types.StringNull()
 			}
 			data.Pvc = append(data.Pvc, item)
 			return true
@@ -2192,39 +2028,20 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 		if value.String() == "variableName" {
 			data.PppAuthenticationProtocolPap = types.BoolNull()
 
-			v := res.Get(path + "ppp.authentication.pap.vipVariableName")
-			data.PppAuthenticationProtocolPapVariable = types.StringValue(v.String())
-
 		} else if value.String() == "ignore" {
-			data.PppAuthenticationProtocolPap = types.BoolNull()
-			data.PppAuthenticationProtocolPapVariable = types.StringNull()
+			data.PppAuthenticationProtocolPap = types.BoolValue(false)
+
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ppp.authentication.pap.vipValue")
 			data.PppAuthenticationProtocolPap = types.BoolValue(v.Bool())
-			data.PppAuthenticationProtocolPapVariable = types.StringNull()
+
 		}
+	} else if value := res.Get(path + "ppp.authentication.pap"); value.Exists() {
+		data.PppAuthenticationProtocolPap = types.BoolValue(true)
+
 	} else {
 		data.PppAuthenticationProtocolPap = types.BoolNull()
-		data.PppAuthenticationProtocolPapVariable = types.StringNull()
-	}
-	if value := res.Get(path + "ppp.authentication.callin.vipType"); value.Exists() {
-		if value.String() == "variableName" {
-			data.AuthenticationType = types.StringNull()
 
-			v := res.Get(path + "ppp.authentication.callin.vipVariableName")
-			data.AuthenticationTypeVariable = types.StringValue(v.String())
-
-		} else if value.String() == "ignore" {
-			data.AuthenticationType = types.StringNull()
-			data.AuthenticationTypeVariable = types.StringNull()
-		} else if value.String() == "constant" {
-			v := res.Get(path + "ppp.authentication.callin.vipValue")
-			data.AuthenticationType = types.StringValue(v.String())
-			data.AuthenticationTypeVariable = types.StringNull()
-		}
-	} else {
-		data.AuthenticationType = types.StringNull()
-		data.AuthenticationTypeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "ppp.chap.hostname.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2288,13 +2105,16 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			data.PapPassword = types.BoolNull()
 
 		} else if value.String() == "ignore" {
-			data.PapPassword = types.BoolNull()
+			data.PapPassword = types.BoolValue(false)
 
 		} else if value.String() == "constant" {
 			v := res.Get(path + "ppp.pap.sent-username.username.password.vipValue")
 			data.PapPassword = types.BoolValue(v.Bool())
 
 		}
+	} else if value := res.Get(path + "ppp.pap.sent-username.username.password"); value.Exists() {
+		data.PapPassword = types.BoolValue(true)
+
 	} else {
 		data.PapPassword = types.BoolNull()
 
@@ -2317,6 +2137,22 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 	} else {
 		data.PapPppAuthPassword = types.StringNull()
 		data.PapPppAuthPasswordVariable = types.StringNull()
+	}
+	if value := res.Get(path + "ppp.authentication.callin.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.PppAuthenticationType = types.StringNull()
+
+		} else if value.String() == "ignore" {
+			data.PppAuthenticationType = types.StringNull()
+
+		} else if value.String() == "constant" {
+			v := res.Get(path + "ppp.authentication.callin.vipValue")
+			data.PppAuthenticationType = types.StringValue(v.String())
+
+		}
+	} else {
+		data.PppAuthenticationType = types.StringNull()
+
 	}
 	if value := res.Get(path + "tunnel-interface.enable-core-region.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2376,9 +2212,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 		data.SecondaryRegionVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.encapsulation.vipValue"); len(value.Array()) > 0 {
-		data.Encapsulation = make([]VPNInterfaceDSLPPPoAEncapsulation, 0)
+		data.TunnelInterfaceEncapsulations = make([]VPNInterfaceDSLPPPoATunnelInterfaceEncapsulations, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLPPPoAEncapsulation{}
+			item := VPNInterfaceDSLPPPoATunnelInterfaceEncapsulations{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -2386,18 +2222,18 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 			}
 			if cValue := v.Get("encap.vipType"); cValue.Exists() {
 				if cValue.String() == "variableName" {
-					item.EncapsulationType = types.StringNull()
+					item.Encapsulation = types.StringNull()
 
 				} else if cValue.String() == "ignore" {
-					item.EncapsulationType = types.StringNull()
+					item.Encapsulation = types.StringNull()
 
 				} else if cValue.String() == "constant" {
 					cv := v.Get("encap.vipValue")
-					item.EncapsulationType = types.StringValue(cv.String())
+					item.Encapsulation = types.StringValue(cv.String())
 
 				}
 			} else {
-				item.EncapsulationType = types.StringNull()
+				item.Encapsulation = types.StringNull()
 
 			}
 			if cValue := v.Get("preference.vipType"); cValue.Exists() {
@@ -2438,47 +2274,47 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				item.Weight = types.Int64Null()
 				item.WeightVariable = types.StringNull()
 			}
-			data.Encapsulation = append(data.Encapsulation, item)
+			data.TunnelInterfaceEncapsulations = append(data.TunnelInterfaceEncapsulations, item)
 			return true
 		})
 	}
 	if value := res.Get(path + "tunnel-interface.group.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.Groups = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.group.vipVariableName")
-			data.GroupsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceGroupsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Groups = types.SetNull(types.Int64Type)
-			data.GroupsVariable = types.StringNull()
+			data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.group.vipValue")
-			data.Groups = helpers.GetInt64Set(v.Array())
-			data.GroupsVariable = types.StringNull()
+			data.TunnelInterfaceGroups = helpers.GetInt64Set(v.Array())
+			data.TunnelInterfaceGroupsVariable = types.StringNull()
 		}
 	} else {
-		data.Groups = types.SetNull(types.Int64Type)
-		data.GroupsVariable = types.StringNull()
+		data.TunnelInterfaceGroups = types.SetNull(types.Int64Type)
+		data.TunnelInterfaceGroupsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.border.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Border = types.BoolNull()
+			data.TunnelInterfaceBorder = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.border.vipVariableName")
-			data.BorderVariable = types.StringValue(v.String())
+			data.TunnelInterfaceBorderVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Border = types.BoolNull()
-			data.BorderVariable = types.StringNull()
+			data.TunnelInterfaceBorder = types.BoolNull()
+			data.TunnelInterfaceBorderVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.border.vipValue")
-			data.Border = types.BoolValue(v.Bool())
-			data.BorderVariable = types.StringNull()
+			data.TunnelInterfaceBorder = types.BoolValue(v.Bool())
+			data.TunnelInterfaceBorderVariable = types.StringNull()
 		}
 	} else {
-		data.Border = types.BoolNull()
-		data.BorderVariable = types.StringNull()
+		data.TunnelInterfaceBorder = types.BoolNull()
+		data.TunnelInterfaceBorderVariable = types.StringNull()
 	}
 	if value := res.Get(path + "per-tunnel-qos.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -2518,694 +2354,713 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 		data.PerTunnelQosAggregator = types.BoolNull()
 		data.PerTunnelQosAggregatorVariable = types.StringNull()
 	}
-	if value := res.Get(path + "tunnel-interface.color.value.vipType"); value.Exists() {
+	if value := res.Get(path + "tunnel-interface.tunnel-qos.mode.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Color = types.StringNull()
+			data.TunnelQosMode = types.StringNull()
 
-			v := res.Get(path + "tunnel-interface.color.value.vipVariableName")
-			data.ColorVariable = types.StringValue(v.String())
+			v := res.Get(path + "tunnel-interface.tunnel-qos.mode.vipVariableName")
+			data.TunnelQosModeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Color = types.StringNull()
-			data.ColorVariable = types.StringNull()
+			data.TunnelQosMode = types.StringNull()
+			data.TunnelQosModeVariable = types.StringNull()
 		} else if value.String() == "constant" {
-			v := res.Get(path + "tunnel-interface.color.value.vipValue")
-			data.Color = types.StringValue(v.String())
-			data.ColorVariable = types.StringNull()
+			v := res.Get(path + "tunnel-interface.tunnel-qos.mode.vipValue")
+			data.TunnelQosMode = types.StringValue(v.String())
+			data.TunnelQosModeVariable = types.StringNull()
 		}
 	} else {
-		data.Color = types.StringNull()
-		data.ColorVariable = types.StringNull()
+		data.TunnelQosMode = types.StringNull()
+		data.TunnelQosModeVariable = types.StringNull()
+	}
+	if value := res.Get(path + "tunnel-interface.color.value.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.TunnelInterfaceColor = types.StringNull()
+
+			v := res.Get(path + "tunnel-interface.color.value.vipVariableName")
+			data.TunnelInterfaceColorVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.TunnelInterfaceColor = types.StringNull()
+			data.TunnelInterfaceColorVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "tunnel-interface.color.value.vipValue")
+			data.TunnelInterfaceColor = types.StringValue(v.String())
+			data.TunnelInterfaceColorVariable = types.StringNull()
+		}
+	} else {
+		data.TunnelInterfaceColor = types.StringNull()
+		data.TunnelInterfaceColorVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.last-resort-circuit.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.LastResortCircuit = types.BoolNull()
+			data.TunnelInterfaceLastResortCircuit = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.last-resort-circuit.vipVariableName")
-			data.LastResortCircuitVariable = types.StringValue(v.String())
+			data.TunnelInterfaceLastResortCircuitVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.LastResortCircuit = types.BoolNull()
-			data.LastResortCircuitVariable = types.StringNull()
+			data.TunnelInterfaceLastResortCircuit = types.BoolNull()
+			data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.last-resort-circuit.vipValue")
-			data.LastResortCircuit = types.BoolValue(v.Bool())
-			data.LastResortCircuitVariable = types.StringNull()
+			data.TunnelInterfaceLastResortCircuit = types.BoolValue(v.Bool())
+			data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
 		}
 	} else {
-		data.LastResortCircuit = types.BoolNull()
-		data.LastResortCircuitVariable = types.StringNull()
+		data.TunnelInterfaceLastResortCircuit = types.BoolNull()
+		data.TunnelInterfaceLastResortCircuitVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.low-bandwidth-link.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.LowBandwidthLink = types.BoolNull()
+			data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.low-bandwidth-link.vipVariableName")
-			data.LowBandwidthLinkVariable = types.StringValue(v.String())
+			data.TunnelInterfaceLowBandwidthLinkVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.LowBandwidthLink = types.BoolNull()
-			data.LowBandwidthLinkVariable = types.StringNull()
+			data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
+			data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.low-bandwidth-link.vipValue")
-			data.LowBandwidthLink = types.BoolValue(v.Bool())
-			data.LowBandwidthLinkVariable = types.StringNull()
+			data.TunnelInterfaceLowBandwidthLink = types.BoolValue(v.Bool())
+			data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
 		}
 	} else {
-		data.LowBandwidthLink = types.BoolNull()
-		data.LowBandwidthLinkVariable = types.StringNull()
+		data.TunnelInterfaceLowBandwidthLink = types.BoolNull()
+		data.TunnelInterfaceLowBandwidthLinkVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.tunnel-tcp-mss-adjust.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TunnelTcpMss = types.Int64Null()
+			data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.tunnel-tcp-mss-adjust.vipVariableName")
-			data.TunnelTcpMssVariable = types.StringValue(v.String())
+			data.TunnelInterfaceTunnelTcpMssVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TunnelTcpMss = types.Int64Null()
-			data.TunnelTcpMssVariable = types.StringNull()
+			data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
+			data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.tunnel-tcp-mss-adjust.vipValue")
-			data.TunnelTcpMss = types.Int64Value(v.Int())
-			data.TunnelTcpMssVariable = types.StringNull()
+			data.TunnelInterfaceTunnelTcpMss = types.Int64Value(v.Int())
+			data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
 		}
 	} else {
-		data.TunnelTcpMss = types.Int64Null()
-		data.TunnelTcpMssVariable = types.StringNull()
+		data.TunnelInterfaceTunnelTcpMss = types.Int64Null()
+		data.TunnelInterfaceTunnelTcpMssVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.clear-dont-fragment.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ClearDontFragment = types.BoolNull()
+			data.TunnelInterfaceClearDontFragment = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.clear-dont-fragment.vipVariableName")
-			data.ClearDontFragmentVariable = types.StringValue(v.String())
+			data.TunnelInterfaceClearDontFragmentVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ClearDontFragment = types.BoolNull()
-			data.ClearDontFragmentVariable = types.StringNull()
+			data.TunnelInterfaceClearDontFragment = types.BoolNull()
+			data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.clear-dont-fragment.vipValue")
-			data.ClearDontFragment = types.BoolValue(v.Bool())
-			data.ClearDontFragmentVariable = types.StringNull()
+			data.TunnelInterfaceClearDontFragment = types.BoolValue(v.Bool())
+			data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
 		}
 	} else {
-		data.ClearDontFragment = types.BoolNull()
-		data.ClearDontFragmentVariable = types.StringNull()
+		data.TunnelInterfaceClearDontFragment = types.BoolNull()
+		data.TunnelInterfaceClearDontFragmentVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.network-broadcast.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.NetworkBroadcast1 = types.BoolNull()
+			data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.network-broadcast.vipVariableName")
-			data.NetworkBroadcast1Variable = types.StringValue(v.String())
+			data.TunnelInterfaceNetworkBroadcastVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.NetworkBroadcast1 = types.BoolNull()
-			data.NetworkBroadcast1Variable = types.StringNull()
+			data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
+			data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.network-broadcast.vipValue")
-			data.NetworkBroadcast1 = types.BoolValue(v.Bool())
-			data.NetworkBroadcast1Variable = types.StringNull()
+			data.TunnelInterfaceNetworkBroadcast = types.BoolValue(v.Bool())
+			data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
 		}
 	} else {
-		data.NetworkBroadcast1 = types.BoolNull()
-		data.NetworkBroadcast1Variable = types.StringNull()
+		data.TunnelInterfaceNetworkBroadcast = types.BoolNull()
+		data.TunnelInterfaceNetworkBroadcastVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.max-control-connections.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.MaxControlConnections = types.Int64Null()
+			data.TunnelInterfaceMaxControlConnections = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.max-control-connections.vipVariableName")
-			data.MaxControlConnectionsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceMaxControlConnectionsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.MaxControlConnections = types.Int64Null()
-			data.MaxControlConnectionsVariable = types.StringNull()
+			data.TunnelInterfaceMaxControlConnections = types.Int64Null()
+			data.TunnelInterfaceMaxControlConnectionsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.max-control-connections.vipValue")
-			data.MaxControlConnections = types.Int64Value(v.Int())
-			data.MaxControlConnectionsVariable = types.StringNull()
+			data.TunnelInterfaceMaxControlConnections = types.Int64Value(v.Int())
+			data.TunnelInterfaceMaxControlConnectionsVariable = types.StringNull()
 		}
 	} else {
-		data.MaxControlConnections = types.Int64Null()
-		data.MaxControlConnectionsVariable = types.StringNull()
+		data.TunnelInterfaceMaxControlConnections = types.Int64Null()
+		data.TunnelInterfaceMaxControlConnectionsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.control-connections.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ControlConnections = types.BoolNull()
+			data.TunnelInterfaceControlConnections = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.control-connections.vipVariableName")
-			data.ControlConnectionsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceControlConnectionsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ControlConnections = types.BoolNull()
-			data.ControlConnectionsVariable = types.StringNull()
+			data.TunnelInterfaceControlConnections = types.BoolNull()
+			data.TunnelInterfaceControlConnectionsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.control-connections.vipValue")
-			data.ControlConnections = types.BoolValue(v.Bool())
-			data.ControlConnectionsVariable = types.StringNull()
+			data.TunnelInterfaceControlConnections = types.BoolValue(v.Bool())
+			data.TunnelInterfaceControlConnectionsVariable = types.StringNull()
 		}
 	} else {
-		data.ControlConnections = types.BoolNull()
-		data.ControlConnectionsVariable = types.StringNull()
+		data.TunnelInterfaceControlConnections = types.BoolNull()
+		data.TunnelInterfaceControlConnectionsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.vbond-as-stun-server.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.VbondAsStunServer = types.BoolNull()
+			data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.vbond-as-stun-server.vipVariableName")
-			data.VbondAsStunServerVariable = types.StringValue(v.String())
+			data.TunnelInterfaceVbondAsStunServerVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.VbondAsStunServer = types.BoolNull()
-			data.VbondAsStunServerVariable = types.StringNull()
+			data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
+			data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.vbond-as-stun-server.vipValue")
-			data.VbondAsStunServer = types.BoolValue(v.Bool())
-			data.VbondAsStunServerVariable = types.StringNull()
+			data.TunnelInterfaceVbondAsStunServer = types.BoolValue(v.Bool())
+			data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
 		}
 	} else {
-		data.VbondAsStunServer = types.BoolNull()
-		data.VbondAsStunServerVariable = types.StringNull()
+		data.TunnelInterfaceVbondAsStunServer = types.BoolNull()
+		data.TunnelInterfaceVbondAsStunServerVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.ExcludeControllerGroupList = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
 
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipVariableName")
-			data.ExcludeControllerGroupListVariable = types.StringValue(v.String())
+			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ExcludeControllerGroupList = types.SetNull(types.Int64Type)
-			data.ExcludeControllerGroupListVariable = types.StringNull()
+			data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
+			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.exclude-controller-group-list.vipValue")
-			data.ExcludeControllerGroupList = helpers.GetInt64Set(v.Array())
-			data.ExcludeControllerGroupListVariable = types.StringNull()
+			data.TunnelInterfaceExcludeControllerGroupList = helpers.GetInt64Set(v.Array())
+			data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 		}
 	} else {
-		data.ExcludeControllerGroupList = types.SetNull(types.Int64Type)
-		data.ExcludeControllerGroupListVariable = types.StringNull()
+		data.TunnelInterfaceExcludeControllerGroupList = types.SetNull(types.Int64Type)
+		data.TunnelInterfaceExcludeControllerGroupListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.VmanageConnectionPreference = types.Int64Null()
+			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipVariableName")
-			data.VmanageConnectionPreferenceVariable = types.StringValue(v.String())
+			data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.VmanageConnectionPreference = types.Int64Null()
-			data.VmanageConnectionPreferenceVariable = types.StringNull()
+			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
+			data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.vmanage-connection-preference.vipValue")
-			data.VmanageConnectionPreference = types.Int64Value(v.Int())
-			data.VmanageConnectionPreferenceVariable = types.StringNull()
+			data.TunnelInterfaceVmanageConnectionPreference = types.Int64Value(v.Int())
+			data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
 		}
 	} else {
-		data.VmanageConnectionPreference = types.Int64Null()
-		data.VmanageConnectionPreferenceVariable = types.StringNull()
+		data.TunnelInterfaceVmanageConnectionPreference = types.Int64Null()
+		data.TunnelInterfaceVmanageConnectionPreferenceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.port-hop.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.PortHop = types.BoolNull()
+			data.TunnelInterfacePortHop = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.port-hop.vipVariableName")
-			data.PortHopVariable = types.StringValue(v.String())
+			data.TunnelInterfacePortHopVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.PortHop = types.BoolNull()
-			data.PortHopVariable = types.StringNull()
+			data.TunnelInterfacePortHop = types.BoolNull()
+			data.TunnelInterfacePortHopVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.port-hop.vipValue")
-			data.PortHop = types.BoolValue(v.Bool())
-			data.PortHopVariable = types.StringNull()
+			data.TunnelInterfacePortHop = types.BoolValue(v.Bool())
+			data.TunnelInterfacePortHopVariable = types.StringNull()
 		}
 	} else {
-		data.PortHop = types.BoolNull()
-		data.PortHopVariable = types.StringNull()
+		data.TunnelInterfacePortHop = types.BoolNull()
+		data.TunnelInterfacePortHopVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.color.restrict.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Restrict = types.BoolNull()
-
-			v := res.Get(path + "tunnel-interface.color.restrict.vipVariableName")
-			data.RestrictVariable = types.StringValue(v.String())
+			data.TunnelInterfaceColorRestrict = types.BoolNull()
 
 		} else if value.String() == "ignore" {
-			data.Restrict = types.BoolNull()
-			data.RestrictVariable = types.StringNull()
+			data.TunnelInterfaceColorRestrict = types.BoolValue(false)
+
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.color.restrict.vipValue")
-			data.Restrict = types.BoolValue(v.Bool())
-			data.RestrictVariable = types.StringNull()
+			data.TunnelInterfaceColorRestrict = types.BoolValue(v.Bool())
+
 		}
+	} else if value := res.Get(path + "tunnel-interface.color.restrict"); value.Exists() {
+		data.TunnelInterfaceColorRestrict = types.BoolValue(true)
+
 	} else {
-		data.Restrict = types.BoolNull()
-		data.RestrictVariable = types.StringNull()
+		data.TunnelInterfaceColorRestrict = types.BoolNull()
+
 	}
 	if value := res.Get(path + "tunnel-interface.carrier.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Carrier = types.StringNull()
+			data.TunnelInterfaceCarrier = types.StringNull()
 
 			v := res.Get(path + "tunnel-interface.carrier.vipVariableName")
-			data.CarrierVariable = types.StringValue(v.String())
+			data.TunnelInterfaceCarrierVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Carrier = types.StringNull()
-			data.CarrierVariable = types.StringNull()
+			data.TunnelInterfaceCarrier = types.StringNull()
+			data.TunnelInterfaceCarrierVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.carrier.vipValue")
-			data.Carrier = types.StringValue(v.String())
-			data.CarrierVariable = types.StringNull()
+			data.TunnelInterfaceCarrier = types.StringValue(v.String())
+			data.TunnelInterfaceCarrierVariable = types.StringNull()
 		}
 	} else {
-		data.Carrier = types.StringNull()
-		data.CarrierVariable = types.StringNull()
+		data.TunnelInterfaceCarrier = types.StringNull()
+		data.TunnelInterfaceCarrierVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.nat-refresh-interval.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.NatRefreshInterval = types.Int64Null()
+			data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.nat-refresh-interval.vipVariableName")
-			data.NatRefreshIntervalVariable = types.StringValue(v.String())
+			data.TunnelInterfaceNatRefreshIntervalVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.NatRefreshInterval = types.Int64Null()
-			data.NatRefreshIntervalVariable = types.StringNull()
+			data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
+			data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.nat-refresh-interval.vipValue")
-			data.NatRefreshInterval = types.Int64Value(v.Int())
-			data.NatRefreshIntervalVariable = types.StringNull()
+			data.TunnelInterfaceNatRefreshInterval = types.Int64Value(v.Int())
+			data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
 		}
 	} else {
-		data.NatRefreshInterval = types.Int64Null()
-		data.NatRefreshIntervalVariable = types.StringNull()
+		data.TunnelInterfaceNatRefreshInterval = types.Int64Null()
+		data.TunnelInterfaceNatRefreshIntervalVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.hello-interval.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.HelloInterval = types.Int64Null()
+			data.TunnelInterfaceHelloInterval = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.hello-interval.vipVariableName")
-			data.HelloIntervalVariable = types.StringValue(v.String())
+			data.TunnelInterfaceHelloIntervalVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.HelloInterval = types.Int64Null()
-			data.HelloIntervalVariable = types.StringNull()
+			data.TunnelInterfaceHelloInterval = types.Int64Null()
+			data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.hello-interval.vipValue")
-			data.HelloInterval = types.Int64Value(v.Int())
-			data.HelloIntervalVariable = types.StringNull()
+			data.TunnelInterfaceHelloInterval = types.Int64Value(v.Int())
+			data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
 		}
 	} else {
-		data.HelloInterval = types.Int64Null()
-		data.HelloIntervalVariable = types.StringNull()
+		data.TunnelInterfaceHelloInterval = types.Int64Null()
+		data.TunnelInterfaceHelloIntervalVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.hello-tolerance.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.HelloTolerance = types.Int64Null()
+			data.TunnelInterfaceHelloTolerance = types.Int64Null()
 
 			v := res.Get(path + "tunnel-interface.hello-tolerance.vipVariableName")
-			data.HelloToleranceVariable = types.StringValue(v.String())
+			data.TunnelInterfaceHelloToleranceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.HelloTolerance = types.Int64Null()
-			data.HelloToleranceVariable = types.StringNull()
+			data.TunnelInterfaceHelloTolerance = types.Int64Null()
+			data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.hello-tolerance.vipValue")
-			data.HelloTolerance = types.Int64Value(v.Int())
-			data.HelloToleranceVariable = types.StringNull()
+			data.TunnelInterfaceHelloTolerance = types.Int64Value(v.Int())
+			data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
 		}
 	} else {
-		data.HelloTolerance = types.Int64Null()
-		data.HelloToleranceVariable = types.StringNull()
+		data.TunnelInterfaceHelloTolerance = types.Int64Null()
+		data.TunnelInterfaceHelloToleranceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.bind.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.BindLoopbackTunnel = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
 
 			v := res.Get(path + "tunnel-interface.bind.vipVariableName")
-			data.BindLoopbackTunnelVariable = types.StringValue(v.String())
+			data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.BindLoopbackTunnel = types.StringNull()
-			data.BindLoopbackTunnelVariable = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.bind.vipValue")
-			data.BindLoopbackTunnel = types.StringValue(v.String())
-			data.BindLoopbackTunnelVariable = types.StringNull()
+			data.TunnelInterfaceBindLoopbackTunnel = types.StringValue(v.String())
+			data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
 		}
 	} else {
-		data.BindLoopbackTunnel = types.StringNull()
-		data.BindLoopbackTunnelVariable = types.StringNull()
+		data.TunnelInterfaceBindLoopbackTunnel = types.StringNull()
+		data.TunnelInterfaceBindLoopbackTunnelVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.all.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.All = types.BoolNull()
+			data.TunnelInterfaceAllowAll = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.all.vipVariableName")
-			data.AllVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowAllVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.All = types.BoolNull()
-			data.AllVariable = types.StringNull()
+			data.TunnelInterfaceAllowAll = types.BoolNull()
+			data.TunnelInterfaceAllowAllVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.all.vipValue")
-			data.All = types.BoolValue(v.Bool())
-			data.AllVariable = types.StringNull()
+			data.TunnelInterfaceAllowAll = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowAllVariable = types.StringNull()
 		}
 	} else {
-		data.All = types.BoolNull()
-		data.AllVariable = types.StringNull()
-	}
-	if value := res.Get(path + "tunnel-interface.network-broadcast.vipType"); value.Exists() {
-		if value.String() == "variableName" {
-			data.NetworkBroadcast2 = types.BoolNull()
-
-			v := res.Get(path + "tunnel-interface.network-broadcast.vipVariableName")
-			data.NetworkBroadcast2Variable = types.StringValue(v.String())
-
-		} else if value.String() == "ignore" {
-			data.NetworkBroadcast2 = types.BoolNull()
-			data.NetworkBroadcast2Variable = types.StringNull()
-		} else if value.String() == "constant" {
-			v := res.Get(path + "tunnel-interface.network-broadcast.vipValue")
-			data.NetworkBroadcast2 = types.BoolValue(v.Bool())
-			data.NetworkBroadcast2Variable = types.StringNull()
-		}
-	} else {
-		data.NetworkBroadcast2 = types.BoolNull()
-		data.NetworkBroadcast2Variable = types.StringNull()
+		data.TunnelInterfaceAllowAll = types.BoolNull()
+		data.TunnelInterfaceAllowAllVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.bgp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Bgp = types.BoolNull()
+			data.TunnelInterfaceAllowBgp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.bgp.vipVariableName")
-			data.BgpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowBgpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Bgp = types.BoolNull()
-			data.BgpVariable = types.StringNull()
+			data.TunnelInterfaceAllowBgp = types.BoolNull()
+			data.TunnelInterfaceAllowBgpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.bgp.vipValue")
-			data.Bgp = types.BoolValue(v.Bool())
-			data.BgpVariable = types.StringNull()
+			data.TunnelInterfaceAllowBgp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowBgpVariable = types.StringNull()
 		}
 	} else {
-		data.Bgp = types.BoolNull()
-		data.BgpVariable = types.StringNull()
+		data.TunnelInterfaceAllowBgp = types.BoolNull()
+		data.TunnelInterfaceAllowBgpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.dhcp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Dhcp = types.BoolNull()
+			data.TunnelInterfaceAllowDhcp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.dhcp.vipVariableName")
-			data.DhcpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowDhcpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Dhcp = types.BoolNull()
-			data.DhcpVariable = types.StringNull()
+			data.TunnelInterfaceAllowDhcp = types.BoolNull()
+			data.TunnelInterfaceAllowDhcpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.dhcp.vipValue")
-			data.Dhcp = types.BoolValue(v.Bool())
-			data.DhcpVariable = types.StringNull()
+			data.TunnelInterfaceAllowDhcp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowDhcpVariable = types.StringNull()
 		}
 	} else {
-		data.Dhcp = types.BoolNull()
-		data.DhcpVariable = types.StringNull()
+		data.TunnelInterfaceAllowDhcp = types.BoolNull()
+		data.TunnelInterfaceAllowDhcpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.dns.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Dns = types.BoolNull()
+			data.TunnelInterfaceAllowDns = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.dns.vipVariableName")
-			data.DnsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowDnsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Dns = types.BoolNull()
-			data.DnsVariable = types.StringNull()
+			data.TunnelInterfaceAllowDns = types.BoolNull()
+			data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.dns.vipValue")
-			data.Dns = types.BoolValue(v.Bool())
-			data.DnsVariable = types.StringNull()
+			data.TunnelInterfaceAllowDns = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 		}
 	} else {
-		data.Dns = types.BoolNull()
-		data.DnsVariable = types.StringNull()
+		data.TunnelInterfaceAllowDns = types.BoolNull()
+		data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.icmp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Icmp = types.BoolNull()
+			data.TunnelInterfaceAllowIcmp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.icmp.vipVariableName")
-			data.IcmpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowIcmpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Icmp = types.BoolNull()
-			data.IcmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowIcmp = types.BoolNull()
+			data.TunnelInterfaceAllowIcmpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.icmp.vipValue")
-			data.Icmp = types.BoolValue(v.Bool())
-			data.IcmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowIcmp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowIcmpVariable = types.StringNull()
 		}
 	} else {
-		data.Icmp = types.BoolNull()
-		data.IcmpVariable = types.StringNull()
+		data.TunnelInterfaceAllowIcmp = types.BoolNull()
+		data.TunnelInterfaceAllowIcmpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.sshd.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Ssh = types.BoolNull()
+			data.TunnelInterfaceAllowSsh = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.sshd.vipVariableName")
-			data.SshVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowSshVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Ssh = types.BoolNull()
-			data.SshVariable = types.StringNull()
+			data.TunnelInterfaceAllowSsh = types.BoolNull()
+			data.TunnelInterfaceAllowSshVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.sshd.vipValue")
-			data.Ssh = types.BoolValue(v.Bool())
-			data.SshVariable = types.StringNull()
+			data.TunnelInterfaceAllowSsh = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowSshVariable = types.StringNull()
 		}
 	} else {
-		data.Ssh = types.BoolNull()
-		data.SshVariable = types.StringNull()
+		data.TunnelInterfaceAllowSsh = types.BoolNull()
+		data.TunnelInterfaceAllowSshVariable = types.StringNull()
+	}
+	if value := res.Get(path + "tunnel-interface.allow-service.ntp.vipType"); value.Exists() {
+		if value.String() == "variableName" {
+			data.TunnelInterfaceAllowNtp = types.BoolNull()
+
+			v := res.Get(path + "tunnel-interface.allow-service.ntp.vipVariableName")
+			data.TunnelInterfaceAllowNtpVariable = types.StringValue(v.String())
+
+		} else if value.String() == "ignore" {
+			data.TunnelInterfaceAllowNtp = types.BoolNull()
+			data.TunnelInterfaceAllowNtpVariable = types.StringNull()
+		} else if value.String() == "constant" {
+			v := res.Get(path + "tunnel-interface.allow-service.ntp.vipValue")
+			data.TunnelInterfaceAllowNtp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowNtpVariable = types.StringNull()
+		}
+	} else {
+		data.TunnelInterfaceAllowNtp = types.BoolNull()
+		data.TunnelInterfaceAllowNtpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.netconf.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Netconf = types.BoolNull()
+			data.TunnelInterfaceAllowNetconf = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.netconf.vipVariableName")
-			data.NetconfVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowNetconfVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Netconf = types.BoolNull()
-			data.NetconfVariable = types.StringNull()
+			data.TunnelInterfaceAllowNetconf = types.BoolNull()
+			data.TunnelInterfaceAllowNetconfVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.netconf.vipValue")
-			data.Netconf = types.BoolValue(v.Bool())
-			data.NetconfVariable = types.StringNull()
+			data.TunnelInterfaceAllowNetconf = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowNetconfVariable = types.StringNull()
 		}
 	} else {
-		data.Netconf = types.BoolNull()
-		data.NetconfVariable = types.StringNull()
+		data.TunnelInterfaceAllowNetconf = types.BoolNull()
+		data.TunnelInterfaceAllowNetconfVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.ospf.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Ospf = types.BoolNull()
+			data.TunnelInterfaceAllowOspf = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.ospf.vipVariableName")
-			data.OspfVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowOspfVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Ospf = types.BoolNull()
-			data.OspfVariable = types.StringNull()
+			data.TunnelInterfaceAllowOspf = types.BoolNull()
+			data.TunnelInterfaceAllowOspfVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.ospf.vipValue")
-			data.Ospf = types.BoolValue(v.Bool())
-			data.OspfVariable = types.StringNull()
+			data.TunnelInterfaceAllowOspf = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowOspfVariable = types.StringNull()
 		}
 	} else {
-		data.Ospf = types.BoolNull()
-		data.OspfVariable = types.StringNull()
+		data.TunnelInterfaceAllowOspf = types.BoolNull()
+		data.TunnelInterfaceAllowOspfVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.stun.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Stun = types.BoolNull()
+			data.TunnelInterfaceAllowStun = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.stun.vipVariableName")
-			data.StunVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowStunVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Stun = types.BoolNull()
-			data.StunVariable = types.StringNull()
+			data.TunnelInterfaceAllowStun = types.BoolNull()
+			data.TunnelInterfaceAllowStunVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.stun.vipValue")
-			data.Stun = types.BoolValue(v.Bool())
-			data.StunVariable = types.StringNull()
+			data.TunnelInterfaceAllowStun = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowStunVariable = types.StringNull()
 		}
 	} else {
-		data.Stun = types.BoolNull()
-		data.StunVariable = types.StringNull()
+		data.TunnelInterfaceAllowStun = types.BoolNull()
+		data.TunnelInterfaceAllowStunVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.snmp.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Snmp = types.BoolNull()
+			data.TunnelInterfaceAllowSnmp = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.snmp.vipVariableName")
-			data.SnmpVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowSnmpVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Snmp = types.BoolNull()
-			data.SnmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowSnmp = types.BoolNull()
+			data.TunnelInterfaceAllowSnmpVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.snmp.vipValue")
-			data.Snmp = types.BoolValue(v.Bool())
-			data.SnmpVariable = types.StringNull()
+			data.TunnelInterfaceAllowSnmp = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowSnmpVariable = types.StringNull()
 		}
 	} else {
-		data.Snmp = types.BoolNull()
-		data.SnmpVariable = types.StringNull()
+		data.TunnelInterfaceAllowSnmp = types.BoolNull()
+		data.TunnelInterfaceAllowSnmpVariable = types.StringNull()
 	}
 	if value := res.Get(path + "tunnel-interface.allow-service.https.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.Https = types.BoolNull()
+			data.TunnelInterfaceAllowHttps = types.BoolNull()
 
 			v := res.Get(path + "tunnel-interface.allow-service.https.vipVariableName")
-			data.HttpsVariable = types.StringValue(v.String())
+			data.TunnelInterfaceAllowHttpsVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.Https = types.BoolNull()
-			data.HttpsVariable = types.StringNull()
+			data.TunnelInterfaceAllowHttps = types.BoolNull()
+			data.TunnelInterfaceAllowHttpsVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "tunnel-interface.allow-service.https.vipValue")
-			data.Https = types.BoolValue(v.Bool())
-			data.HttpsVariable = types.StringNull()
+			data.TunnelInterfaceAllowHttps = types.BoolValue(v.Bool())
+			data.TunnelInterfaceAllowHttpsVariable = types.StringNull()
 		}
 	} else {
-		data.Https = types.BoolNull()
-		data.HttpsVariable = types.StringNull()
+		data.TunnelInterfaceAllowHttps = types.BoolNull()
+		data.TunnelInterfaceAllowHttpsVariable = types.StringNull()
 	}
 	if value := res.Get(path + "nat.vipType"); value.Exists() {
 		if value.String() == "variableName" {
 			data.Nat = types.BoolNull()
 
-			v := res.Get(path + "nat.vipVariableName")
-			data.NatVariable = types.StringValue(v.String())
-
 		} else if value.String() == "ignore" {
-			data.Nat = types.BoolNull()
-			data.NatVariable = types.StringNull()
+			data.Nat = types.BoolValue(false)
+
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat.vipValue")
 			data.Nat = types.BoolValue(v.Bool())
-			data.NatVariable = types.StringNull()
+
 		}
+	} else if value := res.Get(path + "nat"); value.Exists() {
+		data.Nat = types.BoolValue(true)
+
 	} else {
 		data.Nat = types.BoolNull()
-		data.NatVariable = types.StringNull()
+
 	}
 	if value := res.Get(path + "nat.refresh.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.RefreshMode = types.StringNull()
+			data.NatRefreshMode = types.StringNull()
 
 			v := res.Get(path + "nat.refresh.vipVariableName")
-			data.RefreshModeVariable = types.StringValue(v.String())
+			data.NatRefreshModeVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.RefreshMode = types.StringNull()
-			data.RefreshModeVariable = types.StringNull()
+			data.NatRefreshMode = types.StringNull()
+			data.NatRefreshModeVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat.refresh.vipValue")
-			data.RefreshMode = types.StringValue(v.String())
-			data.RefreshModeVariable = types.StringNull()
+			data.NatRefreshMode = types.StringValue(v.String())
+			data.NatRefreshModeVariable = types.StringNull()
 		}
 	} else {
-		data.RefreshMode = types.StringNull()
-		data.RefreshModeVariable = types.StringNull()
+		data.NatRefreshMode = types.StringNull()
+		data.NatRefreshModeVariable = types.StringNull()
 	}
 	if value := res.Get(path + "nat.udp-timeout.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.UdpTimeout = types.Int64Null()
+			data.NatUdpTimeout = types.Int64Null()
 
 			v := res.Get(path + "nat.udp-timeout.vipVariableName")
-			data.UdpTimeoutVariable = types.StringValue(v.String())
+			data.NatUdpTimeoutVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.UdpTimeout = types.Int64Null()
-			data.UdpTimeoutVariable = types.StringNull()
+			data.NatUdpTimeout = types.Int64Null()
+			data.NatUdpTimeoutVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat.udp-timeout.vipValue")
-			data.UdpTimeout = types.Int64Value(v.Int())
-			data.UdpTimeoutVariable = types.StringNull()
+			data.NatUdpTimeout = types.Int64Value(v.Int())
+			data.NatUdpTimeoutVariable = types.StringNull()
 		}
 	} else {
-		data.UdpTimeout = types.Int64Null()
-		data.UdpTimeoutVariable = types.StringNull()
+		data.NatUdpTimeout = types.Int64Null()
+		data.NatUdpTimeoutVariable = types.StringNull()
 	}
 	if value := res.Get(path + "nat.tcp-timeout.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.TcpTimeout = types.Int64Null()
+			data.NatTcpTimeout = types.Int64Null()
 
 			v := res.Get(path + "nat.tcp-timeout.vipVariableName")
-			data.TcpTimeoutVariable = types.StringValue(v.String())
+			data.NatTcpTimeoutVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.TcpTimeout = types.Int64Null()
-			data.TcpTimeoutVariable = types.StringNull()
+			data.NatTcpTimeout = types.Int64Null()
+			data.NatTcpTimeoutVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat.tcp-timeout.vipValue")
-			data.TcpTimeout = types.Int64Value(v.Int())
-			data.TcpTimeoutVariable = types.StringNull()
+			data.NatTcpTimeout = types.Int64Value(v.Int())
+			data.NatTcpTimeoutVariable = types.StringNull()
 		}
 	} else {
-		data.TcpTimeout = types.Int64Null()
-		data.TcpTimeoutVariable = types.StringNull()
+		data.NatTcpTimeout = types.Int64Null()
+		data.NatTcpTimeoutVariable = types.StringNull()
 	}
 	if value := res.Get(path + "nat.block-icmp-error.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.BlockIcmpError = types.BoolNull()
+			data.NatBlockIcmpError = types.BoolNull()
 
 			v := res.Get(path + "nat.block-icmp-error.vipVariableName")
-			data.BlockIcmpErrorVariable = types.StringValue(v.String())
+			data.NatBlockIcmpErrorVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.BlockIcmpError = types.BoolNull()
-			data.BlockIcmpErrorVariable = types.StringNull()
+			data.NatBlockIcmpError = types.BoolNull()
+			data.NatBlockIcmpErrorVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat.block-icmp-error.vipValue")
-			data.BlockIcmpError = types.BoolValue(v.Bool())
-			data.BlockIcmpErrorVariable = types.StringNull()
+			data.NatBlockIcmpError = types.BoolValue(v.Bool())
+			data.NatBlockIcmpErrorVariable = types.StringNull()
 		}
 	} else {
-		data.BlockIcmpError = types.BoolNull()
-		data.BlockIcmpErrorVariable = types.StringNull()
+		data.NatBlockIcmpError = types.BoolNull()
+		data.NatBlockIcmpErrorVariable = types.StringNull()
 	}
 	if value := res.Get(path + "nat.respond-to-ping.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.RespondToPing = types.BoolNull()
+			data.NatResponseToPing = types.BoolNull()
 
 			v := res.Get(path + "nat.respond-to-ping.vipVariableName")
-			data.RespondToPingVariable = types.StringValue(v.String())
+			data.NatResponseToPingVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.RespondToPing = types.BoolNull()
-			data.RespondToPingVariable = types.StringNull()
+			data.NatResponseToPing = types.BoolNull()
+			data.NatResponseToPingVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "nat.respond-to-ping.vipValue")
-			data.RespondToPing = types.BoolValue(v.Bool())
-			data.RespondToPingVariable = types.StringNull()
+			data.NatResponseToPing = types.BoolValue(v.Bool())
+			data.NatResponseToPingVariable = types.StringNull()
 		}
 	} else {
-		data.RespondToPing = types.BoolNull()
-		data.RespondToPingVariable = types.StringNull()
+		data.NatResponseToPing = types.BoolNull()
+		data.NatResponseToPingVariable = types.StringNull()
 	}
 	if value := res.Get(path + "nat.port-forward.vipValue"); len(value.Array()) > 0 {
-		data.PortForward = make([]VPNInterfaceDSLPPPoAPortForward, 0)
+		data.NatPortForwards = make([]VPNInterfaceDSLPPPoANatPortForwards, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLPPPoAPortForward{}
+			item := VPNInterfaceDSLPPPoANatPortForwards{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -3297,158 +3152,142 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				item.PrivateIpAddress = types.StringNull()
 				item.PrivateIpAddressVariable = types.StringNull()
 			}
-			data.PortForward = append(data.PortForward, item)
+			data.NatPortForwards = append(data.NatPortForwards, item)
 			return true
 		})
 	}
-	if value := res.Get(path + "qos-adaptive.vipType"); value.Exists() {
-		if value.String() == "variableName" {
-			data.AdaptiveQos = types.BoolNull()
-
-		} else if value.String() == "ignore" {
-			data.AdaptiveQos = types.BoolNull()
-
-		} else if value.String() == "constant" {
-			v := res.Get(path + "qos-adaptive.vipValue")
-			data.AdaptiveQos = types.BoolValue(v.Bool())
-
-		}
-	} else {
-		data.AdaptiveQos = types.BoolNull()
-
-	}
 	if value := res.Get(path + "qos-adaptive.period.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.AdaptPeriod = types.Int64Null()
+			data.QosAdaptivePeriod = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.period.vipVariableName")
-			data.AdaptPeriodVariable = types.StringValue(v.String())
+			data.QosAdaptivePeriodVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AdaptPeriod = types.Int64Null()
-			data.AdaptPeriodVariable = types.StringNull()
+			data.QosAdaptivePeriod = types.Int64Null()
+			data.QosAdaptivePeriodVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-adaptive.period.vipValue")
-			data.AdaptPeriod = types.Int64Value(v.Int())
-			data.AdaptPeriodVariable = types.StringNull()
+			data.QosAdaptivePeriod = types.Int64Value(v.Int())
+			data.QosAdaptivePeriodVariable = types.StringNull()
 		}
 	} else {
-		data.AdaptPeriod = types.Int64Null()
-		data.AdaptPeriodVariable = types.StringNull()
+		data.QosAdaptivePeriod = types.Int64Null()
+		data.QosAdaptivePeriodVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.downstream.bandwidth-down.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ShapingRateDownstreamDefault = types.Int64Null()
+			data.QosAdaptiveBandwidthDownstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.downstream.bandwidth-down.vipVariableName")
-			data.ShapingRateDownstreamDefaultVariable = types.StringValue(v.String())
+			data.QosAdaptiveBandwidthDownstreamVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ShapingRateDownstreamDefault = types.Int64Null()
-			data.ShapingRateDownstreamDefaultVariable = types.StringNull()
+			data.QosAdaptiveBandwidthDownstream = types.Int64Null()
+			data.QosAdaptiveBandwidthDownstreamVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-adaptive.downstream.bandwidth-down.vipValue")
-			data.ShapingRateDownstreamDefault = types.Int64Value(v.Int())
-			data.ShapingRateDownstreamDefaultVariable = types.StringNull()
+			data.QosAdaptiveBandwidthDownstream = types.Int64Value(v.Int())
+			data.QosAdaptiveBandwidthDownstreamVariable = types.StringNull()
 		}
 	} else {
-		data.ShapingRateDownstreamDefault = types.Int64Null()
-		data.ShapingRateDownstreamDefaultVariable = types.StringNull()
+		data.QosAdaptiveBandwidthDownstream = types.Int64Null()
+		data.QosAdaptiveBandwidthDownstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.downstream.range.dmin.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ShapingRateDownstreamMin = types.Int64Null()
+			data.QosAdaptiveMinDownstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.downstream.range.dmin.vipVariableName")
-			data.ShapingRateDownstreamMinVariable = types.StringValue(v.String())
+			data.QosAdaptiveMinDownstreamVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ShapingRateDownstreamMin = types.Int64Null()
-			data.ShapingRateDownstreamMinVariable = types.StringNull()
+			data.QosAdaptiveMinDownstream = types.Int64Null()
+			data.QosAdaptiveMinDownstreamVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-adaptive.downstream.range.dmin.vipValue")
-			data.ShapingRateDownstreamMin = types.Int64Value(v.Int())
-			data.ShapingRateDownstreamMinVariable = types.StringNull()
+			data.QosAdaptiveMinDownstream = types.Int64Value(v.Int())
+			data.QosAdaptiveMinDownstreamVariable = types.StringNull()
 		}
 	} else {
-		data.ShapingRateDownstreamMin = types.Int64Null()
-		data.ShapingRateDownstreamMinVariable = types.StringNull()
+		data.QosAdaptiveMinDownstream = types.Int64Null()
+		data.QosAdaptiveMinDownstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.downstream.range.dmax.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ShapingRateDownstreamMax = types.Int64Null()
+			data.QosAdaptiveMaxDownstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.downstream.range.dmax.vipVariableName")
-			data.ShapingRateDownstreamMaxVariable = types.StringValue(v.String())
+			data.QosAdaptiveMaxDownstreamVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ShapingRateDownstreamMax = types.Int64Null()
-			data.ShapingRateDownstreamMaxVariable = types.StringNull()
+			data.QosAdaptiveMaxDownstream = types.Int64Null()
+			data.QosAdaptiveMaxDownstreamVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-adaptive.downstream.range.dmax.vipValue")
-			data.ShapingRateDownstreamMax = types.Int64Value(v.Int())
-			data.ShapingRateDownstreamMaxVariable = types.StringNull()
+			data.QosAdaptiveMaxDownstream = types.Int64Value(v.Int())
+			data.QosAdaptiveMaxDownstreamVariable = types.StringNull()
 		}
 	} else {
-		data.ShapingRateDownstreamMax = types.Int64Null()
-		data.ShapingRateDownstreamMaxVariable = types.StringNull()
+		data.QosAdaptiveMaxDownstream = types.Int64Null()
+		data.QosAdaptiveMaxDownstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.upstream.bandwidth-up.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ShapingRateUpstreamDefault = types.Int64Null()
+			data.QosAdaptiveBandwidthUpstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.upstream.bandwidth-up.vipVariableName")
-			data.ShapingRateUpstreamDefaultVariable = types.StringValue(v.String())
+			data.QosAdaptiveBandwidthUpstreamVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ShapingRateUpstreamDefault = types.Int64Null()
-			data.ShapingRateUpstreamDefaultVariable = types.StringNull()
+			data.QosAdaptiveBandwidthUpstream = types.Int64Null()
+			data.QosAdaptiveBandwidthUpstreamVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-adaptive.upstream.bandwidth-up.vipValue")
-			data.ShapingRateUpstreamDefault = types.Int64Value(v.Int())
-			data.ShapingRateUpstreamDefaultVariable = types.StringNull()
+			data.QosAdaptiveBandwidthUpstream = types.Int64Value(v.Int())
+			data.QosAdaptiveBandwidthUpstreamVariable = types.StringNull()
 		}
 	} else {
-		data.ShapingRateUpstreamDefault = types.Int64Null()
-		data.ShapingRateUpstreamDefaultVariable = types.StringNull()
+		data.QosAdaptiveBandwidthUpstream = types.Int64Null()
+		data.QosAdaptiveBandwidthUpstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.upstream.range.umin.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ShapingRateUpstreamMin = types.Int64Null()
+			data.QosAdaptiveMinUpstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.upstream.range.umin.vipVariableName")
-			data.ShapingRateUpstreamMinVariable = types.StringValue(v.String())
+			data.QosAdaptiveMinUpstreamVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ShapingRateUpstreamMin = types.Int64Null()
-			data.ShapingRateUpstreamMinVariable = types.StringNull()
+			data.QosAdaptiveMinUpstream = types.Int64Null()
+			data.QosAdaptiveMinUpstreamVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-adaptive.upstream.range.umin.vipValue")
-			data.ShapingRateUpstreamMin = types.Int64Value(v.Int())
-			data.ShapingRateUpstreamMinVariable = types.StringNull()
+			data.QosAdaptiveMinUpstream = types.Int64Value(v.Int())
+			data.QosAdaptiveMinUpstreamVariable = types.StringNull()
 		}
 	} else {
-		data.ShapingRateUpstreamMin = types.Int64Null()
-		data.ShapingRateUpstreamMinVariable = types.StringNull()
+		data.QosAdaptiveMinUpstream = types.Int64Null()
+		data.QosAdaptiveMinUpstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "qos-adaptive.upstream.range.umax.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.ShapingRateUpstreamMax = types.Int64Null()
+			data.QosAdaptiveMaxUpstream = types.Int64Null()
 
 			v := res.Get(path + "qos-adaptive.upstream.range.umax.vipVariableName")
-			data.ShapingRateUpstreamMaxVariable = types.StringValue(v.String())
+			data.QosAdaptiveMaxUpstreamVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ShapingRateUpstreamMax = types.Int64Null()
-			data.ShapingRateUpstreamMaxVariable = types.StringNull()
+			data.QosAdaptiveMaxUpstream = types.Int64Null()
+			data.QosAdaptiveMaxUpstreamVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-adaptive.upstream.range.umax.vipValue")
-			data.ShapingRateUpstreamMax = types.Int64Value(v.Int())
-			data.ShapingRateUpstreamMaxVariable = types.StringNull()
+			data.QosAdaptiveMaxUpstream = types.Int64Value(v.Int())
+			data.QosAdaptiveMaxUpstreamVariable = types.StringNull()
 		}
 	} else {
-		data.ShapingRateUpstreamMax = types.Int64Null()
-		data.ShapingRateUpstreamMaxVariable = types.StringNull()
+		data.QosAdaptiveMaxUpstream = types.Int64Null()
+		data.QosAdaptiveMaxUpstreamVariable = types.StringNull()
 	}
 	if value := res.Get(path + "shaping-rate.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3490,22 +3329,22 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 	}
 	if value := res.Get(path + "qos-map-vpn.vipType"); value.Exists() {
 		if value.String() == "variableName" {
-			data.VpnQosMap = types.StringNull()
+			data.QosMapVpn = types.StringNull()
 
 			v := res.Get(path + "qos-map-vpn.vipVariableName")
-			data.VpnQosMapVariable = types.StringValue(v.String())
+			data.QosMapVpnVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.VpnQosMap = types.StringNull()
-			data.VpnQosMapVariable = types.StringNull()
+			data.QosMapVpn = types.StringNull()
+			data.QosMapVpnVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "qos-map-vpn.vipValue")
-			data.VpnQosMap = types.StringValue(v.String())
-			data.VpnQosMapVariable = types.StringNull()
+			data.QosMapVpn = types.StringValue(v.String())
+			data.QosMapVpnVariable = types.StringNull()
 		}
 	} else {
-		data.VpnQosMap = types.StringNull()
-		data.VpnQosMapVariable = types.StringNull()
+		data.QosMapVpn = types.StringNull()
+		data.QosMapVpnVariable = types.StringNull()
 	}
 	if value := res.Get(path + "bandwidth-upstream.vipType"); value.Exists() {
 		if value.String() == "variableName" {
@@ -3565,9 +3404,9 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 		data.WriteRuleVariable = types.StringNull()
 	}
 	if value := res.Get(path + "access-list.vipValue"); len(value.Array()) > 0 {
-		data.AccessList = make([]VPNInterfaceDSLPPPoAAccessList, 0)
+		data.Ipv4AccessLists = make([]VPNInterfaceDSLPPPoAIpv4AccessLists, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLPPPoAAccessList{}
+			item := VPNInterfaceDSLPPPoAIpv4AccessLists{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -3608,14 +3447,14 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				item.AclName = types.StringNull()
 				item.AclNameVariable = types.StringNull()
 			}
-			data.AccessList = append(data.AccessList, item)
+			data.Ipv4AccessLists = append(data.Ipv4AccessLists, item)
 			return true
 		})
 	}
 	if value := res.Get(path + "policer.vipValue"); len(value.Array()) > 0 {
-		data.Policer = make([]VPNInterfaceDSLPPPoAPolicer, 0)
+		data.Policers = make([]VPNInterfaceDSLPPPoAPolicers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := VPNInterfaceDSLPPPoAPolicer{}
+			item := VPNInterfaceDSLPPPoAPolicers{}
 			if cValue := v.Get("vipOptional"); cValue.Exists() {
 				item.Optional = types.BoolValue(cValue.Bool())
 			} else {
@@ -3653,7 +3492,7 @@ func (data *VPNInterfaceDSLPPPoA) fromBody(ctx context.Context, res gjson.Result
 				item.PolicerName = types.StringNull()
 
 			}
-			data.Policer = append(data.Policer, item)
+			data.Policers = append(data.Policers, item)
 			return true
 		})
 	}
@@ -3762,35 +3601,35 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 	if !data.Shutdown.Equal(state.Shutdown) {
 		hasChanges = true
 	}
-	if !data.InterfaceDescription.Equal(state.InterfaceDescription) {
+	if !data.AtmDescription.Equal(state.AtmDescription) {
 		hasChanges = true
 	}
-	if len(data.Vdsl) != len(state.Vdsl) {
+	if len(data.VdslConfiguration) != len(state.VdslConfiguration) {
 		hasChanges = true
 	} else {
-		for i := range data.Vdsl {
-			if !data.Vdsl[i].ControllerVdslSlot.Equal(state.Vdsl[i].ControllerVdslSlot) {
+		for i := range data.VdslConfiguration {
+			if !data.VdslConfiguration[i].ControllerVdslSlot.Equal(state.VdslConfiguration[i].ControllerVdslSlot) {
 				hasChanges = true
 			}
-			if !data.Vdsl[i].Sra.Equal(state.Vdsl[i].Sra) {
+			if !data.VdslConfiguration[i].Sra.Equal(state.VdslConfiguration[i].Sra) {
 				hasChanges = true
 			}
-			if !data.Vdsl[i].ModeAdsl1.Equal(state.Vdsl[i].ModeAdsl1) {
+			if !data.VdslConfiguration[i].ModeAdsl1.Equal(state.VdslConfiguration[i].ModeAdsl1) {
 				hasChanges = true
 			}
-			if !data.Vdsl[i].ModeAdsl2.Equal(state.Vdsl[i].ModeAdsl2) {
+			if !data.VdslConfiguration[i].ModeAdsl2.Equal(state.VdslConfiguration[i].ModeAdsl2) {
 				hasChanges = true
 			}
-			if !data.Vdsl[i].ModeAdsl2plus.Equal(state.Vdsl[i].ModeAdsl2plus) {
+			if !data.VdslConfiguration[i].ModeAdsl2plus.Equal(state.VdslConfiguration[i].ModeAdsl2plus) {
 				hasChanges = true
 			}
-			if !data.Vdsl[i].ModeVdsl2.Equal(state.Vdsl[i].ModeVdsl2) {
+			if !data.VdslConfiguration[i].ModeVdsl2.Equal(state.VdslConfiguration[i].ModeVdsl2) {
 				hasChanges = true
 			}
-			if !data.Vdsl[i].ModeAnsi.Equal(state.Vdsl[i].ModeAnsi) {
+			if !data.VdslConfiguration[i].ModeAnsi.Equal(state.VdslConfiguration[i].ModeAnsi) {
 				hasChanges = true
 			}
-			if !data.Vdsl[i].VdslModemConfiguration.Equal(state.Vdsl[i].VdslModemConfiguration) {
+			if !data.VdslConfiguration[i].VdslModemConfiguration.Equal(state.VdslConfiguration[i].VdslModemConfiguration) {
 				hasChanges = true
 			}
 		}
@@ -3799,37 +3638,37 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 		hasChanges = true
 	} else {
 		for i := range data.Pvc {
-			if !data.Pvc[i].VpiAndVci.Equal(state.Pvc[i].VpiAndVci) {
+			if !data.Pvc[i].AtmVpiAndVci.Equal(state.Pvc[i].AtmVpiAndVci) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].VbrNrtPeakCellRate.Equal(state.Pvc[i].VbrNrtPeakCellRate) {
+			if !data.Pvc[i].AtmVbrNrtPeakCellRate.Equal(state.Pvc[i].AtmVbrNrtPeakCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].VbrNrtSustainableCellRate.Equal(state.Pvc[i].VbrNrtSustainableCellRate) {
+			if !data.Pvc[i].AtmVbrNrtSustainableCellRate.Equal(state.Pvc[i].AtmVbrNrtSustainableCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].VbrNrtMaximumBurstSize.Equal(state.Pvc[i].VbrNrtMaximumBurstSize) {
+			if !data.Pvc[i].AtmVbrNrtMaximumBurstSize.Equal(state.Pvc[i].AtmVbrNrtMaximumBurstSize) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].VbrRtPeakCellRate.Equal(state.Pvc[i].VbrRtPeakCellRate) {
+			if !data.Pvc[i].AtmVbrRtPeakCellRate.Equal(state.Pvc[i].AtmVbrRtPeakCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].VbrRtAverageCellRate.Equal(state.Pvc[i].VbrRtAverageCellRate) {
+			if !data.Pvc[i].AtmVbrRtAverageCellRate.Equal(state.Pvc[i].AtmVbrRtAverageCellRate) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].VbrRtMaximumBurstSize.Equal(state.Pvc[i].VbrRtMaximumBurstSize) {
+			if !data.Pvc[i].AtmVbrRtMaximumBurstSize.Equal(state.Pvc[i].AtmVbrRtMaximumBurstSize) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].Dialer.Equal(state.Pvc[i].Dialer) {
+			if !data.Pvc[i].AtmEncapsulationAal5mux.Equal(state.Pvc[i].AtmEncapsulationAal5mux) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].EncapsulationAal5nlpid.Equal(state.Pvc[i].EncapsulationAal5nlpid) {
+			if !data.Pvc[i].AtmEncapsulationAal5nlpid.Equal(state.Pvc[i].AtmEncapsulationAal5nlpid) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].EncapsulationAal5snap.Equal(state.Pvc[i].EncapsulationAal5snap) {
+			if !data.Pvc[i].AtmEncapsulationAal5snap.Equal(state.Pvc[i].AtmEncapsulationAal5snap) {
 				hasChanges = true
 			}
-			if !data.Pvc[i].DialerPoolMember.Equal(state.Pvc[i].DialerPoolMember) {
+			if !data.Pvc[i].AtmDialerPoolMember.Equal(state.Pvc[i].AtmDialerPoolMember) {
 				hasChanges = true
 			}
 		}
@@ -3838,9 +3677,6 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 		hasChanges = true
 	}
 	if !data.PppAuthenticationProtocolPap.Equal(state.PppAuthenticationProtocolPap) {
-		hasChanges = true
-	}
-	if !data.AuthenticationType.Equal(state.AuthenticationType) {
 		hasChanges = true
 	}
 	if !data.ChapHostname.Equal(state.ChapHostname) {
@@ -3858,6 +3694,9 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 	if !data.PapPppAuthPassword.Equal(state.PapPppAuthPassword) {
 		hasChanges = true
 	}
+	if !data.PppAuthenticationType.Equal(state.PppAuthenticationType) {
+		hasChanges = true
+	}
 	if !data.EnableCoreRegion.Equal(state.EnableCoreRegion) {
 		hasChanges = true
 	}
@@ -3867,25 +3706,25 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 	if !data.SecondaryRegion.Equal(state.SecondaryRegion) {
 		hasChanges = true
 	}
-	if len(data.Encapsulation) != len(state.Encapsulation) {
+	if len(data.TunnelInterfaceEncapsulations) != len(state.TunnelInterfaceEncapsulations) {
 		hasChanges = true
 	} else {
-		for i := range data.Encapsulation {
-			if !data.Encapsulation[i].EncapsulationType.Equal(state.Encapsulation[i].EncapsulationType) {
+		for i := range data.TunnelInterfaceEncapsulations {
+			if !data.TunnelInterfaceEncapsulations[i].Encapsulation.Equal(state.TunnelInterfaceEncapsulations[i].Encapsulation) {
 				hasChanges = true
 			}
-			if !data.Encapsulation[i].Preference.Equal(state.Encapsulation[i].Preference) {
+			if !data.TunnelInterfaceEncapsulations[i].Preference.Equal(state.TunnelInterfaceEncapsulations[i].Preference) {
 				hasChanges = true
 			}
-			if !data.Encapsulation[i].Weight.Equal(state.Encapsulation[i].Weight) {
+			if !data.TunnelInterfaceEncapsulations[i].Weight.Equal(state.TunnelInterfaceEncapsulations[i].Weight) {
 				hasChanges = true
 			}
 		}
 	}
-	if !data.Groups.Equal(state.Groups) {
+	if !data.TunnelInterfaceGroups.Equal(state.TunnelInterfaceGroups) {
 		hasChanges = true
 	}
-	if !data.Border.Equal(state.Border) {
+	if !data.TunnelInterfaceBorder.Equal(state.TunnelInterfaceBorder) {
 		hasChanges = true
 	}
 	if !data.PerTunnelQos.Equal(state.PerTunnelQos) {
@@ -3894,157 +3733,157 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 	if !data.PerTunnelQosAggregator.Equal(state.PerTunnelQosAggregator) {
 		hasChanges = true
 	}
-	if !data.Color.Equal(state.Color) {
+	if !data.TunnelQosMode.Equal(state.TunnelQosMode) {
 		hasChanges = true
 	}
-	if !data.LastResortCircuit.Equal(state.LastResortCircuit) {
+	if !data.TunnelInterfaceColor.Equal(state.TunnelInterfaceColor) {
 		hasChanges = true
 	}
-	if !data.LowBandwidthLink.Equal(state.LowBandwidthLink) {
+	if !data.TunnelInterfaceLastResortCircuit.Equal(state.TunnelInterfaceLastResortCircuit) {
 		hasChanges = true
 	}
-	if !data.TunnelTcpMss.Equal(state.TunnelTcpMss) {
+	if !data.TunnelInterfaceLowBandwidthLink.Equal(state.TunnelInterfaceLowBandwidthLink) {
 		hasChanges = true
 	}
-	if !data.ClearDontFragment.Equal(state.ClearDontFragment) {
+	if !data.TunnelInterfaceTunnelTcpMss.Equal(state.TunnelInterfaceTunnelTcpMss) {
 		hasChanges = true
 	}
-	if !data.NetworkBroadcast1.Equal(state.NetworkBroadcast1) {
+	if !data.TunnelInterfaceClearDontFragment.Equal(state.TunnelInterfaceClearDontFragment) {
 		hasChanges = true
 	}
-	if !data.MaxControlConnections.Equal(state.MaxControlConnections) {
+	if !data.TunnelInterfaceNetworkBroadcast.Equal(state.TunnelInterfaceNetworkBroadcast) {
 		hasChanges = true
 	}
-	if !data.ControlConnections.Equal(state.ControlConnections) {
+	if !data.TunnelInterfaceMaxControlConnections.Equal(state.TunnelInterfaceMaxControlConnections) {
 		hasChanges = true
 	}
-	if !data.VbondAsStunServer.Equal(state.VbondAsStunServer) {
+	if !data.TunnelInterfaceControlConnections.Equal(state.TunnelInterfaceControlConnections) {
 		hasChanges = true
 	}
-	if !data.ExcludeControllerGroupList.Equal(state.ExcludeControllerGroupList) {
+	if !data.TunnelInterfaceVbondAsStunServer.Equal(state.TunnelInterfaceVbondAsStunServer) {
 		hasChanges = true
 	}
-	if !data.VmanageConnectionPreference.Equal(state.VmanageConnectionPreference) {
+	if !data.TunnelInterfaceExcludeControllerGroupList.Equal(state.TunnelInterfaceExcludeControllerGroupList) {
 		hasChanges = true
 	}
-	if !data.PortHop.Equal(state.PortHop) {
+	if !data.TunnelInterfaceVmanageConnectionPreference.Equal(state.TunnelInterfaceVmanageConnectionPreference) {
 		hasChanges = true
 	}
-	if !data.Restrict.Equal(state.Restrict) {
+	if !data.TunnelInterfacePortHop.Equal(state.TunnelInterfacePortHop) {
 		hasChanges = true
 	}
-	if !data.Carrier.Equal(state.Carrier) {
+	if !data.TunnelInterfaceColorRestrict.Equal(state.TunnelInterfaceColorRestrict) {
 		hasChanges = true
 	}
-	if !data.NatRefreshInterval.Equal(state.NatRefreshInterval) {
+	if !data.TunnelInterfaceCarrier.Equal(state.TunnelInterfaceCarrier) {
 		hasChanges = true
 	}
-	if !data.HelloInterval.Equal(state.HelloInterval) {
+	if !data.TunnelInterfaceNatRefreshInterval.Equal(state.TunnelInterfaceNatRefreshInterval) {
 		hasChanges = true
 	}
-	if !data.HelloTolerance.Equal(state.HelloTolerance) {
+	if !data.TunnelInterfaceHelloInterval.Equal(state.TunnelInterfaceHelloInterval) {
 		hasChanges = true
 	}
-	if !data.BindLoopbackTunnel.Equal(state.BindLoopbackTunnel) {
+	if !data.TunnelInterfaceHelloTolerance.Equal(state.TunnelInterfaceHelloTolerance) {
 		hasChanges = true
 	}
-	if !data.All.Equal(state.All) {
+	if !data.TunnelInterfaceBindLoopbackTunnel.Equal(state.TunnelInterfaceBindLoopbackTunnel) {
 		hasChanges = true
 	}
-	if !data.NetworkBroadcast2.Equal(state.NetworkBroadcast2) {
+	if !data.TunnelInterfaceAllowAll.Equal(state.TunnelInterfaceAllowAll) {
 		hasChanges = true
 	}
-	if !data.Bgp.Equal(state.Bgp) {
+	if !data.TunnelInterfaceAllowBgp.Equal(state.TunnelInterfaceAllowBgp) {
 		hasChanges = true
 	}
-	if !data.Dhcp.Equal(state.Dhcp) {
+	if !data.TunnelInterfaceAllowDhcp.Equal(state.TunnelInterfaceAllowDhcp) {
 		hasChanges = true
 	}
-	if !data.Dns.Equal(state.Dns) {
+	if !data.TunnelInterfaceAllowDns.Equal(state.TunnelInterfaceAllowDns) {
 		hasChanges = true
 	}
-	if !data.Icmp.Equal(state.Icmp) {
+	if !data.TunnelInterfaceAllowIcmp.Equal(state.TunnelInterfaceAllowIcmp) {
 		hasChanges = true
 	}
-	if !data.Ssh.Equal(state.Ssh) {
+	if !data.TunnelInterfaceAllowSsh.Equal(state.TunnelInterfaceAllowSsh) {
 		hasChanges = true
 	}
-	if !data.Netconf.Equal(state.Netconf) {
+	if !data.TunnelInterfaceAllowNtp.Equal(state.TunnelInterfaceAllowNtp) {
 		hasChanges = true
 	}
-	if !data.Ospf.Equal(state.Ospf) {
+	if !data.TunnelInterfaceAllowNetconf.Equal(state.TunnelInterfaceAllowNetconf) {
 		hasChanges = true
 	}
-	if !data.Stun.Equal(state.Stun) {
+	if !data.TunnelInterfaceAllowOspf.Equal(state.TunnelInterfaceAllowOspf) {
 		hasChanges = true
 	}
-	if !data.Snmp.Equal(state.Snmp) {
+	if !data.TunnelInterfaceAllowStun.Equal(state.TunnelInterfaceAllowStun) {
 		hasChanges = true
 	}
-	if !data.Https.Equal(state.Https) {
+	if !data.TunnelInterfaceAllowSnmp.Equal(state.TunnelInterfaceAllowSnmp) {
+		hasChanges = true
+	}
+	if !data.TunnelInterfaceAllowHttps.Equal(state.TunnelInterfaceAllowHttps) {
 		hasChanges = true
 	}
 	if !data.Nat.Equal(state.Nat) {
 		hasChanges = true
 	}
-	if !data.RefreshMode.Equal(state.RefreshMode) {
+	if !data.NatRefreshMode.Equal(state.NatRefreshMode) {
 		hasChanges = true
 	}
-	if !data.UdpTimeout.Equal(state.UdpTimeout) {
+	if !data.NatUdpTimeout.Equal(state.NatUdpTimeout) {
 		hasChanges = true
 	}
-	if !data.TcpTimeout.Equal(state.TcpTimeout) {
+	if !data.NatTcpTimeout.Equal(state.NatTcpTimeout) {
 		hasChanges = true
 	}
-	if !data.BlockIcmpError.Equal(state.BlockIcmpError) {
+	if !data.NatBlockIcmpError.Equal(state.NatBlockIcmpError) {
 		hasChanges = true
 	}
-	if !data.RespondToPing.Equal(state.RespondToPing) {
+	if !data.NatResponseToPing.Equal(state.NatResponseToPing) {
 		hasChanges = true
 	}
-	if len(data.PortForward) != len(state.PortForward) {
+	if len(data.NatPortForwards) != len(state.NatPortForwards) {
 		hasChanges = true
 	} else {
-		for i := range data.PortForward {
-			if !data.PortForward[i].PortStartRange.Equal(state.PortForward[i].PortStartRange) {
+		for i := range data.NatPortForwards {
+			if !data.NatPortForwards[i].PortStartRange.Equal(state.NatPortForwards[i].PortStartRange) {
 				hasChanges = true
 			}
-			if !data.PortForward[i].PortEndRange.Equal(state.PortForward[i].PortEndRange) {
+			if !data.NatPortForwards[i].PortEndRange.Equal(state.NatPortForwards[i].PortEndRange) {
 				hasChanges = true
 			}
-			if !data.PortForward[i].Protocol.Equal(state.PortForward[i].Protocol) {
+			if !data.NatPortForwards[i].Protocol.Equal(state.NatPortForwards[i].Protocol) {
 				hasChanges = true
 			}
-			if !data.PortForward[i].PrivateVpn.Equal(state.PortForward[i].PrivateVpn) {
+			if !data.NatPortForwards[i].PrivateVpn.Equal(state.NatPortForwards[i].PrivateVpn) {
 				hasChanges = true
 			}
-			if !data.PortForward[i].PrivateIpAddress.Equal(state.PortForward[i].PrivateIpAddress) {
+			if !data.NatPortForwards[i].PrivateIpAddress.Equal(state.NatPortForwards[i].PrivateIpAddress) {
 				hasChanges = true
 			}
 		}
 	}
-	if !data.AdaptiveQos.Equal(state.AdaptiveQos) {
+	if !data.QosAdaptivePeriod.Equal(state.QosAdaptivePeriod) {
 		hasChanges = true
 	}
-	if !data.AdaptPeriod.Equal(state.AdaptPeriod) {
+	if !data.QosAdaptiveBandwidthDownstream.Equal(state.QosAdaptiveBandwidthDownstream) {
 		hasChanges = true
 	}
-	if !data.ShapingRateDownstreamDefault.Equal(state.ShapingRateDownstreamDefault) {
+	if !data.QosAdaptiveMinDownstream.Equal(state.QosAdaptiveMinDownstream) {
 		hasChanges = true
 	}
-	if !data.ShapingRateDownstreamMin.Equal(state.ShapingRateDownstreamMin) {
+	if !data.QosAdaptiveMaxDownstream.Equal(state.QosAdaptiveMaxDownstream) {
 		hasChanges = true
 	}
-	if !data.ShapingRateDownstreamMax.Equal(state.ShapingRateDownstreamMax) {
+	if !data.QosAdaptiveBandwidthUpstream.Equal(state.QosAdaptiveBandwidthUpstream) {
 		hasChanges = true
 	}
-	if !data.ShapingRateUpstreamDefault.Equal(state.ShapingRateUpstreamDefault) {
+	if !data.QosAdaptiveMinUpstream.Equal(state.QosAdaptiveMinUpstream) {
 		hasChanges = true
 	}
-	if !data.ShapingRateUpstreamMin.Equal(state.ShapingRateUpstreamMin) {
-		hasChanges = true
-	}
-	if !data.ShapingRateUpstreamMax.Equal(state.ShapingRateUpstreamMax) {
+	if !data.QosAdaptiveMaxUpstream.Equal(state.QosAdaptiveMaxUpstream) {
 		hasChanges = true
 	}
 	if !data.ShapingRate.Equal(state.ShapingRate) {
@@ -4053,7 +3892,7 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 	if !data.QosMap.Equal(state.QosMap) {
 		hasChanges = true
 	}
-	if !data.VpnQosMap.Equal(state.VpnQosMap) {
+	if !data.QosMapVpn.Equal(state.QosMapVpn) {
 		hasChanges = true
 	}
 	if !data.BandwidthUpstream.Equal(state.BandwidthUpstream) {
@@ -4065,26 +3904,26 @@ func (data *VPNInterfaceDSLPPPoA) hasChanges(ctx context.Context, state *VPNInte
 	if !data.WriteRule.Equal(state.WriteRule) {
 		hasChanges = true
 	}
-	if len(data.AccessList) != len(state.AccessList) {
+	if len(data.Ipv4AccessLists) != len(state.Ipv4AccessLists) {
 		hasChanges = true
 	} else {
-		for i := range data.AccessList {
-			if !data.AccessList[i].Direction.Equal(state.AccessList[i].Direction) {
+		for i := range data.Ipv4AccessLists {
+			if !data.Ipv4AccessLists[i].Direction.Equal(state.Ipv4AccessLists[i].Direction) {
 				hasChanges = true
 			}
-			if !data.AccessList[i].AclName.Equal(state.AccessList[i].AclName) {
+			if !data.Ipv4AccessLists[i].AclName.Equal(state.Ipv4AccessLists[i].AclName) {
 				hasChanges = true
 			}
 		}
 	}
-	if len(data.Policer) != len(state.Policer) {
+	if len(data.Policers) != len(state.Policers) {
 		hasChanges = true
 	} else {
-		for i := range data.Policer {
-			if !data.Policer[i].Direction.Equal(state.Policer[i].Direction) {
+		for i := range data.Policers {
+			if !data.Policers[i].Direction.Equal(state.Policers[i].Direction) {
 				hasChanges = true
 			}
-			if !data.Policer[i].PolicerName.Equal(state.Policer[i].PolicerName) {
+			if !data.Policers[i].PolicerName.Equal(state.Policers[i].PolicerName) {
 				hasChanges = true
 			}
 		}
