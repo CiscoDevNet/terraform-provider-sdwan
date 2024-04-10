@@ -43,13 +43,9 @@ resource "sdwan_system_security_profile_parcel" "example" {
       send_life_time_local         = true
       send_life_time_start_epoch   = 1659284400
       send_life_time_infinite      = true
-      send_life_time_duration      = 2147483645
-      send_life_time_exact         = 1
       accept_life_time_local       = true
       accept_life_time_start_epoch = 1659284400
       accept_life_time_infinite    = true
-      accept_life_time_duration    = 2147483645
-      accept_life_time_exact       = 1
     }
   ]
 }
@@ -99,10 +95,6 @@ Optional:
 - `accept_ao_mismatch` (Boolean) Configure Accept AO Mismatch
   - Default value: `false`
 - `accept_ao_mismatch_variable` (String) Variable name
-- `accept_life_time_duration` (Number) Send lifetime Duration (seconds)
-  - Range: `1`-`2147483646`
-- `accept_life_time_duration_variable` (String) Variable name
-- `accept_life_time_exact` (Number) Configure Key lifetime end time
 - `accept_life_time_infinite` (Boolean) Infinite lifetime
   - Default value: `true`
 - `accept_life_time_infinite_variable` (String) Variable name
@@ -125,10 +117,6 @@ Optional:
 - `send_id` (Number) Specify the Send ID
   - Range: `0`-`255`
 - `send_id_variable` (String) Variable name
-- `send_life_time_duration` (Number) Send lifetime Duration (seconds)
-  - Range: `1`-`2147483646`
-- `send_life_time_duration_variable` (String) Variable name
-- `send_life_time_exact` (Number) Configure Key lifetime end time
 - `send_life_time_infinite` (Boolean) Infinite lifetime
   - Default value: `true`
 - `send_life_time_infinite_variable` (String) Variable name

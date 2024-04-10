@@ -216,6 +216,7 @@ type YamlConfigAttribute struct {
 	ModelTypeString      bool                           `yaml:"model_type_string"`
 	BoolEmptyString      bool                           `yaml:"bool_empty_string"`
 	DataPath             []string                       `yaml:"data_path"`
+	SchemaPath           []string                       `yaml:"schema_path"`
 	Keys                 []string                       `yaml:"keys"`
 	Id                   bool                           `yaml:"id"`
 	Reference            bool                           `yaml:"reference"`
@@ -643,8 +644,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		return
 	}
 	path := ""
-	for _, e := range attr.DataPath {
-		path += e + ".properties."
+	if len(attr.SchemaPath) == 0 {
+		for _, e := range attr.DataPath {
+			path += e + ".properties."
+		}
+	} else {
+		for _, e := range attr.SchemaPath {
+			path += e + ".properties."
+		}
 	}
 	path += attr.ModelName
 	r := model.Get("properties." + path)

@@ -26,13 +26,9 @@ resource "sdwan_system_security_profile_parcel" "example" {
       send_life_time_local         = true
       send_life_time_start_epoch   = 1659284400
       send_life_time_infinite      = true
-      send_life_time_duration      = 2147483645
-      send_life_time_exact         = 1
       accept_life_time_local       = true
       accept_life_time_start_epoch = 1659284400
       accept_life_time_infinite    = true
-      accept_life_time_duration    = 2147483645
-      accept_life_time_exact       = 1
     }
   ]
 }

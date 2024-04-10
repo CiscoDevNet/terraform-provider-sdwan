@@ -29,11 +29,13 @@ attributes:
         tf_name: key_chain_name
         example: aaa
       - model_name: id
+        id: true
         tf_name: key_id
         example: 1
   - model_name: key
     attributes:
       - model_name: id
+        id: true
         example: 0
       - model_name: name
         example: aaa
@@ -50,6 +52,7 @@ attributes:
         tf_name: crypto_algorithm
         example: aes-128-cmac
       - model_name: keyString
+        write_only: true
         example: abcabc
       - model_name: local
         tf_name: send_life_time_local
@@ -61,16 +64,19 @@ attributes:
         example: 1659284400
       - model_name: infinite
         tf_name: send_life_time_infinite
-        data_path: [sendLifetime, oneOfendChoice.oneOf.0]
+        data_path: [sendLifetime, oneOfendChoice]
+        schema_path: [sendLifetime, oneOfendChoice.oneOf.0]
         example: true
-      - model_name: duration
-        tf_name: send_life_time_duration
-        data_path: [sendLifetime, oneOfendChoice.oneOf.1]
-        example: 2147483645
-      - model_name: exact
-        tf_name: send_life_time_exact
-        data_path: [sendLifetime, oneOfendChoice.oneOf.2]
-        example: 1
+      # - model_name: duration
+      #   tf_name: send_life_time_duration
+      #   data_path: [sendLifetime, oneOfendChoice]
+      #   schema_path: [sendLifetime, oneOfendChoice.oneOf.1]
+      #   example: 100
+      # - model_name: exact
+      #   tf_name: send_life_time_exact
+      #   data_path: [sendLifetime, oneOfendChoice]
+      #   schema_path: [sendLifetime, oneOfendChoice.oneOf.2]
+      #   example: 1659284400
       - model_name: local
         tf_name: accept_life_time_local
         data_path: [acceptLifetime]
@@ -81,16 +87,21 @@ attributes:
         example: 1659284400
       - model_name: infinite
         tf_name: accept_life_time_infinite
-        data_path: [acceptLifetime, oneOfendChoice.oneOf.0]
+        data_path: [acceptLifetime, oneOfendChoice]
+        schema_path: [acceptLifetime, oneOfendChoice.oneOf.0]
         example: true
-      - model_name: duration
-        tf_name: accept_life_time_duration
-        data_path: [acceptLifetime, oneOfendChoice.oneOf.1]
-        example: 2147483645
-      - model_name: exact
-        tf_name: accept_life_time_exact
-        data_path: [acceptLifetime, oneOfendChoice.oneOf.2]
-        example: 1
+      # - model_name: duration
+      #   tf_name: accept_life_time_duration
+      #   data_path: [acceptLifetime, oneOfendChoice]
+      #   schema_path: [acceptLifetime, oneOfendChoice.oneOf.1]
+      #   exclude_test: true
+      #   example: 100
+      # - model_name: exact
+      #   tf_name: accept_life_time_exact
+      #   data_path: [acceptLifetime, oneOfendChoice]
+      #   schema_path: [acceptLifetime, oneOfendChoice.oneOf.2]
+      #   exclude_test: true
+      #   example: 1659284400
 
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {

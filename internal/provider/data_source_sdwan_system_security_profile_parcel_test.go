@@ -40,17 +40,12 @@ func TestAccDataSourceSdwanSystemSecurityProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.include_tcp_options", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.accept_ao_mismatch", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.crypto_algorithm", "aes-128-cmac"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.key_string", "abcabc"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.send_life_time_local", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.send_life_time_start_epoch", "1659284400"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.send_life_time_infinite", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.send_life_time_duration", "2147483645"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.send_life_time_exact", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.accept_life_time_local", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.accept_life_time_start_epoch", "1659284400"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.accept_life_time_infinite", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.accept_life_time_duration", "2147483645"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_security_profile_parcel.test", "key.0.accept_life_time_exact", "1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -96,13 +91,9 @@ func testAccDataSourceSdwanSystemSecurityProfileParcelConfig() string {
 	config += `	  send_life_time_local = true` + "\n"
 	config += `	  send_life_time_start_epoch = 1659284400` + "\n"
 	config += `	  send_life_time_infinite = true` + "\n"
-	config += `	  send_life_time_duration = 2147483645` + "\n"
-	config += `	  send_life_time_exact = 1` + "\n"
 	config += `	  accept_life_time_local = true` + "\n"
 	config += `	  accept_life_time_start_epoch = 1659284400` + "\n"
 	config += `	  accept_life_time_infinite = true` + "\n"
-	config += `	  accept_life_time_duration = 2147483645` + "\n"
-	config += `	  accept_life_time_exact = 1` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

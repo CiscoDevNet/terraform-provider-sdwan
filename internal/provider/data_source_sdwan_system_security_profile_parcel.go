@@ -210,18 +210,6 @@ func (d *SystemSecurityProfileParcelDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"send_life_time_duration": schema.Int64Attribute{
-							MarkdownDescription: "Send lifetime Duration (seconds)",
-							Computed:            true,
-						},
-						"send_life_time_duration_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
-						"send_life_time_exact": schema.Int64Attribute{
-							MarkdownDescription: "Configure Key lifetime end time",
-							Computed:            true,
-						},
 						"accept_life_time_local": schema.BoolAttribute{
 							MarkdownDescription: "Configure Send lifetime Local",
 							Computed:            true,
@@ -240,18 +228,6 @@ func (d *SystemSecurityProfileParcelDataSource) Schema(ctx context.Context, req 
 						},
 						"accept_life_time_infinite_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
-						"accept_life_time_duration": schema.Int64Attribute{
-							MarkdownDescription: "Send lifetime Duration (seconds)",
-							Computed:            true,
-						},
-						"accept_life_time_duration_variable": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-							Computed:            true,
-						},
-						"accept_life_time_exact": schema.Int64Attribute{
-							MarkdownDescription: "Configure Key lifetime end time",
 							Computed:            true,
 						},
 					},
