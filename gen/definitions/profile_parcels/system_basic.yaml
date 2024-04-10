@@ -1,0 +1,101 @@
+---
+name: System Basic
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/basic
+minimum_version: 20.12.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: timezone
+    data_path: [clock]
+    example:  "UTC"
+  - model_name: description
+    tf_name: config_description
+    example: example
+  - model_name: location
+    example: example
+  - model_name: longitude
+    data_path: [gpsLocation]
+    example: -77
+  - model_name: latitude
+    data_path: [gpsLocation]
+    example: 38
+  - model_name: enable
+    data_path: [gpsLocation, geoFencing]
+    example: true
+  - model_name: range
+    data_path: [gpsLocation, geoFencing]
+    example: 100
+  - model_name: enable
+    tf_name: sms_enable
+    data_path: [gpsLocation, geoFencing, sms]
+    example: true
+  - model_name: mobileNumber
+    tf_name: mobile_numbers
+    data_path: [gpsLocation, geoFencing, sms]
+    attributes:
+      - model_name: number
+        id: true
+        example: "+11111233"
+  - model_name: deviceGroups
+    example: example
+  - model_name: controllerGroupList
+    example: 1
+  - model_name: overlayId
+    example: 1
+  - model_name: portOffset
+    example: 19
+  - model_name: portHop
+    example: true
+  - model_name: controlSessionPps
+    example: 300
+  - model_name: trackTransport
+    example: true
+  - model_name: trackInterfaceTag
+    example: 2
+  - model_name: consoleBaudRate
+    example: "4800"
+  - model_name: maxOmpSessions
+    example: 24
+  - model_name: multiTenant
+    example: false
+  - model_name: trackDefaultGateway
+    example: true
+  - model_name: adminTechOnFailure
+    example: true
+  - model_name: idleTimeout
+    example: "10"
+  - model_name: onDemandEnable
+    data_path: [onDemand]
+    example: true
+  - model_name: onDemandIdleTimeout
+    data_path: [onDemand]
+    example: 10
+  - model_name: transportGateway
+    example: false
+  - model_name: epfr
+    example: disabled
+  - model_name: siteType
+    example: type-1
+  - model_name: affinityGroupNumber
+    example: 1
+  - model_name: affinityGroupPreference
+    example: 1
+  - model_name: affinityPreferenceAuto
+    example: false
+  - model_name: affinityPerVrf
+    attributes:
+      - model_name: affinityGroupNumber
+        id: true
+        example: 1
+      - model_name: vrfRange
+        example: 123-456
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

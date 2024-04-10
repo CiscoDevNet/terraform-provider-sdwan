@@ -4,6 +4,7 @@
 - Add `sdwan_system_security_profile_parcel` resource and data source
 - Add `sdwan_system_mrf_profile_parcel` resource and data source
 - Add `sdwan_system_snmp_profile_parcel` resource and data source
+- Add `sdwan_system_basic_profile_parcel` resource and data source
 
 ## 0.3.7
 
