@@ -47,7 +47,7 @@ attributes:
   - model_name: deviceGroups
     example: example
   - model_name: controllerGroupList
-    tf_name: controller_group
+    tf_name: controller_groups
     example: 1
   - model_name: overlayId
     example: 1
@@ -86,14 +86,17 @@ attributes:
     tf_name: enhanced_app_aware_routing
     example: aggressive
   - model_name: siteType
+    tf_name: site_types
     example: type-1
   - model_name: affinityGroupNumber
     example: 1
   - model_name: affinityGroupPreference
+    tf_name: affinity_group_preferences
     example: 1
   - model_name: affinityPreferenceAuto
     example: false
   - model_name: affinityPerVrf
+    tf_name: affinity_per_vrfs
     attributes:
       - model_name: affinityGroupNumber
         id: true

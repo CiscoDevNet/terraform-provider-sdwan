@@ -54,8 +54,8 @@ func TestAccDataSourceSdwanSystemBasicProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "enhanced_app_aware_routing", "aggressive"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_group_number", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_preference_auto", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_per_vrf.0.affinity_group_number", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_per_vrf.0.vrf_range", "123-456"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_per_vrfs.0.affinity_group_number", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_per_vrfs.0.vrf_range", "123-456"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -92,7 +92,7 @@ func testAccDataSourceSdwanSystemBasicProfileParcelConfig() string {
 	config += `	  number = "+11111233"` + "\n"
 	config += `	}]` + "\n"
 	config += `	device_groups = ["example"]` + "\n"
-	config += `	controller_group = [1]` + "\n"
+	config += `	controller_groups = [1]` + "\n"
 	config += `	overlay_id = 1` + "\n"
 	config += `	port_offset = 19` + "\n"
 	config += `	port_hopping = true` + "\n"
@@ -109,11 +109,11 @@ func testAccDataSourceSdwanSystemBasicProfileParcelConfig() string {
 	config += `	on_demand_idle_timeout = 10` + "\n"
 	config += `	transport_gateway = false` + "\n"
 	config += `	enhanced_app_aware_routing = "aggressive"` + "\n"
-	config += `	site_type = ["type-1"]` + "\n"
+	config += `	site_types = ["type-1"]` + "\n"
 	config += `	affinity_group_number = 1` + "\n"
-	config += `	affinity_group_preference = [1]` + "\n"
+	config += `	affinity_group_preferences = [1]` + "\n"
 	config += `	affinity_preference_auto = false` + "\n"
-	config += `	affinity_per_vrf = [{` + "\n"
+	config += `	affinity_per_vrfs = [{` + "\n"
 	config += `	  affinity_group_number = 1` + "\n"
 	config += `	  vrf_range = "123-456"` + "\n"
 	config += `	}]` + "\n"

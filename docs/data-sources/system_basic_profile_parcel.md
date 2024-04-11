@@ -33,9 +33,9 @@ data "sdwan_system_basic_profile_parcel" "example" {
 - `admin_tech_on_failure_variable` (String) Variable name
 - `affinity_group_number` (Number) Affinity Group Number
 - `affinity_group_number_variable` (String) Variable name
-- `affinity_group_preference` (Set of Number) Affinity Group Preference
-- `affinity_group_preference_variable` (String) Variable name
-- `affinity_per_vrf` (Attributes List) Affinity Group Number for VRFs (see [below for nested schema](#nestedatt--affinity_per_vrf))
+- `affinity_group_preferences` (Set of Number) Affinity Group Preference
+- `affinity_group_preferences_variable` (String) Variable name
+- `affinity_per_vrfs` (Attributes List) Affinity Group Number for VRFs (see [below for nested schema](#nestedatt--affinity_per_vrfs))
 - `affinity_preference_auto` (Boolean) Affinity Group Preference Auto
 - `affinity_preference_auto_variable` (String) Variable name
 - `config_description` (String) Set a text description of the device
@@ -44,8 +44,8 @@ data "sdwan_system_basic_profile_parcel" "example" {
 - `console_baud_rate_variable` (String) Variable name
 - `control_session_pps` (Number) Set the policer rate for control sessions
 - `control_session_pps_variable` (String) Variable name
-- `controller_group` (Set of Number) Configure a list of comma-separated controller groups
-- `controller_group_variable` (String) Variable name
+- `controller_groups` (Set of Number) Configure a list of comma-separated controller groups
+- `controller_groups_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `device_groups` (Set of String) Device groups
 - `device_groups_variable` (String) Variable name
@@ -79,8 +79,8 @@ data "sdwan_system_basic_profile_parcel" "example" {
 - `port_hopping_variable` (String) Variable name
 - `port_offset` (Number) Set the TLOC port offset when multiple devices are behind a NAT
 - `port_offset_variable` (String) Variable name
-- `site_type` (Set of String) Site Type
-- `site_type_variable` (String) Variable name
+- `site_types` (Set of String) Site Type
+- `site_types_variable` (String) Variable name
 - `timezone` (String) Set the timezone
 - `timezone_variable` (String) Variable name
 - `track_default_gateway` (Boolean) Enable or disable default gateway tracking
@@ -93,8 +93,8 @@ data "sdwan_system_basic_profile_parcel" "example" {
 - `transport_gateway_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
 
-<a id="nestedatt--affinity_per_vrf"></a>
-### Nested Schema for `affinity_per_vrf`
+<a id="nestedatt--affinity_per_vrfs"></a>
+### Nested Schema for `affinity_per_vrfs`
 
 Read-Only:
 

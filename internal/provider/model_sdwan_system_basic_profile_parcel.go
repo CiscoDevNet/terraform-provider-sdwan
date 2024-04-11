@@ -32,71 +32,71 @@ import (
 )
 
 type SystemBasic struct {
-	Id                              types.String                  `tfsdk:"id"`
-	Version                         types.Int64                   `tfsdk:"version"`
-	Name                            types.String                  `tfsdk:"name"`
-	Description                     types.String                  `tfsdk:"description"`
-	FeatureProfileId                types.String                  `tfsdk:"feature_profile_id"`
-	Timezone                        types.String                  `tfsdk:"timezone"`
-	TimezoneVariable                types.String                  `tfsdk:"timezone_variable"`
-	ConfigDescription               types.String                  `tfsdk:"config_description"`
-	ConfigDescriptionVariable       types.String                  `tfsdk:"config_description_variable"`
-	Location                        types.String                  `tfsdk:"location"`
-	LocationVariable                types.String                  `tfsdk:"location_variable"`
-	GpsLongitude                    types.Int64                   `tfsdk:"gps_longitude"`
-	GpsLongitudeVariable            types.String                  `tfsdk:"gps_longitude_variable"`
-	GpsLatitude                     types.Int64                   `tfsdk:"gps_latitude"`
-	GpsLatitudeVariable             types.String                  `tfsdk:"gps_latitude_variable"`
-	GpsEnableGeoFencing             types.Bool                    `tfsdk:"gps_enable_geo_fencing"`
-	GpsGeoFencingRange              types.Int64                   `tfsdk:"gps_geo_fencing_range"`
-	GpsGeoFencingRangeVariable      types.String                  `tfsdk:"gps_geo_fencing_range_variable"`
-	GpsSmsEnable                    types.Bool                    `tfsdk:"gps_sms_enable"`
-	GpsMobileNumbers                []SystemBasicGpsMobileNumbers `tfsdk:"gps_mobile_numbers"`
-	DeviceGroups                    types.Set                     `tfsdk:"device_groups"`
-	DeviceGroupsVariable            types.String                  `tfsdk:"device_groups_variable"`
-	ControllerGroup                 types.Set                     `tfsdk:"controller_group"`
-	ControllerGroupVariable         types.String                  `tfsdk:"controller_group_variable"`
-	OverlayId                       types.Int64                   `tfsdk:"overlay_id"`
-	OverlayIdVariable               types.String                  `tfsdk:"overlay_id_variable"`
-	PortOffset                      types.Int64                   `tfsdk:"port_offset"`
-	PortOffsetVariable              types.String                  `tfsdk:"port_offset_variable"`
-	PortHopping                     types.Bool                    `tfsdk:"port_hopping"`
-	PortHoppingVariable             types.String                  `tfsdk:"port_hopping_variable"`
-	ControlSessionPps               types.Int64                   `tfsdk:"control_session_pps"`
-	ControlSessionPpsVariable       types.String                  `tfsdk:"control_session_pps_variable"`
-	TrackTransport                  types.Bool                    `tfsdk:"track_transport"`
-	TrackTransportVariable          types.String                  `tfsdk:"track_transport_variable"`
-	TrackInterfaceTag               types.Int64                   `tfsdk:"track_interface_tag"`
-	TrackInterfaceTagVariable       types.String                  `tfsdk:"track_interface_tag_variable"`
-	ConsoleBaudRate                 types.String                  `tfsdk:"console_baud_rate"`
-	ConsoleBaudRateVariable         types.String                  `tfsdk:"console_baud_rate_variable"`
-	MaxOmpSessions                  types.Int64                   `tfsdk:"max_omp_sessions"`
-	MaxOmpSessionsVariable          types.String                  `tfsdk:"max_omp_sessions_variable"`
-	MultiTenant                     types.Bool                    `tfsdk:"multi_tenant"`
-	MultiTenantVariable             types.String                  `tfsdk:"multi_tenant_variable"`
-	TrackDefaultGateway             types.Bool                    `tfsdk:"track_default_gateway"`
-	TrackDefaultGatewayVariable     types.String                  `tfsdk:"track_default_gateway_variable"`
-	AdminTechOnFailure              types.Bool                    `tfsdk:"admin_tech_on_failure"`
-	AdminTechOnFailureVariable      types.String                  `tfsdk:"admin_tech_on_failure_variable"`
-	IdleTimeout                     types.Int64                   `tfsdk:"idle_timeout"`
-	IdleTimeoutVariable             types.String                  `tfsdk:"idle_timeout_variable"`
-	OnDemandEnable                  types.Bool                    `tfsdk:"on_demand_enable"`
-	OnDemandEnableVariable          types.String                  `tfsdk:"on_demand_enable_variable"`
-	OnDemandIdleTimeout             types.Int64                   `tfsdk:"on_demand_idle_timeout"`
-	OnDemandIdleTimeoutVariable     types.String                  `tfsdk:"on_demand_idle_timeout_variable"`
-	TransportGateway                types.Bool                    `tfsdk:"transport_gateway"`
-	TransportGatewayVariable        types.String                  `tfsdk:"transport_gateway_variable"`
-	EnhancedAppAwareRouting         types.String                  `tfsdk:"enhanced_app_aware_routing"`
-	EnhancedAppAwareRoutingVariable types.String                  `tfsdk:"enhanced_app_aware_routing_variable"`
-	SiteType                        types.Set                     `tfsdk:"site_type"`
-	SiteTypeVariable                types.String                  `tfsdk:"site_type_variable"`
-	AffinityGroupNumber             types.Int64                   `tfsdk:"affinity_group_number"`
-	AffinityGroupNumberVariable     types.String                  `tfsdk:"affinity_group_number_variable"`
-	AffinityGroupPreference         types.Set                     `tfsdk:"affinity_group_preference"`
-	AffinityGroupPreferenceVariable types.String                  `tfsdk:"affinity_group_preference_variable"`
-	AffinityPreferenceAuto          types.Bool                    `tfsdk:"affinity_preference_auto"`
-	AffinityPreferenceAutoVariable  types.String                  `tfsdk:"affinity_preference_auto_variable"`
-	AffinityPerVrf                  []SystemBasicAffinityPerVrf   `tfsdk:"affinity_per_vrf"`
+	Id                               types.String                  `tfsdk:"id"`
+	Version                          types.Int64                   `tfsdk:"version"`
+	Name                             types.String                  `tfsdk:"name"`
+	Description                      types.String                  `tfsdk:"description"`
+	FeatureProfileId                 types.String                  `tfsdk:"feature_profile_id"`
+	Timezone                         types.String                  `tfsdk:"timezone"`
+	TimezoneVariable                 types.String                  `tfsdk:"timezone_variable"`
+	ConfigDescription                types.String                  `tfsdk:"config_description"`
+	ConfigDescriptionVariable        types.String                  `tfsdk:"config_description_variable"`
+	Location                         types.String                  `tfsdk:"location"`
+	LocationVariable                 types.String                  `tfsdk:"location_variable"`
+	GpsLongitude                     types.Int64                   `tfsdk:"gps_longitude"`
+	GpsLongitudeVariable             types.String                  `tfsdk:"gps_longitude_variable"`
+	GpsLatitude                      types.Int64                   `tfsdk:"gps_latitude"`
+	GpsLatitudeVariable              types.String                  `tfsdk:"gps_latitude_variable"`
+	GpsEnableGeoFencing              types.Bool                    `tfsdk:"gps_enable_geo_fencing"`
+	GpsGeoFencingRange               types.Int64                   `tfsdk:"gps_geo_fencing_range"`
+	GpsGeoFencingRangeVariable       types.String                  `tfsdk:"gps_geo_fencing_range_variable"`
+	GpsSmsEnable                     types.Bool                    `tfsdk:"gps_sms_enable"`
+	GpsMobileNumbers                 []SystemBasicGpsMobileNumbers `tfsdk:"gps_mobile_numbers"`
+	DeviceGroups                     types.Set                     `tfsdk:"device_groups"`
+	DeviceGroupsVariable             types.String                  `tfsdk:"device_groups_variable"`
+	ControllerGroups                 types.Set                     `tfsdk:"controller_groups"`
+	ControllerGroupsVariable         types.String                  `tfsdk:"controller_groups_variable"`
+	OverlayId                        types.Int64                   `tfsdk:"overlay_id"`
+	OverlayIdVariable                types.String                  `tfsdk:"overlay_id_variable"`
+	PortOffset                       types.Int64                   `tfsdk:"port_offset"`
+	PortOffsetVariable               types.String                  `tfsdk:"port_offset_variable"`
+	PortHopping                      types.Bool                    `tfsdk:"port_hopping"`
+	PortHoppingVariable              types.String                  `tfsdk:"port_hopping_variable"`
+	ControlSessionPps                types.Int64                   `tfsdk:"control_session_pps"`
+	ControlSessionPpsVariable        types.String                  `tfsdk:"control_session_pps_variable"`
+	TrackTransport                   types.Bool                    `tfsdk:"track_transport"`
+	TrackTransportVariable           types.String                  `tfsdk:"track_transport_variable"`
+	TrackInterfaceTag                types.Int64                   `tfsdk:"track_interface_tag"`
+	TrackInterfaceTagVariable        types.String                  `tfsdk:"track_interface_tag_variable"`
+	ConsoleBaudRate                  types.String                  `tfsdk:"console_baud_rate"`
+	ConsoleBaudRateVariable          types.String                  `tfsdk:"console_baud_rate_variable"`
+	MaxOmpSessions                   types.Int64                   `tfsdk:"max_omp_sessions"`
+	MaxOmpSessionsVariable           types.String                  `tfsdk:"max_omp_sessions_variable"`
+	MultiTenant                      types.Bool                    `tfsdk:"multi_tenant"`
+	MultiTenantVariable              types.String                  `tfsdk:"multi_tenant_variable"`
+	TrackDefaultGateway              types.Bool                    `tfsdk:"track_default_gateway"`
+	TrackDefaultGatewayVariable      types.String                  `tfsdk:"track_default_gateway_variable"`
+	AdminTechOnFailure               types.Bool                    `tfsdk:"admin_tech_on_failure"`
+	AdminTechOnFailureVariable       types.String                  `tfsdk:"admin_tech_on_failure_variable"`
+	IdleTimeout                      types.Int64                   `tfsdk:"idle_timeout"`
+	IdleTimeoutVariable              types.String                  `tfsdk:"idle_timeout_variable"`
+	OnDemandEnable                   types.Bool                    `tfsdk:"on_demand_enable"`
+	OnDemandEnableVariable           types.String                  `tfsdk:"on_demand_enable_variable"`
+	OnDemandIdleTimeout              types.Int64                   `tfsdk:"on_demand_idle_timeout"`
+	OnDemandIdleTimeoutVariable      types.String                  `tfsdk:"on_demand_idle_timeout_variable"`
+	TransportGateway                 types.Bool                    `tfsdk:"transport_gateway"`
+	TransportGatewayVariable         types.String                  `tfsdk:"transport_gateway_variable"`
+	EnhancedAppAwareRouting          types.String                  `tfsdk:"enhanced_app_aware_routing"`
+	EnhancedAppAwareRoutingVariable  types.String                  `tfsdk:"enhanced_app_aware_routing_variable"`
+	SiteTypes                        types.Set                     `tfsdk:"site_types"`
+	SiteTypesVariable                types.String                  `tfsdk:"site_types_variable"`
+	AffinityGroupNumber              types.Int64                   `tfsdk:"affinity_group_number"`
+	AffinityGroupNumberVariable      types.String                  `tfsdk:"affinity_group_number_variable"`
+	AffinityGroupPreferences         types.Set                     `tfsdk:"affinity_group_preferences"`
+	AffinityGroupPreferencesVariable types.String                  `tfsdk:"affinity_group_preferences_variable"`
+	AffinityPreferenceAuto           types.Bool                    `tfsdk:"affinity_preference_auto"`
+	AffinityPreferenceAutoVariable   types.String                  `tfsdk:"affinity_preference_auto_variable"`
+	AffinityPerVrfs                  []SystemBasicAffinityPerVrfs  `tfsdk:"affinity_per_vrfs"`
 }
 
 type SystemBasicGpsMobileNumbers struct {
@@ -104,7 +104,7 @@ type SystemBasicGpsMobileNumbers struct {
 	NumberVariable types.String `tfsdk:"number_variable"`
 }
 
-type SystemBasicAffinityPerVrf struct {
+type SystemBasicAffinityPerVrfs struct {
 	AffinityGroupNumber         types.Int64  `tfsdk:"affinity_group_number"`
 	AffinityGroupNumberVariable types.String `tfsdk:"affinity_group_number_variable"`
 	VrfRange                    types.String `tfsdk:"vrf_range"`
@@ -230,16 +230,16 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"deviceGroups.value", values)
 	}
 
-	if !data.ControllerGroupVariable.IsNull() {
+	if !data.ControllerGroupsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "variable")
-		body, _ = sjson.Set(body, path+"controllerGroupList.value", data.ControllerGroupVariable.ValueString())
-	} else if data.ControllerGroup.IsNull() {
+		body, _ = sjson.Set(body, path+"controllerGroupList.value", data.ControllerGroupsVariable.ValueString())
+	} else if data.ControllerGroups.IsNull() {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "global")
 		var values []int64
-		data.ControllerGroup.ElementsAs(ctx, &values, false)
+		data.ControllerGroups.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"controllerGroupList.value", values)
 	}
 
@@ -419,16 +419,16 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"epfr.value", data.EnhancedAppAwareRouting.ValueString())
 	}
 
-	if !data.SiteTypeVariable.IsNull() {
+	if !data.SiteTypesVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"siteType.optionType", "variable")
-		body, _ = sjson.Set(body, path+"siteType.value", data.SiteTypeVariable.ValueString())
-	} else if data.SiteType.IsNull() {
+		body, _ = sjson.Set(body, path+"siteType.value", data.SiteTypesVariable.ValueString())
+	} else if data.SiteTypes.IsNull() {
 		body, _ = sjson.Set(body, path+"siteType.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"siteType.optionType", "global")
 		var values []string
-		data.SiteType.ElementsAs(ctx, &values, false)
+		data.SiteTypes.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"siteType.value", values)
 	}
 
@@ -443,16 +443,16 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"affinityGroupNumber.value", data.AffinityGroupNumber.ValueInt64())
 	}
 
-	if !data.AffinityGroupPreferenceVariable.IsNull() {
+	if !data.AffinityGroupPreferencesVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "variable")
-		body, _ = sjson.Set(body, path+"affinityGroupPreference.value", data.AffinityGroupPreferenceVariable.ValueString())
-	} else if data.AffinityGroupPreference.IsNull() {
+		body, _ = sjson.Set(body, path+"affinityGroupPreference.value", data.AffinityGroupPreferencesVariable.ValueString())
+	} else if data.AffinityGroupPreferences.IsNull() {
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "global")
 		var values []int64
-		data.AffinityGroupPreference.ElementsAs(ctx, &values, false)
+		data.AffinityGroupPreferences.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.value", values)
 	}
 
@@ -466,7 +466,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "global")
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", data.AffinityPreferenceAuto.ValueBool())
 	}
-	for _, item := range data.AffinityPerVrf {
+	for _, item := range data.AffinityPerVrfs {
 		itemBody := ""
 
 		if !item.AffinityGroupNumberVariable.IsNull() {
@@ -607,14 +607,14 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.DeviceGroups = helpers.GetStringSet(va.Array())
 		}
 	}
-	data.ControllerGroup = types.SetNull(types.Int64Type)
-	data.ControllerGroupVariable = types.StringNull()
+	data.ControllerGroups = types.SetNull(types.Int64Type)
+	data.ControllerGroupsVariable = types.StringNull()
 	if t := res.Get(path + "controllerGroupList.optionType"); t.Exists() {
 		va := res.Get(path + "controllerGroupList.value")
 		if t.String() == "variable" {
-			data.ControllerGroupVariable = types.StringValue(va.String())
+			data.ControllerGroupsVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ControllerGroup = helpers.GetInt64Set(va.Array())
+			data.ControllerGroups = helpers.GetInt64Set(va.Array())
 		}
 	}
 	data.OverlayId = types.Int64Null()
@@ -777,14 +777,14 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.EnhancedAppAwareRouting = types.StringValue(va.String())
 		}
 	}
-	data.SiteType = types.SetNull(types.StringType)
-	data.SiteTypeVariable = types.StringNull()
+	data.SiteTypes = types.SetNull(types.StringType)
+	data.SiteTypesVariable = types.StringNull()
 	if t := res.Get(path + "siteType.optionType"); t.Exists() {
 		va := res.Get(path + "siteType.value")
 		if t.String() == "variable" {
-			data.SiteTypeVariable = types.StringValue(va.String())
+			data.SiteTypesVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SiteType = helpers.GetStringSet(va.Array())
+			data.SiteTypes = helpers.GetStringSet(va.Array())
 		}
 	}
 	data.AffinityGroupNumber = types.Int64Null()
@@ -797,14 +797,14 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.AffinityGroupNumber = types.Int64Value(va.Int())
 		}
 	}
-	data.AffinityGroupPreference = types.SetNull(types.Int64Type)
-	data.AffinityGroupPreferenceVariable = types.StringNull()
+	data.AffinityGroupPreferences = types.SetNull(types.Int64Type)
+	data.AffinityGroupPreferencesVariable = types.StringNull()
 	if t := res.Get(path + "affinityGroupPreference.optionType"); t.Exists() {
 		va := res.Get(path + "affinityGroupPreference.value")
 		if t.String() == "variable" {
-			data.AffinityGroupPreferenceVariable = types.StringValue(va.String())
+			data.AffinityGroupPreferencesVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AffinityGroupPreference = helpers.GetInt64Set(va.Array())
+			data.AffinityGroupPreferences = helpers.GetInt64Set(va.Array())
 		}
 	}
 	data.AffinityPreferenceAuto = types.BoolNull()
@@ -818,9 +818,9 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	if value := res.Get(path + "affinityPerVrf"); value.Exists() {
-		data.AffinityPerVrf = make([]SystemBasicAffinityPerVrf, 0)
+		data.AffinityPerVrfs = make([]SystemBasicAffinityPerVrfs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := SystemBasicAffinityPerVrf{}
+			item := SystemBasicAffinityPerVrfs{}
 			item.AffinityGroupNumber = types.Int64Null()
 			item.AffinityGroupNumberVariable = types.StringNull()
 			if t := v.Get("affinityGroupNumber.optionType"); t.Exists() {
@@ -841,7 +841,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 					item.VrfRange = types.StringValue(va.String())
 				}
 			}
-			data.AffinityPerVrf = append(data.AffinityPerVrf, item)
+			data.AffinityPerVrfs = append(data.AffinityPerVrfs, item)
 			return true
 		})
 	}
@@ -978,14 +978,14 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.DeviceGroups = helpers.GetStringSet(va.Array())
 		}
 	}
-	data.ControllerGroup = types.SetNull(types.Int64Type)
-	data.ControllerGroupVariable = types.StringNull()
+	data.ControllerGroups = types.SetNull(types.Int64Type)
+	data.ControllerGroupsVariable = types.StringNull()
 	if t := res.Get(path + "controllerGroupList.optionType"); t.Exists() {
 		va := res.Get(path + "controllerGroupList.value")
 		if t.String() == "variable" {
-			data.ControllerGroupVariable = types.StringValue(va.String())
+			data.ControllerGroupsVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ControllerGroup = helpers.GetInt64Set(va.Array())
+			data.ControllerGroups = helpers.GetInt64Set(va.Array())
 		}
 	}
 	data.OverlayId = types.Int64Null()
@@ -1148,14 +1148,14 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.EnhancedAppAwareRouting = types.StringValue(va.String())
 		}
 	}
-	data.SiteType = types.SetNull(types.StringType)
-	data.SiteTypeVariable = types.StringNull()
+	data.SiteTypes = types.SetNull(types.StringType)
+	data.SiteTypesVariable = types.StringNull()
 	if t := res.Get(path + "siteType.optionType"); t.Exists() {
 		va := res.Get(path + "siteType.value")
 		if t.String() == "variable" {
-			data.SiteTypeVariable = types.StringValue(va.String())
+			data.SiteTypesVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SiteType = helpers.GetStringSet(va.Array())
+			data.SiteTypes = helpers.GetStringSet(va.Array())
 		}
 	}
 	data.AffinityGroupNumber = types.Int64Null()
@@ -1168,14 +1168,14 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.AffinityGroupNumber = types.Int64Value(va.Int())
 		}
 	}
-	data.AffinityGroupPreference = types.SetNull(types.Int64Type)
-	data.AffinityGroupPreferenceVariable = types.StringNull()
+	data.AffinityGroupPreferences = types.SetNull(types.Int64Type)
+	data.AffinityGroupPreferencesVariable = types.StringNull()
 	if t := res.Get(path + "affinityGroupPreference.optionType"); t.Exists() {
 		va := res.Get(path + "affinityGroupPreference.value")
 		if t.String() == "variable" {
-			data.AffinityGroupPreferenceVariable = types.StringValue(va.String())
+			data.AffinityGroupPreferencesVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AffinityGroupPreference = helpers.GetInt64Set(va.Array())
+			data.AffinityGroupPreferences = helpers.GetInt64Set(va.Array())
 		}
 	}
 	data.AffinityPreferenceAuto = types.BoolNull()
@@ -1188,10 +1188,10 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.AffinityPreferenceAuto = types.BoolValue(va.Bool())
 		}
 	}
-	for i := range data.AffinityPerVrf {
+	for i := range data.AffinityPerVrfs {
 		keys := [...]string{"affinityGroupNumber"}
-		keyValues := [...]string{strconv.FormatInt(data.AffinityPerVrf[i].AffinityGroupNumber.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.AffinityPerVrf[i].AffinityGroupNumberVariable.ValueString()}
+		keyValues := [...]string{strconv.FormatInt(data.AffinityPerVrfs[i].AffinityGroupNumber.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{data.AffinityPerVrfs[i].AffinityGroupNumberVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "affinityPerVrf").ForEach(
@@ -1214,24 +1214,24 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 				return true
 			},
 		)
-		data.AffinityPerVrf[i].AffinityGroupNumber = types.Int64Null()
-		data.AffinityPerVrf[i].AffinityGroupNumberVariable = types.StringNull()
+		data.AffinityPerVrfs[i].AffinityGroupNumber = types.Int64Null()
+		data.AffinityPerVrfs[i].AffinityGroupNumberVariable = types.StringNull()
 		if t := r.Get("affinityGroupNumber.optionType"); t.Exists() {
 			va := r.Get("affinityGroupNumber.value")
 			if t.String() == "variable" {
-				data.AffinityPerVrf[i].AffinityGroupNumberVariable = types.StringValue(va.String())
+				data.AffinityPerVrfs[i].AffinityGroupNumberVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.AffinityPerVrf[i].AffinityGroupNumber = types.Int64Value(va.Int())
+				data.AffinityPerVrfs[i].AffinityGroupNumber = types.Int64Value(va.Int())
 			}
 		}
-		data.AffinityPerVrf[i].VrfRange = types.StringNull()
-		data.AffinityPerVrf[i].VrfRangeVariable = types.StringNull()
+		data.AffinityPerVrfs[i].VrfRange = types.StringNull()
+		data.AffinityPerVrfs[i].VrfRangeVariable = types.StringNull()
 		if t := r.Get("vrfRange.optionType"); t.Exists() {
 			va := r.Get("vrfRange.value")
 			if t.String() == "variable" {
-				data.AffinityPerVrf[i].VrfRangeVariable = types.StringValue(va.String())
+				data.AffinityPerVrfs[i].VrfRangeVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.AffinityPerVrf[i].VrfRange = types.StringValue(va.String())
+				data.AffinityPerVrfs[i].VrfRange = types.StringValue(va.String())
 			}
 		}
 	}
@@ -1292,10 +1292,10 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.DeviceGroupsVariable.IsNull() {
 		return false
 	}
-	if !data.ControllerGroup.IsNull() {
+	if !data.ControllerGroups.IsNull() {
 		return false
 	}
-	if !data.ControllerGroupVariable.IsNull() {
+	if !data.ControllerGroupsVariable.IsNull() {
 		return false
 	}
 	if !data.OverlayId.IsNull() {
@@ -1394,10 +1394,10 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.EnhancedAppAwareRoutingVariable.IsNull() {
 		return false
 	}
-	if !data.SiteType.IsNull() {
+	if !data.SiteTypes.IsNull() {
 		return false
 	}
-	if !data.SiteTypeVariable.IsNull() {
+	if !data.SiteTypesVariable.IsNull() {
 		return false
 	}
 	if !data.AffinityGroupNumber.IsNull() {
@@ -1406,10 +1406,10 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.AffinityGroupNumberVariable.IsNull() {
 		return false
 	}
-	if !data.AffinityGroupPreference.IsNull() {
+	if !data.AffinityGroupPreferences.IsNull() {
 		return false
 	}
-	if !data.AffinityGroupPreferenceVariable.IsNull() {
+	if !data.AffinityGroupPreferencesVariable.IsNull() {
 		return false
 	}
 	if !data.AffinityPreferenceAuto.IsNull() {
@@ -1418,7 +1418,7 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.AffinityPreferenceAutoVariable.IsNull() {
 		return false
 	}
-	if len(data.AffinityPerVrf) > 0 {
+	if len(data.AffinityPerVrfs) > 0 {
 		return false
 	}
 	return true

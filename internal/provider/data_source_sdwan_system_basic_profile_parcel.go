@@ -157,12 +157,12 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"controller_group": schema.SetAttribute{
+			"controller_groups": schema.SetAttribute{
 				MarkdownDescription: "Configure a list of comma-separated controller groups",
 				ElementType:         types.Int64Type,
 				Computed:            true,
 			},
-			"controller_group_variable": schema.StringAttribute{
+			"controller_groups_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -294,12 +294,12 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"site_type": schema.SetAttribute{
+			"site_types": schema.SetAttribute{
 				MarkdownDescription: "Site Type",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"site_type_variable": schema.StringAttribute{
+			"site_types_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -311,12 +311,12 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"affinity_group_preference": schema.SetAttribute{
+			"affinity_group_preferences": schema.SetAttribute{
 				MarkdownDescription: "Affinity Group Preference",
 				ElementType:         types.Int64Type,
 				Computed:            true,
 			},
-			"affinity_group_preference_variable": schema.StringAttribute{
+			"affinity_group_preferences_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -328,7 +328,7 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"affinity_per_vrf": schema.ListNestedAttribute{
+			"affinity_per_vrfs": schema.ListNestedAttribute{
 				MarkdownDescription: "Affinity Group Number for VRFs",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

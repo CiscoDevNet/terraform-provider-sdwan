@@ -16,7 +16,7 @@ resource "sdwan_system_basic_profile_parcel" "example" {
     }
   ]
   device_groups              = ["example"]
-  controller_group           = [1]
+  controller_groups          = [1]
   overlay_id                 = 1
   port_offset                = 19
   port_hopping               = true
@@ -33,11 +33,11 @@ resource "sdwan_system_basic_profile_parcel" "example" {
   on_demand_idle_timeout     = 10
   transport_gateway          = false
   enhanced_app_aware_routing = "aggressive"
-  site_type                  = ["type-1"]
+  site_types                 = ["type-1"]
   affinity_group_number      = 1
-  affinity_group_preference  = [1]
+  affinity_group_preferences = [1]
   affinity_preference_auto   = false
-  affinity_per_vrf = [
+  affinity_per_vrfs = [
     {
       affinity_group_number = 1
       vrf_range             = "123-456"
