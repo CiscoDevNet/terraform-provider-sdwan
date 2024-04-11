@@ -216,6 +216,7 @@ type YamlConfigAttribute struct {
 	ModelTypeString       bool                           `yaml:"model_type_string"`
 	BoolEmptyString       bool                           `yaml:"bool_empty_string"`
 	DataPath              []string                       `yaml:"data_path"`
+	SchemaPath            []string                       `yaml:"schema_path"`
 	Keys                  []string                       `yaml:"keys"`
 	Id                    bool                           `yaml:"id"`
 	Reference             bool                           `yaml:"reference"`
@@ -644,8 +645,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		return
 	}
 	path := ""
-	for _, e := range attr.DataPath {
-		path += e + ".properties."
+	if len(attr.SchemaPath) == 0 {
+		for _, e := range attr.DataPath {
+			path += e + ".properties."
+		}
+	} else {
+		for _, e := range attr.SchemaPath {
+			path += e + ".properties."
+		}
 	}
 	path += attr.ModelName
 	r := model.Get("properties." + path)
@@ -662,7 +669,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 	if r.Get("type").String() == "object" {
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
 		if t.Exists() {
-			if t.Get("properties.value.type").String() == "string" {
+			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
 				attr.Type = "String"
 				if value := t.Get("properties.value.minLength"); value.Exists() {
 					attr.StringMinLength = value.Int()
