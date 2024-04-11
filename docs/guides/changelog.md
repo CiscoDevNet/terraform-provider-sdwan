@@ -10,7 +10,6 @@ description: |-
 ## 0.3.8 (unreleased)
 
 - Add `sdwan_system_flexible_port_speed_profile_parcel` resource and data source
-- Add `sdwan_system_security_profile_parcel` resource and data source
 - Add `sdwan_system_mrf_profile_parcel` resource and data source
 - Add `sdwan_system_snmp_profile_parcel` resource and data source
 - Add `sdwan_system_basic_profile_parcel` resource and data source
