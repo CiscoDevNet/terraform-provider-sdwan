@@ -32,74 +32,74 @@ import (
 )
 
 type SystemBasic struct {
-	Id                              types.String                `tfsdk:"id"`
-	Version                         types.Int64                 `tfsdk:"version"`
-	Name                            types.String                `tfsdk:"name"`
-	Description                     types.String                `tfsdk:"description"`
-	FeatureProfileId                types.String                `tfsdk:"feature_profile_id"`
-	Timezone                        types.String                `tfsdk:"timezone"`
-	TimezoneVariable                types.String                `tfsdk:"timezone_variable"`
-	ConfigDescription               types.String                `tfsdk:"config_description"`
-	ConfigDescriptionVariable       types.String                `tfsdk:"config_description_variable"`
-	Location                        types.String                `tfsdk:"location"`
-	LocationVariable                types.String                `tfsdk:"location_variable"`
-	Longitude                       types.Int64                 `tfsdk:"longitude"`
-	LongitudeVariable               types.String                `tfsdk:"longitude_variable"`
-	Latitude                        types.Int64                 `tfsdk:"latitude"`
-	LatitudeVariable                types.String                `tfsdk:"latitude_variable"`
-	Enable                          types.Bool                  `tfsdk:"enable"`
-	Range                           types.Int64                 `tfsdk:"range"`
-	RangeVariable                   types.String                `tfsdk:"range_variable"`
-	SmsEnable                       types.Bool                  `tfsdk:"sms_enable"`
-	MobileNumbers                   []SystemBasicMobileNumbers  `tfsdk:"mobile_numbers"`
-	DeviceGroups                    types.Set                   `tfsdk:"device_groups"`
-	DeviceGroupsVariable            types.String                `tfsdk:"device_groups_variable"`
-	ControllerGroupList             types.Set                   `tfsdk:"controller_group_list"`
-	ControllerGroupListVariable     types.String                `tfsdk:"controller_group_list_variable"`
-	OverlayId                       types.Int64                 `tfsdk:"overlay_id"`
-	OverlayIdVariable               types.String                `tfsdk:"overlay_id_variable"`
-	PortOffset                      types.Int64                 `tfsdk:"port_offset"`
-	PortOffsetVariable              types.String                `tfsdk:"port_offset_variable"`
-	PortHop                         types.Bool                  `tfsdk:"port_hop"`
-	PortHopVariable                 types.String                `tfsdk:"port_hop_variable"`
-	ControlSessionPps               types.Int64                 `tfsdk:"control_session_pps"`
-	ControlSessionPpsVariable       types.String                `tfsdk:"control_session_pps_variable"`
-	TrackTransport                  types.Bool                  `tfsdk:"track_transport"`
-	TrackTransportVariable          types.String                `tfsdk:"track_transport_variable"`
-	TrackInterfaceTag               types.Int64                 `tfsdk:"track_interface_tag"`
-	TrackInterfaceTagVariable       types.String                `tfsdk:"track_interface_tag_variable"`
-	ConsoleBaudRate                 types.String                `tfsdk:"console_baud_rate"`
-	ConsoleBaudRateVariable         types.String                `tfsdk:"console_baud_rate_variable"`
-	MaxOmpSessions                  types.Int64                 `tfsdk:"max_omp_sessions"`
-	MaxOmpSessionsVariable          types.String                `tfsdk:"max_omp_sessions_variable"`
-	MultiTenant                     types.Bool                  `tfsdk:"multi_tenant"`
-	MultiTenantVariable             types.String                `tfsdk:"multi_tenant_variable"`
-	TrackDefaultGateway             types.Bool                  `tfsdk:"track_default_gateway"`
-	TrackDefaultGatewayVariable     types.String                `tfsdk:"track_default_gateway_variable"`
-	AdminTechOnFailure              types.Bool                  `tfsdk:"admin_tech_on_failure"`
-	AdminTechOnFailureVariable      types.String                `tfsdk:"admin_tech_on_failure_variable"`
-	IdleTimeout                     types.Int64                 `tfsdk:"idle_timeout"`
-	IdleTimeoutVariable             types.String                `tfsdk:"idle_timeout_variable"`
-	OnDemandEnable                  types.Bool                  `tfsdk:"on_demand_enable"`
-	OnDemandEnableVariable          types.String                `tfsdk:"on_demand_enable_variable"`
-	OnDemandIdleTimeout             types.Int64                 `tfsdk:"on_demand_idle_timeout"`
-	OnDemandIdleTimeoutVariable     types.String                `tfsdk:"on_demand_idle_timeout_variable"`
-	TransportGateway                types.Bool                  `tfsdk:"transport_gateway"`
-	TransportGatewayVariable        types.String                `tfsdk:"transport_gateway_variable"`
-	Epfr                            types.String                `tfsdk:"epfr"`
-	EpfrVariable                    types.String                `tfsdk:"epfr_variable"`
-	SiteType                        types.Set                   `tfsdk:"site_type"`
-	SiteTypeVariable                types.String                `tfsdk:"site_type_variable"`
-	AffinityGroupNumber             types.Int64                 `tfsdk:"affinity_group_number"`
-	AffinityGroupNumberVariable     types.String                `tfsdk:"affinity_group_number_variable"`
-	AffinityGroupPreference         types.Set                   `tfsdk:"affinity_group_preference"`
-	AffinityGroupPreferenceVariable types.String                `tfsdk:"affinity_group_preference_variable"`
-	AffinityPreferenceAuto          types.Bool                  `tfsdk:"affinity_preference_auto"`
-	AffinityPreferenceAutoVariable  types.String                `tfsdk:"affinity_preference_auto_variable"`
-	AffinityPerVrf                  []SystemBasicAffinityPerVrf `tfsdk:"affinity_per_vrf"`
+	Id                              types.String                  `tfsdk:"id"`
+	Version                         types.Int64                   `tfsdk:"version"`
+	Name                            types.String                  `tfsdk:"name"`
+	Description                     types.String                  `tfsdk:"description"`
+	FeatureProfileId                types.String                  `tfsdk:"feature_profile_id"`
+	Timezone                        types.String                  `tfsdk:"timezone"`
+	TimezoneVariable                types.String                  `tfsdk:"timezone_variable"`
+	ConfigDescription               types.String                  `tfsdk:"config_description"`
+	ConfigDescriptionVariable       types.String                  `tfsdk:"config_description_variable"`
+	Location                        types.String                  `tfsdk:"location"`
+	LocationVariable                types.String                  `tfsdk:"location_variable"`
+	GpsLongitude                    types.Int64                   `tfsdk:"gps_longitude"`
+	GpsLongitudeVariable            types.String                  `tfsdk:"gps_longitude_variable"`
+	GpsLatitude                     types.Int64                   `tfsdk:"gps_latitude"`
+	GpsLatitudeVariable             types.String                  `tfsdk:"gps_latitude_variable"`
+	GpsEnableGeoFencing             types.Bool                    `tfsdk:"gps_enable_geo_fencing"`
+	GpsGeoFencingRange              types.Int64                   `tfsdk:"gps_geo_fencing_range"`
+	GpsGeoFencingRangeVariable      types.String                  `tfsdk:"gps_geo_fencing_range_variable"`
+	GpsSmsEnable                    types.Bool                    `tfsdk:"gps_sms_enable"`
+	GpsMobileNumbers                []SystemBasicGpsMobileNumbers `tfsdk:"gps_mobile_numbers"`
+	DeviceGroups                    types.Set                     `tfsdk:"device_groups"`
+	DeviceGroupsVariable            types.String                  `tfsdk:"device_groups_variable"`
+	ControllerGroup                 types.Set                     `tfsdk:"controller_group"`
+	ControllerGroupVariable         types.String                  `tfsdk:"controller_group_variable"`
+	OverlayId                       types.Int64                   `tfsdk:"overlay_id"`
+	OverlayIdVariable               types.String                  `tfsdk:"overlay_id_variable"`
+	PortOffset                      types.Int64                   `tfsdk:"port_offset"`
+	PortOffsetVariable              types.String                  `tfsdk:"port_offset_variable"`
+	PortHopping                     types.Bool                    `tfsdk:"port_hopping"`
+	PortHoppingVariable             types.String                  `tfsdk:"port_hopping_variable"`
+	ControlSessionPps               types.Int64                   `tfsdk:"control_session_pps"`
+	ControlSessionPpsVariable       types.String                  `tfsdk:"control_session_pps_variable"`
+	TrackTransport                  types.Bool                    `tfsdk:"track_transport"`
+	TrackTransportVariable          types.String                  `tfsdk:"track_transport_variable"`
+	TrackInterfaceTag               types.Int64                   `tfsdk:"track_interface_tag"`
+	TrackInterfaceTagVariable       types.String                  `tfsdk:"track_interface_tag_variable"`
+	ConsoleBaudRate                 types.String                  `tfsdk:"console_baud_rate"`
+	ConsoleBaudRateVariable         types.String                  `tfsdk:"console_baud_rate_variable"`
+	MaxOmpSessions                  types.Int64                   `tfsdk:"max_omp_sessions"`
+	MaxOmpSessionsVariable          types.String                  `tfsdk:"max_omp_sessions_variable"`
+	MultiTenant                     types.Bool                    `tfsdk:"multi_tenant"`
+	MultiTenantVariable             types.String                  `tfsdk:"multi_tenant_variable"`
+	TrackDefaultGateway             types.Bool                    `tfsdk:"track_default_gateway"`
+	TrackDefaultGatewayVariable     types.String                  `tfsdk:"track_default_gateway_variable"`
+	AdminTechOnFailure              types.Bool                    `tfsdk:"admin_tech_on_failure"`
+	AdminTechOnFailureVariable      types.String                  `tfsdk:"admin_tech_on_failure_variable"`
+	IdleTimeout                     types.Int64                   `tfsdk:"idle_timeout"`
+	IdleTimeoutVariable             types.String                  `tfsdk:"idle_timeout_variable"`
+	OnDemandEnable                  types.Bool                    `tfsdk:"on_demand_enable"`
+	OnDemandEnableVariable          types.String                  `tfsdk:"on_demand_enable_variable"`
+	OnDemandIdleTimeout             types.Int64                   `tfsdk:"on_demand_idle_timeout"`
+	OnDemandIdleTimeoutVariable     types.String                  `tfsdk:"on_demand_idle_timeout_variable"`
+	TransportGateway                types.Bool                    `tfsdk:"transport_gateway"`
+	TransportGatewayVariable        types.String                  `tfsdk:"transport_gateway_variable"`
+	EnhancedAppAwareRouting         types.String                  `tfsdk:"enhanced_app_aware_routing"`
+	EnhancedAppAwareRoutingVariable types.String                  `tfsdk:"enhanced_app_aware_routing_variable"`
+	SiteType                        types.Set                     `tfsdk:"site_type"`
+	SiteTypeVariable                types.String                  `tfsdk:"site_type_variable"`
+	AffinityGroupNumber             types.Int64                   `tfsdk:"affinity_group_number"`
+	AffinityGroupNumberVariable     types.String                  `tfsdk:"affinity_group_number_variable"`
+	AffinityGroupPreference         types.Set                     `tfsdk:"affinity_group_preference"`
+	AffinityGroupPreferenceVariable types.String                  `tfsdk:"affinity_group_preference_variable"`
+	AffinityPreferenceAuto          types.Bool                    `tfsdk:"affinity_preference_auto"`
+	AffinityPreferenceAutoVariable  types.String                  `tfsdk:"affinity_preference_auto_variable"`
+	AffinityPerVrf                  []SystemBasicAffinityPerVrf   `tfsdk:"affinity_per_vrf"`
 }
 
-type SystemBasicMobileNumbers struct {
+type SystemBasicGpsMobileNumbers struct {
 	Number         types.String `tfsdk:"number"`
 	NumberVariable types.String `tfsdk:"number_variable"`
 }
@@ -158,53 +158,53 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"location.value", data.Location.ValueString())
 	}
 
-	if !data.LongitudeVariable.IsNull() {
+	if !data.GpsLongitudeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.LongitudeVariable.ValueString())
-	} else if data.Longitude.IsNull() {
+		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitudeVariable.ValueString())
+	} else if data.GpsLongitude.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "global")
-		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.Longitude.ValueInt64())
+		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitude.ValueInt64())
 	}
 
-	if !data.LatitudeVariable.IsNull() {
+	if !data.GpsLatitudeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.LatitudeVariable.ValueString())
-	} else if data.Latitude.IsNull() {
+		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitudeVariable.ValueString())
+	} else if data.GpsLatitude.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "global")
-		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.Latitude.ValueInt64())
+		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitude.ValueInt64())
 	}
-	if data.Enable.IsNull() {
+	if data.GpsEnableGeoFencing.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.optionType", "default")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.optionType", "global")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.value", data.Enable.ValueBool())
+		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.value", data.GpsEnableGeoFencing.ValueBool())
 	}
 
-	if !data.RangeVariable.IsNull() {
+	if !data.GpsGeoFencingRangeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.RangeVariable.ValueString())
-	} else if data.Range.IsNull() {
+		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.GpsGeoFencingRangeVariable.ValueString())
+	} else if data.GpsGeoFencingRange.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "default")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", 100)
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "global")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.Range.ValueInt64())
+		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.GpsGeoFencingRange.ValueInt64())
 	}
-	if data.SmsEnable.IsNull() {
+	if data.GpsSmsEnable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "default")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "global")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", data.SmsEnable.ValueBool())
+		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", data.GpsSmsEnable.ValueBool())
 	}
-	for _, item := range data.MobileNumbers {
+	for _, item := range data.GpsMobileNumbers {
 		itemBody := ""
 
 		if !item.NumberVariable.IsNull() {
@@ -230,16 +230,16 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"deviceGroups.value", values)
 	}
 
-	if !data.ControllerGroupListVariable.IsNull() {
+	if !data.ControllerGroupVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "variable")
-		body, _ = sjson.Set(body, path+"controllerGroupList.value", data.ControllerGroupListVariable.ValueString())
-	} else if data.ControllerGroupList.IsNull() {
+		body, _ = sjson.Set(body, path+"controllerGroupList.value", data.ControllerGroupVariable.ValueString())
+	} else if data.ControllerGroup.IsNull() {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "global")
 		var values []int64
-		data.ControllerGroupList.ElementsAs(ctx, &values, false)
+		data.ControllerGroup.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"controllerGroupList.value", values)
 	}
 
@@ -265,15 +265,15 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"portOffset.value", data.PortOffset.ValueInt64())
 	}
 
-	if !data.PortHopVariable.IsNull() {
+	if !data.PortHoppingVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"portHop.optionType", "variable")
-		body, _ = sjson.Set(body, path+"portHop.value", data.PortHopVariable.ValueString())
-	} else if data.PortHop.IsNull() {
+		body, _ = sjson.Set(body, path+"portHop.value", data.PortHoppingVariable.ValueString())
+	} else if data.PortHopping.IsNull() {
 		body, _ = sjson.Set(body, path+"portHop.optionType", "default")
 		body, _ = sjson.Set(body, path+"portHop.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"portHop.optionType", "global")
-		body, _ = sjson.Set(body, path+"portHop.value", data.PortHop.ValueBool())
+		body, _ = sjson.Set(body, path+"portHop.value", data.PortHopping.ValueBool())
 	}
 
 	if !data.ControlSessionPpsVariable.IsNull() {
@@ -408,15 +408,15 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueBool())
 	}
 
-	if !data.EpfrVariable.IsNull() {
+	if !data.EnhancedAppAwareRoutingVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"epfr.optionType", "variable")
-		body, _ = sjson.Set(body, path+"epfr.value", data.EpfrVariable.ValueString())
-	} else if data.Epfr.IsNull() {
+		body, _ = sjson.Set(body, path+"epfr.value", data.EnhancedAppAwareRoutingVariable.ValueString())
+	} else if data.EnhancedAppAwareRouting.IsNull() {
 		body, _ = sjson.Set(body, path+"epfr.optionType", "default")
 		body, _ = sjson.Set(body, path+"epfr.value", "disabled")
 	} else {
 		body, _ = sjson.Set(body, path+"epfr.optionType", "global")
-		body, _ = sjson.Set(body, path+"epfr.value", data.Epfr.ValueString())
+		body, _ = sjson.Set(body, path+"epfr.value", data.EnhancedAppAwareRouting.ValueString())
 	}
 
 	if !data.SiteTypeVariable.IsNull() {
@@ -533,56 +533,56 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.Location = types.StringValue(va.String())
 		}
 	}
-	data.Longitude = types.Int64Null()
-	data.LongitudeVariable = types.StringNull()
+	data.GpsLongitude = types.Int64Null()
+	data.GpsLongitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.longitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.longitude.value")
 		if t.String() == "variable" {
-			data.LongitudeVariable = types.StringValue(va.String())
+			data.GpsLongitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Longitude = types.Int64Value(va.Int())
+			data.GpsLongitude = types.Int64Value(va.Int())
 		}
 	}
-	data.Latitude = types.Int64Null()
-	data.LatitudeVariable = types.StringNull()
+	data.GpsLatitude = types.Int64Null()
+	data.GpsLatitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.latitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.latitude.value")
 		if t.String() == "variable" {
-			data.LatitudeVariable = types.StringValue(va.String())
+			data.GpsLatitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Latitude = types.Int64Value(va.Int())
+			data.GpsLatitude = types.Int64Value(va.Int())
 		}
 	}
-	data.Enable = types.BoolNull()
+	data.GpsEnableGeoFencing = types.BoolNull()
 
 	if t := res.Get(path + "gpsLocation.geoFencing.enable.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.geoFencing.enable.value")
 		if t.String() == "global" {
-			data.Enable = types.BoolValue(va.Bool())
+			data.GpsEnableGeoFencing = types.BoolValue(va.Bool())
 		}
 	}
-	data.Range = types.Int64Null()
-	data.RangeVariable = types.StringNull()
+	data.GpsGeoFencingRange = types.Int64Null()
+	data.GpsGeoFencingRangeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.geoFencing.range.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.geoFencing.range.value")
 		if t.String() == "variable" {
-			data.RangeVariable = types.StringValue(va.String())
+			data.GpsGeoFencingRangeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Range = types.Int64Value(va.Int())
+			data.GpsGeoFencingRange = types.Int64Value(va.Int())
 		}
 	}
-	data.SmsEnable = types.BoolNull()
+	data.GpsSmsEnable = types.BoolNull()
 
 	if t := res.Get(path + "gpsLocation.geoFencing.sms.enable.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.geoFencing.sms.enable.value")
 		if t.String() == "global" {
-			data.SmsEnable = types.BoolValue(va.Bool())
+			data.GpsSmsEnable = types.BoolValue(va.Bool())
 		}
 	}
 	if value := res.Get(path + "gpsLocation.geoFencing.sms.mobileNumber"); value.Exists() {
-		data.MobileNumbers = make([]SystemBasicMobileNumbers, 0)
+		data.GpsMobileNumbers = make([]SystemBasicGpsMobileNumbers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := SystemBasicMobileNumbers{}
+			item := SystemBasicGpsMobileNumbers{}
 			item.Number = types.StringNull()
 			item.NumberVariable = types.StringNull()
 			if t := v.Get("number.optionType"); t.Exists() {
@@ -593,7 +593,7 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 					item.Number = types.StringValue(va.String())
 				}
 			}
-			data.MobileNumbers = append(data.MobileNumbers, item)
+			data.GpsMobileNumbers = append(data.GpsMobileNumbers, item)
 			return true
 		})
 	}
@@ -607,14 +607,14 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.DeviceGroups = helpers.GetStringSet(va.Array())
 		}
 	}
-	data.ControllerGroupList = types.SetNull(types.Int64Type)
-	data.ControllerGroupListVariable = types.StringNull()
+	data.ControllerGroup = types.SetNull(types.Int64Type)
+	data.ControllerGroupVariable = types.StringNull()
 	if t := res.Get(path + "controllerGroupList.optionType"); t.Exists() {
 		va := res.Get(path + "controllerGroupList.value")
 		if t.String() == "variable" {
-			data.ControllerGroupListVariable = types.StringValue(va.String())
+			data.ControllerGroupVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ControllerGroupList = helpers.GetInt64Set(va.Array())
+			data.ControllerGroup = helpers.GetInt64Set(va.Array())
 		}
 	}
 	data.OverlayId = types.Int64Null()
@@ -637,14 +637,14 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.PortOffset = types.Int64Value(va.Int())
 		}
 	}
-	data.PortHop = types.BoolNull()
-	data.PortHopVariable = types.StringNull()
+	data.PortHopping = types.BoolNull()
+	data.PortHoppingVariable = types.StringNull()
 	if t := res.Get(path + "portHop.optionType"); t.Exists() {
 		va := res.Get(path + "portHop.value")
 		if t.String() == "variable" {
-			data.PortHopVariable = types.StringValue(va.String())
+			data.PortHoppingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.PortHop = types.BoolValue(va.Bool())
+			data.PortHopping = types.BoolValue(va.Bool())
 		}
 	}
 	data.ControlSessionPps = types.Int64Null()
@@ -767,14 +767,14 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.TransportGateway = types.BoolValue(va.Bool())
 		}
 	}
-	data.Epfr = types.StringNull()
-	data.EpfrVariable = types.StringNull()
+	data.EnhancedAppAwareRouting = types.StringNull()
+	data.EnhancedAppAwareRoutingVariable = types.StringNull()
 	if t := res.Get(path + "epfr.optionType"); t.Exists() {
 		va := res.Get(path + "epfr.value")
 		if t.String() == "variable" {
-			data.EpfrVariable = types.StringValue(va.String())
+			data.EnhancedAppAwareRoutingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Epfr = types.StringValue(va.String())
+			data.EnhancedAppAwareRouting = types.StringValue(va.String())
 		}
 	}
 	data.SiteType = types.SetNull(types.StringType)
@@ -885,56 +885,56 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.Location = types.StringValue(va.String())
 		}
 	}
-	data.Longitude = types.Int64Null()
-	data.LongitudeVariable = types.StringNull()
+	data.GpsLongitude = types.Int64Null()
+	data.GpsLongitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.longitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.longitude.value")
 		if t.String() == "variable" {
-			data.LongitudeVariable = types.StringValue(va.String())
+			data.GpsLongitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Longitude = types.Int64Value(va.Int())
+			data.GpsLongitude = types.Int64Value(va.Int())
 		}
 	}
-	data.Latitude = types.Int64Null()
-	data.LatitudeVariable = types.StringNull()
+	data.GpsLatitude = types.Int64Null()
+	data.GpsLatitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.latitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.latitude.value")
 		if t.String() == "variable" {
-			data.LatitudeVariable = types.StringValue(va.String())
+			data.GpsLatitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Latitude = types.Int64Value(va.Int())
+			data.GpsLatitude = types.Int64Value(va.Int())
 		}
 	}
-	data.Enable = types.BoolNull()
+	data.GpsEnableGeoFencing = types.BoolNull()
 
 	if t := res.Get(path + "gpsLocation.geoFencing.enable.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.geoFencing.enable.value")
 		if t.String() == "global" {
-			data.Enable = types.BoolValue(va.Bool())
+			data.GpsEnableGeoFencing = types.BoolValue(va.Bool())
 		}
 	}
-	data.Range = types.Int64Null()
-	data.RangeVariable = types.StringNull()
+	data.GpsGeoFencingRange = types.Int64Null()
+	data.GpsGeoFencingRangeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.geoFencing.range.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.geoFencing.range.value")
 		if t.String() == "variable" {
-			data.RangeVariable = types.StringValue(va.String())
+			data.GpsGeoFencingRangeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Range = types.Int64Value(va.Int())
+			data.GpsGeoFencingRange = types.Int64Value(va.Int())
 		}
 	}
-	data.SmsEnable = types.BoolNull()
+	data.GpsSmsEnable = types.BoolNull()
 
 	if t := res.Get(path + "gpsLocation.geoFencing.sms.enable.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.geoFencing.sms.enable.value")
 		if t.String() == "global" {
-			data.SmsEnable = types.BoolValue(va.Bool())
+			data.GpsSmsEnable = types.BoolValue(va.Bool())
 		}
 	}
-	for i := range data.MobileNumbers {
+	for i := range data.GpsMobileNumbers {
 		keys := [...]string{"number"}
-		keyValues := [...]string{data.MobileNumbers[i].Number.ValueString()}
-		keyValuesVariables := [...]string{data.MobileNumbers[i].NumberVariable.ValueString()}
+		keyValues := [...]string{data.GpsMobileNumbers[i].Number.ValueString()}
+		keyValuesVariables := [...]string{data.GpsMobileNumbers[i].NumberVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "gpsLocation.geoFencing.sms.mobileNumber").ForEach(
@@ -957,14 +957,14 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 				return true
 			},
 		)
-		data.MobileNumbers[i].Number = types.StringNull()
-		data.MobileNumbers[i].NumberVariable = types.StringNull()
+		data.GpsMobileNumbers[i].Number = types.StringNull()
+		data.GpsMobileNumbers[i].NumberVariable = types.StringNull()
 		if t := r.Get("number.optionType"); t.Exists() {
 			va := r.Get("number.value")
 			if t.String() == "variable" {
-				data.MobileNumbers[i].NumberVariable = types.StringValue(va.String())
+				data.GpsMobileNumbers[i].NumberVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.MobileNumbers[i].Number = types.StringValue(va.String())
+				data.GpsMobileNumbers[i].Number = types.StringValue(va.String())
 			}
 		}
 	}
@@ -978,14 +978,14 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.DeviceGroups = helpers.GetStringSet(va.Array())
 		}
 	}
-	data.ControllerGroupList = types.SetNull(types.Int64Type)
-	data.ControllerGroupListVariable = types.StringNull()
+	data.ControllerGroup = types.SetNull(types.Int64Type)
+	data.ControllerGroupVariable = types.StringNull()
 	if t := res.Get(path + "controllerGroupList.optionType"); t.Exists() {
 		va := res.Get(path + "controllerGroupList.value")
 		if t.String() == "variable" {
-			data.ControllerGroupListVariable = types.StringValue(va.String())
+			data.ControllerGroupVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ControllerGroupList = helpers.GetInt64Set(va.Array())
+			data.ControllerGroup = helpers.GetInt64Set(va.Array())
 		}
 	}
 	data.OverlayId = types.Int64Null()
@@ -1008,14 +1008,14 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.PortOffset = types.Int64Value(va.Int())
 		}
 	}
-	data.PortHop = types.BoolNull()
-	data.PortHopVariable = types.StringNull()
+	data.PortHopping = types.BoolNull()
+	data.PortHoppingVariable = types.StringNull()
 	if t := res.Get(path + "portHop.optionType"); t.Exists() {
 		va := res.Get(path + "portHop.value")
 		if t.String() == "variable" {
-			data.PortHopVariable = types.StringValue(va.String())
+			data.PortHoppingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.PortHop = types.BoolValue(va.Bool())
+			data.PortHopping = types.BoolValue(va.Bool())
 		}
 	}
 	data.ControlSessionPps = types.Int64Null()
@@ -1138,14 +1138,14 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.TransportGateway = types.BoolValue(va.Bool())
 		}
 	}
-	data.Epfr = types.StringNull()
-	data.EpfrVariable = types.StringNull()
+	data.EnhancedAppAwareRouting = types.StringNull()
+	data.EnhancedAppAwareRoutingVariable = types.StringNull()
 	if t := res.Get(path + "epfr.optionType"); t.Exists() {
 		va := res.Get(path + "epfr.value")
 		if t.String() == "variable" {
-			data.EpfrVariable = types.StringValue(va.String())
+			data.EnhancedAppAwareRoutingVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Epfr = types.StringValue(va.String())
+			data.EnhancedAppAwareRouting = types.StringValue(va.String())
 		}
 	}
 	data.SiteType = types.SetNull(types.StringType)
@@ -1259,31 +1259,31 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.LocationVariable.IsNull() {
 		return false
 	}
-	if !data.Longitude.IsNull() {
+	if !data.GpsLongitude.IsNull() {
 		return false
 	}
-	if !data.LongitudeVariable.IsNull() {
+	if !data.GpsLongitudeVariable.IsNull() {
 		return false
 	}
-	if !data.Latitude.IsNull() {
+	if !data.GpsLatitude.IsNull() {
 		return false
 	}
-	if !data.LatitudeVariable.IsNull() {
+	if !data.GpsLatitudeVariable.IsNull() {
 		return false
 	}
-	if !data.Enable.IsNull() {
+	if !data.GpsEnableGeoFencing.IsNull() {
 		return false
 	}
-	if !data.Range.IsNull() {
+	if !data.GpsGeoFencingRange.IsNull() {
 		return false
 	}
-	if !data.RangeVariable.IsNull() {
+	if !data.GpsGeoFencingRangeVariable.IsNull() {
 		return false
 	}
-	if !data.SmsEnable.IsNull() {
+	if !data.GpsSmsEnable.IsNull() {
 		return false
 	}
-	if len(data.MobileNumbers) > 0 {
+	if len(data.GpsMobileNumbers) > 0 {
 		return false
 	}
 	if !data.DeviceGroups.IsNull() {
@@ -1292,10 +1292,10 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.DeviceGroupsVariable.IsNull() {
 		return false
 	}
-	if !data.ControllerGroupList.IsNull() {
+	if !data.ControllerGroup.IsNull() {
 		return false
 	}
-	if !data.ControllerGroupListVariable.IsNull() {
+	if !data.ControllerGroupVariable.IsNull() {
 		return false
 	}
 	if !data.OverlayId.IsNull() {
@@ -1310,10 +1310,10 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.PortOffsetVariable.IsNull() {
 		return false
 	}
-	if !data.PortHop.IsNull() {
+	if !data.PortHopping.IsNull() {
 		return false
 	}
-	if !data.PortHopVariable.IsNull() {
+	if !data.PortHoppingVariable.IsNull() {
 		return false
 	}
 	if !data.ControlSessionPps.IsNull() {
@@ -1388,10 +1388,10 @@ func (data *SystemBasic) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.TransportGatewayVariable.IsNull() {
 		return false
 	}
-	if !data.Epfr.IsNull() {
+	if !data.EnhancedAppAwareRouting.IsNull() {
 		return false
 	}
-	if !data.EpfrVariable.IsNull() {
+	if !data.EnhancedAppAwareRoutingVariable.IsNull() {
 		return false
 	}
 	if !data.SiteType.IsNull() {

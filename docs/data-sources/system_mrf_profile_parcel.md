@@ -30,12 +30,12 @@ data "sdwan_system_mrf_profile_parcel" "example" {
 ### Read-Only
 
 - `description` (String) The description of the profile parcel
-- `enable_mrf_migration` (String) Enable migration mode to Multi-Region Fabric
+- `enable_migration_to_mrf` (String) Enable migration mode to Multi-Region Fabric
 - `migration_bgp_community` (Number) Set BGP community during migration from BGP-core based network
 - `name` (String) The name of the profile parcel
 - `region_id` (Number) Set region ID
 - `role` (String) Set the role for router
 - `role_variable` (String) Variable name
-- `secondary_region` (Number) Set secondary region ID
-- `secondary_region_variable` (String) Variable name
+- `secondary_region_id` (Number) Set secondary region ID
+- `secondary_region_id_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel

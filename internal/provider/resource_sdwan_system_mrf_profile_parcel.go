@@ -92,14 +92,14 @@ func (r *SystemMRFProfileParcelResource) Schema(ctx context.Context, req resourc
 					int64validator.Between(1, 63),
 				},
 			},
-			"secondary_region": schema.Int64Attribute{
+			"secondary_region_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set secondary region ID").AddIntegerRangeDescription(1, 63).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 63),
 				},
 			},
-			"secondary_region_variable": schema.StringAttribute{
+			"secondary_region_id_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -114,7 +114,7 @@ func (r *SystemMRFProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"enable_mrf_migration": schema.StringAttribute{
+			"enable_migration_to_mrf": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable migration mode to Multi-Region Fabric").AddStringEnumDescription("enabled", "enabled-from-bgp-core").String,
 				Optional:            true,
 				Validators: []validator.String{

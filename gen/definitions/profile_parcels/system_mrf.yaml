@@ -13,10 +13,12 @@ attributes:
     id: true
     example: 1
   - model_name: secondaryRegion
+    tf_name: secondary_region_id
     example: 2
   - model_name: role
     example: edge-router
   - model_name: enableMrfMigration
+    tf_name: enable_migration_to_mrf
     example: enabled
   - model_name: migrationBgpCommunity
     example: 100

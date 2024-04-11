@@ -100,39 +100,39 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"longitude": schema.Int64Attribute{
+			"gps_longitude": schema.Int64Attribute{
 				MarkdownDescription: "Set the device physical longitude",
 				Computed:            true,
 			},
-			"longitude_variable": schema.StringAttribute{
+			"gps_longitude_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"latitude": schema.Int64Attribute{
+			"gps_latitude": schema.Int64Attribute{
 				MarkdownDescription: "Set the device physical latitude",
 				Computed:            true,
 			},
-			"latitude_variable": schema.StringAttribute{
+			"gps_latitude_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"enable": schema.BoolAttribute{
+			"gps_enable_geo_fencing": schema.BoolAttribute{
 				MarkdownDescription: "Enable Geo fencing",
 				Computed:            true,
 			},
-			"range": schema.Int64Attribute{
+			"gps_geo_fencing_range": schema.Int64Attribute{
 				MarkdownDescription: "Set the device’s geo fencing range",
 				Computed:            true,
 			},
-			"range_variable": schema.StringAttribute{
+			"gps_geo_fencing_range_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"sms_enable": schema.BoolAttribute{
+			"gps_sms_enable": schema.BoolAttribute{
 				MarkdownDescription: "Enable device’s geo fencing SMS",
 				Computed:            true,
 			},
-			"mobile_numbers": schema.ListNestedAttribute{
+			"gps_mobile_numbers": schema.ListNestedAttribute{
 				MarkdownDescription: "Set device’s geo fencing SMS phone number",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -157,12 +157,12 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"controller_group_list": schema.SetAttribute{
+			"controller_group": schema.SetAttribute{
 				MarkdownDescription: "Configure a list of comma-separated controller groups",
 				ElementType:         types.Int64Type,
 				Computed:            true,
 			},
-			"controller_group_list_variable": schema.StringAttribute{
+			"controller_group_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -182,11 +182,11 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"port_hop": schema.BoolAttribute{
+			"port_hopping": schema.BoolAttribute{
 				MarkdownDescription: "Enable port hopping",
 				Computed:            true,
 			},
-			"port_hop_variable": schema.StringAttribute{
+			"port_hopping_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -286,11 +286,11 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"epfr": schema.StringAttribute{
+			"enhanced_app_aware_routing": schema.StringAttribute{
 				MarkdownDescription: "Enable SLA Dampening and Enhanced App Routing.",
 				Computed:            true,
 			},
-			"epfr_variable": schema.StringAttribute{
+			"enhanced_app_aware_routing_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

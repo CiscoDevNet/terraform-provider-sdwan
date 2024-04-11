@@ -28,9 +28,9 @@ import (
 func TestAccSdwanSystemMRFProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "region_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "secondary_region", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "secondary_region_id", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "role", "edge-router"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "enable_mrf_migration", "enabled"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "enable_migration_to_mrf", "enabled"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "migration_bgp_community", "100"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -69,9 +69,9 @@ func testAccSdwanSystemMRFProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
 	config += `	region_id = 1` + "\n"
-	config += `	secondary_region = 2` + "\n"
+	config += `	secondary_region_id = 2` + "\n"
 	config += `	role = "edge-router"` + "\n"
-	config += `	enable_mrf_migration = "enabled"` + "\n"
+	config += `	enable_migration_to_mrf = "enabled"` + "\n"
 	config += `	migration_bgp_community = 100` + "\n"
 	config += `}` + "\n"
 	return config

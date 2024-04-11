@@ -44,25 +44,28 @@ data "sdwan_system_basic_profile_parcel" "example" {
 - `console_baud_rate_variable` (String) Variable name
 - `control_session_pps` (Number) Set the policer rate for control sessions
 - `control_session_pps_variable` (String) Variable name
-- `controller_group_list` (Set of Number) Configure a list of comma-separated controller groups
-- `controller_group_list_variable` (String) Variable name
+- `controller_group` (Set of Number) Configure a list of comma-separated controller groups
+- `controller_group_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `device_groups` (Set of String) Device groups
 - `device_groups_variable` (String) Variable name
-- `enable` (Boolean) Enable Geo fencing
-- `epfr` (String) Enable SLA Dampening and Enhanced App Routing.
-- `epfr_variable` (String) Variable name
+- `enhanced_app_aware_routing` (String) Enable SLA Dampening and Enhanced App Routing.
+- `enhanced_app_aware_routing_variable` (String) Variable name
+- `gps_enable_geo_fencing` (Boolean) Enable Geo fencing
+- `gps_geo_fencing_range` (Number) Set the device’s geo fencing range
+- `gps_geo_fencing_range_variable` (String) Variable name
+- `gps_latitude` (Number) Set the device physical latitude
+- `gps_latitude_variable` (String) Variable name
+- `gps_longitude` (Number) Set the device physical longitude
+- `gps_longitude_variable` (String) Variable name
+- `gps_mobile_numbers` (Attributes List) Set device’s geo fencing SMS phone number (see [below for nested schema](#nestedatt--gps_mobile_numbers))
+- `gps_sms_enable` (Boolean) Enable device’s geo fencing SMS
 - `idle_timeout` (Number) Idle CLI timeout in minutes
 - `idle_timeout_variable` (String) Variable name
-- `latitude` (Number) Set the device physical latitude
-- `latitude_variable` (String) Variable name
 - `location` (String) Set the location of the device
 - `location_variable` (String) Variable name
-- `longitude` (Number) Set the device physical longitude
-- `longitude_variable` (String) Variable name
 - `max_omp_sessions` (Number) Set the maximum number of OMP sessions <1..100> the device can have
 - `max_omp_sessions_variable` (String) Variable name
-- `mobile_numbers` (Attributes List) Set device’s geo fencing SMS phone number (see [below for nested schema](#nestedatt--mobile_numbers))
 - `multi_tenant` (Boolean) Device is multi-tenant
 - `multi_tenant_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
@@ -72,15 +75,12 @@ data "sdwan_system_basic_profile_parcel" "example" {
 - `on_demand_idle_timeout_variable` (String) Variable name
 - `overlay_id` (Number) Set the Overlay ID
 - `overlay_id_variable` (String) Variable name
-- `port_hop` (Boolean) Enable port hopping
-- `port_hop_variable` (String) Variable name
+- `port_hopping` (Boolean) Enable port hopping
+- `port_hopping_variable` (String) Variable name
 - `port_offset` (Number) Set the TLOC port offset when multiple devices are behind a NAT
 - `port_offset_variable` (String) Variable name
-- `range` (Number) Set the device’s geo fencing range
-- `range_variable` (String) Variable name
 - `site_type` (Set of String) Site Type
 - `site_type_variable` (String) Variable name
-- `sms_enable` (Boolean) Enable device’s geo fencing SMS
 - `timezone` (String) Set the timezone
 - `timezone_variable` (String) Variable name
 - `track_default_gateway` (Boolean) Enable or disable default gateway tracking
@@ -104,8 +104,8 @@ Read-Only:
 - `vrf_range_variable` (String) Variable name
 
 
-<a id="nestedatt--mobile_numbers"></a>
-### Nested Schema for `mobile_numbers`
+<a id="nestedatt--gps_mobile_numbers"></a>
+### Nested Schema for `gps_mobile_numbers`
 
 Read-Only:
 

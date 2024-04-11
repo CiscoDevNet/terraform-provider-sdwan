@@ -30,18 +30,18 @@ import (
 )
 
 type SystemMRF struct {
-	Id                      types.String `tfsdk:"id"`
-	Version                 types.Int64  `tfsdk:"version"`
-	Name                    types.String `tfsdk:"name"`
-	Description             types.String `tfsdk:"description"`
-	FeatureProfileId        types.String `tfsdk:"feature_profile_id"`
-	RegionId                types.Int64  `tfsdk:"region_id"`
-	SecondaryRegion         types.Int64  `tfsdk:"secondary_region"`
-	SecondaryRegionVariable types.String `tfsdk:"secondary_region_variable"`
-	Role                    types.String `tfsdk:"role"`
-	RoleVariable            types.String `tfsdk:"role_variable"`
-	EnableMrfMigration      types.String `tfsdk:"enable_mrf_migration"`
-	MigrationBgpCommunity   types.Int64  `tfsdk:"migration_bgp_community"`
+	Id                        types.String `tfsdk:"id"`
+	Version                   types.Int64  `tfsdk:"version"`
+	Name                      types.String `tfsdk:"name"`
+	Description               types.String `tfsdk:"description"`
+	FeatureProfileId          types.String `tfsdk:"feature_profile_id"`
+	RegionId                  types.Int64  `tfsdk:"region_id"`
+	SecondaryRegionId         types.Int64  `tfsdk:"secondary_region_id"`
+	SecondaryRegionIdVariable types.String `tfsdk:"secondary_region_id_variable"`
+	Role                      types.String `tfsdk:"role"`
+	RoleVariable              types.String `tfsdk:"role_variable"`
+	EnableMigrationToMrf      types.String `tfsdk:"enable_migration_to_mrf"`
+	MigrationBgpCommunity     types.Int64  `tfsdk:"migration_bgp_community"`
 }
 
 func (data SystemMRF) getModel() string {
@@ -65,15 +65,15 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"regionId.value", data.RegionId.ValueInt64())
 	}
 
-	if !data.SecondaryRegionVariable.IsNull() {
+	if !data.SecondaryRegionIdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "variable")
-		body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegionVariable.ValueString())
-	} else if data.SecondaryRegion.IsNull() {
+		body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegionIdVariable.ValueString())
+	} else if data.SecondaryRegionId.IsNull() {
 		body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "global")
-		body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegion.ValueInt64())
+		body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegionId.ValueInt64())
 	}
 
 	if !data.RoleVariable.IsNull() {
@@ -86,12 +86,12 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"role.optionType", "global")
 		body, _ = sjson.Set(body, path+"role.value", data.Role.ValueString())
 	}
-	if data.EnableMrfMigration.IsNull() {
+	if data.EnableMigrationToMrf.IsNull() {
 		body, _ = sjson.Set(body, path+"enableMrfMigration.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"enableMrfMigration.optionType", "global")
-		body, _ = sjson.Set(body, path+"enableMrfMigration.value", data.EnableMrfMigration.ValueString())
+		body, _ = sjson.Set(body, path+"enableMrfMigration.value", data.EnableMigrationToMrf.ValueString())
 	}
 	if data.MigrationBgpCommunity.IsNull() {
 		body, _ = sjson.Set(body, path+"migrationBgpCommunity.optionType", "default")
@@ -119,14 +119,14 @@ func (data *SystemMRF) fromBody(ctx context.Context, res gjson.Result) {
 			data.RegionId = types.Int64Value(va.Int())
 		}
 	}
-	data.SecondaryRegion = types.Int64Null()
-	data.SecondaryRegionVariable = types.StringNull()
+	data.SecondaryRegionId = types.Int64Null()
+	data.SecondaryRegionIdVariable = types.StringNull()
 	if t := res.Get(path + "secondaryRegion.optionType"); t.Exists() {
 		va := res.Get(path + "secondaryRegion.value")
 		if t.String() == "variable" {
-			data.SecondaryRegionVariable = types.StringValue(va.String())
+			data.SecondaryRegionIdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SecondaryRegion = types.Int64Value(va.Int())
+			data.SecondaryRegionId = types.Int64Value(va.Int())
 		}
 	}
 	data.Role = types.StringNull()
@@ -139,12 +139,12 @@ func (data *SystemMRF) fromBody(ctx context.Context, res gjson.Result) {
 			data.Role = types.StringValue(va.String())
 		}
 	}
-	data.EnableMrfMigration = types.StringNull()
+	data.EnableMigrationToMrf = types.StringNull()
 
 	if t := res.Get(path + "enableMrfMigration.optionType"); t.Exists() {
 		va := res.Get(path + "enableMrfMigration.value")
 		if t.String() == "global" {
-			data.EnableMrfMigration = types.StringValue(va.String())
+			data.EnableMigrationToMrf = types.StringValue(va.String())
 		}
 	}
 	data.MigrationBgpCommunity = types.Int64Null()
@@ -173,14 +173,14 @@ func (data *SystemMRF) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.RegionId = types.Int64Value(va.Int())
 		}
 	}
-	data.SecondaryRegion = types.Int64Null()
-	data.SecondaryRegionVariable = types.StringNull()
+	data.SecondaryRegionId = types.Int64Null()
+	data.SecondaryRegionIdVariable = types.StringNull()
 	if t := res.Get(path + "secondaryRegion.optionType"); t.Exists() {
 		va := res.Get(path + "secondaryRegion.value")
 		if t.String() == "variable" {
-			data.SecondaryRegionVariable = types.StringValue(va.String())
+			data.SecondaryRegionIdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SecondaryRegion = types.Int64Value(va.Int())
+			data.SecondaryRegionId = types.Int64Value(va.Int())
 		}
 	}
 	data.Role = types.StringNull()
@@ -193,12 +193,12 @@ func (data *SystemMRF) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.Role = types.StringValue(va.String())
 		}
 	}
-	data.EnableMrfMigration = types.StringNull()
+	data.EnableMigrationToMrf = types.StringNull()
 
 	if t := res.Get(path + "enableMrfMigration.optionType"); t.Exists() {
 		va := res.Get(path + "enableMrfMigration.value")
 		if t.String() == "global" {
-			data.EnableMrfMigration = types.StringValue(va.String())
+			data.EnableMigrationToMrf = types.StringValue(va.String())
 		}
 	}
 	data.MigrationBgpCommunity = types.Int64Null()
@@ -218,10 +218,10 @@ func (data *SystemMRF) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.RegionId.IsNull() {
 		return false
 	}
-	if !data.SecondaryRegion.IsNull() {
+	if !data.SecondaryRegionId.IsNull() {
 		return false
 	}
-	if !data.SecondaryRegionVariable.IsNull() {
+	if !data.SecondaryRegionIdVariable.IsNull() {
 		return false
 	}
 	if !data.Role.IsNull() {
@@ -230,7 +230,7 @@ func (data *SystemMRF) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.RoleVariable.IsNull() {
 		return false
 	}
-	if !data.EnableMrfMigration.IsNull() {
+	if !data.EnableMigrationToMrf.IsNull() {
 		return false
 	}
 	if !data.MigrationBgpCommunity.IsNull() {

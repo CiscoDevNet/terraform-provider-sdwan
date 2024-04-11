@@ -18,23 +18,27 @@ attributes:
   - model_name: location
     example: example
   - model_name: longitude
+    tf_name: gps_longitude
     data_path: [gpsLocation]
     example: -77
   - model_name: latitude
+    tf_name: gps_latitude
     data_path: [gpsLocation]
     example: 38
   - model_name: enable
+    tf_name: gps_enable_geo_fencing
     data_path: [gpsLocation, geoFencing]
     example: true
   - model_name: range
+    tf_name: gps_geo_fencing_range
     data_path: [gpsLocation, geoFencing]
     example: 100
   - model_name: enable
-    tf_name: sms_enable
+    tf_name: gps_sms_enable
     data_path: [gpsLocation, geoFencing, sms]
     example: true
   - model_name: mobileNumber
-    tf_name: mobile_numbers
+    tf_name: gps_mobile_numbers
     data_path: [gpsLocation, geoFencing, sms]
     attributes:
       - model_name: number
@@ -43,12 +47,14 @@ attributes:
   - model_name: deviceGroups
     example: example
   - model_name: controllerGroupList
+    tf_name: controller_group
     example: 1
   - model_name: overlayId
     example: 1
   - model_name: portOffset
     example: 19
   - model_name: portHop
+    tf_name: port_hopping
     example: true
   - model_name: controlSessionPps
     example: 300
@@ -57,7 +63,7 @@ attributes:
   - model_name: trackInterfaceTag
     example: 2
   - model_name: consoleBaudRate
-    example: "4800"
+    example: "9600"
   - model_name: maxOmpSessions
     example: 24
   - model_name: multiTenant
@@ -77,7 +83,8 @@ attributes:
   - model_name: transportGateway
     example: false
   - model_name: epfr
-    example: disabled
+    tf_name: enhanced_app_aware_routing
+    example: aggressive
   - model_name: siteType
     example: type-1
   - model_name: affinityGroupNumber

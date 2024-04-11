@@ -79,11 +79,11 @@ func (d *SystemMRFProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "Set region ID",
 				Computed:            true,
 			},
-			"secondary_region": schema.Int64Attribute{
+			"secondary_region_id": schema.Int64Attribute{
 				MarkdownDescription: "Set secondary region ID",
 				Computed:            true,
 			},
-			"secondary_region_variable": schema.StringAttribute{
+			"secondary_region_id_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -95,7 +95,7 @@ func (d *SystemMRFProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"enable_mrf_migration": schema.StringAttribute{
+			"enable_migration_to_mrf": schema.StringAttribute{
 				MarkdownDescription: "Enable migration mode to Multi-Region Fabric",
 				Computed:            true,
 			},

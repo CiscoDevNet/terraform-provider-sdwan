@@ -119,48 +119,48 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"longitude": schema.Int64Attribute{
+			"gps_longitude": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the device physical longitude").AddIntegerRangeDescription(-180, 180).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(-180, 180),
 				},
 			},
-			"longitude_variable": schema.StringAttribute{
+			"gps_longitude_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"latitude": schema.Int64Attribute{
+			"gps_latitude": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the device physical latitude").AddIntegerRangeDescription(-90, 90).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(-90, 90),
 				},
 			},
-			"latitude_variable": schema.StringAttribute{
+			"gps_latitude_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"enable": schema.BoolAttribute{
+			"gps_enable_geo_fencing": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable Geo fencing").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"range": schema.Int64Attribute{
+			"gps_geo_fencing_range": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set the device’s geo fencing range").AddIntegerRangeDescription(100, 10000).AddDefaultValueDescription("100").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(100, 10000),
 				},
 			},
-			"range_variable": schema.StringAttribute{
+			"gps_geo_fencing_range_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"sms_enable": schema.BoolAttribute{
+			"gps_sms_enable": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable device’s geo fencing SMS").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"mobile_numbers": schema.ListNestedAttribute{
+			"gps_mobile_numbers": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set device’s geo fencing SMS phone number").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -189,12 +189,12 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"controller_group_list": schema.SetAttribute{
+			"controller_group": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure a list of comma-separated controller groups").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,
 			},
-			"controller_group_list_variable": schema.StringAttribute{
+			"controller_group_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -217,11 +217,11 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"port_hop": schema.BoolAttribute{
+			"port_hopping": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable port hopping").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"port_hop_variable": schema.StringAttribute{
+			"port_hopping_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -336,14 +336,14 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"epfr": schema.StringAttribute{
+			"enhanced_app_aware_routing": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable SLA Dampening and Enhanced App Routing.").AddStringEnumDescription("disabled", "aggressive", "moderate", "conservative").AddDefaultValueDescription("disabled").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("disabled", "aggressive", "moderate", "conservative"),
 				},
 			},
-			"epfr_variable": schema.StringAttribute{
+			"enhanced_app_aware_routing_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

@@ -30,19 +30,19 @@ func TestAccDataSourceSdwanSystemBasicProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "timezone", "UTC"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "config_description", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "location", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "longitude", "-77"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "latitude", "38"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "range", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "sms_enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "mobile_numbers.0.number", "+11111233"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "gps_longitude", "-77"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "gps_latitude", "38"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "gps_enable_geo_fencing", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "gps_geo_fencing_range", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "gps_sms_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "gps_mobile_numbers.0.number", "+11111233"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "overlay_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "port_offset", "19"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "port_hop", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "port_hopping", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "control_session_pps", "300"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "track_transport", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "track_interface_tag", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "console_baud_rate", "4800"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "console_baud_rate", "9600"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "max_omp_sessions", "24"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "multi_tenant", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "track_default_gateway", "true"))
@@ -51,7 +51,7 @@ func TestAccDataSourceSdwanSystemBasicProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "on_demand_enable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "on_demand_idle_timeout", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "transport_gateway", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "epfr", "disabled"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "enhanced_app_aware_routing", "aggressive"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_group_number", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_preference_auto", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_basic_profile_parcel.test", "affinity_per_vrf.0.affinity_group_number", "1"))
@@ -83,23 +83,23 @@ func testAccDataSourceSdwanSystemBasicProfileParcelConfig() string {
 	config += `	timezone = "UTC"` + "\n"
 	config += `	config_description = "example"` + "\n"
 	config += `	location = "example"` + "\n"
-	config += `	longitude = -77` + "\n"
-	config += `	latitude = 38` + "\n"
-	config += `	enable = true` + "\n"
-	config += `	range = 100` + "\n"
-	config += `	sms_enable = true` + "\n"
-	config += `	mobile_numbers = [{` + "\n"
+	config += `	gps_longitude = -77` + "\n"
+	config += `	gps_latitude = 38` + "\n"
+	config += `	gps_enable_geo_fencing = true` + "\n"
+	config += `	gps_geo_fencing_range = 100` + "\n"
+	config += `	gps_sms_enable = true` + "\n"
+	config += `	gps_mobile_numbers = [{` + "\n"
 	config += `	  number = "+11111233"` + "\n"
 	config += `	}]` + "\n"
 	config += `	device_groups = ["example"]` + "\n"
-	config += `	controller_group_list = [1]` + "\n"
+	config += `	controller_group = [1]` + "\n"
 	config += `	overlay_id = 1` + "\n"
 	config += `	port_offset = 19` + "\n"
-	config += `	port_hop = true` + "\n"
+	config += `	port_hopping = true` + "\n"
 	config += `	control_session_pps = 300` + "\n"
 	config += `	track_transport = true` + "\n"
 	config += `	track_interface_tag = 2` + "\n"
-	config += `	console_baud_rate = "4800"` + "\n"
+	config += `	console_baud_rate = "9600"` + "\n"
 	config += `	max_omp_sessions = 24` + "\n"
 	config += `	multi_tenant = false` + "\n"
 	config += `	track_default_gateway = true` + "\n"
@@ -108,7 +108,7 @@ func testAccDataSourceSdwanSystemBasicProfileParcelConfig() string {
 	config += `	on_demand_enable = true` + "\n"
 	config += `	on_demand_idle_timeout = 10` + "\n"
 	config += `	transport_gateway = false` + "\n"
-	config += `	epfr = "disabled"` + "\n"
+	config += `	enhanced_app_aware_routing = "aggressive"` + "\n"
 	config += `	site_type = ["type-1"]` + "\n"
 	config += `	affinity_group_number = 1` + "\n"
 	config += `	affinity_group_preference = [1]` + "\n"
