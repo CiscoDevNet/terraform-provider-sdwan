@@ -2,6 +2,7 @@
 name: System Basic
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/basic
 minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -26,7 +27,7 @@ attributes:
     data_path: [gpsLocation]
     example: 38
   - model_name: enable
-    tf_name: gps_enable_geo_fencing
+    tf_name: gps_geo_fencing_enable
     data_path: [gpsLocation, geoFencing]
     example: true
   - model_name: range
@@ -38,7 +39,7 @@ attributes:
     data_path: [gpsLocation, geoFencing, sms]
     example: true
   - model_name: mobileNumber
-    tf_name: gps_mobile_numbers
+    tf_name: gps_sms_mobile_numbers
     data_path: [gpsLocation, geoFencing, sms]
     attributes:
       - model_name: number

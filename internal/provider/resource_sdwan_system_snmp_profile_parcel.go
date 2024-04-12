@@ -128,7 +128,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 								stringvalidator.LengthBetween(1, 32),
 							},
 						},
-						"oid": schema.ListNestedAttribute{
+						"oids": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure SNMP object identifier").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -309,33 +309,33 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"vpn_to_reach_trap_target_server": schema.Int64Attribute{
+						"vpn_id": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set VPN in which SNMP server is located").AddIntegerRangeDescription(0, 65530).String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.AtMost(65530),
 							},
 						},
-						"vpn_to_reach_trap_target_server_variable": schema.StringAttribute{
+						"vpn_id_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"ip_address_of_snmp_server": schema.StringAttribute{
+						"ip": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set IPv4/IPv6 address of SNMP server").String,
 							Optional:            true,
 						},
-						"ip_address_of_snmp_server_variable": schema.StringAttribute{
+						"ip_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"udp_port_number_of_snmp_server": schema.Int64Attribute{
+						"port": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set UDP port number to connect to SNMP server").AddIntegerRangeDescription(1, 65535).String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 65535),
 							},
 						},
-						"udp_port_number_of_snmp_server_variable": schema.StringAttribute{
+						"port_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -357,7 +357,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"source_interface_for_outgoing_snmp_trap": schema.StringAttribute{
+						"source_interface": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Source interface for outgoing SNMP traps").String,
 							Optional:            true,
 							Validators: []validator.String{
@@ -365,7 +365,7 @@ func (r *SystemSNMPProfileParcelResource) Schema(ctx context.Context, req resour
 								stringvalidator.RegexMatches(regexp.MustCompile(`(^GigabitEthernet|Loopback|TenGigabitEthernet|TwoGigabitEthernet|FortyGigabitEthernet|HundredGigE|Vlan)(([1-9]\d|\d)/){0,2}(0|[1-9]\d*)([:|\.][1-9]\d*)?`), ""),
 							},
 						},
-						"source_interface_for_outgoing_snmp_trap_variable": schema.StringAttribute{
+						"source_interface_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

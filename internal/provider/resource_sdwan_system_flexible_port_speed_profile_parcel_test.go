@@ -20,12 +20,16 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemFlexiblePortSpeedProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_flexible_port_speed_profile_parcel.test", "port_type", "12 ports of 1/10GE + 3 ports 40GE"))
 	resource.Test(t, resource.TestCase{

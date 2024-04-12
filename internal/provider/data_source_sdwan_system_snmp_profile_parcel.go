@@ -108,7 +108,7 @@ func (d *SystemSNMPProfileParcelDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: "Set the name of the SNMP view",
 							Computed:            true,
 						},
-						"oid": schema.ListNestedAttribute{
+						"oids": schema.ListNestedAttribute{
 							MarkdownDescription: "Configure SNMP object identifier",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -248,27 +248,27 @@ func (d *SystemSNMPProfileParcelDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"vpn_to_reach_trap_target_server": schema.Int64Attribute{
+						"vpn_id": schema.Int64Attribute{
 							MarkdownDescription: "Set VPN in which SNMP server is located",
 							Computed:            true,
 						},
-						"vpn_to_reach_trap_target_server_variable": schema.StringAttribute{
+						"vpn_id_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"ip_address_of_snmp_server": schema.StringAttribute{
+						"ip": schema.StringAttribute{
 							MarkdownDescription: "Set IPv4/IPv6 address of SNMP server",
 							Computed:            true,
 						},
-						"ip_address_of_snmp_server_variable": schema.StringAttribute{
+						"ip_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"udp_port_number_of_snmp_server": schema.Int64Attribute{
+						"port": schema.Int64Attribute{
 							MarkdownDescription: "Set UDP port number to connect to SNMP server",
 							Computed:            true,
 						},
-						"udp_port_number_of_snmp_server_variable": schema.StringAttribute{
+						"port_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
@@ -284,11 +284,11 @@ func (d *SystemSNMPProfileParcelDataSource) Schema(ctx context.Context, req data
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"source_interface_for_outgoing_snmp_trap": schema.StringAttribute{
+						"source_interface": schema.StringAttribute{
 							MarkdownDescription: "Source interface for outgoing SNMP traps",
 							Computed:            true,
 						},
-						"source_interface_for_outgoing_snmp_trap_variable": schema.StringAttribute{
+						"source_interface_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

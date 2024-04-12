@@ -7,10 +7,10 @@ resource "sdwan_system_basic_profile_parcel" "example" {
   location               = "example"
   gps_longitude          = -77
   gps_latitude           = 38
-  gps_enable_geo_fencing = true
+  gps_geo_fencing_enable = true
   gps_geo_fencing_range  = 100
   gps_sms_enable         = true
-  gps_mobile_numbers = [
+  gps_sms_mobile_numbers = [
     {
       number = "+11111233"
     }

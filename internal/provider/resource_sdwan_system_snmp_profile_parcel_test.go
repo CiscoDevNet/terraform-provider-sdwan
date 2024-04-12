@@ -20,19 +20,23 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemSNMPProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "shutdown", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "contact_person", "wixie.cisco"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "location_of_device", "SHANGHAI"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "views.0.name", "VIEW1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "views.0.oid.0.id", "1.3.6.1.4.1.9.9.394"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "views.0.oid.0.exclude", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "views.0.oids.0.id", "1.3.6.1.4.1.9.9.394"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "views.0.oids.0.exclude", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "communities.0.user_label", "COMMUNITY1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "communities.0.view", "VIEW1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "communities.0.authorization", "read-only"))
@@ -45,12 +49,12 @@ func TestAccSdwanSystemSNMPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "users.0.privacy_protocol", "aes-256-cfb-128"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "users.0.privacy_password", "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "users.0.group", "GROUP1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.vpn_to_reach_trap_target_server", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.ip_address_of_snmp_server", "10.75.221.156"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.udp_port_number_of_snmp_server", "161"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.ip", "10.75.221.156"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.port", "161"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.user_label", "TARGET1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.user", "USER1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.source_interface_for_outgoing_snmp_trap", "GigabitEthernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.source_interface", "GigabitEthernet1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -92,7 +96,7 @@ func testAccSdwanSystemSNMPProfileParcelConfig_all() string {
 	config += `	location_of_device = "SHANGHAI"` + "\n"
 	config += `	views = [{` + "\n"
 	config += `	  name = "VIEW1"` + "\n"
-	config += `	  oid = [{` + "\n"
+	config += `	  oids = [{` + "\n"
 	config += `		id = "1.3.6.1.4.1.9.9.394"` + "\n"
 	config += `		exclude = false` + "\n"
 	config += `	}]` + "\n"
@@ -117,12 +121,12 @@ func testAccSdwanSystemSNMPProfileParcelConfig_all() string {
 	config += `	  group = "GROUP1"` + "\n"
 	config += `	}]` + "\n"
 	config += `	trap_target_servers = [{` + "\n"
-	config += `	  vpn_to_reach_trap_target_server = 1` + "\n"
-	config += `	  ip_address_of_snmp_server = "10.75.221.156"` + "\n"
-	config += `	  udp_port_number_of_snmp_server = 161` + "\n"
+	config += `	  vpn_id = 1` + "\n"
+	config += `	  ip = "10.75.221.156"` + "\n"
+	config += `	  port = 161` + "\n"
 	config += `	  user_label = "TARGET1"` + "\n"
 	config += `	  user = "USER1"` + "\n"
-	config += `	  source_interface_for_outgoing_snmp_trap = "GigabitEthernet1"` + "\n"
+	config += `	  source_interface = "GigabitEthernet1"` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config

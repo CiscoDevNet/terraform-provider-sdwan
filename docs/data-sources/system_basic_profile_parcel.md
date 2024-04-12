@@ -51,15 +51,15 @@ data "sdwan_system_basic_profile_parcel" "example" {
 - `device_groups_variable` (String) Variable name
 - `enhanced_app_aware_routing` (String) Enable SLA Dampening and Enhanced App Routing.
 - `enhanced_app_aware_routing_variable` (String) Variable name
-- `gps_enable_geo_fencing` (Boolean) Enable Geo fencing
+- `gps_geo_fencing_enable` (Boolean) Enable Geo fencing
 - `gps_geo_fencing_range` (Number) Set the device’s geo fencing range
 - `gps_geo_fencing_range_variable` (String) Variable name
 - `gps_latitude` (Number) Set the device physical latitude
 - `gps_latitude_variable` (String) Variable name
 - `gps_longitude` (Number) Set the device physical longitude
 - `gps_longitude_variable` (String) Variable name
-- `gps_mobile_numbers` (Attributes List) Set device’s geo fencing SMS phone number (see [below for nested schema](#nestedatt--gps_mobile_numbers))
 - `gps_sms_enable` (Boolean) Enable device’s geo fencing SMS
+- `gps_sms_mobile_numbers` (Attributes List) Set device’s geo fencing SMS phone number (see [below for nested schema](#nestedatt--gps_sms_mobile_numbers))
 - `idle_timeout` (Number) Idle CLI timeout in minutes
 - `idle_timeout_variable` (String) Variable name
 - `location` (String) Set the location of the device
@@ -104,8 +104,8 @@ Read-Only:
 - `vrf_range_variable` (String) Variable name
 
 
-<a id="nestedatt--gps_mobile_numbers"></a>
-### Nested Schema for `gps_mobile_numbers`
+<a id="nestedatt--gps_sms_mobile_numbers"></a>
+### Nested Schema for `gps_sms_mobile_numbers`
 
 Read-Only:
 

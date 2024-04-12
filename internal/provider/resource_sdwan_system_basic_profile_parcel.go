@@ -141,7 +141,7 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"gps_enable_geo_fencing": schema.BoolAttribute{
+			"gps_geo_fencing_enable": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable Geo fencing").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
@@ -160,7 +160,7 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Enable device’s geo fencing SMS").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"gps_mobile_numbers": schema.ListNestedAttribute{
+			"gps_sms_mobile_numbers": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set device’s geo fencing SMS phone number").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{

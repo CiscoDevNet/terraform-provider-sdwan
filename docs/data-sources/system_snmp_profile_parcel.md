@@ -73,17 +73,17 @@ Read-Only:
 
 Read-Only:
 
-- `ip_address_of_snmp_server` (String) Set IPv4/IPv6 address of SNMP server
-- `ip_address_of_snmp_server_variable` (String) Variable name
-- `source_interface_for_outgoing_snmp_trap` (String) Source interface for outgoing SNMP traps
-- `source_interface_for_outgoing_snmp_trap_variable` (String) Variable name
-- `udp_port_number_of_snmp_server` (Number) Set UDP port number to connect to SNMP server
-- `udp_port_number_of_snmp_server_variable` (String) Variable name
+- `ip` (String) Set IPv4/IPv6 address of SNMP server
+- `ip_variable` (String) Variable name
+- `port` (Number) Set UDP port number to connect to SNMP server
+- `port_variable` (String) Variable name
+- `source_interface` (String) Source interface for outgoing SNMP traps
+- `source_interface_variable` (String) Variable name
 - `user` (String) Set name of the SNMP user
 - `user_label` (String) Set user label of the SNMP community
 - `user_variable` (String) Variable name
-- `vpn_to_reach_trap_target_server` (Number) Set VPN in which SNMP server is located
-- `vpn_to_reach_trap_target_server_variable` (String) Variable name
+- `vpn_id` (Number) Set VPN in which SNMP server is located
+- `vpn_id_variable` (String) Variable name
 
 
 <a id="nestedatt--users"></a>
@@ -110,10 +110,10 @@ Read-Only:
 Read-Only:
 
 - `name` (String) Set the name of the SNMP view
-- `oid` (Attributes List) Configure SNMP object identifier (see [below for nested schema](#nestedatt--views--oid))
+- `oids` (Attributes List) Configure SNMP object identifier (see [below for nested schema](#nestedatt--views--oids))
 
-<a id="nestedatt--views--oid"></a>
-### Nested Schema for `views.oid`
+<a id="nestedatt--views--oids"></a>
+### Nested Schema for `views.oids`
 
 Read-Only:
 

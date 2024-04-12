@@ -20,12 +20,16 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemMRFProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "region_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_mrf_profile_parcel.test", "secondary_region_id", "2"))

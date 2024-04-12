@@ -25,7 +25,7 @@ resource "sdwan_system_snmp_profile_parcel" "example" {
   views = [
     {
       name = "VIEW1"
-      oid = [
+      oids = [
         {
           id      = "1.3.6.1.4.1.9.9.394"
           exclude = false
@@ -60,12 +60,12 @@ resource "sdwan_system_snmp_profile_parcel" "example" {
   ]
   trap_target_servers = [
     {
-      vpn_to_reach_trap_target_server         = 1
-      ip_address_of_snmp_server               = "10.75.221.156"
-      udp_port_number_of_snmp_server          = 161
-      user_label                              = "TARGET1"
-      user                                    = "USER1"
-      source_interface_for_outgoing_snmp_trap = "GigabitEthernet1"
+      vpn_id           = 1
+      ip               = "10.75.221.156"
+      port             = 161
+      user_label       = "TARGET1"
+      user             = "USER1"
+      source_interface = "GigabitEthernet1"
     }
   ]
 }
@@ -131,19 +131,19 @@ Optional:
 
 Optional:
 
-- `ip_address_of_snmp_server` (String) Set IPv4/IPv6 address of SNMP server
-- `ip_address_of_snmp_server_variable` (String) Variable name
-- `source_interface_for_outgoing_snmp_trap` (String) Source interface for outgoing SNMP traps
-- `source_interface_for_outgoing_snmp_trap_variable` (String) Variable name
-- `udp_port_number_of_snmp_server` (Number) Set UDP port number to connect to SNMP server
+- `ip` (String) Set IPv4/IPv6 address of SNMP server
+- `ip_variable` (String) Variable name
+- `port` (Number) Set UDP port number to connect to SNMP server
   - Range: `1`-`65535`
-- `udp_port_number_of_snmp_server_variable` (String) Variable name
+- `port_variable` (String) Variable name
+- `source_interface` (String) Source interface for outgoing SNMP traps
+- `source_interface_variable` (String) Variable name
 - `user` (String) Set name of the SNMP user
 - `user_label` (String) Set user label of the SNMP community
 - `user_variable` (String) Variable name
-- `vpn_to_reach_trap_target_server` (Number) Set VPN in which SNMP server is located
+- `vpn_id` (Number) Set VPN in which SNMP server is located
   - Range: `0`-`65530`
-- `vpn_to_reach_trap_target_server_variable` (String) Variable name
+- `vpn_id_variable` (String) Variable name
 
 
 <a id="nestedatt--users"></a>
@@ -172,10 +172,10 @@ Optional:
 Optional:
 
 - `name` (String) Set the name of the SNMP view
-- `oid` (Attributes List) Configure SNMP object identifier (see [below for nested schema](#nestedatt--views--oid))
+- `oids` (Attributes List) Configure SNMP object identifier (see [below for nested schema](#nestedatt--views--oids))
 
-<a id="nestedatt--views--oid"></a>
-### Nested Schema for `views.oid`
+<a id="nestedatt--views--oids"></a>
+### Nested Schema for `views.oids`
 
 Optional:
 

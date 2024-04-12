@@ -2,6 +2,8 @@
 name: System SNMP
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/snmp
 minimum_version: 20.12.0
+
+test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -24,6 +26,7 @@ attributes:
         id: true
         example: VIEW1
       - model_name: oid
+        tf_name: oids
         attributes:
           - model_name: id
             id: true
@@ -77,13 +80,11 @@ attributes:
     tf_name: trap_target_servers
     attributes:
       - model_name: vpnId
-        tf_name: vpn_to_reach_trap_target_server
+        tf_name: vpn_id
         example: 1
       - model_name: ip
-        tf_name: ip_address_of_snmp_server
         example: "10.75.221.156"
       - model_name: port
-        tf_name: udp_port_number_of_snmp_server
         example: 161
       - model_name: userLabel
         id: true
@@ -91,7 +92,6 @@ attributes:
       - model_name: user
         example: USER1
       - model_name: sourceInterface
-        tf_name: source_interface_for_outgoing_snmp_trap
         example: "GigabitEthernet1"
 
 test_prerequisites: |

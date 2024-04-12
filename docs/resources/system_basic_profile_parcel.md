@@ -24,10 +24,10 @@ resource "sdwan_system_basic_profile_parcel" "example" {
   location               = "example"
   gps_longitude          = -77
   gps_latitude           = 38
-  gps_enable_geo_fencing = true
+  gps_geo_fencing_enable = true
   gps_geo_fencing_range  = 100
   gps_sms_enable         = true
-  gps_mobile_numbers = [
+  gps_sms_mobile_numbers = [
     {
       number = "+11111233"
     }
@@ -104,7 +104,7 @@ resource "sdwan_system_basic_profile_parcel" "example" {
   - Default value: `disabled`
 - `enhanced_app_aware_routing_variable` (String) Variable name
 - `feature_profile_id` (String) Feature Profile ID
-- `gps_enable_geo_fencing` (Boolean) Enable Geo fencing
+- `gps_geo_fencing_enable` (Boolean) Enable Geo fencing
   - Default value: `false`
 - `gps_geo_fencing_range` (Number) Set the device’s geo fencing range
   - Range: `100`-`10000`
@@ -116,9 +116,9 @@ resource "sdwan_system_basic_profile_parcel" "example" {
 - `gps_longitude` (Number) Set the device physical longitude
   - Range: `-180`-`180`
 - `gps_longitude_variable` (String) Variable name
-- `gps_mobile_numbers` (Attributes List) Set device’s geo fencing SMS phone number (see [below for nested schema](#nestedatt--gps_mobile_numbers))
 - `gps_sms_enable` (Boolean) Enable device’s geo fencing SMS
   - Default value: `false`
+- `gps_sms_mobile_numbers` (Attributes List) Set device’s geo fencing SMS phone number (see [below for nested schema](#nestedatt--gps_sms_mobile_numbers))
 - `idle_timeout` (Number) Idle CLI timeout in minutes
   - Range: `0`-`300`
 - `idle_timeout_variable` (String) Variable name
@@ -184,8 +184,8 @@ Optional:
 - `vrf_range_variable` (String) Variable name
 
 
-<a id="nestedatt--gps_mobile_numbers"></a>
-### Nested Schema for `gps_mobile_numbers`
+<a id="nestedatt--gps_sms_mobile_numbers"></a>
+### Nested Schema for `gps_sms_mobile_numbers`
 
 Optional:
 

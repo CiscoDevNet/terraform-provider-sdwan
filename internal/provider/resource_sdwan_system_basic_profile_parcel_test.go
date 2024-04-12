@@ -20,22 +20,26 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanSystemBasicProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "timezone", "UTC"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "config_description", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "location", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_longitude", "-77"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_latitude", "38"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_enable_geo_fencing", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_geo_fencing_enable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_geo_fencing_range", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_sms_enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_mobile_numbers.0.number", "+11111233"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "gps_sms_mobile_numbers.0.number", "+11111233"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "overlay_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "port_offset", "19"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_basic_profile_parcel.test", "port_hopping", "true"))
@@ -97,10 +101,10 @@ func testAccSdwanSystemBasicProfileParcelConfig_all() string {
 	config += `	location = "example"` + "\n"
 	config += `	gps_longitude = -77` + "\n"
 	config += `	gps_latitude = 38` + "\n"
-	config += `	gps_enable_geo_fencing = true` + "\n"
+	config += `	gps_geo_fencing_enable = true` + "\n"
 	config += `	gps_geo_fencing_range = 100` + "\n"
 	config += `	gps_sms_enable = true` + "\n"
-	config += `	gps_mobile_numbers = [{` + "\n"
+	config += `	gps_sms_mobile_numbers = [{` + "\n"
 	config += `	  number = "+11111233"` + "\n"
 	config += `	}]` + "\n"
 	config += `	device_groups = ["example"]` + "\n"

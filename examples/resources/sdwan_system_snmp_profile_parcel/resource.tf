@@ -8,7 +8,7 @@ resource "sdwan_system_snmp_profile_parcel" "example" {
   views = [
     {
       name = "VIEW1"
-      oid = [
+      oids = [
         {
           id      = "1.3.6.1.4.1.9.9.394"
           exclude = false
@@ -43,12 +43,12 @@ resource "sdwan_system_snmp_profile_parcel" "example" {
   ]
   trap_target_servers = [
     {
-      vpn_to_reach_trap_target_server         = 1
-      ip_address_of_snmp_server               = "10.75.221.156"
-      udp_port_number_of_snmp_server          = 161
-      user_label                              = "TARGET1"
-      user                                    = "USER1"
-      source_interface_for_outgoing_snmp_trap = "GigabitEthernet1"
+      vpn_id           = 1
+      ip               = "10.75.221.156"
+      port             = 161
+      user_label       = "TARGET1"
+      user             = "USER1"
+      source_interface = "GigabitEthernet1"
     }
   ]
 }

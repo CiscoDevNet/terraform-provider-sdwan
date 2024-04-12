@@ -49,8 +49,8 @@ type SystemSNMP struct {
 }
 
 type SystemSNMPViews struct {
-	Name types.String         `tfsdk:"name"`
-	Oid  []SystemSNMPViewsOid `tfsdk:"oid"`
+	Name types.String          `tfsdk:"name"`
+	Oids []SystemSNMPViewsOids `tfsdk:"oids"`
 }
 
 type SystemSNMPCommunities struct {
@@ -84,20 +84,20 @@ type SystemSNMPUsers struct {
 }
 
 type SystemSNMPTrapTargetServers struct {
-	VpnToReachTrapTargetServer                 types.Int64  `tfsdk:"vpn_to_reach_trap_target_server"`
-	VpnToReachTrapTargetServerVariable         types.String `tfsdk:"vpn_to_reach_trap_target_server_variable"`
-	IpAddressOfSnmpServer                      types.String `tfsdk:"ip_address_of_snmp_server"`
-	IpAddressOfSnmpServerVariable              types.String `tfsdk:"ip_address_of_snmp_server_variable"`
-	UdpPortNumberOfSnmpServer                  types.Int64  `tfsdk:"udp_port_number_of_snmp_server"`
-	UdpPortNumberOfSnmpServerVariable          types.String `tfsdk:"udp_port_number_of_snmp_server_variable"`
-	UserLabel                                  types.String `tfsdk:"user_label"`
-	User                                       types.String `tfsdk:"user"`
-	UserVariable                               types.String `tfsdk:"user_variable"`
-	SourceInterfaceForOutgoingSnmpTrap         types.String `tfsdk:"source_interface_for_outgoing_snmp_trap"`
-	SourceInterfaceForOutgoingSnmpTrapVariable types.String `tfsdk:"source_interface_for_outgoing_snmp_trap_variable"`
+	VpnId                   types.Int64  `tfsdk:"vpn_id"`
+	VpnIdVariable           types.String `tfsdk:"vpn_id_variable"`
+	Ip                      types.String `tfsdk:"ip"`
+	IpVariable              types.String `tfsdk:"ip_variable"`
+	Port                    types.Int64  `tfsdk:"port"`
+	PortVariable            types.String `tfsdk:"port_variable"`
+	UserLabel               types.String `tfsdk:"user_label"`
+	User                    types.String `tfsdk:"user"`
+	UserVariable            types.String `tfsdk:"user_variable"`
+	SourceInterface         types.String `tfsdk:"source_interface"`
+	SourceInterfaceVariable types.String `tfsdk:"source_interface_variable"`
 }
 
-type SystemSNMPViewsOid struct {
+type SystemSNMPViewsOids struct {
 	Id              types.String `tfsdk:"id"`
 	IdVariable      types.String `tfsdk:"id_variable"`
 	Exclude         types.Bool   `tfsdk:"exclude"`
@@ -156,7 +156,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
-		for _, childItem := range item.Oid {
+		for _, childItem := range item.Oids {
 			itemChildBody := ""
 
 			if !childItem.IdVariable.IsNull() {
@@ -292,28 +292,28 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	for _, item := range data.TrapTargetServers {
 		itemBody := ""
 
-		if !item.VpnToReachTrapTargetServerVariable.IsNull() {
+		if !item.VpnIdVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vpnId.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "vpnId.value", item.VpnToReachTrapTargetServerVariable.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "vpnId.value", item.VpnIdVariable.ValueString())
 		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "vpnId.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "vpnId.value", item.VpnToReachTrapTargetServer.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "vpnId.value", item.VpnId.ValueInt64())
 		}
 
-		if !item.IpAddressOfSnmpServerVariable.IsNull() {
+		if !item.IpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ip.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "ip.value", item.IpAddressOfSnmpServerVariable.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "ip.value", item.IpVariable.ValueString())
 		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "ip.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ip.value", item.IpAddressOfSnmpServer.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "ip.value", item.Ip.ValueString())
 		}
 
-		if !item.UdpPortNumberOfSnmpServerVariable.IsNull() {
+		if !item.PortVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "port.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "port.value", item.UdpPortNumberOfSnmpServerVariable.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "port.value", item.PortVariable.ValueString())
 		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "port.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "port.value", item.UdpPortNumberOfSnmpServer.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "port.value", item.Port.ValueInt64())
 		}
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "userLabel.optionType", "global")
@@ -328,12 +328,12 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "user.value", item.User.ValueString())
 		}
 
-		if !item.SourceInterfaceForOutgoingSnmpTrapVariable.IsNull() {
+		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceForOutgoingSnmpTrapVariable.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
 		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceForOutgoingSnmpTrap.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
 		body, _ = sjson.SetRaw(body, path+"target.-1", itemBody)
 	}
@@ -391,9 +391,9 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			if cValue := v.Get("oid"); cValue.Exists() {
-				item.Oid = make([]SystemSNMPViewsOid, 0)
+				item.Oids = make([]SystemSNMPViewsOids, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := SystemSNMPViewsOid{}
+					cItem := SystemSNMPViewsOids{}
 					cItem.Id = types.StringNull()
 					cItem.IdVariable = types.StringNull()
 					if t := cv.Get("id.optionType"); t.Exists() {
@@ -414,7 +414,7 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.Exclude = types.BoolValue(va.Bool())
 						}
 					}
-					item.Oid = append(item.Oid, cItem)
+					item.Oids = append(item.Oids, cItem)
 					return true
 				})
 			}
@@ -562,34 +562,34 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 		data.TrapTargetServers = make([]SystemSNMPTrapTargetServers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := SystemSNMPTrapTargetServers{}
-			item.VpnToReachTrapTargetServer = types.Int64Null()
-			item.VpnToReachTrapTargetServerVariable = types.StringNull()
+			item.VpnId = types.Int64Null()
+			item.VpnIdVariable = types.StringNull()
 			if t := v.Get("vpnId.optionType"); t.Exists() {
 				va := v.Get("vpnId.value")
 				if t.String() == "variable" {
-					item.VpnToReachTrapTargetServerVariable = types.StringValue(va.String())
+					item.VpnIdVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.VpnToReachTrapTargetServer = types.Int64Value(va.Int())
+					item.VpnId = types.Int64Value(va.Int())
 				}
 			}
-			item.IpAddressOfSnmpServer = types.StringNull()
-			item.IpAddressOfSnmpServerVariable = types.StringNull()
+			item.Ip = types.StringNull()
+			item.IpVariable = types.StringNull()
 			if t := v.Get("ip.optionType"); t.Exists() {
 				va := v.Get("ip.value")
 				if t.String() == "variable" {
-					item.IpAddressOfSnmpServerVariable = types.StringValue(va.String())
+					item.IpVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.IpAddressOfSnmpServer = types.StringValue(va.String())
+					item.Ip = types.StringValue(va.String())
 				}
 			}
-			item.UdpPortNumberOfSnmpServer = types.Int64Null()
-			item.UdpPortNumberOfSnmpServerVariable = types.StringNull()
+			item.Port = types.Int64Null()
+			item.PortVariable = types.StringNull()
 			if t := v.Get("port.optionType"); t.Exists() {
 				va := v.Get("port.value")
 				if t.String() == "variable" {
-					item.UdpPortNumberOfSnmpServerVariable = types.StringValue(va.String())
+					item.PortVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.UdpPortNumberOfSnmpServer = types.Int64Value(va.Int())
+					item.Port = types.Int64Value(va.Int())
 				}
 			}
 			item.UserLabel = types.StringNull()
@@ -610,14 +610,14 @@ func (data *SystemSNMP) fromBody(ctx context.Context, res gjson.Result) {
 					item.User = types.StringValue(va.String())
 				}
 			}
-			item.SourceInterfaceForOutgoingSnmpTrap = types.StringNull()
-			item.SourceInterfaceForOutgoingSnmpTrapVariable = types.StringNull()
+			item.SourceInterface = types.StringNull()
+			item.SourceInterfaceVariable = types.StringNull()
 			if t := v.Get("sourceInterface.optionType"); t.Exists() {
 				va := v.Get("sourceInterface.value")
 				if t.String() == "variable" {
-					item.SourceInterfaceForOutgoingSnmpTrapVariable = types.StringValue(va.String())
+					item.SourceInterfaceVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.SourceInterfaceForOutgoingSnmpTrap = types.StringValue(va.String())
+					item.SourceInterface = types.StringValue(va.String())
 				}
 			}
 			data.TrapTargetServers = append(data.TrapTargetServers, item)
@@ -698,10 +698,10 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 				data.Views[i].Name = types.StringValue(va.String())
 			}
 		}
-		for ci := range data.Views[i].Oid {
+		for ci := range data.Views[i].Oids {
 			keys := [...]string{"id"}
-			keyValues := [...]string{data.Views[i].Oid[ci].Id.ValueString()}
-			keyValuesVariables := [...]string{data.Views[i].Oid[ci].IdVariable.ValueString()}
+			keyValues := [...]string{data.Views[i].Oids[ci].Id.ValueString()}
+			keyValuesVariables := [...]string{data.Views[i].Oids[ci].IdVariable.ValueString()}
 
 			var cr gjson.Result
 			r.Get("oid").ForEach(
@@ -724,24 +724,24 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 					return true
 				},
 			)
-			data.Views[i].Oid[ci].Id = types.StringNull()
-			data.Views[i].Oid[ci].IdVariable = types.StringNull()
+			data.Views[i].Oids[ci].Id = types.StringNull()
+			data.Views[i].Oids[ci].IdVariable = types.StringNull()
 			if t := cr.Get("id.optionType"); t.Exists() {
 				va := cr.Get("id.value")
 				if t.String() == "variable" {
-					data.Views[i].Oid[ci].IdVariable = types.StringValue(va.String())
+					data.Views[i].Oids[ci].IdVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Views[i].Oid[ci].Id = types.StringValue(va.String())
+					data.Views[i].Oids[ci].Id = types.StringValue(va.String())
 				}
 			}
-			data.Views[i].Oid[ci].Exclude = types.BoolNull()
-			data.Views[i].Oid[ci].ExcludeVariable = types.StringNull()
+			data.Views[i].Oids[ci].Exclude = types.BoolNull()
+			data.Views[i].Oids[ci].ExcludeVariable = types.StringNull()
 			if t := cr.Get("exclude.optionType"); t.Exists() {
 				va := cr.Get("exclude.value")
 				if t.String() == "variable" {
-					data.Views[i].Oid[ci].ExcludeVariable = types.StringValue(va.String())
+					data.Views[i].Oids[ci].ExcludeVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Views[i].Oid[ci].Exclude = types.BoolValue(va.Bool())
+					data.Views[i].Oids[ci].Exclude = types.BoolValue(va.Bool())
 				}
 			}
 		}
@@ -965,34 +965,34 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 				return true
 			},
 		)
-		data.TrapTargetServers[i].VpnToReachTrapTargetServer = types.Int64Null()
-		data.TrapTargetServers[i].VpnToReachTrapTargetServerVariable = types.StringNull()
+		data.TrapTargetServers[i].VpnId = types.Int64Null()
+		data.TrapTargetServers[i].VpnIdVariable = types.StringNull()
 		if t := r.Get("vpnId.optionType"); t.Exists() {
 			va := r.Get("vpnId.value")
 			if t.String() == "variable" {
-				data.TrapTargetServers[i].VpnToReachTrapTargetServerVariable = types.StringValue(va.String())
+				data.TrapTargetServers[i].VpnIdVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.TrapTargetServers[i].VpnToReachTrapTargetServer = types.Int64Value(va.Int())
+				data.TrapTargetServers[i].VpnId = types.Int64Value(va.Int())
 			}
 		}
-		data.TrapTargetServers[i].IpAddressOfSnmpServer = types.StringNull()
-		data.TrapTargetServers[i].IpAddressOfSnmpServerVariable = types.StringNull()
+		data.TrapTargetServers[i].Ip = types.StringNull()
+		data.TrapTargetServers[i].IpVariable = types.StringNull()
 		if t := r.Get("ip.optionType"); t.Exists() {
 			va := r.Get("ip.value")
 			if t.String() == "variable" {
-				data.TrapTargetServers[i].IpAddressOfSnmpServerVariable = types.StringValue(va.String())
+				data.TrapTargetServers[i].IpVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.TrapTargetServers[i].IpAddressOfSnmpServer = types.StringValue(va.String())
+				data.TrapTargetServers[i].Ip = types.StringValue(va.String())
 			}
 		}
-		data.TrapTargetServers[i].UdpPortNumberOfSnmpServer = types.Int64Null()
-		data.TrapTargetServers[i].UdpPortNumberOfSnmpServerVariable = types.StringNull()
+		data.TrapTargetServers[i].Port = types.Int64Null()
+		data.TrapTargetServers[i].PortVariable = types.StringNull()
 		if t := r.Get("port.optionType"); t.Exists() {
 			va := r.Get("port.value")
 			if t.String() == "variable" {
-				data.TrapTargetServers[i].UdpPortNumberOfSnmpServerVariable = types.StringValue(va.String())
+				data.TrapTargetServers[i].PortVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.TrapTargetServers[i].UdpPortNumberOfSnmpServer = types.Int64Value(va.Int())
+				data.TrapTargetServers[i].Port = types.Int64Value(va.Int())
 			}
 		}
 		data.TrapTargetServers[i].UserLabel = types.StringNull()
@@ -1013,14 +1013,14 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 				data.TrapTargetServers[i].User = types.StringValue(va.String())
 			}
 		}
-		data.TrapTargetServers[i].SourceInterfaceForOutgoingSnmpTrap = types.StringNull()
-		data.TrapTargetServers[i].SourceInterfaceForOutgoingSnmpTrapVariable = types.StringNull()
+		data.TrapTargetServers[i].SourceInterface = types.StringNull()
+		data.TrapTargetServers[i].SourceInterfaceVariable = types.StringNull()
 		if t := r.Get("sourceInterface.optionType"); t.Exists() {
 			va := r.Get("sourceInterface.value")
 			if t.String() == "variable" {
-				data.TrapTargetServers[i].SourceInterfaceForOutgoingSnmpTrapVariable = types.StringValue(va.String())
+				data.TrapTargetServers[i].SourceInterfaceVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.TrapTargetServers[i].SourceInterfaceForOutgoingSnmpTrap = types.StringValue(va.String())
+				data.TrapTargetServers[i].SourceInterface = types.StringValue(va.String())
 			}
 		}
 	}
