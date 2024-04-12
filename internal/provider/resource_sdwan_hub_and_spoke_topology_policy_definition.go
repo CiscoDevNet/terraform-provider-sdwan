@@ -96,6 +96,18 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Schema(ctx context.Context
 							MarkdownDescription: helpers.NewAttributeDescription("Topology name").String,
 							Required:            true,
 						},
+						"all_hubs_are_equal": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("All hubs are equal (All Spokes Sites connect to all Hubs)").String,
+							Optional:            true,
+						},
+						"advertise_hub_tlocs": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Advertise Hub TLOCs").String,
+							Optional:            true,
+						},
+						"tloc_list_id": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("TLOC list ID (required when `advertise_hub_tlocs` is 'true')").String,
+							Optional:            true,
+						},
 						"spokes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of spokes").String,
 							Optional:            true,
@@ -120,6 +132,20 @@ func (r *HubAndSpokeTopologyPolicyDefinitionResource) Schema(ctx context.Context
 												},
 												"site_list_version": schema.Int64Attribute{
 													MarkdownDescription: helpers.NewAttributeDescription("Site list version").String,
+													Optional:            true,
+												},
+												"preference": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Preference, multiple of 10 (for example 70, 80, 90, 100). The higher the value the higher the priority of the associated hub (required when `all_hubs_are_equal` is 'false')").String,
+													Optional:            true,
+												},
+												"ipv4_prefix_list_ids": schema.SetAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("List of IPv4 prefix list IDs").String,
+													ElementType:         types.StringType,
+													Optional:            true,
+												},
+												"ipv6_prefix_list_ids": schema.SetAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("List of IPv6 prefix list IDs").String,
+													ElementType:         types.StringType,
 													Optional:            true,
 												},
 											},

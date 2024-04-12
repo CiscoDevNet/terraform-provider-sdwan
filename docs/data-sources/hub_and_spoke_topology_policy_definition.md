@@ -39,8 +39,11 @@ data "sdwan_hub_and_spoke_topology_policy_definition" "example" {
 
 Read-Only:
 
+- `advertise_hub_tlocs` (Boolean) Advertise Hub TLOCs
+- `all_hubs_are_equal` (Boolean) All hubs are equal (All Spokes Sites connect to all Hubs)
 - `name` (String) Topology name
 - `spokes` (Attributes List) List of spokes (see [below for nested schema](#nestedatt--topologies--spokes))
+- `tloc_list_id` (String) TLOC list ID (required when `advertise_hub_tlocs` is 'true')
 
 <a id="nestedatt--topologies--spokes"></a>
 ### Nested Schema for `topologies.spokes`
@@ -56,5 +59,8 @@ Read-Only:
 
 Read-Only:
 
+- `ipv4_prefix_list_ids` (Set of String) List of IPv4 prefix list IDs
+- `ipv6_prefix_list_ids` (Set of String) List of IPv6 prefix list IDs
+- `preference` (String) Preference, multiple of 10 (for example 70, 80, 90, 100). The higher the value the higher the priority of the associated hub (required when `all_hubs_are_equal` is 'false')
 - `site_list_id` (String) Site list ID
 - `site_list_version` (Number) Site list version

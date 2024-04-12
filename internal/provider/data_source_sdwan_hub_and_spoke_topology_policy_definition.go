@@ -26,6 +26,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -87,6 +88,18 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Schema(ctx context.Conte
 							MarkdownDescription: "Topology name",
 							Computed:            true,
 						},
+						"all_hubs_are_equal": schema.BoolAttribute{
+							MarkdownDescription: "All hubs are equal (All Spokes Sites connect to all Hubs)",
+							Computed:            true,
+						},
+						"advertise_hub_tlocs": schema.BoolAttribute{
+							MarkdownDescription: "Advertise Hub TLOCs",
+							Computed:            true,
+						},
+						"tloc_list_id": schema.StringAttribute{
+							MarkdownDescription: "TLOC list ID (required when `advertise_hub_tlocs` is 'true')",
+							Computed:            true,
+						},
 						"spokes": schema.ListNestedAttribute{
 							MarkdownDescription: "List of spokes",
 							Computed:            true,
@@ -111,6 +124,20 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Schema(ctx context.Conte
 												},
 												"site_list_version": schema.Int64Attribute{
 													MarkdownDescription: "Site list version",
+													Computed:            true,
+												},
+												"preference": schema.StringAttribute{
+													MarkdownDescription: "Preference, multiple of 10 (for example 70, 80, 90, 100). The higher the value the higher the priority of the associated hub (required when `all_hubs_are_equal` is 'false')",
+													Computed:            true,
+												},
+												"ipv4_prefix_list_ids": schema.SetAttribute{
+													MarkdownDescription: "List of IPv4 prefix list IDs",
+													ElementType:         types.StringType,
+													Computed:            true,
+												},
+												"ipv6_prefix_list_ids": schema.SetAttribute{
+													MarkdownDescription: "List of IPv6 prefix list IDs",
+													ElementType:         types.StringType,
 													Computed:            true,
 												},
 											},

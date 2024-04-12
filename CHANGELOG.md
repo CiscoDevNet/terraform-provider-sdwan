@@ -1,3 +1,7 @@
+## 0.3.8
+
+- Add 'advertise_hub_tlocs','all_hubs_are_equal','tloc_list_id', 'ipv4_prefix_list_ids', 'ipv6_prefix_list_ids' and 'preference' to 'sdwan_hub_and_spoke_topology_policy_definition' resource and data source
+
 ## 0.3.7
 
 - Add `tracker`, `interval`, `interval_variable` and `zscaler_surrogate_refresh_time` to `sdwan_cisco_secure_internet_gateway_feature_template` resource and data source
