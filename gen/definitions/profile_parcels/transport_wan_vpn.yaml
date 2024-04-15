@@ -73,7 +73,6 @@ attributes:
       - model_name: nextHop
         tf_name: next_hops
         data_path: [oneOfIpRoute, nextHopContainer]
-        schema_path: [oneOfIpRoute.oneOf.0, nextHopContainer]
         attributes:
           - model_name: address
             example: 2001:0:0:1::0
@@ -82,14 +81,12 @@ attributes:
             example: 1
       # - model_name: null0
       #   data_path: [oneOfIpRoute]
-      #   schema_path: [oneOfIpRoute.oneOf.1]
-      #   exclude_test: true
+      #   # exclude_test: true
       #   example: true
       # - model_name: nat
       #   data_path: [oneOfIpRoute]
-      #   schema_path: [oneOfIpRoute.oneOf.2]
-      #   exclude_test: true
-      #   example: NAT64
+      #   # exclude_test: true
+        # example: NAT64
   - model_name: service
     tf_name: services
     attributes:

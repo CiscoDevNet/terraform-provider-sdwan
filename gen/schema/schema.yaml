@@ -30,7 +30,6 @@ attribute:
   model_type_string: bool(required=False) # Set to true if element should be added as string to payload
   bool_empty_string: bool(required=False) # Set to true if a boolean value of "true" should be expressed as an empty string in the payload
   data_path: list(str(), required=False) # Path to the attribute in the model structure
-  schema_path: list(str(), required=False) # Path to the attribute in the model structure when the schema differs from required payload
   keys: list(str(), required=False) # Keys according to feature template schema
   id: bool(required=False) # Set to true if the attribute is part of the ID
   reference: bool(required=False) # Indicates that the attribute is being used in the url path

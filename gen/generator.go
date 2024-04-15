@@ -216,7 +216,6 @@ type YamlConfigAttribute struct {
 	ModelTypeString       bool                           `yaml:"model_type_string"`
 	BoolEmptyString       bool                           `yaml:"bool_empty_string"`
 	DataPath              []string                       `yaml:"data_path"`
-	SchemaPath            []string                       `yaml:"schema_path"`
 	Keys                  []string                       `yaml:"keys"`
 	Id                    bool                           `yaml:"id"`
 	Reference             bool                           `yaml:"reference"`
@@ -645,16 +644,36 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		return
 	}
 	path := ""
-	if len(attr.SchemaPath) == 0 {
-		for _, e := range attr.DataPath {
-			path += e + ".properties."
-		}
-	} else {
-		for _, e := range attr.SchemaPath {
+	for i, e := range attr.DataPath {
+		// Check if the next element is a oneOf
+		if model.Get("properties." + path + e + ".oneOf").Exists() {
+			// We need to find the right element in oneOf which has the next element
+
+			next := ""
+			if i+1 < len(attr.DataPath) {
+				next = attr.DataPath[i+1]
+			} else {
+				next = attr.ModelName
+			}
+
+			index := 0
+			model.Get("properties." + path + e + ".oneOf").ForEach(func(k, v gjson.Result) bool {
+				if v.Get("properties." + next).Exists() {
+					path += fmt.Sprintf("%s.oneOf.%v.properties.", e, index)
+					return false // stop iterating
+				}
+				index += 1
+				return true // keep iterating
+			})
+
+		} else {
 			path += e + ".properties."
 		}
 	}
 	path += attr.ModelName
+
+	fmt.Println("path - ", path)
+
 	r := model.Get("properties." + path)
 
 	if !r.Exists() {
