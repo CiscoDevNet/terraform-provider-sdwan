@@ -19,7 +19,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
       network_address = "1.2.3.4"
       subnet_mask     = "0.0.0.0"
       gateway         = "nextHop"
-      ipv4_route_gateway_next_ho = [
+      ipv4_route_gateway_next_hop = [
         {
           address                 = "1.2.3.4"
           administrative_distance = 1
@@ -31,12 +31,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
   ipv6_static_routes = [
     {
       prefix = "2002::/16"
-      next_hops = [
-        {
-          address                 = "2001:0:0:1::0"
-          administrative_distance = 1
-        }
-      ]
+      null0  = true
     }
   ]
   services = [

@@ -189,7 +189,7 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 								stringvalidator.OneOf("nextHop", "dhcp", "null0"),
 							},
 						},
-						"ipv4_route_gateway_next_ho": schema.ListNestedAttribute{
+						"ipv4_route_gateway_next_hop": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -246,31 +246,15 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"next_hops": schema.ListNestedAttribute{
+						"null0": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Route Gateway Next Hop").String,
 							Optional:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Address").String,
-										Optional:            true,
-									},
-									"address_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Optional:            true,
-									},
-									"administrative_distance": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 254).AddDefaultValueDescription("1").String,
-										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 254),
-										},
-									},
-									"administrative_distance_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Optional:            true,
-									},
-								},
+						},
+						"nat": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Nat").AddStringEnumDescription("NAT64", "NAT66").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("NAT64", "NAT66"),
 							},
 						},
 					},

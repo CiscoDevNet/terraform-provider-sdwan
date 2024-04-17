@@ -36,7 +36,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
       network_address = "1.2.3.4"
       subnet_mask     = "0.0.0.0"
       gateway         = "nextHop"
-      ipv4_route_gateway_next_ho = [
+      ipv4_route_gateway_next_hop = [
         {
           address                 = "1.2.3.4"
           administrative_distance = 1
@@ -48,12 +48,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
   ipv6_static_routes = [
     {
       prefix = "2002::/16"
-      next_hops = [
-        {
-          address                 = "2001:0:0:1::0"
-          administrative_distance = 1
-        }
-      ]
+      null0  = true
     }
   ]
   services = [
@@ -119,15 +114,15 @@ Optional:
 - `gateway` (String) Gateway
   - Choices: `nextHop`, `dhcp`, `null0`
   - Default value: `nextHop`
-- `ipv4_route_gateway_next_ho` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho))
+- `ipv4_route_gateway_next_hop` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--ipv4_route_gateway_next_hop))
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 
-<a id="nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho"></a>
-### Nested Schema for `ipv4_static_routes.ipv4_route_gateway_next_ho`
+<a id="nestedatt--ipv4_static_routes--ipv4_route_gateway_next_hop"></a>
+### Nested Schema for `ipv4_static_routes.ipv4_route_gateway_next_hop`
 
 Optional:
 
@@ -145,22 +140,11 @@ Optional:
 
 Optional:
 
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
+- `nat` (String) IPv6 Nat
+  - Choices: `NAT64`, `NAT66`
+- `null0` (Boolean) IPv6 Route Gateway Next Hop
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
-
-<a id="nestedatt--ipv6_static_routes--next_hops"></a>
-### Nested Schema for `ipv6_static_routes.next_hops`
-
-Optional:
-
-- `address` (String) Address
-- `address_variable` (String) Variable name
-- `administrative_distance` (Number) Administrative distance
-  - Range: `1`-`254`
-  - Default value: `1`
-- `administrative_distance_variable` (String) Variable name
-
 
 
 <a id="nestedatt--nat_64_v4_pools"></a>

@@ -62,20 +62,21 @@ type TransportWANVPNNewHostMappings struct {
 }
 
 type TransportWANVPNIpv4StaticRoutes struct {
-	NetworkAddress                 types.String                                            `tfsdk:"network_address"`
-	NetworkAddressVariable         types.String                                            `tfsdk:"network_address_variable"`
-	SubnetMask                     types.String                                            `tfsdk:"subnet_mask"`
-	SubnetMaskVariable             types.String                                            `tfsdk:"subnet_mask_variable"`
-	Gateway                        types.String                                            `tfsdk:"gateway"`
-	Ipv4RouteGatewayNextHo         []TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHo `tfsdk:"ipv4_route_gateway_next_ho"`
-	AdministrativeDistance         types.Int64                                             `tfsdk:"administrative_distance"`
-	AdministrativeDistanceVariable types.String                                            `tfsdk:"administrative_distance_variable"`
+	NetworkAddress                 types.String                                             `tfsdk:"network_address"`
+	NetworkAddressVariable         types.String                                             `tfsdk:"network_address_variable"`
+	SubnetMask                     types.String                                             `tfsdk:"subnet_mask"`
+	SubnetMaskVariable             types.String                                             `tfsdk:"subnet_mask_variable"`
+	Gateway                        types.String                                             `tfsdk:"gateway"`
+	Ipv4RouteGatewayNextHop        []TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHop `tfsdk:"ipv4_route_gateway_next_hop"`
+	AdministrativeDistance         types.Int64                                              `tfsdk:"administrative_distance"`
+	AdministrativeDistanceVariable types.String                                             `tfsdk:"administrative_distance_variable"`
 }
 
 type TransportWANVPNIpv6StaticRoutes struct {
-	Prefix         types.String                              `tfsdk:"prefix"`
-	PrefixVariable types.String                              `tfsdk:"prefix_variable"`
-	NextHops       []TransportWANVPNIpv6StaticRoutesNextHops `tfsdk:"next_hops"`
+	Prefix         types.String `tfsdk:"prefix"`
+	PrefixVariable types.String `tfsdk:"prefix_variable"`
+	Null0          types.Bool   `tfsdk:"null0"`
+	Nat            types.String `tfsdk:"nat"`
 }
 
 type TransportWANVPNServices struct {
@@ -93,14 +94,7 @@ type TransportWANVPNNat64V4Pools struct {
 	Nat64V4PoolOverloadVariable   types.String `tfsdk:"nat64_v4_pool_overload_variable"`
 }
 
-type TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHo struct {
-	Address                        types.String `tfsdk:"address"`
-	AddressVariable                types.String `tfsdk:"address_variable"`
-	AdministrativeDistance         types.Int64  `tfsdk:"administrative_distance"`
-	AdministrativeDistanceVariable types.String `tfsdk:"administrative_distance_variable"`
-}
-
-type TransportWANVPNIpv6StaticRoutesNextHops struct {
+type TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHop struct {
 	Address                        types.String `tfsdk:"address"`
 	AddressVariable                types.String `tfsdk:"address_variable"`
 	AdministrativeDistance         types.Int64  `tfsdk:"administrative_distance"`
@@ -229,7 +223,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "gateway.value", item.Gateway.ValueString())
 		}
-		for _, childItem := range item.Ipv4RouteGatewayNextHo {
+		for _, childItem := range item.Ipv4RouteGatewayNextHop {
 			itemChildBody := ""
 
 			if !childItem.AddressVariable.IsNull() {
@@ -275,28 +269,13 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 		}
-		for _, childItem := range item.NextHops {
-			itemChildBody := ""
-
-			if !childItem.AddressVariable.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
-			} else if true {
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
-			}
-
-			if !childItem.AdministrativeDistanceVariable.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
-			} else if childItem.AdministrativeDistance.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
-			} else {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
-			}
-			itemBody, _ = sjson.SetRaw(itemBody, "oneOfIpRoute.nextHopContainer.nextHop.-1", itemChildBody)
+		if true {
+			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
+			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
+		}
+		if true {
+			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
+			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv6Route.-1", itemBody)
 	}
@@ -477,9 +456,9 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			if cValue := v.Get("nextHop"); cValue.Exists() {
-				item.Ipv4RouteGatewayNextHo = make([]TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHo, 0)
+				item.Ipv4RouteGatewayNextHop = make([]TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHop, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHo{}
+					cItem := TransportWANVPNIpv4StaticRoutesIpv4RouteGatewayNextHop{}
 					cItem.Address = types.StringNull()
 					cItem.AddressVariable = types.StringNull()
 					if t := cv.Get("address.optionType"); t.Exists() {
@@ -500,7 +479,7 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 							cItem.AdministrativeDistance = types.Int64Value(va.Int())
 						}
 					}
-					item.Ipv4RouteGatewayNextHo = append(item.Ipv4RouteGatewayNextHo, cItem)
+					item.Ipv4RouteGatewayNextHop = append(item.Ipv4RouteGatewayNextHop, cItem)
 					return true
 				})
 			}
@@ -532,33 +511,21 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Prefix = types.StringValue(va.String())
 				}
 			}
-			if cValue := v.Get("oneOfIpRoute.nextHopContainer.nextHop"); cValue.Exists() {
-				item.NextHops = make([]TransportWANVPNIpv6StaticRoutesNextHops, 0)
-				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := TransportWANVPNIpv6StaticRoutesNextHops{}
-					cItem.Address = types.StringNull()
-					cItem.AddressVariable = types.StringNull()
-					if t := cv.Get("address.optionType"); t.Exists() {
-						va := cv.Get("address.value")
-						if t.String() == "variable" {
-							cItem.AddressVariable = types.StringValue(va.String())
-						} else if t.String() == "global" {
-							cItem.Address = types.StringValue(va.String())
-						}
-					}
-					cItem.AdministrativeDistance = types.Int64Null()
-					cItem.AdministrativeDistanceVariable = types.StringNull()
-					if t := cv.Get("distance.optionType"); t.Exists() {
-						va := cv.Get("distance.value")
-						if t.String() == "variable" {
-							cItem.AdministrativeDistanceVariable = types.StringValue(va.String())
-						} else if t.String() == "global" {
-							cItem.AdministrativeDistance = types.Int64Value(va.Int())
-						}
-					}
-					item.NextHops = append(item.NextHops, cItem)
-					return true
-				})
+			item.Null0 = types.BoolNull()
+
+			if t := v.Get("oneOfIpRoute.null0.optionType"); t.Exists() {
+				va := v.Get("oneOfIpRoute.null0.value")
+				if t.String() == "global" {
+					item.Null0 = types.BoolValue(va.Bool())
+				}
+			}
+			item.Nat = types.StringNull()
+
+			if t := v.Get("oneOfIpRoute.nat.optionType"); t.Exists() {
+				va := v.Get("oneOfIpRoute.nat.value")
+				if t.String() == "global" {
+					item.Nat = types.StringValue(va.String())
+				}
 			}
 			data.Ipv6StaticRoutes = append(data.Ipv6StaticRoutes, item)
 			return true
@@ -797,7 +764,7 @@ func (data *TransportWANVPN) updateFromBody(ctx context.Context, res gjson.Resul
 				data.Ipv4StaticRoutes[i].Gateway = types.StringValue(va.String())
 			}
 		}
-		for ci := range data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo {
+		for ci := range data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop {
 			keys := [...]string{}
 			keyValues := [...]string{}
 			keyValuesVariables := [...]string{}
@@ -823,24 +790,24 @@ func (data *TransportWANVPN) updateFromBody(ctx context.Context, res gjson.Resul
 					return true
 				},
 			)
-			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].Address = types.StringNull()
-			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].AddressVariable = types.StringNull()
+			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].Address = types.StringNull()
+			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].AddressVariable = types.StringNull()
 			if t := cr.Get("address.optionType"); t.Exists() {
 				va := cr.Get("address.value")
 				if t.String() == "variable" {
-					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].AddressVariable = types.StringValue(va.String())
+					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].AddressVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].Address = types.StringValue(va.String())
+					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].Address = types.StringValue(va.String())
 				}
 			}
-			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].AdministrativeDistance = types.Int64Null()
-			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].AdministrativeDistanceVariable = types.StringNull()
+			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].AdministrativeDistance = types.Int64Null()
+			data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].AdministrativeDistanceVariable = types.StringNull()
 			if t := cr.Get("distance.optionType"); t.Exists() {
 				va := cr.Get("distance.value")
 				if t.String() == "variable" {
-					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].AdministrativeDistanceVariable = types.StringValue(va.String())
+					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].AdministrativeDistanceVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHo[ci].AdministrativeDistance = types.Int64Value(va.Int())
+					data.Ipv4StaticRoutes[i].Ipv4RouteGatewayNextHop[ci].AdministrativeDistance = types.Int64Value(va.Int())
 				}
 			}
 		}
@@ -891,51 +858,20 @@ func (data *TransportWANVPN) updateFromBody(ctx context.Context, res gjson.Resul
 				data.Ipv6StaticRoutes[i].Prefix = types.StringValue(va.String())
 			}
 		}
-		for ci := range data.Ipv6StaticRoutes[i].NextHops {
-			keys := [...]string{}
-			keyValues := [...]string{}
-			keyValuesVariables := [...]string{}
+		data.Ipv6StaticRoutes[i].Null0 = types.BoolNull()
 
-			var cr gjson.Result
-			r.Get("oneOfIpRoute.nextHopContainer.nextHop").ForEach(
-				func(_, v gjson.Result) bool {
-					found := false
-					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
-						}
-						found = false
-						break
-					}
-					if found {
-						cr = v
-						return false
-					}
-					return true
-				},
-			)
-			data.Ipv6StaticRoutes[i].NextHops[ci].Address = types.StringNull()
-			data.Ipv6StaticRoutes[i].NextHops[ci].AddressVariable = types.StringNull()
-			if t := cr.Get("address.optionType"); t.Exists() {
-				va := cr.Get("address.value")
-				if t.String() == "variable" {
-					data.Ipv6StaticRoutes[i].NextHops[ci].AddressVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv6StaticRoutes[i].NextHops[ci].Address = types.StringValue(va.String())
-				}
+		if t := r.Get("oneOfIpRoute.null0.optionType"); t.Exists() {
+			va := r.Get("oneOfIpRoute.null0.value")
+			if t.String() == "global" {
+				data.Ipv6StaticRoutes[i].Null0 = types.BoolValue(va.Bool())
 			}
-			data.Ipv6StaticRoutes[i].NextHops[ci].AdministrativeDistance = types.Int64Null()
-			data.Ipv6StaticRoutes[i].NextHops[ci].AdministrativeDistanceVariable = types.StringNull()
-			if t := cr.Get("distance.optionType"); t.Exists() {
-				va := cr.Get("distance.value")
-				if t.String() == "variable" {
-					data.Ipv6StaticRoutes[i].NextHops[ci].AdministrativeDistanceVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					data.Ipv6StaticRoutes[i].NextHops[ci].AdministrativeDistance = types.Int64Value(va.Int())
-				}
+		}
+		data.Ipv6StaticRoutes[i].Nat = types.StringNull()
+
+		if t := r.Get("oneOfIpRoute.nat.optionType"); t.Exists() {
+			va := r.Get("oneOfIpRoute.nat.value")
+			if t.String() == "global" {
+				data.Ipv6StaticRoutes[i].Nat = types.StringValue(va.String())
 			}
 		}
 	}

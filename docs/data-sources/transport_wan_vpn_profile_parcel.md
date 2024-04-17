@@ -57,14 +57,14 @@ Read-Only:
 - `administrative_distance` (Number) Administrative distance
 - `administrative_distance_variable` (String) Variable name
 - `gateway` (String) Gateway
-- `ipv4_route_gateway_next_ho` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho))
+- `ipv4_route_gateway_next_hop` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--ipv4_route_gateway_next_hop))
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 
-<a id="nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho"></a>
-### Nested Schema for `ipv4_static_routes.ipv4_route_gateway_next_ho`
+<a id="nestedatt--ipv4_static_routes--ipv4_route_gateway_next_hop"></a>
+### Nested Schema for `ipv4_static_routes.ipv4_route_gateway_next_hop`
 
 Read-Only:
 
@@ -80,20 +80,10 @@ Read-Only:
 
 Read-Only:
 
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
+- `nat` (String) IPv6 Nat
+- `null0` (Boolean) IPv6 Route Gateway Next Hop
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
-
-<a id="nestedatt--ipv6_static_routes--next_hops"></a>
-### Nested Schema for `ipv6_static_routes.next_hops`
-
-Read-Only:
-
-- `address` (String) Address
-- `address_variable` (String) Variable name
-- `administrative_distance` (Number) Administrative distance
-- `administrative_distance_variable` (String) Variable name
-
 
 
 <a id="nestedatt--nat_64_v4_pools"></a>

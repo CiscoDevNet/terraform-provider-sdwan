@@ -644,6 +644,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		return
 	}
 	path := ""
+	isOneOfAttribute := false
 	for i, e := range attr.DataPath {
 		// Check if the next element is a oneOf
 		if model.Get("properties." + path + e + ".oneOf").Exists() {
@@ -660,6 +661,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 			model.Get("properties." + path + e + ".oneOf").ForEach(func(k, v gjson.Result) bool {
 				if v.Get("properties." + next).Exists() {
 					path += fmt.Sprintf("%s.oneOf.%v.properties.", e, index)
+					isOneOfAttribute = true
 					return false // stop iterating
 				}
 				index += 1
@@ -671,8 +673,6 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		}
 	}
 	path += attr.ModelName
-
-	fmt.Println("path - ", path)
 
 	r := model.Get("properties." + path)
 
@@ -736,11 +736,11 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
 		}
-		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
+		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() && !isOneOfAttribute {
 			attr.Variable = true
 		}
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
-		if d.Exists() {
+		if d.Exists() && !isOneOfAttribute {
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
 				attr.DefaultValue = value.String()
 				attr.DefaultValuePresent = true

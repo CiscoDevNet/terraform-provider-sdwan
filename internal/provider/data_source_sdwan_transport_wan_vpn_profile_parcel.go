@@ -170,7 +170,7 @@ func (d *TransportWANVPNProfileParcelDataSource) Schema(ctx context.Context, req
 							MarkdownDescription: "Gateway",
 							Computed:            true,
 						},
-						"ipv4_route_gateway_next_ho": schema.ListNestedAttribute{
+						"ipv4_route_gateway_next_hop": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv4 Route Gateway Next Hop",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -218,29 +218,13 @@ func (d *TransportWANVPNProfileParcelDataSource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"next_hops": schema.ListNestedAttribute{
+						"null0": schema.BoolAttribute{
 							MarkdownDescription: "IPv6 Route Gateway Next Hop",
 							Computed:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"address": schema.StringAttribute{
-										MarkdownDescription: "Address",
-										Computed:            true,
-									},
-									"address_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Computed:            true,
-									},
-									"administrative_distance": schema.Int64Attribute{
-										MarkdownDescription: "Administrative distance",
-										Computed:            true,
-									},
-									"administrative_distance_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Computed:            true,
-									},
-								},
-							},
+						},
+						"nat": schema.StringAttribute{
+							MarkdownDescription: "IPv6 Nat",
+							Computed:            true,
 						},
 					},
 				},

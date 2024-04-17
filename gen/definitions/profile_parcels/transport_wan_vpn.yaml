@@ -48,7 +48,7 @@ attributes:
     - model_name: gateway
       example: nextHop
     - model_name: nextHop
-      tf_name: ipv4_route_gateway_next_ho
+      tf_name: ipv4_route_gateway_next_hop
       conditional_attribute:
         name: gateway
         value: nextHop
@@ -70,23 +70,22 @@ attributes:
     attributes:
       - model_name: prefix
         example: 2002::/16
-      - model_name: nextHop
-        tf_name: next_hops
-        data_path: [oneOfIpRoute, nextHopContainer]
-        attributes:
-          - model_name: address
-            example: 2001:0:0:1::0
-          - model_name: distance
-            tf_name: administrative_distance
-            example: 1
-      # - model_name: null0
-      #   data_path: [oneOfIpRoute]
-      #   # exclude_test: true
-      #   example: true
-      # - model_name: nat
-      #   data_path: [oneOfIpRoute]
-      #   # exclude_test: true
-        # example: NAT64
+      # - model_name: nextHop
+      #   tf_name: next_hops
+      #   data_path: [oneOfIpRoute, nextHopContainer]
+      #   attributes:
+      #     - model_name: address
+      #       example: 2001:0:0:1::0
+      #     - model_name: distance
+      #       tf_name: administrative_distance
+      #       example: 1
+      - model_name: null0
+        data_path: [oneOfIpRoute]
+        example: true
+      - model_name: nat
+        data_path: [oneOfIpRoute]
+        exclude_test: true
+        example: NAT64
   - model_name: service
     tf_name: services
     attributes:
