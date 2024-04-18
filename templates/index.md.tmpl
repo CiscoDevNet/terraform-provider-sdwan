@@ -15,6 +15,7 @@ All resources and data sources have been tested with the following releases.
 | Platform        | Version |
 | --------------- | ------- |
 | Catalyst SD-WAN | 20.9    |
+| Catalyst SD-WAN | 20.12   |
 
 ## Getting Started
 

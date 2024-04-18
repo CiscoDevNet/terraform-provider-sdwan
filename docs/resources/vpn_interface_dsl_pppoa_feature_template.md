@@ -34,7 +34,7 @@ resource "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
       vdsl_modem_configuration = "100"
     }
   ]
-  pvc = [
+  pvcs = [
     {
       atm_vpi_and_vci                   = "example-vpi"
       atm_vbr_nrt_peak_cell_rate        = 1010
@@ -232,7 +232,7 @@ resource "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
 - `ppp_authentication_type` (String) Authenticate remote on incoming call only
   - Choices: `callin`, `false`
   - Default value: `callin`
-- `pvc` (Attributes List) pvc (see [below for nested schema](#nestedatt--pvc))
+- `pvcs` (Attributes List) pvc (see [below for nested schema](#nestedatt--pvcs))
 - `qos_adaptive_bandwidth_downstream` (Number) Adaptive QoS default downstream bandwidth
   - Range: `8`-`100000000`
 - `qos_adaptive_bandwidth_downstream_variable` (String) Variable name
@@ -430,8 +430,8 @@ Optional:
 - `policer_name` (String) Name of policer
 
 
-<a id="nestedatt--pvc"></a>
-### Nested Schema for `pvc`
+<a id="nestedatt--pvcs"></a>
+### Nested Schema for `pvcs`
 
 Optional:
 

@@ -77,7 +77,7 @@ data "sdwan_vpn_interface_dsl_pppoa_feature_template" "example" {
 - `ppp_authentication_protocol_pap` (Boolean) PPP Authentication Protocol PAP
 - `ppp_authentication_protocol_variable` (String) Variable name
 - `ppp_authentication_type` (String) Authenticate remote on incoming call only
-- `pvc` (Attributes List) pvc (see [below for nested schema](#nestedatt--pvc))
+- `pvcs` (Attributes List) pvc (see [below for nested schema](#nestedatt--pvcs))
 - `qos_adaptive_bandwidth_downstream` (Number) Adaptive QoS default downstream bandwidth
 - `qos_adaptive_bandwidth_downstream_variable` (String) Variable name
 - `qos_adaptive_bandwidth_upstream` (Number) Adaptive QoS default upstream bandwidth
@@ -216,8 +216,8 @@ Read-Only:
 - `policer_name` (String) Name of policer
 
 
-<a id="nestedatt--pvc"></a>
-### Nested Schema for `pvc`
+<a id="nestedatt--pvcs"></a>
+### Nested Schema for `pvcs`
 
 Read-Only:
 

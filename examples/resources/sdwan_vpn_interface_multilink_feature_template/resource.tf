@@ -10,88 +10,88 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
   ipv6_access_lists = [
     {
       direction = "in"
-      acl_name  = "Egress ACL - IPv4"
+      acl_name  = "ACL1"
     }
   ]
   ppp_authentication_protocol     = "chap"
   ppp_authentication_protocol_pap = false
-  authentication_type             = "callin"
   chap_hostname                   = "chap-example"
   chap_ppp_auth_password          = "myPassword"
   pap_username                    = "pap-username"
   pap_password                    = true
   pap_ppp_auth_password           = "myPassword"
+  ppp_authentication_type         = "callin"
   enable_core_region              = true
   core_region                     = "core"
   secondary_region                = "off"
-  encapsulation = [
+  tunnel_interface_encapsulations = [
     {
-      encapsulation_type = "gre"
-      preference         = 4294967
-      weight             = 250
+      encapsulation = "gre"
+      preference    = 4294967
+      weight        = 250
     }
   ]
-  groups                        = [42949672]
-  border                        = true
-  per_tunnel_qos                = true
-  per_tunnel_qos_aggregator     = false
-  color                         = "custom1"
-  last_resort_circuit           = false
-  low_bandwidth_link            = false
-  tunnel_tcp_mss                = 1460
-  enable_clear_dont_fragment    = false
-  network_broadcast_1           = false
-  max_control_connections       = 8
-  control_connections           = true
-  vbond_as_stun_server          = false
-  exclude_controller_group_list = [100]
-  vmanage_connection_preference = 5
-  port_hop                      = false
-  restrict                      = false
-  carrier                       = "carrier1"
-  nat_refresh_interval          = 15
-  hello_interval                = 1000
-  hello_tolerance               = 12
-  bind_loopback_tunnel          = "12"
-  all                           = false
-  network_broadcast_2           = false
-  bgp                           = false
-  dhcp                          = true
-  dns                           = true
-  icmp                          = true
-  ssh                           = false
-  netconf                       = false
-  ospf                          = false
-  stun                          = false
-  snmp                          = false
-  https                         = true
-  disable_fragmentation         = true
-  fragment_max_delay            = 1
-  interleaving_fragment         = false
-  clear_dont_fragment_bit       = false
-  pmtu_discovery                = false
-  ip_mtu                        = 1500
-  static_ingress_qos            = 6
-  tcp_mss                       = 720
-  ip_directed_broadcast         = true
-  tloc_extension                = "tloc"
-  administrative_shutdown       = true
-  link_autonegotiate            = true
-  shaping_rate                  = 10000000
-  qos_map                       = "test"
-  vpn_qos_map                   = "test"
-  bandwidth_upstream            = 214748300
-  bandwidth_downstream          = 214748300
-  write_rule                    = "test_rule"
-  access_list = [
+  tunnel_interface_groups                        = [42949672]
+  tunnel_interface_border                        = true
+  per_tunnel_qos                                 = true
+  per_tunnel_qos_aggregator                      = false
+  tunnel_qos_mode                                = "spoke"
+  tunnel_interface_color                         = "custom1"
+  tunnel_interface_last_resort_circuit           = false
+  tunnel_interface_low_bandwidth_link            = false
+  tunnel_interface_tunnel_tcp_mss                = 1460
+  tunnel_interface_clear_dont_fragment           = false
+  tunnel_interface_network_broadcast             = false
+  tunnel_interface_max_control_connections       = 8
+  tunnel_interface_control_connections           = true
+  tunnel_interface_vbond_as_stun_server          = false
+  tunnel_interface_exclude_controller_group_list = [100]
+  tunnel_interface_vmanage_connection_preference = 5
+  tunnel_interface_port_hop                      = false
+  tunnel_interface_color_restrict                = false
+  tunnel_interface_carrier                       = "carrier1"
+  tunnel_interface_nat_refresh_interval          = 15
+  tunnel_interface_hello_interval                = 1000
+  tunnel_interface_hello_tolerance               = 12
+  tunnel_interface_bind_loopback_tunnel          = "12"
+  tunnel_interface_allow_all                     = false
+  tunnel_interface_allow_bgp                     = false
+  tunnel_interface_allow_dhcp                    = true
+  tunnel_interface_allow_dns                     = true
+  tunnel_interface_allow_icmp                    = true
+  tunnel_interface_allow_ssh                     = false
+  tunnel_interface_allow_ntp                     = false
+  tunnel_interface_allow_netconf                 = false
+  tunnel_interface_allow_ospf                    = false
+  tunnel_interface_allow_stun                    = false
+  tunnel_interface_allow_snmp                    = false
+  tunnel_interface_allow_https                   = true
+  disable_fragmentation                          = true
+  fragment_max_delay                             = 1
+  interleaving_fragment                          = false
+  clear_dont_fragment_bit                        = false
+  pmtu_discovery                                 = false
+  ip_mtu                                         = 1500
+  static_ingress_qos                             = 6
+  tcp_mss                                        = 720
+  tloc_extension                                 = "tloc"
+  shutdown                                       = true
+  autonegotiate                                  = true
+  shaping_rate                                   = 10000000
+  qos_map                                        = "test"
+  qos_map_vpn                                    = "test"
+  bandwidth_upstream                             = 214748300
+  bandwidth_downstream                           = 214748300
+  write_rule                                     = "RULE1"
+  access_lists = [
     {
       direction = "in"
-      acl_name  = "Egress ACL - IPv4"
+      acl_name  = "ACL2"
     }
   ]
-  controller_tx_ex_list = [
+  multilink_interfaces = [
     {
-      card_type            = "E1"
+      interface_type       = "E1"
       slot                 = "interface-t1"
       framing              = "example-framing"
       line_mode            = "primary"
@@ -103,16 +103,16 @@ resource "sdwan_vpn_interface_multilink_feature_template" "example" {
       channel_group_list = [
         {
           channel_group = 30
-          timeslots     = ["example"]
+          time_slot     = ["example"]
         }
       ]
     }
   ]
   nim_interface_list = [
     {
-      nim_serial_interface_type = "2t"
+      nim_serial_interface_type = "2T"
       interface_name            = "nim-interface"
-      interface_description     = "interface description"
+      interface_description     = "My Description"
       bandwidth                 = 21474836
       clock_rate                = 120000
       encapsulation_serial      = "hdlc"

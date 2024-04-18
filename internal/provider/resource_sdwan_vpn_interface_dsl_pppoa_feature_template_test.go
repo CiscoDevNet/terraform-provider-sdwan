@@ -38,17 +38,17 @@ func TestAccSdwanVPNInterfaceDSLPPPoAFeatureTemplate(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "vdsl_configuration.0.mode_vdsl2", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "vdsl_configuration.0.mode_ansi", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "vdsl_configuration.0.vdsl_modem_configuration", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_vpi_and_vci", "example-vpi"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_vbr_nrt_peak_cell_rate", "1010"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_vbr_nrt_sustainable_cell_rate", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_vbr_nrt_maximum_burst_size", "65530"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_vbr_rt_peak_cell_rate", "1015"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_vbr_rt_average_cell_rate", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_vbr_rt_maximum_burst_size", "65530"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_encapsulation_aal5mux", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_encapsulation_aal5nlpid", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_encapsulation_aal5snap", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvc.0.atm_dialer_pool_member", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_vpi_and_vci", "example-vpi"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_vbr_nrt_peak_cell_rate", "1010"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_vbr_nrt_sustainable_cell_rate", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_vbr_nrt_maximum_burst_size", "65530"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_vbr_rt_peak_cell_rate", "1015"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_vbr_rt_average_cell_rate", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_vbr_rt_maximum_burst_size", "65530"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_encapsulation_aal5mux", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_encapsulation_aal5nlpid", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_encapsulation_aal5snap", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "pvcs.0.atm_dialer_pool_member", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "ppp_authentication_protocol", "chap"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "ppp_authentication_protocol_pap", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_vpn_interface_dsl_pppoa_feature_template.test", "chap_hostname", "chap-example"))
@@ -180,7 +180,7 @@ func testAccSdwanVPNInterfaceDSLPPPoAFeatureTemplateConfig_all() string {
 	config += `	  mode_ansi = false` + "\n"
 	config += `	  vdsl_modem_configuration = "100"` + "\n"
 	config += `	}]` + "\n"
-	config += `	pvc = [{` + "\n"
+	config += `	pvcs = [{` + "\n"
 	config += `	  atm_vpi_and_vci = "example-vpi"` + "\n"
 	config += `	  atm_vbr_nrt_peak_cell_rate = 1010` + "\n"
 	config += `	  atm_vbr_nrt_sustainable_cell_rate = 1000` + "\n"

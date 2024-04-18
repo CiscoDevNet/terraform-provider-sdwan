@@ -62,6 +62,7 @@ attribute:
   always_include: bool(required=False) # Include attribute always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true
+  conditional_list_length: str(required=False) # Add attribute to payload only if referenced list has a length greater than 0
   query_param: bool(required=False) # Set to true if attribute is a query parameter to be included in request url
   no_augment_config: bool(required=False) # If true do not augment with model data
   test_tags: list(str(), required=False) # List of test tags, attribute is only included in acceptance tests if an environment variable with one of these tags is configured

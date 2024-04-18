@@ -162,7 +162,7 @@ func (d *VPNInterfaceDSLPPPoAFeatureTemplateDataSource) Schema(ctx context.Conte
 					},
 				},
 			},
-			"pvc": schema.ListNestedAttribute{
+			"pvcs": schema.ListNestedAttribute{
 				MarkdownDescription: "pvc",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

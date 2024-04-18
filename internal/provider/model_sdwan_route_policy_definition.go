@@ -173,10 +173,10 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
-			if true {
+			if true && len(item.ActionEntries) > 0 {
 				itemBody, _ = sjson.Set(itemBody, "actions.0.type", "set")
 			}
-			if true {
+			if true && len(item.ActionEntries) > 0 {
 				itemBody, _ = sjson.Set(itemBody, "actions.0.parameter", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
