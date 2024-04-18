@@ -1,14 +1,15 @@
 ---
 name: Transport WAN VPN
-rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn
 minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id
     reference: true
     type: String
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: sdwan_system_feature_profile.test.id
+    test_value: sdwan_transport_feature_profile.test.id
   - model_name: vpnId
     tf_name: vpn
     type: Int64
@@ -31,6 +32,7 @@ attributes:
     tf_name: new_host_mappings
     attributes:
     - model_name: hostName
+      id: true
       example: example
     - model_name: listOfIp
       tf_name: list_of_ip_addresses
@@ -41,11 +43,14 @@ attributes:
     - model_name: ipAddress
       tf_name: network_address
       data_path: [prefix]
+      id: true
       example: 1.2.3.4
     - model_name: subnetMask
       data_path: [prefix]
+      id: true
       example: 0.0.0.0
     - model_name: gateway
+      id: true
       example: nextHop
     - model_name: nextHop
       tf_name: ipv4_route_gateway_next_hop
@@ -55,6 +60,7 @@ attributes:
       attributes:
       - model_name: address
         type: String
+        id: true
         example: 1.2.3.4
       - model_name: distance
         tf_name: administrative_distance
@@ -69,18 +75,21 @@ attributes:
     tf_name: ipv6_static_routes
     attributes:
       - model_name: prefix
+        id: true
         example: 2002::/16
-      # - model_name: nextHop
-      #   tf_name: next_hops
-      #   data_path: [oneOfIpRoute, nextHopContainer]
-      #   attributes:
-      #     - model_name: address
-      #       example: 2001:0:0:1::0
-      #     - model_name: distance
-      #       tf_name: administrative_distance
-      #       example: 1
+      - model_name: nextHop
+        tf_name: next_hops
+        data_path: [oneOfIpRoute, nextHopContainer]
+        attributes:
+          - model_name: address
+            id: true
+            example: 2001:0:0:1::0
+          - model_name: distance
+            tf_name: administrative_distance
+            example: 1
       - model_name: null0
         data_path: [oneOfIpRoute]
+        exclude_test: true
         example: true
       - model_name: nat
         data_path: [oneOfIpRoute]
@@ -90,14 +99,16 @@ attributes:
     tf_name: services
     attributes:
       - model_name: serviceType
+        id: true
         example: TE
   - model_name: nat64V4Pool
     tf_name: nat_64_v4_pools
     attributes:
       - model_name: nat64V4PoolName
+        id: true
         example: example
       - model_name: nat64V4PoolRangeStart
-        example: 302.0.113.50
+        example: 203.0.113.50
       - model_name: nat64V4PoolRangeEnd
         example: 203.0.113.100
       - model_name: nat64V4PoolOverload
@@ -105,7 +116,7 @@ attributes:
         
 
 test_prerequisites: |
-  resource "sdwan_system_feature_profile" "test" {
+  resource "sdwan_transport_feature_profile" "test" {
     name = "TF_TEST"
     description = "Terraform test"
   }

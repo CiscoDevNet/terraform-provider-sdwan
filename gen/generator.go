@@ -227,6 +227,7 @@ type YamlConfigAttribute struct {
 	ExcludeTest           bool                           `yaml:"exclude_test"`
 	ExcludeExample        bool                           `yaml:"exclude_example"`
 	ExcludeIgnore         bool                           `yaml:"exclude_ignore"`
+	ExcludeNull           bool                           `yaml:"exclude_null"`
 	NodeOnlyContainer     bool                           `yaml:"node_only_container"`
 	Description           string                         `yaml:"description"`
 	Example               string                         `yaml:"example"`
@@ -753,7 +754,15 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
 				attr.DefaultValue = value.String()
 				attr.DefaultValuePresent = true
+			} else {
+				attr.ParcelMandatory = true
+				if !attr.Variable {
+					attr.Mandatory = true
+				}
 			}
+		} else if isOneOfAttribute {
+			attr.ParcelMandatory = true
+			attr.ExcludeNull = true
 		} else {
 			attr.ParcelMandatory = true
 			if !attr.Variable {

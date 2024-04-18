@@ -20,12 +20,16 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccSdwanTransportWANVPNProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "vpn", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "enhance_ecmp_keying", "true"))
@@ -41,10 +45,11 @@ func TestAccSdwanTransportWANVPNProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "ipv4_static_routes.0.ipv4_route_gateway_next_hop.0.administrative_distance", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "ipv4_static_routes.0.administrative_distance", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "ipv6_static_routes.0.prefix", "2002::/16"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "ipv6_static_routes.0.null0", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "ipv6_static_routes.0.next_hops.0.address", "2001:0:0:1::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "ipv6_static_routes.0.next_hops.0.administrative_distance", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "services.0.service_type", "TE"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "nat_64_v4_pools.0.nat64_v4_pool_name", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "nat_64_v4_pools.0.nat64_v4_pool_range_start", "302.0.113.50"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "nat_64_v4_pools.0.nat64_v4_pool_range_start", "203.0.113.50"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "nat_64_v4_pools.0.nat64_v4_pool_range_end", "203.0.113.100"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_profile_parcel.test", "nat_64_v4_pools.0.nat64_v4_pool_overload", "false"))
 	resource.Test(t, resource.TestCase{
@@ -63,7 +68,7 @@ func TestAccSdwanTransportWANVPNProfileParcel(t *testing.T) {
 }
 
 const testAccSdwanTransportWANVPNPrerequisitesProfileParcelConfig = `
-resource "sdwan_system_feature_profile" "test" {
+resource "sdwan_transport_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
@@ -73,7 +78,11 @@ func testAccSdwanTransportWANVPNProfileParcelConfig_minimum() string {
 	config := `resource "sdwan_transport_wan_vpn_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
+	config += `	secondary_dns_address_ipv4 = "2.3.4.5"` + "\n"
+	config += `	primary_dns_address_ipv6 = "2001:0:0:1::0"` + "\n"
+	config += `	secondary_dns_address_ipv6 = "2001:0:0:2::0"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -82,7 +91,7 @@ func testAccSdwanTransportWANVPNProfileParcelConfig_all() string {
 	config := `resource "sdwan_transport_wan_vpn_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	vpn = 0` + "\n"
 	config += `	enhance_ecmp_keying = true` + "\n"
 	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
@@ -105,14 +114,17 @@ func testAccSdwanTransportWANVPNProfileParcelConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	ipv6_static_routes = [{` + "\n"
 	config += `	  prefix = "2002::/16"` + "\n"
-	config += `	  null0 = true` + "\n"
+	config += `	  next_hops = [{` + "\n"
+	config += `		address = "2001:0:0:1::0"` + "\n"
+	config += `		administrative_distance = 1` + "\n"
+	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	services = [{` + "\n"
 	config += `	  service_type = "TE"` + "\n"
 	config += `	}]` + "\n"
 	config += `	nat_64_v4_pools = [{` + "\n"
 	config += `	  nat64_v4_pool_name = "example"` + "\n"
-	config += `	  nat64_v4_pool_range_start = "302.0.113.50"` + "\n"
+	config += `	  nat64_v4_pool_range_start = "203.0.113.50"` + "\n"
 	config += `	  nat64_v4_pool_range_end = "203.0.113.100"` + "\n"
 	config += `	  nat64_v4_pool_overload = false` + "\n"
 	config += `	}]` + "\n"

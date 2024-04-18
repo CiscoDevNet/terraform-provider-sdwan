@@ -218,6 +218,30 @@ func (d *TransportWANVPNProfileParcelDataSource) Schema(ctx context.Context, req
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"next_hops": schema.ListNestedAttribute{
+							MarkdownDescription: "IPv6 Route Gateway Next Hop",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"address": schema.StringAttribute{
+										MarkdownDescription: "Address",
+										Computed:            true,
+									},
+									"address_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"administrative_distance": schema.Int64Attribute{
+										MarkdownDescription: "Administrative distance",
+										Computed:            true,
+									},
+									"administrative_distance_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+								},
+							},
+						},
 						"null0": schema.BoolAttribute{
 							MarkdownDescription: "IPv6 Route Gateway Next Hop",
 							Computed:            true,

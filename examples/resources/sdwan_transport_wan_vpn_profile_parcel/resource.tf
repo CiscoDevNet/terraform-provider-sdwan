@@ -31,7 +31,12 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
   ipv6_static_routes = [
     {
       prefix = "2002::/16"
-      null0  = true
+      next_hops = [
+        {
+          address                 = "2001:0:0:1::0"
+          administrative_distance = 1
+        }
+      ]
     }
   ]
   services = [
@@ -42,7 +47,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
   nat_64_v4_pools = [
     {
       nat64_v4_pool_name        = "example"
-      nat64_v4_pool_range_start = "302.0.113.50"
+      nat64_v4_pool_range_start = "203.0.113.50"
       nat64_v4_pool_range_end   = "203.0.113.100"
       nat64_v4_pool_overload    = false
     }
