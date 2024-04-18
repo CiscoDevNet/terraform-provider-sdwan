@@ -4,7 +4,7 @@ page_title: "sdwan_vpn_interface_svi_feature_template Resource - terraform-provi
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a VPN Interface SVI feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_vpn_interface_svi_feature_template (Resource)

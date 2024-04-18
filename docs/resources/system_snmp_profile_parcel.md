@@ -4,7 +4,7 @@ page_title: "sdwan_system_snmp_profile_parcel Resource - terraform-provider-sdwa
 subcategory: "Profile Parcels"
 description: |-
   This resource can manage a System SNMP profile parcel.
-    - Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_system_snmp_profile_parcel (Resource)

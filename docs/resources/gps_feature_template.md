@@ -4,7 +4,7 @@ page_title: "sdwan_gps_feature_template Resource - terraform-provider-sdwan"
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a gps feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_gps_feature_template (Resource)

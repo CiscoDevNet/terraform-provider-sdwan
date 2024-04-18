@@ -4,7 +4,7 @@ page_title: "sdwan_cli_template_feature_template Resource - terraform-provider-s
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a CLI Template feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cli_template_feature_template (Resource)

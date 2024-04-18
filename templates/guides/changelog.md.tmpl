@@ -13,6 +13,7 @@ description: |-
 - Add `sdwan_system_mrf_profile_parcel` resource and data source
 - Add `sdwan_system_snmp_profile_parcel` resource and data source
 - Add `sdwan_system_basic_profile_parcel` resource and data source
+- Fix issue with deleted feature profile resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
 
 ## 0.3.7
 

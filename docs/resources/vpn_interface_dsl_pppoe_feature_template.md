@@ -4,7 +4,7 @@ page_title: "sdwan_vpn_interface_dsl_pppoe_feature_template Resource - terraform
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a VPN Interface DSL PPPoE feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_vpn_interface_dsl_pppoe_feature_template (Resource)

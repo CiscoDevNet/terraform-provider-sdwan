@@ -4,7 +4,7 @@ page_title: "sdwan_cedge_multicast_feature_template Resource - terraform-provide
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a cEdge Multicast feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cedge_multicast_feature_template (Resource)

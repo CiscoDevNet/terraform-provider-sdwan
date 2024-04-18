@@ -4,7 +4,7 @@ page_title: "sdwan_system_flexible_port_speed_profile_parcel Resource - terrafor
 subcategory: "Profile Parcels"
 description: |-
   This resource can manage a System Flexible Port Speed profile parcel.
-    - Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_system_flexible_port_speed_profile_parcel (Resource)
