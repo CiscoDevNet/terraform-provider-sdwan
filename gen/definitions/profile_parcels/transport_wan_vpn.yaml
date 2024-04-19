@@ -53,7 +53,7 @@ attributes:
       id: true
       example: nextHop
     - model_name: nextHop
-      tf_name: ipv4_route_gateway_next_hop
+      tf_name: next_hops
       conditional_attribute:
         name: gateway
         value: nextHop
