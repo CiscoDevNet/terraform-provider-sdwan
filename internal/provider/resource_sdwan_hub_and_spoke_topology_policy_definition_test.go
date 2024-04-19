@@ -20,6 +20,7 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -30,8 +31,12 @@ func TestAccSdwanHubAndSpokeTopologyPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "name", "Example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "description", "My description"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.name", "Topology1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.all_hubs_are_equal", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.advertise_hub_tlocs", "true"))
+	if os.Getenv("SDWAN_2012") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.all_hubs_are_equal", "false"))
+	}
+	if os.Getenv("SDWAN_2012") != "" {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.advertise_hub_tlocs", "true"))
+	}
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.spokes.0.hubs.0.preference", "30"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -85,9 +90,15 @@ func testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig_all() string {
 	config += `	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id` + "\n"
 	config += `	topologies = [{` + "\n"
 	config += `	  name = "Topology1"` + "\n"
-	config += `	  all_hubs_are_equal = false` + "\n"
-	config += `	  advertise_hub_tlocs = true` + "\n"
-	config += `	  tloc_list_id = sdwan_tloc_list_policy_object.tloc1.id` + "\n"
+	if os.Getenv("SDWAN_2012") != "" {
+		config += `	  all_hubs_are_equal = false` + "\n"
+	}
+	if os.Getenv("SDWAN_2012") != "" {
+		config += `	  advertise_hub_tlocs = true` + "\n"
+	}
+	if os.Getenv("SDWAN_2012") != "" {
+		config += `	  tloc_list_id = sdwan_tloc_list_policy_object.tloc1.id` + "\n"
+	}
 	config += `	  spokes = [{` + "\n"
 	config += `		site_list_id = sdwan_site_list_policy_object.sites1.id` + "\n"
 	config += `      hubs = [{` + "\n"
