@@ -4,7 +4,7 @@ page_title: "sdwan_cedge_global_feature_template Resource - terraform-provider-s
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a cEdge Global feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cedge_global_feature_template (Resource)

@@ -227,6 +227,7 @@ type YamlConfigAttribute struct {
 	ExcludeTest           bool                           `yaml:"exclude_test"`
 	ExcludeExample        bool                           `yaml:"exclude_example"`
 	ExcludeIgnore         bool                           `yaml:"exclude_ignore"`
+	ExcludeNull           bool                           `yaml:"exclude_null"`
 	NodeOnlyContainer     bool                           `yaml:"node_only_container"`
 	Description           string                         `yaml:"description"`
 	Example               string                         `yaml:"example"`
@@ -644,10 +645,36 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		return
 	}
 	path := ""
-	for _, e := range attr.DataPath {
-		path += e + ".properties."
+	isOneOfAttribute := false
+	for i, e := range attr.DataPath {
+		// Check if the next element is a oneOf
+		if model.Get("properties." + path + e + ".oneOf").Exists() {
+			// We need to find the right element in oneOf which has the next element
+
+			next := ""
+			if i+1 < len(attr.DataPath) {
+				next = attr.DataPath[i+1]
+			} else {
+				next = attr.ModelName
+			}
+
+			index := 0
+			model.Get("properties." + path + e + ".oneOf").ForEach(func(k, v gjson.Result) bool {
+				if v.Get("properties." + next).Exists() {
+					path += fmt.Sprintf("%s.oneOf.%v.properties.", e, index)
+					isOneOfAttribute = true
+					return false // stop iterating
+				}
+				index += 1
+				return true // keep iterating
+			})
+
+		} else {
+			path += e + ".properties."
+		}
 	}
 	path += attr.ModelName
+
 	r := model.Get("properties." + path)
 
 	if !r.Exists() {
@@ -662,7 +689,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 	if r.Get("type").String() == "object" {
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
 		if t.Exists() {
-			if t.Get("properties.value.type").String() == "string" {
+			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
 				attr.Type = "String"
 				if value := t.Get("properties.value.minLength"); value.Exists() {
 					attr.StringMinLength = value.Int()
@@ -710,11 +737,11 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
 		}
-		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
+		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() && !isOneOfAttribute {
 			attr.Variable = true
 		}
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
-		if d.Exists() {
+		if d.Exists() && !isOneOfAttribute {
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
 				attr.DefaultValue = value.String()
 				attr.DefaultValuePresent = true
@@ -727,7 +754,15 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
 				attr.DefaultValue = value.String()
 				attr.DefaultValuePresent = true
+			} else {
+				attr.ParcelMandatory = true
+				if !attr.Variable {
+					attr.Mandatory = true
+				}
 			}
+		} else if isOneOfAttribute {
+			attr.ParcelMandatory = true
+			attr.ExcludeNull = true
 		} else {
 			attr.ParcelMandatory = true
 			if !attr.Variable {

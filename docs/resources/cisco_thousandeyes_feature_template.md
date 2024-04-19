@@ -4,7 +4,7 @@ page_title: "sdwan_cisco_thousandeyes_feature_template Resource - terraform-prov
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cisco ThousandEyes feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cisco_thousandeyes_feature_template (Resource)

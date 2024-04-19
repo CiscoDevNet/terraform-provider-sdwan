@@ -4,7 +4,7 @@ page_title: "sdwan_cisco_system_feature_template Resource - terraform-provider-s
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cisco System feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cisco_system_feature_template (Resource)

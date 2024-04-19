@@ -4,7 +4,7 @@ page_title: "sdwan_vpn_interface_t1_e1_serial_feature_template Resource - terraf
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a VPN Interface T1 E1 Serial feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_vpn_interface_t1_e1_serial_feature_template (Resource)

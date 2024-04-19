@@ -211,10 +211,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.KeyTypeVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyTypeVariable.ValueString())
-			} else if childItem.KeyType.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "default")
-
-			} else {
+			} else if true {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
 			}
@@ -239,10 +236,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-		} else if item.SourceInterface.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
-
-		} else {
+		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
@@ -304,17 +298,11 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			if !childItem.SecretKeyVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyVariable.ValueString())
-			} else if childItem.SecretKey.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "default")
-
-			} else {
+			} else if true {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
 			}
-			if childItem.KeyEnum.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "default")
-
-			} else {
+			if true {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
 			}
@@ -350,10 +338,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-		} else if item.SourceInterface.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
-
-		} else {
+		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
@@ -397,10 +382,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
 			}
-			if childItem.KeyEnum.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "default")
-
-			} else {
+			if true {
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
 			}
@@ -418,10 +400,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "method.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "method.value", item.Method.ValueString())
 		}
-		if item.Level.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "level.optionType", "default")
-
-		} else {
+		if true {
 			itemBody, _ = sjson.Set(itemBody, "level.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "level.value", item.Level.ValueString())
 		}

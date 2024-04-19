@@ -4,7 +4,7 @@ page_title: "sdwan_system_banner_profile_parcel Resource - terraform-provider-sd
 subcategory: "Profile Parcels"
 description: |-
   This resource can manage a System Banner profile parcel.
-    - Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_system_banner_profile_parcel (Resource)

@@ -1,6 +1,12 @@
-## 0.3.8
+## 0.3.8 (unreleased)
 
-- Add 'advertise_hub_tlocs','all_hubs_are_equal','tloc_list_id', 'ipv4_prefix_list_ids', 'ipv6_prefix_list_ids' and 'preference' to 'sdwan_hub_and_spoke_topology_policy_definition' resource and data source
+- Add `sdwan_system_flexible_port_speed_profile_parcel` resource and data source
+- Add `sdwan_system_mrf_profile_parcel` resource and data source
+- Add `sdwan_system_snmp_profile_parcel` resource and data source
+- Add `sdwan_system_basic_profile_parcel` resource and data source
+- Fix issue with deleted feature profile resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
+- Add `sdwan_transport_wan_vpn_profile_parcel` resource and data source
+- - Add 'advertise_hub_tlocs','all_hubs_are_equal','tloc_list_id', 'ipv4_prefix_list_ids', 'ipv6_prefix_list_ids' and 'preference' to 'sdwan_hub_and_spoke_topology_policy_definition' resource and data source
 
 ## 0.3.7
 

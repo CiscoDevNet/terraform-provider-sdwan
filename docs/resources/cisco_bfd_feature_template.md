@@ -4,7 +4,7 @@ page_title: "sdwan_cisco_bfd_feature_template Resource - terraform-provider-sdwa
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cisco BFD feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cisco_bfd_feature_template (Resource)
