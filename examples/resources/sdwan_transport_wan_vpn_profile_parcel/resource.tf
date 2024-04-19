@@ -19,7 +19,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
       network_address = "1.2.3.4"
       subnet_mask     = "0.0.0.0"
       gateway         = "nextHop"
-      ipv4_route_gateway_next_hop = [
+      next_hops = [
         {
           address                 = "1.2.3.4"
           administrative_distance = 1

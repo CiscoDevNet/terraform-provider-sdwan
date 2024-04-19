@@ -189,7 +189,7 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 								stringvalidator.OneOf("nextHop", "dhcp", "null0"),
 							},
 						},
-						"ipv4_route_gateway_next_hop": schema.ListNestedAttribute{
+						"next_hops": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

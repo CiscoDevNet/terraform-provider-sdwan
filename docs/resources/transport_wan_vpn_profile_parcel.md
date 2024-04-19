@@ -4,7 +4,7 @@ page_title: "sdwan_transport_wan_vpn_profile_parcel Resource - terraform-provide
 subcategory: "Profile Parcels"
 description: |-
   This resource can manage a Transport WAN VPN profile parcel.
-    - Minimum SD-WAN Manager version: 20.12.0
+  Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_transport_wan_vpn_profile_parcel (Resource)
@@ -36,7 +36,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
       network_address = "1.2.3.4"
       subnet_mask     = "0.0.0.0"
       gateway         = "nextHop"
-      ipv4_route_gateway_next_hop = [
+      next_hops = [
         {
           address                 = "1.2.3.4"
           administrative_distance = 1
@@ -119,15 +119,15 @@ Optional:
 - `gateway` (String) Gateway
   - Choices: `nextHop`, `dhcp`, `null0`
   - Default value: `nextHop`
-- `ipv4_route_gateway_next_hop` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--ipv4_route_gateway_next_hop))
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
+- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 
-<a id="nestedatt--ipv4_static_routes--ipv4_route_gateway_next_hop"></a>
-### Nested Schema for `ipv4_static_routes.ipv4_route_gateway_next_hop`
+<a id="nestedatt--ipv4_static_routes--next_hops"></a>
+### Nested Schema for `ipv4_static_routes.next_hops`
 
 Optional:
 

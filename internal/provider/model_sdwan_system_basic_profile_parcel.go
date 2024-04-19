@@ -139,10 +139,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.ConfigDescriptionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"description.optionType", "variable")
 		body, _ = sjson.Set(body, path+"description.value", data.ConfigDescriptionVariable.ValueString())
-	} else if data.ConfigDescription.IsNull() {
-		body, _ = sjson.Set(body, path+"description.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"description.optionType", "global")
 		body, _ = sjson.Set(body, path+"description.value", data.ConfigDescription.ValueString())
 	}
@@ -150,10 +147,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.LocationVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"location.optionType", "variable")
 		body, _ = sjson.Set(body, path+"location.value", data.LocationVariable.ValueString())
-	} else if data.Location.IsNull() {
-		body, _ = sjson.Set(body, path+"location.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"location.optionType", "global")
 		body, _ = sjson.Set(body, path+"location.value", data.Location.ValueString())
 	}
@@ -161,10 +155,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.GpsLongitudeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "variable")
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitudeVariable.ValueString())
-	} else if data.GpsLongitude.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitude.ValueInt64())
 	}
@@ -172,10 +163,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.GpsLatitudeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "variable")
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitudeVariable.ValueString())
-	} else if data.GpsLatitude.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitude.ValueInt64())
 	}
@@ -220,10 +208,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.DeviceGroupsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"deviceGroups.optionType", "variable")
 		body, _ = sjson.Set(body, path+"deviceGroups.value", data.DeviceGroupsVariable.ValueString())
-	} else if data.DeviceGroups.IsNull() {
-		body, _ = sjson.Set(body, path+"deviceGroups.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"deviceGroups.optionType", "global")
 		var values []string
 		data.DeviceGroups.ElementsAs(ctx, &values, false)
@@ -233,10 +218,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.ControllerGroupsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "variable")
 		body, _ = sjson.Set(body, path+"controllerGroupList.value", data.ControllerGroupsVariable.ValueString())
-	} else if data.ControllerGroups.IsNull() {
-		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "global")
 		var values []int64
 		data.ControllerGroups.ElementsAs(ctx, &values, false)
@@ -301,10 +283,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.TrackInterfaceTagVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "variable")
 		body, _ = sjson.Set(body, path+"trackInterfaceTag.value", data.TrackInterfaceTagVariable.ValueString())
-	} else if data.TrackInterfaceTag.IsNull() {
-		body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "global")
 		body, _ = sjson.Set(body, path+"trackInterfaceTag.value", data.TrackInterfaceTag.ValueInt64())
 	}
@@ -323,10 +302,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.MaxOmpSessionsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "variable")
 		body, _ = sjson.Set(body, path+"maxOmpSessions.value", data.MaxOmpSessionsVariable.ValueString())
-	} else if data.MaxOmpSessions.IsNull() {
-		body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "global")
 		body, _ = sjson.Set(body, path+"maxOmpSessions.value", data.MaxOmpSessions.ValueInt64())
 	}
@@ -367,10 +343,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.IdleTimeoutVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"idleTimeout.optionType", "variable")
 		body, _ = sjson.Set(body, path+"idleTimeout.value", data.IdleTimeoutVariable.ValueString())
-	} else if data.IdleTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"idleTimeout.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"idleTimeout.optionType", "global")
 		body, _ = sjson.Set(body, path+"idleTimeout.value", data.IdleTimeout.ValueInt64())
 	}
@@ -422,10 +395,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.SiteTypesVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"siteType.optionType", "variable")
 		body, _ = sjson.Set(body, path+"siteType.value", data.SiteTypesVariable.ValueString())
-	} else if data.SiteTypes.IsNull() {
-		body, _ = sjson.Set(body, path+"siteType.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"siteType.optionType", "global")
 		var values []string
 		data.SiteTypes.ElementsAs(ctx, &values, false)
@@ -435,10 +405,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.AffinityGroupNumberVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "variable")
 		body, _ = sjson.Set(body, path+"affinityGroupNumber.value", data.AffinityGroupNumberVariable.ValueString())
-	} else if data.AffinityGroupNumber.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "global")
 		body, _ = sjson.Set(body, path+"affinityGroupNumber.value", data.AffinityGroupNumber.ValueInt64())
 	}
@@ -446,10 +413,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	if !data.AffinityGroupPreferencesVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "variable")
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.value", data.AffinityGroupPreferencesVariable.ValueString())
-	} else if data.AffinityGroupPreferences.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "default")
-
-	} else {
+	} else if true {
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "global")
 		var values []int64
 		data.AffinityGroupPreferences.ElementsAs(ctx, &values, false)
@@ -472,10 +436,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		if !item.AffinityGroupNumberVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumberVariable.ValueString())
-		} else if item.AffinityGroupNumber.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "default")
-
-		} else {
+		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumber.ValueInt64())
 		}
@@ -483,10 +444,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		if !item.VrfRangeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRangeVariable.ValueString())
-		} else if item.VrfRange.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "default")
-
-		} else {
+		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRange.ValueString())
 		}

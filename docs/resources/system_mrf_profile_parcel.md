@@ -32,18 +32,18 @@ resource "sdwan_system_mrf_profile_parcel" "example" {
 
 ### Required
 
+- `enable_migration_to_mrf` (String) Enable migration mode to Multi-Region Fabric
+  - Choices: `enabled`, `enabled-from-bgp-core`
+- `migration_bgp_community` (Number) Set BGP community during migration from BGP-core based network
+  - Range: `1`-`4294967295`
 - `name` (String) The name of the profile parcel
+- `region_id` (Number) Set region ID
+  - Range: `1`-`63`
 
 ### Optional
 
 - `description` (String) The description of the profile parcel
-- `enable_migration_to_mrf` (String) Enable migration mode to Multi-Region Fabric
-  - Choices: `enabled`, `enabled-from-bgp-core`
 - `feature_profile_id` (String) Feature Profile ID
-- `migration_bgp_community` (Number) Set BGP community during migration from BGP-core based network
-  - Range: `1`-`4294967295`
-- `region_id` (Number) Set region ID
-  - Range: `1`-`63`
 - `role` (String) Set the role for router
   - Choices: `edge-router`, `border-router`
 - `role_variable` (String) Variable name
