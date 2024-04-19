@@ -30,6 +30,9 @@ func TestAccSdwanHubAndSpokeTopologyPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "name", "Example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "description", "My description"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.name", "Topology1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.all_hubs_are_equal", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.advertise_hub_tlocs", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_hub_and_spoke_topology_policy_definition.test", "topologies.0.spokes.0.hubs.0.preference", "30"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -61,6 +64,18 @@ resource "sdwan_vpn_list_policy_object" "vpns1" {
   ]
 }
 
+resource "sdwan_tloc_list_policy_object" "tloc1" {
+  name = "Example"
+  entries = [
+    {
+      tloc_ip       = "1.1.1.2"
+      color         = "blue"
+      encapsulation = "gre"
+      preference    = 10
+    }
+  ]
+}
+
 `
 
 func testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig_all() string {
@@ -70,10 +85,14 @@ func testAccSdwanHubAndSpokeTopologyPolicyDefinitionConfig_all() string {
 	config += `	vpn_list_id = sdwan_vpn_list_policy_object.vpns1.id` + "\n"
 	config += `	topologies = [{` + "\n"
 	config += `	  name = "Topology1"` + "\n"
+	config += `	  all_hubs_are_equal = false` + "\n"
+	config += `	  advertise_hub_tlocs = true` + "\n"
+	config += `	  tloc_list_id = sdwan_tloc_list_policy_object.tloc1.id` + "\n"
 	config += `	  spokes = [{` + "\n"
 	config += `		site_list_id = sdwan_site_list_policy_object.sites1.id` + "\n"
 	config += `      hubs = [{` + "\n"
 	config += `			site_list_id = sdwan_site_list_policy_object.sites1.id` + "\n"
+	config += `			preference = "30"` + "\n"
 	config += `		}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"

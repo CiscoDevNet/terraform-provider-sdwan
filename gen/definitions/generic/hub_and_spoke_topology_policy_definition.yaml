@@ -47,6 +47,25 @@ attributes:
         mandatory: true
         description: Topology name
         example: Topology1
+      - model_name: equalPreference
+        tf_name: all_hubs_are_equal
+        type: Bool
+        description: All hubs are equal (All Spokes Sites connect to all Hubs)
+        example: false
+        test_tags: [SDWAN_2012]
+      - model_name: advertiseTloc
+        tf_name: advertise_hub_tlocs
+        type: Bool
+        description: Advertise Hub TLOCs
+        example: true
+        test_tags: [SDWAN_2012]
+      - model_name: tlocList
+        tf_name: tloc_list_id
+        type: String
+        description: TLOC list ID (required when `advertise_hub_tlocs` is 'true')
+        example: b326e448-bf33-47e4-83e7-f947e6981382
+        test_value: sdwan_tloc_list_policy_object.tloc1.id
+        test_tags: [SDWAN_2012]
       - model_name: spokes
         tf_name: spokes
         type: List
@@ -81,6 +100,25 @@ attributes:
                 type: Version
                 description: Site list version
                 exclude_test: true
+              - model_name: preference
+                tf_name: preference
+                type: String
+                description: Preference, multiple of 10 (for example 70, 80, 90, 100). The higher the value the higher the priority of the associated hub (required when `all_hubs_are_equal` is 'false')
+                example: 30
+              - model_name: prefixLists
+                tf_name:  ipv4_prefix_list_ids
+                type: Set
+                element_type: String
+                description: List of IPv4 prefix list IDs
+                example: 198d764e-9e88-44d7-8e18-5629e8565a3a
+                exclude_test: true
+              - model_name: ipv6PrefixLists
+                tf_name: ipv6_prefix_list_ids
+                type: Set
+                element_type: String
+                description: List of IPv6 prefix list IDs
+                example: 415fafee-df10-4893-a44a-563573a51d36
+                exclude_test: true
 
 test_prerequisites: |
   resource "sdwan_site_list_policy_object" "sites1" {
@@ -97,6 +135,18 @@ test_prerequisites: |
     entries = [
       {
         vpn_id = "100-200"
+      }
+    ]
+  }
+
+  resource "sdwan_tloc_list_policy_object" "tloc1" {
+    name = "Example"
+    entries = [
+      {
+        tloc_ip       = "1.1.1.2"
+        color         = "blue"
+        encapsulation = "gre"
+        preference    = 10
       }
     ]
   }

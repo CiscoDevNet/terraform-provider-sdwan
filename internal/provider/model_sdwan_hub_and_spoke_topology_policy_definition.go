@@ -23,6 +23,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -39,8 +40,11 @@ type HubAndSpokeTopologyPolicyDefinition struct {
 }
 
 type HubAndSpokeTopologyPolicyDefinitionTopologies struct {
-	Name   types.String                                          `tfsdk:"name"`
-	Spokes []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes `tfsdk:"spokes"`
+	Name              types.String                                          `tfsdk:"name"`
+	AllHubsAreEqual   types.Bool                                            `tfsdk:"all_hubs_are_equal"`
+	AdvertiseHubTlocs types.Bool                                            `tfsdk:"advertise_hub_tlocs"`
+	TlocListId        types.String                                          `tfsdk:"tloc_list_id"`
+	Spokes            []HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes `tfsdk:"spokes"`
 }
 
 type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes struct {
@@ -50,8 +54,11 @@ type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes struct {
 }
 
 type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs struct {
-	SiteListId      types.String `tfsdk:"site_list_id"`
-	SiteListVersion types.Int64  `tfsdk:"site_list_version"`
+	SiteListId        types.String `tfsdk:"site_list_id"`
+	SiteListVersion   types.Int64  `tfsdk:"site_list_version"`
+	Preference        types.String `tfsdk:"preference"`
+	Ipv4PrefixListIds types.Set    `tfsdk:"ipv4_prefix_list_ids"`
+	Ipv6PrefixListIds types.Set    `tfsdk:"ipv6_prefix_list_ids"`
 }
 
 func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) string {
@@ -75,6 +82,23 @@ func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) stri
 			if !item.Name.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "name", item.Name.ValueString())
 			}
+			if !item.AllHubsAreEqual.IsNull() {
+				if false && item.AllHubsAreEqual.ValueBool() {
+					itemBody, _ = sjson.Set(itemBody, "equalPreference", "")
+				} else {
+					itemBody, _ = sjson.Set(itemBody, "equalPreference", item.AllHubsAreEqual.ValueBool())
+				}
+			}
+			if !item.AdvertiseHubTlocs.IsNull() {
+				if false && item.AdvertiseHubTlocs.ValueBool() {
+					itemBody, _ = sjson.Set(itemBody, "advertiseTloc", "")
+				} else {
+					itemBody, _ = sjson.Set(itemBody, "advertiseTloc", item.AdvertiseHubTlocs.ValueBool())
+				}
+			}
+			if !item.TlocListId.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "tlocList", item.TlocListId.ValueString())
+			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "spokes", []interface{}{})
 				for _, childItem := range item.Spokes {
@@ -88,6 +112,19 @@ func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) stri
 							itemChildChildBody := ""
 							if !childChildItem.SiteListId.IsNull() {
 								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "siteList", childChildItem.SiteListId.ValueString())
+							}
+							if !childChildItem.Preference.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preference", childChildItem.Preference.ValueString())
+							}
+							if !childChildItem.Ipv4PrefixListIds.IsNull() {
+								var values []string
+								childChildItem.Ipv4PrefixListIds.ElementsAs(ctx, &values, false)
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "prefixLists", values)
+							}
+							if !childChildItem.Ipv6PrefixListIds.IsNull() {
+								var values []string
+								childChildItem.Ipv6PrefixListIds.ElementsAs(ctx, &values, false)
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "ipv6PrefixLists", values)
 							}
 							itemChildBody, _ = sjson.SetRaw(itemChildBody, "hubs.-1", itemChildChildBody)
 						}
@@ -127,6 +164,29 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 			} else {
 				item.Name = types.StringNull()
 			}
+			if cValue := v.Get("equalPreference"); cValue.Exists() {
+				if false && cValue.String() == "" {
+					item.AllHubsAreEqual = types.BoolValue(true)
+				} else {
+					item.AllHubsAreEqual = types.BoolValue(cValue.Bool())
+				}
+			} else {
+				item.AllHubsAreEqual = types.BoolNull()
+			}
+			if cValue := v.Get("advertiseTloc"); cValue.Exists() {
+				if false && cValue.String() == "" {
+					item.AdvertiseHubTlocs = types.BoolValue(true)
+				} else {
+					item.AdvertiseHubTlocs = types.BoolValue(cValue.Bool())
+				}
+			} else {
+				item.AdvertiseHubTlocs = types.BoolNull()
+			}
+			if cValue := v.Get("tlocList"); cValue.Exists() {
+				item.TlocListId = types.StringValue(cValue.String())
+			} else {
+				item.TlocListId = types.StringNull()
+			}
 			if cValue := v.Get("spokes"); cValue.Exists() && len(cValue.Array()) > 0 {
 				item.Spokes = make([]HubAndSpokeTopologyPolicyDefinitionTopologiesSpokes, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
@@ -144,6 +204,21 @@ func (data *HubAndSpokeTopologyPolicyDefinition) fromBody(ctx context.Context, r
 								ccItem.SiteListId = types.StringValue(cccValue.String())
 							} else {
 								ccItem.SiteListId = types.StringNull()
+							}
+							if cccValue := ccv.Get("preference"); cccValue.Exists() {
+								ccItem.Preference = types.StringValue(cccValue.String())
+							} else {
+								ccItem.Preference = types.StringNull()
+							}
+							if cccValue := ccv.Get("prefixLists"); cccValue.Exists() {
+								ccItem.Ipv4PrefixListIds = helpers.GetStringSet(cccValue.Array())
+							} else {
+								ccItem.Ipv4PrefixListIds = types.SetNull(types.StringType)
+							}
+							if cccValue := ccv.Get("ipv6PrefixLists"); cccValue.Exists() {
+								ccItem.Ipv6PrefixListIds = helpers.GetStringSet(cccValue.Array())
+							} else {
+								ccItem.Ipv6PrefixListIds = types.SetNull(types.StringType)
 							}
 							cItem.Hubs = append(cItem.Hubs, ccItem)
 							return true
@@ -190,6 +265,15 @@ func (data *HubAndSpokeTopologyPolicyDefinition) hasChanges(ctx context.Context,
 			if !data.Topologies[i].Name.Equal(state.Topologies[i].Name) {
 				hasChanges = true
 			}
+			if !data.Topologies[i].AllHubsAreEqual.Equal(state.Topologies[i].AllHubsAreEqual) {
+				hasChanges = true
+			}
+			if !data.Topologies[i].AdvertiseHubTlocs.Equal(state.Topologies[i].AdvertiseHubTlocs) {
+				hasChanges = true
+			}
+			if !data.Topologies[i].TlocListId.Equal(state.Topologies[i].TlocListId) {
+				hasChanges = true
+			}
 			if len(data.Topologies[i].Spokes) != len(state.Topologies[i].Spokes) {
 				hasChanges = true
 			} else {
@@ -202,6 +286,15 @@ func (data *HubAndSpokeTopologyPolicyDefinition) hasChanges(ctx context.Context,
 					} else {
 						for iii := range data.Topologies[i].Spokes[ii].Hubs {
 							if !data.Topologies[i].Spokes[ii].Hubs[iii].SiteListId.Equal(state.Topologies[i].Spokes[ii].Hubs[iii].SiteListId) {
+								hasChanges = true
+							}
+							if !data.Topologies[i].Spokes[ii].Hubs[iii].Preference.Equal(state.Topologies[i].Spokes[ii].Hubs[iii].Preference) {
+								hasChanges = true
+							}
+							if !data.Topologies[i].Spokes[ii].Hubs[iii].Ipv4PrefixListIds.Equal(state.Topologies[i].Spokes[ii].Hubs[iii].Ipv4PrefixListIds) {
+								hasChanges = true
+							}
+							if !data.Topologies[i].Spokes[ii].Hubs[iii].Ipv6PrefixListIds.Equal(state.Topologies[i].Spokes[ii].Hubs[iii].Ipv6PrefixListIds) {
 								hasChanges = true
 							}
 						}
