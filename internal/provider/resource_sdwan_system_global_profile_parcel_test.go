@@ -81,6 +81,9 @@ func testAccSdwanSystemGlobalProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	source_interface = "GigabitEthernet0/0/1"` + "\n"
+	config += `	http_authentication = "aaa"` + "\n"
+	config += `	ssh_version = "2"` + "\n"
 	config += `}` + "\n"
 	return config
 }
