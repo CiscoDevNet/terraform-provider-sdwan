@@ -4,7 +4,7 @@ page_title: "sdwan_cisco_secure_internet_gateway_feature_template Resource - ter
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cisco Secure Internet Gateway feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cisco_secure_internet_gateway_feature_template (Resource)

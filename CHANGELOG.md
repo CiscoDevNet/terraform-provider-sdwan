@@ -1,5 +1,10 @@
-## 0.3.8
+## 0.3.8 (unreleased)
 
+- Add `sdwan_system_flexible_port_speed_profile_parcel` resource and data source
+- Add `sdwan_system_mrf_profile_parcel` resource and data source
+- Add `sdwan_system_snmp_profile_parcel` resource and data source
+- Add `sdwan_system_basic_profile_parcel` resource and data source
+- Fix issue with deleted feature profile resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
 - Add `sdwan_transport_wan_vpn_profile_parcel` resource and data source
 
 ## 0.3.7

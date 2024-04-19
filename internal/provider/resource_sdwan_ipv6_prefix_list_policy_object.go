@@ -155,7 +155,7 @@ func (r *IPv6PrefixListPolicyObjectResource) Read(ctx context.Context, req resou
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
 	res, err := r.client.Get("/template/policy/list/ipv6prefix/" + url.QueryEscape(state.Id.ValueString()))
-	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") {
+	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") {
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {

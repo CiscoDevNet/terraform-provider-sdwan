@@ -4,7 +4,7 @@ page_title: "sdwan_cellular_controller_feature_template Resource - terraform-pro
 subcategory: "Feature Templates"
 description: |-
   This resource can manage a Cellular Controller feature template.
-    - Minimum SD-WAN Manager version: 15.0.0
+  Minimum SD-WAN Manager version: 15.0.0
 ---
 
 # sdwan_cellular_controller_feature_template (Resource)
