@@ -52,17 +52,20 @@ attributes:
         type: Bool
         description: All hubs are equal (All Spokes Sites connect to all Hubs)
         example: false
+        test_tags: [SDWAN_2012]
       - model_name: advertiseTloc
         tf_name: advertise_hub_tlocs
         type: Bool
         description: Advertise Hub TLOCs
         example: true
+        test_tags: [SDWAN_2012]
       - model_name: tlocList
         tf_name: tloc_list_id
         type: String
         description: TLOC list ID (required when `advertise_hub_tlocs` is 'true')
         example: b326e448-bf33-47e4-83e7-f947e6981382
         test_value: sdwan_tloc_list_policy_object.tloc1.id
+        test_tags: [SDWAN_2012]
       - model_name: spokes
         tf_name: spokes
         type: List
