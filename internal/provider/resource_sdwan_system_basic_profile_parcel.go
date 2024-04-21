@@ -471,7 +471,7 @@ func (r *SystemBasicProfileParcelResource) Read(ctx context.Context, req resourc
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
 	res, err := r.client.Get(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
-	if res.Get("error.message").String() == "Invalid Template Id" {
+	if res.Get("error.message").String() == "Invalid feature Id" {
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {
