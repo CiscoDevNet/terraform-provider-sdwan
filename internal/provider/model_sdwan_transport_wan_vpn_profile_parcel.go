@@ -144,7 +144,10 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.PrimaryDnsAddressIpv4Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4Variable.ValueString())
-	} else if true {
+	} else if data.PrimaryDnsAddressIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4.ValueString())
 	}
@@ -152,7 +155,10 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.SecondaryDnsAddressIpv4Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4Variable.ValueString())
-	} else if true {
+	} else if data.SecondaryDnsAddressIpv4.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4.ValueString())
 	}
@@ -160,7 +166,10 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.PrimaryDnsAddressIpv6Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6Variable.ValueString())
-	} else if true {
+	} else if data.PrimaryDnsAddressIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6.ValueString())
 	}
@@ -168,7 +177,10 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.SecondaryDnsAddressIpv6Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6Variable.ValueString())
-	} else if true {
+	} else if data.SecondaryDnsAddressIpv6.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6.ValueString())
 	}

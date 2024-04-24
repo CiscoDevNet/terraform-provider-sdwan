@@ -87,18 +87,6 @@ func testAccSdwanSystemBasicProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
-	config += `	config_description = "example"` + "\n"
-	config += `	location = "example"` + "\n"
-	config += `	gps_longitude = -77` + "\n"
-	config += `	gps_latitude = 38` + "\n"
-	config += `	device_groups = ["example"]` + "\n"
-	config += `	controller_groups = [1]` + "\n"
-	config += `	track_interface_tag = 2` + "\n"
-	config += `	max_omp_sessions = 24` + "\n"
-	config += `	idle_timeout = 10` + "\n"
-	config += `	site_types = ["type-1"]` + "\n"
-	config += `	affinity_group_number = 1` + "\n"
-	config += `	affinity_group_preferences = [1]` + "\n"
 	config += `}` + "\n"
 	return config
 }
