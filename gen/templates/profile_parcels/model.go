@@ -135,8 +135,10 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
   {{- range .Attributes}}
   {{- if and (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)) (not .Reference)}}
   {{if .RequiresDefault}}
+  if true {
     body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
     {{if .DefaultValuePresent}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+  }
   {{else}}
   {{if .Variable}}
   if !data.{{toGoName .TfName}}Variable.IsNull() {
@@ -162,8 +164,10 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
     {{- range .Attributes}}
     {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
     {{if .RequiresDefault}}
+    if true{
       itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
       {{if .DefaultValuePresent}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+    }
     {{else}}
     {{if .Variable}}
     if !item.{{toGoName .TfName}}Variable.IsNull() {
@@ -189,9 +193,11 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
       {{- range .Attributes}}
       {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
       {{if .RequiresDefault}}
+      if true {
         itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
         {{if .DefaultValuePresent}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
-      {{else}}
+      }
+        {{else}}
       {{if .Variable}}
       if !childItem.{{toGoName .TfName}}Variable.IsNull() {
         itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "variable")
@@ -216,8 +222,10 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
         {{- range .Attributes}}
         {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64") (eq .Type "Bool") (isListSet .)}}
         {{if .RequiresDefault}}
+        if true {
           itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
           {{if .DefaultValuePresent}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+        }
         {{else}}
         {{if .Variable}}
         if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {

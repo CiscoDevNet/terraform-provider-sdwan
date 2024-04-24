@@ -106,8 +106,10 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 
-	body, _ = sjson.Set(body, path+"vpnId.optionType", "default")
-	body, _ = sjson.Set(body, path+"vpnId.value", 512)
+	if true {
+		body, _ = sjson.Set(body, path+"vpnId.optionType", "default")
+		body, _ = sjson.Set(body, path+"vpnId.value", 512)
+	}
 
 	if !data.BasicConfigurationDescriptionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"name.optionType", "variable")

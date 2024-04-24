@@ -160,8 +160,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", item.TlsVersion.ValueString())
 		}
 
-		itemBody, _ = sjson.Set(itemBody, "authType.optionType", "default")
-		itemBody, _ = sjson.Set(itemBody, "authType.value", "Server")
+		if true {
+			itemBody, _ = sjson.Set(itemBody, "authType.optionType", "default")
+			itemBody, _ = sjson.Set(itemBody, "authType.value", "Server")
+		}
 
 		if !item.CipherSuiteListVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "variable")
