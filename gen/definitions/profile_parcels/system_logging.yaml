@@ -1,0 +1,72 @@
+---
+name: System Logging
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/logging
+minimum_version: 20.12.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: diskEnable
+    data_path: [disk]
+    example: true
+  - model_name: diskFileSize
+    data_path: [disk, file]
+    example: 9 
+  - model_name: diskFileRotate
+    data_path: [disk, file]
+    example: 10
+  - model_name: tlsProfile
+    attributes:
+      - model_name: profile
+        id: true
+        example: test
+      - model_name: tlsVersion
+        example: TLSv1.1
+      - model_name: authType
+        type: String
+        example: Server 
+      - model_name: cipherSuiteList
+        example: aes-128-cbc-sha
+  - model_name: server
+    attributes:
+      - model_name: name
+        id: true
+        example: "1.1.1.1"
+      - model_name: vpn
+        example: 512
+      - model_name: sourceInterface
+        example: GigabitEthernet1
+      - model_name: priority
+        example: informational
+      - model_name: tlsEnable
+        example: true
+      - model_name: tlsPropertiesCustomProfile
+        example: false
+      - model_name: tlsPropertiesProfile
+        example: test
+  - model_name: ipv6Server
+    attributes:
+      - model_name: name
+        id: true
+        example: "1.1.1.1"
+      - model_name: vpn
+        example: 512
+      - model_name: sourceInterface
+        example: GigabitEthernet1
+      - model_name: priority
+        example: informational
+      - model_name: tlsEnable
+        example: true
+      - model_name: tlsPropertiesCustomProfile
+        example: false
+      - model_name: tlsPropertiesProfile
+        example: test
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
