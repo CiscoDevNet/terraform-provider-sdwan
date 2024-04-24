@@ -167,6 +167,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitude.ValueInt64())
 	}
+
 	if data.GpsGeoFencingEnable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.optionType", "default")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.value", false)
@@ -185,6 +186,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.GpsGeoFencingRange.ValueInt64())
 	}
+
 	if data.GpsSmsEnable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "default")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", false)
@@ -192,6 +194,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", data.GpsSmsEnable.ValueBool())
 	}
+
 	for _, item := range data.GpsSmsMobileNumbers {
 		itemBody := ""
 
@@ -202,6 +205,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "number.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "number.value", item.Number.ValueString())
 		}
+
 		body, _ = sjson.SetRaw(body, path+"gpsLocation.geoFencing.sms.mobileNumber.-1", itemBody)
 	}
 
@@ -430,6 +434,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "global")
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", data.AffinityPreferenceAuto.ValueBool())
 	}
+
 	for _, item := range data.AffinityPerVrfs {
 		itemBody := ""
 
@@ -448,6 +453,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRange.ValueString())
 		}
+
 		body, _ = sjson.SetRaw(body, path+"affinityPerVrf.-1", itemBody)
 	}
 	return body

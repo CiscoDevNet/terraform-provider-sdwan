@@ -421,6 +421,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 		data.SiteTypes.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"siteTypes.value", values)
 	}
+
 	return body
 }
 

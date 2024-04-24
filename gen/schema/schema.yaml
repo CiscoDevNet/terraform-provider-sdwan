@@ -42,6 +42,7 @@ attribute:
   exclude_example: bool(required=False) # Exclude attribute from example (documentation)
   exclude_ignore: bool(required=False) # If true the object will not be included in the payload if vipType="ignore"
   exclude_null: bool(required=False) # If true the object will not be included in the payload if value not set (null)
+  requires_default: bool(required=False) # If true the object will be included as default only in payload
   node_only_container: bool(required=False) # Some node-only attributes are at the same time a container for other attributes, in this case set to "true"
   description: str(required=False) # Attribute description
   example: any(str(), int(), bool(), required=False) # Example value for documentation, also used for acceptance test

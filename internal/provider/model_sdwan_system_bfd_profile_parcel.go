@@ -103,6 +103,7 @@ func (data SystemBFD) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"defaultDscp.optionType", "global")
 		body, _ = sjson.Set(body, path+"defaultDscp.value", data.DefaultDscp.ValueInt64())
 	}
+
 	for _, item := range data.Colors {
 		itemBody := ""
 
@@ -157,6 +158,7 @@ func (data SystemBFD) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dscp.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "dscp.value", item.Dscp.ValueInt64())
 		}
+
 		body, _ = sjson.SetRaw(body, path+"colors.-1", itemBody)
 	}
 	return body

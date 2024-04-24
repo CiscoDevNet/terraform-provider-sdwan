@@ -340,6 +340,7 @@ func (data SystemGlobal) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "global")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersion.ValueString())
 	}
+
 	return body
 }
 

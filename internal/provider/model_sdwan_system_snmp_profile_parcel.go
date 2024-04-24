@@ -144,12 +144,15 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"location.optionType", "global")
 		body, _ = sjson.Set(body, path+"location.value", data.LocationOfDevice.ValueString())
 	}
+
 	for _, item := range data.Views {
 		itemBody := ""
+
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
+
 		for _, childItem := range item.Oids {
 			itemChildBody := ""
 
@@ -171,16 +174,19 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "exclude.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "exclude.value", childItem.Exclude.ValueBool())
 			}
+
 			itemBody, _ = sjson.SetRaw(itemBody, "oid.-1", itemChildBody)
 		}
 		body, _ = sjson.SetRaw(body, path+"view.-1", itemBody)
 	}
 	for _, item := range data.Communities {
 		itemBody := ""
+
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
+
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "userLabel.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "userLabel.value", item.UserLabel.ValueString())
@@ -201,14 +207,17 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "authorization.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "authorization.value", item.Authorization.ValueString())
 		}
+
 		body, _ = sjson.SetRaw(body, path+"community.-1", itemBody)
 	}
 	for _, item := range data.Groups {
 		itemBody := ""
+
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
+
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "securityLevel.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "securityLevel.value", item.SecurityLevel.ValueString())
@@ -221,10 +230,12 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "view.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "view.value", item.View.ValueString())
 		}
+
 		body, _ = sjson.SetRaw(body, path+"group.-1", itemBody)
 	}
 	for _, item := range data.Users {
 		itemBody := ""
+
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
@@ -269,6 +280,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "group.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "group.value", item.Group.ValueString())
 		}
+
 		body, _ = sjson.SetRaw(body, path+"user.-1", itemBody)
 	}
 	for _, item := range data.TrapTargetServers {
@@ -297,6 +309,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "port.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "port.value", item.Port.ValueInt64())
 		}
+
 		if true {
 			itemBody, _ = sjson.Set(itemBody, "userLabel.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "userLabel.value", item.UserLabel.ValueString())
@@ -317,6 +330,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
+
 		body, _ = sjson.SetRaw(body, path+"target.-1", itemBody)
 	}
 	return body
