@@ -132,10 +132,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	if !data.ContactPersonVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"contact.optionType", "variable")
 		body, _ = sjson.Set(body, path+"contact.value", data.ContactPersonVariable.ValueString())
-	} else if data.ContactPerson.IsNull() {
-		body, _ = sjson.Set(body, path+"contact.optionType", "default")
-
-	} else {
+	} else if !data.ContactPerson.IsNull() {
 		body, _ = sjson.Set(body, path+"contact.optionType", "global")
 		body, _ = sjson.Set(body, path+"contact.value", data.ContactPerson.ValueString())
 	}
@@ -143,16 +140,13 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	if !data.LocationOfDeviceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"location.optionType", "variable")
 		body, _ = sjson.Set(body, path+"location.value", data.LocationOfDeviceVariable.ValueString())
-	} else if data.LocationOfDevice.IsNull() {
-		body, _ = sjson.Set(body, path+"location.optionType", "default")
-
-	} else {
+	} else if !data.LocationOfDevice.IsNull() {
 		body, _ = sjson.Set(body, path+"location.optionType", "global")
 		body, _ = sjson.Set(body, path+"location.value", data.LocationOfDevice.ValueString())
 	}
 	for _, item := range data.Views {
 		itemBody := ""
-		if true {
+		if !item.Name.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
@@ -162,7 +156,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 			if !childItem.IdVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "id.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "id.value", childItem.IdVariable.ValueString())
-			} else if true {
+			} else if !childItem.Id.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "id.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "id.value", childItem.Id.ValueString())
 			}
@@ -183,11 +177,11 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	}
 	for _, item := range data.Communities {
 		itemBody := ""
-		if true {
+		if !item.Name.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
-		if true {
+		if !item.UserLabel.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "userLabel.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "userLabel.value", item.UserLabel.ValueString())
 		}
@@ -195,7 +189,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.ViewVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "view.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "view.value", item.ViewVariable.ValueString())
-		} else if true {
+		} else if !item.View.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "view.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "view.value", item.View.ValueString())
 		}
@@ -203,7 +197,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.AuthorizationVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "authorization.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "authorization.value", item.AuthorizationVariable.ValueString())
-		} else if true {
+		} else if !item.Authorization.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "authorization.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "authorization.value", item.Authorization.ValueString())
 		}
@@ -211,11 +205,11 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	}
 	for _, item := range data.Groups {
 		itemBody := ""
-		if true {
+		if !item.Name.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
-		if true {
+		if !item.SecurityLevel.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "securityLevel.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "securityLevel.value", item.SecurityLevel.ValueString())
 		}
@@ -223,7 +217,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.ViewVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "view.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "view.value", item.ViewVariable.ValueString())
-		} else if true {
+		} else if !item.View.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "view.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "view.value", item.View.ValueString())
 		}
@@ -231,7 +225,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	}
 	for _, item := range data.Users {
 		itemBody := ""
-		if true {
+		if !item.Name.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
@@ -239,10 +233,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.AuthenticationProtocolVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "auth.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "auth.value", item.AuthenticationProtocolVariable.ValueString())
-		} else if item.AuthenticationProtocol.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "auth.optionType", "default")
-
-		} else {
+		} else if !item.AuthenticationProtocol.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "auth.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "auth.value", item.AuthenticationProtocol.ValueString())
 		}
@@ -250,10 +241,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.AuthenticationPasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPasswordVariable.ValueString())
-		} else if item.AuthenticationPassword.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "default")
-
-		} else {
+		} else if !item.AuthenticationPassword.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPassword.ValueString())
 		}
@@ -261,10 +249,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.PrivacyProtocolVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "priv.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "priv.value", item.PrivacyProtocolVariable.ValueString())
-		} else if item.PrivacyProtocol.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "priv.optionType", "default")
-
-		} else {
+		} else if !item.PrivacyProtocol.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "priv.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "priv.value", item.PrivacyProtocol.ValueString())
 		}
@@ -272,10 +257,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.PrivacyPasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPasswordVariable.ValueString())
-		} else if item.PrivacyPassword.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "default")
-
-		} else {
+		} else if !item.PrivacyPassword.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPassword.ValueString())
 		}
@@ -283,7 +265,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.GroupVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "group.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "group.value", item.GroupVariable.ValueString())
-		} else if true {
+		} else if !item.Group.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "group.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "group.value", item.Group.ValueString())
 		}
@@ -295,7 +277,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.VpnIdVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vpnId.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "vpnId.value", item.VpnIdVariable.ValueString())
-		} else if true {
+		} else if !item.VpnId.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vpnId.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "vpnId.value", item.VpnId.ValueInt64())
 		}
@@ -303,7 +285,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.IpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ip.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ip.value", item.IpVariable.ValueString())
-		} else if true {
+		} else if !item.Ip.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ip.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ip.value", item.Ip.ValueString())
 		}
@@ -311,11 +293,11 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.PortVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "port.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "port.value", item.PortVariable.ValueString())
-		} else if true {
+		} else if !item.Port.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "port.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "port.value", item.Port.ValueInt64())
 		}
-		if true {
+		if !item.UserLabel.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "userLabel.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "userLabel.value", item.UserLabel.ValueString())
 		}
@@ -323,7 +305,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.UserVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "user.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "user.value", item.UserVariable.ValueString())
-		} else if true {
+		} else if !item.User.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "user.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "user.value", item.User.ValueString())
 		}
@@ -331,7 +313,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-		} else if true {
+		} else if !item.SourceInterface.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}

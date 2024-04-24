@@ -124,10 +124,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	if !data.OverlayAsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"overlayAs.optionType", "variable")
 		body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAsVariable.ValueString())
-	} else if data.OverlayAs.IsNull() {
-		body, _ = sjson.Set(body, path+"overlayAs.optionType", "default")
-
-	} else {
+	} else if !data.OverlayAs.IsNull() {
 		body, _ = sjson.Set(body, path+"overlayAs.optionType", "global")
 		body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAs.ValueInt64())
 	}
@@ -410,10 +407,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	if !data.TransportGatewayVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"transportGateway.optionType", "variable")
 		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGatewayVariable.ValueString())
-	} else if data.TransportGateway.IsNull() {
-		body, _ = sjson.Set(body, path+"transportGateway.optionType", "default")
-
-	} else {
+	} else if !data.TransportGateway.IsNull() {
 		body, _ = sjson.Set(body, path+"transportGateway.optionType", "global")
 		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueString())
 	}
@@ -421,10 +415,7 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	if !data.SiteTypesVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"siteTypes.optionType", "variable")
 		body, _ = sjson.Set(body, path+"siteTypes.value", data.SiteTypesVariable.ValueString())
-	} else if data.SiteTypes.IsNull() {
-		body, _ = sjson.Set(body, path+"siteTypes.optionType", "default")
-
-	} else {
+	} else if !data.SiteTypes.IsNull() {
 		body, _ = sjson.Set(body, path+"siteTypes.optionType", "global")
 		var values []string
 		data.SiteTypes.ElementsAs(ctx, &values, false)

@@ -754,13 +754,12 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
 				attr.DefaultValue = value.String()
 				attr.DefaultValuePresent = true
+			} else {
+				attr.ParcelMandatory = true
+				// if !attr.Variable {
+				// 	attr.Mandatory = true
+				// }
 			}
-			// } else {
-			// attr.ParcelMandatory = true
-			// if !attr.Variable {
-			// 	attr.Mandatory = true
-			// }
-			// }
 		} else if isOneOfAttribute {
 			attr.ParcelMandatory = true
 			attr.ExcludeNull = true

@@ -80,6 +80,10 @@ func testAccSdwanTransportWANVPNProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
+	config += `	secondary_dns_address_ipv4 = "2.3.4.5"` + "\n"
+	config += `	primary_dns_address_ipv6 = "2001:0:0:1::0"` + "\n"
+	config += `	secondary_dns_address_ipv6 = "2001:0:0:2::0"` + "\n"
 	config += `}` + "\n"
 	return config
 }
