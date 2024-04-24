@@ -199,7 +199,7 @@ func (data SystemGlobal) toBody(ctx context.Context) string {
 	if !data.SourceInterfaceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "variable")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterfaceVariable.ValueString())
-	} else if true {
+	} else if !data.SourceInterface.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "global")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterface.ValueString())
 	}
@@ -328,7 +328,7 @@ func (data SystemGlobal) toBody(ctx context.Context) string {
 	if !data.HttpAuthenticationVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "variable")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthenticationVariable.ValueString())
-	} else if true {
+	} else if !data.HttpAuthentication.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "global")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthentication.ValueString())
 	}
@@ -336,7 +336,7 @@ func (data SystemGlobal) toBody(ctx context.Context) string {
 	if !data.SshVersionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "variable")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersionVariable.ValueString())
-	} else if true {
+	} else if !data.SshVersion.IsNull() {
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "global")
 		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersion.ValueString())
 	}

@@ -756,13 +756,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				attr.DefaultValuePresent = true
 			} else {
 				attr.ParcelMandatory = true
-				if !attr.Variable {
-					attr.Mandatory = true
-				}
+				// if !attr.Variable {
+				// 	attr.Mandatory = true
+				// }
 			}
 		} else if isOneOfAttribute {
 			attr.ParcelMandatory = true
 			attr.ExcludeNull = true
+
 		} else {
 			attr.ParcelMandatory = true
 			if !attr.Variable {

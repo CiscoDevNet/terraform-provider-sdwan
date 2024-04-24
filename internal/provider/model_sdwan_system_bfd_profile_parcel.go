@@ -109,7 +109,7 @@ func (data SystemBFD) toBody(ctx context.Context) string {
 		if !item.ColorVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "color.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "color.value", item.ColorVariable.ValueString())
-		} else if true {
+		} else if !item.Color.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "color.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "color.value", item.Color.ValueString())
 		}
