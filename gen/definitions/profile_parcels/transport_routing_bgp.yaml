@@ -1,0 +1,325 @@
+---
+name: Transport Routing BGP
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/routing/bgp
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: asNum
+    tf_name: as_number
+    example: 429
+  - model_name: routerId
+    tf_name: router_id
+    example: "1.2.3.4"
+  - model_name: propagateAspath
+    tf_name: propagate_as_path
+    example: false
+  - model_name: propagateCommunity
+    example: false
+  - model_name: external
+    tf_name: external_routes_distance
+    example: 20
+  - model_name: internal
+    tf_name: internal_routes_distance
+    example: 200
+  - model_name: local
+    tf_name: local_routes_distance
+    example: 20
+  - model_name: keepalive
+    tf_name: keepalive_time
+    example: 60
+  - model_name: holdtime
+    tf_name: hold_time
+    example: 180
+  - model_name: alwaysCompare
+    tf_name: compare_med
+    example: false
+  - model_name: deterministic
+    tf_name: deterministic_med
+    example: false
+  - model_name: missingAsWorst
+    tf_name: missing_med_as_worst
+    example: false
+  - model_name: compareRouterId
+    example: false
+  - model_name: multipathRelax
+    example: false
+  - model_name: neighbor
+    tf_name: ipv4_neighbors
+    attributes:
+    - model_name: address
+      example: 1.2.3.4
+    - model_name: description
+      id: true
+      example: neighbor1
+    - model_name: shutdown
+      example: false
+    - model_name: remoteAs
+      example: 200
+    - model_name: keepalive
+      tf_name: keepalive_time
+      example: 40
+    - model_name: holdtime
+      tf_name: hold_time
+      example: 200
+    - model_name: ifName
+      tf_name: update_source_interface
+      example: GigabitEthernet0
+    - model_name: nextHopSelf
+      example: false
+    - model_name: sendCommunity
+      example: true
+    - model_name: sendExtCommunity
+      tf_name: send_extended_community
+      example: true
+    - model_name: ebgpMultihop
+      example: 1
+    - model_name: password
+      write_only: true
+      example: myPassword
+    - model_name: sendLabel
+      example: true
+    - model_name: sendLabelExplicit
+      tf_name: explicit_null
+      example: false
+    - model_name: asOverride
+      example: false
+    - model_name: asNumber
+      tf_name: allowas_in_number
+      example: 1
+    - model_name: addressFamily
+      tf_name: address_families
+      attributes:
+      - model_name: familyType
+        id: true
+        example: ipv4-unicast
+      - model_name: prefixNum
+        tf_name: max_number_of_prefixes
+        data_path: [maxPrefixConfig]
+        example: 2000
+      - model_name: threshold
+        data_path: [maxPrefixConfig]
+        example: 75
+      - model_name: policyType
+        data_path: [maxPrefixConfig]
+        type: String
+        example: restart
+      - model_name: restartInterval
+        data_path: [maxPrefixConfig]
+        example: 30
+      # === UX2.0 Route Policy Not Supported by Provider ===
+      - model_name: refId
+        tf_name: in_route_policy_id
+        data_path: [inRoutePolicy]
+        exclude_test: true
+        example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+      # === UX2.0 Route Policy Not Supported by Provider ===
+      - model_name: refId
+        tf_name: out_route_policy_id
+        data_path: [outRoutePolicy]
+        exclude_test: true
+        example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+  - model_name: ipv6Neighbor
+    tf_name: ipv6_neighbors
+    attributes:
+    - model_name: address
+      example: "2001::1"
+    - model_name: description
+      id: true
+      example: neighbor2
+    - model_name: shutdown
+      example: false
+    - model_name: remoteAs
+      example: 200
+    - model_name: keepalive
+      tf_name: keepalive_time
+      example: 180
+    - model_name: holdtime
+      tf_name: hold_time
+      example: 60
+    - model_name: ifName
+      tf_name: update_source_interface
+      example: Loopback1
+    - model_name: nextHopSelf
+      example: true
+    - model_name: sendCommunity
+      example: true
+    - model_name: sendExtCommunity
+      tf_name: send_extended_community
+      example: true
+    - model_name: ebgpMultihop
+      example: 3
+    - model_name: password
+      write_only: true
+      example: myPassword
+    - model_name: asOverride
+      example: true
+    - model_name: asNumber
+      tf_name: allowas_in_number
+      example: 3
+    - model_name: addressFamily
+      tf_name: address_families
+      attributes:
+      - model_name: familyType
+        id: true
+        example: ipv6-unicast
+      - model_name: prefixNum
+        tf_name: max_number_of_prefixes
+        data_path: [maxPrefixConfig]
+        example: 2000
+      - model_name: threshold
+        data_path: [maxPrefixConfig]
+        example: 75
+      - model_name: policyType
+        data_path: [maxPrefixConfig]
+        type: String
+        example: restart
+      - model_name: restartInterval
+        data_path: [maxPrefixConfig]
+        example: 30
+        # === UX2.0 Route Policy Not Supported by Provider ===
+      - model_name: refId
+        tf_name: in_route_policy_id
+        data_path: [inRoutePolicy]
+        exclude_test: true
+        example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+        # === UX2.0 Route Policy Not Supported by Provider ===
+      - model_name: refId
+        tf_name: out_route_policy_id
+        data_path: [outRoutePolicy]
+        exclude_test: true
+        example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+  - model_name: aggregateAddress
+    tf_name: ipv4_aggregate_addresses
+    data_path: [addressFamily]
+    attributes:
+    - model_name: address
+      tf_name: network_address
+      data_path: [prefix]
+      id: true
+      example: 10.10.0.0
+    - model_name: mask
+      tf_name: subnet_mask
+      data_path: [prefix]
+      example: 255.255.0.0
+    - model_name: asSet
+      tf_name: as_set_path
+      example: false
+    - model_name: summaryOnly
+      example: false
+  - model_name: network
+    tf_name: ipv4_networks
+    data_path: [addressFamily]
+    attributes:
+    - model_name: address
+      tf_name: network_address
+      data_path: [prefix]
+      id: true
+      example: 10.10.0.0
+    - model_name: mask
+      tf_name: subnet_mask
+      data_path: [prefix]
+      example: 255.255.0.0
+  - model_name: paths
+    tf_name: ipv4_eibgp_maximum_paths
+    data_path: [addressFamily]
+    example: 1
+  - model_name: originate
+    tf_name: ipv4_originate
+    data_path: [addressFamily]
+    example: false
+  #   # === UX2.0 Route Policy Not Supported by Provider ===
+  # - model_name: refId
+  #   tf_name: ipv4_table_map_route_policy_id
+  #   data_path: [addressFamily, name]
+  #   exclude_test: true
+  #   example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+  #   # test_value:
+  - model_name: filter
+    tf_name: ipv4_table_map_filter
+    data_path: [addressFamily]
+    example: false
+  - model_name: redistribute
+    tf_name: ipv4_redistributes
+    data_path: [addressFamily]
+    exclude_test: true
+    attributes:
+    - model_name: protocol
+      example: static
+      # === UX2.0 Route Policy Not Supported by Provider ===
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      id: true
+      example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+  - model_name: ipv6AggregateAddress
+    tf_name: ipv6_aggregate_addresses
+    data_path: [ipv6AddressFamily]
+    attributes:
+    - model_name: prefix
+      tf_name: aggregate_prefix
+      id: true
+      example: 3001::1/128
+    - model_name: asSet
+      tf_name: as_set_path
+      example: false
+    - model_name: summaryOnly
+      example: false
+  - model_name: ipv6Network
+    tf_name: ipv6_network
+    data_path: [ipv6AddressFamily]
+    attributes:
+    - model_name: prefix
+      tf_name: network_prefix
+      id: true
+      example: 2001:0DB8:0000:000b::/64
+  - model_name: paths
+    tf_name: ipv6_eibgp_maximum_paths
+    data_path: [ipv6AddressFamily]
+    example: 2
+  - model_name: originate
+    tf_name: ipv6_originate
+    data_path: [ipv6AddressFamily]
+    example: true
+  #   # === UX2.0 Route Policy Not Supported by Provider ===
+  # - model_name: refId
+  #   tf_name: ipv6_table_map_route_policy_id
+  #   data_path: [ipv6AddressFamily, name]
+  #   exclude_test: true
+  #   example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+  #   # test_value:
+  - model_name: filter
+    tf_name: ipv6_table_map_filter
+    data_path: [ipv6AddressFamily]
+    example: false
+  - model_name: redistribute
+    tf_name: ipv6_redistributes
+    data_path: [ipv6AddressFamily]
+    exclude_test: true
+    attributes:
+    - model_name: protocol
+      example: static
+      # === UX2.0 Route Policy Not Supported by Provider ===
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      id: true
+      example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+  - model_name: mplsInterface
+    tf_name: mpls_interfaces
+    attributes:
+    - model_name: ifName
+      tf_name: interface_name
+      id: true
+      example: GigabitEthernet1
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
