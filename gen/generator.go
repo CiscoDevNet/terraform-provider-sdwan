@@ -686,8 +686,16 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
 
-	if r.Get("type").String() == "object" {
+	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+		if value := r.Get("properties.optionType.enum.0"); value.Exists() {
+			// if value := r.Get("properties.optionType.enum.0=\"global\""); value.Exists() {
+			t = r
+		} else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
+			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\")"); value.Exists() {
+			t = r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\").properties.refId")
+		}
+
 		if t.Exists() {
 			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
 				attr.Type = "String"
@@ -733,6 +741,8 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				// if value := t.Get("properties.value.items.maximum"); value.Exists() {
 				// 	attr.MaxInt = value.Int()
 				// }
+			} else if t.Get("properties.value.const").String() == "true" || t.Get("properties.value.const").String() == "false" {
+				attr.Type = "Bool"
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
