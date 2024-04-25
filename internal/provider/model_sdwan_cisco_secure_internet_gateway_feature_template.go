@@ -235,14 +235,14 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "description."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "description."+"vipValue", item.Description.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "unnumbered")
+		itemAttributes = append(itemAttributes, "ip")
 		if item.IpUnnumbered.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ip.unnumbered."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "ip.unnumbered."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ip.unnumbered."+"vipValue", strconv.FormatBool(item.IpUnnumbered.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "address")
+		itemAttributes = append(itemAttributes, "ip")
 
 		if !item.Ipv4AddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ip.address."+"vipObjectType", "object")
@@ -349,7 +349,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "mtu."+"vipValue", item.Mtu.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "dpd-interval")
+		itemAttributes = append(itemAttributes, "dead-peer-detection")
 
 		if !item.DeadPeerDetectionIntervalVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dead-peer-detection.dpd-interval."+"vipObjectType", "object")
@@ -363,7 +363,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dead-peer-detection.dpd-interval."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dead-peer-detection.dpd-interval."+"vipValue", item.DeadPeerDetectionInterval.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "dpd-retries")
+		itemAttributes = append(itemAttributes, "dead-peer-detection")
 
 		if !item.DeadPeerDetectionRetriesVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dead-peer-detection.dpd-retries."+"vipObjectType", "object")
@@ -377,7 +377,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dead-peer-detection.dpd-retries."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dead-peer-detection.dpd-retries."+"vipValue", item.DeadPeerDetectionRetries.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "ike-version")
+		itemAttributes = append(itemAttributes, "ike")
 
 		if !item.IkeVersionVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipObjectType", "object")
@@ -389,7 +389,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-version."+"vipValue", item.IkeVersion.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "pre-shared-secret")
+		itemAttributes = append(itemAttributes, "ike")
 
 		if !item.IkePreSharedKeyVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipObjectType", "object")
@@ -401,7 +401,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.pre-shared-secret."+"vipValue", item.IkePreSharedKey.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "ike-rekey-interval")
+		itemAttributes = append(itemAttributes, "ike")
 
 		if !item.IkeRekeyIntervalVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipObjectType", "object")
@@ -413,7 +413,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-rekey-interval."+"vipValue", item.IkeRekeyInterval.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "ike-ciphersuite")
+		itemAttributes = append(itemAttributes, "ike")
 
 		if !item.IkeCiphersuiteVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipObjectType", "object")
@@ -425,7 +425,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-ciphersuite."+"vipValue", item.IkeCiphersuite.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "ike-group")
+		itemAttributes = append(itemAttributes, "ike")
 
 		if !item.IkeGroupVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipObjectType", "object")
@@ -437,14 +437,14 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.ike-group."+"vipValue", item.IkeGroup.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "pre-shared-key-dynamic")
+		itemAttributes = append(itemAttributes, "ike")
 		if item.IkePreSharedKeyDynamic.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key-dynamic."+"vipObjectType", "node-only")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key-dynamic."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key-dynamic."+"vipValue", strconv.FormatBool(item.IkePreSharedKeyDynamic.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "ike-local-id")
+		itemAttributes = append(itemAttributes, "ike")
 
 		if !item.IkePreSharedKeyLocalIdVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipObjectType", "object")
@@ -456,7 +456,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-local-id."+"vipValue", item.IkePreSharedKeyLocalId.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "ike-remote-id")
+		itemAttributes = append(itemAttributes, "ike")
 
 		if !item.IkePreSharedKeyRemoteIdVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipObjectType", "object")
@@ -468,7 +468,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ike.authentication-type.pre-shared-key.ike-remote-id."+"vipValue", item.IkePreSharedKeyRemoteId.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "ipsec-rekey-interval")
+		itemAttributes = append(itemAttributes, "ipsec")
 
 		if !item.IpsecRekeyIntervalVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipObjectType", "object")
@@ -480,7 +480,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-rekey-interval."+"vipValue", item.IpsecRekeyInterval.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "ipsec-replay-window")
+		itemAttributes = append(itemAttributes, "ipsec")
 
 		if !item.IpsecReplayWindowVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipObjectType", "object")
@@ -492,7 +492,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-replay-window."+"vipValue", item.IpsecReplayWindow.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "ipsec-ciphersuite")
+		itemAttributes = append(itemAttributes, "ipsec")
 
 		if !item.IpsecCiphersuiteVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipObjectType", "object")
@@ -504,7 +504,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "ipsec.ipsec-ciphersuite."+"vipValue", item.IpsecCiphersuite.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "perfect-forward-secrecy")
+		itemAttributes = append(itemAttributes, "ipsec")
 
 		if !item.IpsecPerfectForwardSecrecyVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipsec.perfect-forward-secrecy."+"vipObjectType", "object")
@@ -575,7 +575,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "svc-type."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "svc-type."+"vipValue", item.ServiceType.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "interface-pair")
+		itemAttributes = append(itemAttributes, "ha-pairs")
 		if len(item.InterfacePairs) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "ha-pairs.interface-pair."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "ha-pairs.interface-pair."+"vipType", "constant")
@@ -624,42 +624,42 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			}
 			itemBody, _ = sjson.SetRaw(itemBody, "ha-pairs.interface-pair."+"vipValue.-1", itemChildBody)
 		}
-		itemAttributes = append(itemAttributes, "auth-required")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerAuthenticationRequired.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.auth-required."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.auth-required."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.auth-required."+"vipValue", strconv.FormatBool(item.ZscalerAuthenticationRequired.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "xff-forward-enabled")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerXffForward.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.xff-forward-enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.xff-forward-enabled."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.xff-forward-enabled."+"vipValue", strconv.FormatBool(item.ZscalerXffForward.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "ofw-enabled")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerFirewallEnabled.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ofw-enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ofw-enabled."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ofw-enabled."+"vipValue", strconv.FormatBool(item.ZscalerFirewallEnabled.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "ips-control")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerIpsControlEnabled.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ips-control."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ips-control."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.ips-control."+"vipValue", strconv.FormatBool(item.ZscalerIpsControlEnabled.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "caution-enabled")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerCautionEnabled.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.caution-enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.caution-enabled."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.caution-enabled."+"vipValue", strconv.FormatBool(item.ZscalerCautionEnabled.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "primary-data-center")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 
 		if !item.ZscalerPrimaryDataCenterVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipObjectType", "object")
@@ -671,7 +671,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.primary-data-center."+"vipValue", item.ZscalerPrimaryDataCenter.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "secondary-data-center")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 
 		if !item.ZscalerSecondaryDataCenterVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipObjectType", "object")
@@ -683,35 +683,35 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.datacenters.secondary-data-center."+"vipValue", item.ZscalerSecondaryDataCenter.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "ip")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerSurrogateIp.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip."+"vipValue", strconv.FormatBool(item.ZscalerSurrogateIp.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "idle-time")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerSurrogateIdleTime.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.idle-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.idle-time."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.idle-time."+"vipValue", item.ZscalerSurrogateIdleTime.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "display-time-unit")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerSurrogateDisplayTimeUnit.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.display-time-unit."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.display-time-unit."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.display-time-unit."+"vipValue", item.ZscalerSurrogateDisplayTimeUnit.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "ip-enforced-for-known-browsers")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerSurrogateIpEnforceForKnownBrowsers.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.ip-enforced-for-known-browsers."+"vipValue", strconv.FormatBool(item.ZscalerSurrogateIpEnforceForKnownBrowsers.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "refresh-time")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerSurrogateRefreshTime.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipType", "ignore")
@@ -720,42 +720,42 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time."+"vipValue", item.ZscalerSurrogateRefreshTime.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "refresh-time-unit")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerSurrogateRefreshTimeUnit.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.surrogate.refresh-time-unit."+"vipValue", item.ZscalerSurrogateRefreshTimeUnit.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "enabled")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerAupEnabled.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.enabled."+"vipValue", strconv.FormatBool(item.ZscalerAupEnabled.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "block-internet-until-accepted")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerAupBlockInternetUntilAccepted.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.block-internet-until-accepted."+"vipValue", strconv.FormatBool(item.ZscalerAupBlockInternetUntilAccepted.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "force-ssl-inspection")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerAupForceSslInspection.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.force-ssl-inspection."+"vipValue", strconv.FormatBool(item.ZscalerAupForceSslInspection.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "timeout")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 		if item.ZscalerAupTimeout.IsNull() {
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.aup.timeout."+"vipValue", item.ZscalerAupTimeout.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "location-name")
+		itemAttributes = append(itemAttributes, "zscaler-location-settings")
 
 		if !item.ZscalerLocationNameVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipObjectType", "object")
@@ -767,7 +767,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "zscaler-location-settings.location-name."+"vipValue", item.ZscalerLocationName.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "data-center-primary")
+		itemAttributes = append(itemAttributes, "umbrella-data-center")
 
 		if !item.UmbrellaPrimaryDataCenterVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipObjectType", "object")
@@ -779,7 +779,7 @@ func (data CiscoSecureInternetGateway) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-primary."+"vipValue", item.UmbrellaPrimaryDataCenter.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "data-center-secondary")
+		itemAttributes = append(itemAttributes, "umbrella-data-center")
 
 		if !item.UmbrellaSecondaryDataCenterVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "umbrella-data-center.data-center-secondary."+"vipObjectType", "object")

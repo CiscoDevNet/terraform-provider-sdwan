@@ -162,7 +162,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "if-name."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "if-name."+"vipValue", item.Name.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "mode")
+		itemAttributes = append(itemAttributes, "switchport")
 		if item.SwitchportMode.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "switchport", map[string]interface{}{})
 		} else {
@@ -212,7 +212,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "duplex."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "duplex."+"vipValue", item.Duplex.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "vlan")
+		itemAttributes = append(itemAttributes, "switchport")
 
 		if !item.SwitchportAccessVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "switchport.access.vlan.vlan."+"vipObjectType", "object")
@@ -226,7 +226,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "switchport.access.vlan.vlan."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "switchport.access.vlan.vlan."+"vipValue", item.SwitchportAccessVlan.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "vlans")
+		itemAttributes = append(itemAttributes, "switchport")
 
 		if !item.SwitchportTrunkAllowedVlansVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "switchport.trunk.allowed.vlan.vlans."+"vipObjectType", "object")
@@ -240,7 +240,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "switchport.trunk.allowed.vlan.vlans."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "switchport.trunk.allowed.vlan.vlans."+"vipValue", item.SwitchportTrunkAllowedVlans.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "vlan")
+		itemAttributes = append(itemAttributes, "switchport")
 
 		if !item.SwitchportTrunkNativeVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "switchport.trunk.native.vlan."+"vipObjectType", "object")
@@ -254,7 +254,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "switchport.trunk.native.vlan."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "switchport.trunk.native.vlan."+"vipValue", item.SwitchportTrunkNativeVlan.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "dot1x-enable")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xEnableVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipObjectType", "object")
@@ -268,7 +268,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipValue", strconv.FormatBool(item.Dot1xEnable.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "port-control")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xPortControlVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.port-control."+"vipObjectType", "object")
@@ -282,7 +282,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.port-control."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.port-control."+"vipValue", item.Dot1xPortControl.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "auth-order")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xAuthenticationOrderVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.auth-order."+"vipObjectType", "list")
@@ -298,7 +298,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			item.Dot1xAuthenticationOrder.ElementsAs(ctx, &values, false)
 			itemBody, _ = sjson.Set(itemBody, "dot1x.auth-order."+"vipValue", values)
 		}
-		itemAttributes = append(itemAttributes, "voice-vlan")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.VoiceVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipObjectType", "object")
@@ -312,7 +312,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.voice-vlan."+"vipValue", item.VoiceVlan.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "pae-enable")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xPaeEnableVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.pae-enable."+"vipObjectType", "object")
@@ -325,7 +325,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.pae-enable."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.pae-enable."+"vipValue", strconv.FormatBool(item.Dot1xPaeEnable.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "mac-authentication-bypass")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xMacAuthenticationBypassVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.mac-authentication-bypass."+"vipObjectType", "object")
@@ -339,7 +339,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.mac-authentication-bypass."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.mac-authentication-bypass."+"vipValue", strconv.FormatBool(item.Dot1xMacAuthenticationBypass.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "host-mode")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xHostModeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.host-mode."+"vipObjectType", "object")
@@ -352,7 +352,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.host-mode."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.host-mode."+"vipValue", item.Dot1xHostMode.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "enable-periodic-reauth")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xEnablePeriodicReauthVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.enable-periodic-reauth."+"vipObjectType", "object")
@@ -365,7 +365,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.enable-periodic-reauth."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.enable-periodic-reauth."+"vipValue", strconv.FormatBool(item.Dot1xEnablePeriodicReauth.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "inactivity")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xPeriodicReauthInactivityTimeoutVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.periodic-reauthentication.inactivity."+"vipObjectType", "object")
@@ -379,7 +379,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.periodic-reauthentication.inactivity."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.periodic-reauthentication.inactivity."+"vipValue", item.Dot1xPeriodicReauthInactivityTimeout.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "reauthentication")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xPeriodicReauthIntervalVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.periodic-reauthentication.reauthentication."+"vipObjectType", "object")
@@ -393,7 +393,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.periodic-reauthentication.reauthentication."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.periodic-reauthentication.reauthentication."+"vipValue", item.Dot1xPeriodicReauthInterval.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "control-direction")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xControlDirectionVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.control-direction."+"vipObjectType", "object")
@@ -406,7 +406,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.control-direction."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.control-direction."+"vipValue", item.Dot1xControlDirection.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "restricted-vlan")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xRestrictedVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.restricted-vlan."+"vipObjectType", "object")
@@ -420,7 +420,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.restricted-vlan."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.restricted-vlan."+"vipValue", item.Dot1xRestrictedVlan.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "guest-vlan")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xGuestVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.guest-vlan."+"vipObjectType", "object")
@@ -434,7 +434,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.guest-vlan."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.guest-vlan."+"vipValue", item.Dot1xGuestVlan.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "critical-vlan")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xCriticalVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.critical-vlan."+"vipObjectType", "object")
@@ -448,7 +448,7 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.critical-vlan."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.critical-vlan."+"vipValue", item.Dot1xCriticalVlan.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "enable-voice")
+		itemAttributes = append(itemAttributes, "dot1x")
 
 		if !item.Dot1xEnableCriticialVoiceVlanVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.event.enable-voice."+"vipObjectType", "object")

@@ -2080,7 +2080,7 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "track-prefix-list."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "track-prefix-list."+"vipValue", item.TrackPrefixList.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "address")
+		itemAttributes = append(itemAttributes, "ipv4")
 
 		if !item.IpAddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipv4.address."+"vipObjectType", "object")
