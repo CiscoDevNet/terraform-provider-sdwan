@@ -239,7 +239,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	if !data.AsNumberVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"asNum.optionType", "variable")
 		body, _ = sjson.Set(body, path+"asNum.value", data.AsNumberVariable.ValueString())
-	} else if true {
+	} else if !data.AsNumber.IsNull() {
 		body, _ = sjson.Set(body, path+"asNum.optionType", "global")
 		body, _ = sjson.Set(body, path+"asNum.value", data.AsNumber.ValueInt64())
 	}
@@ -247,7 +247,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	if !data.RouterIdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"routerId.optionType", "variable")
 		body, _ = sjson.Set(body, path+"routerId.value", data.RouterIdVariable.ValueString())
-	} else if true {
+	} else if !data.RouterId.IsNull() {
 		body, _ = sjson.Set(body, path+"routerId.optionType", "global")
 		body, _ = sjson.Set(body, path+"routerId.value", data.RouterId.ValueString())
 	}
@@ -389,7 +389,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.AddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "address.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "address.value", item.AddressVariable.ValueString())
-		} else if true {
+		} else if !item.Address.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "address.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "address.value", item.Address.ValueString())
 		}
@@ -397,7 +397,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.DescriptionVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.DescriptionVariable.ValueString())
-		} else if true {
+		} else if !item.Description.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.Description.ValueString())
 		}
@@ -416,7 +416,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.RemoteAsVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAsVariable.ValueString())
-		} else if true {
+		} else if !item.RemoteAs.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAs.ValueInt64())
 		}
@@ -446,7 +446,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.UpdateSourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterfaceVariable.ValueString())
-		} else if true {
+		} else if !item.UpdateSourceInterface.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterface.ValueString())
 		}
@@ -498,7 +498,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.PasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordVariable.ValueString())
-		} else if true {
+		} else if !item.Password.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 		}
@@ -535,13 +535,13 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.AllowasInNumberVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumberVariable.ValueString())
-		} else if true {
+		} else if !item.AllowasInNumber.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumber.ValueInt64())
 		}
 		for _, childItem := range item.AddressFamilies {
 			itemChildBody := ""
-			if true {
+			if !childItem.FamilyType.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.value", childItem.FamilyType.ValueString())
 			}
@@ -579,7 +579,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.AddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "address.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "address.value", item.AddressVariable.ValueString())
-		} else if true {
+		} else if !item.Address.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "address.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "address.value", item.Address.ValueString())
 		}
@@ -587,7 +587,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.DescriptionVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.DescriptionVariable.ValueString())
-		} else if true {
+		} else if !item.Description.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.Description.ValueString())
 		}
@@ -606,7 +606,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.RemoteAsVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAsVariable.ValueString())
-		} else if true {
+		} else if !item.RemoteAs.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "remoteAs.value", item.RemoteAs.ValueInt64())
 		}
@@ -636,7 +636,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.UpdateSourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterfaceVariable.ValueString())
-		} else if true {
+		} else if !item.UpdateSourceInterface.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterface.ValueString())
 		}
@@ -688,7 +688,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.PasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordVariable.ValueString())
-		} else if true {
+		} else if !item.Password.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 		}
@@ -707,13 +707,13 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.AllowasInNumberVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumberVariable.ValueString())
-		} else if true {
+		} else if !item.AllowasInNumber.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumber.ValueInt64())
 		}
 		for _, childItem := range item.AddressFamilies {
 			itemChildBody := ""
-			if true {
+			if !childItem.FamilyType.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.value", childItem.FamilyType.ValueString())
 			}
@@ -751,7 +751,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.NetworkAddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.value", item.NetworkAddressVariable.ValueString())
-		} else if true {
+		} else if !item.NetworkAddress.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.value", item.NetworkAddress.ValueString())
 		}
@@ -759,7 +759,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.SubnetMaskVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.value", item.SubnetMaskVariable.ValueString())
-		} else if true {
+		} else if !item.SubnetMask.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.value", item.SubnetMask.ValueString())
 		}
@@ -793,7 +793,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.NetworkAddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.value", item.NetworkAddressVariable.ValueString())
-		} else if true {
+		} else if !item.NetworkAddress.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.address.value", item.NetworkAddress.ValueString())
 		}
@@ -801,7 +801,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.SubnetMaskVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.value", item.SubnetMaskVariable.ValueString())
-		} else if true {
+		} else if !item.SubnetMask.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.mask.value", item.SubnetMask.ValueString())
 		}
@@ -811,7 +811,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	if !data.Ipv4EibgpMaximumPathsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"addressFamily.paths.optionType", "variable")
 		body, _ = sjson.Set(body, path+"addressFamily.paths.value", data.Ipv4EibgpMaximumPathsVariable.ValueString())
-	} else if true {
+	} else if !data.Ipv4EibgpMaximumPaths.IsNull() {
 		body, _ = sjson.Set(body, path+"addressFamily.paths.optionType", "global")
 		body, _ = sjson.Set(body, path+"addressFamily.paths.value", data.Ipv4EibgpMaximumPaths.ValueInt64())
 	}
@@ -843,7 +843,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.ProtocolVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "protocol.value", item.ProtocolVariable.ValueString())
-		} else if true {
+		} else if !item.Protocol.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "protocol.value", item.Protocol.ValueString())
 		}
@@ -859,7 +859,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.AggregatePrefixVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.AggregatePrefixVariable.ValueString())
-		} else if true {
+		} else if !item.AggregatePrefix.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.AggregatePrefix.ValueString())
 		}
@@ -893,7 +893,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.NetworkPrefixVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.NetworkPrefixVariable.ValueString())
-		} else if true {
+		} else if !item.NetworkPrefix.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.NetworkPrefix.ValueString())
 		}
@@ -903,7 +903,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	if !data.Ipv6EibgpMaximumPathsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.optionType", "variable")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.value", data.Ipv6EibgpMaximumPathsVariable.ValueString())
-	} else if true {
+	} else if !data.Ipv6EibgpMaximumPaths.IsNull() {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.optionType", "global")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.value", data.Ipv6EibgpMaximumPaths.ValueInt64())
 	}
@@ -935,7 +935,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.ProtocolVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "protocol.value", item.ProtocolVariable.ValueString())
-		} else if true {
+		} else if !item.Protocol.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "protocol.value", item.Protocol.ValueString())
 		}
@@ -951,7 +951,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.InterfaceNameVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceNameVariable.ValueString())
-		} else if true {
+		} else if !item.InterfaceName.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceName.ValueString())
 		}

@@ -697,13 +697,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
-		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+		t := r.Get("oneOf.#(properties.optionType.enum.0==\"global\")")
 		if value := r.Get("properties.optionType.enum.0"); value.Exists() {
-			// if value := r.Get("properties.optionType.enum.0=\"global\""); value.Exists() {
+			// if value := r.Get("properties.optionType.enum.0==\"global\""); value.Exists() {
 			t = r
 		} else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
-			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\")"); value.Exists() {
-			t = r.Get("properties.refId")
+			t = r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\").properties.refId")
+			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0==\"global\")"); value.Exists() {
+			// t = value.Get("properties.refId")
 		}
 
 		if t.Exists() {
@@ -737,19 +738,19 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
-				// 	attr.MinList = value.Int()
+				//  attr.MinList = value.Int()
 				// }
 				// if value := t.Get("properties.value.items.maxItems"); value.Exists() {
-				// 	attr.MaxList = value.Int()
+				//  attr.MaxList = value.Int()
 				// }
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
 				attr.Type = "Set"
 				attr.ElementType = "Int64"
 				// if value := t.Get("properties.value.items.minimum"); value.Exists() {
-				// 	attr.MinInt = value.Int()
+				//  attr.MinInt = value.Int()
 				// }
 				// if value := t.Get("properties.value.items.maximum"); value.Exists() {
-				// 	attr.MaxInt = value.Int()
+				//  attr.MaxInt = value.Int()
 				// }
 			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" {
 				attr.Type = "String"
@@ -757,11 +758,11 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
 		}
-		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() && !isOneOfAttribute {
+		if r.Get("oneOf.#(properties.optionType.enum.0==\"variable\")").Exists() && !isOneOfAttribute {
 			attr.Variable = true
 		}
-		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
-		if value := r.Get("properties.optionType.enum.0=\"default\""); value.Exists() {
+		d := r.Get("oneOf.#(properties.optionType.enum.0==\"default\")")
+		if value := r.Get("properties.optionType.enum.0==\"default\""); value.Exists() {
 			d = r
 		}
 		if d.Exists() && !isOneOfAttribute {
@@ -780,7 +781,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 			} else {
 				attr.ParcelMandatory = true
 				// if !attr.Variable {
-				// 	attr.Mandatory = true
+				//  attr.Mandatory = true
 				// }
 			}
 		} else if isOneOfAttribute {
