@@ -12,6 +12,7 @@
 - Add warning and continue if there are no changes to deploy with `sdwan_attach_feature_device_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/220)
 - Add 'sdwan_system_security_profile_parcel' resource and data source
 - Fix issue with `dot1x_enable` attribute of `sdwan_switchport_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/219)
+- Add possible types to `sdwan_localized_policy` and `sdwan_feature_device_template` resource
 
 ## 0.3.7
 

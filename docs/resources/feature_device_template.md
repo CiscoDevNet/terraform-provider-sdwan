@@ -57,6 +57,7 @@ Required:
 
 - `id` (String) Feature template ID
 - `type` (String) Feature template type
+  - Choices: `cisco_system`, `cedge_aaa`, `cisco_bfd`, `cisco_omp`, `cisco_security`, `cisco_banner`, `cisco_snmp`, `cedge_global`, `cli-template`, `cisco_sig_credentials`, `switchport`, `cisco_thousandeyes`, `cisco_vpn`
 
 Optional:
 
@@ -70,6 +71,7 @@ Required:
 
 - `id` (String) Feature template ID
 - `type` (String) Feature template type
+  - Choices: `cisco_logging`, `cisco_ntp`, `cisco_ospf`, `cisco_bgp`, `cisco_vpn_interface`, `cisco_vpn_interface_ipsec`, `vpn-interface-svi`, `cisco_secure_internet_gateway`
 
 Optional:
 
@@ -83,6 +85,7 @@ Required:
 
 - `id` (String) Feature template ID
 - `type` (String) Feature template type
+  - Choices: `cisco_dhcp_server`
 
 Optional:
 

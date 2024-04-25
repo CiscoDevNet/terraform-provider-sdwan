@@ -28,6 +28,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -159,8 +160,11 @@ func (r *LocalizedPolicyResource) Schema(ctx context.Context, req resource.Schem
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Policy definition type").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Policy definition type").AddStringEnumDescription("qosMap", "rewriteRule", "vedgeRoute", "acl", "aclv6", "deviceAccessPolicy", "deviceAccessPolicyv6").String,
 							Required:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("qosMap", "rewriteRule", "vedgeRoute", "acl", "aclv6", "deviceAccessPolicy", "deviceAccessPolicyv6"),
+							},
 						},
 					},
 				},
