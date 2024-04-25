@@ -9,6 +9,7 @@
 - Add 'advertise_hub_tlocs','all_hubs_are_equal','tloc_list_id', 'ipv4_prefix_list_ids', 'ipv6_prefix_list_ids' and 'preference' to 'sdwan_hub_and_spoke_topology_policy_definition' resource and data source
 - Fix issue with deleted profile parcel resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
 - Fix issue with incorrect feature template payloads, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/213)
+- Add warning and continue if there are no changes to deploy with `sdwan_attach_feature_device_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/220)
 
 ## 0.3.7
 
