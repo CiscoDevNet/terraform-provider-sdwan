@@ -393,7 +393,7 @@ func (data VPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "sra."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "adsl1")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAdsl1.IsNull() {
 			if item.ModeAdsl1.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1", map[string]interface{}{})
@@ -402,7 +402,7 @@ func (data VPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "adsl2")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAdsl2.IsNull() {
 			if item.ModeAdsl2.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2", map[string]interface{}{})
@@ -411,7 +411,7 @@ func (data VPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "adsl2plus")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAdsl2plus.IsNull() {
 			if item.ModeAdsl2plus.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus", map[string]interface{}{})
@@ -420,7 +420,7 @@ func (data VPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "vdsl2")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeVdsl2.IsNull() {
 			if item.ModeVdsl2.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2", map[string]interface{}{})
@@ -429,7 +429,7 @@ func (data VPNInterfaceDSLIPoE) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "ansi")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAnsi.IsNull() {
 			if item.ModeAnsi.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi", map[string]interface{}{})

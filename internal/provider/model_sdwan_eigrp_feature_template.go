@@ -149,7 +149,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "type."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "type."+"vipValue", item.Type.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "redistribute")
+		itemAttributes = append(itemAttributes, "topology")
 		if len(item.Redistributes) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipType", "constant")

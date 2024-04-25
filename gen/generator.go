@@ -439,6 +439,15 @@ func IsNestedSet(attribute YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return parent model name in case data_path is used
+func GetParentModelName(attribute YamlConfigAttribute) string {
+	if len(attribute.DataPath) > 0 {
+		return attribute.DataPath[0]
+	} else {
+		return attribute.ModelName
+	}
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -469,6 +478,7 @@ var functions = template.FuncMap{
 	"isNestedListSet":      IsNestedListSet,
 	"isNestedList":         IsNestedList,
 	"isNestedSet":          IsNestedSet,
+	"getParentModelName":   GetParentModelName,
 	"contains":             contains,
 }
 

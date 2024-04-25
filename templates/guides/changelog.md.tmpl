@@ -17,6 +17,7 @@ description: |-
 - Add `sdwan_transport_wan_vpn_profile_parcel` resource and data source
 - Add 'advertise_hub_tlocs','all_hubs_are_equal','tloc_list_id', 'ipv4_prefix_list_ids', 'ipv6_prefix_list_ids' and 'preference' to 'sdwan_hub_and_spoke_topology_policy_definition' resource and data source
 - Fix issue with deleted profile parcel resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
+- Fix issue with incorrect feature template payloads, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/213)
 
 ## 0.3.7
 

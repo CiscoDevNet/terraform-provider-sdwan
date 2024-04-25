@@ -345,7 +345,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "sra."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "adsl1")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAdsl1.IsNull() {
 			if item.ModeAdsl1.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1", map[string]interface{}{})
@@ -354,7 +354,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl1."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "adsl2")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAdsl2.IsNull() {
 			if item.ModeAdsl2.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2", map[string]interface{}{})
@@ -363,7 +363,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "adsl2plus")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAdsl2plus.IsNull() {
 			if item.ModeAdsl2plus.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus", map[string]interface{}{})
@@ -372,7 +372,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.adsl2plus."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "vdsl2")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeVdsl2.IsNull() {
 			if item.ModeVdsl2.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2", map[string]interface{}{})
@@ -381,7 +381,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.vdsl2."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "ansi")
+		itemAttributes = append(itemAttributes, "operating")
 		if !item.ModeAnsi.IsNull() {
 			if item.ModeAnsi.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "operating.mode.auto.ansi", map[string]interface{}{})
@@ -436,7 +436,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "local-vpi-vci."+"vipValue", item.AtmVpiAndVci.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "PCR")
+		itemAttributes = append(itemAttributes, "vbr-nrt")
 
 		if !item.AtmVbrNrtPeakCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipObjectType", "object")
@@ -449,7 +449,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.PCR."+"vipValue", item.AtmVbrNrtPeakCellRate.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "SCR")
+		itemAttributes = append(itemAttributes, "vbr-nrt")
 
 		if !item.AtmVbrNrtSustainableCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipObjectType", "object")
@@ -462,7 +462,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.SCR."+"vipValue", item.AtmVbrNrtSustainableCellRate.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "MCR")
+		itemAttributes = append(itemAttributes, "vbr-nrt")
 
 		if !item.AtmVbrNrtMaximumBurstSizeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipObjectType", "object")
@@ -475,7 +475,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "vbr-nrt.MCR."+"vipValue", item.AtmVbrNrtMaximumBurstSize.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "PCR")
+		itemAttributes = append(itemAttributes, "vbr-rt")
 
 		if !item.AtmVbrRtPeakCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipObjectType", "object")
@@ -488,7 +488,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.PCR."+"vipValue", item.AtmVbrRtPeakCellRate.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "ACR")
+		itemAttributes = append(itemAttributes, "vbr-rt")
 
 		if !item.AtmVbrRtAverageCellRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipObjectType", "object")
@@ -501,7 +501,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.ACR."+"vipValue", item.AtmVbrRtAverageCellRate.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "Burst-cell-size")
+		itemAttributes = append(itemAttributes, "vbr-rt")
 
 		if !item.AtmVbrRtMaximumBurstSizeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipObjectType", "object")
@@ -514,7 +514,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "vbr-rt.Burst-cell-size."+"vipValue", item.AtmVbrRtMaximumBurstSize.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "dialer")
+		itemAttributes = append(itemAttributes, "encapsulation")
 		if !item.AtmEncapsulationAal5mux.IsNull() {
 			if item.AtmEncapsulationAal5mux.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer", map[string]interface{}{})
@@ -523,7 +523,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5mux.ppp.dialer."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "aal5nlpid")
+		itemAttributes = append(itemAttributes, "encapsulation")
 		if !item.AtmEncapsulationAal5nlpid.IsNull() {
 			if item.AtmEncapsulationAal5nlpid.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid", map[string]interface{}{})
@@ -532,7 +532,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5nlpid."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "aal5snap")
+		itemAttributes = append(itemAttributes, "encapsulation")
 		if !item.AtmEncapsulationAal5snap.IsNull() {
 			if item.AtmEncapsulationAal5snap.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap", map[string]interface{}{})
@@ -541,7 +541,7 @@ func (data VPNInterfaceDSLPPPoA) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "encapsulation.aal5snap."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "pool-member")
+		itemAttributes = append(itemAttributes, "dialer")
 
 		if !item.AtmDialerPoolMemberVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dialer.pool-member."+"vipObjectType", "object")

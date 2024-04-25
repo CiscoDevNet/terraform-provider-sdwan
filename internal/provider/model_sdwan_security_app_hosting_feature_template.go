@@ -105,7 +105,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "application-type."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "application-type."+"vipValue", item.ApplicationType.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "nat")
+		itemAttributes = append(itemAttributes, "utd")
 
 		if !item.NatVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "utd.nat."+"vipObjectType", "object")
@@ -119,7 +119,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "utd.nat."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "utd.nat."+"vipValue", strconv.FormatBool(item.Nat.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "database-url")
+		itemAttributes = append(itemAttributes, "utd")
 
 		if !item.DatabaseUrlVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "utd.database-url."+"vipObjectType", "object")
@@ -132,7 +132,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "utd.database-url."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "utd.database-url."+"vipValue", strconv.FormatBool(item.DatabaseUrl.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "resource-profile")
+		itemAttributes = append(itemAttributes, "utd")
 
 		if !item.ResourceProfileVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "utd.resource-profile."+"vipObjectType", "object")
@@ -146,7 +146,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "utd.resource-profile."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "utd.resource-profile."+"vipValue", item.ResourceProfile.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "service-gateway-ip")
+		itemAttributes = append(itemAttributes, "utd")
 
 		if !item.ServiceGatewayIpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "utd.service-gateway-ip."+"vipObjectType", "object")
@@ -160,7 +160,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "utd.service-gateway-ip."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "utd.service-gateway-ip."+"vipValue", item.ServiceGatewayIp.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "service-ip")
+		itemAttributes = append(itemAttributes, "utd")
 
 		if !item.ServiceIpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "utd.service-ip."+"vipObjectType", "object")
@@ -174,7 +174,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "utd.service-ip."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "utd.service-ip."+"vipValue", item.ServiceIp.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "data-gateway-ip")
+		itemAttributes = append(itemAttributes, "utd")
 
 		if !item.DataGatewayIpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "utd.data-gateway-ip."+"vipObjectType", "object")
@@ -188,7 +188,7 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "utd.data-gateway-ip."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "utd.data-gateway-ip."+"vipValue", item.DataGatewayIp.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "data-service-ip")
+		itemAttributes = append(itemAttributes, "utd")
 
 		if !item.DataServiceIpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "utd.data-service-ip."+"vipObjectType", "object")

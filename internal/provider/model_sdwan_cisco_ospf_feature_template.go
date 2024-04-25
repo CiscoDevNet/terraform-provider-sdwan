@@ -491,7 +491,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "no-summary")
+		itemAttributes = append(itemAttributes, "stub")
 
 		if !item.StubNoSummaryVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipObjectType", "node-only")
@@ -512,7 +512,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "no-summary")
+		itemAttributes = append(itemAttributes, "nssa")
 
 		if !item.NssaNoSummaryVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipObjectType", "node-only")
@@ -649,7 +649,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "passive-interface."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "passive-interface."+"vipValue", strconv.FormatBool(childItem.PassiveInterface.ValueBool()))
 			}
-			itemChildAttributes = append(itemChildAttributes, "type")
+			itemChildAttributes = append(itemChildAttributes, "authentication")
 
 			if !childItem.AuthenticationTypeVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipObjectType", "object")
@@ -663,7 +663,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipValue", childItem.AuthenticationType.ValueString())
 			}
-			itemChildAttributes = append(itemChildAttributes, "message-digest-key")
+			itemChildAttributes = append(itemChildAttributes, "authentication")
 
 			if !childItem.AuthenticationMessageDigestKeyIdVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.message-digest-key."+"vipObjectType", "object")
@@ -677,7 +677,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.message-digest-key."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.message-digest-key."+"vipValue", childItem.AuthenticationMessageDigestKeyId.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "md5")
+			itemChildAttributes = append(itemChildAttributes, "authentication")
 
 			if !childItem.AuthenticationMessageDigestKeyVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.md5."+"vipObjectType", "object")
