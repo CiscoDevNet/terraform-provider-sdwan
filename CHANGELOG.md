@@ -10,6 +10,7 @@
 - Fix issue with deleted profile parcel resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
 - Fix issue with incorrect feature template payloads, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/213)
 - Add warning and continue if there are no changes to deploy with `sdwan_attach_feature_device_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/220)
+- Add 'sdwan_system_security_profile_parcel' resource and data source
 
 ## 0.3.7
 
