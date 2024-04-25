@@ -80,6 +80,12 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				Computed:            true,
 			},
 			{{- end}}
+			{{- if .TypeValue}}
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
+				Computed:            true,
+			},
+			{{- end}}
 			{{- range  .Attributes}}
 			{{- if not .Value}}
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else if eq .Type "Versions"}}List{{else if eq .Type "Version"}}Int64{{else}}{{.Type}}{{end}}Attribute{
@@ -424,6 +430,9 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 	{{- end}}
 	{{- if .HasVersion}}
 	plan.Version = types.Int64Value(0)
+	{{- end}}
+	{{- if .TypeValue}}
+	plan.Type = types.StringValue("{{.TypeValue}}")
 	{{- end}}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))

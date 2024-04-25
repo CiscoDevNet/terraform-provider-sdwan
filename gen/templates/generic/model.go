@@ -39,6 +39,9 @@ type {{camelCase .Name}} struct {
 {{- if .HasVersion}}
 	Version types.Int64 `tfsdk:"version"`
 {{- end}}
+{{- if .TypeValue}}
+Type types.String `tfsdk:"type"`
+{{- end}}
 {{- range .Attributes}}
 {{- if not .Value}}
 {{- if isNestedListSet .}}

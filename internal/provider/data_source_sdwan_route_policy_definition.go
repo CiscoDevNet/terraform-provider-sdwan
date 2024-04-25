@@ -63,6 +63,10 @@ func (d *RoutePolicyDefinitionDataSource) Schema(ctx context.Context, req dataso
 				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy definition",
 				Computed:            true,
@@ -296,6 +300,7 @@ func (d *RoutePolicyDefinitionDataSource) Read(ctx context.Context, req datasour
 	}
 
 	config.fromBody(ctx, res)
+	config.Type = types.StringValue("vedgeRoute")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

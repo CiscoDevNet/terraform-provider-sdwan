@@ -26,6 +26,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -60,6 +61,10 @@ func (d *QoSMapPolicyDefinitionDataSource) Schema(ctx context.Context, req datas
 			},
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -141,6 +146,7 @@ func (d *QoSMapPolicyDefinitionDataSource) Read(ctx context.Context, req datasou
 	}
 
 	config.fromBody(ctx, res)
+	config.Type = types.StringValue("qosMap")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

@@ -204,6 +204,7 @@ type YamlConfig struct {
 	TestTags                 []string              `yaml:"test_tags"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
+	TypeValue                string                `yaml:"type_value"`
 }
 
 type YamlConfigAttribute struct {
