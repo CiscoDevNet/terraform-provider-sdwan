@@ -3,6 +3,7 @@ name: Application Aware Routing Policy Definition
 rest_endpoint: /template/policy/definition/approute/
 has_version: true
 id_attribute: definitionId
+type_value: appRoute
 doc_category: Centralized Policies
 attributes:
   - model_name: type

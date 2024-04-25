@@ -56,6 +56,7 @@ resource "sdwan_hub_and_spoke_topology_policy_definition" "example" {
 ### Read-Only
 
 - `id` (String) The id of the object
+- `type` (String) Type
 - `version` (Number) The version of the object
 
 <a id="nestedatt--topologies"></a>

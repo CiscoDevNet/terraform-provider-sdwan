@@ -14,6 +14,7 @@
 - Fix issue with `dot1x_enable` attribute of `sdwan_switchport_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/219)
 - Add possible types to `sdwan_localized_policy` and `sdwan_feature_device_template` resource
 - Add `type` read-only attribute to localized policy definitions
+- Add `type` read-only attribute to centralized policy definitions
 
 ## 0.3.7
 
