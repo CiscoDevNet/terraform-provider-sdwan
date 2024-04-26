@@ -343,7 +343,6 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`255`
-  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 - `tracker_id` (String)
 
@@ -357,7 +356,6 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`255`
-  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 
@@ -387,6 +385,7 @@ Optional:
 
 - `nat` (String) IPv6 Nat
   - Choices: `NAT64`, `NAT66`
+- `nat_variable` (String) Variable name
 - `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_routes--next_hops))
 - `null0` (Boolean) IPv6 Route Gateway Next Hop
 - `prefix` (String) Prefix
@@ -401,7 +400,6 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`254`
-  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 

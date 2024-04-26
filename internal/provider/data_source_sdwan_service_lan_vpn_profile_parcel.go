@@ -406,6 +406,10 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "IPv6 Nat",
 							Computed:            true,
 						},
+						"nat_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 					},
 				},
 			},

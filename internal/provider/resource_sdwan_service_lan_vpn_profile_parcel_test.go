@@ -110,13 +110,6 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	config_description = "VPN1"` + "\n"
-	config += `	omp_admin_distance_ipv4 = 1` + "\n"
-	config += `	omp_admin_distance_ipv6 = 1` + "\n"
-	config += `	dns_primary_ipv4_address = "1.2.3.4"` + "\n"
-	config += `	dns_secondary_ipv4_address = "2.3.4.5"` + "\n"
-	config += `	dns_primary_ipv6_address = "2001:0:0:1::0"` + "\n"
-	config += `	dns_secondary_ipv6_address = "2001:0:0:2::0"` + "\n"
 	config += `}` + "\n"
 	return config
 }

@@ -360,7 +360,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 										Optional:            true,
 									},
 									"administrative_distance": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 255).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 255),
@@ -387,7 +387,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 										Optional:            true,
 									},
 									"administrative_distance": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 255).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 255),
@@ -452,7 +452,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 										Optional:            true,
 									},
 									"administrative_distance": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 254).AddDefaultValueDescription("1").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 254).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 254),
@@ -475,6 +475,10 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							Validators: []validator.String{
 								stringvalidator.OneOf("NAT64", "NAT66"),
 							},
+						},
+						"nat_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
 						},
 					},
 				},
