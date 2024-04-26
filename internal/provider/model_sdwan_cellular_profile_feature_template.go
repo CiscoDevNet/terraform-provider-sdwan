@@ -94,7 +94,9 @@ func (data CellularProfile) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipVariableName", data.ProfileIdVariable.ValueString())
 	} else if data.ProfileId.IsNull() {
-		body, _ = sjson.Set(body, path+"profile", map[string]interface{}{})
+		if !gjson.Get(body, path+"profile").Exists() {
+			body, _ = sjson.Set(body, path+"profile", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"profile.profile-id."+"vipType", "constant")

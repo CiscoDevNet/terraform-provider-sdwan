@@ -312,7 +312,9 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipVariableName", data.AsNumberVariable.ValueString())
 	} else if data.AsNumber.IsNull() {
-		body, _ = sjson.Set(body, path+"bgp", map[string]interface{}{})
+		if !gjson.Get(body, path+"bgp").Exists() {
+			body, _ = sjson.Set(body, path+"bgp", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipType", "constant")
