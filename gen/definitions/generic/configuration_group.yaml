@@ -1,0 +1,39 @@
+---
+name: Configuration Group
+rest_endpoint: /v1/config-group/
+id_attribute: id
+doc_category: Configuration Groups
+test_tags: [SDWAN_2012]
+attributes:
+  - model_name: name
+    type: String
+    mandatory: true
+    description: The name of the configuration group
+    example: CG_1
+  - model_name: description
+    type: String
+    mandatory: true
+    description: Description
+    example: My config group 1
+  - model_name: solution
+    type: String
+    mandatory: true
+    enum_values: [mobility, sdwan, nfvirtual]
+    description: Type of solution
+    example: sdwan
+  - model_name: profiles
+    tf_name: feature_profiles
+    type: List
+    description: List of feature profiles
+    attributes:
+      - model_name: id
+        type: String
+        id: true
+        description: Feature profile ID
+        example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+        test_value: sdwan_system_feature_profile.test.id
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

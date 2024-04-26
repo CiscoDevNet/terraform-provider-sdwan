@@ -78,6 +78,7 @@ type TransportWANVPNIpv6StaticRoutes struct {
 	NextHops       []TransportWANVPNIpv6StaticRoutesNextHops `tfsdk:"next_hops"`
 	Null0          types.Bool                                `tfsdk:"null0"`
 	Nat            types.String                              `tfsdk:"nat"`
+	NatVariable    types.String                              `tfsdk:"nat_variable"`
 }
 
 type TransportWANVPNServices struct {
@@ -144,7 +145,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.PrimaryDnsAddressIpv4Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4Variable.ValueString())
-	} else if true {
+	} else if !data.PrimaryDnsAddressIpv4.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4.ValueString())
 	}
@@ -152,7 +153,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.SecondaryDnsAddressIpv4Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4Variable.ValueString())
-	} else if true {
+	} else if !data.SecondaryDnsAddressIpv4.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4.ValueString())
 	}
@@ -160,7 +161,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.PrimaryDnsAddressIpv6Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6Variable.ValueString())
-	} else if true {
+	} else if !data.PrimaryDnsAddressIpv6.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6.ValueString())
 	}
@@ -168,17 +169,18 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 	if !data.SecondaryDnsAddressIpv6Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6Variable.ValueString())
-	} else if true {
+	} else if !data.SecondaryDnsAddressIpv6.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6.ValueString())
 	}
+	body, _ = sjson.Set(body, path+"newHostMapping", []interface{}{})
 	for _, item := range data.NewHostMappings {
 		itemBody := ""
 
 		if !item.HostNameVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostNameVariable.ValueString())
-		} else if true {
+		} else if !item.HostName.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostName.ValueString())
 		}
@@ -186,7 +188,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		if !item.ListOfIpAddressesVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "listOfIp.value", item.ListOfIpAddressesVariable.ValueString())
-		} else if true {
+		} else if !item.ListOfIpAddresses.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "global")
 			var values []string
 			item.ListOfIpAddresses.ElementsAs(ctx, &values, false)
@@ -194,13 +196,14 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"newHostMapping.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"ipv4Route", []interface{}{})
 	for _, item := range data.Ipv4StaticRoutes {
 		itemBody := ""
 
 		if !item.NetworkAddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddressVariable.ValueString())
-		} else if true {
+		} else if !item.NetworkAddress.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddress.ValueString())
 		}
@@ -208,7 +211,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		if !item.SubnetMaskVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMaskVariable.ValueString())
-		} else if true {
+		} else if !item.SubnetMask.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMask.ValueString())
 		}
@@ -219,13 +222,14 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "gateway.value", item.Gateway.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "nextHop", []interface{}{})
 		for _, childItem := range item.NextHops {
 			itemChildBody := ""
 
 			if !childItem.AddressVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
-			} else if true {
+			} else if !childItem.Address.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
 			}
@@ -255,23 +259,25 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv4Route.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"ipv6Route", []interface{}{})
 	for _, item := range data.Ipv6StaticRoutes {
 		itemBody := ""
 
 		if !item.PrefixVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.PrefixVariable.ValueString())
-		} else if true {
+		} else if !item.Prefix.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nextHopContainer.nextHop", []interface{}{})
 		for _, childItem := range item.NextHops {
 			itemChildBody := ""
 
 			if !childItem.AddressVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
-			} else if true {
+			} else if !childItem.Address.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
 			}
@@ -279,10 +285,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			if !childItem.AdministrativeDistanceVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
-			} else if childItem.AdministrativeDistance.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
-			} else {
+			} else if !childItem.AdministrativeDistance.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
 			}
@@ -292,27 +295,33 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
 		}
-		if !item.Nat.IsNull() {
+
+		if !item.NatVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
+			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
+		} else if !item.Nat.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv6Route.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"service", []interface{}{})
 	for _, item := range data.Services {
 		itemBody := ""
-		if true {
+		if !item.ServiceType.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "serviceType.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "serviceType.value", item.ServiceType.ValueString())
 		}
 		body, _ = sjson.SetRaw(body, path+"service.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"nat64V4Pool", []interface{}{})
 	for _, item := range data.Nat64V4Pools {
 		itemBody := ""
 
 		if !item.Nat64V4PoolNameVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.value", item.Nat64V4PoolNameVariable.ValueString())
-		} else if true {
+		} else if !item.Nat64V4PoolName.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.value", item.Nat64V4PoolName.ValueString())
 		}
@@ -320,7 +329,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		if !item.Nat64V4PoolRangeStartVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.value", item.Nat64V4PoolRangeStartVariable.ValueString())
-		} else if true {
+		} else if !item.Nat64V4PoolRangeStart.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.value", item.Nat64V4PoolRangeStart.ValueString())
 		}
@@ -328,7 +337,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		if !item.Nat64V4PoolRangeEndVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.value", item.Nat64V4PoolRangeEndVariable.ValueString())
-		} else if true {
+		} else if !item.Nat64V4PoolRangeEnd.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.value", item.Nat64V4PoolRangeEnd.ValueString())
 		}
@@ -567,10 +576,12 @@ func (data *TransportWANVPN) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			item.Nat = types.StringNull()
-
+			item.NatVariable = types.StringNull()
 			if t := v.Get("oneOfIpRoute.nat.optionType"); t.Exists() {
 				va := v.Get("oneOfIpRoute.nat.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.NatVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.Nat = types.StringValue(va.String())
 				}
 			}
@@ -961,10 +972,12 @@ func (data *TransportWANVPN) updateFromBody(ctx context.Context, res gjson.Resul
 			}
 		}
 		data.Ipv6StaticRoutes[i].Nat = types.StringNull()
-
+		data.Ipv6StaticRoutes[i].NatVariable = types.StringNull()
 		if t := r.Get("oneOfIpRoute.nat.optionType"); t.Exists() {
 			va := r.Get("oneOfIpRoute.nat.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.Ipv6StaticRoutes[i].NatVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.Ipv6StaticRoutes[i].Nat = types.StringValue(va.String())
 			}
 		}

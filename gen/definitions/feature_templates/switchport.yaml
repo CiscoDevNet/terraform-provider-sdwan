@@ -38,6 +38,7 @@ attributes:
         tf_name: switchport_trunk_native_vlan
         example: 100
       - model_name: dot1x-enable
+        exclude_ignore: true
         example: true
       - model_name: port-control
         tf_name: dot1x_port_control

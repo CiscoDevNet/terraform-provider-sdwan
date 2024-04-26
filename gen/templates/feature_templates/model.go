@@ -228,7 +228,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		{{- range .Attributes}}
-		itemAttributes = append(itemAttributes, "{{.ModelName}}")
+		itemAttributes = append(itemAttributes, "{{getParentModelName .}}")
 		{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 		{{if .Variable}}
 		if !item.{{toGoName .TfName}}Variable.IsNull() {
@@ -315,7 +315,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			{{- range .Attributes}}
-			itemChildAttributes = append(itemChildAttributes, "{{.ModelName}}")
+			itemChildAttributes = append(itemChildAttributes, "{{getParentModelName .}}")
 			{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 			{{if .Variable}}
 			if !childItem.{{toGoName .TfName}}Variable.IsNull() {
@@ -402,7 +402,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemChildChildBody := ""
 				itemChildChildAttributes := make([]string, 0)
 				{{- range .Attributes}}
-				itemChildChildAttributes = append(itemChildChildAttributes, "{{.ModelName}}")
+				itemChildChildAttributes = append(itemChildChildAttributes, "{{getParentModelName .}}")
 				{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 				{{if .Variable}}
 				if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {

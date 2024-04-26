@@ -117,6 +117,7 @@ attributes:
         tf_name: type
         type: String
         mandatory: true
+        enum_values: [qosMap, rewriteRule, vedgeRoute, acl, aclv6, deviceAccessPolicy, deviceAccessPolicyv6]
         description: Policy definition type
         example: acl
 

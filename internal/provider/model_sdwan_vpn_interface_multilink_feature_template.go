@@ -1198,7 +1198,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "framing."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "framing."+"vipValue", item.Framing.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "line-mode")
+		itemAttributes = append(itemAttributes, "clock")
 
 		if !item.LineModeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "clock.source.line.line-mode."+"vipObjectType", "object")
@@ -1212,7 +1212,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "clock.source.line.line-mode."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "clock.source.line.line-mode."+"vipValue", item.LineMode.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "internal")
+		itemAttributes = append(itemAttributes, "clock")
 		if !item.Internal.IsNull() {
 			if item.Internal.ValueBool() {
 				itemBody, _ = sjson.Set(itemBody, "clock.source.internal", map[string]interface{}{})
@@ -1249,7 +1249,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "linecode."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "linecode."+"vipValue", item.Linecode.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "long")
+		itemAttributes = append(itemAttributes, "cablelength")
 		if item.SetLengthForLong.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipType", "ignore")
@@ -1258,7 +1258,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipValue", item.SetLengthForLong.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "short")
+		itemAttributes = append(itemAttributes, "cablelength")
 		if item.SetLengthForShort.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "cablelength.short."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "cablelength.short."+"vipType", "ignore")
@@ -1390,7 +1390,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "bandwidth."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "bandwidth."+"vipValue", item.Bandwidth.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "clock-rate")
+		itemAttributes = append(itemAttributes, "DCE-mode-config")
 
 		if !item.ClockRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "DCE-mode-config.clock-rate."+"vipObjectType", "object")

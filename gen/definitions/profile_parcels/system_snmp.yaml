@@ -80,15 +80,19 @@ attributes:
     attributes:
       - model_name: vpnId
         tf_name: vpn_id
+        id: true
         example: 1
       - model_name: ip
+        id: true
         example: "10.75.221.156"
       - model_name: port
+        id: true
         example: 161
       - model_name: userLabel
-        id: true
+        exclude_null: true
         example: TARGET1
       - model_name: user
+        exclude_null: true
         example: USER1
       - model_name: sourceInterface
         example: "GigabitEthernet1"

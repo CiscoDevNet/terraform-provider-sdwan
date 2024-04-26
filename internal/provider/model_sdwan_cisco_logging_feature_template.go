@@ -177,7 +177,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "profile."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "profile."+"vipValue", item.Name.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "version")
+		itemAttributes = append(itemAttributes, "tls-version")
 
 		if !item.VersionVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tls-version.version."+"vipObjectType", "object")
@@ -200,7 +200,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "auth-type."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "auth-type."+"vipValue", item.AuthenticationType.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "ciphersuite-list")
+		itemAttributes = append(itemAttributes, "ciphersuite")
 
 		if !item.CiphersuiteListVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ciphersuite.ciphersuite-list."+"vipObjectType", "object")
@@ -290,7 +290,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "priority."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "priority."+"vipValue", item.LoggingLevel.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "enable-tls")
+		itemAttributes = append(itemAttributes, "tls")
 
 		if !item.EnableTlsVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tls.enable-tls."+"vipObjectType", "object")
@@ -304,7 +304,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "tls.enable-tls."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "tls.enable-tls."+"vipValue", strconv.FormatBool(item.EnableTls.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "custom-profile")
+		itemAttributes = append(itemAttributes, "tls")
 
 		if !item.CustomProfileVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.custom-profile."+"vipObjectType", "object")
@@ -318,7 +318,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.custom-profile."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.custom-profile."+"vipValue", strconv.FormatBool(item.CustomProfile.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "profile")
+		itemAttributes = append(itemAttributes, "tls")
 
 		if !item.ProfileVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.profile."+"vipObjectType", "object")
@@ -406,7 +406,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "priority."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "priority."+"vipValue", item.LoggingLevel.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "enable-tls")
+		itemAttributes = append(itemAttributes, "tls")
 
 		if !item.EnableTlsVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tls.enable-tls."+"vipObjectType", "object")
@@ -420,7 +420,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "tls.enable-tls."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "tls.enable-tls."+"vipValue", strconv.FormatBool(item.EnableTls.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "custom-profile")
+		itemAttributes = append(itemAttributes, "tls")
 
 		if !item.CustomProfileVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.custom-profile."+"vipObjectType", "object")
@@ -434,7 +434,7 @@ func (data CiscoLogging) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.custom-profile."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.custom-profile."+"vipValue", strconv.FormatBool(item.CustomProfile.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "profile")
+		itemAttributes = append(itemAttributes, "tls")
 
 		if !item.ProfileVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tls.tls-properties.profile."+"vipObjectType", "object")

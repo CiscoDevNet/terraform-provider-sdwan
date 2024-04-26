@@ -30,6 +30,7 @@ data "sdwan_vpn_membership_policy_definition" "example" {
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `sites` (Attributes List) List of sites (see [below for nested schema](#nestedatt--sites))
+- `type` (String) Type
 - `version` (Number) The version of the object
 
 <a id="nestedatt--sites"></a>

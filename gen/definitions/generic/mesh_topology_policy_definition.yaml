@@ -3,6 +3,7 @@ name: Mesh Topology Policy Definition
 rest_endpoint: /template/policy/definition/mesh/
 has_version: true
 id_attribute: definitionId
+type_value: mesh
 doc_category: Centralized Policies
 attributes:
   - model_name: type

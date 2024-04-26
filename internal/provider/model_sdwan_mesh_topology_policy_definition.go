@@ -32,6 +32,7 @@ import (
 type MeshTopologyPolicyDefinition struct {
 	Id             types.String                          `tfsdk:"id"`
 	Version        types.Int64                           `tfsdk:"version"`
+	Type           types.String                          `tfsdk:"type"`
 	Name           types.String                          `tfsdk:"name"`
 	Description    types.String                          `tfsdk:"description"`
 	VpnListId      types.String                          `tfsdk:"vpn_list_id"`

@@ -30,6 +30,7 @@ data "sdwan_hub_and_spoke_topology_policy_definition" "example" {
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `topologies` (Attributes List) List of topologies (see [below for nested schema](#nestedatt--topologies))
+- `type` (String) Type
 - `version` (Number) The version of the object
 - `vpn_list_id` (String) VPN list ID
 - `vpn_list_version` (Number) VPN list version
