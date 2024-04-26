@@ -699,7 +699,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
 
-	if r.Get("type").String() == "object" && !r.Get("items").Exists() || !r.Get("type").Exists() {
+	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
 			t = r
@@ -760,7 +760,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			attr.Variable = true
 		}
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
-		if value := r.Get("properties.optionType.enum.0=\"default\""); value.Exists() {
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
 		if d.Exists() && !isOneOfAttribute {
