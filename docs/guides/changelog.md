@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.3.8 (unreleased)
+## 0.3.8
 
 - Add `sdwan_system_flexible_port_speed_profile_parcel` resource and data source
 - Add `sdwan_system_mrf_profile_parcel` resource and data source
