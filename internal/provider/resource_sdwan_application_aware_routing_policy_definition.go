@@ -74,6 +74,10 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,
 				Required:            true,
@@ -308,6 +312,7 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Con
 	}
 	plan.Id = types.StringValue(res.Get("definitionId").String())
 	plan.Version = types.Int64Value(0)
+	plan.Type = types.StringValue("appRoute")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 

@@ -30,6 +30,7 @@ data "sdwan_mesh_topology_policy_definition" "example" {
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `regions` (Attributes List) List of regions (see [below for nested schema](#nestedatt--regions))
+- `type` (String) Type
 - `version` (Number) The version of the object
 - `vpn_list_id` (String) VPN list ID
 - `vpn_list_version` (Number) VPN list version

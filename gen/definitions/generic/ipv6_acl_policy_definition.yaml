@@ -3,6 +3,7 @@ name: IPv6 ACL Policy Definition
 rest_endpoint: /template/policy/definition/aclv6/
 has_version: true
 id_attribute: definitionId
+type_value: aclv6
 doc_category: Localized Policies
 attributes:
   - model_name: type

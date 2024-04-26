@@ -204,55 +204,56 @@ type YamlConfig struct {
 	TestTags                 []string              `yaml:"test_tags"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
+	TypeValue                string                `yaml:"type_value"`
 }
 
 type YamlConfigAttribute struct {
-	ModelName             string                         `yaml:"model_name"`
-	ResponseModelName     string                         `yaml:"response_model_name"`
-	TfName                string                         `yaml:"tf_name"`
-	Type                  string                         `yaml:"type"`
-	ElementType           string                         `yaml:"element_type"`
-	ObjectType            string                         `yaml:"object_type"`
-	ModelTypeString       bool                           `yaml:"model_type_string"`
-	BoolEmptyString       bool                           `yaml:"bool_empty_string"`
-	DataPath              []string                       `yaml:"data_path"`
-	Keys                  []string                       `yaml:"keys"`
-	Id                    bool                           `yaml:"id"`
-	Reference             bool                           `yaml:"reference"`
-	Variable              bool                           `yaml:"variable"`
-	Mandatory             bool                           `yaml:"mandatory"`
-	ParcelMandatory       bool                           `yaml:"parcel_mandatory"`
-	WriteOnly             bool                           `yaml:"write_only"`
-	TfOnly                bool                           `yaml:"tf_only"`
-	ExcludeTest           bool                           `yaml:"exclude_test"`
-	ExcludeExample        bool                           `yaml:"exclude_example"`
-	ExcludeIgnore         bool                           `yaml:"exclude_ignore"`
-	ExcludeNull           bool                           `yaml:"exclude_null"`
-	NodeOnlyContainer     bool                           `yaml:"node_only_container"`
-	Description           string                         `yaml:"description"`
-	Example               string                         `yaml:"example"`
-	EnumValues            []string                       `yaml:"enum_values"`
-	IgnoreEnum            bool                           `yaml:"ignore_enum"`
-	MinList               int64                          `yaml:"min_list"`
-	MaxList               int64                          `yaml:"max_list"`
-	MinInt                int64                          `yaml:"min_int"`
-	MaxInt                int64                          `yaml:"max_int"`
-	MinFloat              float64                        `yaml:"min_float"`
-	MaxFloat              float64                        `yaml:"max_float"`
-	StringPatterns        []string                       `yaml:"string_patterns"`
-	StringMinLength       int64                          `yaml:"string_min_length"`
-	StringMaxLength       int64                          `yaml:"string_max_length"`
-	DefaultValue          string                         `yaml:"default_value"`
-	DefaultValuePresent   bool                           `yaml:"default_value_present"`
-	Value                 string                         `yaml:"value"`
-	TestValue             string                         `yaml:"test_value"`
-	AlwaysInclude         bool                           `yaml:"always_include"`
-	Attributes            []YamlConfigAttribute          `yaml:"attributes"`
-	ConditionalAttribute  YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
-	ConditionalListLength string                         `yaml:"conditional_list_length"`
-	QueryParam            bool                           `yaml:"query_param"`
-	NoAugmentConfig       bool                           `yaml:"no_augment_config"`
-	TestTags              []string                       `yaml:"test_tags"`
+	ModelName               string                         `yaml:"model_name"`
+	ResponseModelName       string                         `yaml:"response_model_name"`
+	TfName                  string                         `yaml:"tf_name"`
+	Type                    string                         `yaml:"type"`
+	ElementType             string                         `yaml:"element_type"`
+	ObjectType              string                         `yaml:"object_type"`
+	ModelTypeString         bool                           `yaml:"model_type_string"`
+	BoolEmptyString         bool                           `yaml:"bool_empty_string"`
+	DataPath                []string                       `yaml:"data_path"`
+	Keys                    []string                       `yaml:"keys"`
+	Id                      bool                           `yaml:"id"`
+	Reference               bool                           `yaml:"reference"`
+	Variable                bool                           `yaml:"variable"`
+	Mandatory               bool                           `yaml:"mandatory"`
+	WriteOnly               bool                           `yaml:"write_only"`
+	TfOnly                  bool                           `yaml:"tf_only"`
+	ExcludeTest             bool                           `yaml:"exclude_test"`
+	ExcludeExample          bool                           `yaml:"exclude_example"`
+	ExcludeIgnore           bool                           `yaml:"exclude_ignore"`
+	ExcludeNull             bool                           `yaml:"exclude_null"`
+	NodeOnlyContainer       bool                           `yaml:"node_only_container"`
+	Description             string                         `yaml:"description"`
+	Example                 string                         `yaml:"example"`
+	EnumValues              []string                       `yaml:"enum_values"`
+	IgnoreEnum              bool                           `yaml:"ignore_enum"`
+	MinList                 int64                          `yaml:"min_list"`
+	MaxList                 int64                          `yaml:"max_list"`
+	MinInt                  int64                          `yaml:"min_int"`
+	MaxInt                  int64                          `yaml:"max_int"`
+	MinFloat                float64                        `yaml:"min_float"`
+	MaxFloat                float64                        `yaml:"max_float"`
+	StringPatterns          []string                       `yaml:"string_patterns"`
+	StringMinLength         int64                          `yaml:"string_min_length"`
+	StringMaxLength         int64                          `yaml:"string_max_length"`
+	DefaultValue            string                         `yaml:"default_value"`
+	DefaultValuePresent     bool                           `yaml:"default_value_present"`
+	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
+	Value                   string                         `yaml:"value"`
+	TestValue               string                         `yaml:"test_value"`
+	AlwaysInclude           bool                           `yaml:"always_include"`
+	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
+	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
+	ConditionalListLength   string                         `yaml:"conditional_list_length"`
+	QueryParam              bool                           `yaml:"query_param"`
+	NoAugmentConfig         bool                           `yaml:"no_augment_config"`
+	TestTags                []string                       `yaml:"test_tags"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -650,12 +651,11 @@ func augmentFeatureTemplateConfig(config *YamlConfig) {
 	}
 }
 
-func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) {
+func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, isOneOfAttribute bool) {
 	if attr.ModelName == "" {
 		return
 	}
 	path := ""
-	isOneOfAttribute := false
 	for i, e := range attr.DataPath {
 		// Check if the next element is a oneOf
 		if model.Get("properties." + path + e + ".oneOf").Exists() {
@@ -753,7 +753,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
 		}
-		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() && !isOneOfAttribute {
+		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
 			attr.Variable = true
 		}
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
@@ -761,38 +761,39 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 			d = r
 		}
 		if d.Exists() && !isOneOfAttribute {
+			attr.DefaultValuePresent = true
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
-				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
+				if value.String() == "" {
+					attr.DefaultValueEmptyString = true
+				} else {
+					attr.DefaultValue = value.String()
+				}
 			} else if value := d.Get("properties.value.default"); value.Exists() {
-				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
-			} else if value := d.Get("properties.value.default"); value.Exists() {
-				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
+				if value.String() == "" {
+					attr.DefaultValueEmptyString = true
+				} else {
+					attr.DefaultValue = value.String()
+				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
 				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
-			} else {
-				attr.ParcelMandatory = true
-				// if !attr.Variable {
-				//  attr.Mandatory = true
-				// }
 			}
 		} else if isOneOfAttribute {
-			attr.ParcelMandatory = true
 			attr.ExcludeNull = true
-
 		} else {
-			attr.ParcelMandatory = true
 			if !attr.Variable {
 				attr.Mandatory = true
 			}
 		}
 	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" && len(attr.Attributes) > 0 {
 		attr.Type = "List"
+		if r.Get("minItems").Exists() {
+			attr.MinList = r.Get("minItems").Int()
+		}
+		if r.Get("maxItems").Exists() {
+			attr.MaxList = r.Get("maxItems").Int()
+		}
 		for a := range attr.Attributes {
-			parseProfileParcelAttribute(&attr.Attributes[a], r.Get("items"))
+			parseProfileParcelAttribute(&attr.Attributes[a], r.Get("items"), isOneOfAttribute)
 		}
 	}
 }
@@ -811,7 +812,7 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 	model := gjson.ParseBytes(modelBytes)
 
 	for ia := range config.Attributes {
-		parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"))
+		parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"), false)
 	}
 
 	if config.DsDescription == "" {

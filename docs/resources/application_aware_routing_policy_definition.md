@@ -50,6 +50,7 @@ resource "sdwan_application_aware_routing_policy_definition" "example" {
 ### Read-Only
 
 - `id` (String) The id of the object
+- `type` (String) Type
 - `version` (Number) The version of the object
 
 <a id="nestedatt--sequences"></a>

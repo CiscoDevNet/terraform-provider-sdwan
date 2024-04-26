@@ -261,8 +261,6 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipVariableName", item.Dot1xEnableVariable.ValueString())
 		} else if item.Dot1xEnable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipObjectType", "object")
-			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipType", "ignore")
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.dot1x-enable."+"vipType", "constant")

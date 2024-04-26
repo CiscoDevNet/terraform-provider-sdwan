@@ -63,6 +63,10 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy definition",
 				Computed:            true,
@@ -132,6 +136,7 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Read(ctx context.Context, req d
 	}
 
 	config.fromBody(ctx, res)
+	config.Type = types.StringValue("mesh")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
