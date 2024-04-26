@@ -57,31 +57,35 @@ type SystemSecurityKeychains struct {
 }
 
 type SystemSecurityKeys struct {
-	Id                          types.Int64  `tfsdk:"id"`
-	Name                        types.String `tfsdk:"name"`
-	SendId                      types.Int64  `tfsdk:"send_id"`
-	SendIdVariable              types.String `tfsdk:"send_id_variable"`
-	ReceiverId                  types.Int64  `tfsdk:"receiver_id"`
-	ReceiverIdVariable          types.String `tfsdk:"receiver_id_variable"`
-	IncludeTcpOptions           types.Bool   `tfsdk:"include_tcp_options"`
-	IncludeTcpOptionsVariable   types.String `tfsdk:"include_tcp_options_variable"`
-	AcceptAoMismatch            types.Bool   `tfsdk:"accept_ao_mismatch"`
-	AcceptAoMismatchVariable    types.String `tfsdk:"accept_ao_mismatch_variable"`
-	CryptoAlgorithm             types.String `tfsdk:"crypto_algorithm"`
-	KeyString                   types.String `tfsdk:"key_string"`
-	KeyStringVariable           types.String `tfsdk:"key_string_variable"`
-	SendLifeTimeLocal           types.Bool   `tfsdk:"send_life_time_local"`
-	SendLifeTimeLocalVariable   types.String `tfsdk:"send_life_time_local_variable"`
-	SendLifeTimeStartEpoch      types.Int64  `tfsdk:"send_life_time_start_epoch"`
-	SendLifeTimeInfinite        types.Bool   `tfsdk:"send_life_time_infinite"`
-	SendLifeTimeDuration        types.Int64  `tfsdk:"send_life_time_duration"`
-	SendLifeTimeExact           types.Int64  `tfsdk:"send_life_time_exact"`
-	AcceptLifeTimeLocal         types.Bool   `tfsdk:"accept_life_time_local"`
-	AcceptLifeTimeLocalVariable types.String `tfsdk:"accept_life_time_local_variable"`
-	AcceptLifeTimeStartEpoch    types.Int64  `tfsdk:"accept_life_time_start_epoch"`
-	AcceptLifeTimeInfinite      types.Bool   `tfsdk:"accept_life_time_infinite"`
-	AcceptLifeTimeDuration      types.Int64  `tfsdk:"accept_life_time_duration"`
-	AcceptLifeTimeExact         types.Int64  `tfsdk:"accept_life_time_exact"`
+	Id                             types.Int64  `tfsdk:"id"`
+	Name                           types.String `tfsdk:"name"`
+	SendId                         types.Int64  `tfsdk:"send_id"`
+	SendIdVariable                 types.String `tfsdk:"send_id_variable"`
+	ReceiverId                     types.Int64  `tfsdk:"receiver_id"`
+	ReceiverIdVariable             types.String `tfsdk:"receiver_id_variable"`
+	IncludeTcpOptions              types.Bool   `tfsdk:"include_tcp_options"`
+	IncludeTcpOptionsVariable      types.String `tfsdk:"include_tcp_options_variable"`
+	AcceptAoMismatch               types.Bool   `tfsdk:"accept_ao_mismatch"`
+	AcceptAoMismatchVariable       types.String `tfsdk:"accept_ao_mismatch_variable"`
+	CryptoAlgorithm                types.String `tfsdk:"crypto_algorithm"`
+	KeyString                      types.String `tfsdk:"key_string"`
+	KeyStringVariable              types.String `tfsdk:"key_string_variable"`
+	SendLifeTimeLocal              types.Bool   `tfsdk:"send_life_time_local"`
+	SendLifeTimeLocalVariable      types.String `tfsdk:"send_life_time_local_variable"`
+	SendLifeTimeStartEpoch         types.Int64  `tfsdk:"send_life_time_start_epoch"`
+	SendLifeTimeInfinite           types.Bool   `tfsdk:"send_life_time_infinite"`
+	SendLifeTimeInfiniteVariable   types.String `tfsdk:"send_life_time_infinite_variable"`
+	SendLifeTimeDuration           types.Int64  `tfsdk:"send_life_time_duration"`
+	SendLifeTimeDurationVariable   types.String `tfsdk:"send_life_time_duration_variable"`
+	SendLifeTimeExact              types.Int64  `tfsdk:"send_life_time_exact"`
+	AcceptLifeTimeLocal            types.Bool   `tfsdk:"accept_life_time_local"`
+	AcceptLifeTimeLocalVariable    types.String `tfsdk:"accept_life_time_local_variable"`
+	AcceptLifeTimeStartEpoch       types.Int64  `tfsdk:"accept_life_time_start_epoch"`
+	AcceptLifeTimeInfinite         types.Bool   `tfsdk:"accept_life_time_infinite"`
+	AcceptLifeTimeInfiniteVariable types.String `tfsdk:"accept_life_time_infinite_variable"`
+	AcceptLifeTimeDuration         types.Int64  `tfsdk:"accept_life_time_duration"`
+	AcceptLifeTimeDurationVariable types.String `tfsdk:"accept_life_time_duration_variable"`
+	AcceptLifeTimeExact            types.Int64  `tfsdk:"accept_life_time_exact"`
 }
 
 func (data SystemSecurity) getModel() string {
@@ -238,11 +242,19 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.startEpoch.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.startEpoch.value", item.SendLifeTimeStartEpoch.ValueInt64())
 		}
-		if !item.SendLifeTimeInfinite.IsNull() {
+
+		if !item.SendLifeTimeInfiniteVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.optionType", "variable")
+			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.value", item.SendLifeTimeInfiniteVariable.ValueString())
+		} else if !item.SendLifeTimeInfinite.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.value", item.SendLifeTimeInfinite.ValueBool())
 		}
-		if !item.SendLifeTimeDuration.IsNull() {
+
+		if !item.SendLifeTimeDurationVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.optionType", "variable")
+			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.value", item.SendLifeTimeDurationVariable.ValueString())
+		} else if !item.SendLifeTimeDuration.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.value", item.SendLifeTimeDuration.ValueInt64())
 		}
@@ -265,11 +277,19 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.startEpoch.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.startEpoch.value", item.AcceptLifeTimeStartEpoch.ValueInt64())
 		}
-		if !item.AcceptLifeTimeInfinite.IsNull() {
+
+		if !item.AcceptLifeTimeInfiniteVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.optionType", "variable")
+			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.value", item.AcceptLifeTimeInfiniteVariable.ValueString())
+		} else if !item.AcceptLifeTimeInfinite.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.value", item.AcceptLifeTimeInfinite.ValueBool())
 		}
-		if !item.AcceptLifeTimeDuration.IsNull() {
+
+		if !item.AcceptLifeTimeDurationVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.optionType", "variable")
+			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.value", item.AcceptLifeTimeDurationVariable.ValueString())
+		} else if !item.AcceptLifeTimeDuration.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.value", item.AcceptLifeTimeDuration.ValueInt64())
 		}
@@ -451,18 +471,22 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			item.SendLifeTimeInfinite = types.BoolNull()
-
+			item.SendLifeTimeInfiniteVariable = types.StringNull()
 			if t := v.Get("sendLifetime.oneOfendChoice.infinite.optionType"); t.Exists() {
 				va := v.Get("sendLifetime.oneOfendChoice.infinite.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.SendLifeTimeInfiniteVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.SendLifeTimeInfinite = types.BoolValue(va.Bool())
 				}
 			}
 			item.SendLifeTimeDuration = types.Int64Null()
-
+			item.SendLifeTimeDurationVariable = types.StringNull()
 			if t := v.Get("sendLifetime.oneOfendChoice.duration.optionType"); t.Exists() {
 				va := v.Get("sendLifetime.oneOfendChoice.duration.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.SendLifeTimeDurationVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.SendLifeTimeDuration = types.Int64Value(va.Int())
 				}
 			}
@@ -493,18 +517,22 @@ func (data *SystemSecurity) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			item.AcceptLifeTimeInfinite = types.BoolNull()
-
+			item.AcceptLifeTimeInfiniteVariable = types.StringNull()
 			if t := v.Get("acceptLifetime.oneOfendChoice.infinite.optionType"); t.Exists() {
 				va := v.Get("acceptLifetime.oneOfendChoice.infinite.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.AcceptLifeTimeInfiniteVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.AcceptLifeTimeInfinite = types.BoolValue(va.Bool())
 				}
 			}
 			item.AcceptLifeTimeDuration = types.Int64Null()
-
+			item.AcceptLifeTimeDurationVariable = types.StringNull()
 			if t := v.Get("acceptLifetime.oneOfendChoice.duration.optionType"); t.Exists() {
 				va := v.Get("acceptLifetime.oneOfendChoice.duration.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					item.AcceptLifeTimeDurationVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					item.AcceptLifeTimeDuration = types.Int64Value(va.Int())
 				}
 			}
@@ -732,18 +760,22 @@ func (data *SystemSecurity) updateFromBody(ctx context.Context, res gjson.Result
 			}
 		}
 		data.Keys[i].SendLifeTimeInfinite = types.BoolNull()
-
+		data.Keys[i].SendLifeTimeInfiniteVariable = types.StringNull()
 		if t := r.Get("sendLifetime.oneOfendChoice.infinite.optionType"); t.Exists() {
 			va := r.Get("sendLifetime.oneOfendChoice.infinite.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.Keys[i].SendLifeTimeInfiniteVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.Keys[i].SendLifeTimeInfinite = types.BoolValue(va.Bool())
 			}
 		}
 		data.Keys[i].SendLifeTimeDuration = types.Int64Null()
-
+		data.Keys[i].SendLifeTimeDurationVariable = types.StringNull()
 		if t := r.Get("sendLifetime.oneOfendChoice.duration.optionType"); t.Exists() {
 			va := r.Get("sendLifetime.oneOfendChoice.duration.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.Keys[i].SendLifeTimeDurationVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.Keys[i].SendLifeTimeDuration = types.Int64Value(va.Int())
 			}
 		}
@@ -774,18 +806,22 @@ func (data *SystemSecurity) updateFromBody(ctx context.Context, res gjson.Result
 			}
 		}
 		data.Keys[i].AcceptLifeTimeInfinite = types.BoolNull()
-
+		data.Keys[i].AcceptLifeTimeInfiniteVariable = types.StringNull()
 		if t := r.Get("acceptLifetime.oneOfendChoice.infinite.optionType"); t.Exists() {
 			va := r.Get("acceptLifetime.oneOfendChoice.infinite.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.Keys[i].AcceptLifeTimeInfiniteVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.Keys[i].AcceptLifeTimeInfinite = types.BoolValue(va.Bool())
 			}
 		}
 		data.Keys[i].AcceptLifeTimeDuration = types.Int64Null()
-
+		data.Keys[i].AcceptLifeTimeDurationVariable = types.StringNull()
 		if t := r.Get("acceptLifetime.oneOfendChoice.duration.optionType"); t.Exists() {
 			va := r.Get("acceptLifetime.oneOfendChoice.duration.value")
-			if t.String() == "global" {
+			if t.String() == "variable" {
+				data.Keys[i].AcceptLifeTimeDurationVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
 				data.Keys[i].AcceptLifeTimeDuration = types.Int64Value(va.Int())
 			}
 		}

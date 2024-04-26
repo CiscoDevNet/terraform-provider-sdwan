@@ -242,12 +242,20 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 							MarkdownDescription: helpers.NewAttributeDescription("Infinite lifetime").String,
 							Optional:            true,
 						},
+						"send_life_time_infinite_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 						"send_life_time_duration": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Send lifetime Duration (seconds)").AddIntegerRangeDescription(1, 2147483646).String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 2147483646),
 							},
+						},
+						"send_life_time_duration_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
 						},
 						"send_life_time_exact": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Key lifetime end time").String,
@@ -269,12 +277,20 @@ func (r *SystemSecurityProfileParcelResource) Schema(ctx context.Context, req re
 							MarkdownDescription: helpers.NewAttributeDescription("Infinite lifetime").String,
 							Optional:            true,
 						},
+						"accept_life_time_infinite_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 						"accept_life_time_duration": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Send lifetime Duration (seconds)").AddIntegerRangeDescription(1, 2147483646).String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 2147483646),
 							},
+						},
+						"accept_life_time_duration_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
 						},
 						"accept_life_time_exact": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Configure Key lifetime end time").String,

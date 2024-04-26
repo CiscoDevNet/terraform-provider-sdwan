@@ -62,8 +62,10 @@ Read-Only:
 - `accept_ao_mismatch` (Boolean) Configure Accept AO Mismatch
 - `accept_ao_mismatch_variable` (String) Variable name
 - `accept_life_time_duration` (Number) Send lifetime Duration (seconds)
+- `accept_life_time_duration_variable` (String) Variable name
 - `accept_life_time_exact` (Number) Configure Key lifetime end time
 - `accept_life_time_infinite` (Boolean) Infinite lifetime
+- `accept_life_time_infinite_variable` (String) Variable name
 - `accept_life_time_local` (Boolean) Configure Send lifetime Local
 - `accept_life_time_local_variable` (String) Variable name
 - `accept_life_time_start_epoch` (Number) Configure Key lifetime start time
@@ -79,8 +81,10 @@ Read-Only:
 - `send_id` (Number) Specify the Send ID
 - `send_id_variable` (String) Variable name
 - `send_life_time_duration` (Number) Send lifetime Duration (seconds)
+- `send_life_time_duration_variable` (String) Variable name
 - `send_life_time_exact` (Number) Configure Key lifetime end time
 - `send_life_time_infinite` (Boolean) Infinite lifetime
+- `send_life_time_infinite_variable` (String) Variable name
 - `send_life_time_local` (Boolean) Configure Send lifetime Local
 - `send_life_time_local_variable` (String) Variable name
 - `send_life_time_start_epoch` (Number) Configure Key lifetime start time

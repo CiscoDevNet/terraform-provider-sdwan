@@ -57,7 +57,10 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	if !data.RegionId.IsNull() {
+	if data.RegionId.IsNull() {
+		body, _ = sjson.Set(body, path+"regionId.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"regionId.optionType", "global")
 		body, _ = sjson.Set(body, path+"regionId.value", data.RegionId.ValueInt64())
 	}
@@ -65,7 +68,10 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 	if !data.SecondaryRegionIdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "variable")
 		body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegionIdVariable.ValueString())
-	} else if !data.SecondaryRegionId.IsNull() {
+	} else if data.SecondaryRegionId.IsNull() {
+		body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "global")
 		body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegionId.ValueInt64())
 	}
@@ -73,15 +79,24 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 	if !data.RoleVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"role.optionType", "variable")
 		body, _ = sjson.Set(body, path+"role.value", data.RoleVariable.ValueString())
-	} else if !data.Role.IsNull() {
+	} else if data.Role.IsNull() {
+		body, _ = sjson.Set(body, path+"role.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"role.optionType", "global")
 		body, _ = sjson.Set(body, path+"role.value", data.Role.ValueString())
 	}
-	if !data.EnableMigrationToMrf.IsNull() {
+	if data.EnableMigrationToMrf.IsNull() {
+		body, _ = sjson.Set(body, path+"enableMrfMigration.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"enableMrfMigration.optionType", "global")
 		body, _ = sjson.Set(body, path+"enableMrfMigration.value", data.EnableMigrationToMrf.ValueString())
 	}
-	if !data.MigrationBgpCommunity.IsNull() {
+	if data.MigrationBgpCommunity.IsNull() {
+		body, _ = sjson.Set(body, path+"migrationBgpCommunity.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"migrationBgpCommunity.optionType", "global")
 		body, _ = sjson.Set(body, path+"migrationBgpCommunity.value", data.MigrationBgpCommunity.ValueInt64())
 	}

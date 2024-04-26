@@ -77,7 +77,6 @@ func testAccSdwanSystemSecurityProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
-	config += `	integrity_type = ["esp"]` + "\n"
 	config += `}` + "\n"
 	return config
 }

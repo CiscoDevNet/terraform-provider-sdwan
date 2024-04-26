@@ -206,8 +206,16 @@ func (d *SystemSecurityProfileParcelDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "Infinite lifetime",
 							Computed:            true,
 						},
+						"send_life_time_infinite_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"send_life_time_duration": schema.Int64Attribute{
 							MarkdownDescription: "Send lifetime Duration (seconds)",
+							Computed:            true,
+						},
+						"send_life_time_duration_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"send_life_time_exact": schema.Int64Attribute{
@@ -230,8 +238,16 @@ func (d *SystemSecurityProfileParcelDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "Infinite lifetime",
 							Computed:            true,
 						},
+						"accept_life_time_infinite_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"accept_life_time_duration": schema.Int64Attribute{
 							MarkdownDescription: "Send lifetime Duration (seconds)",
+							Computed:            true,
+						},
+						"accept_life_time_duration_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 						"accept_life_time_exact": schema.Int64Attribute{

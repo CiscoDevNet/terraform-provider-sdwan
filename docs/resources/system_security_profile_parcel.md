@@ -107,8 +107,10 @@ Optional:
 - `accept_ao_mismatch_variable` (String) Variable name
 - `accept_life_time_duration` (Number) Send lifetime Duration (seconds)
   - Range: `1`-`2147483646`
+- `accept_life_time_duration_variable` (String) Variable name
 - `accept_life_time_exact` (Number) Configure Key lifetime end time
 - `accept_life_time_infinite` (Boolean) Infinite lifetime
+- `accept_life_time_infinite_variable` (String) Variable name
 - `accept_life_time_local` (Boolean) Configure Send lifetime Local
   - Default value: `false`
 - `accept_life_time_local_variable` (String) Variable name
@@ -130,8 +132,10 @@ Optional:
 - `send_id_variable` (String) Variable name
 - `send_life_time_duration` (Number) Send lifetime Duration (seconds)
   - Range: `1`-`2147483646`
+- `send_life_time_duration_variable` (String) Variable name
 - `send_life_time_exact` (Number) Configure Key lifetime end time
 - `send_life_time_infinite` (Boolean) Infinite lifetime
+- `send_life_time_infinite_variable` (String) Variable name
 - `send_life_time_local` (Boolean) Configure Send lifetime Local
   - Default value: `false`
 - `send_life_time_local_variable` (String) Variable name
