@@ -24,6 +24,7 @@ description: |-
 - Add possible types to `sdwan_localized_policy` and `sdwan_feature_device_template` resource
 - Add `type` read-only attribute to localized policy definitions
 - Add `type` read-only attribute to centralized policy definitions
+- Add `sdwan_configuration_group` resource and data source
 
 ## 0.3.7
 
