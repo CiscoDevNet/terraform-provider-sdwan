@@ -26,6 +26,7 @@ description: |-
 - Add `type` read-only attribute to centralized policy definitions
 - Add `sdwan_configuration_group` resource and data source
 - Add `sdwan_system_ntp_profile_parcel` resource and data source
+- Add `sdwan_system_performance_monitoring_profile_parcel` resource and data source
 
 ## 0.3.7
 

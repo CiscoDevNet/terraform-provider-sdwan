@@ -1,0 +1,44 @@
+---
+name: System Performance Monitoring
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/perfmonitor
+minimum_version: 20.12.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: enabled
+    tf_name: app_perf_monitor_enabled
+    data_path: [appPerfMonitorConfig]
+    example: true
+  - model_name: appGroups
+    tf_name: app_perf_monitor_app_group
+    data_path: [appPerfMonitorConfig, policyFilters]
+    exclude_null: true
+    example: amazon-group
+  - model_name: enabled
+    tf_name: monitoring_config_enabled
+    data_path: [umtsConfig, monitoringConfig]
+    example: true
+  - model_name: interval
+    tf_name: monitoring_config_interval
+    data_path: [umtsConfig, monitoringConfig]
+    exclude_null: true
+    example: 30
+  - model_name: enabled
+    tf_name: event_driven_config_enabled
+    data_path: [umtsConfig, eventDrivenConfig]
+    example: true
+  - model_name: events
+    tf_name: event_driven_events
+    data_path: [umtsConfig, eventDrivenConfig]
+    exclude_null: true
+    example: SLA_CHANGE
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
