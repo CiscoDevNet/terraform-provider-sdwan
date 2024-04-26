@@ -151,6 +151,8 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 
 ### Required
 
+- `dns_primary_ipv4_address` (String) Primary DNS Address (IPv4)
+- `dns_primary_ipv6_address` (String) Primary DNS Address (IPv6)
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
@@ -161,9 +163,7 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 - `config_description` (String) Name
 - `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `dns_primary_ipv4_address` (String) Primary DNS Address (IPv4)
 - `dns_primary_ipv4_address_variable` (String) Variable name
-- `dns_primary_ipv6_address` (String) Primary DNS Address (IPv6)
 - `dns_primary_ipv6_address_variable` (String) Variable name
 - `dns_secondary_ipv4_address` (String) Secondary DNS Address (IPv4)
 - `dns_secondary_ipv4_address_variable` (String) Variable name

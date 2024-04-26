@@ -136,7 +136,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 			},
 			"dns_primary_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Primary DNS Address (IPv4)").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"dns_primary_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -152,7 +152,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 			},
 			"dns_primary_ipv6_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Primary DNS Address (IPv6)").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"dns_primary_ipv6_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

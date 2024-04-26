@@ -27,19 +27,17 @@ attributes:
     tf_name: enable_sdwan_remote_access
     example: false
   - model_name: primaryDnsAddressIpv4
-    tf_name: dns_primary_ipv4_address
     data_path: [dnsIpv4]
+    mandatory: true
     example: 1.2.3.4
   - model_name: secondaryDnsAddressIpv4
-    tf_name: dns_secondary_ipv4_address
     data_path: [dnsIpv4]
     example: 2.3.4.5
   - model_name: primaryDnsAddressIpv6
-    tf_name: dns_primary_ipv6_address
     data_path: [dnsIpv6]
+    mandatory: true
     example: 2001:0:0:1::0
   - model_name: secondaryDnsAddressIpv6
-    tf_name: dns_secondary_ipv6_address
     data_path: [dnsIpv6]
     example: 2001:0:0:2::0
   - model_name: newHostMapping
