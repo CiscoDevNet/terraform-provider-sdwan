@@ -669,6 +669,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				return true // keep iterating
 			})
 
+		} else if model.Get("properties." + path + e + ".items").Exists() {
+			path += fmt.Sprintf("%s.items.properties.", e)
+
 		} else {
 			path += e + ".properties."
 		}
@@ -686,14 +689,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
 
-	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
+	if r.Get("type").String() == "object" && !r.Get("items").Exists() || !r.Get("type").Exists() {
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
-		if value := r.Get("properties.optionType.enum.0"); value.Exists() {
-			// if value := r.Get("properties.optionType.enum.0=\"global\""); value.Exists() {
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
 			t = r
-		} else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
-			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\")"); value.Exists() {
-			t = r.Get("properties.refId")
 		}
 
 		if t.Exists() {

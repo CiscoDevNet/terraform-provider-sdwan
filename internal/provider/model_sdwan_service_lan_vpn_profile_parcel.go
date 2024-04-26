@@ -168,6 +168,7 @@ type ServiceLANVPNNatPools struct {
 	OverloadVariable     types.String `tfsdk:"overload_variable"`
 	Direction            types.String `tfsdk:"direction"`
 	DirectionVariable    types.String `tfsdk:"direction_variable"`
+	TrackerObjectId      types.String `tfsdk:"tracker_object_id"`
 }
 
 type ServiceLANVPNNatPortForwards struct {
@@ -194,6 +195,7 @@ type ServiceLANVPNStaticNats struct {
 	TranslatedSourceIpVariable types.String `tfsdk:"translated_source_ip_variable"`
 	StaticNatDirection         types.String `tfsdk:"static_nat_direction"`
 	StaticNatDirectionVariable types.String `tfsdk:"static_nat_direction_variable"`
+	TrackerObjectId            types.String `tfsdk:"tracker_object_id"`
 }
 
 type ServiceLANVPNNat64V4Pool struct {
@@ -813,6 +815,10 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "direction.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "direction.value", item.Direction.ValueString())
 		}
+		if !item.TrackerObjectId.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "trackingObject.trackerId.refId.optionType", "global")
+			itemBody, _ = sjson.Set(itemBody, "trackingObject.trackerId.refId.value", item.TrackerObjectId.ValueString())
+		}
 		body, _ = sjson.SetRaw(body, path+"natPool.-1", itemBody)
 	}
 	for _, item := range data.NatPortForwards {
@@ -900,6 +906,10 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 		} else if true {
 			itemBody, _ = sjson.Set(itemBody, "staticNatDirection.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "staticNatDirection.value", item.StaticNatDirection.ValueString())
+		}
+		if !item.TrackerObjectId.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "trackingObject.trackerId.refId.optionType", "global")
+			itemBody, _ = sjson.Set(itemBody, "trackingObject.trackerId.refId.value", item.TrackerObjectId.ValueString())
 		}
 		body, _ = sjson.SetRaw(body, path+"staticNat.-1", itemBody)
 	}
@@ -1755,6 +1765,14 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.Direction = types.StringValue(va.String())
 				}
 			}
+			item.TrackerObjectId = types.StringNull()
+
+			if t := v.Get("trackingObject.trackerId.refId.optionType"); t.Exists() {
+				va := v.Get("trackingObject.trackerId.refId.value")
+				if t.String() == "global" {
+					item.TrackerObjectId = types.StringValue(va.String())
+				}
+			}
 			data.NatPools = append(data.NatPools, item)
 			return true
 		})
@@ -1869,6 +1887,14 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 					item.StaticNatDirectionVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
 					item.StaticNatDirection = types.StringValue(va.String())
+				}
+			}
+			item.TrackerObjectId = types.StringNull()
+
+			if t := v.Get("trackingObject.trackerId.refId.optionType"); t.Exists() {
+				va := v.Get("trackingObject.trackerId.refId.value")
+				if t.String() == "global" {
+					item.TrackerObjectId = types.StringValue(va.String())
 				}
 			}
 			data.StaticNats = append(data.StaticNats, item)
@@ -2307,9 +2333,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.AdvertiseOmpIpv4s {
-		keys := [...]string{"ompProtocol", "routePolicy.refId"}
-		keyValues := [...]string{data.AdvertiseOmpIpv4s[i].Protocol.ValueString(), data.AdvertiseOmpIpv4s[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.AdvertiseOmpIpv4s[i].ProtocolVariable.ValueString(), ""}
+		keys := [...]string{"routePolicy.refId"}
+		keyValues := [...]string{data.AdvertiseOmpIpv4s[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "ompAdvertiseIp4").ForEach(
@@ -2417,9 +2443,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.AdvertiseOmpIpv6s {
-		keys := [...]string{"ompProtocol", "routePolicy.refId"}
-		keyValues := [...]string{data.AdvertiseOmpIpv6s[i].Protocol.ValueString(), data.AdvertiseOmpIpv6s[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.AdvertiseOmpIpv6s[i].ProtocolVariable.ValueString(), ""}
+		keys := [...]string{"routePolicy.refId"}
+		keyValues := [...]string{data.AdvertiseOmpIpv6s[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "ompAdvertiseIpv6").ForEach(
@@ -2782,7 +2808,7 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 	for i := range data.Services {
 		keys := [...]string{"serviceType"}
 		keyValues := [...]string{data.Services[i].ServiceType.ValueString()}
-		keyValuesVariables := [...]string{data.Services[i].ServiceTypeVariable.ValueString(), data.Services[i].Ipv4AddressesVariable.ValueString()}
+		keyValuesVariables := [...]string{data.Services[i].ServiceTypeVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "service").ForEach(
@@ -3109,6 +3135,14 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				data.NatPools[i].Direction = types.StringValue(va.String())
 			}
 		}
+		data.NatPools[i].TrackerObjectId = types.StringNull()
+
+		if t := r.Get("trackingObject.trackerId.refId.optionType"); t.Exists() {
+			va := r.Get("trackingObject.trackerId.refId.value")
+			if t.String() == "global" {
+				data.NatPools[i].TrackerObjectId = types.StringValue(va.String())
+			}
+		}
 	}
 	for i := range data.NatPortForwards {
 		keys := [...]string{"natPoolName"}
@@ -3263,6 +3297,14 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				data.StaticNats[i].StaticNatDirection = types.StringValue(va.String())
 			}
 		}
+		data.StaticNats[i].TrackerObjectId = types.StringNull()
+
+		if t := r.Get("trackingObject.trackerId.refId.optionType"); t.Exists() {
+			va := r.Get("trackingObject.trackerId.refId.value")
+			if t.String() == "global" {
+				data.StaticNats[i].TrackerObjectId = types.StringValue(va.String())
+			}
+		}
 	}
 	for i := range data.Nat64V4Pool {
 		keys := [...]string{"nat64V4PoolName"}
@@ -3332,9 +3374,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.RouteLeakFromGlobalVpns {
-		keys := [...]string{"routeProtocol", "routePolicy.refId"}
-		keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].RouteProtocol.ValueString(), data.RouteLeakFromGlobalVpns[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.RouteLeakFromGlobalVpns[i].RouteProtocolVariable.ValueString(), ""}
+		keys := [...]string{"routePolicy.refId"}
+		keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "routeLeakFromGlobal").ForEach(
@@ -3376,9 +3418,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.RouteLeakFromGlobalVpns[i].Redistributions {
-			keys := [...]string{"protocol", "policy.refId"}
-			keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].Redistributions[ci].Protocol.ValueString(), data.RouteLeakFromGlobalVpns[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
-			keyValuesVariables := [...]string{data.RouteLeakFromGlobalVpns[i].Redistributions[ci].ProtocolVariable.ValueString(), ""}
+			keys := [...]string{"policy.refId"}
+			keyValues := [...]string{data.RouteLeakFromGlobalVpns[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
+			keyValuesVariables := [...]string{""}
 
 			var cr gjson.Result
 			r.Get("redistributeToProtocol").ForEach(
@@ -3422,9 +3464,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.RouteLeakToGlobalVpns {
-		keys := [...]string{"routeProtocol", "routePolicy.refId"}
-		keyValues := [...]string{data.RouteLeakToGlobalVpns[i].RouteProtocol.ValueString(), data.RouteLeakToGlobalVpns[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.RouteLeakToGlobalVpns[i].RouteProtocolVariable.ValueString(), ""}
+		keys := [...]string{"routePolicy.refId"}
+		keyValues := [...]string{data.RouteLeakToGlobalVpns[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "routeLeakFromService").ForEach(
@@ -3466,9 +3508,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.RouteLeakToGlobalVpns[i].Redistributions {
-			keys := [...]string{"protocol", "policy.refId"}
-			keyValues := [...]string{data.RouteLeakToGlobalVpns[i].Redistributions[ci].Protocol.ValueString(), data.RouteLeakToGlobalVpns[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
-			keyValuesVariables := [...]string{data.RouteLeakToGlobalVpns[i].Redistributions[ci].ProtocolVariable.ValueString(), ""}
+			keys := [...]string{"policy.refId"}
+			keyValues := [...]string{data.RouteLeakToGlobalVpns[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
+			keyValuesVariables := [...]string{""}
 
 			var cr gjson.Result
 			r.Get("redistributeToProtocol").ForEach(
@@ -3512,9 +3554,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	for i := range data.RouteLeakFromOtherServices {
-		keys := [...]string{"routeProtocol", "routePolicy.refId"}
-		keyValues := [...]string{data.RouteLeakFromOtherServices[i].RouteProtocol.ValueString(), data.RouteLeakFromOtherServices[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{data.RouteLeakFromOtherServices[i].RouteProtocolVariable.ValueString(), ""}
+		keys := [...]string{"routePolicy.refId"}
+		keyValues := [...]string{data.RouteLeakFromOtherServices[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "routeLeakBetweenServices").ForEach(
@@ -3566,9 +3608,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.RouteLeakFromOtherServices[i].Redistributions {
-			keys := [...]string{"protocol", "policy.refId"}
-			keyValues := [...]string{data.RouteLeakFromOtherServices[i].Redistributions[ci].Protocol.ValueString(), data.RouteLeakFromOtherServices[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
-			keyValuesVariables := [...]string{data.RouteLeakFromOtherServices[i].Redistributions[ci].ProtocolVariable.ValueString(), ""}
+			keys := [...]string{"policy.refId"}
+			keyValues := [...]string{data.RouteLeakFromOtherServices[i].Redistributions[ci].RedistributionPolicyId.ValueString()}
+			keyValuesVariables := [...]string{""}
 
 			var cr gjson.Result
 			r.Get("redistributeToProtocol").ForEach(

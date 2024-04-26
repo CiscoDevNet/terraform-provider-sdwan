@@ -593,6 +593,10 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
+						"tracker_object_id": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 					},
 				},
 			},
@@ -687,6 +691,10 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 						},
 						"static_nat_direction_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
+						"tracker_object_id": schema.StringAttribute{
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 					},

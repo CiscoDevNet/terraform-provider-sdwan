@@ -440,6 +440,7 @@ Optional:
 - `range_end_variable` (String) Variable name
 - `range_start` (String) NAT Pool Range Start
 - `range_start_variable` (String) Variable name
+- `tracker_object_id` (String)
 
 
 <a id="nestedatt--nat_port_forwards"></a>
@@ -580,6 +581,7 @@ Optional:
 - `static_nat_direction` (String) Static NAT Direction
   - Choices: `inside`, `outside`
 - `static_nat_direction_variable` (String) Variable name
+- `tracker_object_id` (String)
 - `translated_source_ip` (String) Translated Source IP Address
 - `translated_source_ip_variable` (String) Variable name
 
