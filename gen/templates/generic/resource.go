@@ -116,7 +116,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- if len .DefaultValue}}
 				Computed:            true,
 				{{- end}}
-				{{- if len .EnumValues}}
+				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 				},
@@ -178,7 +178,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							{{- if len .DefaultValue}}
 							Computed:            true,
 							{{- end}}
-							{{- if len .EnumValues}}
+							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 							Validators: []validator.String{
 								stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 							},
@@ -240,7 +240,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										{{- if len .DefaultValue}}
 										Computed:            true,
 										{{- end}}
-										{{- if len .EnumValues}}
+										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 										Validators: []validator.String{
 											stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 										},
@@ -302,7 +302,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													{{- if len .DefaultValue}}
 													Computed:            true,
 													{{- end}}
-													{{- if len .EnumValues}}
+													{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 													Validators: []validator.String{
 														stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 													},

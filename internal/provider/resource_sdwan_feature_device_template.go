@@ -122,11 +122,8 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn").String,
 							Required:            true,
-							Validators: []validator.String{
-								stringvalidator.OneOf("cisco_system", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn"),
-							},
 						},
 						"sub_templates": schema.SetNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of sub templates").String,
@@ -144,9 +141,6 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 									"type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_logging", "cisco_ntp", "cisco_ospf", "cisco_bgp", "cisco_vpn_interface", "cisco_vpn_interface_ipsec", "vpn-interface-svi", "cisco_secure_internet_gateway").String,
 										Required:            true,
-										Validators: []validator.String{
-											stringvalidator.OneOf("cisco_logging", "cisco_ntp", "cisco_ospf", "cisco_bgp", "cisco_vpn_interface", "cisco_vpn_interface_ipsec", "vpn-interface-svi", "cisco_secure_internet_gateway"),
-										},
 									},
 									"sub_templates": schema.SetNestedAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("List of sub templates").String,
@@ -164,9 +158,6 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 												"type": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_dhcp_server").String,
 													Required:            true,
-													Validators: []validator.String{
-														stringvalidator.OneOf("cisco_dhcp_server"),
-													},
 												},
 											},
 										},
