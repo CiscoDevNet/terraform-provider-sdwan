@@ -127,6 +127,7 @@ func testAccSdwanTransportRoutingBGPProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	as_number = 429` + "\n"
 	config += `}` + "\n"
 	return config
 }
