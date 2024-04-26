@@ -242,6 +242,9 @@ Optional:
 - `prefix_lists` (Attributes List) IPv6 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv6s--prefix_lists))
 - `protocol` (String) Protocol
   - Choices: `BGP`, `OSPF`, `Connected`, `Static`, `Network`, `Aggregate`
+- `protocol_sub_type` (String) Protocol Sub Type
+  - Choices: `External`
+- `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
 

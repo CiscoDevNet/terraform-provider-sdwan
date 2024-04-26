@@ -242,6 +242,14 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "",
 							Computed:            true,
 						},
+						"protocol_sub_type": schema.StringAttribute{
+							MarkdownDescription: "Protocol Sub Type",
+							Computed:            true,
+						},
+						"protocol_sub_type_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Computed:            true,
+						},
 						"prefix_lists": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv6 Prefix List",
 							Computed:            true,

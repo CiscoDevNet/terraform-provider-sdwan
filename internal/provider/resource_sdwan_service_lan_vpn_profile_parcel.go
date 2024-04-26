@@ -285,6 +285,17 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 							},
 						},
+						"protocol_sub_type": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Protocol Sub Type").AddStringEnumDescription("External").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("External"),
+							},
+						},
+						"protocol_sub_type_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 						"prefix_lists": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Prefix List").String,
 							Optional:            true,

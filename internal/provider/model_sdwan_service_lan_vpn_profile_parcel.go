@@ -91,10 +91,12 @@ type ServiceLANVPNAdvertiseOmpIpv4s struct {
 }
 
 type ServiceLANVPNAdvertiseOmpIpv6s struct {
-	Protocol         types.String                                `tfsdk:"protocol"`
-	ProtocolVariable types.String                                `tfsdk:"protocol_variable"`
-	RoutePolicyId    types.String                                `tfsdk:"route_policy_id"`
-	PrefixLists      []ServiceLANVPNAdvertiseOmpIpv6sPrefixLists `tfsdk:"prefix_lists"`
+	Protocol                types.String                                `tfsdk:"protocol"`
+	ProtocolVariable        types.String                                `tfsdk:"protocol_variable"`
+	RoutePolicyId           types.String                                `tfsdk:"route_policy_id"`
+	ProtocolSubType         types.String                                `tfsdk:"protocol_sub_type"`
+	ProtocolSubTypeVariable types.String                                `tfsdk:"protocol_sub_type_variable"`
+	PrefixLists             []ServiceLANVPNAdvertiseOmpIpv6sPrefixLists `tfsdk:"prefix_lists"`
 }
 
 type ServiceLANVPNIpv4StaticRoutes struct {
@@ -483,6 +485,14 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 		if !item.RoutePolicyId.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.value", item.RoutePolicyId.ValueString())
+		}
+
+		if !item.ProtocolSubTypeVariable.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "protocolSubType.optionType", "variable")
+			itemBody, _ = sjson.Set(itemBody, "protocolSubType.value", item.ProtocolSubTypeVariable.ValueString())
+		} else if true {
+			itemBody, _ = sjson.Set(itemBody, "protocolSubType.optionType", "global")
+			itemBody, _ = sjson.Set(itemBody, "protocolSubType.value", item.ProtocolSubType.ValueString())
 		}
 		for _, childItem := range item.PrefixLists {
 			itemChildBody := ""
@@ -1323,6 +1333,16 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 				va := v.Get("routePolicy.refId.value")
 				if t.String() == "global" {
 					item.RoutePolicyId = types.StringValue(va.String())
+				}
+			}
+			item.ProtocolSubType = types.StringNull()
+			item.ProtocolSubTypeVariable = types.StringNull()
+			if t := v.Get("protocolSubType.optionType"); t.Exists() {
+				va := v.Get("protocolSubType.value")
+				if t.String() == "variable" {
+					item.ProtocolSubTypeVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
+					item.ProtocolSubType = types.StringValue(va.String())
 				}
 			}
 			if cValue := v.Get("prefixList"); cValue.Exists() {
@@ -2484,6 +2504,16 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			va := r.Get("routePolicy.refId.value")
 			if t.String() == "global" {
 				data.AdvertiseOmpIpv6s[i].RoutePolicyId = types.StringValue(va.String())
+			}
+		}
+		data.AdvertiseOmpIpv6s[i].ProtocolSubType = types.StringNull()
+		data.AdvertiseOmpIpv6s[i].ProtocolSubTypeVariable = types.StringNull()
+		if t := r.Get("protocolSubType.optionType"); t.Exists() {
+			va := r.Get("protocolSubType.value")
+			if t.String() == "variable" {
+				data.AdvertiseOmpIpv6s[i].ProtocolSubTypeVariable = types.StringValue(va.String())
+			} else if t.String() == "global" {
+				data.AdvertiseOmpIpv6s[i].ProtocolSubType = types.StringValue(va.String())
 			}
 		}
 		for ci := range data.AdvertiseOmpIpv6s[i].PrefixLists {

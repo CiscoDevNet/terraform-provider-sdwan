@@ -95,9 +95,8 @@ attributes:
       id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
       # test_value: 
-    # - model_name: protocolSubType
-    #   exclude_test: true
-    #   example: External
+    - model_name: protocolSubType
+      example: External
     - model_name: prefixList
       tf_name: prefix_lists
       exclude_test: true
