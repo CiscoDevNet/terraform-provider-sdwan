@@ -329,8 +329,16 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 										MarkdownDescription: "Set maximum number of prefixes accepted from BGP peer",
 										Computed:            true,
 									},
+									"max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
 									"threshold": schema.Int64Attribute{
 										MarkdownDescription: "Set threshold(1 to 100) at which to generate a warning message",
+										Computed:            true,
+									},
+									"threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
 									"policy_type": schema.StringAttribute{
@@ -339,6 +347,10 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 									},
 									"restart_interval": schema.Int64Attribute{
 										MarkdownDescription: "Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded",
+										Computed:            true,
+									},
+									"restart_interval_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
 									"in_route_policy_id": schema.StringAttribute{
@@ -485,8 +497,16 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 										MarkdownDescription: "Set maximum number of prefixes accepted from BGP peer",
 										Computed:            true,
 									},
+									"max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
 									"threshold": schema.Int64Attribute{
 										MarkdownDescription: "Set threshold(1 to 100) at which to generate a warning message",
+										Computed:            true,
+									},
+									"threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
 									"policy_type": schema.StringAttribute{
@@ -495,6 +515,10 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 									},
 									"restart_interval": schema.Int64Attribute{
 										MarkdownDescription: "Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded",
+										Computed:            true,
+									},
+									"restart_interval_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
 									"in_route_policy_id": schema.StringAttribute{

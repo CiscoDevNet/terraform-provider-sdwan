@@ -299,12 +299,15 @@ Optional:
 - `in_route_policy_id` (String)
 - `max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
   - Range: `1`-`4294967295`
+- `max_number_of_prefixes_variable` (String) Variable name
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
 - `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded
   - Range: `1`-`65535`
+- `restart_interval_variable` (String) Variable name
 - `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
   - Range: `1`-`100`
+- `threshold_variable` (String) Variable name
 
 
 
@@ -402,12 +405,15 @@ Optional:
 - `in_route_policy_id` (String)
 - `max_number_of_prefixes` (Number) Set maximum number of prefixes accepted from BGP peer
   - Range: `1`-`4294967295`
+- `max_number_of_prefixes_variable` (String) Variable name
 - `out_route_policy_id` (String)
 - `policy_type` (String) Neighbor received maximum prefix policy is disabled.
 - `restart_interval` (Number) Set the restart interval(minutes) when to restart BGP connection if threshold is exceeded
   - Range: `1`-`65535`
+- `restart_interval_variable` (String) Variable name
 - `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
   - Range: `1`-`100`
+- `threshold_variable` (String) Variable name
 
 
 

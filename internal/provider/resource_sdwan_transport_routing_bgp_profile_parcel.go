@@ -377,12 +377,20 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 											int64validator.Between(1, 4294967295),
 										},
 									},
+									"max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
 									"threshold": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message").AddIntegerRangeDescription(1, 100).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 100),
 										},
+									},
+									"threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
 									},
 									"policy_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Neighbor received maximum prefix policy is disabled.").String,
@@ -394,6 +402,10 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65535),
 										},
+									},
+									"restart_interval_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
 									},
 									"in_route_policy_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
@@ -573,12 +585,20 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 											int64validator.Between(1, 4294967295),
 										},
 									},
+									"max_number_of_prefixes_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
 									"threshold": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message").AddIntegerRangeDescription(1, 100).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 100),
 										},
+									},
+									"threshold_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
 									},
 									"policy_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Neighbor received maximum prefix policy is disabled.").String,
@@ -590,6 +610,10 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65535),
 										},
+									},
+									"restart_interval_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
 									},
 									"in_route_policy_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,

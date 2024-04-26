@@ -205,23 +205,29 @@ type TransportRoutingBGPMplsInterfaces struct {
 }
 
 type TransportRoutingBGPIpv4NeighborsAddressFamilies struct {
-	FamilyType          types.String `tfsdk:"family_type"`
-	MaxNumberOfPrefixes types.Int64  `tfsdk:"max_number_of_prefixes"`
-	Threshold           types.Int64  `tfsdk:"threshold"`
-	PolicyType          types.String `tfsdk:"policy_type"`
-	RestartInterval     types.Int64  `tfsdk:"restart_interval"`
-	InRoutePolicyId     types.String `tfsdk:"in_route_policy_id"`
-	OutRoutePolicyId    types.String `tfsdk:"out_route_policy_id"`
+	FamilyType                  types.String `tfsdk:"family_type"`
+	MaxNumberOfPrefixes         types.Int64  `tfsdk:"max_number_of_prefixes"`
+	MaxNumberOfPrefixesVariable types.String `tfsdk:"max_number_of_prefixes_variable"`
+	Threshold                   types.Int64  `tfsdk:"threshold"`
+	ThresholdVariable           types.String `tfsdk:"threshold_variable"`
+	PolicyType                  types.String `tfsdk:"policy_type"`
+	RestartInterval             types.Int64  `tfsdk:"restart_interval"`
+	RestartIntervalVariable     types.String `tfsdk:"restart_interval_variable"`
+	InRoutePolicyId             types.String `tfsdk:"in_route_policy_id"`
+	OutRoutePolicyId            types.String `tfsdk:"out_route_policy_id"`
 }
 
 type TransportRoutingBGPIpv6NeighborsAddressFamilies struct {
-	FamilyType          types.String `tfsdk:"family_type"`
-	MaxNumberOfPrefixes types.Int64  `tfsdk:"max_number_of_prefixes"`
-	Threshold           types.Int64  `tfsdk:"threshold"`
-	PolicyType          types.String `tfsdk:"policy_type"`
-	RestartInterval     types.Int64  `tfsdk:"restart_interval"`
-	InRoutePolicyId     types.String `tfsdk:"in_route_policy_id"`
-	OutRoutePolicyId    types.String `tfsdk:"out_route_policy_id"`
+	FamilyType                  types.String `tfsdk:"family_type"`
+	MaxNumberOfPrefixes         types.Int64  `tfsdk:"max_number_of_prefixes"`
+	MaxNumberOfPrefixesVariable types.String `tfsdk:"max_number_of_prefixes_variable"`
+	Threshold                   types.Int64  `tfsdk:"threshold"`
+	ThresholdVariable           types.String `tfsdk:"threshold_variable"`
+	PolicyType                  types.String `tfsdk:"policy_type"`
+	RestartInterval             types.Int64  `tfsdk:"restart_interval"`
+	RestartIntervalVariable     types.String `tfsdk:"restart_interval_variable"`
+	InRoutePolicyId             types.String `tfsdk:"in_route_policy_id"`
+	OutRoutePolicyId            types.String `tfsdk:"out_route_policy_id"`
 }
 
 func (data TransportRoutingBGP) getModel() string {
@@ -249,7 +255,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	if !data.RouterIdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"routerId.optionType", "variable")
 		body, _ = sjson.Set(body, path+"routerId.value", data.RouterIdVariable.ValueString())
-	} else if !data.RouterId.IsNull() {
+	} else if data.RouterId.IsNull() {
+		body, _ = sjson.Set(body, path+"routerId.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"routerId.optionType", "global")
 		body, _ = sjson.Set(body, path+"routerId.value", data.RouterId.ValueString())
 	}
@@ -385,6 +394,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"multipathRelax.optionType", "global")
 		body, _ = sjson.Set(body, path+"multipathRelax.value", data.MultipathRelax.ValueBool())
 	}
+	body, _ = sjson.Set(body, path+"neighbor", []interface{}{})
 	for _, item := range data.Ipv4Neighbors {
 		itemBody := ""
 
@@ -399,7 +409,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.DescriptionVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.DescriptionVariable.ValueString())
-		} else if !item.Description.IsNull() {
+		} else if item.Description.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "description.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.Description.ValueString())
 		}
@@ -448,7 +461,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.UpdateSourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterfaceVariable.ValueString())
-		} else if !item.UpdateSourceInterface.IsNull() {
+		} else if item.UpdateSourceInterface.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterface.ValueString())
 		}
@@ -500,7 +516,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.PasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordVariable.ValueString())
-		} else if !item.Password.IsNull() {
+		} else if item.Password.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "password.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 		}
@@ -537,21 +556,33 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.AllowasInNumberVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumberVariable.ValueString())
-		} else if !item.AllowasInNumber.IsNull() {
+		} else if item.AllowasInNumber.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumber.ValueInt64())
 		}
+		itemBody, _ = sjson.Set(itemBody, "addressFamily", []interface{}{})
 		for _, childItem := range item.AddressFamilies {
 			itemChildBody := ""
 			if !childItem.FamilyType.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.value", childItem.FamilyType.ValueString())
 			}
-			if !childItem.MaxNumberOfPrefixes.IsNull() {
+
+			if !childItem.MaxNumberOfPrefixesVariable.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "variable")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.MaxNumberOfPrefixesVariable.ValueString())
+			} else if !childItem.MaxNumberOfPrefixes.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.MaxNumberOfPrefixes.ValueInt64())
 			}
-			if !childItem.Threshold.IsNull() {
+
+			if !childItem.ThresholdVariable.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.ThresholdVariable.ValueString())
+			} else if !childItem.Threshold.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.Threshold.ValueInt64())
 			}
@@ -559,7 +590,11 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.policyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.policyType.value", childItem.PolicyType.ValueString())
 			}
-			if !childItem.RestartInterval.IsNull() {
+
+			if !childItem.RestartIntervalVariable.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.optionType", "variable")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.value", childItem.RestartIntervalVariable.ValueString())
+			} else if !childItem.RestartInterval.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.value", childItem.RestartInterval.ValueInt64())
 			}
@@ -575,6 +610,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"neighbor.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"ipv6Neighbor", []interface{}{})
 	for _, item := range data.Ipv6Neighbors {
 		itemBody := ""
 
@@ -589,7 +625,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.DescriptionVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.DescriptionVariable.ValueString())
-		} else if !item.Description.IsNull() {
+		} else if item.Description.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "description.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "description.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "description.value", item.Description.ValueString())
 		}
@@ -638,7 +677,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.UpdateSourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterfaceVariable.ValueString())
-		} else if !item.UpdateSourceInterface.IsNull() {
+		} else if item.UpdateSourceInterface.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.UpdateSourceInterface.ValueString())
 		}
@@ -690,7 +732,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.PasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordVariable.ValueString())
-		} else if !item.Password.IsNull() {
+		} else if item.Password.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "password.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 		}
@@ -709,21 +754,33 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		if !item.AllowasInNumberVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumberVariable.ValueString())
-		} else if !item.AllowasInNumber.IsNull() {
+		} else if item.AllowasInNumber.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "asNumber.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "asNumber.value", item.AllowasInNumber.ValueInt64())
 		}
+		itemBody, _ = sjson.Set(itemBody, "addressFamily", []interface{}{})
 		for _, childItem := range item.AddressFamilies {
 			itemChildBody := ""
 			if !childItem.FamilyType.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "familyType.value", childItem.FamilyType.ValueString())
 			}
-			if !childItem.MaxNumberOfPrefixes.IsNull() {
+
+			if !childItem.MaxNumberOfPrefixesVariable.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "variable")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.MaxNumberOfPrefixesVariable.ValueString())
+			} else if !childItem.MaxNumberOfPrefixes.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.prefixNum.value", childItem.MaxNumberOfPrefixes.ValueInt64())
 			}
-			if !childItem.Threshold.IsNull() {
+
+			if !childItem.ThresholdVariable.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.ThresholdVariable.ValueString())
+			} else if !childItem.Threshold.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.Threshold.ValueInt64())
 			}
@@ -731,7 +788,11 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.policyType.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.policyType.value", childItem.PolicyType.ValueString())
 			}
-			if !childItem.RestartInterval.IsNull() {
+
+			if !childItem.RestartIntervalVariable.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.optionType", "variable")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.value", childItem.RestartIntervalVariable.ValueString())
+			} else if !childItem.RestartInterval.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.restartInterval.value", childItem.RestartInterval.ValueInt64())
 			}
@@ -747,6 +808,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv6Neighbor.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"addressFamily.aggregateAddress", []interface{}{})
 	for _, item := range data.Ipv4AggregateAddresses {
 		itemBody := ""
 
@@ -789,6 +851,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"addressFamily.aggregateAddress.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"addressFamily.network", []interface{}{})
 	for _, item := range data.Ipv4Networks {
 		itemBody := ""
 
@@ -813,7 +876,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	if !data.Ipv4EibgpMaximumPathsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"addressFamily.paths.optionType", "variable")
 		body, _ = sjson.Set(body, path+"addressFamily.paths.value", data.Ipv4EibgpMaximumPathsVariable.ValueString())
-	} else if !data.Ipv4EibgpMaximumPaths.IsNull() {
+	} else if data.Ipv4EibgpMaximumPaths.IsNull() {
+		body, _ = sjson.Set(body, path+"addressFamily.paths.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"addressFamily.paths.optionType", "global")
 		body, _ = sjson.Set(body, path+"addressFamily.paths.value", data.Ipv4EibgpMaximumPaths.ValueInt64())
 	}
@@ -843,6 +909,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"addressFamily.filter.optionType", "global")
 		body, _ = sjson.Set(body, path+"addressFamily.filter.value", data.Ipv4TableMapFilter.ValueBool())
 	}
+	body, _ = sjson.Set(body, path+"addressFamily.redistribute", []interface{}{})
 	for _, item := range data.Ipv4Redistributes {
 		itemBody := ""
 
@@ -859,6 +926,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"addressFamily.redistribute.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"ipv6AddressFamily.ipv6AggregateAddress", []interface{}{})
 	for _, item := range data.Ipv6AggregateAddresses {
 		itemBody := ""
 
@@ -893,6 +961,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv6AddressFamily.ipv6AggregateAddress.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"ipv6AddressFamily.ipv6Network", []interface{}{})
 	for _, item := range data.Ipv6Network {
 		itemBody := ""
 
@@ -909,7 +978,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	if !data.Ipv6EibgpMaximumPathsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.optionType", "variable")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.value", data.Ipv6EibgpMaximumPathsVariable.ValueString())
-	} else if !data.Ipv6EibgpMaximumPaths.IsNull() {
+	} else if data.Ipv6EibgpMaximumPaths.IsNull() {
+		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.optionType", "global")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.paths.value", data.Ipv6EibgpMaximumPaths.ValueInt64())
 	}
@@ -939,6 +1011,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.filter.optionType", "global")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.filter.value", data.Ipv6TableMapFilter.ValueBool())
 	}
+	body, _ = sjson.Set(body, path+"ipv6AddressFamily.redistribute", []interface{}{})
 	for _, item := range data.Ipv6Redistributes {
 		itemBody := ""
 
@@ -955,6 +1028,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv6AddressFamily.redistribute.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"mplsInterface", []interface{}{})
 	for _, item := range data.MplsInterfaces {
 		itemBody := ""
 
@@ -1283,18 +1357,22 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 						}
 					}
 					cItem.MaxNumberOfPrefixes = types.Int64Null()
-
+					cItem.MaxNumberOfPrefixesVariable = types.StringNull()
 					if t := cv.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
 						va := cv.Get("maxPrefixConfig.prefixNum.value")
-						if t.String() == "global" {
+						if t.String() == "variable" {
+							cItem.MaxNumberOfPrefixesVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
 							cItem.MaxNumberOfPrefixes = types.Int64Value(va.Int())
 						}
 					}
 					cItem.Threshold = types.Int64Null()
-
+					cItem.ThresholdVariable = types.StringNull()
 					if t := cv.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
 						va := cv.Get("maxPrefixConfig.threshold.value")
-						if t.String() == "global" {
+						if t.String() == "variable" {
+							cItem.ThresholdVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
 							cItem.Threshold = types.Int64Value(va.Int())
 						}
 					}
@@ -1307,10 +1385,12 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 						}
 					}
 					cItem.RestartInterval = types.Int64Null()
-
+					cItem.RestartIntervalVariable = types.StringNull()
 					if t := cv.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
 						va := cv.Get("maxPrefixConfig.restartInterval.value")
-						if t.String() == "global" {
+						if t.String() == "variable" {
+							cItem.RestartIntervalVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
 							cItem.RestartInterval = types.Int64Value(va.Int())
 						}
 					}
@@ -1485,18 +1565,22 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 						}
 					}
 					cItem.MaxNumberOfPrefixes = types.Int64Null()
-
+					cItem.MaxNumberOfPrefixesVariable = types.StringNull()
 					if t := cv.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
 						va := cv.Get("maxPrefixConfig.prefixNum.value")
-						if t.String() == "global" {
+						if t.String() == "variable" {
+							cItem.MaxNumberOfPrefixesVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
 							cItem.MaxNumberOfPrefixes = types.Int64Value(va.Int())
 						}
 					}
 					cItem.Threshold = types.Int64Null()
-
+					cItem.ThresholdVariable = types.StringNull()
 					if t := cv.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
 						va := cv.Get("maxPrefixConfig.threshold.value")
-						if t.String() == "global" {
+						if t.String() == "variable" {
+							cItem.ThresholdVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
 							cItem.Threshold = types.Int64Value(va.Int())
 						}
 					}
@@ -1509,10 +1593,12 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 						}
 					}
 					cItem.RestartInterval = types.Int64Null()
-
+					cItem.RestartIntervalVariable = types.StringNull()
 					if t := cv.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
 						va := cv.Get("maxPrefixConfig.restartInterval.value")
-						if t.String() == "global" {
+						if t.String() == "variable" {
+							cItem.RestartIntervalVariable = types.StringValue(va.String())
+						} else if t.String() == "global" {
 							cItem.RestartInterval = types.Int64Value(va.Int())
 						}
 					}
@@ -2177,18 +2263,22 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 				}
 			}
 			data.Ipv4Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixes = types.Int64Null()
-
+			data.Ipv4Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixesVariable = types.StringNull()
 			if t := cr.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
 				va := cr.Get("maxPrefixConfig.prefixNum.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					data.Ipv4Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixesVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					data.Ipv4Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixes = types.Int64Value(va.Int())
 				}
 			}
 			data.Ipv4Neighbors[i].AddressFamilies[ci].Threshold = types.Int64Null()
-
+			data.Ipv4Neighbors[i].AddressFamilies[ci].ThresholdVariable = types.StringNull()
 			if t := cr.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
 				va := cr.Get("maxPrefixConfig.threshold.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					data.Ipv4Neighbors[i].AddressFamilies[ci].ThresholdVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					data.Ipv4Neighbors[i].AddressFamilies[ci].Threshold = types.Int64Value(va.Int())
 				}
 			}
@@ -2201,10 +2291,12 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 				}
 			}
 			data.Ipv4Neighbors[i].AddressFamilies[ci].RestartInterval = types.Int64Null()
-
+			data.Ipv4Neighbors[i].AddressFamilies[ci].RestartIntervalVariable = types.StringNull()
 			if t := cr.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
 				va := cr.Get("maxPrefixConfig.restartInterval.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					data.Ipv4Neighbors[i].AddressFamilies[ci].RestartIntervalVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					data.Ipv4Neighbors[i].AddressFamilies[ci].RestartInterval = types.Int64Value(va.Int())
 				}
 			}
@@ -2417,18 +2509,22 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 				}
 			}
 			data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixes = types.Int64Null()
-
+			data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixesVariable = types.StringNull()
 			if t := cr.Get("maxPrefixConfig.prefixNum.optionType"); t.Exists() {
 				va := cr.Get("maxPrefixConfig.prefixNum.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixesVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					data.Ipv6Neighbors[i].AddressFamilies[ci].MaxNumberOfPrefixes = types.Int64Value(va.Int())
 				}
 			}
 			data.Ipv6Neighbors[i].AddressFamilies[ci].Threshold = types.Int64Null()
-
+			data.Ipv6Neighbors[i].AddressFamilies[ci].ThresholdVariable = types.StringNull()
 			if t := cr.Get("maxPrefixConfig.threshold.optionType"); t.Exists() {
 				va := cr.Get("maxPrefixConfig.threshold.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					data.Ipv6Neighbors[i].AddressFamilies[ci].ThresholdVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					data.Ipv6Neighbors[i].AddressFamilies[ci].Threshold = types.Int64Value(va.Int())
 				}
 			}
@@ -2441,10 +2537,12 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 				}
 			}
 			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartInterval = types.Int64Null()
-
+			data.Ipv6Neighbors[i].AddressFamilies[ci].RestartIntervalVariable = types.StringNull()
 			if t := cr.Get("maxPrefixConfig.restartInterval.optionType"); t.Exists() {
 				va := cr.Get("maxPrefixConfig.restartInterval.value")
-				if t.String() == "global" {
+				if t.String() == "variable" {
+					data.Ipv6Neighbors[i].AddressFamilies[ci].RestartIntervalVariable = types.StringValue(va.String())
+				} else if t.String() == "global" {
 					data.Ipv6Neighbors[i].AddressFamilies[ci].RestartInterval = types.Int64Value(va.Int())
 				}
 			}
