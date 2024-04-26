@@ -173,6 +173,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6.ValueString())
 	}
+	body, _ = sjson.Set(body, path+"newHostMapping", []interface{}{})
 	for _, item := range data.NewHostMappings {
 		itemBody := ""
 
@@ -195,6 +196,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"newHostMapping.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"ipv4Route", []interface{}{})
 	for _, item := range data.Ipv4StaticRoutes {
 		itemBody := ""
 
@@ -220,6 +222,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "gateway.value", item.Gateway.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "nextHop", []interface{}{})
 		for _, childItem := range item.NextHops {
 			itemChildBody := ""
 
@@ -256,6 +259,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv4Route.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"ipv6Route", []interface{}{})
 	for _, item := range data.Ipv6StaticRoutes {
 		itemBody := ""
 
@@ -266,6 +270,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nextHopContainer.nextHop", []interface{}{})
 		for _, childItem := range item.NextHops {
 			itemChildBody := ""
 
@@ -300,6 +305,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv6Route.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"service", []interface{}{})
 	for _, item := range data.Services {
 		itemBody := ""
 		if !item.ServiceType.IsNull() {
@@ -308,6 +314,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"service.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"nat64V4Pool", []interface{}{})
 	for _, item := range data.Nat64V4Pools {
 		itemBody := ""
 

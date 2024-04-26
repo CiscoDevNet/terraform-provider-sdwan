@@ -172,6 +172,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		data.ServerAuthOrder.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"serverAuthOrder.value", values)
 	}
+
 	for _, item := range data.Users {
 		itemBody := ""
 
@@ -201,6 +202,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "privilege.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "privilege.value", item.Privilege.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "pubkeyChain", []interface{}{})
 		for _, childItem := range item.PublicKeys {
 			itemChildBody := ""
 			if !childItem.KeyString.IsNull() {
@@ -222,6 +224,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"user.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"radius", []interface{}{})
 	for _, item := range data.RadiusGroups {
 		itemBody := ""
 		if !item.GroupName.IsNull() {
@@ -246,6 +249,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "server", []interface{}{})
 		for _, childItem := range item.Servers {
 			itemChildBody := ""
 			if !childItem.Address.IsNull() {
@@ -333,6 +337,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"radius.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"tacacs", []interface{}{})
 	for _, item := range data.TacacsGroups {
 		itemBody := ""
 		if !item.GroupName.IsNull() {
@@ -357,6 +362,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "server", []interface{}{})
 		for _, childItem := range item.Servers {
 			itemChildBody := ""
 			if !childItem.Address.IsNull() {
@@ -408,6 +414,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"tacacs.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"accountingRule", []interface{}{})
 	for _, item := range data.AccountingRules {
 		itemBody := ""
 		if !item.RuleId.IsNull() {
@@ -466,6 +473,7 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"authorizationConfigCommands.optionType", "global")
 		body, _ = sjson.Set(body, path+"authorizationConfigCommands.value", data.AuthorizationConfigCommands.ValueBool())
 	}
+	body, _ = sjson.Set(body, path+"authorizationRule", []interface{}{})
 	for _, item := range data.AuthorizationRules {
 		itemBody := ""
 		if !item.RuleId.IsNull() {

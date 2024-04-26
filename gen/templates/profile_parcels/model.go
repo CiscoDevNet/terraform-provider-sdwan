@@ -152,6 +152,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		{{- end}}
 	}
 	{{- else if isNestedListSet .}}
+	{{if not .MinList}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 	for _, item := range data.{{toGoName .TfName}} {
 		itemBody := ""
 		{{- range .Attributes}}
@@ -174,6 +175,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			{{- end}}
 		}
 		{{- else if isNestedListSet .}}
+		{{if not .MinList}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 		for _, childItem := range item.{{toGoName .TfName}} {
 			itemChildBody := ""
 			{{- range .Attributes}}
@@ -196,6 +198,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				{{- end}}
 			}
 			{{- else if isNestedListSet .}}
+			{{if not .MinList}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", []interface{}{}){{end}}
 			for _, childChildItem := range childItem.{{toGoName .TfName}} {
 				itemChildChildBody := ""
 				{{- range .Attributes}}

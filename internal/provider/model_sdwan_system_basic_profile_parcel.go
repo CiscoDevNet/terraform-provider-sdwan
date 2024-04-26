@@ -204,6 +204,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", data.GpsSmsEnable.ValueBool())
 	}
+	body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.mobileNumber", []interface{}{})
 	for _, item := range data.GpsSmsMobileNumbers {
 		itemBody := ""
 
@@ -466,6 +467,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "global")
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", data.AffinityPreferenceAuto.ValueBool())
 	}
+	body, _ = sjson.Set(body, path+"affinityPerVrf", []interface{}{})
 	for _, item := range data.AffinityPerVrfs {
 		itemBody := ""
 

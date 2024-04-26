@@ -155,6 +155,7 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 		data.IntegrityType.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"integrityType.value", values)
 	}
+	body, _ = sjson.Set(body, path+"keychain", []interface{}{})
 	for _, item := range data.Keychains {
 		itemBody := ""
 		if !item.KeyChainName.IsNull() {
@@ -167,6 +168,7 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"keychain.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"key", []interface{}{})
 	for _, item := range data.Keys {
 		itemBody := ""
 		if !item.Id.IsNull() {

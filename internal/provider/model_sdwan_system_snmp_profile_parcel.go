@@ -23,6 +23,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -150,12 +151,14 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"location.optionType", "global")
 		body, _ = sjson.Set(body, path+"location.value", data.LocationOfDevice.ValueString())
 	}
+	body, _ = sjson.Set(body, path+"view", []interface{}{})
 	for _, item := range data.Views {
 		itemBody := ""
 		if !item.Name.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "oid", []interface{}{})
 		for _, childItem := range item.Oids {
 			itemChildBody := ""
 
@@ -181,6 +184,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"view.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"community", []interface{}{})
 	for _, item := range data.Communities {
 		itemBody := ""
 		if !item.Name.IsNull() {
@@ -209,6 +213,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"community.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"group", []interface{}{})
 	for _, item := range data.Groups {
 		itemBody := ""
 		if !item.Name.IsNull() {
@@ -229,6 +234,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"group.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"user", []interface{}{})
 	for _, item := range data.Users {
 		itemBody := ""
 		if !item.Name.IsNull() {
@@ -289,6 +295,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"user.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"target", []interface{}{})
 	for _, item := range data.TrapTargetServers {
 		itemBody := ""
 
@@ -940,9 +947,9 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	for i := range data.TrapTargetServers {
-		keys := [...]string{"userLabel"}
-		keyValues := [...]string{data.TrapTargetServers[i].UserLabel.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"vpnId", "ip", "port"}
+		keyValues := [...]string{strconv.FormatInt(data.TrapTargetServers[i].VpnId.ValueInt64(), 10), data.TrapTargetServers[i].Ip.ValueString(), strconv.FormatInt(data.TrapTargetServers[i].Port.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{data.TrapTargetServers[i].VpnIdVariable.ValueString(), data.TrapTargetServers[i].IpVariable.ValueString(), data.TrapTargetServers[i].PortVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "target").ForEach(
