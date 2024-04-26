@@ -54,6 +54,7 @@ data "sdwan_transport_routing_bgp_profile_parcel" "example" {
 - `ipv4_redistributes` (Attributes List) Redistribute routes into BGP (see [below for nested schema](#nestedatt--ipv4_redistributes))
 - `ipv4_table_map_filter` (Boolean) Table map filtered or not
 - `ipv4_table_map_filter_variable` (String) Variable name
+- `ipv4_table_map_route_policy_id` (String)
 - `ipv6_aggregate_addresses` (Attributes List) IPv6 Aggregate prefixes in specific range (see [below for nested schema](#nestedatt--ipv6_aggregate_addresses))
 - `ipv6_eibgp_maximum_paths` (Number) Set maximum number of parallel IBGP paths for multipath load sharing
 - `ipv6_eibgp_maximum_paths_variable` (String) Variable name
@@ -64,6 +65,7 @@ data "sdwan_transport_routing_bgp_profile_parcel" "example" {
 - `ipv6_redistributes` (Attributes List) Redistribute routes into BGP (see [below for nested schema](#nestedatt--ipv6_redistributes))
 - `ipv6_table_map_filter` (Boolean) Table map filtered or not
 - `ipv6_table_map_filter_variable` (String) Variable name
+- `ipv6_table_map_route_policy_id` (String)
 - `keepalive_time` (Number) Interval (seconds) of keepalive messages sent to its BGP peer
 - `keepalive_time_variable` (String) Variable name
 - `local_routes_distance` (Number) Set administrative distance for local BGP routes

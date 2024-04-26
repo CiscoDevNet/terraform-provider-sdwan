@@ -697,14 +697,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
-		t := r.Get("oneOf.#(properties.optionType.enum.0==\"global\")")
-		if value := r.Get("properties.optionType.enum.0"); value.Exists() {
-			// if value := r.Get("properties.optionType.enum.0==\"global\""); value.Exists() {
+		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
 			t = r
-		} else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
-			t = r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\").properties.refId")
-			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0==\"global\")"); value.Exists() {
-			// t = value.Get("properties.refId")
 		}
 
 		if t.Exists() {
@@ -758,11 +753,11 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
 		}
-		if r.Get("oneOf.#(properties.optionType.enum.0==\"variable\")").Exists() && !isOneOfAttribute {
+		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() && !isOneOfAttribute {
 			attr.Variable = true
 		}
-		d := r.Get("oneOf.#(properties.optionType.enum.0==\"default\")")
-		if value := r.Get("properties.optionType.enum.0==\"default\""); value.Exists() {
+		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
 		if d.Exists() && !isOneOfAttribute {

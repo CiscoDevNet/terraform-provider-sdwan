@@ -176,6 +176,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
 - `ipv4_table_map_filter` (Boolean) Table map filtered or not
   - Default value: `false`
 - `ipv4_table_map_filter_variable` (String) Variable name
+- `ipv4_table_map_route_policy_id` (String)
 - `ipv6_aggregate_addresses` (Attributes List) IPv6 Aggregate prefixes in specific range (see [below for nested schema](#nestedatt--ipv6_aggregate_addresses))
 - `ipv6_eibgp_maximum_paths` (Number) Set maximum number of parallel IBGP paths for multipath load sharing
   - Range: `1`-`32`
@@ -189,6 +190,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
 - `ipv6_table_map_filter` (Boolean) Table map filtered or not
   - Default value: `false`
 - `ipv6_table_map_filter_variable` (String) Variable name
+- `ipv6_table_map_route_policy_id` (String)
 - `keepalive_time` (Number) Interval (seconds) of keepalive messages sent to its BGP peer
   - Range: `0`-`65535`
   - Default value: `60`

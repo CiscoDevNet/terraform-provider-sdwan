@@ -130,7 +130,9 @@ func testAccSdwanTransportRoutingBGPProfileParcelConfig_minimum() string {
 	config += `	as_number = 429` + "\n"
 	config += `	router_id = "1.2.3.4"` + "\n"
 	config += `	ipv4_eibgp_maximum_paths = 1` + "\n"
+	config += `	ipv4_table_map_route_policy_id = "a509839f-33aa-492a-ab8e-6a6fe70d7d79"` + "\n"
 	config += `	ipv6_eibgp_maximum_paths = 2` + "\n"
+	config += `	ipv6_table_map_route_policy_id = "a509839f-33aa-492a-ab8e-6a6fe70d7d79"` + "\n"
 	config += `}` + "\n"
 	return config
 }

@@ -700,6 +700,13 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"ipv4_table_map_route_policy_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+				},
+			},
 			"ipv4_table_map_filter": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Table map filtered or not").AddDefaultValueDescription("false").String,
 				Optional:            true,
@@ -806,6 +813,13 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 			"ipv6_originate_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
+			},
+			"ipv6_table_map_route_policy_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+				},
 			},
 			"ipv6_table_map_filter": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Table map filtered or not").AddDefaultValueDescription("false").String,

@@ -71,6 +71,7 @@ type TransportRoutingBGP struct {
 	Ipv4EibgpMaximumPathsVariable  types.String                                `tfsdk:"ipv4_eibgp_maximum_paths_variable"`
 	Ipv4Originate                  types.Bool                                  `tfsdk:"ipv4_originate"`
 	Ipv4OriginateVariable          types.String                                `tfsdk:"ipv4_originate_variable"`
+	Ipv4TableMapRoutePolicyId      types.String                                `tfsdk:"ipv4_table_map_route_policy_id"`
 	Ipv4TableMapFilter             types.Bool                                  `tfsdk:"ipv4_table_map_filter"`
 	Ipv4TableMapFilterVariable     types.String                                `tfsdk:"ipv4_table_map_filter_variable"`
 	Ipv4Redistributes              []TransportRoutingBGPIpv4Redistributes      `tfsdk:"ipv4_redistributes"`
@@ -80,6 +81,7 @@ type TransportRoutingBGP struct {
 	Ipv6EibgpMaximumPathsVariable  types.String                                `tfsdk:"ipv6_eibgp_maximum_paths_variable"`
 	Ipv6Originate                  types.Bool                                  `tfsdk:"ipv6_originate"`
 	Ipv6OriginateVariable          types.String                                `tfsdk:"ipv6_originate_variable"`
+	Ipv6TableMapRoutePolicyId      types.String                                `tfsdk:"ipv6_table_map_route_policy_id"`
 	Ipv6TableMapFilter             types.Bool                                  `tfsdk:"ipv6_table_map_filter"`
 	Ipv6TableMapFilterVariable     types.String                                `tfsdk:"ipv6_table_map_filter_variable"`
 	Ipv6Redistributes              []TransportRoutingBGPIpv6Redistributes      `tfsdk:"ipv6_redistributes"`
@@ -826,6 +828,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"addressFamily.originate.optionType", "global")
 		body, _ = sjson.Set(body, path+"addressFamily.originate.value", data.Ipv4Originate.ValueBool())
 	}
+	if !data.Ipv4TableMapRoutePolicyId.IsNull() {
+		body, _ = sjson.Set(body, path+"addressFamily.name.refId.optionType", "global")
+		body, _ = sjson.Set(body, path+"addressFamily.name.refId.value", data.Ipv4TableMapRoutePolicyId.ValueString())
+	}
 
 	if !data.Ipv4TableMapFilterVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"addressFamily.filter.optionType", "variable")
@@ -917,6 +923,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 	} else {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.originate.optionType", "global")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.originate.value", data.Ipv6Originate.ValueBool())
+	}
+	if !data.Ipv6TableMapRoutePolicyId.IsNull() {
+		body, _ = sjson.Set(body, path+"ipv6AddressFamily.name.refId.optionType", "global")
+		body, _ = sjson.Set(body, path+"ipv6AddressFamily.name.refId.value", data.Ipv6TableMapRoutePolicyId.ValueString())
 	}
 
 	if !data.Ipv6TableMapFilterVariable.IsNull() {
@@ -1626,6 +1636,14 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			data.Ipv4Originate = types.BoolValue(va.Bool())
 		}
 	}
+	data.Ipv4TableMapRoutePolicyId = types.StringNull()
+
+	if t := res.Get(path + "addressFamily.name.refId.optionType"); t.Exists() {
+		va := res.Get(path + "addressFamily.name.refId.value")
+		if t.String() == "global" {
+			data.Ipv4TableMapRoutePolicyId = types.StringValue(va.String())
+		}
+	}
 	data.Ipv4TableMapFilter = types.BoolNull()
 	data.Ipv4TableMapFilterVariable = types.StringNull()
 	if t := res.Get(path + "addressFamily.filter.optionType"); t.Exists() {
@@ -1736,6 +1754,14 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			data.Ipv6OriginateVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.Ipv6Originate = types.BoolValue(va.Bool())
+		}
+	}
+	data.Ipv6TableMapRoutePolicyId = types.StringNull()
+
+	if t := res.Get(path + "ipv6AddressFamily.name.refId.optionType"); t.Exists() {
+		va := res.Get(path + "ipv6AddressFamily.name.refId.value")
+		if t.String() == "global" {
+			data.Ipv6TableMapRoutePolicyId = types.StringValue(va.String())
 		}
 	}
 	data.Ipv6TableMapFilter = types.BoolNull()
@@ -2574,6 +2600,14 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			data.Ipv4Originate = types.BoolValue(va.Bool())
 		}
 	}
+	data.Ipv4TableMapRoutePolicyId = types.StringNull()
+
+	if t := res.Get(path + "addressFamily.name.refId.optionType"); t.Exists() {
+		va := res.Get(path + "addressFamily.name.refId.value")
+		if t.String() == "global" {
+			data.Ipv4TableMapRoutePolicyId = types.StringValue(va.String())
+		}
+	}
 	data.Ipv4TableMapFilter = types.BoolNull()
 	data.Ipv4TableMapFilterVariable = types.StringNull()
 	if t := res.Get(path + "addressFamily.filter.optionType"); t.Exists() {
@@ -2741,6 +2775,14 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			data.Ipv6OriginateVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
 			data.Ipv6Originate = types.BoolValue(va.Bool())
+		}
+	}
+	data.Ipv6TableMapRoutePolicyId = types.StringNull()
+
+	if t := res.Get(path + "ipv6AddressFamily.name.refId.optionType"); t.Exists() {
+		va := res.Get(path + "ipv6AddressFamily.name.refId.value")
+		if t.String() == "global" {
+			data.Ipv6TableMapRoutePolicyId = types.StringValue(va.String())
 		}
 	}
 	data.Ipv6TableMapFilter = types.BoolNull()
@@ -2949,6 +2991,9 @@ func (data *TransportRoutingBGP) isNull(ctx context.Context, res gjson.Result) b
 	if !data.Ipv4OriginateVariable.IsNull() {
 		return false
 	}
+	if !data.Ipv4TableMapRoutePolicyId.IsNull() {
+		return false
+	}
 	if !data.Ipv4TableMapFilter.IsNull() {
 		return false
 	}
@@ -2974,6 +3019,9 @@ func (data *TransportRoutingBGP) isNull(ctx context.Context, res gjson.Result) b
 		return false
 	}
 	if !data.Ipv6OriginateVariable.IsNull() {
+		return false
+	}
+	if !data.Ipv6TableMapRoutePolicyId.IsNull() {
 		return false
 	}
 	if !data.Ipv6TableMapFilter.IsNull() {

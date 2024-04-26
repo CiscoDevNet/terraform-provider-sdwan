@@ -591,6 +591,10 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"ipv4_table_map_route_policy_id": schema.StringAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
 			"ipv4_table_map_filter": schema.BoolAttribute{
 				MarkdownDescription: "Table map filtered or not",
 				Computed:            true,
@@ -681,6 +685,10 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 			},
 			"ipv6_originate_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv6_table_map_route_policy_id": schema.StringAttribute{
+				MarkdownDescription: "",
 				Computed:            true,
 			},
 			"ipv6_table_map_filter": schema.BoolAttribute{
