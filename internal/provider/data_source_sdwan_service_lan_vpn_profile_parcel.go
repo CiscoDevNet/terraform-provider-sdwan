@@ -112,35 +112,35 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 				MarkdownDescription: "Enable SDWAN Remote Access",
 				Computed:            true,
 			},
-			"dns_primary_ipv4_address": schema.StringAttribute{
+			"primary_dns_address_ipv4": schema.StringAttribute{
 				MarkdownDescription: "Primary DNS Address (IPv4)",
 				Computed:            true,
 			},
-			"dns_primary_ipv4_address_variable": schema.StringAttribute{
+			"primary_dns_address_ipv4_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"dns_secondary_ipv4_address": schema.StringAttribute{
+			"secondary_dns_address_ipv4": schema.StringAttribute{
 				MarkdownDescription: "Secondary DNS Address (IPv4)",
 				Computed:            true,
 			},
-			"dns_secondary_ipv4_address_variable": schema.StringAttribute{
+			"secondary_dns_address_ipv4_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"dns_primary_ipv6_address": schema.StringAttribute{
+			"primary_dns_address_ipv6": schema.StringAttribute{
 				MarkdownDescription: "Primary DNS Address (IPv6)",
 				Computed:            true,
 			},
-			"dns_primary_ipv6_address_variable": schema.StringAttribute{
+			"primary_dns_address_ipv6_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"dns_secondary_ipv6_address": schema.StringAttribute{
+			"secondary_dns_address_ipv6": schema.StringAttribute{
 				MarkdownDescription: "Secondary DNS Address (IPv6)",
 				Computed:            true,
 			},
-			"dns_secondary_ipv6_address_variable": schema.StringAttribute{
+			"secondary_dns_address_ipv6_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

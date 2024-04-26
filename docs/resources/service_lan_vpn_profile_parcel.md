@@ -24,10 +24,10 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
   omp_admin_distance_ipv4    = 1
   omp_admin_distance_ipv6    = 1
   enable_sdwan_remote_access = false
-  dns_primary_ipv4_address   = "1.2.3.4"
-  dns_secondary_ipv4_address = "2.3.4.5"
-  dns_primary_ipv6_address   = "2001:0:0:1::0"
-  dns_secondary_ipv6_address = "2001:0:0:2::0"
+  primary_dns_address_ipv4   = "1.2.3.4"
+  secondary_dns_address_ipv4 = "2.3.4.5"
+  primary_dns_address_ipv6   = "2001:0:0:1::0"
+  secondary_dns_address_ipv6 = "2001:0:0:2::0"
   host_mappings = [
     {
       host_name  = "HOSTMAPPING1"
@@ -151,10 +151,10 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 
 ### Required
 
-- `dns_primary_ipv4_address` (String) Primary DNS Address (IPv4)
-- `dns_primary_ipv6_address` (String) Primary DNS Address (IPv6)
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
+- `primary_dns_address_ipv4` (String) Primary DNS Address (IPv4)
+- `primary_dns_address_ipv6` (String) Primary DNS Address (IPv6)
 
 ### Optional
 
@@ -163,12 +163,6 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 - `config_description` (String) Name
 - `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `dns_primary_ipv4_address_variable` (String) Variable name
-- `dns_primary_ipv6_address_variable` (String) Variable name
-- `dns_secondary_ipv4_address` (String) Secondary DNS Address (IPv4)
-- `dns_secondary_ipv4_address_variable` (String) Variable name
-- `dns_secondary_ipv6_address` (String) Secondary DNS Address (IPv6)
-- `dns_secondary_ipv6_address_variable` (String) Variable name
 - `enable_sdwan_remote_access` (Boolean) Enable SDWAN Remote Access
   - Default value: `false`
 - `gre_routes` (Attributes List) IPv4 Static GRE Route (see [below for nested schema](#nestedatt--gre_routes))
@@ -189,9 +183,15 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 - `omp_admin_distance_ipv6` (Number) OMP Admin Distance IPv6
   - Range: `1`-`255`
 - `omp_admin_distance_ipv6_variable` (String) Variable name
+- `primary_dns_address_ipv4_variable` (String) Variable name
+- `primary_dns_address_ipv6_variable` (String) Variable name
 - `route_leak_from_global_vpns` (Attributes List) Enable route leaking from Global to Service VPN (see [below for nested schema](#nestedatt--route_leak_from_global_vpns))
 - `route_leak_from_other_services` (Attributes List) Enable route leak from another Service VPN to current Service VPN (see [below for nested schema](#nestedatt--route_leak_from_other_services))
 - `route_leak_to_global_vpns` (Attributes List) Enable route leaking from Service to Global VPN (see [below for nested schema](#nestedatt--route_leak_to_global_vpns))
+- `secondary_dns_address_ipv4` (String) Secondary DNS Address (IPv4)
+- `secondary_dns_address_ipv4_variable` (String) Variable name
+- `secondary_dns_address_ipv6` (String) Secondary DNS Address (IPv6)
+- `secondary_dns_address_ipv6_variable` (String) Variable name
 - `service_routes` (Attributes List) Service (see [below for nested schema](#nestedatt--service_routes))
 - `services` (Attributes List) Service (see [below for nested schema](#nestedatt--services))
 - `static_nats` (Attributes List) Static NAT Rules (see [below for nested schema](#nestedatt--static_nats))

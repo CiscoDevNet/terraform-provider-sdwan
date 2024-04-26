@@ -46,14 +46,14 @@ type ServiceLANVPN struct {
 	OmpAdminDistanceIpv6            types.Int64                               `tfsdk:"omp_admin_distance_ipv6"`
 	OmpAdminDistanceIpv6Variable    types.String                              `tfsdk:"omp_admin_distance_ipv6_variable"`
 	EnableSdwanRemoteAccess         types.Bool                                `tfsdk:"enable_sdwan_remote_access"`
-	DnsPrimaryIpv4Address           types.String                              `tfsdk:"dns_primary_ipv4_address"`
-	DnsPrimaryIpv4AddressVariable   types.String                              `tfsdk:"dns_primary_ipv4_address_variable"`
-	DnsSecondaryIpv4Address         types.String                              `tfsdk:"dns_secondary_ipv4_address"`
-	DnsSecondaryIpv4AddressVariable types.String                              `tfsdk:"dns_secondary_ipv4_address_variable"`
-	DnsPrimaryIpv6Address           types.String                              `tfsdk:"dns_primary_ipv6_address"`
-	DnsPrimaryIpv6AddressVariable   types.String                              `tfsdk:"dns_primary_ipv6_address_variable"`
-	DnsSecondaryIpv6Address         types.String                              `tfsdk:"dns_secondary_ipv6_address"`
-	DnsSecondaryIpv6AddressVariable types.String                              `tfsdk:"dns_secondary_ipv6_address_variable"`
+	PrimaryDnsAddressIpv4           types.String                              `tfsdk:"primary_dns_address_ipv4"`
+	PrimaryDnsAddressIpv4Variable   types.String                              `tfsdk:"primary_dns_address_ipv4_variable"`
+	SecondaryDnsAddressIpv4         types.String                              `tfsdk:"secondary_dns_address_ipv4"`
+	SecondaryDnsAddressIpv4Variable types.String                              `tfsdk:"secondary_dns_address_ipv4_variable"`
+	PrimaryDnsAddressIpv6           types.String                              `tfsdk:"primary_dns_address_ipv6"`
+	PrimaryDnsAddressIpv6Variable   types.String                              `tfsdk:"primary_dns_address_ipv6_variable"`
+	SecondaryDnsAddressIpv6         types.String                              `tfsdk:"secondary_dns_address_ipv6"`
+	SecondaryDnsAddressIpv6Variable types.String                              `tfsdk:"secondary_dns_address_ipv6_variable"`
 	HostMappings                    []ServiceLANVPNHostMappings               `tfsdk:"host_mappings"`
 	AdvertiseOmpIpv4s               []ServiceLANVPNAdvertiseOmpIpv4s          `tfsdk:"advertise_omp_ipv4s"`
 	AdvertiseOmpIpv6s               []ServiceLANVPNAdvertiseOmpIpv6s          `tfsdk:"advertise_omp_ipv6s"`
@@ -375,48 +375,48 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"enableSdra.value", data.EnableSdwanRemoteAccess.ValueBool())
 	}
 
-	if !data.DnsPrimaryIpv4AddressVariable.IsNull() {
+	if !data.PrimaryDnsAddressIpv4Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.DnsPrimaryIpv4AddressVariable.ValueString())
-	} else if data.DnsPrimaryIpv4Address.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4Variable.ValueString())
+	} else if data.PrimaryDnsAddressIpv4.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "global")
-		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.DnsPrimaryIpv4Address.ValueString())
+		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4.ValueString())
 	}
 
-	if !data.DnsSecondaryIpv4AddressVariable.IsNull() {
+	if !data.SecondaryDnsAddressIpv4Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.DnsSecondaryIpv4AddressVariable.ValueString())
-	} else if data.DnsSecondaryIpv4Address.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4Variable.ValueString())
+	} else if data.SecondaryDnsAddressIpv4.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "global")
-		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.DnsSecondaryIpv4Address.ValueString())
+		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4.ValueString())
 	}
 
-	if !data.DnsPrimaryIpv6AddressVariable.IsNull() {
+	if !data.PrimaryDnsAddressIpv6Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.DnsPrimaryIpv6AddressVariable.ValueString())
-	} else if data.DnsPrimaryIpv6Address.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6Variable.ValueString())
+	} else if data.PrimaryDnsAddressIpv6.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "global")
-		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.DnsPrimaryIpv6Address.ValueString())
+		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6.ValueString())
 	}
 
-	if !data.DnsSecondaryIpv6AddressVariable.IsNull() {
+	if !data.SecondaryDnsAddressIpv6Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.DnsSecondaryIpv6AddressVariable.ValueString())
-	} else if data.DnsSecondaryIpv6Address.IsNull() {
+		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6Variable.ValueString())
+	} else if data.SecondaryDnsAddressIpv6.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "global")
-		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.DnsSecondaryIpv6Address.ValueString())
+		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6.ValueString())
 	}
 	body, _ = sjson.Set(body, path+"newHostMapping", []interface{}{})
 	for _, item := range data.HostMappings {
@@ -1233,44 +1233,44 @@ func (data *ServiceLANVPN) fromBody(ctx context.Context, res gjson.Result) {
 			data.EnableSdwanRemoteAccess = types.BoolValue(va.Bool())
 		}
 	}
-	data.DnsPrimaryIpv4Address = types.StringNull()
-	data.DnsPrimaryIpv4AddressVariable = types.StringNull()
+	data.PrimaryDnsAddressIpv4 = types.StringNull()
+	data.PrimaryDnsAddressIpv4Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv4.primaryDnsAddressIpv4.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv4.primaryDnsAddressIpv4.value")
 		if t.String() == "variable" {
-			data.DnsPrimaryIpv4AddressVariable = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv4Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsPrimaryIpv4Address = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv4 = types.StringValue(va.String())
 		}
 	}
-	data.DnsSecondaryIpv4Address = types.StringNull()
-	data.DnsSecondaryIpv4AddressVariable = types.StringNull()
+	data.SecondaryDnsAddressIpv4 = types.StringNull()
+	data.SecondaryDnsAddressIpv4Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv4.secondaryDnsAddressIpv4.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv4.secondaryDnsAddressIpv4.value")
 		if t.String() == "variable" {
-			data.DnsSecondaryIpv4AddressVariable = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv4Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsSecondaryIpv4Address = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv4 = types.StringValue(va.String())
 		}
 	}
-	data.DnsPrimaryIpv6Address = types.StringNull()
-	data.DnsPrimaryIpv6AddressVariable = types.StringNull()
+	data.PrimaryDnsAddressIpv6 = types.StringNull()
+	data.PrimaryDnsAddressIpv6Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv6.primaryDnsAddressIpv6.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv6.primaryDnsAddressIpv6.value")
 		if t.String() == "variable" {
-			data.DnsPrimaryIpv6AddressVariable = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv6Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsPrimaryIpv6Address = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv6 = types.StringValue(va.String())
 		}
 	}
-	data.DnsSecondaryIpv6Address = types.StringNull()
-	data.DnsSecondaryIpv6AddressVariable = types.StringNull()
+	data.SecondaryDnsAddressIpv6 = types.StringNull()
+	data.SecondaryDnsAddressIpv6Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv6.secondaryDnsAddressIpv6.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv6.secondaryDnsAddressIpv6.value")
 		if t.String() == "variable" {
-			data.DnsSecondaryIpv6AddressVariable = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv6Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsSecondaryIpv6Address = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv6 = types.StringValue(va.String())
 		}
 	}
 	if value := res.Get(path + "newHostMapping"); value.Exists() {
@@ -2327,44 +2327,44 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			data.EnableSdwanRemoteAccess = types.BoolValue(va.Bool())
 		}
 	}
-	data.DnsPrimaryIpv4Address = types.StringNull()
-	data.DnsPrimaryIpv4AddressVariable = types.StringNull()
+	data.PrimaryDnsAddressIpv4 = types.StringNull()
+	data.PrimaryDnsAddressIpv4Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv4.primaryDnsAddressIpv4.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv4.primaryDnsAddressIpv4.value")
 		if t.String() == "variable" {
-			data.DnsPrimaryIpv4AddressVariable = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv4Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsPrimaryIpv4Address = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv4 = types.StringValue(va.String())
 		}
 	}
-	data.DnsSecondaryIpv4Address = types.StringNull()
-	data.DnsSecondaryIpv4AddressVariable = types.StringNull()
+	data.SecondaryDnsAddressIpv4 = types.StringNull()
+	data.SecondaryDnsAddressIpv4Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv4.secondaryDnsAddressIpv4.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv4.secondaryDnsAddressIpv4.value")
 		if t.String() == "variable" {
-			data.DnsSecondaryIpv4AddressVariable = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv4Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsSecondaryIpv4Address = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv4 = types.StringValue(va.String())
 		}
 	}
-	data.DnsPrimaryIpv6Address = types.StringNull()
-	data.DnsPrimaryIpv6AddressVariable = types.StringNull()
+	data.PrimaryDnsAddressIpv6 = types.StringNull()
+	data.PrimaryDnsAddressIpv6Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv6.primaryDnsAddressIpv6.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv6.primaryDnsAddressIpv6.value")
 		if t.String() == "variable" {
-			data.DnsPrimaryIpv6AddressVariable = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv6Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsPrimaryIpv6Address = types.StringValue(va.String())
+			data.PrimaryDnsAddressIpv6 = types.StringValue(va.String())
 		}
 	}
-	data.DnsSecondaryIpv6Address = types.StringNull()
-	data.DnsSecondaryIpv6AddressVariable = types.StringNull()
+	data.SecondaryDnsAddressIpv6 = types.StringNull()
+	data.SecondaryDnsAddressIpv6Variable = types.StringNull()
 	if t := res.Get(path + "dnsIpv6.secondaryDnsAddressIpv6.optionType"); t.Exists() {
 		va := res.Get(path + "dnsIpv6.secondaryDnsAddressIpv6.value")
 		if t.String() == "variable" {
-			data.DnsSecondaryIpv6AddressVariable = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv6Variable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DnsSecondaryIpv6Address = types.StringValue(va.String())
+			data.SecondaryDnsAddressIpv6 = types.StringValue(va.String())
 		}
 	}
 	for i := range data.HostMappings {
@@ -3928,28 +3928,28 @@ func (data *ServiceLANVPN) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.EnableSdwanRemoteAccess.IsNull() {
 		return false
 	}
-	if !data.DnsPrimaryIpv4Address.IsNull() {
+	if !data.PrimaryDnsAddressIpv4.IsNull() {
 		return false
 	}
-	if !data.DnsPrimaryIpv4AddressVariable.IsNull() {
+	if !data.PrimaryDnsAddressIpv4Variable.IsNull() {
 		return false
 	}
-	if !data.DnsSecondaryIpv4Address.IsNull() {
+	if !data.SecondaryDnsAddressIpv4.IsNull() {
 		return false
 	}
-	if !data.DnsSecondaryIpv4AddressVariable.IsNull() {
+	if !data.SecondaryDnsAddressIpv4Variable.IsNull() {
 		return false
 	}
-	if !data.DnsPrimaryIpv6Address.IsNull() {
+	if !data.PrimaryDnsAddressIpv6.IsNull() {
 		return false
 	}
-	if !data.DnsPrimaryIpv6AddressVariable.IsNull() {
+	if !data.PrimaryDnsAddressIpv6Variable.IsNull() {
 		return false
 	}
-	if !data.DnsSecondaryIpv6Address.IsNull() {
+	if !data.SecondaryDnsAddressIpv6.IsNull() {
 		return false
 	}
-	if !data.DnsSecondaryIpv6AddressVariable.IsNull() {
+	if !data.SecondaryDnsAddressIpv6Variable.IsNull() {
 		return false
 	}
 	if len(data.HostMappings) > 0 {

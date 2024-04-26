@@ -36,10 +36,10 @@ func TestAccSdwanServiceLANVPNProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "omp_admin_distance_ipv4", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "omp_admin_distance_ipv6", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "enable_sdwan_remote_access", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "dns_primary_ipv4_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "dns_secondary_ipv4_address", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "dns_primary_ipv6_address", "2001:0:0:1::0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "dns_secondary_ipv6_address", "2001:0:0:2::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "primary_dns_address_ipv4", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "secondary_dns_address_ipv4", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "primary_dns_address_ipv6", "2001:0:0:1::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "secondary_dns_address_ipv6", "2001:0:0:2::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "host_mappings.0.host_name", "HOSTMAPPING1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv4_static_routes.0.network_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv4_static_routes.0.subnet_mask", "0.0.0.0"))
@@ -110,8 +110,8 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	dns_primary_ipv4_address = "1.2.3.4"` + "\n"
-	config += `	dns_primary_ipv6_address = "2001:0:0:1::0"` + "\n"
+	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
+	config += `	primary_dns_address_ipv6 = "2001:0:0:1::0"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -126,10 +126,10 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_all() string {
 	config += `	omp_admin_distance_ipv4 = 1` + "\n"
 	config += `	omp_admin_distance_ipv6 = 1` + "\n"
 	config += `	enable_sdwan_remote_access = false` + "\n"
-	config += `	dns_primary_ipv4_address = "1.2.3.4"` + "\n"
-	config += `	dns_secondary_ipv4_address = "2.3.4.5"` + "\n"
-	config += `	dns_primary_ipv6_address = "2001:0:0:1::0"` + "\n"
-	config += `	dns_secondary_ipv6_address = "2001:0:0:2::0"` + "\n"
+	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
+	config += `	secondary_dns_address_ipv4 = "2.3.4.5"` + "\n"
+	config += `	primary_dns_address_ipv6 = "2001:0:0:1::0"` + "\n"
+	config += `	secondary_dns_address_ipv6 = "2001:0:0:2::0"` + "\n"
 	config += `	host_mappings = [{` + "\n"
 	config += `	  host_name = "HOSTMAPPING1"` + "\n"
 	config += `	  list_of_ip = ["1.2.3.4"]` + "\n"

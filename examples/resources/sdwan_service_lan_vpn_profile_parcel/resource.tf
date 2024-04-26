@@ -7,10 +7,10 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
   omp_admin_distance_ipv4    = 1
   omp_admin_distance_ipv6    = 1
   enable_sdwan_remote_access = false
-  dns_primary_ipv4_address   = "1.2.3.4"
-  dns_secondary_ipv4_address = "2.3.4.5"
-  dns_primary_ipv6_address   = "2001:0:0:1::0"
-  dns_secondary_ipv6_address = "2001:0:0:2::0"
+  primary_dns_address_ipv4   = "1.2.3.4"
+  secondary_dns_address_ipv4 = "2.3.4.5"
+  primary_dns_address_ipv6   = "2001:0:0:1::0"
+  secondary_dns_address_ipv6 = "2001:0:0:2::0"
   host_mappings = [
     {
       host_name  = "HOSTMAPPING1"
