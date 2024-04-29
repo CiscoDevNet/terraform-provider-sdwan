@@ -33,7 +33,7 @@ func TestAccSdwanCLIConfigProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_config_profile_parcel.test", "name", "Example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_config_profile_parcel.test", "description", "My Example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_config_profile_parcel.test", "cli_config", "! Enable new BGP community format\nip bgp-community new-format\n"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_cli_config_profile_parcel.test", "cli_configuration", "bfd default-dscp 48\nbfd app-route multiplier 6\nbfd app-route poll-interval 600000"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -58,7 +58,7 @@ func testAccSdwanCLIConfigProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_cli_feature_profile.test.id` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My Example"` + "\n"
-	config += `	cli_config = "! Enable new BGP community format\nip bgp-community new-format\n"` + "\n"
+	config += `	cli_configuration = "bfd default-dscp 48\nbfd app-route multiplier 6\nbfd app-route poll-interval 600000"` + "\n"
 	config += `}` + "\n"
 	return config
 }

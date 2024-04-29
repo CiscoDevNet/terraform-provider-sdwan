@@ -34,7 +34,7 @@ type CLIConfigProfileParcel struct {
 	FeatureProfileId types.String `tfsdk:"feature_profile_id"`
 	Name             types.String `tfsdk:"name"`
 	Description      types.String `tfsdk:"description"`
-	CliConfig        types.String `tfsdk:"cli_config"`
+	CliConfiguration types.String `tfsdk:"cli_configuration"`
 }
 
 func (data CLIConfigProfileParcel) getPath() string {
@@ -49,8 +49,8 @@ func (data CLIConfigProfileParcel) toBody(ctx context.Context) string {
 	if !data.Description.IsNull() {
 		body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	}
-	if !data.CliConfig.IsNull() {
-		body, _ = sjson.Set(body, "data.config", data.CliConfig.ValueString())
+	if !data.CliConfiguration.IsNull() {
+		body, _ = sjson.Set(body, "data.config", data.CliConfiguration.ValueString())
 	}
 	return body
 }
@@ -67,9 +67,9 @@ func (data *CLIConfigProfileParcel) fromBody(ctx context.Context, res gjson.Resu
 		data.Description = types.StringNull()
 	}
 	if value := res.Get("data.config"); value.Exists() {
-		data.CliConfig = types.StringValue(value.String())
+		data.CliConfiguration = types.StringValue(value.String())
 	} else {
-		data.CliConfig = types.StringNull()
+		data.CliConfiguration = types.StringNull()
 	}
 }
 
@@ -84,7 +84,7 @@ func (data *CLIConfigProfileParcel) hasChanges(ctx context.Context, state *CLICo
 	if !data.Description.Equal(state.Description) {
 		hasChanges = true
 	}
-	if !data.CliConfig.Equal(state.CliConfig) {
+	if !data.CliConfiguration.Equal(state.CliConfiguration) {
 		hasChanges = true
 	}
 	return hasChanges

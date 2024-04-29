@@ -24,12 +24,12 @@ attributes:
     description: The description of the profile parcel
     example: My Example
   - model_name: config
-    tf_name: cli_config
+    tf_name: cli_configuration
     data_path: [data]
     type: String
     mandatory: true
     description: CLI configuration
-    example: '! Enable new BGP community format\nip bgp-community new-format\n'
+    example: 'bfd default-dscp 48\nbfd app-route multiplier 6\nbfd app-route poll-interval 600000'
 
 test_prerequisites: |
   resource "sdwan_cli_feature_profile" "test" {

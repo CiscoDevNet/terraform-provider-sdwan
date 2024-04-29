@@ -79,7 +79,7 @@ func (r *CLIConfigProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("The description of the profile parcel").String,
 				Required:            true,
 			},
-			"cli_config": schema.StringAttribute{
+			"cli_configuration": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("CLI configuration").String,
 				Required:            true,
 			},

@@ -70,7 +70,7 @@ func (d *CLIConfigProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "The description of the profile parcel",
 				Computed:            true,
 			},
-			"cli_config": schema.StringAttribute{
+			"cli_configuration": schema.StringAttribute{
 				MarkdownDescription: "CLI configuration",
 				Computed:            true,
 			},
