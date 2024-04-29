@@ -62,6 +62,10 @@ type IPv6DeviceACLPolicyDefinitionSequencesActionEntries struct {
 	CounterName types.String `tfsdk:"counter_name"`
 }
 
+func (data IPv6DeviceACLPolicyDefinition) getPath() string {
+	return "/template/policy/definition/deviceaccesspolicyv6/"
+}
+
 func (data IPv6DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

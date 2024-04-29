@@ -72,6 +72,10 @@ type TLSSSLDecryptionPolicyDefinitionNetworkRulesSourceAndDestinationConfigurati
 	Value  types.String `tfsdk:"value"`
 }
 
+func (data TLSSSLDecryptionPolicyDefinition) getPath() string {
+	return "/template/policy/definition/ssldecryption/"
+}
+
 func (data TLSSSLDecryptionPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

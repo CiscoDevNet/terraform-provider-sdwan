@@ -62,6 +62,10 @@ type IPv4DeviceACLPolicyDefinitionSequencesActionEntries struct {
 	CounterName types.String `tfsdk:"counter_name"`
 }
 
+func (data IPv4DeviceACLPolicyDefinition) getPath() string {
+	return "/template/policy/definition/deviceaccesspolicy/"
+}
+
 func (data IPv4DeviceACLPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

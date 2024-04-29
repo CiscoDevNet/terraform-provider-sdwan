@@ -41,6 +41,10 @@ type VEdgeInventoryDevices struct {
 	DeviceType    types.String `tfsdk:"device_type"`
 }
 
+func (data VEdgeInventory) getPath() string {
+	return "/device/vedgeinventory/detail"
+}
+
 func (data VEdgeInventory) toBody(ctx context.Context) string {
 	body := ""
 	if true {

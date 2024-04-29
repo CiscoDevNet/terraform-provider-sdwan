@@ -45,6 +45,10 @@ type VPNMembershipPolicyDefinitionSites struct {
 	VpnListVersions types.List   `tfsdk:"vpn_list_versions"`
 }
 
+func (data VPNMembershipPolicyDefinition) getPath() string {
+	return "/template/policy/definition/vpnmembershipgroup/"
+}
+
 func (data VPNMembershipPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

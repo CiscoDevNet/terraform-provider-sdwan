@@ -39,6 +39,10 @@ type PreferredColorGroupPolicyObject struct {
 	TertiaryPathPreference   types.String `tfsdk:"tertiary_path_preference"`
 }
 
+func (data PreferredColorGroupPolicyObject) getPath() string {
+	return "/template/policy/list/preferredcolorgroup/"
+}
+
 func (data PreferredColorGroupPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

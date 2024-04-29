@@ -75,6 +75,10 @@ type RuleSetPolicyDefinitionRules struct {
 	ProtocolNumber                       types.Int64  `tfsdk:"protocol_number"`
 }
 
+func (data RuleSetPolicyDefinition) getPath() string {
+	return "/template/policy/definition/ruleset/"
+}
+
 func (data RuleSetPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

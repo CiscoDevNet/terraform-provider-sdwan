@@ -38,6 +38,10 @@ type DomainListPolicyObjectEntries struct {
 	Domain types.String `tfsdk:"domain"`
 }
 
+func (data DomainListPolicyObject) getPath() string {
+	return "/template/policy/list/localdomain/"
+}
+
 func (data DomainListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

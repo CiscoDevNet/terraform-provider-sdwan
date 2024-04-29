@@ -84,6 +84,10 @@ type ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParame
 	PreferredColor                 types.String `tfsdk:"preferred_color"`
 }
 
+func (data ApplicationAwareRoutingPolicyDefinition) getPath() string {
+	return "/template/policy/definition/approute/"
+}
+
 func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

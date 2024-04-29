@@ -38,6 +38,10 @@ type AllowURLListPolicyObjectEntries struct {
 	Url types.String `tfsdk:"url"`
 }
 
+func (data AllowURLListPolicyObject) getPath() string {
+	return "/template/policy/list/urlwhitelist/"
+}
+
 func (data AllowURLListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -39,6 +39,10 @@ type ZoneListPolicyObjectEntries struct {
 	Interface types.String `tfsdk:"interface"`
 }
 
+func (data ZoneListPolicyObject) getPath() string {
+	return "/template/policy/list/zone/"
+}
+
 func (data ZoneListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

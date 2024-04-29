@@ -37,6 +37,10 @@ type CLIDeviceTemplate struct {
 	CliConfiguration types.String `tfsdk:"cli_configuration"`
 }
 
+func (data CLIDeviceTemplate) getPath() string {
+	return "/template/device/"
+}
+
 func (data CLIDeviceTemplate) toBody(ctx context.Context) string {
 	body := ""
 	if true {

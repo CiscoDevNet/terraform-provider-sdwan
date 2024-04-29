@@ -62,6 +62,10 @@ type FeatureDeviceTemplateGeneralTemplatesSubTemplatesSubTemplates struct {
 	Type    types.String `tfsdk:"type"`
 }
 
+func (data FeatureDeviceTemplate) getPath() string {
+	return "/template/device/"
+}
+
 func (data FeatureDeviceTemplate) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -90,6 +90,10 @@ type RoutePolicyDefinitionSequencesActionEntries struct {
 	Originator          types.String `tfsdk:"originator"`
 }
 
+func (data RoutePolicyDefinition) getPath() string {
+	return "/template/policy/definition/vedgeroute/"
+}
+
 func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

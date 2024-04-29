@@ -55,6 +55,10 @@ type CentralizedPolicyDefinitionsEntries struct {
 	RegionIds          types.Set    `tfsdk:"region_ids"`
 }
 
+func (data CentralizedPolicy) getPath() string {
+	return "/template/policy/vsmart/"
+}
+
 func (data CentralizedPolicy) toBody(ctx context.Context) string {
 	body := ""
 	if true {

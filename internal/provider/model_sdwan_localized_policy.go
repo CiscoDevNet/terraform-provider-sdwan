@@ -52,6 +52,10 @@ type LocalizedPolicyDefinitions struct {
 	Type    types.String `tfsdk:"type"`
 }
 
+func (data LocalizedPolicy) getPath() string {
+	return "/template/policy/vedge/"
+}
+
 func (data LocalizedPolicy) toBody(ctx context.Context) string {
 	body := ""
 	if true {

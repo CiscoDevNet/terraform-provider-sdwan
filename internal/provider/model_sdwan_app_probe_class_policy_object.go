@@ -40,6 +40,10 @@ type AppProbeClassPolicyObjectMappings struct {
 	Dscp  types.Int64  `tfsdk:"dscp"`
 }
 
+func (data AppProbeClassPolicyObject) getPath() string {
+	return "/template/policy/list/appprobe/"
+}
+
 func (data AppProbeClassPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

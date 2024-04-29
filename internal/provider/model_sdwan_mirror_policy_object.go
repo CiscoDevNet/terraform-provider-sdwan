@@ -35,6 +35,10 @@ type MirrorPolicyObject struct {
 	SourceIp            types.String `tfsdk:"source_ip"`
 }
 
+func (data MirrorPolicyObject) getPath() string {
+	return "/template/policy/list/mirror/"
+}
+
 func (data MirrorPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

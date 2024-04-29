@@ -62,6 +62,10 @@ type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs struct {
 	Ipv6PrefixListIds types.Set    `tfsdk:"ipv6_prefix_list_ids"`
 }
 
+func (data HubAndSpokeTopologyPolicyDefinition) getPath() string {
+	return "/template/policy/definition/hubandspoke/"
+}
+
 func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -48,6 +48,10 @@ type QoSMapPolicyDefinitionQosSchedulers struct {
 	SchedulingType   types.String `tfsdk:"scheduling_type"`
 }
 
+func (data QoSMapPolicyDefinition) getPath() string {
+	return "/template/policy/definition/qosmap/"
+}
+
 func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

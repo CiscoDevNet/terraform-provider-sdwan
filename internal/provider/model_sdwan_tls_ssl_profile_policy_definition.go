@@ -46,6 +46,10 @@ type TLSSSLProfilePolicyDefinition struct {
 	FailDecrypt            types.Bool   `tfsdk:"fail_decrypt"`
 }
 
+func (data TLSSSLProfilePolicyDefinition) getPath() string {
+	return "/template/policy/definition/sslutdprofile/"
+}
+
 func (data TLSSSLProfilePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
