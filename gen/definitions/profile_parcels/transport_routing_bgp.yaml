@@ -38,7 +38,7 @@ attributes:
     tf_name: hold_time
     example: 180
   - model_name: alwaysCompare
-    tf_name: compare_med
+    tf_name: always_compare_med
     example: false
   - model_name: deterministic
     tf_name: deterministic_med
@@ -278,7 +278,7 @@ attributes:
     - model_name: summaryOnly
       example: false
   - model_name: ipv6Network
-    tf_name: ipv6_network
+    tf_name: ipv6_networks
     data_path: [ipv6AddressFamily]
     attributes:
     - model_name: prefix

@@ -147,11 +147,11 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"compare_med": schema.BoolAttribute{
+			"always_compare_med": schema.BoolAttribute{
 				MarkdownDescription: "Compare MEDs from all ASs when selecting active BGP paths",
 				Computed:            true,
 			},
-			"compare_med_variable": schema.StringAttribute{
+			"always_compare_med_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -679,7 +679,7 @@ func (d *TransportRoutingBGPProfileParcelDataSource) Schema(ctx context.Context,
 					},
 				},
 			},
-			"ipv6_network": schema.ListNestedAttribute{
+			"ipv6_networks": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure the networks for BGP to advertise",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

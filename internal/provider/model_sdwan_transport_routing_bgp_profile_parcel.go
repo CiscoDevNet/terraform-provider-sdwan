@@ -53,8 +53,8 @@ type TransportRoutingBGP struct {
 	KeepaliveTimeVariable          types.String                                `tfsdk:"keepalive_time_variable"`
 	HoldTime                       types.Int64                                 `tfsdk:"hold_time"`
 	HoldTimeVariable               types.String                                `tfsdk:"hold_time_variable"`
-	CompareMed                     types.Bool                                  `tfsdk:"compare_med"`
-	CompareMedVariable             types.String                                `tfsdk:"compare_med_variable"`
+	AlwaysCompareMed               types.Bool                                  `tfsdk:"always_compare_med"`
+	AlwaysCompareMedVariable       types.String                                `tfsdk:"always_compare_med_variable"`
 	DeterministicMed               types.Bool                                  `tfsdk:"deterministic_med"`
 	DeterministicMedVariable       types.String                                `tfsdk:"deterministic_med_variable"`
 	MissingMedAsWorst              types.Bool                                  `tfsdk:"missing_med_as_worst"`
@@ -76,7 +76,7 @@ type TransportRoutingBGP struct {
 	Ipv4TableMapFilterVariable     types.String                                `tfsdk:"ipv4_table_map_filter_variable"`
 	Ipv4Redistributes              []TransportRoutingBGPIpv4Redistributes      `tfsdk:"ipv4_redistributes"`
 	Ipv6AggregateAddresses         []TransportRoutingBGPIpv6AggregateAddresses `tfsdk:"ipv6_aggregate_addresses"`
-	Ipv6Network                    []TransportRoutingBGPIpv6Network            `tfsdk:"ipv6_network"`
+	Ipv6Networks                   []TransportRoutingBGPIpv6Networks           `tfsdk:"ipv6_networks"`
 	Ipv6EibgpMaximumPaths          types.Int64                                 `tfsdk:"ipv6_eibgp_maximum_paths"`
 	Ipv6EibgpMaximumPathsVariable  types.String                                `tfsdk:"ipv6_eibgp_maximum_paths_variable"`
 	Ipv6Originate                  types.Bool                                  `tfsdk:"ipv6_originate"`
@@ -188,7 +188,7 @@ type TransportRoutingBGPIpv6AggregateAddresses struct {
 	SummaryOnlyVariable     types.String `tfsdk:"summary_only_variable"`
 }
 
-type TransportRoutingBGPIpv6Network struct {
+type TransportRoutingBGPIpv6Networks struct {
 	NetworkPrefix         types.String `tfsdk:"network_prefix"`
 	NetworkPrefixVariable types.String `tfsdk:"network_prefix_variable"`
 }
@@ -340,15 +340,15 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"holdtime.value", data.HoldTime.ValueInt64())
 	}
 
-	if !data.CompareMedVariable.IsNull() {
+	if !data.AlwaysCompareMedVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"alwaysCompare.optionType", "variable")
-		body, _ = sjson.Set(body, path+"alwaysCompare.value", data.CompareMedVariable.ValueString())
-	} else if data.CompareMed.IsNull() {
+		body, _ = sjson.Set(body, path+"alwaysCompare.value", data.AlwaysCompareMedVariable.ValueString())
+	} else if data.AlwaysCompareMed.IsNull() {
 		body, _ = sjson.Set(body, path+"alwaysCompare.optionType", "default")
 		body, _ = sjson.Set(body, path+"alwaysCompare.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"alwaysCompare.optionType", "global")
-		body, _ = sjson.Set(body, path+"alwaysCompare.value", data.CompareMed.ValueBool())
+		body, _ = sjson.Set(body, path+"alwaysCompare.value", data.AlwaysCompareMed.ValueBool())
 	}
 
 	if !data.DeterministicMedVariable.IsNull() {
@@ -962,7 +962,7 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.SetRaw(body, path+"ipv6AddressFamily.ipv6AggregateAddress.-1", itemBody)
 	}
 	body, _ = sjson.Set(body, path+"ipv6AddressFamily.ipv6Network", []interface{}{})
-	for _, item := range data.Ipv6Network {
+	for _, item := range data.Ipv6Networks {
 		itemBody := ""
 
 		if !item.NetworkPrefixVariable.IsNull() {
@@ -1142,14 +1142,14 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			data.HoldTime = types.Int64Value(va.Int())
 		}
 	}
-	data.CompareMed = types.BoolNull()
-	data.CompareMedVariable = types.StringNull()
+	data.AlwaysCompareMed = types.BoolNull()
+	data.AlwaysCompareMedVariable = types.StringNull()
 	if t := res.Get(path + "alwaysCompare.optionType"); t.Exists() {
 		va := res.Get(path + "alwaysCompare.value")
 		if t.String() == "variable" {
-			data.CompareMedVariable = types.StringValue(va.String())
+			data.AlwaysCompareMedVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.CompareMed = types.BoolValue(va.Bool())
+			data.AlwaysCompareMed = types.BoolValue(va.Bool())
 		}
 	}
 	data.DeterministicMed = types.BoolNull()
@@ -1805,9 +1805,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		})
 	}
 	if value := res.Get(path + "ipv6AddressFamily.ipv6Network"); value.Exists() {
-		data.Ipv6Network = make([]TransportRoutingBGPIpv6Network, 0)
+		data.Ipv6Networks = make([]TransportRoutingBGPIpv6Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv6Network{}
+			item := TransportRoutingBGPIpv6Networks{}
 			item.NetworkPrefix = types.StringNull()
 			item.NetworkPrefixVariable = types.StringNull()
 			if t := v.Get("prefix.optionType"); t.Exists() {
@@ -1818,7 +1818,7 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 					item.NetworkPrefix = types.StringValue(va.String())
 				}
 			}
-			data.Ipv6Network = append(data.Ipv6Network, item)
+			data.Ipv6Networks = append(data.Ipv6Networks, item)
 			return true
 		})
 	}
@@ -2004,14 +2004,14 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			data.HoldTime = types.Int64Value(va.Int())
 		}
 	}
-	data.CompareMed = types.BoolNull()
-	data.CompareMedVariable = types.StringNull()
+	data.AlwaysCompareMed = types.BoolNull()
+	data.AlwaysCompareMedVariable = types.StringNull()
 	if t := res.Get(path + "alwaysCompare.optionType"); t.Exists() {
 		va := res.Get(path + "alwaysCompare.value")
 		if t.String() == "variable" {
-			data.CompareMedVariable = types.StringValue(va.String())
+			data.AlwaysCompareMedVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.CompareMed = types.BoolValue(va.Bool())
+			data.AlwaysCompareMed = types.BoolValue(va.Bool())
 		}
 	}
 	data.DeterministicMed = types.BoolNull()
@@ -2818,10 +2818,10 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			}
 		}
 	}
-	for i := range data.Ipv6Network {
+	for i := range data.Ipv6Networks {
 		keys := [...]string{"prefix"}
-		keyValues := [...]string{data.Ipv6Network[i].NetworkPrefix.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6Network[i].NetworkPrefixVariable.ValueString()}
+		keyValues := [...]string{data.Ipv6Networks[i].NetworkPrefix.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6Networks[i].NetworkPrefixVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "ipv6AddressFamily.ipv6Network").ForEach(
@@ -2844,14 +2844,14 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 				return true
 			},
 		)
-		data.Ipv6Network[i].NetworkPrefix = types.StringNull()
-		data.Ipv6Network[i].NetworkPrefixVariable = types.StringNull()
+		data.Ipv6Networks[i].NetworkPrefix = types.StringNull()
+		data.Ipv6Networks[i].NetworkPrefixVariable = types.StringNull()
 		if t := r.Get("prefix.optionType"); t.Exists() {
 			va := r.Get("prefix.value")
 			if t.String() == "variable" {
-				data.Ipv6Network[i].NetworkPrefixVariable = types.StringValue(va.String())
+				data.Ipv6Networks[i].NetworkPrefixVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv6Network[i].NetworkPrefix = types.StringValue(va.String())
+				data.Ipv6Networks[i].NetworkPrefix = types.StringValue(va.String())
 			}
 		}
 	}
@@ -3035,10 +3035,10 @@ func (data *TransportRoutingBGP) isNull(ctx context.Context, res gjson.Result) b
 	if !data.HoldTimeVariable.IsNull() {
 		return false
 	}
-	if !data.CompareMed.IsNull() {
+	if !data.AlwaysCompareMed.IsNull() {
 		return false
 	}
-	if !data.CompareMedVariable.IsNull() {
+	if !data.AlwaysCompareMedVariable.IsNull() {
 		return false
 	}
 	if !data.DeterministicMed.IsNull() {
@@ -3104,7 +3104,7 @@ func (data *TransportRoutingBGP) isNull(ctx context.Context, res gjson.Result) b
 	if len(data.Ipv6AggregateAddresses) > 0 {
 		return false
 	}
-	if len(data.Ipv6Network) > 0 {
+	if len(data.Ipv6Networks) > 0 {
 		return false
 	}
 	if !data.Ipv6EibgpMaximumPaths.IsNull() {

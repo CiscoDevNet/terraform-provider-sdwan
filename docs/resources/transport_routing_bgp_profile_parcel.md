@@ -28,7 +28,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
   local_routes_distance    = 20
   keepalive_time           = 60
   hold_time                = 180
-  compare_med              = false
+  always_compare_med       = false
   deterministic_med        = false
   missing_med_as_worst     = false
   compare_router_id        = false
@@ -113,7 +113,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
       summary_only     = false
     }
   ]
-  ipv6_network = [
+  ipv6_networks = [
     {
       network_prefix = "2001:0DB8:0000:000b::/64"
     }
@@ -139,10 +139,10 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
 
 ### Optional
 
-- `as_number_variable` (String) Variable name
-- `compare_med` (Boolean) Compare MEDs from all ASs when selecting active BGP paths
+- `always_compare_med` (Boolean) Compare MEDs from all ASs when selecting active BGP paths
   - Default value: `false`
-- `compare_med_variable` (String) Variable name
+- `always_compare_med_variable` (String) Variable name
+- `as_number_variable` (String) Variable name
 - `compare_router_id` (Boolean) Compare router IDs when selecting active BGP paths
   - Default value: `false`
 - `compare_router_id_variable` (String) Variable name
@@ -182,7 +182,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
   - Range: `1`-`32`
 - `ipv6_eibgp_maximum_paths_variable` (String) Variable name
 - `ipv6_neighbors` (Attributes List) Set BGP IPv6 neighbors (see [below for nested schema](#nestedatt--ipv6_neighbors))
-- `ipv6_network` (Attributes List) Configure the networks for BGP to advertise (see [below for nested schema](#nestedatt--ipv6_network))
+- `ipv6_networks` (Attributes List) Configure the networks for BGP to advertise (see [below for nested schema](#nestedatt--ipv6_networks))
 - `ipv6_originate` (Boolean) BGP Default Information Originate
   - Default value: `false`
 - `ipv6_originate_variable` (String) Variable name
@@ -417,8 +417,8 @@ Optional:
 
 
 
-<a id="nestedatt--ipv6_network"></a>
-### Nested Schema for `ipv6_network`
+<a id="nestedatt--ipv6_networks"></a>
+### Nested Schema for `ipv6_networks`
 
 Optional:
 

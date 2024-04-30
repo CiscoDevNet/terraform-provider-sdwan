@@ -40,7 +40,7 @@ func TestAccSdwanTransportRoutingBGPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "local_routes_distance", "20"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "keepalive_time", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "hold_time", "180"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "compare_med", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "always_compare_med", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "deterministic_med", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "missing_med_as_worst", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "compare_router_id", "false"))
@@ -95,7 +95,7 @@ func TestAccSdwanTransportRoutingBGPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_aggregate_addresses.0.aggregate_prefix", "3001::1/128"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_aggregate_addresses.0.as_set_path", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_aggregate_addresses.0.summary_only", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_network.0.network_prefix", "2001:0DB8:0000:000b::/64"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_networks.0.network_prefix", "2001:0DB8:0000:000b::/64"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_eibgp_maximum_paths", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_originate", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_table_map_filter", "false"))
@@ -146,7 +146,7 @@ func testAccSdwanTransportRoutingBGPProfileParcelConfig_all() string {
 	config += `	local_routes_distance = 20` + "\n"
 	config += `	keepalive_time = 60` + "\n"
 	config += `	hold_time = 180` + "\n"
-	config += `	compare_med = false` + "\n"
+	config += `	always_compare_med = false` + "\n"
 	config += `	deterministic_med = false` + "\n"
 	config += `	missing_med_as_worst = false` + "\n"
 	config += `	compare_router_id = false` + "\n"
@@ -217,7 +217,7 @@ func testAccSdwanTransportRoutingBGPProfileParcelConfig_all() string {
 	config += `	  as_set_path = false` + "\n"
 	config += `	  summary_only = false` + "\n"
 	config += `	}]` + "\n"
-	config += `	ipv6_network = [{` + "\n"
+	config += `	ipv6_networks = [{` + "\n"
 	config += `	  network_prefix = "2001:0DB8:0000:000b::/64"` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_eibgp_maximum_paths = 2` + "\n"

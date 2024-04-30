@@ -10,6 +10,7 @@ description: |-
 ## 0.3.9 (unreleased)
 
 - Fix issue with rendering feature template payloads
+- Add `sdwan_transport_routing_bgp_profile_parcel` resource and data source
 
 ## 0.3.8
 
@@ -29,7 +30,6 @@ description: |-
 - Add `type` read-only attribute to localized policy definitions
 - Add `type` read-only attribute to centralized policy definitions
 - Add `sdwan_configuration_group` resource and data source
-- Add `sdwan_transport_routing_bgp_profile_parcel` resource and data source
 
 ## 0.3.7
 

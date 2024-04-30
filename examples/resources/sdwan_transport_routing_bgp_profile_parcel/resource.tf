@@ -11,7 +11,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
   local_routes_distance    = 20
   keepalive_time           = 60
   hold_time                = 180
-  compare_med              = false
+  always_compare_med       = false
   deterministic_med        = false
   missing_med_as_worst     = false
   compare_router_id        = false
@@ -96,7 +96,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
       summary_only     = false
     }
   ]
-  ipv6_network = [
+  ipv6_networks = [
     {
       network_prefix = "2001:0DB8:0000:000b::/64"
     }

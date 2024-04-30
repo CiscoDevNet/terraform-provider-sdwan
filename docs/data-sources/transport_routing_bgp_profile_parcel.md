@@ -29,10 +29,10 @@ data "sdwan_transport_routing_bgp_profile_parcel" "example" {
 
 ### Read-Only
 
+- `always_compare_med` (Boolean) Compare MEDs from all ASs when selecting active BGP paths
+- `always_compare_med_variable` (String) Variable name
 - `as_number` (Number) Set autonomous system number <1..4294967295> or <XX.YY>
 - `as_number_variable` (String) Variable name
-- `compare_med` (Boolean) Compare MEDs from all ASs when selecting active BGP paths
-- `compare_med_variable` (String) Variable name
 - `compare_router_id` (Boolean) Compare router IDs when selecting active BGP paths
 - `compare_router_id_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
@@ -59,7 +59,7 @@ data "sdwan_transport_routing_bgp_profile_parcel" "example" {
 - `ipv6_eibgp_maximum_paths` (Number) Set maximum number of parallel IBGP paths for multipath load sharing
 - `ipv6_eibgp_maximum_paths_variable` (String) Variable name
 - `ipv6_neighbors` (Attributes List) Set BGP IPv6 neighbors (see [below for nested schema](#nestedatt--ipv6_neighbors))
-- `ipv6_network` (Attributes List) Configure the networks for BGP to advertise (see [below for nested schema](#nestedatt--ipv6_network))
+- `ipv6_networks` (Attributes List) Configure the networks for BGP to advertise (see [below for nested schema](#nestedatt--ipv6_networks))
 - `ipv6_originate` (Boolean) BGP Default Information Originate
 - `ipv6_originate_variable` (String) Variable name
 - `ipv6_redistributes` (Attributes List) Redistribute routes into BGP (see [below for nested schema](#nestedatt--ipv6_redistributes))
@@ -242,8 +242,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--ipv6_network"></a>
-### Nested Schema for `ipv6_network`
+<a id="nestedatt--ipv6_networks"></a>
+### Nested Schema for `ipv6_networks`
 
 Read-Only:
 

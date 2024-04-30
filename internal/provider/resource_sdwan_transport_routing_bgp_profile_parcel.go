@@ -167,11 +167,11 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"compare_med": schema.BoolAttribute{
+			"always_compare_med": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Compare MEDs from all ASs when selecting active BGP paths").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"compare_med_variable": schema.StringAttribute{
+			"always_compare_med_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -800,7 +800,7 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 					},
 				},
 			},
-			"ipv6_network": schema.ListNestedAttribute{
+			"ipv6_networks": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure the networks for BGP to advertise").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
