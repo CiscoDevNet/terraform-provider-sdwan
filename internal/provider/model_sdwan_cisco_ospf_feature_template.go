@@ -200,7 +200,9 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 	}
 	if !data.DefaultInformationOriginate.IsNull() {
 		if data.DefaultInformationOriginate.ValueBool() {
-			body, _ = sjson.Set(body, path+"ospf.default-information.originate", map[string]interface{}{})
+			if !gjson.Get(body, path+"ospf.default-information.originate").Exists() {
+				body, _ = sjson.Set(body, path+"ospf.default-information.originate", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ospf.default-information.originate."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ospf.default-information.originate."+"vipType", "ignore")
@@ -485,7 +487,9 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "stub")
 		if !item.Stub.IsNull() {
 			if item.Stub.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				if !gjson.Get(itemBody, "stub").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipType", "ignore")
@@ -506,7 +510,9 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "nssa")
 		if !item.Nssa.IsNull() {
 			if item.Nssa.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				if !gjson.Get(itemBody, "nssa").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipType", "ignore")

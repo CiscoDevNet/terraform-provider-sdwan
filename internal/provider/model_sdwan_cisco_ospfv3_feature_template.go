@@ -299,7 +299,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 	}
 	if !data.Ipv4DefaultInformationOriginate.IsNull() {
 		if data.Ipv4DefaultInformationOriginate.ValueBool() {
-			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate", map[string]interface{}{})
+			if !gjson.Get(body, path+"ospfv3.address-family.ipv4.default-information.originate").Exists() {
+				body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv4.default-information.originate."+"vipType", "ignore")
@@ -583,7 +585,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "stub")
 		if !item.Stub.IsNull() {
 			if item.Stub.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				if !gjson.Get(itemBody, "stub").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipType", "ignore")
@@ -604,7 +608,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "nssa")
 		if !item.Nssa.IsNull() {
 			if item.Nssa.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				if !gjson.Get(itemBody, "nssa").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipType", "ignore")
@@ -768,7 +774,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipType", "variableName")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipVariableName", childItem.AuthenticationTypeVariable.ValueString())
 			} else if childItem.AuthenticationType.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				if !gjson.Get(itemChildBody, "authentication").Exists() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipObjectType", "object")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipType", "constant")
@@ -781,7 +789,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipType", "variableName")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipVariableName", childItem.AuthenticationKeyVariable.ValueString())
 			} else if childItem.AuthenticationKey.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				if !gjson.Get(itemChildBody, "authentication").Exists() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipObjectType", "object")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipType", "constant")
@@ -915,7 +925,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 	}
 	if !data.Ipv6DefaultInformationOriginate.IsNull() {
 		if data.Ipv6DefaultInformationOriginate.ValueBool() {
-			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate", map[string]interface{}{})
+			if !gjson.Get(body, path+"ospfv3.address-family.ipv6.default-information.originate").Exists() {
+				body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ospfv3.address-family.ipv6.default-information.originate."+"vipType", "ignore")
@@ -1185,7 +1197,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "stub")
 		if !item.Stub.IsNull() {
 			if item.Stub.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				if !gjson.Get(itemBody, "stub").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipType", "ignore")
@@ -1206,7 +1220,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "nssa")
 		if !item.Nssa.IsNull() {
 			if item.Nssa.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				if !gjson.Get(itemBody, "nssa").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipType", "ignore")
@@ -1370,7 +1386,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipType", "variableName")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipVariableName", childItem.AuthenticationTypeVariable.ValueString())
 			} else if childItem.AuthenticationType.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				if !gjson.Get(itemChildBody, "authentication").Exists() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipObjectType", "object")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipType", "constant")
@@ -1383,7 +1401,9 @@ func (data CiscoOSPFv3) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipType", "variableName")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipVariableName", childItem.AuthenticationKeyVariable.ValueString())
 			} else if childItem.AuthenticationKey.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				if !gjson.Get(itemChildBody, "authentication").Exists() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "authentication", map[string]interface{}{})
+				}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipObjectType", "object")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.authentication-key."+"vipType", "constant")

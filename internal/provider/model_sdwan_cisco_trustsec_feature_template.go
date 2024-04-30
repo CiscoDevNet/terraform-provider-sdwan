@@ -281,7 +281,9 @@ func (data CiscoTrustSec) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"sxp-default.listener-hold-time-max."+"vipValue", data.MaximumListenerHoldTime.ValueInt64())
 	}
 	if data.SxpNodeIdType.IsNull() {
-		body, _ = sjson.Set(body, path+"sxp-default", map[string]interface{}{})
+		if !gjson.Get(body, path+"sxp-default").Exists() {
+			body, _ = sjson.Set(body, path+"sxp-default", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id-type."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id-type."+"vipType", "constant")
@@ -293,7 +295,9 @@ func (data CiscoTrustSec) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id."+"vipVariableName", data.SxpNodeIdVariable.ValueString())
 	} else if data.SxpNodeId.IsNull() {
-		body, _ = sjson.Set(body, path+"sxp-default", map[string]interface{}{})
+		if !gjson.Get(body, path+"sxp-default").Exists() {
+			body, _ = sjson.Set(body, path+"sxp-default", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"sxp-default.sxp-node-id."+"vipType", "constant")
