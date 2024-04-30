@@ -182,12 +182,12 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"list_of_ip": schema.SetAttribute{
+						"list_of_ips": schema.SetAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of IP").String,
 							ElementType:         types.StringType,
 							Optional:            true,
 						},
-						"list_of_ip_variable": schema.StringAttribute{
+						"list_of_ips_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -217,7 +217,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 								stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 							},
 						},
-						"prefix_lists": schema.ListNestedAttribute{
+						"prefixes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Prefix List").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -296,7 +296,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"prefix_lists": schema.ListNestedAttribute{
+						"prefixes": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 Prefix List").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -422,7 +422,7 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 					},
 				},
 			},
-			"ipv6_routes": schema.ListNestedAttribute{
+			"ipv6_static_routes": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Static Route").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -824,35 +824,35 @@ func (r *ServiceLANVPNProfileParcelResource) Schema(ctx context.Context, req res
 					},
 				},
 			},
-			"nat_64_v4_pool": schema.ListNestedAttribute{
+			"nat_64_v4_pools": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("NAT64 V4 Pool").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"nat64_v4_pool_name": schema.StringAttribute{
+						"name": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("NAT64 v4 Pool Name").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 32),
 							},
 						},
-						"nat64_v4_pool_name_variable": schema.StringAttribute{
+						"name_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"nat64_v4_pool_range_start": schema.StringAttribute{
+						"range_start": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("NAT64 Pool Range Start").String,
 							Optional:            true,
 						},
-						"nat64_v4_pool_range_start_variable": schema.StringAttribute{
+						"range_start_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"nat64_v4_pool_range_end": schema.StringAttribute{
+						"range_end": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("NAT64 Pool Range End").String,
 							Optional:            true,
 						},
-						"nat64_v4_pool_range_end_variable": schema.StringAttribute{
+						"range_end_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

@@ -13,8 +13,8 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
   secondary_dns_address_ipv6 = "2001:0:0:2::0"
   host_mappings = [
     {
-      host_name  = "HOSTMAPPING1"
-      list_of_ip = ["1.2.3.4"]
+      host_name   = "HOSTMAPPING1"
+      list_of_ips = ["1.2.3.4"]
     }
   ]
   ipv4_static_routes = [
@@ -29,7 +29,7 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
       ]
     }
   ]
-  ipv6_routes = [
+  ipv6_static_routes = [
     {
       prefix = "2001:0:0:1::0/12"
       next_hops = [
@@ -98,12 +98,12 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
       static_nat_direction = "inside"
     }
   ]
-  nat_64_v4_pool = [
+  nat_64_v4_pools = [
     {
-      nat64_v4_pool_name        = "NATPOOL1"
-      nat64_v4_pool_range_start = "1.2.3.4"
-      nat64_v4_pool_range_end   = "2.3.4.5"
-      overload                  = false
+      name        = "NATPOOL1"
+      range_start = "1.2.3.4"
+      range_end   = "2.3.4.5"
+      overload    = false
     }
   ]
   ipv4_import_route_targets = [

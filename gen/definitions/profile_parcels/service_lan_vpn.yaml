@@ -47,6 +47,7 @@ attributes:
       id: true
       example: HOSTMAPPING1
     - model_name: listOfIp
+      tf_name: list_of_ips
       example: 1.2.3.4
   - model_name: ompAdvertiseIp4
     tf_name: advertise_omp_ipv4s
@@ -63,7 +64,7 @@ attributes:
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
       # test_value: 
     - model_name: prefixList
-      tf_name: prefix_lists
+      tf_name: prefixes
       exclude_test: true
       attributes:
       - model_name: address
@@ -96,7 +97,7 @@ attributes:
     - model_name: protocolSubType
       example: External
     - model_name: prefixList
-      tf_name: prefix_lists
+      tf_name: prefixes
       exclude_test: true
       attributes:
       - model_name: prefix
@@ -155,7 +156,7 @@ attributes:
       exclude_test: true
       example: false
   - model_name: ipv6Route
-    tf_name: ipv6_routes
+    tf_name: ipv6_static_routes
     attributes:
     - model_name: prefix
       id: true
@@ -291,14 +292,17 @@ attributes:
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
       # test_value: 
   - model_name: nat64V4Pool
-    tf_name: nat_64_v4_pool
+    tf_name: nat_64_v4_pools
     attributes:
     - model_name: nat64V4PoolName
+      tf_name: name
       id: true
       example: NATPOOL1
     - model_name: nat64V4PoolRangeStart
+      tf_name: range_start
       example: 1.2.3.4
     - model_name: nat64V4PoolRangeEnd
+      tf_name: range_end
       example: 2.3.4.5
     - model_name: nat64V4PoolOverload
       tf_name: overload

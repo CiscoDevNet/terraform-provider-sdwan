@@ -45,9 +45,9 @@ func TestAccSdwanServiceLANVPNProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv4_static_routes.0.subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv4_static_routes.0.next_hops.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv4_static_routes.0.next_hops.0.administrative_distance", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv6_routes.0.prefix", "2001:0:0:1::0/12"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv6_routes.0.next_hops.0.address", "2001:0:0:1::0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv6_routes.0.next_hops.0.administrative_distance", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv6_static_routes.0.prefix", "2001:0:0:1::0/12"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv6_static_routes.0.next_hops.0.address", "2001:0:0:1::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv6_static_routes.0.next_hops.0.administrative_distance", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "services.0.service_type", "FW"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "services.0.tracking", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "service_routes.0.network_address", "1.2.3.4"))
@@ -75,10 +75,10 @@ func TestAccSdwanServiceLANVPNProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "static_nats.0.source_ip", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "static_nats.0.translated_source_ip", "2.3.4.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "static_nats.0.static_nat_direction", "inside"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pool.0.nat64_v4_pool_name", "NATPOOL1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pool.0.nat64_v4_pool_range_start", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pool.0.nat64_v4_pool_range_end", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pool.0.overload", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pools.0.name", "NATPOOL1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pools.0.range_start", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pools.0.range_end", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "nat_64_v4_pools.0.overload", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv4_import_route_targets.0.route_target", "1.1.1.3:200"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv4_export_route_targets.0.route_target", "1.1.1.3:200"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_profile_parcel.test", "ipv6_import_route_targets.0.route_target", "1.1.1.3:200"))
@@ -132,7 +132,7 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_all() string {
 	config += `	secondary_dns_address_ipv6 = "2001:0:0:2::0"` + "\n"
 	config += `	host_mappings = [{` + "\n"
 	config += `	  host_name = "HOSTMAPPING1"` + "\n"
-	config += `	  list_of_ip = ["1.2.3.4"]` + "\n"
+	config += `	  list_of_ips = ["1.2.3.4"]` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv4_static_routes = [{` + "\n"
 	config += `	  network_address = "1.2.3.4"` + "\n"
@@ -142,7 +142,7 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_all() string {
 	config += `		administrative_distance = 1` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
-	config += `	ipv6_routes = [{` + "\n"
+	config += `	ipv6_static_routes = [{` + "\n"
 	config += `	  prefix = "2001:0:0:1::0/12"` + "\n"
 	config += `	  next_hops = [{` + "\n"
 	config += `		address = "2001:0:0:1::0"` + "\n"
@@ -193,10 +193,10 @@ func testAccSdwanServiceLANVPNProfileParcelConfig_all() string {
 	config += `	  translated_source_ip = "2.3.4.5"` + "\n"
 	config += `	  static_nat_direction = "inside"` + "\n"
 	config += `	}]` + "\n"
-	config += `	nat_64_v4_pool = [{` + "\n"
-	config += `	  nat64_v4_pool_name = "NATPOOL1"` + "\n"
-	config += `	  nat64_v4_pool_range_start = "1.2.3.4"` + "\n"
-	config += `	  nat64_v4_pool_range_end = "2.3.4.5"` + "\n"
+	config += `	nat_64_v4_pools = [{` + "\n"
+	config += `	  name = "NATPOOL1"` + "\n"
+	config += `	  range_start = "1.2.3.4"` + "\n"
+	config += `	  range_end = "2.3.4.5"` + "\n"
 	config += `	  overload = false` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv4_import_route_targets = [{` + "\n"

@@ -43,9 +43,9 @@ data "sdwan_service_lan_vpn_profile_parcel" "example" {
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_export_route_targets` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_export_route_targets))
 - `ipv6_import_route_targets` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_import_route_targets))
-- `ipv6_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_routes))
+- `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
 - `name` (String) The name of the profile parcel
-- `nat_64_v4_pool` (Attributes List) NAT64 V4 Pool (see [below for nested schema](#nestedatt--nat_64_v4_pool))
+- `nat_64_v4_pools` (Attributes List) NAT64 V4 Pool (see [below for nested schema](#nestedatt--nat_64_v4_pools))
 - `nat_pools` (Attributes List) NAT Pool (see [below for nested schema](#nestedatt--nat_pools))
 - `nat_port_forwards` (Attributes List) NAT Port Forward (see [below for nested schema](#nestedatt--nat_port_forwards))
 - `omp_admin_distance_ipv4` (Number) OMP Admin Distance IPv4
@@ -75,13 +75,13 @@ data "sdwan_service_lan_vpn_profile_parcel" "example" {
 
 Read-Only:
 
-- `prefix_lists` (Attributes List) IPv4 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv4s--prefix_lists))
+- `prefixes` (Attributes List) IPv4 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv4s--prefixes))
 - `protocol` (String) Protocol
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
 
-<a id="nestedatt--advertise_omp_ipv4s--prefix_lists"></a>
-### Nested Schema for `advertise_omp_ipv4s.prefix_lists`
+<a id="nestedatt--advertise_omp_ipv4s--prefixes"></a>
+### Nested Schema for `advertise_omp_ipv4s.prefixes`
 
 Read-Only:
 
@@ -100,15 +100,15 @@ Read-Only:
 
 Read-Only:
 
-- `prefix_lists` (Attributes List) IPv6 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv6s--prefix_lists))
+- `prefixes` (Attributes List) IPv6 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv6s--prefixes))
 - `protocol` (String) Protocol
 - `protocol_sub_type` (String) Protocol Sub Type
 - `protocol_sub_type_variable` (String) Variable name
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
 
-<a id="nestedatt--advertise_omp_ipv6s--prefix_lists"></a>
-### Nested Schema for `advertise_omp_ipv6s.prefix_lists`
+<a id="nestedatt--advertise_omp_ipv6s--prefixes"></a>
+### Nested Schema for `advertise_omp_ipv6s.prefixes`
 
 Read-Only:
 
@@ -139,8 +139,8 @@ Read-Only:
 
 - `host_name` (String) Hostname
 - `host_name_variable` (String) Variable name
-- `list_of_ip` (Set of String) List of IP
-- `list_of_ip_variable` (String) Variable name
+- `list_of_ips` (Set of String) List of IP
+- `list_of_ips_variable` (String) Variable name
 
 
 <a id="nestedatt--ipsec_routes"></a>
@@ -231,20 +231,20 @@ Read-Only:
 - `route_target_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_routes"></a>
-### Nested Schema for `ipv6_routes`
+<a id="nestedatt--ipv6_static_routes"></a>
+### Nested Schema for `ipv6_static_routes`
 
 Read-Only:
 
 - `nat` (String) IPv6 Nat
 - `nat_variable` (String) Variable name
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_routes--next_hops))
+- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
 - `null0` (Boolean) IPv6 Route Gateway Next Hop
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
 
-<a id="nestedatt--ipv6_routes--next_hops"></a>
-### Nested Schema for `ipv6_routes.next_hops`
+<a id="nestedatt--ipv6_static_routes--next_hops"></a>
+### Nested Schema for `ipv6_static_routes.next_hops`
 
 Read-Only:
 
@@ -255,19 +255,19 @@ Read-Only:
 
 
 
-<a id="nestedatt--nat_64_v4_pool"></a>
-### Nested Schema for `nat_64_v4_pool`
+<a id="nestedatt--nat_64_v4_pools"></a>
+### Nested Schema for `nat_64_v4_pools`
 
 Read-Only:
 
-- `nat64_v4_pool_name` (String) NAT64 v4 Pool Name
-- `nat64_v4_pool_name_variable` (String) Variable name
-- `nat64_v4_pool_range_end` (String) NAT64 Pool Range End
-- `nat64_v4_pool_range_end_variable` (String) Variable name
-- `nat64_v4_pool_range_start` (String) NAT64 Pool Range Start
-- `nat64_v4_pool_range_start_variable` (String) Variable name
+- `name` (String) NAT64 v4 Pool Name
+- `name_variable` (String) Variable name
 - `overload` (Boolean) NAT64 Overload
 - `overload_variable` (String) Variable name
+- `range_end` (String) NAT64 Pool Range End
+- `range_end_variable` (String) Variable name
+- `range_start` (String) NAT64 Pool Range Start
+- `range_start_variable` (String) Variable name
 
 
 <a id="nestedatt--nat_pools"></a>

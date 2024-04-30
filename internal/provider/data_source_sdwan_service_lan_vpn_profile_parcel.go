@@ -157,12 +157,12 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"list_of_ip": schema.SetAttribute{
+						"list_of_ips": schema.SetAttribute{
 							MarkdownDescription: "List of IP",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"list_of_ip_variable": schema.StringAttribute{
+						"list_of_ips_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
@@ -186,7 +186,7 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: "",
 							Computed:            true,
 						},
-						"prefix_lists": schema.ListNestedAttribute{
+						"prefixes": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv4 Prefix List",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -250,7 +250,7 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"prefix_lists": schema.ListNestedAttribute{
+						"prefixes": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv6 Prefix List",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -361,7 +361,7 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 					},
 				},
 			},
-			"ipv6_routes": schema.ListNestedAttribute{
+			"ipv6_static_routes": schema.ListNestedAttribute{
 				MarkdownDescription: "IPv6 Static Route",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -712,32 +712,32 @@ func (d *ServiceLANVPNProfileParcelDataSource) Schema(ctx context.Context, req d
 					},
 				},
 			},
-			"nat_64_v4_pool": schema.ListNestedAttribute{
+			"nat_64_v4_pools": schema.ListNestedAttribute{
 				MarkdownDescription: "NAT64 V4 Pool",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"nat64_v4_pool_name": schema.StringAttribute{
+						"name": schema.StringAttribute{
 							MarkdownDescription: "NAT64 v4 Pool Name",
 							Computed:            true,
 						},
-						"nat64_v4_pool_name_variable": schema.StringAttribute{
+						"name_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"nat64_v4_pool_range_start": schema.StringAttribute{
+						"range_start": schema.StringAttribute{
 							MarkdownDescription: "NAT64 Pool Range Start",
 							Computed:            true,
 						},
-						"nat64_v4_pool_range_start_variable": schema.StringAttribute{
+						"range_start_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"nat64_v4_pool_range_end": schema.StringAttribute{
+						"range_end": schema.StringAttribute{
 							MarkdownDescription: "NAT64 Pool Range End",
 							Computed:            true,
 						},
-						"nat64_v4_pool_range_end_variable": schema.StringAttribute{
+						"range_end_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

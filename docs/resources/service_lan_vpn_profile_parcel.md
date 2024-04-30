@@ -30,8 +30,8 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
   secondary_dns_address_ipv6 = "2001:0:0:2::0"
   host_mappings = [
     {
-      host_name  = "HOSTMAPPING1"
-      list_of_ip = ["1.2.3.4"]
+      host_name   = "HOSTMAPPING1"
+      list_of_ips = ["1.2.3.4"]
     }
   ]
   ipv4_static_routes = [
@@ -46,7 +46,7 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
       ]
     }
   ]
-  ipv6_routes = [
+  ipv6_static_routes = [
     {
       prefix = "2001:0:0:1::0/12"
       next_hops = [
@@ -115,12 +115,12 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
       static_nat_direction = "inside"
     }
   ]
-  nat_64_v4_pool = [
+  nat_64_v4_pools = [
     {
-      nat64_v4_pool_name        = "NATPOOL1"
-      nat64_v4_pool_range_start = "1.2.3.4"
-      nat64_v4_pool_range_end   = "2.3.4.5"
-      overload                  = false
+      name        = "NATPOOL1"
+      range_start = "1.2.3.4"
+      range_end   = "2.3.4.5"
+      overload    = false
     }
   ]
   ipv4_import_route_targets = [
@@ -173,8 +173,8 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_export_route_targets` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_export_route_targets))
 - `ipv6_import_route_targets` (Attributes List) (see [below for nested schema](#nestedatt--ipv6_import_route_targets))
-- `ipv6_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_routes))
-- `nat_64_v4_pool` (Attributes List) NAT64 V4 Pool (see [below for nested schema](#nestedatt--nat_64_v4_pool))
+- `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
+- `nat_64_v4_pools` (Attributes List) NAT64 V4 Pool (see [below for nested schema](#nestedatt--nat_64_v4_pools))
 - `nat_pools` (Attributes List) NAT Pool (see [below for nested schema](#nestedatt--nat_pools))
 - `nat_port_forwards` (Attributes List) NAT Port Forward (see [below for nested schema](#nestedatt--nat_port_forwards))
 - `omp_admin_distance_ipv4` (Number) OMP Admin Distance IPv4
@@ -210,14 +210,14 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 
 Optional:
 
-- `prefix_lists` (Attributes List) IPv4 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv4s--prefix_lists))
+- `prefixes` (Attributes List) IPv4 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv4s--prefixes))
 - `protocol` (String) Protocol
   - Choices: `bgp`, `ospf`, `ospfv3`, `connected`, `static`, `network`, `aggregate`, `eigrp`, `lisp`, `isis`
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
 
-<a id="nestedatt--advertise_omp_ipv4s--prefix_lists"></a>
-### Nested Schema for `advertise_omp_ipv4s.prefix_lists`
+<a id="nestedatt--advertise_omp_ipv4s--prefixes"></a>
+### Nested Schema for `advertise_omp_ipv4s.prefixes`
 
 Optional:
 
@@ -239,7 +239,7 @@ Optional:
 
 Optional:
 
-- `prefix_lists` (Attributes List) IPv6 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv6s--prefix_lists))
+- `prefixes` (Attributes List) IPv6 Prefix List (see [below for nested schema](#nestedatt--advertise_omp_ipv6s--prefixes))
 - `protocol` (String) Protocol
   - Choices: `BGP`, `OSPF`, `Connected`, `Static`, `Network`, `Aggregate`
 - `protocol_sub_type` (String) Protocol Sub Type
@@ -248,8 +248,8 @@ Optional:
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
 
-<a id="nestedatt--advertise_omp_ipv6s--prefix_lists"></a>
-### Nested Schema for `advertise_omp_ipv6s.prefix_lists`
+<a id="nestedatt--advertise_omp_ipv6s--prefixes"></a>
+### Nested Schema for `advertise_omp_ipv6s.prefixes`
 
 Optional:
 
@@ -282,8 +282,8 @@ Optional:
 
 - `host_name` (String) Hostname
 - `host_name_variable` (String) Variable name
-- `list_of_ip` (Set of String) List of IP
-- `list_of_ip_variable` (String) Variable name
+- `list_of_ips` (Set of String) List of IP
+- `list_of_ips_variable` (String) Variable name
 
 
 <a id="nestedatt--ipsec_routes"></a>
@@ -378,21 +378,21 @@ Optional:
 - `route_target_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_routes"></a>
-### Nested Schema for `ipv6_routes`
+<a id="nestedatt--ipv6_static_routes"></a>
+### Nested Schema for `ipv6_static_routes`
 
 Optional:
 
 - `nat` (String) IPv6 Nat
   - Choices: `NAT64`, `NAT66`
 - `nat_variable` (String) Variable name
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_routes--next_hops))
+- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
 - `null0` (Boolean) IPv6 Route Gateway Next Hop
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
 
-<a id="nestedatt--ipv6_routes--next_hops"></a>
-### Nested Schema for `ipv6_routes.next_hops`
+<a id="nestedatt--ipv6_static_routes--next_hops"></a>
+### Nested Schema for `ipv6_static_routes.next_hops`
 
 Optional:
 
@@ -404,20 +404,20 @@ Optional:
 
 
 
-<a id="nestedatt--nat_64_v4_pool"></a>
-### Nested Schema for `nat_64_v4_pool`
+<a id="nestedatt--nat_64_v4_pools"></a>
+### Nested Schema for `nat_64_v4_pools`
 
 Optional:
 
-- `nat64_v4_pool_name` (String) NAT64 v4 Pool Name
-- `nat64_v4_pool_name_variable` (String) Variable name
-- `nat64_v4_pool_range_end` (String) NAT64 Pool Range End
-- `nat64_v4_pool_range_end_variable` (String) Variable name
-- `nat64_v4_pool_range_start` (String) NAT64 Pool Range Start
-- `nat64_v4_pool_range_start_variable` (String) Variable name
+- `name` (String) NAT64 v4 Pool Name
+- `name_variable` (String) Variable name
 - `overload` (Boolean) NAT64 Overload
   - Default value: `false`
 - `overload_variable` (String) Variable name
+- `range_end` (String) NAT64 Pool Range End
+- `range_end_variable` (String) Variable name
+- `range_start` (String) NAT64 Pool Range Start
+- `range_start_variable` (String) Variable name
 
 
 <a id="nestedatt--nat_pools"></a>
