@@ -68,7 +68,9 @@ func (data CEdgeMulticast) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"multicast.spt-only."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"multicast.spt-only."+"vipVariableName", data.SptOnlyVariable.ValueString())
 	} else if data.SptOnly.IsNull() {
-		body, _ = sjson.Set(body, path+"multicast", map[string]interface{}{})
+		if !gjson.Get(body, path+"multicast").Exists() {
+			body, _ = sjson.Set(body, path+"multicast", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"multicast.spt-only."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"multicast.spt-only."+"vipType", "constant")
@@ -80,7 +82,9 @@ func (data CEdgeMulticast) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"multicast-replicator.local."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"multicast-replicator.local."+"vipVariableName", data.LocalReplicatorVariable.ValueString())
 	} else if data.LocalReplicator.IsNull() {
-		body, _ = sjson.Set(body, path+"multicast-replicator", map[string]interface{}{})
+		if !gjson.Get(body, path+"multicast-replicator").Exists() {
+			body, _ = sjson.Set(body, path+"multicast-replicator", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"multicast-replicator.local."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"multicast-replicator.local."+"vipType", "constant")

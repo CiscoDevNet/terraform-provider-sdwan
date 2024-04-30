@@ -38,6 +38,9 @@ resource "sdwan_configuration_group" "example" {
 ### Optional
 
 - `feature_profiles` (Attributes List) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
+- `topology_devices` (Attributes List) List of topology device types (see [below for nested schema](#nestedatt--topology_devices))
+- `topology_site_devices` (Number) Number of devices per site
+  - Range: `1`-`20`
 
 ### Read-Only
 
@@ -49,6 +52,29 @@ resource "sdwan_configuration_group" "example" {
 Optional:
 
 - `id` (String) Feature profile ID
+
+
+<a id="nestedatt--topology_devices"></a>
+### Nested Schema for `topology_devices`
+
+Required:
+
+- `criteria_attribute` (String) Criteria attribute
+  - Choices: `tag`
+
+Optional:
+
+- `criteria_value` (String) Criteria value
+- `unsupported_features` (Attributes List) List of unsupported features (see [below for nested schema](#nestedatt--topology_devices--unsupported_features))
+
+<a id="nestedatt--topology_devices--unsupported_features"></a>
+### Nested Schema for `topology_devices.unsupported_features`
+
+Optional:
+
+- `parcel_id` (String) Parcel ID
+- `parcel_type` (String) Parcel type
+  - Choices: `wan/vpn/interface/gre`, `wan/vpn/interface/ethernet`, `wan/vpn/interface/cellular`, `wan/vpn/interface/ipsec`, `wan/vpn/interface/serial`, `routing/ospf`, `lan/vpn/interface/ethernet`, `lan/vpn/interface/svi`, `lan/vpn/interface/ipsec`, `lan/vpn`
 
 ## Import
 

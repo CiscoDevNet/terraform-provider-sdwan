@@ -27,6 +27,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -94,6 +95,51 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 							Optional:            true,
 						},
 					},
+				},
+			},
+			"topology_devices": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("List of topology device types").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"criteria_attribute": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Criteria attribute").AddStringEnumDescription("tag").String,
+							Required:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("tag"),
+							},
+						},
+						"criteria_value": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Criteria value").String,
+							Optional:            true,
+						},
+						"unsupported_features": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("List of unsupported features").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"parcel_type": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Parcel type").AddStringEnumDescription("wan/vpn/interface/gre", "wan/vpn/interface/ethernet", "wan/vpn/interface/cellular", "wan/vpn/interface/ipsec", "wan/vpn/interface/serial", "routing/ospf", "lan/vpn/interface/ethernet", "lan/vpn/interface/svi", "lan/vpn/interface/ipsec", "lan/vpn").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("wan/vpn/interface/gre", "wan/vpn/interface/ethernet", "wan/vpn/interface/cellular", "wan/vpn/interface/ipsec", "wan/vpn/interface/serial", "routing/ospf", "lan/vpn/interface/ethernet", "lan/vpn/interface/svi", "lan/vpn/interface/ipsec", "lan/vpn"),
+										},
+									},
+									"parcel_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Parcel ID").String,
+										Optional:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"topology_site_devices": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Number of devices per site").AddIntegerRangeDescription(1, 20).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 20),
 				},
 			},
 		},

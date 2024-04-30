@@ -31,6 +31,8 @@ data "sdwan_configuration_group" "example" {
 - `feature_profiles` (Attributes List) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
 - `name` (String) The name of the configuration group
 - `solution` (String) Type of solution
+- `topology_devices` (Attributes List) List of topology device types (see [below for nested schema](#nestedatt--topology_devices))
+- `topology_site_devices` (Number) Number of devices per site
 
 <a id="nestedatt--feature_profiles"></a>
 ### Nested Schema for `feature_profiles`
@@ -38,3 +40,21 @@ data "sdwan_configuration_group" "example" {
 Read-Only:
 
 - `id` (String) Feature profile ID
+
+
+<a id="nestedatt--topology_devices"></a>
+### Nested Schema for `topology_devices`
+
+Read-Only:
+
+- `criteria_attribute` (String) Criteria attribute
+- `criteria_value` (String) Criteria value
+- `unsupported_features` (Attributes List) List of unsupported features (see [below for nested schema](#nestedatt--topology_devices--unsupported_features))
+
+<a id="nestedatt--topology_devices--unsupported_features"></a>
+### Nested Schema for `topology_devices.unsupported_features`
+
+Read-Only:
+
+- `parcel_id` (String) Parcel ID
+- `parcel_type` (String) Parcel type

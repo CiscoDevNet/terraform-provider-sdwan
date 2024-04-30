@@ -344,7 +344,9 @@ func (data VPNInterfaceCellular) toBody(ctx context.Context) string {
 	}
 	if !data.Nat.IsNull() {
 		if data.Nat.ValueBool() {
-			body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+			if !gjson.Get(body, path+"nat").Exists() {
+				body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"nat."+"vipType", "ignore")

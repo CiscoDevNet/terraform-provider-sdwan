@@ -281,7 +281,9 @@ func (data CiscoSecurity) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "cryptographic-algorithm-choice")
 		if item.CryptoAlgorithm.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "cryptographic-algorithm-choice", map[string]interface{}{})
+			if !gjson.Get(itemBody, "cryptographic-algorithm-choice").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "cryptographic-algorithm-choice", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "cryptographic-algorithm-choice.tcp."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "cryptographic-algorithm-choice.tcp."+"vipType", "constant")
@@ -313,7 +315,9 @@ func (data CiscoSecurity) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "send-lifetime")
 		if item.SendLifetimeStartTime.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1", map[string]interface{}{})
+			if !gjson.Get(itemBody, "send-lifetime.lifetime-group-v1").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.start-epoch."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "send-lifetime.lifetime-group-v1.start-epoch."+"vipType", "constant")
@@ -373,7 +377,9 @@ func (data CiscoSecurity) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "accept-lifetime")
 		if item.AcceptLifetimeStartTime.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1", map[string]interface{}{})
+			if !gjson.Get(itemBody, "accept-lifetime.lifetime-group-v1").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.start-epoch."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "accept-lifetime.lifetime-group-v1.start-epoch."+"vipType", "constant")

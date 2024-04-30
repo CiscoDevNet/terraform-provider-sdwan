@@ -164,7 +164,9 @@ func (data Switchport) toBody(ctx context.Context) string {
 		}
 		itemAttributes = append(itemAttributes, "switchport")
 		if item.SwitchportMode.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "switchport", map[string]interface{}{})
+			if !gjson.Get(itemBody, "switchport").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "switchport", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "switchport.mode."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "switchport.mode."+"vipType", "constant")
@@ -317,7 +319,9 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.pae-enable."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.pae-enable."+"vipVariableName", item.Dot1xPaeEnableVariable.ValueString())
 		} else if item.Dot1xPaeEnable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "dot1x", map[string]interface{}{})
+			if !gjson.Get(itemBody, "dot1x").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "dot1x", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.pae-enable."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.pae-enable."+"vipType", "constant")
@@ -344,7 +348,9 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.host-mode."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.host-mode."+"vipVariableName", item.Dot1xHostModeVariable.ValueString())
 		} else if item.Dot1xHostMode.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication", map[string]interface{}{})
+			if !gjson.Get(itemBody, "dot1x.authentication").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "dot1x.authentication", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.host-mode."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.host-mode."+"vipType", "constant")
@@ -357,7 +363,9 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.enable-periodic-reauth."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.enable-periodic-reauth."+"vipVariableName", item.Dot1xEnablePeriodicReauthVariable.ValueString())
 		} else if item.Dot1xEnablePeriodicReauth.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication", map[string]interface{}{})
+			if !gjson.Get(itemBody, "dot1x.authentication").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "dot1x.authentication", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.enable-periodic-reauth."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.enable-periodic-reauth."+"vipType", "constant")
@@ -398,7 +406,9 @@ func (data Switchport) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.control-direction."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.control-direction."+"vipVariableName", item.Dot1xControlDirectionVariable.ValueString())
 		} else if item.Dot1xControlDirection.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication", map[string]interface{}{})
+			if !gjson.Get(itemBody, "dot1x.authentication").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "dot1x.authentication", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.control-direction."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "dot1x.authentication.control-direction."+"vipType", "constant")

@@ -32,6 +32,53 @@ attributes:
         description: Feature profile ID
         example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
         test_value: sdwan_system_feature_profile.test.id
+  - model_name: devices
+    data_path: [topology]
+    tf_name: topology_devices
+    type: List
+    description: List of topology device types
+    exclude_test: true
+    conditional_list_length: topology_devices
+    attributes:
+      - model_name: attribute
+        data_path: [criteria]
+        tf_name: criteria_attribute
+        type: String
+        mandatory: true
+        enum_values: [tag]
+        description: Criteria attribute
+        example: tag
+      - model_name: value
+        data_path: [criteria]
+        tf_name: criteria_value
+        type: String
+        id: true
+        description: Criteria value
+        example: EdgeDevice_01
+      - model_name: unsupportedFeatures
+        type: List
+        description: List of unsupported features
+        attributes:
+          - model_name: parcelType
+            type: String
+            id: true
+            enum_values: [wan/vpn/interface/gre, wan/vpn/interface/ethernet, wan/vpn/interface/cellular, wan/vpn/interface/ipsec, wan/vpn/interface/serial, routing/ospf, lan/vpn/interface/ethernet, lan/vpn/interface/svi, lan/vpn/interface/ipsec, lan/vpn]
+            description: Parcel type
+            example: wan/vpn/interface/gre
+          - model_name: parcelId
+            type: String
+            id: true
+            description: Parcel ID
+            example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: siteDevices
+    data_path: [topology]
+    tf_name: topology_site_devices
+    type: Int64
+    min_int: 1
+    max_int: 20
+    description: Number of devices per site
+    example: 2
+    exclude_test: true
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {
     name = "TF_TEST"

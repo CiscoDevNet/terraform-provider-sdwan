@@ -82,6 +82,42 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 					},
 				},
 			},
+			"topology_devices": schema.ListNestedAttribute{
+				MarkdownDescription: "List of topology device types",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"criteria_attribute": schema.StringAttribute{
+							MarkdownDescription: "Criteria attribute",
+							Computed:            true,
+						},
+						"criteria_value": schema.StringAttribute{
+							MarkdownDescription: "Criteria value",
+							Computed:            true,
+						},
+						"unsupported_features": schema.ListNestedAttribute{
+							MarkdownDescription: "List of unsupported features",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"parcel_type": schema.StringAttribute{
+										MarkdownDescription: "Parcel type",
+										Computed:            true,
+									},
+									"parcel_id": schema.StringAttribute{
+										MarkdownDescription: "Parcel ID",
+										Computed:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"topology_site_devices": schema.Int64Attribute{
+				MarkdownDescription: "Number of devices per site",
+				Computed:            true,
+			},
 		},
 	}
 }

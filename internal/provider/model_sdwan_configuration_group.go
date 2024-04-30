@@ -28,15 +28,28 @@ import (
 )
 
 type ConfigurationGroup struct {
-	Id              types.String                        `tfsdk:"id"`
-	Name            types.String                        `tfsdk:"name"`
-	Description     types.String                        `tfsdk:"description"`
-	Solution        types.String                        `tfsdk:"solution"`
-	FeatureProfiles []ConfigurationGroupFeatureProfiles `tfsdk:"feature_profiles"`
+	Id                  types.String                        `tfsdk:"id"`
+	Name                types.String                        `tfsdk:"name"`
+	Description         types.String                        `tfsdk:"description"`
+	Solution            types.String                        `tfsdk:"solution"`
+	FeatureProfiles     []ConfigurationGroupFeatureProfiles `tfsdk:"feature_profiles"`
+	TopologyDevices     []ConfigurationGroupTopologyDevices `tfsdk:"topology_devices"`
+	TopologySiteDevices types.Int64                         `tfsdk:"topology_site_devices"`
 }
 
 type ConfigurationGroupFeatureProfiles struct {
 	Id types.String `tfsdk:"id"`
+}
+
+type ConfigurationGroupTopologyDevices struct {
+	CriteriaAttribute   types.String                                           `tfsdk:"criteria_attribute"`
+	CriteriaValue       types.String                                           `tfsdk:"criteria_value"`
+	UnsupportedFeatures []ConfigurationGroupTopologyDevicesUnsupportedFeatures `tfsdk:"unsupported_features"`
+}
+
+type ConfigurationGroupTopologyDevicesUnsupportedFeatures struct {
+	ParcelType types.String `tfsdk:"parcel_type"`
+	ParcelId   types.String `tfsdk:"parcel_id"`
 }
 
 func (data ConfigurationGroup) toBody(ctx context.Context) string {
@@ -59,6 +72,35 @@ func (data ConfigurationGroup) toBody(ctx context.Context) string {
 			}
 			body, _ = sjson.SetRaw(body, "profiles.-1", itemBody)
 		}
+	}
+	if true && len(data.TopologyDevices) > 0 {
+		body, _ = sjson.Set(body, "topology.devices", []interface{}{})
+		for _, item := range data.TopologyDevices {
+			itemBody := ""
+			if !item.CriteriaAttribute.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "criteria.attribute", item.CriteriaAttribute.ValueString())
+			}
+			if !item.CriteriaValue.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "criteria.value", item.CriteriaValue.ValueString())
+			}
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "unsupportedFeatures", []interface{}{})
+				for _, childItem := range item.UnsupportedFeatures {
+					itemChildBody := ""
+					if !childItem.ParcelType.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "parcelType", childItem.ParcelType.ValueString())
+					}
+					if !childItem.ParcelId.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "parcelId", childItem.ParcelId.ValueString())
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "unsupportedFeatures.-1", itemChildBody)
+				}
+			}
+			body, _ = sjson.SetRaw(body, "topology.devices.-1", itemBody)
+		}
+	}
+	if !data.TopologySiteDevices.IsNull() {
+		body, _ = sjson.Set(body, "topology.siteDevices", data.TopologySiteDevices.ValueInt64())
 	}
 	return body
 }
@@ -96,6 +138,55 @@ func (data *ConfigurationGroup) fromBody(ctx context.Context, res gjson.Result) 
 			data.FeatureProfiles = []ConfigurationGroupFeatureProfiles{}
 		}
 	}
+	if value := res.Get("topology.devices"); value.Exists() && len(value.Array()) > 0 {
+		data.TopologyDevices = make([]ConfigurationGroupTopologyDevices, 0)
+		value.ForEach(func(k, v gjson.Result) bool {
+			item := ConfigurationGroupTopologyDevices{}
+			if cValue := v.Get("criteria.attribute"); cValue.Exists() {
+				item.CriteriaAttribute = types.StringValue(cValue.String())
+			} else {
+				item.CriteriaAttribute = types.StringNull()
+			}
+			if cValue := v.Get("criteria.value"); cValue.Exists() {
+				item.CriteriaValue = types.StringValue(cValue.String())
+			} else {
+				item.CriteriaValue = types.StringNull()
+			}
+			if cValue := v.Get("unsupportedFeatures"); cValue.Exists() && len(cValue.Array()) > 0 {
+				item.UnsupportedFeatures = make([]ConfigurationGroupTopologyDevicesUnsupportedFeatures, 0)
+				cValue.ForEach(func(ck, cv gjson.Result) bool {
+					cItem := ConfigurationGroupTopologyDevicesUnsupportedFeatures{}
+					if ccValue := cv.Get("parcelType"); ccValue.Exists() {
+						cItem.ParcelType = types.StringValue(ccValue.String())
+					} else {
+						cItem.ParcelType = types.StringNull()
+					}
+					if ccValue := cv.Get("parcelId"); ccValue.Exists() {
+						cItem.ParcelId = types.StringValue(ccValue.String())
+					} else {
+						cItem.ParcelId = types.StringNull()
+					}
+					item.UnsupportedFeatures = append(item.UnsupportedFeatures, cItem)
+					return true
+				})
+			} else {
+				if len(item.UnsupportedFeatures) > 0 {
+					item.UnsupportedFeatures = []ConfigurationGroupTopologyDevicesUnsupportedFeatures{}
+				}
+			}
+			data.TopologyDevices = append(data.TopologyDevices, item)
+			return true
+		})
+	} else {
+		if len(data.TopologyDevices) > 0 {
+			data.TopologyDevices = []ConfigurationGroupTopologyDevices{}
+		}
+	}
+	if value := res.Get("topology.siteDevices"); value.Exists() {
+		data.TopologySiteDevices = types.Int64Value(value.Int())
+	} else {
+		data.TopologySiteDevices = types.Int64Null()
+	}
 }
 
 func (data *ConfigurationGroup) hasChanges(ctx context.Context, state *ConfigurationGroup) bool {
@@ -117,6 +208,33 @@ func (data *ConfigurationGroup) hasChanges(ctx context.Context, state *Configura
 				hasChanges = true
 			}
 		}
+	}
+	if len(data.TopologyDevices) != len(state.TopologyDevices) {
+		hasChanges = true
+	} else {
+		for i := range data.TopologyDevices {
+			if !data.TopologyDevices[i].CriteriaAttribute.Equal(state.TopologyDevices[i].CriteriaAttribute) {
+				hasChanges = true
+			}
+			if !data.TopologyDevices[i].CriteriaValue.Equal(state.TopologyDevices[i].CriteriaValue) {
+				hasChanges = true
+			}
+			if len(data.TopologyDevices[i].UnsupportedFeatures) != len(state.TopologyDevices[i].UnsupportedFeatures) {
+				hasChanges = true
+			} else {
+				for ii := range data.TopologyDevices[i].UnsupportedFeatures {
+					if !data.TopologyDevices[i].UnsupportedFeatures[ii].ParcelType.Equal(state.TopologyDevices[i].UnsupportedFeatures[ii].ParcelType) {
+						hasChanges = true
+					}
+					if !data.TopologyDevices[i].UnsupportedFeatures[ii].ParcelId.Equal(state.TopologyDevices[i].UnsupportedFeatures[ii].ParcelId) {
+						hasChanges = true
+					}
+				}
+			}
+		}
+	}
+	if !data.TopologySiteDevices.Equal(state.TopologySiteDevices) {
+		hasChanges = true
 	}
 	return hasChanges
 }
