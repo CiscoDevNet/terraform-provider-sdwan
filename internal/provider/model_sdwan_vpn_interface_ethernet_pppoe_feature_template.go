@@ -299,7 +299,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"pppoe-client.dial-pool-number."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"pppoe-client.dial-pool-number."+"vipVariableName", data.DialerPoolNumberVariable.ValueString())
 	} else if data.DialerPoolNumber.IsNull() {
-		body, _ = sjson.Set(body, path+"pppoe-client", map[string]interface{}{})
+		if !gjson.Get(body, path+"pppoe-client").Exists() {
+			body, _ = sjson.Set(body, path+"pppoe-client", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"pppoe-client.dial-pool-number."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"pppoe-client.dial-pool-number."+"vipType", "constant")
@@ -363,7 +365,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipVariableName", data.PppAuthenticationProtocolVariable.ValueString())
 	} else if data.PppAuthenticationProtocol.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.authentication").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipType", "constant")
@@ -371,7 +375,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 	}
 	if !data.PppAuthenticationProtocolPap.IsNull() {
 		if data.PppAuthenticationProtocolPap.ValueBool() {
-			body, _ = sjson.Set(body, path+"ppp.authentication.pap", map[string]interface{}{})
+			if !gjson.Get(body, path+"ppp.authentication.pap").Exists() {
+				body, _ = sjson.Set(body, path+"ppp.authentication.pap", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipType", "ignore")
@@ -383,7 +389,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipVariableName", data.ChapHostnameVariable.ValueString())
 	} else if data.ChapHostname.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.chap", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.chap").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.chap", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipType", "constant")
@@ -395,7 +403,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipVariableName", data.ChapPppAuthPasswordVariable.ValueString())
 	} else if data.ChapPppAuthPassword.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.chap.password", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.chap.password").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.chap.password", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipType", "constant")
@@ -407,7 +417,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipVariableName", data.PapUsernameVariable.ValueString())
 	} else if data.PapUsername.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.pap.sent-username.username").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipType", "constant")
@@ -415,7 +427,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 	}
 	if !data.PapPassword.IsNull() {
 		if data.PapPassword.ValueBool() {
-			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password", map[string]interface{}{})
+			if !gjson.Get(body, path+"ppp.pap.sent-username.username.password").Exists() {
+				body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipType", "ignore")
@@ -427,14 +441,18 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipVariableName", data.PapPppAuthPasswordVariable.ValueString())
 	} else if data.PapPppAuthPassword.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.pap.sent-username.username").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipValue", data.PapPppAuthPassword.ValueString())
 	}
 	if data.PppAuthenticationType.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.authentication").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipType", "constant")
@@ -714,7 +732,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 	}
 	if !data.TunnelInterfaceColorRestrict.IsNull() {
 		if data.TunnelInterfaceColorRestrict.ValueBool() {
-			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict", map[string]interface{}{})
+			if !gjson.Get(body, path+"tunnel-interface.color.restrict").Exists() {
+				body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "ignore")
@@ -909,7 +929,9 @@ func (data VPNInterfaceEthernetPPPoE) toBody(ctx context.Context) string {
 	}
 	if !data.Nat.IsNull() {
 		if data.Nat.ValueBool() {
-			body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+			if !gjson.Get(body, path+"nat").Exists() {
+				body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"nat."+"vipType", "ignore")

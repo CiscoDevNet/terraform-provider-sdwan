@@ -300,7 +300,9 @@ func (data CiscoWirelessLAN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"mgmt.username."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"mgmt.username."+"vipVariableName", data.UsernameVariable.ValueString())
 	} else if data.Username.IsNull() {
-		body, _ = sjson.Set(body, path+"mgmt", map[string]interface{}{})
+		if !gjson.Get(body, path+"mgmt").Exists() {
+			body, _ = sjson.Set(body, path+"mgmt", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"mgmt.username."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.username."+"vipType", "constant")
@@ -312,7 +314,9 @@ func (data CiscoWirelessLAN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"mgmt.password."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"mgmt.password."+"vipVariableName", data.PasswordVariable.ValueString())
 	} else if data.Password.IsNull() {
-		body, _ = sjson.Set(body, path+"mgmt", map[string]interface{}{})
+		if !gjson.Get(body, path+"mgmt").Exists() {
+			body, _ = sjson.Set(body, path+"mgmt", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"mgmt.password."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"mgmt.password."+"vipType", "constant")

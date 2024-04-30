@@ -126,7 +126,9 @@ func (data SecurityAppHosting) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "utd.database-url."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "utd.database-url."+"vipVariableName", item.DatabaseUrlVariable.ValueString())
 		} else if item.DatabaseUrl.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "utd", map[string]interface{}{})
+			if !gjson.Get(itemBody, "utd").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "utd", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "utd.database-url."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "utd.database-url."+"vipType", "constant")

@@ -718,7 +718,9 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 	}
 	if !data.Nat.IsNull() {
 		if data.Nat.ValueBool() {
-			body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+			if !gjson.Get(body, path+"nat").Exists() {
+				body, _ = sjson.Set(body, path+"nat", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"nat."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"nat."+"vipType", "ignore")
@@ -825,7 +827,9 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 	}
 	if !data.Nat64Interface.IsNull() {
 		if data.Nat64Interface.ValueBool() {
-			body, _ = sjson.Set(body, path+"nat64", map[string]interface{}{})
+			if !gjson.Get(body, path+"nat64").Exists() {
+				body, _ = sjson.Set(body, path+"nat64", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"nat64."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"nat64."+"vipType", "ignore")
@@ -833,7 +837,9 @@ func (data CiscoVPNInterface) toBody(ctx context.Context) string {
 	}
 	if !data.Nat66Interface.IsNull() {
 		if data.Nat66Interface.ValueBool() {
-			body, _ = sjson.Set(body, path+"nat66", map[string]interface{}{})
+			if !gjson.Get(body, path+"nat66").Exists() {
+				body, _ = sjson.Set(body, path+"nat66", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"nat66."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"nat66."+"vipType", "ignore")
