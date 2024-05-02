@@ -36,6 +36,7 @@ resource "sdwan_cli_config_profile_parcel" "example" {
 ### Read-Only
 
 - `id` (String) The id of the object
+- `version` (Number) The version of the object
 
 ## Import
 

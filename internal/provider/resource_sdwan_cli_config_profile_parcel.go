@@ -67,6 +67,10 @@ func (r *CLIConfigProfileParcelResource) Schema(ctx context.Context, req resourc
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
@@ -117,6 +121,7 @@ func (r *CLIConfigProfileParcelResource) Create(ctx context.Context, req resourc
 		return
 	}
 	plan.Id = types.StringValue(res.Get("parcelId").String())
+	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
 
@@ -136,7 +141,7 @@ func (r *CLIConfigProfileParcelResource) Read(ctx context.Context, req resource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get(state.getPath() + "/" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Get(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -189,6 +194,7 @@ func (r *CLIConfigProfileParcelResource) Update(ctx context.Context, req resourc
 	} else {
 		tflog.Debug(ctx, fmt.Sprintf("%s: No changes detected", plan.Name.ValueString()))
 	}
+	plan.Version = types.Int64Value(state.Version.ValueInt64() + 1)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Name.ValueString()))
 

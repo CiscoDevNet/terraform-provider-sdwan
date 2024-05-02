@@ -188,9 +188,9 @@ func (d *{{camelCase .Name}}DataSource) Read(ctx context.Context, req datasource
 	{{- end}}
 	{{- end}}
 	{{- end}}
-	res, err := d.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + params)
+	res, err := d.client.Get({{if .GetRestEndpoint}}"{{.GetRestEndpoint}}"{{else}}config.getPath(){{end}} +  params)
 	{{- else}}
-	res, err := d.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" + url.QueryEscape(config.Id.ValueString()))
+	res, err := d.client.Get({{if .GetRestEndpoint}}"{{.GetRestEndpoint}}"{{else}}config.getPath(){{end}} + url.QueryEscape(config.Id.ValueString()))
 	{{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))

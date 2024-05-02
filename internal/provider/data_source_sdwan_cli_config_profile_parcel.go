@@ -58,6 +58,10 @@ func (d *CLIConfigProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "The id of the object",
 				Required:            true,
 			},
+			"version": schema.Int64Attribute{
+				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: "Feature Profile ID",
 				Computed:            true,
@@ -98,7 +102,7 @@ func (d *CLIConfigProfileParcelDataSource) Read(ctx context.Context, req datasou
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("/v1/feature-profile/sdwan/cli/%v/config/" + url.QueryEscape(config.Id.ValueString()))
+	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

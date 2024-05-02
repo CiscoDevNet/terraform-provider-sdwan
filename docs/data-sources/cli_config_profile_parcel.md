@@ -31,3 +31,4 @@ data "sdwan_cli_config_profile_parcel" "example" {
 - `description` (String) The description of the profile parcel
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
+- `version` (Number) The version of the object

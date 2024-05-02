@@ -31,6 +31,7 @@ import (
 
 type CLIConfigProfileParcel struct {
 	Id               types.String `tfsdk:"id"`
+	Version          types.Int64  `tfsdk:"version"`
 	FeatureProfileId types.String `tfsdk:"feature_profile_id"`
 	Name             types.String `tfsdk:"name"`
 	Description      types.String `tfsdk:"description"`
