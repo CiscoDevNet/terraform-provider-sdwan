@@ -17,6 +17,7 @@ description: |-
 - Handle 429 responses with retry logic
 - Add `sdwan_system_remote_access_profile_parcel` resource and data source
 - Add `sdwan_transport_ipv6_tracker_profile_parcel` resource and data source
+- Add `sdwan_service_tracker_profile_parcel` resource and data source
 
 ## 0.3.8
 
