@@ -1,6 +1,6 @@
 ---
-name: Transport IPv6 Tracker
-rest_endpoint: /v1/feature-profile/sdwan/transport/%v/ipv6-tracker
+name: Service Tracker
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/tracker
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 attributes:
@@ -10,16 +10,22 @@ attributes:
     mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: sdwan_transport_feature_profile.test.id
+    test_value: sdwan_service_feature_profile.test.id
   - model_name: trackerName
     mandatory: true
-    example: TRACKER_1
+    example: TRACKER_2
   - model_name: endpointApiUrl
     example: google.com
   - model_name: endpointDnsName
     example: google.com
   - model_name: endpointIp
-    example: 2001:0:0:1::0
+    example: 1.2.3.4
+  - model_name: protocol
+    data_path: [endpointTcpUdp]
+    example: tcp
+  - model_name: port
+    data_path: [endpointTcpUdp]
+    example: 123
   - model_name: interval
     example: 30
   - model_name: multiplier
@@ -27,12 +33,12 @@ attributes:
   - model_name: threshold
     example: 300
   - model_name: endpointTrackerType
-    example: ipv6-interface
+    example: static-route
   - model_name: trackerType
     example: endpoint
 
 test_prerequisites: |
-  resource "sdwan_transport_feature_profile" "test" {
+  resource "sdwan_service_feature_profile" "test" {
     name = "TF_TEST"
     description = "Terraform test"
   }

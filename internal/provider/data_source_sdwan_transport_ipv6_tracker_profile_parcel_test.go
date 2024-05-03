@@ -31,7 +31,7 @@ func TestAccDataSourceSdwanTransportIPv6TrackerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_profile_parcel.test", "tracker_name", "TRACKER1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_profile_parcel.test", "tracker_name", "TRACKER_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_profile_parcel.test", "endpoint_api_url", "google.com"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_profile_parcel.test", "endpoint_dns_name", "google.com"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_profile_parcel.test", "endpoint_ip", "2001:0:0:1::0"))
@@ -64,7 +64,7 @@ func testAccDataSourceSdwanTransportIPv6TrackerProfileParcelConfig() string {
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	tracker_name = "TRACKER1"` + "\n"
+	config += `	tracker_name = "TRACKER_1"` + "\n"
 	config += `	endpoint_api_url = "google.com"` + "\n"
 	config += `	endpoint_dns_name = "google.com"` + "\n"
 	config += `	endpoint_ip = "2001:0:0:1::0"` + "\n"
