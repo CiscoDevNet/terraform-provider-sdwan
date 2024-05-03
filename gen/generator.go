@@ -679,6 +679,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				return true // keep iterating
 			})
 
+		} else if model.Get("properties." + path + e + ".items").Exists() {
+			path += fmt.Sprintf("%s.items.properties.", e)
+
 		} else {
 			path += e + ".properties."
 		}
