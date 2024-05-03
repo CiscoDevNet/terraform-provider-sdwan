@@ -21,6 +21,7 @@ description: |-
 - Use existing variable values if none are provided with `sdwan_attach_feature_device_template` resource
 - Add `sdwan_cli_config_profile_parcel` resource and data source
 - Add `sdwan_system_logging_profile_parcel` resource and data source
+- Add `sdwan_transport_management_vpn_profile_parcel` resource and data source
 
 ## 0.3.8
 
