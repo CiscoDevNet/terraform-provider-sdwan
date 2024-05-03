@@ -38,6 +38,10 @@ type SiteListPolicyObjectEntries struct {
 	SiteId types.String `tfsdk:"site_id"`
 }
 
+func (data SiteListPolicyObject) getPath() string {
+	return "/template/policy/list/site/"
+}
+
 func (data SiteListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

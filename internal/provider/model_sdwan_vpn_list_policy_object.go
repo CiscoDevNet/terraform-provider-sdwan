@@ -38,6 +38,10 @@ type VPNListPolicyObjectEntries struct {
 	VpnId types.String `tfsdk:"vpn_id"`
 }
 
+func (data VPNListPolicyObject) getPath() string {
+	return "/template/policy/list/vpn/"
+}
+
 func (data VPNListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

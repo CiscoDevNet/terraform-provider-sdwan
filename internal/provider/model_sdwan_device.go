@@ -45,6 +45,10 @@ type DeviceDevices struct {
 	State        types.String `tfsdk:"state"`
 }
 
+func (data Device) getPath() string {
+	return "/device"
+}
+
 func (data Device) toBody(ctx context.Context) string {
 	body := ""
 	if !data.SerialNumber.IsNull() {

@@ -83,6 +83,10 @@ type IPv6ACLPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	NextHop      types.String `tfsdk:"next_hop"`
 }
 
+func (data IPv6ACLPolicyDefinition) getPath() string {
+	return "/template/policy/definition/aclv6/"
+}
+
 func (data IPv6ACLPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

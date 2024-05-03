@@ -45,6 +45,10 @@ type RewriteRulePolicyDefinitionRules struct {
 	Layer2Cos       types.Int64  `tfsdk:"layer2_cos"`
 }
 
+func (data RewriteRulePolicyDefinition) getPath() string {
+	return "/template/policy/definition/rewriterule/"
+}
+
 func (data RewriteRulePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

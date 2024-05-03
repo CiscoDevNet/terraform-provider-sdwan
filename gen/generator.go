@@ -217,6 +217,7 @@ type YamlConfigAttribute struct {
 	ModelTypeString         bool                           `yaml:"model_type_string"`
 	BoolEmptyString         bool                           `yaml:"bool_empty_string"`
 	DataPath                []string                       `yaml:"data_path"`
+	ResponseDataPath        []string                       `yaml:"response_data_path"`
 	Keys                    []string                       `yaml:"keys"`
 	Id                      bool                           `yaml:"id"`
 	Reference               bool                           `yaml:"reference"`
@@ -332,13 +333,20 @@ func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
-// Templating helper function to return ResponseModelName if set, otherwise ModelName
-func GetResponseModelName(attribute YamlConfigAttribute) string {
+// Templating helper function to return ResponseModelName if set, otherwise ModelName, including the path
+func GetResponseModelPath(attribute YamlConfigAttribute) string {
+	modelName := ""
 	if attribute.ResponseModelName != "" {
-		return attribute.ResponseModelName
+		modelName = attribute.ResponseModelName
 	} else {
-		return attribute.ModelName
+		modelName = attribute.ModelName
 	}
+	if len(attribute.ResponseDataPath) > 0 {
+		return strings.Join(attribute.ResponseDataPath, ".") + "." + modelName
+	} else if len(attribute.DataPath) > 0 {
+		return strings.Join(attribute.DataPath, ".") + "." + modelName
+	}
+	return modelName
 }
 
 // Templating helper function to return true if reference included in attributes
@@ -467,7 +475,7 @@ var functions = template.FuncMap{
 	"toLower":              strings.ToLower,
 	"path":                 BuildPath,
 	"hasVersionAttribute":  HasVersionAttribute,
-	"getResponseModelName": GetResponseModelName,
+	"getResponseModelPath": GetResponseModelPath,
 	"hasReference":         HasReference,
 	"getGjsonType":         GetGjsonType,
 	"getId":                GetId,

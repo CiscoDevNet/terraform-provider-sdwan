@@ -38,6 +38,10 @@ type ColorListPolicyObjectEntries struct {
 	Color types.String `tfsdk:"color"`
 }
 
+func (data ColorListPolicyObject) getPath() string {
+	return "/template/policy/list/color/"
+}
+
 func (data ColorListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

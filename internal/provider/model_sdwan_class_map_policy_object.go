@@ -35,6 +35,10 @@ type ClassMapPolicyObject struct {
 	Queue   types.Int64  `tfsdk:"queue"`
 }
 
+func (data ClassMapPolicyObject) getPath() string {
+	return "/template/policy/list/class/"
+}
+
 func (data ClassMapPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -46,6 +46,10 @@ type MeshTopologyPolicyDefinitionRegions struct {
 	SiteListVersions types.List   `tfsdk:"site_list_versions"`
 }
 
+func (data MeshTopologyPolicyDefinition) getPath() string {
+	return "/template/policy/definition/mesh/"
+}
+
 func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

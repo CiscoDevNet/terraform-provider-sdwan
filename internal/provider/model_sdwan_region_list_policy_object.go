@@ -38,6 +38,10 @@ type RegionListPolicyObjectEntries struct {
 	RegionId types.String `tfsdk:"region_id"`
 }
 
+func (data RegionListPolicyObject) getPath() string {
+	return "/template/policy/list/region/"
+}
+
 func (data RegionListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

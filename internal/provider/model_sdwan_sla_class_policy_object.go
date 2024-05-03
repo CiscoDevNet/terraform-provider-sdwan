@@ -43,6 +43,10 @@ type SLAClassPolicyObject struct {
 	FallbackBestTunnelLoss     types.Int64  `tfsdk:"fallback_best_tunnel_loss"`
 }
 
+func (data SLAClassPolicyObject) getPath() string {
+	return "/template/policy/list/sla/"
+}
+
 func (data SLAClassPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

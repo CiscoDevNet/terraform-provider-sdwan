@@ -128,6 +128,10 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters struct {
 	Fallback types.Bool   `tfsdk:"fallback"`
 }
 
+func (data TrafficDataPolicyDefinition) getPath() string {
+	return "/template/policy/definition/data/"
+}
+
 func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

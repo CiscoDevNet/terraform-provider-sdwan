@@ -38,6 +38,10 @@ type ExtendedCommunityListPolicyObjectEntries struct {
 	Community types.String `tfsdk:"community"`
 }
 
+func (data ExtendedCommunityListPolicyObject) getPath() string {
+	return "/template/policy/list/extcommunity/"
+}
+
 func (data ExtendedCommunityListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

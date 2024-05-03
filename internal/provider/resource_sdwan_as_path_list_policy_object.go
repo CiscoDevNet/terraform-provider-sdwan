@@ -120,7 +120,7 @@ func (r *ASPathListPolicyObjectResource) Create(ctx context.Context, req resourc
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/list/aspath/", body)
+	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -146,7 +146,7 @@ func (r *ASPathListPolicyObjectResource) Read(ctx context.Context, req resource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/template/policy/list/aspath/" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Get(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -184,7 +184,7 @@ func (r *ASPathListPolicyObjectResource) Update(ctx context.Context, req resourc
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/template/policy/list/aspath/"+url.QueryEscape(plan.Id.ValueString()), body)
+		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -219,7 +219,7 @@ func (r *ASPathListPolicyObjectResource) Delete(ctx context.Context, req resourc
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/template/policy/list/aspath/" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

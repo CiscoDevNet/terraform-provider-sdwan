@@ -41,6 +41,10 @@ type IPv6PrefixListPolicyObjectEntries struct {
 	Ge     types.Int64  `tfsdk:"ge"`
 }
 
+func (data IPv6PrefixListPolicyObject) getPath() string {
+	return "/template/policy/list/ipv6prefix/"
+}
+
 func (data IPv6PrefixListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

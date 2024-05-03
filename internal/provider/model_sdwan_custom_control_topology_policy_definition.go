@@ -106,6 +106,10 @@ type CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters st
 	ServiceTlocEncapsulation types.String `tfsdk:"service_tloc_encapsulation"`
 }
 
+func (data CustomControlTopologyPolicyDefinition) getPath() string {
+	return "/template/policy/definition/control/"
+}
+
 func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

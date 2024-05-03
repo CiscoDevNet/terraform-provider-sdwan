@@ -213,7 +213,7 @@ func testAccDataSourceSdwan{{camelCase .Name}}Config() string {
 	config += `
 		data "sdwan_{{snakeCase .Name}}" "test" {
 			{{- range  .Attributes}}
-			{{- if .QueryParam}}
+			{{- if or .QueryParam .Reference}}
 			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}
 			{{- end}}
 			{{- end}}

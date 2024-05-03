@@ -42,6 +42,10 @@ type IntrusionPreventionPolicyDefinition struct {
 	TargetVpns              types.Set    `tfsdk:"target_vpns"`
 }
 
+func (data IntrusionPreventionPolicyDefinition) getPath() string {
+	return "/template/policy/definition/intrusionprevention/"
+}
+
 func (data IntrusionPreventionPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

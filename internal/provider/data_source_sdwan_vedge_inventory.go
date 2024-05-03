@@ -115,7 +115,7 @@ func (d *VEdgeInventoryDataSource) Read(ctx context.Context, req datasource.Read
 
 	var params = "?"
 
-	res, err := d.client.Get("/device/vedgeinventory/detail" + params)
+	res, err := d.client.Get(config.getPath() + params)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

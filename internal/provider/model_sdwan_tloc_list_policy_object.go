@@ -42,6 +42,10 @@ type TLOCListPolicyObjectEntries struct {
 	Preference    types.Int64  `tfsdk:"preference"`
 }
 
+func (data TLOCListPolicyObject) getPath() string {
+	return "/template/policy/list/tloc/"
+}
+
 func (data TLOCListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

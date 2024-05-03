@@ -53,6 +53,10 @@ type CflowdPolicyDefinitionCollectors struct {
 	ExportSpreading types.String `tfsdk:"export_spreading"`
 }
 
+func (data CflowdPolicyDefinition) getPath() string {
+	return "/template/policy/definition/cflowd/"
+}
+
 func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -52,6 +52,10 @@ type ConfigurationGroupTopologyDevicesUnsupportedFeatures struct {
 	ParcelId   types.String `tfsdk:"parcel_id"`
 }
 
+func (data ConfigurationGroup) getPath() string {
+	return "/v1/config-group/"
+}
+
 func (data ConfigurationGroup) toBody(ctx context.Context) string {
 	body := ""
 	if !data.Name.IsNull() {
