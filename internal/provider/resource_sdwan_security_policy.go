@@ -213,12 +213,12 @@ func (r *SecurityPolicyResource) Create(ctx context.Context, req resource.Create
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/template/policy/security/", body)
+	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-	res, err = r.client.Get("/template/policy/security/")
+	res, err = r.client.Get(plan.getPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return
@@ -282,7 +282,7 @@ func (r *SecurityPolicyResource) Update(ctx context.Context, req resource.Update
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/template/policy/security/"+url.QueryEscape(plan.Id.ValueString()), body)
+		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -317,7 +317,7 @@ func (r *SecurityPolicyResource) Delete(ctx context.Context, req resource.Delete
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/template/policy/security/" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

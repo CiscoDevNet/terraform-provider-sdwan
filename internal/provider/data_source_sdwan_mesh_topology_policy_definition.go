@@ -63,6 +63,10 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Schema(ctx context.Context, req
 				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy definition",
 				Computed:            true,
@@ -125,13 +129,14 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Read(ctx context.Context, req d
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("/template/policy/definition/mesh/" + url.QueryEscape(config.Id.ValueString()))
+	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
 	config.fromBody(ctx, res)
+	config.Type = types.StringValue("mesh")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

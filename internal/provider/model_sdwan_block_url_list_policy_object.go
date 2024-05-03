@@ -38,6 +38,10 @@ type BlockURLListPolicyObjectEntries struct {
 	Url types.String `tfsdk:"url"`
 }
 
+func (data BlockURLListPolicyObject) getPath() string {
+	return "/template/policy/list/urlblacklist/"
+}
+
 func (data BlockURLListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -38,6 +38,10 @@ type ASPathListPolicyObjectEntries struct {
 	AsPath types.String `tfsdk:"as_path"`
 }
 
+func (data ASPathListPolicyObject) getPath() string {
+	return "/template/policy/list/aspath/"
+}
+
 func (data ASPathListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

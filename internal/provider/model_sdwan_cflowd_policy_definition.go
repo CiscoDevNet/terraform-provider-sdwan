@@ -31,6 +31,7 @@ import (
 type CflowdPolicyDefinition struct {
 	Id                  types.String                       `tfsdk:"id"`
 	Version             types.Int64                        `tfsdk:"version"`
+	Type                types.String                       `tfsdk:"type"`
 	Name                types.String                       `tfsdk:"name"`
 	Description         types.String                       `tfsdk:"description"`
 	ActiveFlowTimeout   types.Int64                        `tfsdk:"active_flow_timeout"`
@@ -50,6 +51,10 @@ type CflowdPolicyDefinitionCollectors struct {
 	Transport       types.String `tfsdk:"transport"`
 	SourceInterface types.String `tfsdk:"source_interface"`
 	ExportSpreading types.String `tfsdk:"export_spreading"`
+}
+
+func (data CflowdPolicyDefinition) getPath() string {
+	return "/template/policy/definition/cflowd/"
 }
 
 func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {

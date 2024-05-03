@@ -37,6 +37,7 @@ data "sdwan_cflowd_policy_definition" "example" {
 - `remarked_dscp` (Boolean) Collect remarked DSCP
 - `sampling_interval` (Number) Flow sampling interval
 - `tos` (Boolean) Collect TOS record field
+- `type` (String) Type
 - `version` (Number) The version of the object
 
 <a id="nestedatt--collectors"></a>

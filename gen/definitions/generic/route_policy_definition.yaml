@@ -3,6 +3,7 @@ name: Route Policy Definition
 rest_endpoint: /template/policy/definition/vedgeroute/
 has_version: true
 id_attribute: definitionId
+type_value: vedgeRoute
 doc_category: Localized Policies
 attributes:
   - model_name: type

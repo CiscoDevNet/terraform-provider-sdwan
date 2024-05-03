@@ -32,6 +32,7 @@ import (
 type HubAndSpokeTopologyPolicyDefinition struct {
 	Id             types.String                                    `tfsdk:"id"`
 	Version        types.Int64                                     `tfsdk:"version"`
+	Type           types.String                                    `tfsdk:"type"`
 	Name           types.String                                    `tfsdk:"name"`
 	Description    types.String                                    `tfsdk:"description"`
 	VpnListId      types.String                                    `tfsdk:"vpn_list_id"`
@@ -59,6 +60,10 @@ type HubAndSpokeTopologyPolicyDefinitionTopologiesSpokesHubs struct {
 	Preference        types.String `tfsdk:"preference"`
 	Ipv4PrefixListIds types.Set    `tfsdk:"ipv4_prefix_list_ids"`
 	Ipv6PrefixListIds types.Set    `tfsdk:"ipv6_prefix_list_ids"`
+}
+
+func (data HubAndSpokeTopologyPolicyDefinition) getPath() string {
+	return "/template/policy/definition/hubandspoke/"
 }
 
 func (data HubAndSpokeTopologyPolicyDefinition) toBody(ctx context.Context) string {

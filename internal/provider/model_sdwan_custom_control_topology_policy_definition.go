@@ -31,6 +31,7 @@ import (
 type CustomControlTopologyPolicyDefinition struct {
 	Id            types.String                                     `tfsdk:"id"`
 	Version       types.Int64                                      `tfsdk:"version"`
+	Type          types.String                                     `tfsdk:"type"`
 	Name          types.String                                     `tfsdk:"name"`
 	Description   types.String                                     `tfsdk:"description"`
 	DefaultAction types.String                                     `tfsdk:"default_action"`
@@ -103,6 +104,10 @@ type CustomControlTopologyPolicyDefinitionSequencesActionEntriesSetParameters st
 	ServiceTlocIp            types.String `tfsdk:"service_tloc_ip"`
 	ServiceTlocColor         types.String `tfsdk:"service_tloc_color"`
 	ServiceTlocEncapsulation types.String `tfsdk:"service_tloc_encapsulation"`
+}
+
+func (data CustomControlTopologyPolicyDefinition) getPath() string {
+	return "/template/policy/definition/control/"
 }
 
 func (data CustomControlTopologyPolicyDefinition) toBody(ctx context.Context) string {

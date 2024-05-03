@@ -272,7 +272,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.multilink.group."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.multilink.group."+"vipVariableName", data.MultilinkGroupNumberVariable.ValueString())
 	} else if data.MultilinkGroupNumber.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.multilink", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.multilink").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.multilink", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.multilink.group."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.multilink.group."+"vipType", "constant")
@@ -357,7 +359,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 		body, _ = sjson.SetRaw(body, path+"ipv6.access-list."+"vipValue.-1", itemBody)
 	}
 	if data.PppAuthenticationProtocol.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.authentication").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.authentication.method."+"vipType", "constant")
@@ -365,7 +369,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 	}
 	if !data.PppAuthenticationProtocolPap.IsNull() {
 		if data.PppAuthenticationProtocolPap.ValueBool() {
-			body, _ = sjson.Set(body, path+"ppp.authentication.pap", map[string]interface{}{})
+			if !gjson.Get(body, path+"ppp.authentication.pap").Exists() {
+				body, _ = sjson.Set(body, path+"ppp.authentication.pap", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ppp.authentication.pap."+"vipType", "ignore")
@@ -377,7 +383,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipVariableName", data.ChapHostnameVariable.ValueString())
 	} else if data.ChapHostname.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.chap", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.chap").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.chap", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.chap.hostname."+"vipType", "constant")
@@ -389,7 +397,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipVariableName", data.ChapPppAuthPasswordVariable.ValueString())
 	} else if data.ChapPppAuthPassword.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.chap.password", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.chap.password").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.chap.password", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.chap.password.ppp-auth-password."+"vipType", "constant")
@@ -401,7 +411,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipVariableName", data.PapUsernameVariable.ValueString())
 	} else if data.PapUsername.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.pap.sent-username.username").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.username-string."+"vipType", "constant")
@@ -409,7 +421,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 	}
 	if !data.PapPassword.IsNull() {
 		if data.PapPassword.ValueBool() {
-			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password", map[string]interface{}{})
+			if !gjson.Get(body, path+"ppp.pap.sent-username.username.password").Exists() {
+				body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.password."+"vipType", "ignore")
@@ -421,14 +435,18 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipVariableName", data.PapPppAuthPasswordVariable.ValueString())
 	} else if data.PapPppAuthPassword.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.pap.sent-username.username").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipType", "constant")
 		body, _ = sjson.Set(body, path+"ppp.pap.sent-username.username.ppp-auth-password."+"vipValue", data.PapPppAuthPassword.ValueString())
 	}
 	if data.PppAuthenticationType.IsNull() {
-		body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		if !gjson.Get(body, path+"ppp.authentication").Exists() {
+			body, _ = sjson.Set(body, path+"ppp.authentication", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipObjectType", "node-only")
 		body, _ = sjson.Set(body, path+"ppp.authentication.callin."+"vipType", "constant")
@@ -713,7 +731,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 	}
 	if !data.TunnelInterfaceColorRestrict.IsNull() {
 		if data.TunnelInterfaceColorRestrict.ValueBool() {
-			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict", map[string]interface{}{})
+			if !gjson.Get(body, path+"tunnel-interface.color.restrict").Exists() {
+				body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"tunnel-interface.color.restrict."+"vipType", "ignore")
@@ -908,7 +928,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 	}
 	if !data.DisableFragmentation.IsNull() {
 		if data.DisableFragmentation.ValueBool() {
-			body, _ = sjson.Set(body, path+"ppp.multilink.fragment.disable", map[string]interface{}{})
+			if !gjson.Get(body, path+"ppp.multilink.fragment.disable").Exists() {
+				body, _ = sjson.Set(body, path+"ppp.multilink.fragment.disable", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ppp.multilink.fragment.disable."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ppp.multilink.fragment.disable."+"vipType", "ignore")
@@ -929,7 +951,9 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 	}
 	if !data.InterleavingFragment.IsNull() {
 		if data.InterleavingFragment.ValueBool() {
-			body, _ = sjson.Set(body, path+"ppp.multilink.interleave", map[string]interface{}{})
+			if !gjson.Get(body, path+"ppp.multilink.interleave").Exists() {
+				body, _ = sjson.Set(body, path+"ppp.multilink.interleave", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ppp.multilink.interleave."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ppp.multilink.interleave."+"vipType", "ignore")
@@ -1198,7 +1222,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "framing."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "framing."+"vipValue", item.Framing.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "line-mode")
+		itemAttributes = append(itemAttributes, "clock")
 
 		if !item.LineModeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "clock.source.line.line-mode."+"vipObjectType", "object")
@@ -1212,10 +1236,12 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "clock.source.line.line-mode."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "clock.source.line.line-mode."+"vipValue", item.LineMode.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "internal")
+		itemAttributes = append(itemAttributes, "clock")
 		if !item.Internal.IsNull() {
 			if item.Internal.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "clock.source.internal", map[string]interface{}{})
+				if !gjson.Get(itemBody, "clock.source.internal").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "clock.source.internal", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "clock.source.internal."+"vipObjectType", "node-only")
 				itemBody, _ = sjson.Set(itemBody, "clock.source.internal."+"vipType", "ignore")
@@ -1249,7 +1275,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "linecode."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "linecode."+"vipValue", item.Linecode.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "long")
+		itemAttributes = append(itemAttributes, "cablelength")
 		if item.SetLengthForLong.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipType", "ignore")
@@ -1258,7 +1284,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "cablelength.long."+"vipValue", item.SetLengthForLong.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "short")
+		itemAttributes = append(itemAttributes, "cablelength")
 		if item.SetLengthForShort.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "cablelength.short."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "cablelength.short."+"vipType", "ignore")
@@ -1390,7 +1416,7 @@ func (data VPNInterfaceMultilink) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "bandwidth."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "bandwidth."+"vipValue", item.Bandwidth.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "clock-rate")
+		itemAttributes = append(itemAttributes, "DCE-mode-config")
 
 		if !item.ClockRateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "DCE-mode-config.clock-rate."+"vipObjectType", "object")

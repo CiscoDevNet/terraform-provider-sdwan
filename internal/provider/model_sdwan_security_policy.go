@@ -56,6 +56,10 @@ type SecurityPolicyLogging struct {
 	ExternalSyslogServerVpn types.String `tfsdk:"external_syslog_server_vpn"`
 }
 
+func (data SecurityPolicy) getPath() string {
+	return "/template/policy/security/"
+}
+
 func (data SecurityPolicy) toBody(ctx context.Context) string {
 	body := ""
 	if true {

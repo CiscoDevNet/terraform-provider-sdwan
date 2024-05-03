@@ -33,6 +33,10 @@ type ServiceFeatureProfile struct {
 	Description types.String `tfsdk:"description"`
 }
 
+func (data ServiceFeatureProfile) getPath() string {
+	return "/v1/feature-profile/sdwan/service/"
+}
+
 func (data ServiceFeatureProfile) toBody(ctx context.Context) string {
 	body := ""
 	if !data.Name.IsNull() {

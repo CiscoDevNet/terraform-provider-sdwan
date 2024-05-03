@@ -38,6 +38,10 @@ type ProtocolListPolicyObjectEntries struct {
 	Protocol types.String `tfsdk:"protocol"`
 }
 
+func (data ProtocolListPolicyObject) getPath() string {
+	return "/template/policy/list/protocolname/"
+}
+
 func (data ProtocolListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

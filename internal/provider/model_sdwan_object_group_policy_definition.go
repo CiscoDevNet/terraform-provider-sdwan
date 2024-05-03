@@ -47,6 +47,10 @@ type ObjectGroupPolicyDefinition struct {
 	GeoLocation               types.String `tfsdk:"geo_location"`
 }
 
+func (data ObjectGroupPolicyDefinition) getPath() string {
+	return "/template/policy/definition/securitygroup/"
+}
+
 func (data ObjectGroupPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

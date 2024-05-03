@@ -37,6 +37,10 @@ type PolicerPolicyObject struct {
 	Rate         types.Int64  `tfsdk:"rate"`
 }
 
+func (data PolicerPolicyObject) getPath() string {
+	return "/template/policy/list/policer/"
+}
+
 func (data PolicerPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

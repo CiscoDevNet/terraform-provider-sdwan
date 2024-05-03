@@ -39,6 +39,10 @@ type PortListPolicyObjectEntries struct {
 	Port types.Int64 `tfsdk:"port"`
 }
 
+func (data PortListPolicyObject) getPath() string {
+	return "/template/policy/list/port/"
+}
+
 func (data PortListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

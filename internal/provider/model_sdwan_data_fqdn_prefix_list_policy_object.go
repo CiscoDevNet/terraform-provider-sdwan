@@ -38,6 +38,10 @@ type DataFQDNPrefixListPolicyObjectEntries struct {
 	Fqdn types.String `tfsdk:"fqdn"`
 }
 
+func (data DataFQDNPrefixListPolicyObject) getPath() string {
+	return "/template/policy/list/fqdn/"
+}
+
 func (data DataFQDNPrefixListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -312,7 +312,9 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipVariableName", data.AsNumberVariable.ValueString())
 	} else if data.AsNumber.IsNull() {
-		body, _ = sjson.Set(body, path+"bgp", map[string]interface{}{})
+		if !gjson.Get(body, path+"bgp").Exists() {
+			body, _ = sjson.Set(body, path+"bgp", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"bgp.as-num."+"vipType", "constant")
@@ -923,7 +925,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			}
 			itemBody, _ = sjson.SetRaw(itemBody, "ipv6-network."+"vipValue.-1", itemChildBody)
 		}
-		itemAttributes = append(itemAttributes, "paths")
+		itemAttributes = append(itemAttributes, "maximum-paths")
 
 		if !item.MaximumPathsVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "maximum-paths.paths."+"vipObjectType", "object")
@@ -937,7 +939,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "maximum-paths.paths."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "maximum-paths.paths."+"vipValue", item.MaximumPaths.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "originate")
+		itemAttributes = append(itemAttributes, "default-information")
 
 		if !item.DefaultInformationOriginateVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "default-information.originate."+"vipObjectType", "node-only")
@@ -951,7 +953,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "default-information.originate."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "default-information.originate."+"vipValue", strconv.FormatBool(item.DefaultInformationOriginate.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "name")
+		itemAttributes = append(itemAttributes, "table-map")
 
 		if !item.TableMapPolicyVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "table-map.name."+"vipObjectType", "object")
@@ -965,7 +967,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "table-map.name."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "table-map.name."+"vipValue", item.TableMapPolicy.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "filter")
+		itemAttributes = append(itemAttributes, "table-map")
 
 		if !item.TableMapFilterVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "table-map.filter."+"vipObjectType", "node-only")
@@ -1098,7 +1100,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "remote-as."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "remote-as."+"vipValue", item.RemoteAs.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "keepalive")
+		itemAttributes = append(itemAttributes, "timers")
 
 		if !item.KeepaliveVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "timers.keepalive."+"vipObjectType", "object")
@@ -1112,7 +1114,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "timers.keepalive."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "timers.keepalive."+"vipValue", item.Keepalive.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "holdtime")
+		itemAttributes = append(itemAttributes, "timers")
 
 		if !item.HoldtimeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "timers.holdtime."+"vipObjectType", "object")
@@ -1126,7 +1128,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "timers.holdtime."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "timers.holdtime."+"vipValue", item.Holdtime.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "if-name")
+		itemAttributes = append(itemAttributes, "update-source")
 
 		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "update-source.if-name."+"vipObjectType", "object")
@@ -1252,7 +1254,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "as-override."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "as-override."+"vipValue", strconv.FormatBool(item.AsOverride.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "as-number")
+		itemAttributes = append(itemAttributes, "allowas-in")
 
 		if !item.AllowAsInVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "allowas-in.as-number."+"vipObjectType", "object")
@@ -1288,7 +1290,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "family-type."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "family-type."+"vipValue", childItem.FamilyType.ValueString())
 			}
-			itemChildAttributes = append(itemChildAttributes, "prefix-num")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.prefix-num."+"vipObjectType", "object")
@@ -1302,7 +1304,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.prefix-num."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.prefix-num."+"vipValue", childItem.MaximumPrefixes.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "threshold")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesThresholdVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.threshold."+"vipObjectType", "object")
@@ -1316,7 +1318,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.threshold."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.threshold."+"vipValue", childItem.MaximumPrefixesThreshold.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "restart")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesRestartVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.restart."+"vipObjectType", "object")
@@ -1330,7 +1332,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.restart."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.restart."+"vipValue", childItem.MaximumPrefixesRestart.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "warning-only")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesWarningOnlyVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.warning-only."+"vipObjectType", "object")
@@ -1462,7 +1464,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "remote-as."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "remote-as."+"vipValue", item.RemoteAs.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "keepalive")
+		itemAttributes = append(itemAttributes, "timers")
 
 		if !item.KeepaliveVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "timers.keepalive."+"vipObjectType", "object")
@@ -1476,7 +1478,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "timers.keepalive."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "timers.keepalive."+"vipValue", item.Keepalive.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "holdtime")
+		itemAttributes = append(itemAttributes, "timers")
 
 		if !item.HoldtimeVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "timers.holdtime."+"vipObjectType", "object")
@@ -1490,7 +1492,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "timers.holdtime."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "timers.holdtime."+"vipValue", item.Holdtime.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "if-name")
+		itemAttributes = append(itemAttributes, "update-source")
 
 		if !item.SourceInterfaceVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "update-source.if-name."+"vipObjectType", "object")
@@ -1616,7 +1618,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "as-override."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "as-override."+"vipValue", strconv.FormatBool(item.AsOverride.ValueBool()))
 		}
-		itemAttributes = append(itemAttributes, "as-number")
+		itemAttributes = append(itemAttributes, "allowas-in")
 
 		if !item.AllowAsInVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "allowas-in.as-number."+"vipObjectType", "object")
@@ -1652,7 +1654,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "family-type."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "family-type."+"vipValue", childItem.FamilyType.ValueString())
 			}
-			itemChildAttributes = append(itemChildAttributes, "prefix-num")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.prefix-num."+"vipObjectType", "object")
@@ -1666,7 +1668,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.prefix-num."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.prefix-num."+"vipValue", childItem.MaximumPrefixes.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "threshold")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesThresholdVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.threshold."+"vipObjectType", "object")
@@ -1680,7 +1682,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.threshold."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.threshold."+"vipValue", childItem.MaximumPrefixesThreshold.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "restart")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesRestartVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.restart."+"vipObjectType", "object")
@@ -1694,7 +1696,7 @@ func (data CiscoBGP) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.restart."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.restart."+"vipValue", childItem.MaximumPrefixesRestart.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "warning-only")
+			itemChildAttributes = append(itemChildAttributes, "maximum-prefixes")
 
 			if !childItem.MaximumPrefixesWarningOnlyVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maximum-prefixes.warning-only."+"vipObjectType", "object")

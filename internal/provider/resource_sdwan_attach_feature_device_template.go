@@ -112,15 +112,19 @@ func (r *AttachFeatureDeviceTemplateResource) Create(ctx context.Context, req re
 		return
 	}
 	res, err := r.client.Post("/template/device/config/attachfeature", body)
-	if err != nil {
+	if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
+		resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("No changes detected to trigger an attachment."))
+	} else if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-	actionId := res.Get("id").String()
-	err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
-		return
+	if resp.Diagnostics.WarningsCount() == 0 {
+		actionId := res.Get("id").String()
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
+			return
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Id.ValueString()))
@@ -185,15 +189,19 @@ func (r *AttachFeatureDeviceTemplateResource) Update(ctx context.Context, req re
 		return
 	}
 	res, err := r.client.Post("/template/device/config/attachfeature", body)
-	if err != nil {
+	if strings.Contains(res.Get("error.message").String(), "Template edit request has expired") {
+		resp.Diagnostics.AddWarning("Client Warning", fmt.Sprintf("No changes detected to trigger an attachment."))
+	} else if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
-	actionId := res.Get("id").String()
-	err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
-		return
+	if resp.Diagnostics.WarningsCount() == 0 {
+		actionId := res.Get("id").String()
+		err = helpers.WaitForActionToComplete(ctx, r.client, actionId)
+		if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to attach device template, got error: %s", err))
+			return
+		}
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Update finished successfully", plan.Id.ValueString()))

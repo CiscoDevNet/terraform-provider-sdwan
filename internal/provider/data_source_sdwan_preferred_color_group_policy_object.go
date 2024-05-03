@@ -114,7 +114,7 @@ func (d *PreferredColorGroupPolicyObjectDataSource) Read(ctx context.Context, re
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("/template/policy/list/preferredcolorgroup/" + url.QueryEscape(config.Id.ValueString()))
+	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

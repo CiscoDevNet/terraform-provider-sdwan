@@ -26,6 +26,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -60,6 +61,10 @@ func (d *CustomControlTopologyPolicyDefinitionDataSource) Schema(ctx context.Con
 			},
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
@@ -346,13 +351,14 @@ func (d *CustomControlTopologyPolicyDefinitionDataSource) Read(ctx context.Conte
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
-	res, err := d.client.Get("/template/policy/definition/control/" + url.QueryEscape(config.Id.ValueString()))
+	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
 	config.fromBody(ctx, res)
+	config.Type = types.StringValue("control")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

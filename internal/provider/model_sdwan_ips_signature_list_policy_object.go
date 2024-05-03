@@ -40,6 +40,10 @@ type IPSSignatureListPolicyObjectEntries struct {
 	SignatureId types.Int64 `tfsdk:"signature_id"`
 }
 
+func (data IPSSignatureListPolicyObject) getPath() string {
+	return "/template/policy/list/ipssignature/"
+}
+
 func (data IPSSignatureListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

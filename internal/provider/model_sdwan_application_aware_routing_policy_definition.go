@@ -31,6 +31,7 @@ import (
 type ApplicationAwareRoutingPolicyDefinition struct {
 	Id          types.String                                       `tfsdk:"id"`
 	Version     types.Int64                                        `tfsdk:"version"`
+	Type        types.String                                       `tfsdk:"type"`
 	Name        types.String                                       `tfsdk:"name"`
 	Description types.String                                       `tfsdk:"description"`
 	Sequences   []ApplicationAwareRoutingPolicyDefinitionSequences `tfsdk:"sequences"`
@@ -81,6 +82,10 @@ type ApplicationAwareRoutingPolicyDefinitionSequencesActionEntriesSlaClassParame
 	PreferredColorGroupList        types.String `tfsdk:"preferred_color_group_list"`
 	PreferredColorGroupListVersion types.Int64  `tfsdk:"preferred_color_group_list_version"`
 	PreferredColor                 types.String `tfsdk:"preferred_color"`
+}
+
+func (data ApplicationAwareRoutingPolicyDefinition) getPath() string {
+	return "/template/policy/definition/approute/"
 }
 
 func (data ApplicationAwareRoutingPolicyDefinition) toBody(ctx context.Context) string {

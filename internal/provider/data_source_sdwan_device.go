@@ -138,7 +138,7 @@ func (d *DeviceDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	if !config.Name.IsNull() {
 		params = params + "host-name=" + url.QueryEscape(config.Name.ValueString()) + "&"
 	}
-	res, err := d.client.Get("/device" + params)
+	res, err := d.client.Get(config.getPath() + params)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

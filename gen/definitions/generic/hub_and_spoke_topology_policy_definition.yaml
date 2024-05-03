@@ -4,6 +4,7 @@ rest_endpoint: /template/policy/definition/hubandspoke/
 has_version: true
 id_attribute: definitionId
 root_element: definition
+type_value: hubAndSpoke
 doc_category: Centralized Policies
 attributes:
   - model_name: type

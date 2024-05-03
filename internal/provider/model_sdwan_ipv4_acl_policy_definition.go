@@ -31,6 +31,7 @@ import (
 type IPv4ACLPolicyDefinition struct {
 	Id            types.String                       `tfsdk:"id"`
 	Version       types.Int64                        `tfsdk:"version"`
+	Type          types.String                       `tfsdk:"type"`
 	Name          types.String                       `tfsdk:"name"`
 	Description   types.String                       `tfsdk:"description"`
 	DefaultAction types.String                       `tfsdk:"default_action"`
@@ -80,6 +81,10 @@ type IPv4ACLPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	Type    types.String `tfsdk:"type"`
 	Dscp    types.Int64  `tfsdk:"dscp"`
 	NextHop types.String `tfsdk:"next_hop"`
+}
+
+func (data IPv4ACLPolicyDefinition) getPath() string {
+	return "/template/policy/definition/acl/"
 }
 
 func (data IPv4ACLPolicyDefinition) toBody(ctx context.Context) string {

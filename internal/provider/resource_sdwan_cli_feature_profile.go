@@ -103,7 +103,7 @@ func (r *CLIFeatureProfileResource) Create(ctx context.Context, req resource.Cre
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("/v1/feature-profile/sdwan/cli/", body)
+	res, err := r.client.Post(plan.getPath(), body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
@@ -128,7 +128,7 @@ func (r *CLIFeatureProfileResource) Read(ctx context.Context, req resource.ReadR
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("/v1/feature-profile/sdwan/cli/" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Get(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -166,7 +166,7 @@ func (r *CLIFeatureProfileResource) Update(ctx context.Context, req resource.Upd
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/v1/feature-profile/sdwan/cli/"+url.QueryEscape(plan.Id.ValueString()), body)
+		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -200,7 +200,7 @@ func (r *CLIFeatureProfileResource) Delete(ctx context.Context, req resource.Del
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/v1/feature-profile/sdwan/cli/" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

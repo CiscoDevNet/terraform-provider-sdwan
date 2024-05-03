@@ -32,6 +32,7 @@ import (
 type VPNMembershipPolicyDefinition struct {
 	Id          types.String                         `tfsdk:"id"`
 	Version     types.Int64                          `tfsdk:"version"`
+	Type        types.String                         `tfsdk:"type"`
 	Name        types.String                         `tfsdk:"name"`
 	Description types.String                         `tfsdk:"description"`
 	Sites       []VPNMembershipPolicyDefinitionSites `tfsdk:"sites"`
@@ -42,6 +43,10 @@ type VPNMembershipPolicyDefinitionSites struct {
 	SiteListVersion types.Int64  `tfsdk:"site_list_version"`
 	VpnListIds      types.Set    `tfsdk:"vpn_list_ids"`
 	VpnListVersions types.List   `tfsdk:"vpn_list_versions"`
+}
+
+func (data VPNMembershipPolicyDefinition) getPath() string {
+	return "/template/policy/definition/vpnmembershipgroup/"
 }
 
 func (data VPNMembershipPolicyDefinition) toBody(ctx context.Context) string {

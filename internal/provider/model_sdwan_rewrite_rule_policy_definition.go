@@ -31,6 +31,7 @@ import (
 type RewriteRulePolicyDefinition struct {
 	Id          types.String                       `tfsdk:"id"`
 	Version     types.Int64                        `tfsdk:"version"`
+	Type        types.String                       `tfsdk:"type"`
 	Name        types.String                       `tfsdk:"name"`
 	Description types.String                       `tfsdk:"description"`
 	Rules       []RewriteRulePolicyDefinitionRules `tfsdk:"rules"`
@@ -42,6 +43,10 @@ type RewriteRulePolicyDefinitionRules struct {
 	Priority        types.String `tfsdk:"priority"`
 	Dscp            types.Int64  `tfsdk:"dscp"`
 	Layer2Cos       types.Int64  `tfsdk:"layer2_cos"`
+}
+
+func (data RewriteRulePolicyDefinition) getPath() string {
+	return "/template/policy/definition/rewriterule/"
 }
 
 func (data RewriteRulePolicyDefinition) toBody(ctx context.Context) string {

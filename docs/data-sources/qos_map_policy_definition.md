@@ -30,6 +30,7 @@ data "sdwan_qos_map_policy_definition" "example" {
 - `description` (String) The description of the policy definition
 - `name` (String) The name of the policy definition
 - `qos_schedulers` (Attributes List) List of QoS schedulers (see [below for nested schema](#nestedatt--qos_schedulers))
+- `type` (String) Type
 - `version` (Number) The version of the object
 
 <a id="nestedatt--qos_schedulers"></a>

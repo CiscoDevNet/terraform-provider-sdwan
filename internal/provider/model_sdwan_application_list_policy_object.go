@@ -39,6 +39,10 @@ type ApplicationListPolicyObjectEntries struct {
 	ApplicationFamily types.String `tfsdk:"application_family"`
 }
 
+func (data ApplicationListPolicyObject) getPath() string {
+	return "/template/policy/list/app/"
+}
+
 func (data ApplicationListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

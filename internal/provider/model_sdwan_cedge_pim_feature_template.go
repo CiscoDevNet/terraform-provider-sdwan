@@ -183,7 +183,9 @@ func (data CEdgePIM) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.if-name."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.if-name."+"vipVariableName", data.InterfaceNameVariable.ValueString())
 	} else if data.InterfaceName.IsNull() {
-		body, _ = sjson.Set(body, path+"pim.send-rp-discovery", map[string]interface{}{})
+		if !gjson.Get(body, path+"pim.send-rp-discovery").Exists() {
+			body, _ = sjson.Set(body, path+"pim.send-rp-discovery", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.if-name."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.if-name."+"vipType", "constant")
@@ -321,7 +323,9 @@ func (data CEdgePIM) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.scope."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.scope."+"vipVariableName", data.ScopeVariable.ValueString())
 	} else if data.Scope.IsNull() {
-		body, _ = sjson.Set(body, path+"pim.send-rp-discovery", map[string]interface{}{})
+		if !gjson.Get(body, path+"pim.send-rp-discovery").Exists() {
+			body, _ = sjson.Set(body, path+"pim.send-rp-discovery", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.scope."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"pim.send-rp-discovery.scope."+"vipType", "constant")
@@ -417,7 +421,9 @@ func (data CEdgePIM) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"pim.spt-threshold."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"pim.spt-threshold."+"vipVariableName", data.SptThresholdVariable.ValueString())
 	} else if data.SptThreshold.IsNull() {
-		body, _ = sjson.Set(body, path+"pim", map[string]interface{}{})
+		if !gjson.Get(body, path+"pim").Exists() {
+			body, _ = sjson.Set(body, path+"pim", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"pim.spt-threshold."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"pim.spt-threshold."+"vipType", "constant")

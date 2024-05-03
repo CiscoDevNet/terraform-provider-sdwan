@@ -31,6 +31,7 @@ import (
 type IPv4DeviceACLPolicyDefinition struct {
 	Id            types.String                             `tfsdk:"id"`
 	Version       types.Int64                              `tfsdk:"version"`
+	Type          types.String                             `tfsdk:"type"`
 	Name          types.String                             `tfsdk:"name"`
 	Description   types.String                             `tfsdk:"description"`
 	DefaultAction types.String                             `tfsdk:"default_action"`
@@ -59,6 +60,10 @@ type IPv4DeviceACLPolicyDefinitionSequencesMatchEntries struct {
 type IPv4DeviceACLPolicyDefinitionSequencesActionEntries struct {
 	Type        types.String `tfsdk:"type"`
 	CounterName types.String `tfsdk:"counter_name"`
+}
+
+func (data IPv4DeviceACLPolicyDefinition) getPath() string {
+	return "/template/policy/definition/deviceaccesspolicy/"
 }
 
 func (data IPv4DeviceACLPolicyDefinition) toBody(ctx context.Context) string {

@@ -3,6 +3,7 @@ name: IPv4 ACL Policy Definition
 rest_endpoint: /template/policy/definition/acl/
 has_version: true
 id_attribute: definitionId
+type_value: acl
 doc_category: Localized Policies
 attributes:
   - model_name: type

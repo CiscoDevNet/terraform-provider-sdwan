@@ -43,6 +43,10 @@ type AdvancedInspectionProfilePolicyDefinition struct {
 	TlsSslDecryptionVersion          types.Int64  `tfsdk:"tls_ssl_decryption_version"`
 }
 
+func (data AdvancedInspectionProfilePolicyDefinition) getPath() string {
+	return "/template/policy/definition/advancedinspectionprofile/"
+}
+
 func (data AdvancedInspectionProfilePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

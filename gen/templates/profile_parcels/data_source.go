@@ -77,6 +77,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 				Computed:            true,
 			},
 			{{- range  .Attributes}}
+			{{- if not .Value}}
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
 				MarkdownDescription: "{{.Description}}",
 				{{- if isListSet .}}
@@ -91,6 +92,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
+						{{- if not .Value}}
 						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
 							MarkdownDescription: "{{.Description}}",
 							{{- if isListSet .}}
@@ -101,6 +103,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									{{- range  .Attributes}}
+									{{- if not .Value}}
 									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
 										MarkdownDescription: "{{.Description}}",
 										{{- if isListSet .}}
@@ -111,6 +114,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												{{- range  .Attributes}}
+												{{- if not .Value}}
 												"{{.TfName}}": schema.{{if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
 													MarkdownDescription: "{{.Description}}",
 													{{- if isListSet .}}
@@ -125,6 +129,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 												},
 												{{- end}}
 												{{- end}}
+												{{- end}}
 											},
 										},
 										{{- end}}
@@ -134,6 +139,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
+									{{- end}}
 									{{- end}}
 									{{- end}}
 								},
@@ -147,6 +153,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 						},
 						{{- end}}
 						{{- end}}
+						{{- end}}
 					},
 				},
 				{{- end}}
@@ -156,6 +163,7 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			{{- end}}
 			{{- end}}
 			{{- end}}
 		},

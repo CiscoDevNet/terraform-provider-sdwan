@@ -31,6 +31,7 @@ import (
 type IPv6ACLPolicyDefinition struct {
 	Id            types.String                       `tfsdk:"id"`
 	Version       types.Int64                        `tfsdk:"version"`
+	Type          types.String                       `tfsdk:"type"`
 	Name          types.String                       `tfsdk:"name"`
 	Description   types.String                       `tfsdk:"description"`
 	DefaultAction types.String                       `tfsdk:"default_action"`
@@ -80,6 +81,10 @@ type IPv6ACLPolicyDefinitionSequencesActionEntriesSetParameters struct {
 	Type         types.String `tfsdk:"type"`
 	TrafficClass types.Int64  `tfsdk:"traffic_class"`
 	NextHop      types.String `tfsdk:"next_hop"`
+}
+
+func (data IPv6ACLPolicyDefinition) getPath() string {
+	return "/template/policy/definition/aclv6/"
 }
 
 func (data IPv6ACLPolicyDefinition) toBody(ctx context.Context) string {

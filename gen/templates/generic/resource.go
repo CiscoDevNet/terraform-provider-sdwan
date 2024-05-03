@@ -64,7 +64,7 @@ func (r *{{camelCase .Name}}Resource) Metadata(ctx context.Context, req resource
 func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("{{.ResDescription}}").String,
+		MarkdownDescription: helpers.NewAttributeDescription("{{.ResDescription}}"){{- if .MinimumVersion}}.AddMinimumVersionDescription("{{.MinimumVersion}}"){{- end}}.String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -77,6 +77,12 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 			{{- if .HasVersion}}
 			"version": schema.Int64Attribute{
 				MarkdownDescription: "The version of the object",
+				Computed:            true,
+			},
+			{{- end}}
+			{{- if .TypeValue}}
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
 				Computed:            true,
 			},
 			{{- end}}
@@ -110,7 +116,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- if len .DefaultValue}}
 				Computed:            true,
 				{{- end}}
-				{{- if len .EnumValues}}
+				{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 				Validators: []validator.String{
 					stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 				},
@@ -172,7 +178,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							{{- if len .DefaultValue}}
 							Computed:            true,
 							{{- end}}
-							{{- if len .EnumValues}}
+							{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 							Validators: []validator.String{
 								stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 							},
@@ -234,7 +240,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										{{- if len .DefaultValue}}
 										Computed:            true,
 										{{- end}}
-										{{- if len .EnumValues}}
+										{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 										Validators: []validator.String{
 											stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 										},
@@ -296,7 +302,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													{{- if len .DefaultValue}}
 													Computed:            true,
 													{{- end}}
-													{{- if len .EnumValues}}
+													{{- if and (len .EnumValues) (not .IgnoreEnum)}}
 													Validators: []validator.String{
 														stringvalidator.OneOf({{range .EnumValues}}"{{.}}", {{end}}),
 													},
@@ -404,30 +410,33 @@ func (r *{{camelCase .Name}}Resource) Create(ctx context.Context, req resource.C
 	// Create object
 	body := plan.toBody(ctx)
 
-	res, err := r.client.Post("{{if .PostRestEndpoint}}{{.PostRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}", body)
+	res, err := r.client.Post({{if .PostRestEndpoint}}"{{.PostRestEndpoint}}"{{else}}plan.getPath(){{end}}, body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to configure object (POST), got error: %s, %s", err, res.String()))
 		return
 	}
 	{{- if not .RemoveId}}
 		{{- if .IdAttribute}}
-	plan.Id = types.StringValue(res.Get("{{.IdAttribute}}").String())
+		plan.Id = types.StringValue(res.Get("{{.IdAttribute}}").String())
 		{{- else if .IdFromQueryPath}}
 			{{- $id := getId .Attributes}}
-	res, err = r.client.Get("{{.RestEndpoint}}")
+	res, err = r.client.Get(plan.getPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return
 	}
 	plan.Id = types.StringValue(res.Get("{{.IdFromQueryPath}}.#({{if $id.ResponseModelName}}{{$id.ResponseModelName}}{{else}}{{$id.ModelName}}{{end}}==\""+ plan.{{toGoName $id.TfName}}.Value{{$id.Type}}() +"\").{{if .IdFromQueryPathAttribute}}{{.IdFromQueryPathAttribute}}{{else}}id{{end}}").String())
-		{{- end}}
+	{{- end}}
 	{{- end}}
 	{{- if .HasVersion}}
 	plan.Version = types.Int64Value(0)
 	{{- end}}
-
+	{{- if .TypeValue}}
+	plan.Type = types.StringValue("{{.TypeValue}}")
+	{{- end}}
+	
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
-
+	
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 }
@@ -444,7 +453,7 @@ func (r *{{camelCase .Name}}Resource) Read(ctx context.Context, req resource.Rea
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
-	res, err := r.client.Get("{{if .GetRestEndpoint}}{{.GetRestEndpoint}}{{else}}{{.RestEndpoint}}{{end}}" {{if not .RemoveId}} + url.QueryEscape(state.Id.ValueString()) {{end}})
+	res, err := r.client.Get({{if .GetRestEndpoint}}"{{.GetRestEndpoint}}"{{else}}state.getPath(){{end}}{{if not .RemoveId}} + url.QueryEscape(state.Id.ValueString()){{end}})
 	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") {
 		resp.State.RemoveResource(ctx)
 		return
@@ -482,7 +491,7 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("{{.RestEndpoint}}" {{if not .RemoveId}} + url.QueryEscape(plan.Id.ValueString()){{end}}, body)
+		res, err := r.client.Put(plan.getPath(){{if not .RemoveId}} + url.QueryEscape(plan.Id.ValueString()){{end}}, body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -520,9 +529,9 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 	{{if not .RemoveId}}
-	res, err := r.client.Delete("{{.RestEndpoint}}" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	{{- else}}
-	res, err := r.client.Delete("{{.RestEndpoint}}")
+	res, err := r.client.Delete(plan.getPath())
 	{{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))

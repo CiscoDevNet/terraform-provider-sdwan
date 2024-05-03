@@ -63,11 +63,6 @@ func testAccSdwanSystemMRFProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
-	config += `	region_id = 1` + "\n"
-	config += `	secondary_region_id = 2` + "\n"
-	config += `	role = "edge-router"` + "\n"
-	config += `	enable_migration_to_mrf = "enabled"` + "\n"
-	config += `	migration_bgp_community = 100` + "\n"
 	config += `}` + "\n"
 	return config
 }

@@ -122,7 +122,9 @@ func (data Eigrp) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipType", "variableName")
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipVariableName", data.AsNumberVariable.ValueString())
 	} else if data.AsNumber.IsNull() {
-		body, _ = sjson.Set(body, path+"eigrp", map[string]interface{}{})
+		if !gjson.Get(body, path+"eigrp").Exists() {
+			body, _ = sjson.Set(body, path+"eigrp", map[string]interface{}{})
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipObjectType", "object")
 		body, _ = sjson.Set(body, path+"eigrp.as-num."+"vipType", "constant")
@@ -149,7 +151,7 @@ func (data Eigrp) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "type."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "type."+"vipValue", item.Type.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "redistribute")
+		itemAttributes = append(itemAttributes, "topology")
 		if len(item.Redistributes) > 0 {
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipObjectType", "tree")
 			itemBody, _ = sjson.Set(itemBody, "topology.base.redistribute."+"vipType", "constant")

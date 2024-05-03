@@ -32,6 +32,7 @@ import (
 type RoutePolicyDefinition struct {
 	Id            types.String                     `tfsdk:"id"`
 	Version       types.Int64                      `tfsdk:"version"`
+	Type          types.String                     `tfsdk:"type"`
 	Name          types.String                     `tfsdk:"name"`
 	Description   types.String                     `tfsdk:"description"`
 	DefaultAction types.String                     `tfsdk:"default_action"`
@@ -87,6 +88,10 @@ type RoutePolicyDefinitionSequencesActionEntries struct {
 	OspfTag             types.Int64  `tfsdk:"ospf_tag"`
 	Origin              types.String `tfsdk:"origin"`
 	Originator          types.String `tfsdk:"originator"`
+}
+
+func (data RoutePolicyDefinition) getPath() string {
+	return "/template/policy/definition/vedgeroute/"
 }
 
 func (data RoutePolicyDefinition) toBody(ctx context.Context) string {

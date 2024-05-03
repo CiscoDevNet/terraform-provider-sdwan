@@ -32,6 +32,7 @@ import (
 type MeshTopologyPolicyDefinition struct {
 	Id             types.String                          `tfsdk:"id"`
 	Version        types.Int64                           `tfsdk:"version"`
+	Type           types.String                          `tfsdk:"type"`
 	Name           types.String                          `tfsdk:"name"`
 	Description    types.String                          `tfsdk:"description"`
 	VpnListId      types.String                          `tfsdk:"vpn_list_id"`
@@ -43,6 +44,10 @@ type MeshTopologyPolicyDefinitionRegions struct {
 	Name             types.String `tfsdk:"name"`
 	SiteListIds      types.Set    `tfsdk:"site_list_ids"`
 	SiteListVersions types.List   `tfsdk:"site_list_versions"`
+}
+
+func (data MeshTopologyPolicyDefinition) getPath() string {
+	return "/template/policy/definition/mesh/"
 }
 
 func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {

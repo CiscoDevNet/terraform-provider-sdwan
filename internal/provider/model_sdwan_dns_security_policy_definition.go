@@ -52,6 +52,10 @@ type DNSSecurityPolicyDefinitionTargetVpns struct {
 	LocalDomainBypassEnabled types.Bool   `tfsdk:"local_domain_bypass_enabled"`
 }
 
+func (data DNSSecurityPolicyDefinition) getPath() string {
+	return "/template/policy/definition/dnssecurity/"
+}
+
 func (data DNSSecurityPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {

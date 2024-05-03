@@ -38,6 +38,10 @@ type DataIPv6PrefixListPolicyObjectEntries struct {
 	Prefix types.String `tfsdk:"prefix"`
 }
 
+func (data DataIPv6PrefixListPolicyObject) getPath() string {
+	return "/template/policy/list/dataipv6prefix/"
+}
+
 func (data DataIPv6PrefixListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

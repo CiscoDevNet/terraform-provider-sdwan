@@ -31,6 +31,7 @@ import (
 type TrafficDataPolicyDefinition struct {
 	Id            types.String                           `tfsdk:"id"`
 	Version       types.Int64                            `tfsdk:"version"`
+	Type          types.String                           `tfsdk:"type"`
 	Name          types.String                           `tfsdk:"name"`
 	Description   types.String                           `tfsdk:"description"`
 	DefaultAction types.String                           `tfsdk:"default_action"`
@@ -125,6 +126,10 @@ type TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters struct {
 	Type     types.String `tfsdk:"type"`
 	VpnId    types.Int64  `tfsdk:"vpn_id"`
 	Fallback types.Bool   `tfsdk:"fallback"`
+}
+
+func (data TrafficDataPolicyDefinition) getPath() string {
+	return "/template/policy/definition/data/"
 }
 
 func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {

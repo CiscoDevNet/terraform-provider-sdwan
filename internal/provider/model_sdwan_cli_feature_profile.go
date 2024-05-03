@@ -33,6 +33,10 @@ type CLIFeatureProfile struct {
 	Description types.String `tfsdk:"description"`
 }
 
+func (data CLIFeatureProfile) getPath() string {
+	return "/v1/feature-profile/sdwan/cli/"
+}
+
 func (data CLIFeatureProfile) toBody(ctx context.Context) string {
 	body := ""
 	if !data.Name.IsNull() {

@@ -93,14 +93,14 @@ func (data AttachFeatureDeviceTemplate) getVariables(ctx context.Context, client
 		var templateVariables map[string]string
 		item.Variables.ElementsAs(ctx, &templateVariables, false)
 		for k := range variables {
-			_, ok := templateVariables[k]
-			if ok {
+			if _, ok := templateVariables[k]; ok {
 				variables[k] = templateVariables[k]
 				continue
 			}
-			templateVariableName, ok := mappings[k]
-			if ok {
-				variables[k] = templateVariables[templateVariableName]
+			if templateVariableName, ok := mappings[k]; ok {
+				if _, ok := templateVariables[templateVariableName]; ok {
+					variables[k] = templateVariables[templateVariableName]
+				}
 			}
 		}
 		deviceVariables[item.Id.ValueString()] = variables

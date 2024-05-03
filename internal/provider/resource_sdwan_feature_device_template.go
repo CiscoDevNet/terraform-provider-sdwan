@@ -122,7 +122,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn").String,
 							Required:            true,
 						},
 						"sub_templates": schema.SetNestedAttribute{
@@ -139,7 +139,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 										Optional:            true,
 									},
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Feature template type").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_logging", "cisco_ntp", "cisco_ospf", "cisco_bgp", "cisco_vpn_interface", "cisco_vpn_interface_ipsec", "vpn-interface-svi", "cisco_secure_internet_gateway").String,
 										Required:            true,
 									},
 									"sub_templates": schema.SetNestedAttribute{
@@ -156,7 +156,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 													Optional:            true,
 												},
 												"type": schema.StringAttribute{
-													MarkdownDescription: helpers.NewAttributeDescription("Feature template type").String,
+													MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_dhcp_server").String,
 													Required:            true,
 												},
 											},
@@ -260,7 +260,7 @@ func (r *FeatureDeviceTemplateResource) Update(ctx context.Context, req resource
 	if plan.hasChanges(ctx, &state) {
 		body := plan.toBody(ctx)
 		r.updateMutex.Lock()
-		res, err := r.client.Put("/template/device/"+url.QueryEscape(plan.Id.ValueString()), body)
+		res, err := r.client.Put(plan.getPath()+url.QueryEscape(plan.Id.ValueString()), body)
 		r.updateMutex.Unlock()
 		if err != nil {
 			if strings.Contains(res.Get("error.message").String(), "Failed to acquire lock") {
@@ -295,7 +295,7 @@ func (r *FeatureDeviceTemplateResource) Delete(ctx context.Context, req resource
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
-	res, err := r.client.Delete("/template/device/" + url.QueryEscape(state.Id.ValueString()))
+	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

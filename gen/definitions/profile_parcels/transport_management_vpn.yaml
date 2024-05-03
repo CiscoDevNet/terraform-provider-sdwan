@@ -1,0 +1,104 @@
+---
+name: Transport Management VPN
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: vpnId
+    tf_name: vpn
+    type: Int64
+  - model_name: name
+    tf_name: basic_configuration_description
+    example: example
+  - model_name: primaryDnsAddressIpv4
+    data_path: [dnsIpv4]
+    example: 1.2.3.4
+  - model_name: secondaryDnsAddressIpv4
+    data_path: [dnsIpv4]
+    example: 2.3.4.5
+  - model_name: primaryDnsAddressIpv6
+    data_path: [dnsIpv6]
+    example: 2001:0:0:1::0
+  - model_name: secondaryDnsAddressIpv6
+    data_path: [dnsIpv6]
+    example: 2001:0:0:2::0
+  - model_name: newHostMapping
+    tf_name: new_host_mappings
+    attributes:
+    - model_name: hostName
+      id: true
+      example: example
+    - model_name: listOfIp
+      tf_name: list_of_ip_addresses
+      example: 1.2.3.4
+  - model_name: ipv4Route
+    tf_name: ipv4_static_routes
+    attributes:
+    - model_name: ipAddress
+      tf_name: network_address
+      data_path: [prefix]
+      id: true
+      example: 1.2.3.4
+    - model_name: subnetMask
+      data_path: [prefix]
+      id: true
+      example: 0.0.0.0
+    - model_name: gateway
+      id: true
+      example: nextHop
+    - model_name: nextHop
+      tf_name: ipv4_route_gateway_next_ho
+      conditional_attribute:
+        name: gateway
+        value: nextHop
+      attributes:
+      - model_name: address
+        type: String
+        id: true
+        example: 1.2.3.4
+      - model_name: distance
+        tf_name: administrative_distance
+        example: 1
+    - model_name: distance
+      tf_name: administrative_distance
+      conditional_attribute:
+        name: gateway
+        value: null0
+      example: 1
+  - model_name: ipv6Route
+    tf_name: ipv6_static_routes
+    attributes:
+      - model_name: prefix
+        id: true
+        example: 2002::/16
+      - model_name: nextHop
+        tf_name: next_hops
+        data_path: [oneOfIpRoute, nextHopContainer]
+        mandatory: true
+        attributes:
+          - model_name: address
+            id: true
+            example: 2001:0:0:1::1
+          - model_name: distance
+            tf_name: administrative_distance
+            example: 1
+      - model_name: null0
+        data_path: [oneOfIpRoute]
+        exclude_test: true
+        example: true
+      - model_name: nat
+        data_path: [oneOfIpRoute]
+        exclude_test: true
+        example: NAT64
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

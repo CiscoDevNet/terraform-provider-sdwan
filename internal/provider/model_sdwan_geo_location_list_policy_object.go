@@ -39,6 +39,10 @@ type GeoLocationListPolicyObjectEntries struct {
 	Continent types.String `tfsdk:"continent"`
 }
 
+func (data GeoLocationListPolicyObject) getPath() string {
+	return "/template/policy/list/geolocation/"
+}
+
 func (data GeoLocationListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

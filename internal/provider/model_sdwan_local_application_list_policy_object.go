@@ -38,6 +38,10 @@ type LocalApplicationListPolicyObjectEntries struct {
 	Application types.String `tfsdk:"application"`
 }
 
+func (data LocalApplicationListPolicyObject) getPath() string {
+	return "/template/policy/list/localapp/"
+}
+
 func (data LocalApplicationListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {

@@ -19,6 +19,7 @@ attributes: list(include('attribute'), required=False) # List of attributes
 test_tags: list(str(), required=False) # List of test tags, tests are only executed if an environment variable with one of these tags is configured
 test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
 remove_id: bool(required=False) # Set to true if default ID attribute should be removed
+type_value: str(required=False) # Set to a string which is being provided as a read-only "type" resource and data source attribute
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
@@ -30,12 +31,12 @@ attribute:
   model_type_string: bool(required=False) # Set to true if element should be added as string to payload
   bool_empty_string: bool(required=False) # Set to true if a boolean value of "true" should be expressed as an empty string in the payload
   data_path: list(str(), required=False) # Path to the attribute in the model structure
+  response_data_path: list(str(), required=False) # Path to the attribute in the response model structure
   keys: list(str(), required=False) # Keys according to feature template schema
   id: bool(required=False) # Set to true if the attribute is part of the ID
   reference: bool(required=False) # Indicates that the attribute is being used in the url path
   variable: bool(required=False) # Indicates that this attribute can be provided as a feature template or profile parcel variable
   mandatory: bool(required=False) # Set to true if the attribute is mandatory
-  parcel_mandatory: bool(required=False) # Set to true if profile parcel attribute requires either a "global" or "variable" value
   write_only: bool(required=False) # Set to true if the attribute is write-only, meaning we cannot read the value
   tf_only: bool(required=False) # Set to true if this attribute is only used in Terraform but not added to payload
   exclude_test: bool(required=False) # Exclude attribute from example (documentation) and acceptance test
@@ -58,6 +59,7 @@ attribute:
   string_max_length: int(required=False) # Maximum length of a string, only relevant if type is "String"
   default_value: any(str(), int(), bool(), required=False) # Default value for the attribute
   default_value_present: bool(required=False) # Set to true if profile parcel has default value in schema
+  default_value_empty_string: bool(required=False) # Set to true if default value should be an empty string
   value: any(str(), int(), bool(), required=False) # Hardcoded value for the attribute
   test_value: str(required=False) # Value used for acceptance test
   always_include: bool(required=False) # Include attribute always in payload

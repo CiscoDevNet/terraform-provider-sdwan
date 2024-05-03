@@ -204,55 +204,57 @@ type YamlConfig struct {
 	TestTags                 []string              `yaml:"test_tags"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
+	TypeValue                string                `yaml:"type_value"`
 }
 
 type YamlConfigAttribute struct {
-	ModelName             string                         `yaml:"model_name"`
-	ResponseModelName     string                         `yaml:"response_model_name"`
-	TfName                string                         `yaml:"tf_name"`
-	Type                  string                         `yaml:"type"`
-	ElementType           string                         `yaml:"element_type"`
-	ObjectType            string                         `yaml:"object_type"`
-	ModelTypeString       bool                           `yaml:"model_type_string"`
-	BoolEmptyString       bool                           `yaml:"bool_empty_string"`
-	DataPath              []string                       `yaml:"data_path"`
-	Keys                  []string                       `yaml:"keys"`
-	Id                    bool                           `yaml:"id"`
-	Reference             bool                           `yaml:"reference"`
-	Variable              bool                           `yaml:"variable"`
-	Mandatory             bool                           `yaml:"mandatory"`
-	ParcelMandatory       bool                           `yaml:"parcel_mandatory"`
-	WriteOnly             bool                           `yaml:"write_only"`
-	TfOnly                bool                           `yaml:"tf_only"`
-	ExcludeTest           bool                           `yaml:"exclude_test"`
-	ExcludeExample        bool                           `yaml:"exclude_example"`
-	ExcludeIgnore         bool                           `yaml:"exclude_ignore"`
-	ExcludeNull           bool                           `yaml:"exclude_null"`
-	NodeOnlyContainer     bool                           `yaml:"node_only_container"`
-	Description           string                         `yaml:"description"`
-	Example               string                         `yaml:"example"`
-	EnumValues            []string                       `yaml:"enum_values"`
-	IgnoreEnum            bool                           `yaml:"ignore_enum"`
-	MinList               int64                          `yaml:"min_list"`
-	MaxList               int64                          `yaml:"max_list"`
-	MinInt                int64                          `yaml:"min_int"`
-	MaxInt                int64                          `yaml:"max_int"`
-	MinFloat              float64                        `yaml:"min_float"`
-	MaxFloat              float64                        `yaml:"max_float"`
-	StringPatterns        []string                       `yaml:"string_patterns"`
-	StringMinLength       int64                          `yaml:"string_min_length"`
-	StringMaxLength       int64                          `yaml:"string_max_length"`
-	DefaultValue          string                         `yaml:"default_value"`
-	DefaultValuePresent   bool                           `yaml:"default_value_present"`
-	Value                 string                         `yaml:"value"`
-	TestValue             string                         `yaml:"test_value"`
-	AlwaysInclude         bool                           `yaml:"always_include"`
-	Attributes            []YamlConfigAttribute          `yaml:"attributes"`
-	ConditionalAttribute  YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
-	ConditionalListLength string                         `yaml:"conditional_list_length"`
-	QueryParam            bool                           `yaml:"query_param"`
-	NoAugmentConfig       bool                           `yaml:"no_augment_config"`
-	TestTags              []string                       `yaml:"test_tags"`
+	ModelName               string                         `yaml:"model_name"`
+	ResponseModelName       string                         `yaml:"response_model_name"`
+	TfName                  string                         `yaml:"tf_name"`
+	Type                    string                         `yaml:"type"`
+	ElementType             string                         `yaml:"element_type"`
+	ObjectType              string                         `yaml:"object_type"`
+	ModelTypeString         bool                           `yaml:"model_type_string"`
+	BoolEmptyString         bool                           `yaml:"bool_empty_string"`
+	DataPath                []string                       `yaml:"data_path"`
+	ResponseDataPath        []string                       `yaml:"response_data_path"`
+	Keys                    []string                       `yaml:"keys"`
+	Id                      bool                           `yaml:"id"`
+	Reference               bool                           `yaml:"reference"`
+	Variable                bool                           `yaml:"variable"`
+	Mandatory               bool                           `yaml:"mandatory"`
+	WriteOnly               bool                           `yaml:"write_only"`
+	TfOnly                  bool                           `yaml:"tf_only"`
+	ExcludeTest             bool                           `yaml:"exclude_test"`
+	ExcludeExample          bool                           `yaml:"exclude_example"`
+	ExcludeIgnore           bool                           `yaml:"exclude_ignore"`
+	ExcludeNull             bool                           `yaml:"exclude_null"`
+	NodeOnlyContainer       bool                           `yaml:"node_only_container"`
+	Description             string                         `yaml:"description"`
+	Example                 string                         `yaml:"example"`
+	EnumValues              []string                       `yaml:"enum_values"`
+	IgnoreEnum              bool                           `yaml:"ignore_enum"`
+	MinList                 int64                          `yaml:"min_list"`
+	MaxList                 int64                          `yaml:"max_list"`
+	MinInt                  int64                          `yaml:"min_int"`
+	MaxInt                  int64                          `yaml:"max_int"`
+	MinFloat                float64                        `yaml:"min_float"`
+	MaxFloat                float64                        `yaml:"max_float"`
+	StringPatterns          []string                       `yaml:"string_patterns"`
+	StringMinLength         int64                          `yaml:"string_min_length"`
+	StringMaxLength         int64                          `yaml:"string_max_length"`
+	DefaultValue            string                         `yaml:"default_value"`
+	DefaultValuePresent     bool                           `yaml:"default_value_present"`
+	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
+	Value                   string                         `yaml:"value"`
+	TestValue               string                         `yaml:"test_value"`
+	AlwaysInclude           bool                           `yaml:"always_include"`
+	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
+	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
+	ConditionalListLength   string                         `yaml:"conditional_list_length"`
+	QueryParam              bool                           `yaml:"query_param"`
+	NoAugmentConfig         bool                           `yaml:"no_augment_config"`
+	TestTags                []string                       `yaml:"test_tags"`
 }
 
 type YamlConfigConditionalAttribute struct {
@@ -331,13 +333,20 @@ func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
-// Templating helper function to return ResponseModelName if set, otherwise ModelName
-func GetResponseModelName(attribute YamlConfigAttribute) string {
+// Templating helper function to return ResponseModelName if set, otherwise ModelName, including the path
+func GetResponseModelPath(attribute YamlConfigAttribute) string {
+	modelName := ""
 	if attribute.ResponseModelName != "" {
-		return attribute.ResponseModelName
+		modelName = attribute.ResponseModelName
 	} else {
-		return attribute.ModelName
+		modelName = attribute.ModelName
 	}
+	if len(attribute.ResponseDataPath) > 0 {
+		return strings.Join(attribute.ResponseDataPath, ".") + "." + modelName
+	} else if len(attribute.DataPath) > 0 {
+		return strings.Join(attribute.DataPath, ".") + "." + modelName
+	}
+	return modelName
 }
 
 // Templating helper function to return true if reference included in attributes
@@ -439,6 +448,15 @@ func IsNestedSet(attribute YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return parent model name in case data_path is used
+func GetParentModelName(attribute YamlConfigAttribute) string {
+	if len(attribute.DataPath) > 0 {
+		return attribute.DataPath[0]
+	} else {
+		return attribute.ModelName
+	}
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -457,7 +475,7 @@ var functions = template.FuncMap{
 	"toLower":              strings.ToLower,
 	"path":                 BuildPath,
 	"hasVersionAttribute":  HasVersionAttribute,
-	"getResponseModelName": GetResponseModelName,
+	"getResponseModelPath": GetResponseModelPath,
 	"hasReference":         HasReference,
 	"getGjsonType":         GetGjsonType,
 	"getId":                GetId,
@@ -469,6 +487,7 @@ var functions = template.FuncMap{
 	"isNestedListSet":      IsNestedListSet,
 	"isNestedList":         IsNestedList,
 	"isNestedSet":          IsNestedSet,
+	"getParentModelName":   GetParentModelName,
 	"contains":             contains,
 }
 
@@ -640,12 +659,11 @@ func augmentFeatureTemplateConfig(config *YamlConfig) {
 	}
 }
 
-func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) {
+func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, isOneOfAttribute bool) {
 	if attr.ModelName == "" {
 		return
 	}
 	path := ""
-	isOneOfAttribute := false
 	for i, e := range attr.DataPath {
 		// Check if the next element is a oneOf
 		if model.Get("properties." + path + e + ".oneOf").Exists() {
@@ -669,6 +687,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				return true // keep iterating
 			})
 
+		} else if model.Get("properties." + path + e + ".items").Exists() {
+			path += fmt.Sprintf("%s.items.properties.", e)
+
 		} else {
 			path += e + ".properties."
 		}
@@ -687,17 +708,26 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
+
+		// 		<<<<<<< HEAD
+		// 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+		// 		if value := r.Get("properties.optionType.enum.0"); value.Exists() {
+		// 			// if value := r.Get("properties.optionType.enum.0=\"global\""); value.Exists() {
+		// 			t = r
+		// 		} else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
+		// 			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\")"); value.Exists() {
+		// 			t = r.Get("properties.refId")
+		// =======
+
+		onlyDefault := false
+
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
-		if value := r.Get("properties.optionType.enum.0"); value.Exists() {
-			// if value := r.Get("properties.optionType.enum.0=\"global\""); value.Exists() {
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
 			t = r
-		} else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
-			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\")"); value.Exists() {
-			t = r.Get("properties.refId")
 		}
 
 		if t.Exists() {
-			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
+			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
 				attr.Type = "String"
 				if value := t.Get("properties.value.minLength"); value.Exists() {
 					attr.StringMinLength = value.Int()
@@ -715,7 +745,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				}
 			} else if t.Get("properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" {
+			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
 				attr.Type = "Int64"
 				if value := t.Get("properties.value.minimum"); value.Exists() {
 					attr.MinInt = value.Int()
@@ -727,62 +757,84 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result) 
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
-				// 	attr.MinList = value.Int()
+				//  attr.MinList = value.Int()
 				// }
 				// if value := t.Get("properties.value.items.maxItems"); value.Exists() {
-				// 	attr.MaxList = value.Int()
+				//  attr.MaxList = value.Int()
 				// }
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
 				attr.Type = "Set"
 				attr.ElementType = "Int64"
 				// if value := t.Get("properties.value.items.minimum"); value.Exists() {
-				// 	attr.MinInt = value.Int()
+				//  attr.MinInt = value.Int()
 				// }
 				// if value := t.Get("properties.value.items.maximum"); value.Exists() {
-				// 	attr.MaxInt = value.Int()
+				//  attr.MaxInt = value.Int()
 				// }
 			} else if t.Get("properties.value.const").String() == "true" || t.Get("properties.value.const").String() == "false" {
 				attr.Type = "Bool"
+			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" {
+				attr.Type = "String"
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
+			if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
+				attr.Variable = true
+			}
+		} else {
+			onlyDefault = true
 		}
-		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() && !isOneOfAttribute {
-			attr.Variable = true
-		}
+
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
+			d = r
+		}
 		if d.Exists() && !isOneOfAttribute {
+			attr.DefaultValuePresent = true
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
-				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
+				if value.String() == "" {
+					attr.DefaultValueEmptyString = true
+				} else {
+					if onlyDefault {
+						attr.Value = value.String()
+					} else {
+						attr.DefaultValue = value.String()
+					}
+				}
 			} else if value := d.Get("properties.value.default"); value.Exists() {
-				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
-			} else if value := d.Get("properties.value.default"); value.Exists() {
-				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
+				if value.String() == "" {
+					attr.DefaultValueEmptyString = true
+				} else {
+					if onlyDefault {
+						attr.Value = value.String()
+					} else {
+						attr.DefaultValue = value.String()
+					}
+				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
-				attr.DefaultValue = value.String()
-				attr.DefaultValuePresent = true
-			} else {
-				attr.ParcelMandatory = true
-				if !attr.Variable {
-					attr.Mandatory = true
+				if onlyDefault {
+					attr.Value = value.String()
+				} else {
+					attr.DefaultValue = value.String()
 				}
 			}
 		} else if isOneOfAttribute {
-			attr.ParcelMandatory = true
 			attr.ExcludeNull = true
 		} else {
-			attr.ParcelMandatory = true
 			if !attr.Variable {
 				attr.Mandatory = true
 			}
 		}
 	} else if r.Get("type").String() == "array" && r.Get("items.type").String() == "object" && len(attr.Attributes) > 0 {
 		attr.Type = "List"
+		if r.Get("minItems").Exists() {
+			attr.MinList = r.Get("minItems").Int()
+		}
+		if r.Get("maxItems").Exists() {
+			attr.MaxList = r.Get("maxItems").Int()
+		}
 		for a := range attr.Attributes {
-			parseProfileParcelAttribute(&attr.Attributes[a], r.Get("items"))
+			parseProfileParcelAttribute(&attr.Attributes[a], r.Get("items"), isOneOfAttribute)
 		}
 	}
 }
@@ -801,7 +853,7 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 	model := gjson.ParseBytes(modelBytes)
 
 	for ia := range config.Attributes {
-		parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"))
+		parseProfileParcelAttribute(&config.Attributes[ia], model.Get("request.properties.data"), false)
 	}
 
 	if config.DsDescription == "" {

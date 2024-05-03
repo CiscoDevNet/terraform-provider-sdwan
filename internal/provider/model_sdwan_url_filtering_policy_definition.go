@@ -47,6 +47,10 @@ type URLFilteringPolicyDefinition struct {
 	BlockPageContents   types.String `tfsdk:"block_page_contents"`
 }
 
+func (data URLFilteringPolicyDefinition) getPath() string {
+	return "/template/policy/definition/urlfiltering/"
+}
+
 func (data URLFilteringPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
