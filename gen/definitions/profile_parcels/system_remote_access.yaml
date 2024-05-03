@@ -23,7 +23,7 @@ attributes:
       value: device
     example: INITIALIZED
   - model_name: anyConnectProfileFileName
-    tf_name: any_connect_eap_profile_fil_name
+    tf_name: any_connect_eap_profile_file_name
     conditional_attribute:
       name: anyConnectEapAuth
       value: device
@@ -80,6 +80,7 @@ attributes:
     tf_name: ikev2_security_association_lifetime
     example: 86400
   - model_name: antiDosThreshold
+    tf_name: ikev2_anti_dos_threshold
     example: 99
   - model_name: enableAntiReplay
     tf_name: ipsec_enable_anti_replay
