@@ -708,6 +708,8 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
+		onlyDefault := false
+
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
 			t = r
@@ -763,10 +765,13 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
+			if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
+				attr.Variable = true
+			}
+		} else {
+			onlyDefault = true
 		}
-		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
-			attr.Variable = true
-		}
+
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
@@ -777,16 +782,28 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					attr.DefaultValue = value.String()
+					if onlyDefault {
+						attr.Value = value.String()
+					} else {
+						attr.DefaultValue = value.String()
+					}
 				}
 			} else if value := d.Get("properties.value.default"); value.Exists() {
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					attr.DefaultValue = value.String()
+					if onlyDefault {
+						attr.Value = value.String()
+					} else {
+						attr.DefaultValue = value.String()
+					}
 				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
-				attr.DefaultValue = value.String()
+				if onlyDefault {
+					attr.Value = value.String()
+				} else {
+					attr.DefaultValue = value.String()
+				}
 			}
 		} else if isOneOfAttribute {
 			attr.ExcludeNull = true

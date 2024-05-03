@@ -35,28 +35,28 @@ func TestAccSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	{{- $name := .Name }}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
 	{{- if isNestedListSet .}}
 	{{- $list := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
 	{{- if isNestedListSet .}}
 	{{- $clist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
 	{{- if isNestedListSet .}}
 	{{- $cclist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not (isListSet .))}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
@@ -153,28 +153,28 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	{{- range  .Attributes}}
-	{{- if not .ExcludeTest}}
+	{{- if and (not .ExcludeTest) (not .Value)}}
 	{{- if isNestedListSet .}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	config += `	{{.TfName}} = [{` + "\n"
 		{{- range  .Attributes}}
-		{{- if not .ExcludeTest}}
+		{{- if and (not .ExcludeTest) (not .Value)}}
 		{{- if isNestedListSet .}}
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		{{- end}}
 	config += `	  {{.TfName}} = [{` + "\n"
 			{{- range  .Attributes}}
-			{{- if not .ExcludeTest}}
+			{{- if and (not .ExcludeTest) (not .Value)}}
 			{{- if isNestedListSet .}}
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 			{{- end}}
 	config += `      {{.TfName}} = [{` + "\n"
 				{{- range  .Attributes}}
-				{{- if not .ExcludeTest}}
+				{{- if and (not .ExcludeTest) (not .Value)}}
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
