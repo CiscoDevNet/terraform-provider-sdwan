@@ -79,6 +79,7 @@ Required:
 
 - `id` (String) Policy definition ID
 - `type` (String) Policy definition type
+  - Choices: `qosMap`, `rewriteRule`, `vedgeRoute`, `acl`, `aclv6`, `deviceAccessPolicy`, `deviceAccessPolicyv6`
 
 Optional:
 

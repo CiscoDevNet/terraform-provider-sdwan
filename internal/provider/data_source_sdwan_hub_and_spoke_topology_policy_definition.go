@@ -63,6 +63,10 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy definition",
 				Computed:            true,
@@ -180,6 +184,7 @@ func (d *HubAndSpokeTopologyPolicyDefinitionDataSource) Read(ctx context.Context
 	}
 
 	config.fromBody(ctx, res)
+	config.Type = types.StringValue("hubAndSpoke")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

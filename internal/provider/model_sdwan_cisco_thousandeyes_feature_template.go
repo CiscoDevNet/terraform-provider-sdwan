@@ -109,20 +109,22 @@ func (data CiscoThousandEyes) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "application-type."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "application-type."+"vipValue", item.ApplicationType.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "token")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeAccountGroupTokenVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.token."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.token."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "te.token."+"vipVariableName", item.TeAccountGroupTokenVariable.ValueString())
 		} else if item.TeAccountGroupToken.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			if !gjson.Get(itemBody, "te").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "te.token."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.token."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.token."+"vipValue", item.TeAccountGroupToken.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "vpn")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeVpnVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.vpn."+"vipObjectType", "object")
@@ -136,33 +138,37 @@ func (data CiscoThousandEyes) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "te.vpn."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.vpn."+"vipValue", item.TeVpn.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "te-mgmt-ip")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeAgentIpVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.te-mgmt-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.te-mgmt-ip."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "te.te-mgmt-ip."+"vipVariableName", item.TeAgentIpVariable.ValueString())
 		} else if item.TeAgentIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			if !gjson.Get(itemBody, "te").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "te.te-mgmt-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.te-mgmt-ip."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.te-mgmt-ip."+"vipValue", item.TeAgentIp.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "te-vpg-ip")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeDefaultGatewayVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.te-vpg-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.te-vpg-ip."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "te.te-vpg-ip."+"vipVariableName", item.TeDefaultGatewayVariable.ValueString())
 		} else if item.TeDefaultGateway.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			if !gjson.Get(itemBody, "te").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "te.te-vpg-ip."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.te-vpg-ip."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.te-vpg-ip."+"vipValue", item.TeDefaultGateway.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "name-server")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeNameServerVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.name-server."+"vipObjectType", "object")
@@ -176,7 +182,7 @@ func (data CiscoThousandEyes) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "te.name-server."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.name-server."+"vipValue", item.TeNameServer.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "hostname")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeHostnameVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.hostname."+"vipObjectType", "object")
@@ -190,48 +196,56 @@ func (data CiscoThousandEyes) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "te.hostname."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.hostname."+"vipValue", item.TeHostname.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "proxy_type")
+		itemAttributes = append(itemAttributes, "te")
 		if item.TeWebProxyType.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			if !gjson.Get(itemBody, "te").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "te", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_type."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_type."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_type."+"vipValue", item.TeWebProxyType.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "proxy_host")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeProxyHostVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_host."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_host."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_host."+"vipVariableName", item.TeProxyHostVariable.ValueString())
 		} else if item.TeProxyHost.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "te.proxy_static", map[string]interface{}{})
+			if !gjson.Get(itemBody, "te.proxy_static").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "te.proxy_static", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_host."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_host."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_host."+"vipValue", item.TeProxyHost.ValueString())
 		}
-		itemAttributes = append(itemAttributes, "proxy_port")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TeProxyPortVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_port."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_port."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_port."+"vipVariableName", item.TeProxyPortVariable.ValueString())
 		} else if item.TeProxyPort.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "te.proxy_static", map[string]interface{}{})
+			if !gjson.Get(itemBody, "te.proxy_static").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "te.proxy_static", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_port."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_port."+"vipType", "constant")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_static.proxy_port."+"vipValue", item.TeProxyPort.ValueInt64())
 		}
-		itemAttributes = append(itemAttributes, "pac_url")
+		itemAttributes = append(itemAttributes, "te")
 
 		if !item.TePacUrlVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_pac.pac_url."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_pac.pac_url."+"vipType", "variableName")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_pac.pac_url."+"vipVariableName", item.TePacUrlVariable.ValueString())
 		} else if item.TePacUrl.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "te.proxy_pac", map[string]interface{}{})
+			if !gjson.Get(itemBody, "te.proxy_pac").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "te.proxy_pac", map[string]interface{}{})
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_pac.pac_url."+"vipObjectType", "object")
 			itemBody, _ = sjson.Set(itemBody, "te.proxy_pac.pac_url."+"vipType", "constant")

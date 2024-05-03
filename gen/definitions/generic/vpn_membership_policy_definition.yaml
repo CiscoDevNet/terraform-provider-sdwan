@@ -3,6 +3,7 @@ name: VPN Membership Policy Definition
 rest_endpoint: /template/policy/definition/vpnmembershipgroup/
 has_version: true
 id_attribute: definitionId
+type_value: vpnMembershipGroup
 doc_category: Centralized Policies
 attributes:
   - model_name: type

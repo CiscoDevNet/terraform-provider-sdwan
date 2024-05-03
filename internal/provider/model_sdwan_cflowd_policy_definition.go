@@ -31,6 +31,7 @@ import (
 type CflowdPolicyDefinition struct {
 	Id                  types.String                       `tfsdk:"id"`
 	Version             types.Int64                        `tfsdk:"version"`
+	Type                types.String                       `tfsdk:"type"`
 	Name                types.String                       `tfsdk:"name"`
 	Description         types.String                       `tfsdk:"description"`
 	ActiveFlowTimeout   types.Int64                        `tfsdk:"active_flow_timeout"`

@@ -63,6 +63,10 @@ func (d *VPNMembershipPolicyDefinitionDataSource) Schema(ctx context.Context, re
 				MarkdownDescription: "The version of the object",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type",
+				Computed:            true,
+			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy definition",
 				Computed:            true,
@@ -128,6 +132,7 @@ func (d *VPNMembershipPolicyDefinitionDataSource) Read(ctx context.Context, req 
 	}
 
 	config.fromBody(ctx, res)
+	config.Type = types.StringValue("vpnMembershipGroup")
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 

@@ -7,7 +7,16 @@ description: |-
 
 # Changelog
 
-## 0.3.8 (unreleased)
+## 0.3.9 (unreleased)
+
+- Fix issue with rendering feature template payloads
+- Add `sdwan_transport_routing_bgp_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_profile_parcel` resource and data source
+- Add `sdwan_system_ntp_profile_parcel` resource and data source
+- Add `sdwan_system_performance_monitoring_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_profile_parcel` resource and data source
+
+## 0.3.8
 
 - Add `sdwan_system_flexible_port_speed_profile_parcel` resource and data source
 - Add `sdwan_system_mrf_profile_parcel` resource and data source
@@ -15,9 +24,16 @@ description: |-
 - Add `sdwan_system_basic_profile_parcel` resource and data source
 - Fix issue with deleted feature profile resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
 - Add `sdwan_transport_wan_vpn_profile_parcel` resource and data source
-- Add 'advertise_hub_tlocs','all_hubs_are_equal','tloc_list_id', 'ipv4_prefix_list_ids', 'ipv6_prefix_list_ids' and 'preference' to 'sdwan_hub_and_spoke_topology_policy_definition' resource and data source
+- Add `advertise_hub_tlocs`, `all_hubs_are_equal`, `tloc_list_id`, `ipv4_prefix_list_ids`, `ipv6_prefix_list_ids` and `preference` to `sdwan_hub_and_spoke_topology_policy_definition` resource and data source
 - Fix issue with deleted profile parcel resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
-- Add `sdwan_service_lan_vpn_interface_ethernet_profile_parcel` resource and data source
+- Fix issue with incorrect feature template payloads, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/213)
+- Add warning and continue if there are no changes to deploy with `sdwan_attach_feature_device_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/220)
+- Add `sdwan_system_security_profile_parcel` resource and data source
+- Fix issue with `dot1x_enable` attribute of `sdwan_switchport_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/219)
+- Add possible types to `sdwan_localized_policy` and `sdwan_feature_device_template` resource
+- Add `type` read-only attribute to localized policy definitions
+- Add `type` read-only attribute to centralized policy definitions
+- Add `sdwan_configuration_group` resource and data source
 
 ## 0.3.7
 

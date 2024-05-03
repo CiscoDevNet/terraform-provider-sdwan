@@ -1,0 +1,427 @@
+---
+name: Service LAN VPN
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: vpnId
+    tf_name: vpn
+    example: 1
+  - model_name: name
+    tf_name: config_description
+    example: VPN1
+  - model_name: ompAdminDistance
+    tf_name: omp_admin_distance_ipv4
+    example: 1
+  - model_name: ompAdminDistanceIpv6
+    tf_name: omp_admin_distance_ipv6
+    example: 1
+  - model_name: enableSdra
+    tf_name: enable_sdwan_remote_access
+    example: false
+  - model_name: primaryDnsAddressIpv4
+    data_path: [dnsIpv4]
+    mandatory: true
+    example: 1.2.3.4
+  - model_name: secondaryDnsAddressIpv4
+    data_path: [dnsIpv4]
+    example: 2.3.4.5
+  - model_name: primaryDnsAddressIpv6
+    data_path: [dnsIpv6]
+    mandatory: true
+    example: 2001:0:0:1::0
+  - model_name: secondaryDnsAddressIpv6
+    data_path: [dnsIpv6]
+    example: 2001:0:0:2::0
+  - model_name: newHostMapping
+    tf_name: host_mappings
+    attributes:
+    - model_name: hostName
+      id: true
+      example: HOSTMAPPING1
+    - model_name: listOfIp
+      tf_name: list_of_ips
+      example: 1.2.3.4
+  - model_name: ompAdvertiseIp4
+    tf_name: advertise_omp_ipv4s
+    exclude_test: true
+    attributes:
+    - model_name: ompProtocol
+      tf_name: protocol
+      example: bgp
+    # ====== UX2.0 Route Policy Not Supported By Provider ======
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      id: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+    - model_name: prefixList
+      tf_name: prefixes
+      exclude_test: true
+      attributes:
+      - model_name: address
+        tf_name: network_address
+        data_path: [prefix]
+        id: true
+        example: 1.2.3.4
+      - model_name: mask
+        tf_name: subnet_mask
+        data_path: [prefix]
+        example: 255.255.255.255
+      - model_name: aggregateOnly
+        example: false
+      - model_name: region
+        example: core-and-access
+  - model_name: ompAdvertiseIpv6
+    tf_name: advertise_omp_ipv6s
+    exclude_test: true
+    attributes:
+    - model_name: ompProtocol
+      tf_name: protocol
+      example: OSPF
+    # ====== UX2.0 Route Policy Not Supported By Provider ======
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      id: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+    - model_name: protocolSubType
+      example: External
+    - model_name: prefixList
+      tf_name: prefixes
+      exclude_test: true
+      attributes:
+      - model_name: prefix
+        id: true
+        example: 2001:db8:a::/64
+      - model_name: aggregateOnly
+        example: false
+  - model_name: ipv4Route
+    tf_name: ipv4_static_routes
+    attributes:
+    - model_name: ipAddress
+      tf_name: network_address
+      data_path: [prefix]
+      id: true
+      example: 1.2.3.4
+    - model_name: subnetMask
+      data_path: [prefix]
+      example: 0.0.0.0
+    - model_name: nextHop
+      tf_name: next_hops
+      data_path: [oneOfIpRoute, nextHopContainer]
+      attributes:
+      - model_name: address
+        id: true
+        example: 1.2.3.4
+      - model_name: distance
+        tf_name: administrative_distance
+        example: 1
+    - model_name: nextHopWithTracker
+      tf_name: next_hop_with_trackers
+      data_path: [oneOfIpRoute, nextHopContainer]
+      exclude_test: true
+      attributes:
+      - model_name: address
+        example: 1.2.3.4
+      - model_name: distance
+        tf_name: administrative_distance
+        example: 1
+      # ====== UX2.0 Tracker and Trackerobject Not Supported By Provider ======
+      - model_name: refId
+        tf_name: tracker_id
+        data_path: [tracker]
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+       # test_value: 
+    - model_name: null0
+      data_path: [oneOfIpRoute]
+      exclude_test: true
+      example: false
+    - model_name: dhcp
+      tf_name: gateway_dhcp
+      data_path: [oneOfIpRoute]
+      exclude_test: true
+      example: false
+    - model_name: vpn
+      data_path: [oneOfIpRoute]
+      exclude_test: true
+      example: false
+  - model_name: ipv6Route
+    tf_name: ipv6_static_routes
+    attributes:
+    - model_name: prefix
+      id: true
+      example: 2001:0:0:1::0/12
+    - model_name: nextHop
+      tf_name: next_hops
+      data_path: [oneOfIpRoute, nextHopContainer]
+      attributes:
+      - model_name: address
+        id: true
+        example: 2001:0:0:1::0
+      - model_name: distance
+        tf_name: administrative_distance
+        example: 1
+    - model_name: null0
+      data_path: [oneOfIpRoute]
+      exclude_test: true
+      example: false
+    - model_name: nat
+      data_path: [oneOfIpRoute]
+      exclude_test: true
+      example: NAT64
+  - model_name: service
+    tf_name: services
+    attributes:
+    - model_name: serviceType
+      tf_name: service_type
+      id: true
+      example: FW
+    - model_name: ipv4Addresses
+      example: 1.2.3.4
+    - model_name: tracking
+      example: true
+  - model_name: serviceRoute
+    tf_name: service_routes
+    attributes:
+    - model_name: ipAddress
+      tf_name: network_address
+      data_path: [prefix]
+      id: true
+      example: 1.2.3.4
+    - model_name: subnetMask
+      data_path: [prefix]
+      example: 0.0.0.0
+    - model_name: service
+      example: SIG
+    - model_name: vpn
+      example: 0
+  - model_name: greRoute
+    tf_name: gre_routes
+    attributes:
+    - model_name: ipAddress
+      tf_name: network_address
+      data_path: [prefix]
+      id: true
+      example: 1.2.3.4
+    - model_name: subnetMask
+      data_path: [prefix]
+      example: 0.0.0.0
+    - model_name: interface
+      example: gre01
+    - model_name: vpn
+      example: 0
+  - model_name: ipsecRoute
+    tf_name: ipsec_routes
+    attributes:
+    - model_name: ipAddress
+      tf_name: network_address
+      data_path: [prefix]
+      id: true
+      example: 1.2.3.4
+    - model_name: subnetMask
+      data_path: [prefix]
+      example: 0.0.0.0
+    - model_name: interface
+      example: ipsec01
+  - model_name: natPool
+    tf_name: nat_pools
+    attributes:
+    - model_name: natPoolName
+      id: true
+      example: 1
+    - model_name: prefixLength
+      example: 3
+    - model_name: rangeStart
+      example: 1.2.3.4
+    - model_name: rangeEnd
+      example: 2.3.4.5
+    - model_name: overload
+      example: true
+    - model_name: direction
+      example: inside
+      # ====== UX2.0 Tracker and Trackerobject Not Supported By Provider ======  
+    - model_name: refId
+      tf_name: tracker_object_id
+      data_path: [trackingObject, trackerId]
+      exclude_test: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+  - model_name: natPortForward
+    tf_name: nat_port_forwards
+    attributes:
+    - model_name: natPoolName
+      id: true
+      example: 2
+    - model_name: sourcePort
+      example: 122
+    - model_name: translatePort
+      example: 330
+    - model_name: sourceIp
+      example: 1.2.3.4
+    - model_name: TranslatedSourceIp
+      example: 2.3.4.5
+    - model_name: protocol
+      example: TCP
+  - model_name: staticNat
+    tf_name: static_nats
+    attributes:
+    - model_name: natPoolName
+      id: true
+      example: 3
+    - model_name: sourceIp
+      example: 1.2.3.4
+    - model_name: TranslatedSourceIp
+      example: 2.3.4.5
+    - model_name: staticNatDirection
+      example: inside
+      # ====== UX2.0 Tracker and Trackerobject Not Supported By Provider ======
+    - model_name: refId
+      tf_name: tracker_object_id
+      data_path: [trackingObject, trackerId]
+      exclude_test: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+  - model_name: nat64V4Pool
+    tf_name: nat_64_v4_pools
+    attributes:
+    - model_name: nat64V4PoolName
+      tf_name: name
+      id: true
+      example: NATPOOL1
+    - model_name: nat64V4PoolRangeStart
+      tf_name: range_start
+      example: 1.2.3.4
+    - model_name: nat64V4PoolRangeEnd
+      tf_name: range_end
+      example: 2.3.4.5
+    - model_name: nat64V4PoolOverload
+      tf_name: overload
+      example: false
+  - model_name: routeLeakFromGlobal
+    tf_name: route_leak_from_global_vpns
+    exclude_test: true
+    attributes:
+    - model_name: routeProtocol
+      example: static
+      # ====== UX2.0 Route Policy Not Supported By Provider ======
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      id: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+    - model_name: redistributeToProtocol
+      tf_name: redistributions
+      exclude_test: true
+      attributes:
+      - model_name: protocol
+        example: bgp
+        # ======  UX2.0 Route Policy Not Supported By Provider ======
+      - model_name: refId
+        data_path: [policy]
+        tf_name: redistribution_policy_id
+        id: true
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+  - model_name: routeLeakFromService
+    tf_name: route_leak_to_global_vpns
+    exclude_test: true
+    attributes:
+    - model_name: routeProtocol
+      example: static
+      # ====== UX2.0 Route Policy Not Supported By Provider ======
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      id: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+    - model_name: redistributeToProtocol
+      tf_name: redistributions
+      attributes:
+      - model_name: protocol
+        example: bgp
+        # ====== UX2.0 Route Policy Not Supported By Provider ======
+      - model_name: refId
+        tf_name: redistribution_policy_id
+        data_path: [policy]
+        id: true
+        exclude_test: true
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+  - model_name: routeLeakBetweenServices
+    tf_name: route_leak_from_other_services 
+    exclude_test: true
+    attributes:
+    - model_name: sourceVpn
+      example: 1
+    - model_name: routeProtocol
+      example: static
+      # ====== UX2.0 Route Policy Not Supported By Provider ======
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      id: true
+      example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+    - model_name: redistributeToProtocol
+      tf_name: redistributions
+      exclude_test: true
+      attributes:
+      - model_name: protocol
+        example: bgp
+      # ====== UX2.0 Route Policy Not Supported By Provider ======
+      - model_name: refId
+        tf_name: redistribution_policy_id
+        data_path: [policy]
+        id: true
+        example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+      # test_value: 
+  - model_name: importRtList
+    tf_name: ipv4_import_route_targets
+    data_path: [mplsVpnIpv4RouteTarget]
+    attributes:
+    - model_name: rt
+      tf_name: route_target
+      id: true
+      example:  1.1.1.3:200
+  - model_name: exportRtList
+    tf_name: ipv4_export_route_targets
+    data_path: [mplsVpnIpv4RouteTarget]
+    attributes:
+    - model_name: rt
+      tf_name: route_target
+      id: true
+      example: 1.1.1.3:200
+  - model_name: importRtList
+    tf_name: ipv6_import_route_targets
+    data_path: [mplsVpnIpv6RouteTarget]
+    attributes:
+    - model_name: rt
+      tf_name: route_target
+      id: true
+      example: 1.1.1.3:200
+  - model_name: exportRtList
+    tf_name: ipv6_export_route_targets
+    data_path: [mplsVpnIpv6RouteTarget]
+    attributes:
+    - model_name: rt
+      tf_name: route_target
+      id: true
+      example: 1.1.1.3:200
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

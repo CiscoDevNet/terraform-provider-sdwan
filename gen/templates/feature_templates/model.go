@@ -154,7 +154,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 		{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-		body, _ = sjson.Set(body, path+"{{path .DataPath}}", map[string]interface{}{})
+		if !gjson.Get(body, path+"{{path .DataPath}}").Exists() {
+			body, _ = sjson.Set(body, path+"{{path .DataPath}}", map[string]interface{}{})
+		}
 		{{- end}}
 	} else {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -173,7 +175,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 		{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-		body, _ = sjson.Set(body, path+"{{path .DataPath}}", map[string]interface{}{})
+		if !gjson.Get(body, path+"{{path .DataPath}}").Exists() {
+			body, _ = sjson.Set(body, path+"{{path .DataPath}}", map[string]interface{}{})
+		}
 		{{- end}}
 	} else {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -183,7 +187,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	{{- else if and (eq .Type "Bool") .NodeOnlyContainer}}
 	if !data.{{toGoName .TfName}}.IsNull() {
 		if data.{{toGoName .TfName}}.ValueBool() {
-			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+			if !gjson.Get(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").Exists() {
+				body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
@@ -201,7 +207,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 		{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-		body, _ = sjson.Set(body, path+"{{path .DataPath}}", map[string]interface{}{})
+		if !gjson.Get(body, path+"{{path .DataPath}}").Exists() {
+			body, _ = sjson.Set(body, path+"{{path .DataPath}}", map[string]interface{}{})
+		}
 		{{- end}}
 	} else {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -228,7 +236,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		itemBody := ""
 		itemAttributes := make([]string, 0)
 		{{- range .Attributes}}
-		itemAttributes = append(itemAttributes, "{{.ModelName}}")
+		itemAttributes = append(itemAttributes, "{{getParentModelName .}}")
 		{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 		{{if .Variable}}
 		if !item.{{toGoName .TfName}}Variable.IsNull() {
@@ -241,7 +249,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 			{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-			itemBody, _ = sjson.Set(itemBody, "{{path .DataPath}}", map[string]interface{}{})
+			if !gjson.Get(itemBody, "{{path .DataPath}}").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "{{path .DataPath}}", map[string]interface{}{})
+			}
 			{{- end}}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -260,7 +270,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 			{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-			itemBody, _ = sjson.Set(itemBody, "{{path .DataPath}}", map[string]interface{}{})
+			if !gjson.Get(itemBody, "{{path .DataPath}}").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "{{path .DataPath}}", map[string]interface{}{})
+			}
 			{{- end}}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -270,7 +282,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		{{- else if and (eq .Type "Bool") .NodeOnlyContainer}}
 		if !item.{{toGoName .TfName}}.IsNull() {
 			if item.{{toGoName .TfName}}.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+				if !gjson.Get(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 				itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
@@ -288,7 +302,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 			{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-			itemBody, _ = sjson.Set(itemBody, "{{path .DataPath}}", map[string]interface{}{})
+			if !gjson.Get(temBody, "{{path .DataPath}}").Exists() {
+				itemBody, _ = sjson.Set(itemBody, "{{path .DataPath}}", map[string]interface{}{})
+			}
 			{{- end}}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -315,7 +331,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			itemChildBody := ""
 			itemChildAttributes := make([]string, 0)
 			{{- range .Attributes}}
-			itemChildAttributes = append(itemChildAttributes, "{{.ModelName}}")
+			itemChildAttributes = append(itemChildAttributes, "{{getParentModelName .}}")
 			{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 			{{if .Variable}}
 			if !childItem.{{toGoName .TfName}}Variable.IsNull() {
@@ -328,7 +344,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 				{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-				itemChildBody, _ = sjson.Set(itemChildBody, "{{path .DataPath}}", map[string]interface{}{})
+				if !gjson.Get(itemChildBody, "{{path .DataPath}}").Exists() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "{{path .DataPath}}", map[string]interface{}{})
+				}
 				{{- end}}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -347,7 +365,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 				{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-				itemChildBody, _ = sjson.Set(itemChildBody, "{{path .DataPath}}", map[string]interface{}{})
+				if !gjson.Get(itemChildBody, "{{path .DataPath}}").Exists() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "{{path .DataPath}}", map[string]interface{}{})
+				}
 				{{- end}}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -357,7 +377,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			{{- else if and (eq .Type "Bool") .NodeOnlyContainer}}
 			if !childItem.{{toGoName .TfName}}.IsNull() {
 				if childItem.{{toGoName .TfName}}.ValueBool() {
-					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+					if !gjson.Get(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").Exists() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+					}
 				} else {
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 					itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
@@ -375,7 +397,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 				{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-				itemChildBody, _ = sjson.Set(itemChildBody, "{{path .DataPath}}", map[string]interface{}{})
+				if !gjson.Get(itemChildBody, "{{path .DataPath}}").Exists() {
+					itemChildBody, _ = sjson.Set(itemChildBody, "{{path .DataPath}}", map[string]interface{}{})
+				}
 				{{- end}}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -402,7 +426,7 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				itemChildChildBody := ""
 				itemChildChildAttributes := make([]string, 0)
 				{{- range .Attributes}}
-				itemChildChildAttributes = append(itemChildChildAttributes, "{{.ModelName}}")
+				itemChildChildAttributes = append(itemChildChildAttributes, "{{getParentModelName .}}")
 				{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Float64")}}
 				{{if .Variable}}
 				if !childChildItem.{{toGoName .TfName}}Variable.IsNull() {
@@ -415,7 +439,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 					{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{path .DataPath}}", map[string]interface{}{})
+					if !gjson.Get(itemChildChildBody, "{{path .DataPath}}").Exists() {
+						itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{path .DataPath}}", map[string]interface{}{})
+					}
 					{{- end}}
 				} else {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -434,7 +460,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 					{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{path .DataPath}}", map[string]interface{}{})
+					if !gjson.Get(itemChildChildBody, "{{path .DataPath}}").Exists() {
+						itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{path .DataPath}}", map[string]interface{}{})
+					}
 					{{- end}}
 				} else {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
@@ -444,7 +472,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				{{- else if and (eq .Type "Bool") .NodeOnlyContainer}}
 				if !childChildItem.{{toGoName .TfName}}.IsNull() {
 					if childChildItem.{{toGoName .TfName}}.ValueBool() {
-						itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+						if !gjson.Get(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}").Exists() {
+							itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}", map[string]interface{}{})
+						}
 					} else {
 						itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 						itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
@@ -462,7 +492,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipType", "ignore")
 					{{- else if and (.DataPath) (not .ExcludeIgnore)}}
-					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{path .DataPath}}", map[string]interface{}{})
+					if !gjson.Get(itemChildChildBody, "{{path .DataPath}}").Exists() {
+						itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{path .DataPath}}", map[string]interface{}{})
+					}
 					{{- end}}
 				} else {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}."+"vipObjectType", "{{.ObjectType}}")

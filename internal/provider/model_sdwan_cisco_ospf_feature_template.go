@@ -200,7 +200,9 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 	}
 	if !data.DefaultInformationOriginate.IsNull() {
 		if data.DefaultInformationOriginate.ValueBool() {
-			body, _ = sjson.Set(body, path+"ospf.default-information.originate", map[string]interface{}{})
+			if !gjson.Get(body, path+"ospf.default-information.originate").Exists() {
+				body, _ = sjson.Set(body, path+"ospf.default-information.originate", map[string]interface{}{})
+			}
 		} else {
 			body, _ = sjson.Set(body, path+"ospf.default-information.originate."+"vipObjectType", "node-only")
 			body, _ = sjson.Set(body, path+"ospf.default-information.originate."+"vipType", "ignore")
@@ -485,13 +487,15 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "stub")
 		if !item.Stub.IsNull() {
 			if item.Stub.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				if !gjson.Get(itemBody, "stub").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "stub", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "stub."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "no-summary")
+		itemAttributes = append(itemAttributes, "stub")
 
 		if !item.StubNoSummaryVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "stub.no-summary."+"vipObjectType", "node-only")
@@ -506,13 +510,15 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 		itemAttributes = append(itemAttributes, "nssa")
 		if !item.Nssa.IsNull() {
 			if item.Nssa.ValueBool() {
-				itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				if !gjson.Get(itemBody, "nssa").Exists() {
+					itemBody, _ = sjson.Set(itemBody, "nssa", map[string]interface{}{})
+				}
 			} else {
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipObjectType", "")
 				itemBody, _ = sjson.Set(itemBody, "nssa."+"vipType", "ignore")
 			}
 		}
-		itemAttributes = append(itemAttributes, "no-summary")
+		itemAttributes = append(itemAttributes, "nssa")
 
 		if !item.NssaNoSummaryVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "nssa.no-summary."+"vipObjectType", "node-only")
@@ -649,7 +655,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "passive-interface."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "passive-interface."+"vipValue", strconv.FormatBool(childItem.PassiveInterface.ValueBool()))
 			}
-			itemChildAttributes = append(itemChildAttributes, "type")
+			itemChildAttributes = append(itemChildAttributes, "authentication")
 
 			if !childItem.AuthenticationTypeVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipObjectType", "object")
@@ -663,7 +669,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.type."+"vipValue", childItem.AuthenticationType.ValueString())
 			}
-			itemChildAttributes = append(itemChildAttributes, "message-digest-key")
+			itemChildAttributes = append(itemChildAttributes, "authentication")
 
 			if !childItem.AuthenticationMessageDigestKeyIdVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.message-digest-key."+"vipObjectType", "object")
@@ -677,7 +683,7 @@ func (data CiscoOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.message-digest-key."+"vipType", "constant")
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.message-digest-key."+"vipValue", childItem.AuthenticationMessageDigestKeyId.ValueInt64())
 			}
-			itemChildAttributes = append(itemChildAttributes, "md5")
+			itemChildAttributes = append(itemChildAttributes, "authentication")
 
 			if !childItem.AuthenticationMessageDigestKeyVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "authentication.message-digest.md5."+"vipObjectType", "object")

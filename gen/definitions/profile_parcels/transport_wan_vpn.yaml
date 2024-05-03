@@ -18,15 +18,19 @@ attributes:
     example: true
   - model_name: primaryDnsAddressIpv4
     data_path: [dnsIpv4]
+    exclude_null: true
     example: 1.2.3.4
   - model_name: secondaryDnsAddressIpv4
     data_path: [dnsIpv4]
+    exclude_null: true
     example: 2.3.4.5
   - model_name: primaryDnsAddressIpv6
     data_path: [dnsIpv6]
+    exclude_null: true
     example: 2001:0:0:1::0
   - model_name: secondaryDnsAddressIpv6
     data_path: [dnsIpv6]
+    exclude_null: true
     example: 2001:0:0:2::0
   - model_name: newHostMapping
     tf_name: new_host_mappings

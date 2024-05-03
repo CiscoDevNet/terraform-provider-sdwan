@@ -86,9 +86,6 @@ func testAccSdwanSystemOMPProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
-	config += `	overlay_as = 10` + "\n"
-	config += `	transport_gateway = "prefer"` + "\n"
-	config += `	site_types = ["type-1"]` + "\n"
 	config += `}` + "\n"
 	return config
 }

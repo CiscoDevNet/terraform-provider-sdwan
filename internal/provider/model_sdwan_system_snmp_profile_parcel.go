@@ -23,6 +23,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -132,7 +133,10 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	if !data.ContactPersonVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"contact.optionType", "variable")
 		body, _ = sjson.Set(body, path+"contact.value", data.ContactPersonVariable.ValueString())
-	} else if !data.ContactPerson.IsNull() {
+	} else if data.ContactPerson.IsNull() {
+		body, _ = sjson.Set(body, path+"contact.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"contact.optionType", "global")
 		body, _ = sjson.Set(body, path+"contact.value", data.ContactPerson.ValueString())
 	}
@@ -140,16 +144,21 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 	if !data.LocationOfDeviceVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"location.optionType", "variable")
 		body, _ = sjson.Set(body, path+"location.value", data.LocationOfDeviceVariable.ValueString())
-	} else if !data.LocationOfDevice.IsNull() {
+	} else if data.LocationOfDevice.IsNull() {
+		body, _ = sjson.Set(body, path+"location.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"location.optionType", "global")
 		body, _ = sjson.Set(body, path+"location.value", data.LocationOfDevice.ValueString())
 	}
+	body, _ = sjson.Set(body, path+"view", []interface{}{})
 	for _, item := range data.Views {
 		itemBody := ""
 		if !item.Name.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
 		}
+		itemBody, _ = sjson.Set(itemBody, "oid", []interface{}{})
 		for _, childItem := range item.Oids {
 			itemChildBody := ""
 
@@ -175,6 +184,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"view.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"community", []interface{}{})
 	for _, item := range data.Communities {
 		itemBody := ""
 		if !item.Name.IsNull() {
@@ -203,6 +213,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"community.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"group", []interface{}{})
 	for _, item := range data.Groups {
 		itemBody := ""
 		if !item.Name.IsNull() {
@@ -223,6 +234,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"group.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"user", []interface{}{})
 	for _, item := range data.Users {
 		itemBody := ""
 		if !item.Name.IsNull() {
@@ -233,7 +245,10 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.AuthenticationProtocolVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "auth.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "auth.value", item.AuthenticationProtocolVariable.ValueString())
-		} else if !item.AuthenticationProtocol.IsNull() {
+		} else if item.AuthenticationProtocol.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "auth.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "auth.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "auth.value", item.AuthenticationProtocol.ValueString())
 		}
@@ -241,7 +256,10 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.AuthenticationPasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPasswordVariable.ValueString())
-		} else if !item.AuthenticationPassword.IsNull() {
+		} else if item.AuthenticationPassword.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "authPassword.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "authPassword.value", item.AuthenticationPassword.ValueString())
 		}
@@ -249,7 +267,10 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.PrivacyProtocolVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "priv.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "priv.value", item.PrivacyProtocolVariable.ValueString())
-		} else if !item.PrivacyProtocol.IsNull() {
+		} else if item.PrivacyProtocol.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "priv.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "priv.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "priv.value", item.PrivacyProtocol.ValueString())
 		}
@@ -257,7 +278,10 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		if !item.PrivacyPasswordVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPasswordVariable.ValueString())
-		} else if !item.PrivacyPassword.IsNull() {
+		} else if item.PrivacyPassword.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "default")
+
+		} else {
 			itemBody, _ = sjson.Set(itemBody, "privPassword.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "privPassword.value", item.PrivacyPassword.ValueString())
 		}
@@ -271,6 +295,7 @@ func (data SystemSNMP) toBody(ctx context.Context) string {
 		}
 		body, _ = sjson.SetRaw(body, path+"user.-1", itemBody)
 	}
+	body, _ = sjson.Set(body, path+"target", []interface{}{})
 	for _, item := range data.TrapTargetServers {
 		itemBody := ""
 
@@ -922,9 +947,9 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	for i := range data.TrapTargetServers {
-		keys := [...]string{"userLabel"}
-		keyValues := [...]string{data.TrapTargetServers[i].UserLabel.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"vpnId", "ip", "port"}
+		keyValues := [...]string{strconv.FormatInt(data.TrapTargetServers[i].VpnId.ValueInt64(), 10), data.TrapTargetServers[i].Ip.ValueString(), strconv.FormatInt(data.TrapTargetServers[i].Port.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{data.TrapTargetServers[i].VpnIdVariable.ValueString(), data.TrapTargetServers[i].IpVariable.ValueString(), data.TrapTargetServers[i].PortVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "target").ForEach(

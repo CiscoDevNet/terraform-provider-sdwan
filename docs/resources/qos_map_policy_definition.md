@@ -42,6 +42,7 @@ resource "sdwan_qos_map_policy_definition" "example" {
 ### Read-Only
 
 - `id` (String) The id of the object
+- `type` (String) Type
 - `version` (Number) The version of the object
 
 <a id="nestedatt--qos_schedulers"></a>
