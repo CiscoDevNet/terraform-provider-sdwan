@@ -9,6 +9,7 @@
 - Add `sdwan_system_remote_access_profile_parcel` resource and data source
 - Add `sdwan_transport_ipv6_tracker_profile_parcel` resource and data source
 - Add `sdwan_service_tracker_profile_parcel` resource and data source
+- Use existing variable values if none are provided with `sdwan_attach_feature_device_template` resource
 
 ## 0.3.8
 
