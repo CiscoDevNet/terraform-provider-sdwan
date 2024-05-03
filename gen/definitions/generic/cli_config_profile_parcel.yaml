@@ -18,6 +18,8 @@ attributes:
     type: String
     mandatory: true
     description: The name of the profile parcel
+    string_min_length: 1
+    string_max_length: 128
     example: Example
   - model_name: description
     type: String
