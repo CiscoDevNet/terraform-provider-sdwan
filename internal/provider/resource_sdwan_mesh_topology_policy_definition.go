@@ -74,6 +74,9 @@ func (r *MeshTopologyPolicyDefinitionResource) Schema(ctx context.Context, req r
 			"type": schema.StringAttribute{
 				MarkdownDescription: "Type",
 				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("The name of the policy definition").String,

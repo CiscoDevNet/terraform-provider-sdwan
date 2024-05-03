@@ -22,6 +22,7 @@ description: |-
 - Add `sdwan_cli_config_profile_parcel` resource and data source
 - Add `sdwan_system_logging_profile_parcel` resource and data source
 - Add `sdwan_transport_management_vpn_profile_parcel` resource and data source
+- Fix issue when updating certain policy definitions, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/230)
 
 ## 0.3.8
 

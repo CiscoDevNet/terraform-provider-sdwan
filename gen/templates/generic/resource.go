@@ -84,6 +84,9 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 			"type": schema.StringAttribute{
 				MarkdownDescription: "Type",
 				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 			{{- end}}
 			{{- range  .Attributes}}
