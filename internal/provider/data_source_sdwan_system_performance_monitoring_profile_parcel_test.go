@@ -20,12 +20,16 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccDataSourceSdwanSystemPerformanceMonitoringProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_profile_parcel.test", "app_perf_monitor_enabled", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_profile_parcel.test", "monitoring_config_enabled", "true"))

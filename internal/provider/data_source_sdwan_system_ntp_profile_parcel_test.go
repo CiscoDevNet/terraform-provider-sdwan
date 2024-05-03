@@ -20,12 +20,16 @@
 package provider
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestAccDataSourceSdwanSystemNTPProfileParcel(t *testing.T) {
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
+	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_profile_parcel.test", "servers.0.hostname_ip_address", "1.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_ntp_profile_parcel.test", "servers.0.authentication_key", "41673"))
