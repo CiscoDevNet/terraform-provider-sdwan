@@ -44,8 +44,11 @@ type TransportManagementVPNInterfaceEthernet struct {
 	BasicConfigurationDescription           types.String                                                              `tfsdk:"basic_configuration_description"`
 	BasicConfigurationDescriptionVariable   types.String                                                              `tfsdk:"basic_configuration_description_variable"`
 	Ipv4SettingsDynamicDhcpDistance         types.Int64                                                               `tfsdk:"ipv4_settings_dynamic_dhcp_distance"`
+	Ipv4SettingsDynamicDhcpDistanceVariable types.String                                                              `tfsdk:"ipv4_settings_dynamic_dhcp_distance_variable"`
 	Ipv4SettingsIpAddress                   types.String                                                              `tfsdk:"ipv4_settings_ip_address"`
+	Ipv4SettingsIpAddressVariable           types.String                                                              `tfsdk:"ipv4_settings_ip_address_variable"`
 	Ipv4SettingsSubnetMask                  types.String                                                              `tfsdk:"ipv4_settings_subnet_mask"`
+	Ipv4SettingsSubnetMaskVariable          types.String                                                              `tfsdk:"ipv4_settings_subnet_mask_variable"`
 	Ipv4SettingsSecondaryIpAddresses        []TransportManagementVPNInterfaceEthernetIpv4SettingsSecondaryIpAddresses `tfsdk:"ipv4_settings_secondary_ip_addresses"`
 	Ipv4SettingsDhcpHelper                  types.Set                                                                 `tfsdk:"ipv4_settings_dhcp_helper"`
 	Ipv4SettingsDhcpHelperVariable          types.String                                                              `tfsdk:"ipv4_settings_dhcp_helper_variable"`
@@ -55,6 +58,7 @@ type TransportManagementVPNInterfaceEthernet struct {
 	Ipv4SettingsAutoDetectBandwidthVariable types.String                                                              `tfsdk:"ipv4_settings_auto_detect_bandwidth_variable"`
 	EnableDhcpv6                            types.Bool                                                                `tfsdk:"enable_dhcpv6"`
 	Ipv6SettingsStaticIpAddress             types.String                                                              `tfsdk:"ipv6_settings_static_ip_address"`
+	Ipv6SettingsStaticIpAddressVariable     types.String                                                              `tfsdk:"ipv6_settings_static_ip_address_variable"`
 	Arp                                     []TransportManagementVPNInterfaceEthernetArp                              `tfsdk:"arp"`
 	Duplex                                  types.String                                                              `tfsdk:"duplex"`
 	DuplexVariable                          types.String                                                              `tfsdk:"duplex_variable"`
@@ -124,7 +128,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.InterfaceNameVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"interfaceName.optionType", "variable")
 		body, _ = sjson.Set(body, path+"interfaceName.value", data.InterfaceNameVariable.ValueString())
-	} else if true {
+	} else if !data.InterfaceName.IsNull() {
 		body, _ = sjson.Set(body, path+"interfaceName.optionType", "global")
 		body, _ = sjson.Set(body, path+"interfaceName.value", data.InterfaceName.ValueString())
 	}
@@ -132,29 +136,45 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.BasicConfigurationDescriptionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"description.optionType", "variable")
 		body, _ = sjson.Set(body, path+"description.value", data.BasicConfigurationDescriptionVariable.ValueString())
-	} else if true {
+	} else if data.BasicConfigurationDescription.IsNull() {
+		body, _ = sjson.Set(body, path+"description.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"description.optionType", "global")
 		body, _ = sjson.Set(body, path+"description.value", data.BasicConfigurationDescription.ValueString())
 	}
-	if !data.Ipv4SettingsDynamicDhcpDistance.IsNull() {
+
+	if !data.Ipv4SettingsDynamicDhcpDistanceVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "variable")
+		body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4SettingsDynamicDhcpDistanceVariable.ValueString())
+	} else if !data.Ipv4SettingsDynamicDhcpDistance.IsNull() {
 		body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpAddress.dynamic.dynamicDhcpDistance.value", data.Ipv4SettingsDynamicDhcpDistance.ValueInt64())
 	}
-	if !data.Ipv4SettingsIpAddress.IsNull() {
+
+	if !data.Ipv4SettingsIpAddressVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "variable")
+		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4SettingsIpAddressVariable.ValueString())
+	} else if !data.Ipv4SettingsIpAddress.IsNull() {
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value", data.Ipv4SettingsIpAddress.ValueString())
 	}
-	if !data.Ipv4SettingsSubnetMask.IsNull() {
+
+	if !data.Ipv4SettingsSubnetMaskVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "variable")
+		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SettingsSubnetMaskVariable.ValueString())
+	} else if !data.Ipv4SettingsSubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SettingsSubnetMask.ValueString())
 	}
+	body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
 	for _, item := range data.Ipv4SettingsSecondaryIpAddresses {
 		itemBody := ""
 
 		if !item.IpAddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddressVariable.ValueString())
-		} else if true {
+		} else if !item.IpAddress.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddress.ValueString())
 		}
@@ -162,7 +182,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 		if !item.SubnetMaskVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMaskVariable.ValueString())
-		} else if true {
+		} else if !item.SubnetMask.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMask.ValueString())
 		}
@@ -172,7 +192,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.Ipv4SettingsDhcpHelperVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"dhcpHelper.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dhcpHelper.value", data.Ipv4SettingsDhcpHelperVariable.ValueString())
-	} else if true {
+	} else if data.Ipv4SettingsDhcpHelper.IsNull() {
+		body, _ = sjson.Set(body, path+"dhcpHelper.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"dhcpHelper.optionType", "global")
 		var values []string
 		data.Ipv4SettingsDhcpHelper.ElementsAs(ctx, &values, false)
@@ -182,7 +205,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.Ipv4SettingsIperfServerVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"iperfServer.optionType", "variable")
 		body, _ = sjson.Set(body, path+"iperfServer.value", data.Ipv4SettingsIperfServerVariable.ValueString())
-	} else if true {
+	} else if data.Ipv4SettingsIperfServer.IsNull() {
+		body, _ = sjson.Set(body, path+"iperfServer.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"iperfServer.optionType", "global")
 		body, _ = sjson.Set(body, path+"iperfServer.value", data.Ipv4SettingsIperfServer.ValueString())
 	}
@@ -201,17 +227,22 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 		body, _ = sjson.Set(body, path+"intfIpV6Address.dynamic.dhcpClient.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpV6Address.dynamic.dhcpClient.value", data.EnableDhcpv6.ValueBool())
 	}
-	if !data.Ipv6SettingsStaticIpAddress.IsNull() {
+
+	if !data.Ipv6SettingsStaticIpAddressVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.optionType", "variable")
+		body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.value", data.Ipv6SettingsStaticIpAddressVariable.ValueString())
+	} else if !data.Ipv6SettingsStaticIpAddress.IsNull() {
 		body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.value", data.Ipv6SettingsStaticIpAddress.ValueString())
 	}
+	body, _ = sjson.Set(body, path+"arp", []interface{}{})
 	for _, item := range data.Arp {
 		itemBody := ""
 
 		if !item.IpAddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddressVariable.ValueString())
-		} else if true {
+		} else if !item.IpAddress.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddress.ValueString())
 		}
@@ -219,7 +250,7 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 		if !item.MacAddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "macAddress.optionType", "variable")
 			itemBody, _ = sjson.Set(itemBody, "macAddress.value", item.MacAddressVariable.ValueString())
-		} else if true {
+		} else if !item.MacAddress.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "macAddress.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "macAddress.value", item.MacAddress.ValueString())
 		}
@@ -229,7 +260,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.DuplexVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "variable")
 		body, _ = sjson.Set(body, path+"advanced.duplex.value", data.DuplexVariable.ValueString())
-	} else if true {
+	} else if data.Duplex.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "global")
 		body, _ = sjson.Set(body, path+"advanced.duplex.value", data.Duplex.ValueString())
 	}
@@ -237,7 +271,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.MacAddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "variable")
 		body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.MacAddressVariable.ValueString())
-	} else if true {
+	} else if data.MacAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "global")
 		body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.MacAddress.ValueString())
 	}
@@ -267,7 +304,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.TcpMssVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "variable")
 		body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.TcpMssVariable.ValueString())
-	} else if true {
+	} else if data.TcpMss.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "global")
 		body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.TcpMss.ValueInt64())
 	}
@@ -275,7 +315,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.SpeedVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.speed.optionType", "variable")
 		body, _ = sjson.Set(body, path+"advanced.speed.value", data.SpeedVariable.ValueString())
-	} else if true {
+	} else if data.Speed.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.speed.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"advanced.speed.optionType", "global")
 		body, _ = sjson.Set(body, path+"advanced.speed.value", data.Speed.ValueString())
 	}
@@ -294,7 +337,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.AutonegotiateVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.autonegotiate.optionType", "variable")
 		body, _ = sjson.Set(body, path+"advanced.autonegotiate.value", data.AutonegotiateVariable.ValueString())
-	} else if true {
+	} else if data.Autonegotiate.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.autonegotiate.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"advanced.autonegotiate.optionType", "global")
 		body, _ = sjson.Set(body, path+"advanced.autonegotiate.value", data.Autonegotiate.ValueBool())
 	}
@@ -302,7 +348,10 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 	if !data.MediaTypeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "variable")
 		body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.MediaTypeVariable.ValueString())
-	} else if true {
+	} else if data.MediaType.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "default")
+
+	} else {
 		body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "global")
 		body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.MediaType.ValueString())
 	}
@@ -381,26 +430,32 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		}
 	}
 	data.Ipv4SettingsDynamicDhcpDistance = types.Int64Null()
-
+	data.Ipv4SettingsDynamicDhcpDistanceVariable = types.StringNull()
 	if t := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv4SettingsDynamicDhcpDistanceVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv4SettingsDynamicDhcpDistance = types.Int64Value(va.Int())
 		}
 	}
 	data.Ipv4SettingsIpAddress = types.StringNull()
-
+	data.Ipv4SettingsIpAddressVariable = types.StringNull()
 	if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv4SettingsIpAddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv4SettingsIpAddress = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4SettingsSubnetMask = types.StringNull()
-
+	data.Ipv4SettingsSubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv4SettingsSubnetMaskVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv4SettingsSubnetMask = types.StringValue(va.String())
 		}
 	}
@@ -471,10 +526,12 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 		}
 	}
 	data.Ipv6SettingsStaticIpAddress = types.StringNull()
-
+	data.Ipv6SettingsStaticIpAddressVariable = types.StringNull()
 	if t := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv6SettingsStaticIpAddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv6SettingsStaticIpAddress = types.StringValue(va.String())
 		}
 	}
@@ -667,26 +724,32 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 		}
 	}
 	data.Ipv4SettingsDynamicDhcpDistance = types.Int64Null()
-
+	data.Ipv4SettingsDynamicDhcpDistanceVariable = types.StringNull()
 	if t := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.dynamic.dynamicDhcpDistance.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv4SettingsDynamicDhcpDistanceVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv4SettingsDynamicDhcpDistance = types.Int64Value(va.Int())
 		}
 	}
 	data.Ipv4SettingsIpAddress = types.StringNull()
-
+	data.Ipv4SettingsIpAddressVariable = types.StringNull()
 	if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.ipAddress.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv4SettingsIpAddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv4SettingsIpAddress = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4SettingsSubnetMask = types.StringNull()
-
+	data.Ipv4SettingsSubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv4SettingsSubnetMaskVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv4SettingsSubnetMask = types.StringValue(va.String())
 		}
 	}
@@ -776,10 +839,12 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 		}
 	}
 	data.Ipv6SettingsStaticIpAddress = types.StringNull()
-
+	data.Ipv6SettingsStaticIpAddressVariable = types.StringNull()
 	if t := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.optionType"); t.Exists() {
 		va := res.Get(path + "intfIpV6Address.static.primaryIpV6Address.address.value")
-		if t.String() == "global" {
+		if t.String() == "variable" {
+			data.Ipv6SettingsStaticIpAddressVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
 			data.Ipv6SettingsStaticIpAddress = types.StringValue(va.String())
 		}
 	}
@@ -980,10 +1045,19 @@ func (data *TransportManagementVPNInterfaceEthernet) isNull(ctx context.Context,
 	if !data.Ipv4SettingsDynamicDhcpDistance.IsNull() {
 		return false
 	}
+	if !data.Ipv4SettingsDynamicDhcpDistanceVariable.IsNull() {
+		return false
+	}
 	if !data.Ipv4SettingsIpAddress.IsNull() {
 		return false
 	}
+	if !data.Ipv4SettingsIpAddressVariable.IsNull() {
+		return false
+	}
 	if !data.Ipv4SettingsSubnetMask.IsNull() {
+		return false
+	}
+	if !data.Ipv4SettingsSubnetMaskVariable.IsNull() {
 		return false
 	}
 	if len(data.Ipv4SettingsSecondaryIpAddresses) > 0 {
@@ -1011,6 +1085,9 @@ func (data *TransportManagementVPNInterfaceEthernet) isNull(ctx context.Context,
 		return false
 	}
 	if !data.Ipv6SettingsStaticIpAddress.IsNull() {
+		return false
+	}
+	if !data.Ipv6SettingsStaticIpAddressVariable.IsNull() {
 		return false
 	}
 	if len(data.Arp) > 0 {

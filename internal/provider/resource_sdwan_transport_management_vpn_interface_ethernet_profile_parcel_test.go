@@ -73,7 +73,7 @@ func TestAccSdwanTransportManagementVPNInterfaceEthernetProfileParcel(t *testing
 }
 
 const testAccSdwanTransportManagementVPNInterfaceEthernetPrerequisitesProfileParcelConfig = `
-resource "sdwan_system_feature_profile" "test" {
+resource "sdwan_transport_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
@@ -81,13 +81,13 @@ resource "sdwan_system_feature_profile" "test" {
 resource "sdwan_transport_management_vpn_profile_parcel" "test" {
   name                            = "TF_TEST"
   description                     = "Terraform test"
-  feature_profile_id              = sdwan_system_feature_profile.test.id
+  feature_profile_id              = sdwan_transport_feature_profile.test.id
   basic_configuration_description = "example"
   primary_dns_address_ipv4        = "1.2.3.4"
   secondary_dns_address_ipv4      = "2.3.4.5"
   primary_dns_address_ipv6        = "2001:0:0:1::0"
   secondary_dns_address_ipv6      = "2001:0:0:2::0"
-  host_mappings = [
+  new_host_mappings = [
     {
       host_name            = "example"
       list_of_ip_addresses = ["1.2.3.4"]
@@ -112,7 +112,7 @@ resource "sdwan_transport_management_vpn_profile_parcel" "test" {
       prefix = "2002::/16"
       next_hops = [
         {
-          address                 = "2001:0:0:1::/64"
+          address                 = "2001:0:0:1::1"
           administrative_distance = 1
         }
       ]
@@ -125,23 +125,9 @@ func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_mini
 	config := `resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	profile_parcel_id = sdwan_transport_management_vpn_profile_parcel.test.id` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
-	config += `	basic_configuration_description = "Transport Management VPN Interface Ethernet"` + "\n"
-	config += `	ipv4_settings_dynamic_dhcp_distance = 1` + "\n"
-	config += `	ipv4_settings_ip_address = "1.2.3.4"` + "\n"
-	config += `	ipv4_settings_subnet_mask = "0.0.0.0"` + "\n"
-	config += `	ipv4_settings_dhcp_helper = ["1.2.3.4"]` + "\n"
-	config += `	ipv4_settings_iperf_server = "example"` + "\n"
-	config += `	enable_dhcpv6 = true` + "\n"
-	config += `	ipv6_settings_static_ip_address = "2001:0:0:1::/64"` + "\n"
-	config += `	duplex = "full"` + "\n"
-	config += `	mac_address = "00-B0-D0-63-C2-26"` + "\n"
-	config += `	tcp_mss = 505` + "\n"
-	config += `	speed = "2500"` + "\n"
-	config += `	autonegotiate = false` + "\n"
-	config += `	media_type = "rj45"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -150,7 +136,7 @@ func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_all(
 	config := `resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	profile_parcel_id = sdwan_transport_management_vpn_profile_parcel.test.id` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"

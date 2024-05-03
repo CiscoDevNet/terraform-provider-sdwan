@@ -70,7 +70,7 @@ func TestAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcel(
 }
 
 const testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetPrerequisitesProfileParcelConfig = `
-resource "sdwan_system_feature_profile" "test" {
+resource "sdwan_transport_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
@@ -78,13 +78,13 @@ resource "sdwan_system_feature_profile" "test" {
 resource "sdwan_transport_management_vpn_profile_parcel" "test" {
   name                            = "TF_TEST"
   description                     = "Terraform test"
-  feature_profile_id              = sdwan_system_feature_profile.test.id
+  feature_profile_id              = sdwan_transport_feature_profile.test.id
   basic_configuration_description = "example"
   primary_dns_address_ipv4        = "1.2.3.4"
   secondary_dns_address_ipv4      = "2.3.4.5"
   primary_dns_address_ipv6        = "2001:0:0:1::0"
   secondary_dns_address_ipv6      = "2001:0:0:2::0"
-  host_mappings = [
+  new_host_mappings = [
     {
       host_name            = "example"
       list_of_ip_addresses = ["1.2.3.4"]
@@ -109,7 +109,7 @@ resource "sdwan_transport_management_vpn_profile_parcel" "test" {
       prefix = "2002::/16"
       next_hops = [
         {
-          address                 = "2001:0:0:1::/64"
+          address                 = "2001:0:0:1::1"
           administrative_distance = 1
         }
       ]
@@ -122,7 +122,7 @@ func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelC
 	config := `resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	profile_parcel_id = sdwan_transport_management_vpn_profile_parcel.test.id` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
@@ -160,7 +160,7 @@ func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelC
 	config += `
 		data "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "test" {
 			id = sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test.id
-			feature_profile_id = sdwan_system_feature_profile.test.id
+			feature_profile_id = sdwan_transport_feature_profile.test.id
 			profile_parcel_id = sdwan_transport_management_vpn_profile_parcel.test.id
 		}
 	`

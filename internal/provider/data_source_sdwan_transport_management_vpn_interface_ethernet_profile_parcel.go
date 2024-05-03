@@ -108,12 +108,24 @@ func (d *TransportManagementVPNInterfaceEthernetProfileParcelDataSource) Schema(
 				MarkdownDescription: "DHCP Distance",
 				Computed:            true,
 			},
+			"ipv4_settings_dynamic_dhcp_distance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"ipv4_settings_ip_address": schema.StringAttribute{
 				MarkdownDescription: "IP Address",
 				Computed:            true,
 			},
+			"ipv4_settings_ip_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"ipv4_settings_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "Subnet Mask",
+				Computed:            true,
+			},
+			"ipv4_settings_subnet_mask_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"ipv4_settings_secondary_ip_addresses": schema.ListNestedAttribute{
@@ -171,6 +183,10 @@ func (d *TransportManagementVPNInterfaceEthernetProfileParcelDataSource) Schema(
 			},
 			"ipv6_settings_static_ip_address": schema.StringAttribute{
 				MarkdownDescription: "IPv6 Address Secondary",
+				Computed:            true,
+			},
+			"ipv6_settings_static_ip_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"arp": schema.ListNestedAttribute{

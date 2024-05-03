@@ -57,12 +57,16 @@ data "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "example
 - `ipv4_settings_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_settings_dhcp_helper_variable` (String) Variable name
 - `ipv4_settings_dynamic_dhcp_distance` (Number) DHCP Distance
+- `ipv4_settings_dynamic_dhcp_distance_variable` (String) Variable name
 - `ipv4_settings_ip_address` (String) IP Address
+- `ipv4_settings_ip_address_variable` (String) Variable name
 - `ipv4_settings_iperf_server` (String) Iperf server for auto bandwidth detect
 - `ipv4_settings_iperf_server_variable` (String) Variable name
 - `ipv4_settings_secondary_ip_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_settings_secondary_ip_addresses))
 - `ipv4_settings_subnet_mask` (String) Subnet Mask
+- `ipv4_settings_subnet_mask_variable` (String) Variable name
 - `ipv6_settings_static_ip_address` (String) IPv6 Address Secondary
+- `ipv6_settings_static_ip_address_variable` (String) Variable name
 - `load_interval` (Number) Interval for interface load calculation
 - `load_interval_variable` (String) Variable name
 - `mac_address` (String) MAC Address

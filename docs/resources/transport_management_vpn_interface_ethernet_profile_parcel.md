@@ -63,6 +63,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 
 ### Required
 
+- `interface_name` (String)
 - `name` (String) The name of the profile parcel
 
 ### Optional
@@ -89,7 +90,6 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
   - Range: `1500`-`9216`
   - Default value: `1500`
 - `interface_mtu_variable` (String) Variable name
-- `interface_name` (String)
 - `interface_name_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
   - Default value: `false`
@@ -105,13 +105,17 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 - `ipv4_settings_dhcp_helper_variable` (String) Variable name
 - `ipv4_settings_dynamic_dhcp_distance` (Number) DHCP Distance
   - Range: `1`-`65536`
+- `ipv4_settings_dynamic_dhcp_distance_variable` (String) Variable name
 - `ipv4_settings_ip_address` (String) IP Address
+- `ipv4_settings_ip_address_variable` (String) Variable name
 - `ipv4_settings_iperf_server` (String) Iperf server for auto bandwidth detect
 - `ipv4_settings_iperf_server_variable` (String) Variable name
 - `ipv4_settings_secondary_ip_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_settings_secondary_ip_addresses))
 - `ipv4_settings_subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_settings_subnet_mask_variable` (String) Variable name
 - `ipv6_settings_static_ip_address` (String) IPv6 Address Secondary
+- `ipv6_settings_static_ip_address_variable` (String) Variable name
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
   - Default value: `30`
