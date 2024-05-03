@@ -679,6 +679,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				return true // keep iterating
 			})
 
+		} else if model.Get("properties." + path + e + ".items").Exists() {
+			path += fmt.Sprintf("%s.items.properties.", e)
+
 		} else {
 			path += e + ".properties."
 		}
@@ -696,10 +699,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
 
-	if r.Get("type").String() == "object" {
+	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
+			t = r
+		}
+
 		if t.Exists() {
-			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
+			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
 				attr.Type = "String"
 				if value := t.Get("properties.value.minLength"); value.Exists() {
 					attr.StringMinLength = value.Int()
@@ -717,7 +724,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				}
 			} else if t.Get("properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
-			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" {
+			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
 				attr.Type = "Int64"
 				if value := t.Get("properties.value.minimum"); value.Exists() {
 					attr.MinInt = value.Int()
@@ -729,20 +736,22 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {
-				// 	attr.MinList = value.Int()
+				//  attr.MinList = value.Int()
 				// }
 				// if value := t.Get("properties.value.items.maxItems"); value.Exists() {
-				// 	attr.MaxList = value.Int()
+				//  attr.MaxList = value.Int()
 				// }
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "integer" {
 				attr.Type = "Set"
 				attr.ElementType = "Int64"
 				// if value := t.Get("properties.value.items.minimum"); value.Exists() {
-				// 	attr.MinInt = value.Int()
+				//  attr.MinInt = value.Int()
 				// }
 				// if value := t.Get("properties.value.items.maximum"); value.Exists() {
-				// 	attr.MaxInt = value.Int()
+				//  attr.MaxInt = value.Int()
 				// }
+			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" {
+				attr.Type = "String"
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
@@ -751,6 +760,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			attr.Variable = true
 		}
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
+		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
+			d = r
+		}
 		if d.Exists() && !isOneOfAttribute {
 			attr.DefaultValuePresent = true
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
