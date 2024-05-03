@@ -1,4 +1,4 @@
-## 0.3.9 (unreleased)
+## 0.3.9
 
 - Fix issue with rendering feature template payloads
 - Add `sdwan_transport_routing_bgp_profile_parcel` resource and data source
