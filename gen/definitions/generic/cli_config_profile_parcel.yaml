@@ -15,6 +15,7 @@ attributes:
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_cli_feature_profile.test.id
   - model_name: name
+    response_data_path: [payload]
     type: String
     mandatory: true
     description: The name of the profile parcel
@@ -22,6 +23,7 @@ attributes:
     string_max_length: 128
     example: Example
   - model_name: description
+    response_data_path: [payload]
     type: String
     mandatory: true
     description: The description of the profile parcel
@@ -29,6 +31,7 @@ attributes:
   - model_name: config
     tf_name: cli_configuration
     data_path: [data]
+    response_data_path: [payload, data]
     type: String
     mandatory: true
     description: CLI configuration

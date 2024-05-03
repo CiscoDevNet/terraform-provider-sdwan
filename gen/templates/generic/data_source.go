@@ -88,7 +88,9 @@ func (d *{{camelCase .Name}}DataSource) Schema(ctx context.Context, req datasour
 				{{- else if eq .Type "Versions"}}
 				ElementType:         types.StringType,
 				{{- end}}
-				{{- if .QueryParam}}
+				{{- if .Reference}}
+				Required:            true,
+				{{- else if .QueryParam}}
 				Optional:            true,
 				{{ else }}
 				Computed:            true,

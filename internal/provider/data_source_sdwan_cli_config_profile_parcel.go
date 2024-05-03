@@ -64,7 +64,7 @@ func (d *CLIConfigProfileParcelDataSource) Schema(ctx context.Context, req datas
 			},
 			"feature_profile_id": schema.StringAttribute{
 				MarkdownDescription: "Feature Profile ID",
-				Computed:            true,
+				Required:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the profile parcel",

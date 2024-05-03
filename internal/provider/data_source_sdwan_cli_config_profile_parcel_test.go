@@ -64,6 +64,7 @@ func testAccDataSourceSdwanCLIConfigProfileParcelConfig() string {
 
 	config += `
 		data "sdwan_cli_config_profile_parcel" "test" {
+			feature_profile_id = sdwan_cli_feature_profile.test.id
 			id = sdwan_cli_config_profile_parcel.test.id
 		}
 	`

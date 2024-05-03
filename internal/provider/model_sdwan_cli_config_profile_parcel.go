@@ -57,17 +57,17 @@ func (data CLIConfigProfileParcel) toBody(ctx context.Context) string {
 }
 
 func (data *CLIConfigProfileParcel) fromBody(ctx context.Context, res gjson.Result) {
-	if value := res.Get("name"); value.Exists() {
+	if value := res.Get("payload.name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
 	}
-	if value := res.Get("description"); value.Exists() {
+	if value := res.Get("payload.description"); value.Exists() {
 		data.Description = types.StringValue(value.String())
 	} else {
 		data.Description = types.StringNull()
 	}
-	if value := res.Get("data.config"); value.Exists() {
+	if value := res.Get("payload.data.config"); value.Exists() {
 		data.CliConfiguration = types.StringValue(value.String())
 	} else {
 		data.CliConfiguration = types.StringNull()
