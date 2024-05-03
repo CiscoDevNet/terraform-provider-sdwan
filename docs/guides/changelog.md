@@ -14,6 +14,7 @@ description: |-
 - Add `sdwan_service_lan_vpn_profile_parcel` resource and data source
 - Add `sdwan_system_ntp_profile_parcel` resource and data source
 - Add `sdwan_system_performance_monitoring_profile_parcel` resource and data source
+- Add `sdwan_transport_ipv6_tracker_profile_parcel` resource and data source
 
 ## 0.3.8
 
