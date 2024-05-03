@@ -1,0 +1,102 @@
+---
+name: System Remote Access
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/remote-access
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: enableSSLVPN
+    tf_name: connection_type_ssl
+    example: false
+  - model_name: anyConnectEapAuth
+    tf_name: any_connect_eap_authentication_type
+    example: user
+  - model_name: anyConnectProfileDownloadStatus
+    tf_name: any_connect_eap_profile_download_status
+    conditional_attribute:
+      name: anyConnectEapAuth
+      value: device
+    example: INITIALIZED
+  - model_name: anyConnectProfileFileName
+    tf_name: any_connect_eap_profile_file_name
+    conditional_attribute:
+      name: anyConnectEapAuth
+      value: device
+    example: "<form-data>"
+  - model_name: ipv4PoolSize
+    example: 50
+  - model_name: ipv6PoolSize
+    example: 1024
+  - model_name: enableCrlCheck
+    example: false
+  - model_name: pskSelection
+    tf_name: psk_authentication_type
+    data_path: [pskAuth]
+    example: aaa
+  - model_name: preSharedKey
+    tf_name: psk_authentication_pre_shared_key
+    data_path: [pskAuth]
+    conditional_attribute:
+      name: pskSelection
+      value: group
+    example: Cisco123
+  - model_name: radiusGroupName
+    mandatory: true
+    example: radius-1
+  - model_name: policyName
+    tf_name: aaa_specify_name_policy_name
+    data_path: [aaaPolicy, specifyName]
+    exclude_test: true
+    example: raPolicy
+  - model_name: password
+    tf_name: aaa_specify_name_policy_password
+    data_path: [aaaPolicy, specifyName]
+    exclude_test: true
+    example: cisco123
+  - model_name: deriveNameIdentity
+    tf_name: aaa_derive_name_identity
+    data_path: [aaaPolicy]
+    example: MyPassword
+  - model_name: deriveNameDomain
+    tf_name: aaa_derive_name_domain
+    data_path: [aaaPolicy]
+    exclude_test: true
+    example: MyPassword
+  - model_name: enableAccounting
+    tf_name: aaa_enable_accounting
+    example: false
+  - model_name: localIkev2IdentityType
+    tf_name: ikev2_local_ike_identity_type
+    example: EMAIL
+  - model_name: localIkev2IdentityValue
+    tf_name: ikev2_local_ike_identity_value
+    example: abc@xyz.com
+  - model_name: ikev2SaLifetime
+    tf_name: ikev2_security_association_lifetime
+    example: 86400
+  - model_name: antiDosThreshold
+    tf_name: ikev2_anti_dos_threshold
+    example: 99
+  - model_name: enableAntiReplay
+    tf_name: ipsec_enable_anti_replay
+    example: false
+  - model_name: antiReplayWindowSize
+    tf_name: ipsec_anti_replay_window_size
+    example: 64
+  - model_name: ipSecSaLifetime
+    tf_name: ipsec_security_association_lifetime
+    example: 3600
+  - model_name: enablePFS
+    tf_name: ipsec_enable_perfect_foward_secrecy
+    example: false
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
