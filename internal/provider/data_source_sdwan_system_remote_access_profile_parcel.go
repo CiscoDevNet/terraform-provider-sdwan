@@ -91,11 +91,11 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"any_connect_eap_profile_fil_name": schema.StringAttribute{
+			"any_connect_eap_profile_file_name": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"any_connect_eap_profile_fil_name_variable": schema.StringAttribute{
+			"any_connect_eap_profile_file_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -211,11 +211,11 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"anti_dos_threshold": schema.Int64Attribute{
+			"ikev2_anti_dos_threshold": schema.Int64Attribute{
 				MarkdownDescription: "Anti-DOS Threshold",
 				Computed:            true,
 			},
-			"anti_dos_threshold_variable": schema.StringAttribute{
+			"ikev2_anti_dos_threshold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

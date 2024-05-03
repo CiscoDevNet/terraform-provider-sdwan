@@ -39,17 +39,17 @@ data "sdwan_system_remote_access_profile_parcel" "example" {
 - `aaa_specify_name_policy_name_variable` (String) Variable name
 - `aaa_specify_name_policy_password` (String)
 - `aaa_specify_name_policy_password_variable` (String) Variable name
-- `anti_dos_threshold` (Number) Anti-DOS Threshold
-- `anti_dos_threshold_variable` (String) Variable name
 - `any_connect_eap_authentication_type` (String)
 - `any_connect_eap_profile_download_status` (String)
 - `any_connect_eap_profile_download_status_variable` (String) Variable name
-- `any_connect_eap_profile_fil_name` (String)
-- `any_connect_eap_profile_fil_name_variable` (String) Variable name
+- `any_connect_eap_profile_file_name` (String)
+- `any_connect_eap_profile_file_name_variable` (String) Variable name
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
 - `description` (String) The description of the profile parcel
 - `enable_crl_check` (Boolean)
 - `enable_crl_check_variable` (String) Variable name
+- `ikev2_anti_dos_threshold` (Number) Anti-DOS Threshold
+- `ikev2_anti_dos_threshold_variable` (String) Variable name
 - `ikev2_local_ike_identity_type` (String)
 - `ikev2_local_ike_identity_type_variable` (String) Variable name
 - `ikev2_local_ike_identity_value` (String)

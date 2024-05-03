@@ -107,14 +107,14 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"any_connect_eap_profile_fil_name": schema.StringAttribute{
+			"any_connect_eap_profile_file_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtLeast(1),
 				},
 			},
-			"any_connect_eap_profile_fil_name_variable": schema.StringAttribute{
+			"any_connect_eap_profile_file_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -260,14 +260,14 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"anti_dos_threshold": schema.Int64Attribute{
+			"ikev2_anti_dos_threshold": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Anti-DOS Threshold").AddIntegerRangeDescription(10, 1000).AddDefaultValueDescription("100").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(10, 1000),
 				},
 			},
-			"anti_dos_threshold_variable": schema.StringAttribute{
+			"ikev2_anti_dos_threshold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

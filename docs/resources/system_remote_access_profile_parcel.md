@@ -22,7 +22,7 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
   connection_type_ssl                     = false
   any_connect_eap_authentication_type     = "user"
   any_connect_eap_profile_download_status = "INITIALIZED"
-  any_connect_eap_profile_fil_name        = "<form-data>"
+  any_connect_eap_profile_file_name       = "<form-data>"
   ipv4_pool_size                          = 50
   ipv6_pool_size                          = 1024
   enable_crl_check                        = false
@@ -34,7 +34,7 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
   ikev2_local_ike_identity_type           = "EMAIL"
   ikev2_local_ike_identity_value          = "abc@xyz.com"
   ikev2_security_association_lifetime     = 86400
-  anti_dos_threshold                      = 99
+  ikev2_anti_dos_threshold                = 99
   ipsec_enable_anti_replay                = false
   ipsec_anti_replay_window_size           = 64
   ipsec_security_association_lifetime     = 3600
@@ -64,21 +64,21 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
 - `aaa_specify_name_policy_name_variable` (String) Variable name
 - `aaa_specify_name_policy_password` (String)
 - `aaa_specify_name_policy_password_variable` (String) Variable name
-- `anti_dos_threshold` (Number) Anti-DOS Threshold
-  - Range: `10`-`1000`
-  - Default value: `100`
-- `anti_dos_threshold_variable` (String) Variable name
 - `any_connect_eap_profile_download_status` (String) - Choices: `NONE`, `INITIALIZED`, `INITIALIZED_ERROR`, `COMPLETE`, `COMPLETE_ERROR`
   - Default value: `NONE`
 - `any_connect_eap_profile_download_status_variable` (String) Variable name
-- `any_connect_eap_profile_fil_name` (String)
-- `any_connect_eap_profile_fil_name_variable` (String) Variable name
+- `any_connect_eap_profile_file_name` (String)
+- `any_connect_eap_profile_file_name_variable` (String) Variable name
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
   - Default value: `false`
 - `description` (String) The description of the profile parcel
 - `enable_crl_check` (Boolean) - Default value: `false`
 - `enable_crl_check_variable` (String) Variable name
 - `feature_profile_id` (String) Feature Profile ID
+- `ikev2_anti_dos_threshold` (Number) Anti-DOS Threshold
+  - Range: `10`-`1000`
+  - Default value: `100`
+- `ikev2_anti_dos_threshold_variable` (String) Variable name
 - `ikev2_local_ike_identity_type` (String) - Choices: `EMAIL`, `FQDN`, `KEYID`, `IPv4 ADDRESS`, `IPv6 ADDRESS`
 - `ikev2_local_ike_identity_type_variable` (String) Variable name
 - `ikev2_local_ike_identity_value` (String)

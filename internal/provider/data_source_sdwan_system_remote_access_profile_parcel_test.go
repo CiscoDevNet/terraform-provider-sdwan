@@ -34,7 +34,7 @@ func TestAccDataSourceSdwanSystemRemoteAccessProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "connection_type_ssl", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_authentication_type", "user"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_profile_download_status", "INITIALIZED"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_profile_fil_name", "<form-data>"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_profile_file_name", "<form-data>"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ipv4_pool_size", "50"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ipv6_pool_size", "1024"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "enable_crl_check", "false"))
@@ -46,7 +46,7 @@ func TestAccDataSourceSdwanSystemRemoteAccessProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ikev2_local_ike_identity_type", "EMAIL"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ikev2_local_ike_identity_value", "abc@xyz.com"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ikev2_security_association_lifetime", "86400"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "anti_dos_threshold", "99"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ikev2_anti_dos_threshold", "99"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ipsec_enable_anti_replay", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ipsec_anti_replay_window_size", "64"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_profile_parcel.test", "ipsec_security_association_lifetime", "3600"))
@@ -68,6 +68,7 @@ resource "sdwan_system_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
+
 `
 
 func testAccDataSourceSdwanSystemRemoteAccessProfileParcelConfig() string {
@@ -78,7 +79,7 @@ func testAccDataSourceSdwanSystemRemoteAccessProfileParcelConfig() string {
 	config += `	connection_type_ssl = false` + "\n"
 	config += `	any_connect_eap_authentication_type = "user"` + "\n"
 	config += `	any_connect_eap_profile_download_status = "INITIALIZED"` + "\n"
-	config += `	any_connect_eap_profile_fil_name = "<form-data>"` + "\n"
+	config += `	any_connect_eap_profile_file_name = "<form-data>"` + "\n"
 	config += `	ipv4_pool_size = 50` + "\n"
 	config += `	ipv6_pool_size = 1024` + "\n"
 	config += `	enable_crl_check = false` + "\n"
@@ -90,7 +91,7 @@ func testAccDataSourceSdwanSystemRemoteAccessProfileParcelConfig() string {
 	config += `	ikev2_local_ike_identity_type = "EMAIL"` + "\n"
 	config += `	ikev2_local_ike_identity_value = "abc@xyz.com"` + "\n"
 	config += `	ikev2_security_association_lifetime = 86400` + "\n"
-	config += `	anti_dos_threshold = 99` + "\n"
+	config += `	ikev2_anti_dos_threshold = 99` + "\n"
 	config += `	ipsec_enable_anti_replay = false` + "\n"
 	config += `	ipsec_anti_replay_window_size = 64` + "\n"
 	config += `	ipsec_security_association_lifetime = 3600` + "\n"

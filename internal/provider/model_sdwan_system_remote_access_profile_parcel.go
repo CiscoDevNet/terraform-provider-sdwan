@@ -39,8 +39,8 @@ type SystemRemoteAccess struct {
 	AnyConnectEapAuthenticationType            types.String `tfsdk:"any_connect_eap_authentication_type"`
 	AnyConnectEapProfileDownloadStatus         types.String `tfsdk:"any_connect_eap_profile_download_status"`
 	AnyConnectEapProfileDownloadStatusVariable types.String `tfsdk:"any_connect_eap_profile_download_status_variable"`
-	AnyConnectEapProfileFilName                types.String `tfsdk:"any_connect_eap_profile_fil_name"`
-	AnyConnectEapProfileFilNameVariable        types.String `tfsdk:"any_connect_eap_profile_fil_name_variable"`
+	AnyConnectEapProfileFileName               types.String `tfsdk:"any_connect_eap_profile_file_name"`
+	AnyConnectEapProfileFileNameVariable       types.String `tfsdk:"any_connect_eap_profile_file_name_variable"`
 	Ipv4PoolSize                               types.Int64  `tfsdk:"ipv4_pool_size"`
 	Ipv4PoolSizeVariable                       types.String `tfsdk:"ipv4_pool_size_variable"`
 	Ipv6PoolSize                               types.Int64  `tfsdk:"ipv6_pool_size"`
@@ -69,8 +69,8 @@ type SystemRemoteAccess struct {
 	Ikev2LocalIkeIdentityValueVariable         types.String `tfsdk:"ikev2_local_ike_identity_value_variable"`
 	Ikev2SecurityAssociationLifetime           types.Int64  `tfsdk:"ikev2_security_association_lifetime"`
 	Ikev2SecurityAssociationLifetimeVariable   types.String `tfsdk:"ikev2_security_association_lifetime_variable"`
-	AntiDosThreshold                           types.Int64  `tfsdk:"anti_dos_threshold"`
-	AntiDosThresholdVariable                   types.String `tfsdk:"anti_dos_threshold_variable"`
+	Ikev2AntiDosThreshold                      types.Int64  `tfsdk:"ikev2_anti_dos_threshold"`
+	Ikev2AntiDosThresholdVariable              types.String `tfsdk:"ikev2_anti_dos_threshold_variable"`
 	IpsecEnableAntiReplay                      types.Bool   `tfsdk:"ipsec_enable_anti_replay"`
 	IpsecEnableAntiReplayVariable              types.String `tfsdk:"ipsec_enable_anti_replay_variable"`
 	IpsecAntiReplayWindowSize                  types.Int64  `tfsdk:"ipsec_anti_replay_window_size"`
@@ -117,15 +117,15 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"anyConnectProfileDownloadStatus.value", data.AnyConnectEapProfileDownloadStatus.ValueString())
 	}
 
-	if !data.AnyConnectEapProfileFilNameVariable.IsNull() {
+	if !data.AnyConnectEapProfileFileNameVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.optionType", "variable")
-		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.value", data.AnyConnectEapProfileFilNameVariable.ValueString())
-	} else if data.AnyConnectEapProfileFilName.IsNull() {
+		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.value", data.AnyConnectEapProfileFileNameVariable.ValueString())
+	} else if data.AnyConnectEapProfileFileName.IsNull() {
 		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.optionType", "default")
 		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.value", "")
 	} else {
 		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.optionType", "global")
-		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.value", data.AnyConnectEapProfileFilName.ValueString())
+		body, _ = sjson.Set(body, path+"anyConnectProfileFileName.value", data.AnyConnectEapProfileFileName.ValueString())
 	}
 
 	if !data.Ipv4PoolSizeVariable.IsNull() {
@@ -264,15 +264,15 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ikev2SaLifetime.value", data.Ikev2SecurityAssociationLifetime.ValueInt64())
 	}
 
-	if !data.AntiDosThresholdVariable.IsNull() {
+	if !data.Ikev2AntiDosThresholdVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"antiDosThreshold.optionType", "variable")
-		body, _ = sjson.Set(body, path+"antiDosThreshold.value", data.AntiDosThresholdVariable.ValueString())
-	} else if data.AntiDosThreshold.IsNull() {
+		body, _ = sjson.Set(body, path+"antiDosThreshold.value", data.Ikev2AntiDosThresholdVariable.ValueString())
+	} else if data.Ikev2AntiDosThreshold.IsNull() {
 		body, _ = sjson.Set(body, path+"antiDosThreshold.optionType", "default")
 		body, _ = sjson.Set(body, path+"antiDosThreshold.value", 100)
 	} else {
 		body, _ = sjson.Set(body, path+"antiDosThreshold.optionType", "global")
-		body, _ = sjson.Set(body, path+"antiDosThreshold.value", data.AntiDosThreshold.ValueInt64())
+		body, _ = sjson.Set(body, path+"antiDosThreshold.value", data.Ikev2AntiDosThreshold.ValueInt64())
 	}
 
 	if !data.IpsecEnableAntiReplayVariable.IsNull() {
@@ -355,14 +355,14 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 			data.AnyConnectEapProfileDownloadStatus = types.StringValue(va.String())
 		}
 	}
-	data.AnyConnectEapProfileFilName = types.StringNull()
-	data.AnyConnectEapProfileFilNameVariable = types.StringNull()
+	data.AnyConnectEapProfileFileName = types.StringNull()
+	data.AnyConnectEapProfileFileNameVariable = types.StringNull()
 	if t := res.Get(path + "anyConnectProfileFileName.optionType"); t.Exists() {
 		va := res.Get(path + "anyConnectProfileFileName.value")
 		if t.String() == "variable" {
-			data.AnyConnectEapProfileFilNameVariable = types.StringValue(va.String())
+			data.AnyConnectEapProfileFileNameVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AnyConnectEapProfileFilName = types.StringValue(va.String())
+			data.AnyConnectEapProfileFileName = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4PoolSize = types.Int64Null()
@@ -505,14 +505,14 @@ func (data *SystemRemoteAccess) fromBody(ctx context.Context, res gjson.Result) 
 			data.Ikev2SecurityAssociationLifetime = types.Int64Value(va.Int())
 		}
 	}
-	data.AntiDosThreshold = types.Int64Null()
-	data.AntiDosThresholdVariable = types.StringNull()
+	data.Ikev2AntiDosThreshold = types.Int64Null()
+	data.Ikev2AntiDosThresholdVariable = types.StringNull()
 	if t := res.Get(path + "antiDosThreshold.optionType"); t.Exists() {
 		va := res.Get(path + "antiDosThreshold.value")
 		if t.String() == "variable" {
-			data.AntiDosThresholdVariable = types.StringValue(va.String())
+			data.Ikev2AntiDosThresholdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AntiDosThreshold = types.Int64Value(va.Int())
+			data.Ikev2AntiDosThreshold = types.Int64Value(va.Int())
 		}
 	}
 	data.IpsecEnableAntiReplay = types.BoolNull()
@@ -591,14 +591,14 @@ func (data *SystemRemoteAccess) updateFromBody(ctx context.Context, res gjson.Re
 			data.AnyConnectEapProfileDownloadStatus = types.StringValue(va.String())
 		}
 	}
-	data.AnyConnectEapProfileFilName = types.StringNull()
-	data.AnyConnectEapProfileFilNameVariable = types.StringNull()
+	data.AnyConnectEapProfileFileName = types.StringNull()
+	data.AnyConnectEapProfileFileNameVariable = types.StringNull()
 	if t := res.Get(path + "anyConnectProfileFileName.optionType"); t.Exists() {
 		va := res.Get(path + "anyConnectProfileFileName.value")
 		if t.String() == "variable" {
-			data.AnyConnectEapProfileFilNameVariable = types.StringValue(va.String())
+			data.AnyConnectEapProfileFileNameVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AnyConnectEapProfileFilName = types.StringValue(va.String())
+			data.AnyConnectEapProfileFileName = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4PoolSize = types.Int64Null()
@@ -741,14 +741,14 @@ func (data *SystemRemoteAccess) updateFromBody(ctx context.Context, res gjson.Re
 			data.Ikev2SecurityAssociationLifetime = types.Int64Value(va.Int())
 		}
 	}
-	data.AntiDosThreshold = types.Int64Null()
-	data.AntiDosThresholdVariable = types.StringNull()
+	data.Ikev2AntiDosThreshold = types.Int64Null()
+	data.Ikev2AntiDosThresholdVariable = types.StringNull()
 	if t := res.Get(path + "antiDosThreshold.optionType"); t.Exists() {
 		va := res.Get(path + "antiDosThreshold.value")
 		if t.String() == "variable" {
-			data.AntiDosThresholdVariable = types.StringValue(va.String())
+			data.Ikev2AntiDosThresholdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AntiDosThreshold = types.Int64Value(va.Int())
+			data.Ikev2AntiDosThreshold = types.Int64Value(va.Int())
 		}
 	}
 	data.IpsecEnableAntiReplay = types.BoolNull()
@@ -809,10 +809,10 @@ func (data *SystemRemoteAccess) isNull(ctx context.Context, res gjson.Result) bo
 	if !data.AnyConnectEapProfileDownloadStatusVariable.IsNull() {
 		return false
 	}
-	if !data.AnyConnectEapProfileFilName.IsNull() {
+	if !data.AnyConnectEapProfileFileName.IsNull() {
 		return false
 	}
-	if !data.AnyConnectEapProfileFilNameVariable.IsNull() {
+	if !data.AnyConnectEapProfileFileNameVariable.IsNull() {
 		return false
 	}
 	if !data.Ipv4PoolSize.IsNull() {
@@ -899,10 +899,10 @@ func (data *SystemRemoteAccess) isNull(ctx context.Context, res gjson.Result) bo
 	if !data.Ikev2SecurityAssociationLifetimeVariable.IsNull() {
 		return false
 	}
-	if !data.AntiDosThreshold.IsNull() {
+	if !data.Ikev2AntiDosThreshold.IsNull() {
 		return false
 	}
-	if !data.AntiDosThresholdVariable.IsNull() {
+	if !data.Ikev2AntiDosThresholdVariable.IsNull() {
 		return false
 	}
 	if !data.IpsecEnableAntiReplay.IsNull() {

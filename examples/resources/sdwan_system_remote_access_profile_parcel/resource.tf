@@ -5,7 +5,7 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
   connection_type_ssl                     = false
   any_connect_eap_authentication_type     = "user"
   any_connect_eap_profile_download_status = "INITIALIZED"
-  any_connect_eap_profile_fil_name        = "<form-data>"
+  any_connect_eap_profile_file_name       = "<form-data>"
   ipv4_pool_size                          = 50
   ipv6_pool_size                          = 1024
   enable_crl_check                        = false
@@ -17,7 +17,7 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
   ikev2_local_ike_identity_type           = "EMAIL"
   ikev2_local_ike_identity_value          = "abc@xyz.com"
   ikev2_security_association_lifetime     = 86400
-  anti_dos_threshold                      = 99
+  ikev2_anti_dos_threshold                = 99
   ipsec_enable_anti_replay                = false
   ipsec_anti_replay_window_size           = 64
   ipsec_security_association_lifetime     = 3600
