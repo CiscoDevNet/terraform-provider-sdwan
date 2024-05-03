@@ -1,0 +1,59 @@
+---
+name: System NTP
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/ntp
+minimum_version: 20.9.0
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: server
+    tf_name: servers
+    attributes:
+      - model_name: name
+        tf_name: hostname_ip_address
+        example: "1.1.1.1"
+      - model_name: key
+        tf_name: authentication_key
+        id: true
+        example: 41673
+      - model_name: vpn
+        example: 1
+      - model_name: version
+        tf_name: ntp_version
+        example: 4
+      - model_name: sourceInterface
+        example: Ethernet
+      - model_name: prefer
+        tf_name: prefer_this_ntp_server
+        example: false
+  - model_name: authenticationKeys
+    data_path: [authentication]
+    attributes:
+      - model_name: keyId
+        id: true
+        example: 49737
+      - model_name: md5Value
+        example: $CRYPT_CLUSTER
+  - model_name: trustedKeys
+    data_path: [authentication]
+    example: 49737
+  - model_name: enable
+    tf_name: authoritative_ntp_server
+    data_path: [leader]
+    example: false
+  - model_name: stratum
+    data_path: [leader]
+    example: 1
+  - model_name: source
+    tf_name: source_interface
+    data_path: [leader]
+    example: ATM
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
