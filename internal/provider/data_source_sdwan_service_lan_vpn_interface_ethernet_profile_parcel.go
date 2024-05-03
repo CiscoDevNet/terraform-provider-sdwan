@@ -108,12 +108,24 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: "DHCP Distance",
 				Computed:            true,
 			},
+			"ipv4_settings_dynamic_dhcp_distance_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"ipv4_settings_static_ip_address": schema.StringAttribute{
 				MarkdownDescription: "IP Address",
 				Computed:            true,
 			},
+			"ipv4_settings_static_ip_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"ipv4_settings_static_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "Subnet Mask",
+				Computed:            true,
+			},
+			"ipv4_settings_static_subnet_mask_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"ipv4_settings_static_secondary_address": schema.ListNestedAttribute{
@@ -171,6 +183,10 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 			},
 			"ipv6_settings_static_address": schema.StringAttribute{
 				MarkdownDescription: "IPv6 Address Secondary",
+				Computed:            true,
+			},
+			"ipv6_settings_static_address_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"ipv6_settings_static_secondary_address": schema.ListNestedAttribute{
@@ -481,34 +497,6 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 						"tloc_pref_change_value": schema.Int64Attribute{
 							MarkdownDescription: "Timer interval for successive advertisements, in milliseconds",
 							Computed:            true,
-						},
-						"tracking_objects": schema.ListNestedAttribute{
-							MarkdownDescription: "Tracking object for VRRP configuration",
-							Computed:            true,
-							NestedObject: schema.NestedAttributeObject{
-								Attributes: map[string]schema.Attribute{
-									"tracker_policy_id": schema.StringAttribute{
-										MarkdownDescription: "Associate Object Tracker/Object Tracker Group",
-										Computed:            true,
-									},
-									"tracker_action": schema.StringAttribute{
-										MarkdownDescription: "Track Action",
-										Computed:            true,
-									},
-									"tracker_action_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Computed:            true,
-									},
-									"decrement_value": schema.Int64Attribute{
-										MarkdownDescription: "Decrement Value for VRRP priority",
-										Computed:            true,
-									},
-									"decrement_value_variable": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-										Computed:            true,
-									},
-								},
-							},
 						},
 					},
 				},

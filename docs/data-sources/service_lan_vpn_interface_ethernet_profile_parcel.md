@@ -78,15 +78,19 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ipv4_settings_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
 - `ipv4_settings_dhcp_helper_variable` (String) Variable name
 - `ipv4_settings_dynamic_dhcp_distance` (Number) DHCP Distance
+- `ipv4_settings_dynamic_dhcp_distance_variable` (String) Variable name
 - `ipv4_settings_static_ip_address` (String) IP Address
+- `ipv4_settings_static_ip_address_variable` (String) Variable name
 - `ipv4_settings_static_secondary_address` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_settings_static_secondary_address))
 - `ipv4_settings_static_subnet_mask` (String) Subnet Mask
+- `ipv4_settings_static_subnet_mask_variable` (String) Variable name
 - `ipv4_vrrps` (Attributes List) Enable VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
 - `ipv6_settings_dhcp_helper` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_settings_dhcp_helper))
 - `ipv6_settings_dynamic_dhcp_client` (Boolean) Enable DHCPv6
 - `ipv6_settings_dynamic_secondary_address` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_settings_dynamic_secondary_address))
 - `ipv6_settings_static_address` (String) IPv6 Address Secondary
+- `ipv6_settings_static_address_variable` (String) Variable name
 - `ipv6_settings_static_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_settings_static_secondary_address))
 - `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6 (see [below for nested schema](#nestedatt--ipv6_vrrps))
 - `load_interval` (Number) Interval for interface load calculation
@@ -155,7 +159,6 @@ Read-Only:
 - `tloc_pref_change_value` (Number) Timer interval for successive advertisements, in milliseconds
 - `tloc_prefix_change` (Boolean) Timer interval for successive advertisements, in milliseconds
 - `track_omp` (Boolean) Track OMP status
-- `tracking_objects` (Attributes List) Tracking object for VRRP configuration (see [below for nested schema](#nestedatt--ipv4_vrrps--tracking_objects))
 
 <a id="nestedatt--ipv4_vrrps--secondary_addresses"></a>
 ### Nested Schema for `ipv4_vrrps.secondary_addresses`
@@ -166,18 +169,6 @@ Read-Only:
 - `ip_address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
-
-
-<a id="nestedatt--ipv4_vrrps--tracking_objects"></a>
-### Nested Schema for `ipv4_vrrps.tracking_objects`
-
-Read-Only:
-
-- `decrement_value` (Number) Decrement Value for VRRP priority
-- `decrement_value_variable` (String) Variable name
-- `tracker_action` (String) Track Action
-- `tracker_action_variable` (String) Variable name
-- `tracker_policy_id` (String) Associate Object Tracker/Object Tracker Group
 
 
 

@@ -118,14 +118,14 @@ resource "sdwan_service_lan_vpn_profile_parcel" "test" {
   omp_admin_distance_ipv4    = 1
   omp_admin_distance_ipv6    = 1
   enable_sdwan_remote_access = false
-  dns_primary_ipv4_address   = "1.2.3.4"
-  dns_secondary_ipv4_address = "2.3.4.5"
-  dns_primary_ipv6_address   = "2001:0:0:1::0"
-  dns_secondary_ipv6_address = "2001:0:0:2::0"
+  primary_dns_address_ipv4   = "1.2.3.4"
+  secondary_dns_address_ipv4 = "2.3.4.5"
+  primary_dns_address_ipv6   = "2001:0:0:1::0"
+  secondary_dns_address_ipv6 = "2001:0:0:2::0"
   host_mappings = [
     {
-      host_name  = "HOSTMAPPING1"
-      list_of_ip = ["1.2.3.4"]
+      host_name   = "HOSTMAPPING1"
+      list_of_ips = ["1.2.3.4"]
     }
   ]
   ipv4_static_routes = [
@@ -140,7 +140,7 @@ resource "sdwan_service_lan_vpn_profile_parcel" "test" {
       ]
     }
   ]
-  ipv6_routes = [
+  ipv6_static_routes = [
     {
       prefix = "2001:0:0:1::0/12"
       next_hops = [
@@ -209,12 +209,12 @@ resource "sdwan_service_lan_vpn_profile_parcel" "test" {
       static_nat_direction = "inside"
     }
   ]
-  nat_64_v4_pool = [
+  nat_64_v4_pools = [
     {
-      nat64_v4_pool_name        = "NATPOOL1"
-      nat64_v4_pool_range_start = "1.2.3.4"
-      nat64_v4_pool_range_end   = "2.3.4.5"
-      overload                  = false
+      name        = "NATPOOL1"
+      range_start = "1.2.3.4"
+      range_end   = "2.3.4.5"
+      overload    = false
     }
   ]
   ipv4_import_route_targets = [
@@ -246,35 +246,10 @@ func testAccSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig_minimum() str
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
 	config += `	profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id` + "\n"
-	config += `	interface_name = "GigabitEthernet3"` + "\n"
-	config += `	config_description = "LAN"` + "\n"
-	config += `	ipv4_settings_dynamic_dhcp_distance = 1` + "\n"
-	config += `	ipv4_settings_static_ip_address = "1.2.3.4"` + "\n"
-	config += `	ipv4_settings_static_subnet_mask = "0.0.0.0"` + "\n"
-	config += `	ipv4_settings_dhcp_helper = ["false"]` + "\n"
-	config += `	ipv6_settings_dynamic_dhcp_client = false` + "\n"
-	config += `	ipv6_settings_static_address = "2001:0:0:1::0"` + "\n"
-	config += `	ipv4_nat_type = "pool"` + "\n"
-	config += `	ipv4_nat_range_start = "1.2.3.4"` + "\n"
-	config += `	ipv4_nat_range_end = "4.5.6.7"` + "\n"
-	config += `	ipv4_nat_prefix_length = 1` + "\n"
-	config += `	ipv4_nat_loopback = "123"` + "\n"
-	config += `	acl_shaping_rate = 12` + "\n"
 	config += `	acl_ipv4_egress_policy_id = "1b270f6d-479b-47e3-ab0b-51bc6811a303"` + "\n"
 	config += `	acl_ipv4_ingress_policy_id = "1b270f6d-479b-47e3-ab0b-51bc6811a303"` + "\n"
 	config += `	acl_ipv6_egress_policy_id = "1b270f6d-479b-47e3-ab0b-51bc6811a303"` + "\n"
 	config += `	acl_ipv6_ingress_policy_id = "1b270f6d-479b-47e3-ab0b-51bc6811a303"` + "\n"
-	config += `	trustsec_security_group_tags = example` + "\n"
-	config += `	trustsec_enable_enforced_propogation = false` + "\n"
-	config += `	trustsec_enforced_security_group_tags = example-2` + "\n"
-	config += `	duplex = "full"` + "\n"
-	config += `	mac_address = "00-B0-D0-63-C2-26"` + "\n"
-	config += `	tcp_mss = 500` + "\n"
-	config += `	speed = "1000"` + "\n"
-	config += `	autonegotiate = false` + "\n"
-	config += `	media_type = "auto-select"` + "\n"
-	config += `	tracker = "TRACKER1"` + "\n"
-	config += `	xconnect = "1"` + "\n"
 	config += `}` + "\n"
 	return config
 }
