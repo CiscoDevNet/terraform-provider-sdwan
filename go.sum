@@ -162,8 +162,8 @@ github.com/mitchellh/mapstructure v1.5.0/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RR
 github.com/mitchellh/reflectwalk v1.0.0/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
 github.com/mitchellh/reflectwalk v1.0.2 h1:G2LzWKi524PWgd3mLHV8Y5k7s6XUvT0Gef6zxSIeXaQ=
 github.com/mitchellh/reflectwalk v1.0.2/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
-github.com/netascode/go-sdwan v0.1.5 h1:/ECsXLZRhqryCuk6g9eCMxvqzkYoA9NUqWiADfY0nnk=
-github.com/netascode/go-sdwan v0.1.5/go.mod h1:y/7aUr4U5LPq0gN7OLZDKZjdbHTmYn1kpSTe0XjGCDg=
+github.com/netascode/go-sdwan v0.1.6 h1:tT/y0q6aLKH8oTc3dcW1N6w/fwy3NAFlVg5VZ76bVog=
+github.com/netascode/go-sdwan v0.1.6/go.mod h1:y/7aUr4U5LPq0gN7OLZDKZjdbHTmYn1kpSTe0XjGCDg=
 github.com/oklog/run v1.1.0 h1:GEenZ1cK0+q0+wsJew9qUg/DyD8k3JzYsZAi5gYi2mA=
 github.com/oklog/run v1.1.0/go.mod h1:sVPdnTZT1zYwAJeCMu2Th4T21pA3FPOQRfWjQlk7DVU=
 github.com/pjbgf/sha1cd v0.3.0 h1:4D5XXmUUBUl/xQ6IjCkEAbqXskkq/4O7LmGn0AqMDs4=

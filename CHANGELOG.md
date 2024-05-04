@@ -1,3 +1,7 @@
+## 0.3.10 (unreleased)
+
+- Add `sdwan_configuration_group_devices` resource and data source
+
 ## 0.3.9
 
 - Fix issue with rendering feature template payloads
