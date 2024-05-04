@@ -50,7 +50,9 @@ import (
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &{{camelCase .Name}}Resource{}
+{{- if not .NoImport}}
 var _ resource.ResourceWithImportState = &{{camelCase .Name}}Resource{}
+{{- end}}
 
 func New{{camelCase .Name}}Resource() resource.Resource {
 	return &{{camelCase .Name}}Resource{}
@@ -560,7 +562,9 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
+{{- if not .NoImport}}
 func (r *{{camelCase .Name}}Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
+{{- end}}
 // End of section. //template:end import

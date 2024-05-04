@@ -206,6 +206,7 @@ type YamlConfig struct {
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 	TypeValue                string                `yaml:"type_value"`
+	NoImport                 bool                  `yaml:"no_import"`
 }
 
 type YamlConfigAttribute struct {
@@ -1058,6 +1059,9 @@ func main() {
 
 		// Iterate over templates and render files
 		for _, t := range genericTemplates {
+			if genericConfigs[i].NoImport && t.path == "./gen/templates/generic/import.sh" {
+				continue
+			}
 			renderTemplate(t.path, t.prefix+SnakeCase(genericConfigs[i].Name)+t.suffix, genericConfigs[i])
 		}
 	}
