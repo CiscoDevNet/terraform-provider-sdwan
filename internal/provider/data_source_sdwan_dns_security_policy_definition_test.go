@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
 	"testing"
@@ -26,6 +27,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanDNSSecurityPolicyDefinition(t *testing.T) {
 	if os.Getenv("SDWAN_209") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_209")
@@ -50,6 +54,9 @@ func TestAccDataSourceSdwanDNSSecurityPolicyDefinition(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanDNSSecurityPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_domain_list_policy_object" "test" {
   name = "TEST_TF"
@@ -62,6 +69,9 @@ resource "sdwan_domain_list_policy_object" "test" {
 
 `
 
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanDNSSecurityPolicyDefinitionConfig() string {
 	config := ""
 	config += `resource "sdwan_dns_security_policy_definition" "test" {` + "\n"
@@ -82,3 +92,5 @@ func testAccDataSourceSdwanDNSSecurityPolicyDefinitionConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

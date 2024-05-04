@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -28,6 +29,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type CflowdPolicyDefinition struct {
 	Id                  types.String                       `tfsdk:"id"`
 	Version             types.Int64                        `tfsdk:"version"`
@@ -53,10 +57,16 @@ type CflowdPolicyDefinitionCollectors struct {
 	ExportSpreading types.String `tfsdk:"export_spreading"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data CflowdPolicyDefinition) getPath() string {
 	return "/template/policy/definition/cflowd/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -125,6 +135,9 @@ func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -223,6 +236,9 @@ func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 	}
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *CflowdPolicyDefinition) hasChanges(ctx context.Context, state *CflowdPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -278,3 +294,9 @@ func (data *CflowdPolicyDefinition) hasChanges(ctx context.Context, state *Cflow
 	}
 	return hasChanges
 }
+
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+// End of section. //template:end updateVersions

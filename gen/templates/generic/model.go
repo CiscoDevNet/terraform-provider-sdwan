@@ -20,6 +20,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -32,7 +33,9 @@ import (
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
+// End of section. //template:end imports
 
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 {{- $name := camelCase .Name}}
 type {{camelCase .Name}} struct {
 	Id types.String `tfsdk:"id"`
@@ -143,7 +146,9 @@ type {{$name}}{{$childName}}{{$childChildName}}{{toGoName .TfName}} struct {
 {{- end}}
 {{- end}}
 {{ end}}
+// End of section. //template:end types
 
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data {{camelCase .Name}}) getPath() string {
 	{{- if hasReference .Attributes}}
 		return fmt.Sprintf("{{.RestEndpoint}}"{{range .Attributes}}{{if .Reference}}, url.QueryEscape(data.{{toGoName .TfName}}.Value{{.Type}}()){{end}}{{end}})
@@ -151,7 +156,9 @@ func (data {{camelCase .Name}}) getPath() string {
 		return "{{.RestEndpoint}}"
 	{{- end}}
 }
+// End of section. //template:end getPath
 
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	body := ""
 	{{- range .Attributes}}
@@ -292,7 +299,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	{{- end}}
 	return body
 }
+// End of section. //template:end toBody
 
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result) {
 	{{- if hasVersionAttribute .Attributes}}
 	state := *data
@@ -502,7 +511,9 @@ func (data *{{camelCase .Name}}) fromBody(ctx context.Context, res gjson.Result)
 	data.updateVersions(ctx, &state)
 	{{- end}}
 }
+// End of section. //template:end fromBody
 
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelCase .Name}}) bool {
 	hasChanges := false
 	{{- range .Attributes}}
@@ -565,7 +576,9 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 	{{- end}}
 	return hasChanges
 }
+// End of section. //template:end hasChanges
 
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
 {{if hasVersionAttribute .Attributes}}
 func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{camelCase .Name}}) {
 	{{- range .Attributes}}
@@ -663,3 +676,4 @@ func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{ca
 	{{- end}}
 }
 {{end}}
+// End of section. //template:end updateVersions

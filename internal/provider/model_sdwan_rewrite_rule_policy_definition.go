@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -28,6 +29,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type RewriteRulePolicyDefinition struct {
 	Id          types.String                       `tfsdk:"id"`
 	Version     types.Int64                        `tfsdk:"version"`
@@ -45,10 +49,16 @@ type RewriteRulePolicyDefinitionRules struct {
 	Layer2Cos       types.Int64  `tfsdk:"layer2_cos"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data RewriteRulePolicyDefinition) getPath() string {
 	return "/template/policy/definition/rewriterule/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data RewriteRulePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -82,6 +92,9 @@ func (data RewriteRulePolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *RewriteRulePolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -129,6 +142,9 @@ func (data *RewriteRulePolicyDefinition) fromBody(ctx context.Context, res gjson
 	data.updateVersions(ctx, &state)
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *RewriteRulePolicyDefinition) hasChanges(ctx context.Context, state *RewriteRulePolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -158,6 +174,10 @@ func (data *RewriteRulePolicyDefinition) hasChanges(ctx context.Context, state *
 	return hasChanges
 }
 
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
 func (data *RewriteRulePolicyDefinition) updateVersions(ctx context.Context, state *RewriteRulePolicyDefinition) {
 	for i := range data.Rules {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Rules[i].ClassMapId.ValueString())}
@@ -176,3 +196,5 @@ func (data *RewriteRulePolicyDefinition) updateVersions(ctx context.Context, sta
 		}
 	}
 }
+
+// End of section. //template:end updateVersions

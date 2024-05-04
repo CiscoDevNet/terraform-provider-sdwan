@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanRuleSetPolicyDefinition(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_rule_set_policy_definition.test", "name", "Example"))
@@ -52,6 +56,12 @@ func TestAccSdwanRuleSetPolicyDefinition(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAcc
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanRuleSetPolicyDefinitionConfig_all() string {
 	config := `resource "sdwan_rule_set_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
@@ -72,3 +82,5 @@ func testAccSdwanRuleSetPolicyDefinitionConfig_all() string {
 	config += `}` + "\n"
 	return config
 }
+
+// End of section. //template:end testAccConfigAll

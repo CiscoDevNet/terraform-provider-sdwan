@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanLocalApplicationListPolicyObject(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_local_application_list_policy_object.test", "name", "Example"))
@@ -41,6 +45,12 @@ func TestAccDataSourceSdwanLocalApplicationListPolicyObject(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanLocalApplicationListPolicyObjectConfig() string {
 	config := ""
 	config += `resource "sdwan_local_application_list_policy_object" "test" {` + "\n"
@@ -57,3 +67,5 @@ func testAccDataSourceSdwanLocalApplicationListPolicyObjectConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

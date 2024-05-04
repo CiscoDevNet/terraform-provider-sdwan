@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanTLSSSLProfilePolicyDefinition(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_tls_ssl_profile_policy_definition.test", "name", "Example"))
@@ -45,6 +49,12 @@ func TestAccDataSourceSdwanTLSSSLProfilePolicyDefinition(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanTLSSSLProfilePolicyDefinitionConfig() string {
 	config := ""
 	config += `resource "sdwan_tls_ssl_profile_policy_definition" "test" {` + "\n"
@@ -66,3 +76,5 @@ func testAccDataSourceSdwanTLSSSLProfilePolicyDefinitionConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

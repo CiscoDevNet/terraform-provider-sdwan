@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 
@@ -28,6 +29,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type URLFilteringPolicyDefinition struct {
 	Id                  types.String `tfsdk:"id"`
 	Version             types.Int64  `tfsdk:"version"`
@@ -47,10 +51,16 @@ type URLFilteringPolicyDefinition struct {
 	BlockPageContents   types.String `tfsdk:"block_page_contents"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data URLFilteringPolicyDefinition) getPath() string {
 	return "/template/policy/definition/urlfiltering/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data URLFilteringPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -101,6 +111,9 @@ func (data URLFilteringPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -166,6 +179,9 @@ func (data *URLFilteringPolicyDefinition) fromBody(ctx context.Context, res gjso
 	data.updateVersions(ctx, &state)
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *URLFilteringPolicyDefinition) hasChanges(ctx context.Context, state *URLFilteringPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -207,7 +223,13 @@ func (data *URLFilteringPolicyDefinition) hasChanges(ctx context.Context, state 
 	return hasChanges
 }
 
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
 func (data *URLFilteringPolicyDefinition) updateVersions(ctx context.Context, state *URLFilteringPolicyDefinition) {
 	data.AllowUrlListVersion = state.AllowUrlListVersion
 	data.BlockUrlListVersion = state.BlockUrlListVersion
 }
+
+// End of section. //template:end updateVersions

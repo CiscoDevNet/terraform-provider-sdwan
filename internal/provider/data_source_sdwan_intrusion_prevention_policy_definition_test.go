@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanIntrusionPreventionPolicyDefinition(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_intrusion_prevention_policy_definition.test", "name", "Example"))
@@ -45,6 +49,12 @@ func TestAccDataSourceSdwanIntrusionPreventionPolicyDefinition(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig() string {
 	config := ""
 	config += `resource "sdwan_intrusion_prevention_policy_definition" "test" {` + "\n"
@@ -64,3 +74,5 @@ func testAccDataSourceSdwanIntrusionPreventionPolicyDefinitionConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

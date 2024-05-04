@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 
@@ -27,16 +28,25 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type CLIFeatureProfile struct {
 	Id          types.String `tfsdk:"id"`
 	Name        types.String `tfsdk:"name"`
 	Description types.String `tfsdk:"description"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data CLIFeatureProfile) getPath() string {
 	return "/v1/feature-profile/sdwan/cli/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data CLIFeatureProfile) toBody(ctx context.Context) string {
 	body := ""
 	if !data.Name.IsNull() {
@@ -48,6 +58,9 @@ func (data CLIFeatureProfile) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *CLIFeatureProfile) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("profileName"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -61,6 +74,9 @@ func (data *CLIFeatureProfile) fromBody(ctx context.Context, res gjson.Result) {
 	}
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *CLIFeatureProfile) hasChanges(ctx context.Context, state *CLIFeatureProfile) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -71,3 +87,9 @@ func (data *CLIFeatureProfile) hasChanges(ctx context.Context, state *CLIFeature
 	}
 	return hasChanges
 }
+
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+// End of section. //template:end updateVersions

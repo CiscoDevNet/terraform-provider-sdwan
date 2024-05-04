@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 
@@ -27,6 +28,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type DataIPv4PrefixListPolicyObject struct {
 	Id      types.String                            `tfsdk:"id"`
 	Version types.Int64                             `tfsdk:"version"`
@@ -38,10 +42,16 @@ type DataIPv4PrefixListPolicyObjectEntries struct {
 	Prefix types.String `tfsdk:"prefix"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data DataIPv4PrefixListPolicyObject) getPath() string {
 	return "/template/policy/list/dataprefix/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data DataIPv4PrefixListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -63,6 +73,9 @@ func (data DataIPv4PrefixListPolicyObject) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *DataIPv4PrefixListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -88,6 +101,9 @@ func (data *DataIPv4PrefixListPolicyObject) fromBody(ctx context.Context, res gj
 	}
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *DataIPv4PrefixListPolicyObject) hasChanges(ctx context.Context, state *DataIPv4PrefixListPolicyObject) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -104,3 +120,9 @@ func (data *DataIPv4PrefixListPolicyObject) hasChanges(ctx context.Context, stat
 	}
 	return hasChanges
 }
+
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+// End of section. //template:end updateVersions
