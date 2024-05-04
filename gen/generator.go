@@ -207,6 +207,8 @@ type YamlConfig struct {
 	RemoveId                 bool                  `yaml:"remove_id"`
 	TypeValue                string                `yaml:"type_value"`
 	NoImport                 bool                  `yaml:"no_import"`
+	NoResource               bool                  `yaml:"no_resource"`
+	NoDataSource             bool                  `yaml:"no_data_source"`
 }
 
 type YamlConfigAttribute struct {
@@ -1059,7 +1061,14 @@ func main() {
 
 		// Iterate over templates and render files
 		for _, t := range genericTemplates {
-			if genericConfigs[i].NoImport && t.path == "./gen/templates/generic/import.sh" {
+			if (genericConfigs[i].NoImport && t.path == "./gen/templates/generic/import.sh") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data_source.go") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data_source_test.go") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data-source.tf") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource.go") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource_test.go") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource.tf") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/import.sh") {
 				continue
 			}
 			renderTemplate(t.path, t.prefix+SnakeCase(genericConfigs[i].Name)+t.suffix, genericConfigs[i])

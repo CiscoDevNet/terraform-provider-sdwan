@@ -11,6 +11,7 @@ description: |-
 
 - Add `sdwan_configuration_group_devices` resource and data source
 - Add `sdwan_configuration_group_device_variables` resource and data source
+- Add `sdwan_configuration_group_deploy` resource
 
 ## 0.3.9
 

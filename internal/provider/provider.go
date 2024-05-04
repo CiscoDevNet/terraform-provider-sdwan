@@ -320,6 +320,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewCLIFeatureProfileResource,
 		NewColorListPolicyObjectResource,
 		NewConfigurationGroupResource,
+		NewConfigurationGroupDeployResource,
 		NewConfigurationGroupDeviceVariablesResource,
 		NewConfigurationGroupDevicesResource,
 		NewCustomControlTopologyPolicyDefinitionResource,

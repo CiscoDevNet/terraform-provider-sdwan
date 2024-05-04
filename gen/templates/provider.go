@@ -250,8 +250,10 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		New{{camelCase .Name}}ProfileParcelResource,
 		{{- end}}
 		{{- range .Generic}}
+		{{- if not .NoResource}}
 		{{- if not (contains .SkipTemplates "resource.go")}}
 		New{{camelCase .Name}}Resource,
+		{{- end}}
 		{{- end}}
 		{{- end}}
 		NewAttachFeatureDeviceTemplateResource,
@@ -268,8 +270,10 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		New{{camelCase .Name}}ProfileParcelDataSource,
 		{{- end}}
 		{{- range .Generic}}
+		{{- if not .NoDataSource}}
 		{{- if not (contains .SkipTemplates "data_source.go")}}
 		New{{camelCase .Name}}DataSource,
+		{{- end}}
 		{{- end}}
 		{{- end}}
 	}
