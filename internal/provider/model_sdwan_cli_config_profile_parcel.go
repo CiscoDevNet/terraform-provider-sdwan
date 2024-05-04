@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -29,6 +30,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type CLIConfigProfileParcel struct {
 	Id               types.String `tfsdk:"id"`
 	Version          types.Int64  `tfsdk:"version"`
@@ -38,10 +42,16 @@ type CLIConfigProfileParcel struct {
 	CliConfiguration types.String `tfsdk:"cli_configuration"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data CLIConfigProfileParcel) getPath() string {
 	return fmt.Sprintf("/v1/feature-profile/sdwan/cli/%v/config/", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data CLIConfigProfileParcel) toBody(ctx context.Context) string {
 	body := ""
 	if !data.Name.IsNull() {
@@ -56,6 +66,9 @@ func (data CLIConfigProfileParcel) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *CLIConfigProfileParcel) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("payload.name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -74,6 +87,9 @@ func (data *CLIConfigProfileParcel) fromBody(ctx context.Context, res gjson.Resu
 	}
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *CLIConfigProfileParcel) hasChanges(ctx context.Context, state *CLIConfigProfileParcel) bool {
 	hasChanges := false
 	if !data.FeatureProfileId.Equal(state.FeatureProfileId) {
@@ -90,3 +106,9 @@ func (data *CLIConfigProfileParcel) hasChanges(ctx context.Context, state *CLICo
 	}
 	return hasChanges
 }
+
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+// End of section. //template:end updateVersions

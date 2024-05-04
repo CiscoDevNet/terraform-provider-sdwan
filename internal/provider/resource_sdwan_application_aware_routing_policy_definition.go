@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -39,6 +40,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
+
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &ApplicationAwareRoutingPolicyDefinitionResource{}
@@ -293,6 +298,9 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Configure(_ context.Co
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+// End of section. //template:end model
+
+// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan ApplicationAwareRoutingPolicyDefinition
 
@@ -323,6 +331,9 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Create(ctx context.Con
 	resp.Diagnostics.Append(diags...)
 }
 
+// End of section. //template:end create
+
+// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state ApplicationAwareRoutingPolicyDefinition
 
@@ -352,6 +363,9 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Read(ctx context.Conte
 	resp.Diagnostics.Append(diags...)
 }
 
+// End of section. //template:end read
+
+// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state ApplicationAwareRoutingPolicyDefinition
 
@@ -396,6 +410,9 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Update(ctx context.Con
 	resp.Diagnostics.Append(diags...)
 }
 
+// End of section. //template:end update
+
+// Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state ApplicationAwareRoutingPolicyDefinition
 
@@ -419,6 +436,11 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Delete(ctx context.Con
 	resp.State.RemoveResource(ctx)
 }
 
+// End of section. //template:end delete
+
+// Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *ApplicationAwareRoutingPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
+
+// End of section. //template:end import

@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanCentralizedPolicy(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_centralized_policy.test", "name", "Example"))
@@ -43,6 +47,9 @@ func TestAccDataSourceSdwanCentralizedPolicy(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanCentralizedPolicyPrerequisitesConfig = `
 resource "sdwan_site_list_policy_object" "sites1" {
   name = "TF_TEST"
@@ -84,6 +91,9 @@ resource "sdwan_traffic_data_policy_definition" "data1" {
 
 `
 
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanCentralizedPolicyConfig() string {
 	config := ""
 	config += `resource "sdwan_centralized_policy" "test" {` + "\n"
@@ -107,3 +117,5 @@ func testAccDataSourceSdwanCentralizedPolicyConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

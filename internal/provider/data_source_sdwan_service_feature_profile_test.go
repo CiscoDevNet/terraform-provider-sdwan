@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
 	"testing"
@@ -26,6 +27,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanServiceFeatureProfile(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
@@ -45,6 +49,12 @@ func TestAccDataSourceSdwanServiceFeatureProfile(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanServiceFeatureProfileConfig() string {
 	config := ""
 	config += `resource "sdwan_service_feature_profile" "test" {` + "\n"
@@ -59,3 +69,5 @@ func testAccDataSourceSdwanServiceFeatureProfileConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanRewriteRulePolicyDefinition(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_rewrite_rule_policy_definition.test", "name", "Example"))
@@ -44,6 +48,9 @@ func TestAccDataSourceSdwanRewriteRulePolicyDefinition(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanRewriteRulePolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_class_map_policy_object" "test" {
   name = "TF_TEST_ALL"
@@ -52,6 +59,9 @@ resource "sdwan_class_map_policy_object" "test" {
 
 `
 
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanRewriteRulePolicyDefinitionConfig() string {
 	config := ""
 	config += `resource "sdwan_rewrite_rule_policy_definition" "test" {` + "\n"
@@ -72,3 +82,5 @@ func testAccDataSourceSdwanRewriteRulePolicyDefinitionConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

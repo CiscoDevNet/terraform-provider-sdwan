@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanPreferredColorGroupPolicyObject(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_preferred_color_group_policy_object.test", "name", "Example"))
@@ -46,6 +50,12 @@ func TestAccDataSourceSdwanPreferredColorGroupPolicyObject(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanPreferredColorGroupPolicyObjectConfig() string {
 	config := ""
 	config += `resource "sdwan_preferred_color_group_policy_object" "test" {` + "\n"
@@ -65,3 +75,5 @@ func testAccDataSourceSdwanPreferredColorGroupPolicyObjectConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

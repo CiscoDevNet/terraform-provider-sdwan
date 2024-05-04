@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -38,6 +39,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
+
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &DataFQDNPrefixListPolicyObjectResource{}
@@ -105,6 +110,9 @@ func (r *DataFQDNPrefixListPolicyObjectResource) Configure(_ context.Context, re
 	r.updateMutex = req.ProviderData.(*SdwanProviderData).UpdateMutex
 }
 
+// End of section. //template:end model
+
+// Section below is generated&owned by "gen/generator.go". //template:begin create
 func (r *DataFQDNPrefixListPolicyObjectResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan DataFQDNPrefixListPolicyObject
 
@@ -134,6 +142,9 @@ func (r *DataFQDNPrefixListPolicyObjectResource) Create(ctx context.Context, req
 	resp.Diagnostics.Append(diags...)
 }
 
+// End of section. //template:end create
+
+// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (r *DataFQDNPrefixListPolicyObjectResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var state DataFQDNPrefixListPolicyObject
 
@@ -163,6 +174,9 @@ func (r *DataFQDNPrefixListPolicyObjectResource) Read(ctx context.Context, req r
 	resp.Diagnostics.Append(diags...)
 }
 
+// End of section. //template:end read
+
+// Section below is generated&owned by "gen/generator.go". //template:begin update
 func (r *DataFQDNPrefixListPolicyObjectResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var plan, state DataFQDNPrefixListPolicyObject
 
@@ -207,6 +221,9 @@ func (r *DataFQDNPrefixListPolicyObjectResource) Update(ctx context.Context, req
 	resp.Diagnostics.Append(diags...)
 }
 
+// End of section. //template:end update
+
+// Section below is generated&owned by "gen/generator.go". //template:begin delete
 func (r *DataFQDNPrefixListPolicyObjectResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state DataFQDNPrefixListPolicyObject
 
@@ -230,6 +247,11 @@ func (r *DataFQDNPrefixListPolicyObjectResource) Delete(ctx context.Context, req
 	resp.State.RemoveResource(ctx)
 }
 
+// End of section. //template:end delete
+
+// Section below is generated&owned by "gen/generator.go". //template:begin import
 func (r *DataFQDNPrefixListPolicyObjectResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
+
+// End of section. //template:end import
