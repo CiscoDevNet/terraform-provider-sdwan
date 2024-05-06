@@ -22,6 +22,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
       description             = "neighbor1"
       shutdown                = false
       remote_as               = 200
+      local_as                = 200
       keepalive_time          = 40
       hold_time               = 200
       update_source_interface = "GigabitEthernet0"
@@ -51,6 +52,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
       description             = "neighbor2"
       shutdown                = false
       remote_as               = 200
+      local_as                = 200
       keepalive_time          = 180
       hold_time               = 60
       update_source_interface = "Loopback1"
