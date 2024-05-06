@@ -377,9 +377,9 @@ func (data *SystemNTP) updateFromBody(ctx context.Context, res gjson.Result) {
 	}
 	path := "payload.data."
 	for i := range data.Servers {
-		keys := [...]string{"key"}
-		keyValues := [...]string{strconv.FormatInt(data.Servers[i].AuthenticationKey.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.Servers[i].AuthenticationKeyVariable.ValueString()}
+		keys := [...]string{"name"}
+		keyValues := [...]string{data.Servers[i].HostnameIpAddress.ValueString()}
+		keyValuesVariables := [...]string{data.Servers[i].HostnameIpAddressVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "server").ForEach(
