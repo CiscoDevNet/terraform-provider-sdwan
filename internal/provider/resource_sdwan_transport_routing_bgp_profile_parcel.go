@@ -247,6 +247,14 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"local_as": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set local autonomous number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.").String,
+							Optional:            true,
+						},
+						"local_as_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
 						"keepalive_time": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set how often to advertise keepalive messages to BGP peer").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("60").String,
 							Optional:            true,
@@ -464,6 +472,14 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 							Optional:            true,
 						},
 						"remote_as_variable": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+							Optional:            true,
+						},
+						"local_as": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set local autonomous system number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.").String,
+							Optional:            true,
+						},
+						"local_as_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

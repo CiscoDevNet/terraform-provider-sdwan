@@ -39,6 +39,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
       description             = "neighbor1"
       shutdown                = false
       remote_as               = 200
+      local_as                = 200
       keepalive_time          = 40
       hold_time               = 200
       update_source_interface = "GigabitEthernet0"
@@ -68,6 +69,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
       description             = "neighbor2"
       shutdown                = false
       remote_as               = 200
+      local_as                = 200
       keepalive_time          = 180
       hold_time               = 60
       update_source_interface = "Loopback1"
@@ -268,6 +270,8 @@ Optional:
   - Range: `0`-`65535`
   - Default value: `60`
 - `keepalive_time_variable` (String) Variable name
+- `local_as` (Number) Set local autonomous number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
+- `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
@@ -376,6 +380,8 @@ Optional:
   - Range: `0`-`65535`
   - Default value: `60`
 - `keepalive_time_variable` (String) Variable name
+- `local_as` (Number) Set local autonomous system number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
+- `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
   - Default value: `false`
 - `next_hop_self_variable` (String) Variable name
