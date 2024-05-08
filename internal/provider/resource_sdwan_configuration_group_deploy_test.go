@@ -62,6 +62,42 @@ resource "sdwan_system_basic_profile_parcel" "test" {
   feature_profile_id = sdwan_system_feature_profile.test.id
 }
 
+resource "sdwan_system_aaa_profile_parcel" "test" {
+  name               = "AAA_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+  server_auth_order  = ["local"]
+  users = [{
+    name     = "admin"
+    password = "admin"
+  }]
+}
+
+resource "sdwan_system_bfd_profile_parcel" "test" {
+  name               = "BFD_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
+resource "sdwan_system_global_profile_parcel" "test" {
+  name               = "GLOBAL_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
+resource "sdwan_system_logging_profile_parcel" "test" {
+  name               = "LOGGING_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
+resource "sdwan_transport_feature_profile" "test" {
+  name        = "TRANSPORT_TF"
+  description = "My transport feature profile 1"
+}
+
+resource "sdwan_transport_wan_vpn_profile_parcel" "test" {
+  name               = "WAN_VPN_TF"
+  feature_profile_id = sdwan_transport_feature_profile.test.id
+  vpn                = 0
+}
+
 resource "sdwan_configuration_group" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
@@ -69,6 +105,9 @@ resource "sdwan_configuration_group" "test" {
   feature_profiles = [
     {
       id = sdwan_system_feature_profile.test.id
+    },
+    {
+      id = sdwan_transport_feature_profile.test.id
     }
   ]
 }
