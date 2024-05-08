@@ -14,9 +14,9 @@ This data source can read the Service LAN VPN Interface Ethernet profile parcel.
 
 ```terraform
 data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
-  id                 = "f6b2c44c-693c-4763-b010-895aa3d236bd"
-  feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  profile_parcel_id  = "140331f6-5418-4755-a059-13c77eb96037"
+  id                                = "f6b2c44c-693c-4763-b010-895aa3d236bd"
+  feature_profile_id                = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  service_lan_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
 }
 ```
 
@@ -27,7 +27,7 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `id` (String) The id of the profile parcel
-- `profile_parcel_id` (String) Profile Profile ID
+- `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Profile ID
 
 ### Read-Only
 
@@ -47,6 +47,7 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `description` (String) The description of the profile parcel
 - `duplex` (String) Duplex mode
 - `duplex_variable` (String) Variable name
+- `enable_dhcpv6` (Boolean) Enable DHCPv6
 - `enable_nat64` (Boolean) NAT64 on this interface
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
 - `icmp_redirect_disable_variable` (String) Variable name
@@ -58,6 +59,12 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ip_directed_broadcast_variable` (String) Variable name
 - `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
 - `ip_mtu_variable` (String) Variable name
+- `ipv4_address` (String) IP Address
+- `ipv4_address_variable` (String) Variable name
+- `ipv4_dhcp_distance` (Number) DHCP Distance
+- `ipv4_dhcp_distance_variable` (String) Variable name
+- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
+- `ipv4_dhcp_helper_variable` (String) Variable name
 - `ipv4_nat` (Boolean) enable Network Address Translation on this interface
 - `ipv4_nat_loopback` (String) NAT Inside Source Loopback Interface
 - `ipv4_nat_loopback_variable` (String) Variable name
@@ -75,23 +82,16 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ipv4_nat_type_variable` (String) Variable name
 - `ipv4_nat_udp_timeout` (Number) Set NAT UDP session timeout, in minutes
 - `ipv4_nat_udp_timeout_variable` (String) Variable name
-- `ipv4_settings_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
-- `ipv4_settings_dhcp_helper_variable` (String) Variable name
-- `ipv4_settings_dynamic_dhcp_distance` (Number) DHCP Distance
-- `ipv4_settings_dynamic_dhcp_distance_variable` (String) Variable name
-- `ipv4_settings_static_ip_address` (String) IP Address
-- `ipv4_settings_static_ip_address_variable` (String) Variable name
-- `ipv4_settings_static_secondary_address` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_settings_static_secondary_address))
-- `ipv4_settings_static_subnet_mask` (String) Subnet Mask
-- `ipv4_settings_static_subnet_mask_variable` (String) Variable name
+- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv4_vrrps` (Attributes List) Enable VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
+- `ipv6_address` (String) IPv6 Address Secondary
+- `ipv6_address_variable` (String) Variable name
+- `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
+- `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
-- `ipv6_settings_dhcp_helper` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_settings_dhcp_helper))
-- `ipv6_settings_dynamic_dhcp_client` (Boolean) Enable DHCPv6
-- `ipv6_settings_dynamic_secondary_address` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_settings_dynamic_secondary_address))
-- `ipv6_settings_static_address` (String) IPv6 Address Secondary
-- `ipv6_settings_static_address_variable` (String) Variable name
-- `ipv6_settings_static_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_settings_static_secondary_address))
+- `ipv6_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_address))
 - `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6 (see [below for nested schema](#nestedatt--ipv6_vrrps))
 - `load_interval` (Number) Interval for interface load calculation
 - `load_interval_variable` (String) Variable name
@@ -111,11 +111,11 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `tracker_variable` (String) Variable name
 - `trustsec_enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface
 - `trustsec_enable_sgt_propogation` (Boolean) Indicates that the interface is trustworthy for CTS
-- `trustsec_enforced_security_group_tags` (Number) SGT value between 2 and 65519
-- `trustsec_enforced_security_group_tags_variable` (String) Variable name
+- `trustsec_enforced_security_group_tag` (Number) SGT value between 2 and 65519
+- `trustsec_enforced_security_group_tag_variable` (String) Variable name
 - `trustsec_propogate` (Boolean) Enables the interface for CTS SGT authorization and forwarding
-- `trustsec_security_group_tags` (Number) SGT value between 2 and 65519
-- `trustsec_security_group_tags_variable` (String) Variable name
+- `trustsec_security_group_tag` (Number) SGT value between 2 and 65519
+- `trustsec_security_group_tag_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
 - `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local LAN interface
 - `xconnect_variable` (String) Variable name
@@ -131,13 +131,13 @@ Read-Only:
 - `mac_address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv4_settings_static_secondary_address"></a>
-### Nested Schema for `ipv4_settings_static_secondary_address`
+<a id="nestedatt--ipv4_secondary_addresses"></a>
+### Nested Schema for `ipv4_secondary_addresses`
 
 Read-Only:
 
-- `ip_address` (String) IpV4 Address
-- `ip_address_variable` (String) Variable name
+- `address` (String) IpV4 Address
+- `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 
@@ -165,26 +165,26 @@ Read-Only:
 
 Read-Only:
 
-- `ip_address` (String) Ip Address
-- `ip_address_variable` (String) Variable name
+- `address` (String) Ip Address
+- `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 
 
 
-<a id="nestedatt--ipv6_settings_dhcp_helper"></a>
-### Nested Schema for `ipv6_settings_dhcp_helper`
+<a id="nestedatt--ipv6_dhcp_helpers"></a>
+### Nested Schema for `ipv6_dhcp_helpers`
 
 Read-Only:
 
-- `dhcpv6_helper` (String) DHCPv6 Helper address
-- `dhcpv6_helper_variable` (String) Variable name
+- `address` (String) DHCPv6 Helper address
+- `address_variable` (String) Variable name
 - `dhcpv6_helper_vpn` (Number) DHCPv6 Helper VPN
 - `dhcpv6_helper_vpn_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_settings_dynamic_secondary_address"></a>
-### Nested Schema for `ipv6_settings_dynamic_secondary_address`
+<a id="nestedatt--ipv6_dhcp_secondary_addresses"></a>
+### Nested Schema for `ipv6_dhcp_secondary_addresses`
 
 Read-Only:
 
@@ -192,13 +192,13 @@ Read-Only:
 - `address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_settings_static_secondary_address"></a>
-### Nested Schema for `ipv6_settings_static_secondary_address`
+<a id="nestedatt--ipv6_secondary_address"></a>
+### Nested Schema for `ipv6_secondary_address`
 
 Read-Only:
 
-- `ipv6_address` (String) IPv6 Address Secondary
-- `ipv6_address_variable` (String) Variable name
+- `address` (String) IPv6 Address Secondary
+- `address_variable` (String) Variable name
 
 
 <a id="nestedatt--ipv6_vrrps"></a>
@@ -220,10 +220,10 @@ Read-Only:
 
 Read-Only:
 
-- `global_ipv6_prefix` (String) Assign Global IPv6 Prefix
-- `global_ipv6_prefix_variable` (String) Variable name
-- `ipv6_link_local_address` (String) Use link-local IPv6 Address
-- `ipv6_link_local_address_variable` (String) Variable name
+- `global_address` (String) Assign Global IPv6 Prefix
+- `global_address_variable` (String) Variable name
+- `link_local_address` (String) Use link-local IPv6 Address
+- `link_local_address_variable` (String) Variable name
 
 
 

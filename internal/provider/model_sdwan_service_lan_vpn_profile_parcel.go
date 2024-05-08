@@ -400,10 +400,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 	if !data.SecondaryDnsAddressIpv4Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4Variable.ValueString())
-	} else if data.SecondaryDnsAddressIpv4.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "default")
-
-	} else {
+	} else if !data.SecondaryDnsAddressIpv4.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4.ValueString())
 	}
@@ -422,10 +419,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 	if !data.SecondaryDnsAddressIpv6Variable.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "variable")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6Variable.ValueString())
-	} else if data.SecondaryDnsAddressIpv6.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "default")
-
-	} else {
+	} else if !data.SecondaryDnsAddressIpv6.IsNull() {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6.ValueString())
 	}

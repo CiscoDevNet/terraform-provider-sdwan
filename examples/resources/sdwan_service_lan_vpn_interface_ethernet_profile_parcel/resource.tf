@@ -1,15 +1,23 @@
 resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
-  name                      = "Example"
-  description               = "My Example"
-  feature_profile_id        = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  profile_parcel_id         = "140331f6-5418-4755-a059-13c77eb96037"
-  shutdown                  = false
-  interface_name            = "GigabitEthernet3"
-  config_description        = "LAN"
-  ipv4_settings_dhcp_helper = ["false"]
-  ipv6_settings_dhcp_helper = [
+  name                              = "Example"
+  description                       = "My Example"
+  feature_profile_id                = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  service_lan_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
+  shutdown                          = false
+  interface_name                    = "GigabitEthernet3"
+  config_description                = "LAN"
+  ipv4_address                      = "1.2.3.4"
+  ipv4_subnet_mask                  = "0.0.0.0"
+  ipv4_secondary_addresses = [
     {
-      dhcpv6_helper     = "2001:0:0:1::0"
+      address     = "1.2.3.5"
+      subnet_mask = "0.0.0.0"
+    }
+  ]
+  ipv4_dhcp_helper = ["1.2.3.4"]
+  ipv6_dhcp_helpers = [
+    {
+      address           = "2001:0:0:1::0"
       dhcpv6_helper_vpn = 1
     }
   ]
@@ -35,14 +43,14 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   acl_shaping_rate = 12
   ipv6_vrrps = [
     {
-      group_id  = 0
+      group_id  = 1
       priority  = 100
       timer     = 1000
       track_omp = false
       addresses = [
         {
-          ipv6_link_local_address = "1::1"
-          global_ipv6_prefix      = "1::1/24"
+          link_local_address = "1::1"
+          global_address     = "1::1/24"
         }
       ]
     }
@@ -56,7 +64,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
       ip_address = "1.2.3.4"
       secondary_addresses = [
         {
-          ip_address  = "2.3.4.5"
+          address     = "2.3.4.5"
           subnet_mask = "0.0.0.0"
         }
       ]
@@ -70,23 +78,23 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  trustsec_enable_sgt_propogation       = false
-  trustsec_propogate                    = true
-  trustsec_security_group_tags          = example
-  trustsec_enable_enforced_propogation  = false
-  trustsec_enforced_security_group_tags = example-2
-  duplex                                = "full"
-  mac_address                           = "00-B0-D0-63-C2-26"
-  ip_mtu                                = 1500
-  interface_mtu                         = 1500
-  tcp_mss                               = 500
-  speed                                 = "1000"
-  arp_timeout                           = 1200
-  autonegotiate                         = false
-  media_type                            = "auto-select"
-  load_interval                         = 30
-  tracker                               = "TRACKER1"
-  icmp_redirect_disable                 = true
-  xconnect                              = "1"
-  ip_directed_broadcast                 = false
+  trustsec_enable_sgt_propogation      = false
+  trustsec_propogate                   = true
+  trustsec_security_group_tag          = 123
+  trustsec_enable_enforced_propogation = false
+  trustsec_enforced_security_group_tag = 1234
+  duplex                               = "full"
+  mac_address                          = "00-B0-D0-63-C2-26"
+  ip_mtu                               = 1500
+  interface_mtu                        = 1500
+  tcp_mss                              = 500
+  speed                                = "1000"
+  arp_timeout                          = 1200
+  autonegotiate                        = false
+  media_type                           = "auto-select"
+  load_interval                        = 30
+  tracker                              = "TRACKER1"
+  icmp_redirect_disable                = true
+  xconnect                             = "1"
+  ip_directed_broadcast                = false
 }

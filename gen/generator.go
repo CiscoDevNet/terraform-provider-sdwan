@@ -227,6 +227,7 @@ type YamlConfigAttribute struct {
 	Reference               bool                           `yaml:"reference"`
 	Variable                bool                           `yaml:"variable"`
 	Mandatory               bool                           `yaml:"mandatory"`
+	Optional                bool                           `yaml:"optional"`
 	WriteOnly               bool                           `yaml:"write_only"`
 	TfOnly                  bool                           `yaml:"tf_only"`
 	ExcludeTest             bool                           `yaml:"exclude_test"`
@@ -713,16 +714,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
-		onlyDefault := false
+		noGlobal := false
 
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
-		// if value := r.Get("properties.optionType.enum.0"); value.Exists() {
-		// 	// if value := r.Get("properties.optionType.enum.0=\"global\""); value.Exists() {
-		// 	t = r
-		// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
-		// 	// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\")"); value.Exists() {
-		// 	t = r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\").properties.refId")
-
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
 			t = r
 		}
@@ -779,11 +773,11 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
-			if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
-				attr.Variable = true
-			}
 		} else {
-			onlyDefault = true
+			noGlobal = true
+		}
+		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
+			attr.Variable = true
 		}
 
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
@@ -796,7 +790,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if onlyDefault {
+					if noGlobal {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
@@ -806,14 +800,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if onlyDefault {
+					if noGlobal {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
 					}
 				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
-				if onlyDefault {
+				if noGlobal {
 					attr.Value = value.String()
 				} else {
 					attr.DefaultValue = value.String()

@@ -103,7 +103,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 				{{- if isListSet .}}
 				ElementType:         types.{{.ElementType}}Type,
 				{{- end}}
-				{{- if .Mandatory}}
+				{{- if and .Mandatory (not .Optional)}}
 				Required:            true,
 				{{- else}}
 				Optional:            true,

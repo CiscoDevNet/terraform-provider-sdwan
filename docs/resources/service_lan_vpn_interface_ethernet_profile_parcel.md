@@ -16,17 +16,25 @@ This resource can manage a Service LAN VPN Interface Ethernet profile parcel.
 
 ```terraform
 resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
-  name                      = "Example"
-  description               = "My Example"
-  feature_profile_id        = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  profile_parcel_id         = "140331f6-5418-4755-a059-13c77eb96037"
-  shutdown                  = false
-  interface_name            = "GigabitEthernet3"
-  config_description        = "LAN"
-  ipv4_settings_dhcp_helper = ["false"]
-  ipv6_settings_dhcp_helper = [
+  name                              = "Example"
+  description                       = "My Example"
+  feature_profile_id                = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  service_lan_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
+  shutdown                          = false
+  interface_name                    = "GigabitEthernet3"
+  config_description                = "LAN"
+  ipv4_address                      = "1.2.3.4"
+  ipv4_subnet_mask                  = "0.0.0.0"
+  ipv4_secondary_addresses = [
     {
-      dhcpv6_helper     = "2001:0:0:1::0"
+      address     = "1.2.3.5"
+      subnet_mask = "0.0.0.0"
+    }
+  ]
+  ipv4_dhcp_helper = ["1.2.3.4"]
+  ipv6_dhcp_helpers = [
+    {
+      address           = "2001:0:0:1::0"
       dhcpv6_helper_vpn = 1
     }
   ]
@@ -52,14 +60,14 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   acl_shaping_rate = 12
   ipv6_vrrps = [
     {
-      group_id  = 0
+      group_id  = 1
       priority  = 100
       timer     = 1000
       track_omp = false
       addresses = [
         {
-          ipv6_link_local_address = "1::1"
-          global_ipv6_prefix      = "1::1/24"
+          link_local_address = "1::1"
+          global_address     = "1::1/24"
         }
       ]
     }
@@ -73,7 +81,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
       ip_address = "1.2.3.4"
       secondary_addresses = [
         {
-          ip_address  = "2.3.4.5"
+          address     = "2.3.4.5"
           subnet_mask = "0.0.0.0"
         }
       ]
@@ -87,25 +95,25 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  trustsec_enable_sgt_propogation       = false
-  trustsec_propogate                    = true
-  trustsec_security_group_tags          = example
-  trustsec_enable_enforced_propogation  = false
-  trustsec_enforced_security_group_tags = example-2
-  duplex                                = "full"
-  mac_address                           = "00-B0-D0-63-C2-26"
-  ip_mtu                                = 1500
-  interface_mtu                         = 1500
-  tcp_mss                               = 500
-  speed                                 = "1000"
-  arp_timeout                           = 1200
-  autonegotiate                         = false
-  media_type                            = "auto-select"
-  load_interval                         = 30
-  tracker                               = "TRACKER1"
-  icmp_redirect_disable                 = true
-  xconnect                              = "1"
-  ip_directed_broadcast                 = false
+  trustsec_enable_sgt_propogation      = false
+  trustsec_propogate                   = true
+  trustsec_security_group_tag          = 123
+  trustsec_enable_enforced_propogation = false
+  trustsec_enforced_security_group_tag = 1234
+  duplex                               = "full"
+  mac_address                          = "00-B0-D0-63-C2-26"
+  ip_mtu                               = 1500
+  interface_mtu                        = 1500
+  tcp_mss                              = 500
+  speed                                = "1000"
+  arp_timeout                          = 1200
+  autonegotiate                        = false
+  media_type                           = "auto-select"
+  load_interval                        = 30
+  tracker                              = "TRACKER1"
+  icmp_redirect_disable                = true
+  xconnect                             = "1"
+  ip_directed_broadcast                = false
 }
 ```
 
@@ -114,15 +122,15 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 
 ### Required
 
-- `acl_ipv4_egress_policy_id` (String)
-- `acl_ipv4_ingress_policy_id` (String)
-- `acl_ipv6_egress_policy_id` (String)
-- `acl_ipv6_ingress_policy_id` (String)
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
 ### Optional
 
+- `acl_ipv4_egress_policy_id` (String)
+- `acl_ipv4_ingress_policy_id` (String)
+- `acl_ipv6_egress_policy_id` (String)
+- `acl_ipv6_ingress_policy_id` (String)
 - `acl_shaping_rate` (Number) Shaping Rate (Kbps)
   - Range: `8`-`100000000`
 - `acl_shaping_rate_variable` (String) Variable name
@@ -139,6 +147,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `duplex` (String) Duplex mode
   - Choices: `full`, `half`, `auto`
 - `duplex_variable` (String) Variable name
+- `enable_dhcpv6` (Boolean) Enable DHCPv6
 - `enable_nat64` (Boolean) NAT64 on this interface
   - Default value: `false`
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
@@ -157,6 +166,13 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   - Range: `576`-`9216`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
+- `ipv4_address` (String) IP Address
+- `ipv4_address_variable` (String) Variable name
+- `ipv4_dhcp_distance` (Number) DHCP Distance
+  - Range: `1`-`65536`
+- `ipv4_dhcp_distance_variable` (String) Variable name
+- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
+- `ipv4_dhcp_helper_variable` (String) Variable name
 - `ipv4_nat` (Boolean) enable Network Address Translation on this interface
   - Default value: `false`
 - `ipv4_nat_loopback` (String) NAT Inside Source Loopback Interface
@@ -182,26 +198,18 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   - Range: `1`-`8947`
   - Default value: `1`
 - `ipv4_nat_udp_timeout_variable` (String) Variable name
-- `ipv4_settings_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
-- `ipv4_settings_dhcp_helper_variable` (String) Variable name
-- `ipv4_settings_dynamic_dhcp_distance` (Number) DHCP Distance
-  - Range: `1`-`65536`
-- `ipv4_settings_dynamic_dhcp_distance_variable` (String) Variable name
-- `ipv4_settings_static_ip_address` (String) IP Address
-- `ipv4_settings_static_ip_address_variable` (String) Variable name
-- `ipv4_settings_static_secondary_address` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_settings_static_secondary_address))
-- `ipv4_settings_static_subnet_mask` (String) Subnet Mask
+- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_settings_static_subnet_mask_variable` (String) Variable name
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv4_vrrps` (Attributes List) Enable VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
+- `ipv6_address` (String) IPv6 Address Secondary
+- `ipv6_address_variable` (String) Variable name
+- `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
+- `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
   - Default value: `false`
-- `ipv6_settings_dhcp_helper` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_settings_dhcp_helper))
-- `ipv6_settings_dynamic_dhcp_client` (Boolean) Enable DHCPv6
-- `ipv6_settings_dynamic_secondary_address` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_settings_dynamic_secondary_address))
-- `ipv6_settings_static_address` (String) IPv6 Address Secondary
-- `ipv6_settings_static_address_variable` (String) Variable name
-- `ipv6_settings_static_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_settings_static_secondary_address))
+- `ipv6_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_address))
 - `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6 (see [below for nested schema](#nestedatt--ipv6_vrrps))
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
@@ -212,7 +220,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `media_type` (String) Media type
   - Choices: `auto-select`, `rj45`, `sfp`
 - `media_type_variable` (String) Variable name
-- `profile_parcel_id` (String) Profile Profile ID
+- `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Profile ID
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed
@@ -227,14 +235,14 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `trustsec_enable_enforced_propogation` (Boolean) Enable/Disable SGT Enforcement on an interface
 - `trustsec_enable_sgt_propogation` (Boolean) Indicates that the interface is trustworthy for CTS
   - Default value: `false`
-- `trustsec_enforced_security_group_tags` (Number) SGT value between 2 and 65519
+- `trustsec_enforced_security_group_tag` (Number) SGT value between 2 and 65519
   - Range: `2`-`65519`
-- `trustsec_enforced_security_group_tags_variable` (String) Variable name
+- `trustsec_enforced_security_group_tag_variable` (String) Variable name
 - `trustsec_propogate` (Boolean) Enables the interface for CTS SGT authorization and forwarding
   - Default value: `true`
-- `trustsec_security_group_tags` (Number) SGT value between 2 and 65519
+- `trustsec_security_group_tag` (Number) SGT value between 2 and 65519
   - Range: `2`-`65519`
-- `trustsec_security_group_tags_variable` (String) Variable name
+- `trustsec_security_group_tag_variable` (String) Variable name
 - `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local LAN interface
 - `xconnect_variable` (String) Variable name
 
@@ -254,13 +262,13 @@ Optional:
 - `mac_address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv4_settings_static_secondary_address"></a>
-### Nested Schema for `ipv4_settings_static_secondary_address`
+<a id="nestedatt--ipv4_secondary_addresses"></a>
+### Nested Schema for `ipv4_secondary_addresses`
 
 Optional:
 
-- `ip_address` (String) IpV4 Address
-- `ip_address_variable` (String) Variable name
+- `address` (String) IpV4 Address
+- `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
@@ -297,28 +305,28 @@ Optional:
 
 Optional:
 
-- `ip_address` (String) Ip Address
-- `ip_address_variable` (String) Variable name
+- `address` (String) Ip Address
+- `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 
 
 
-<a id="nestedatt--ipv6_settings_dhcp_helper"></a>
-### Nested Schema for `ipv6_settings_dhcp_helper`
+<a id="nestedatt--ipv6_dhcp_helpers"></a>
+### Nested Schema for `ipv6_dhcp_helpers`
 
 Optional:
 
-- `dhcpv6_helper` (String) DHCPv6 Helper address
-- `dhcpv6_helper_variable` (String) Variable name
+- `address` (String) DHCPv6 Helper address
+- `address_variable` (String) Variable name
 - `dhcpv6_helper_vpn` (Number) DHCPv6 Helper VPN
   - Range: `1`-`65536`
 - `dhcpv6_helper_vpn_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_settings_dynamic_secondary_address"></a>
-### Nested Schema for `ipv6_settings_dynamic_secondary_address`
+<a id="nestedatt--ipv6_dhcp_secondary_addresses"></a>
+### Nested Schema for `ipv6_dhcp_secondary_addresses`
 
 Optional:
 
@@ -326,13 +334,13 @@ Optional:
 - `address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_settings_static_secondary_address"></a>
-### Nested Schema for `ipv6_settings_static_secondary_address`
+<a id="nestedatt--ipv6_secondary_address"></a>
+### Nested Schema for `ipv6_secondary_address`
 
 Optional:
 
-- `ipv6_address` (String) IPv6 Address Secondary
-- `ipv6_address_variable` (String) Variable name
+- `address` (String) IPv6 Address Secondary
+- `address_variable` (String) Variable name
 
 
 <a id="nestedatt--ipv6_vrrps"></a>
@@ -360,10 +368,10 @@ Optional:
 
 Optional:
 
-- `global_ipv6_prefix` (String) Assign Global IPv6 Prefix
-- `global_ipv6_prefix_variable` (String) Variable name
-- `ipv6_link_local_address` (String) Use link-local IPv6 Address
-- `ipv6_link_local_address_variable` (String) Variable name
+- `global_address` (String) Assign Global IPv6 Prefix
+- `global_address_variable` (String) Variable name
+- `link_local_address` (String) Use link-local IPv6 Address
+- `link_local_address_variable` (String) Variable name
 
 
 

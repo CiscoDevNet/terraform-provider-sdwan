@@ -11,80 +11,89 @@ attributes:
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_service_feature_profile.test.id
-  - tf_name: profile_parcel_id
+  - tf_name: service_lan_vpn_profile_parcel_id
     reference: true
     type: String
-    description: Profile Profile ID
+    description: Service LAN VPN Profile Profile ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_service_lan_vpn_profile_parcel.test.id
   - model_name: shutdown
     example: false
   - model_name: interfaceName
     example: GigabitEthernet3
+    minimum_test_value: '"GigabitEthernet3"'
   - model_name: description
     tf_name: config_description
     example: LAN
   - model_name: dynamicDhcpDistance
-    tf_name: ipv4_settings_dynamic_dhcp_distance
+    tf_name: ipv4_dhcp_distance
     data_path: [intfIpAddress, dynamic]
     exclude_test: true
     example: 1
   - model_name: ipAddress
-    tf_name: ipv4_settings_static_ip_address
+    tf_name: ipv4_address
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
-    exclude_test: true
     example: 1.2.3.4
+    minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
-    tf_name: ipv4_settings_static_subnet_mask
+    tf_name: ipv4_subnet_mask
     data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
-    exclude_test: true
     example: 0.0.0.0
+    minimum_test_value: '"0.0.0.0"'
   - model_name: staticIpV4AddressSecondary
-    tf_name: ipv4_settings_static_secondary_address
+    tf_name: ipv4_secondary_addresses
     data_path: [intfIpAddress, static]
-    exclude_test: true
     attributes:
     - model_name: ipAddress
-      example: 1.2.3.4
+      tf_name: address
+      id: true
+      example: 1.2.3.5
     - model_name: subnetMask
       example: 0.0.0.0
   - model_name: dhcpHelper
-    tf_name: ipv4_settings_dhcp_helper
-    example: false
+    tf_name: ipv4_dhcp_helper
+    example: 1.2.3.4
   - model_name: dhcpClient
-    tf_name: ipv6_settings_dynamic_dhcp_client
+    tf_name: enable_dhcpv6
     data_path: [intfIpV6Address, dynamic]
     exclude_test: true
     example: false
   - model_name: secondaryIpV6Address
-    tf_name: ipv6_settings_dynamic_secondary_address
+    tf_name: ipv6_dhcp_secondary_addresses
     data_path: [intfIpV6Address, dynamic]
+    exclude_null: true
     exclude_test: true
     attributes:
     - model_name: address
+      id: true
       example: 2001:0:0:1::0
   - model_name: address
-    tf_name: ipv6_settings_static_address
+    tf_name: ipv6_address
     data_path: [intfIpV6Address, static, primaryIpV6Address]
     exclude_test: true
     example: 2001:0:0:1::0
   - model_name: secondaryIpV6Address
-    tf_name: ipv6_settings_static_secondary_address
+    tf_name: ipv6_secondary_address
     data_path: [intfIpV6Address, static]
+    exclude_null: true
     exclude_test: true
     attributes:
     - model_name: address
-      tf_name: ipv6_address
+      tf_name: address
+      id: true
       example: 2001:0:0:1::0
   - model_name: dhcpHelperV6
-    tf_name: ipv6_settings_dhcp_helper
-    data_path: [intfIpV6Address, static, ]
+    tf_name: ipv6_dhcp_helpers
+    data_path: [intfIpV6Address, static]
+    exclude_null: true
     attributes:
     - model_name: ipAddress
-      tf_name: dhcpv6_helper
+      tf_name: address
+      id: true
       example: 2001:0:0:1::0
     - model_name: vpn
       tf_name: dhcpv6_helper_vpn
+      id: true
       example: 1
   - model_name: nat
     tf_name: ipv4_nat
@@ -93,6 +102,7 @@ attributes:
     tf_name: ipv4_nat_type
     data_path: [natAttributesIpv4]
     example: pool
+    minimum_test_value: '"pool"'
   - model_name: rangeStart
     tf_name: ipv4_nat_range_start
     data_path: [natAttributesIpv4, natPool]
@@ -126,13 +136,17 @@ attributes:
     data_path: [natAttributesIpv4]
     attributes:
     - model_name: sourceIp
+      id: true
       example: 1.2.3.4
     - model_name: translateIp
+      id: true
       example: 2.3.4.5
     - model_name: staticNatDirection
       tf_name: direction
+      id: true
       example: inside
     - model_name: sourceVpn
+      id: true
       example: 0
   - model_name: natIpv6
     tf_name: ipv6_nat
@@ -140,6 +154,7 @@ attributes:
   - model_name: nat64
     tf_name: enable_nat64
     data_path: [natAttributesIpv6]
+    exclude_null: true
     example: false
   - model_name: shapingRate
     tf_name: acl_shaping_rate
@@ -148,28 +163,33 @@ attributes:
   - model_name: refId
     tf_name: acl_ipv4_egress_policy_id
     data_path: [aclQos, ipv4AclEgress]
+    optional: true
     exclude_test: true
     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: refId
     tf_name: acl_ipv4_ingress_policy_id
     data_path: [aclQos, ipv4AclIngress]
+    optional: true
     exclude_test: true
     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: refId
     tf_name: acl_ipv6_egress_policy_id
     data_path: [aclQos, ipv6AclEgress]
+    optional: true
     exclude_test: true
     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: refId
     tf_name: acl_ipv6_ingress_policy_id
     data_path: [aclQos, ipv6AclIngress]
+    optional: true
     exclude_test: true
     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
   - model_name: vrrpIpv6
     tf_name: ipv6_vrrps
     attributes:
     - model_name: groupId
-      example: 0
+      id: true
+      example: 1
     - model_name: priority
       example: 100
     - model_name: timer
@@ -180,17 +200,18 @@ attributes:
       tf_name: addresses
       attributes:
       - model_name: ipv6LinkLocal
-        tf_name: ipv6_link_local_address
+        tf_name: link_local_address
         id: true
         example: 1::1
       - model_name: prefix
-        tf_name: global_ipv6_prefix
+        tf_name: global_address
         example: 1::1/24
   - model_name: vrrp
     tf_name: ipv4_vrrps
     attributes:
     - model_name: group_id
       tf_name: group_id
+      id: true
       example: 1
     - model_name: priority
       example: 100
@@ -204,6 +225,8 @@ attributes:
       tf_name: secondary_addresses
       attributes:
       - model_name: ipAddress
+        tf_name: address
+        id: true
         example: 2.3.4.5
       - model_name: subnetMask
         example: 0.0.0.0
@@ -218,6 +241,7 @@ attributes:
     #   attributes:
     #   - model_name: trackerId
     #     tf_name: tracker_policy_id
+    #     id: true
     #     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
     #   - model_name: trackerAction
     #     example: decrement
@@ -227,8 +251,10 @@ attributes:
     tf_name: arps
     attributes:
     - model_name: ipAddress 
+      id: true
       example: 1.2.3.4
     - model_name: macAddress
+      id: true
       example: 00-B0-D0-63-C2-26
   - model_name: enableSGTPropogation
     tf_name: trustsec_enable_sgt_propogation
@@ -239,17 +265,17 @@ attributes:
     data_path: [trustsec]
     example: true
   - model_name: securityGroupTag
-    tf_name: trustsec_security_group_tags
+    tf_name: trustsec_security_group_tag
     data_path: [trustsec]
-    example: example
+    example: 123
   - model_name: enableEnforcedPropogation
     tf_name: trustsec_enable_enforced_propogation
     data_path: [trustsec]
     example: false
   - model_name: enforcedSecurityGroupTag
-    tf_name: trustsec_enforced_security_group_tags
+    tf_name: trustsec_enforced_security_group_tag
     data_path: [trustsec]
-    example: example-2
+    example: 1234
   - model_name: duplex
     data_path: [advanced]
     example: full
@@ -294,7 +320,6 @@ attributes:
     data_path: [advanced]
     example: false
 
-
 test_prerequisites: |
   resource "sdwan_service_feature_profile" "test" {
     name = "TF_TEST"
@@ -302,131 +327,6 @@ test_prerequisites: |
   }
 
   resource "sdwan_service_lan_vpn_profile_parcel" "test" {
-    name                       = "TF_TEST"
-    description                = "Terraform test"
-    feature_profile_id         = sdwan_service_feature_profile.test.id
-    vpn                        = 1
-    config_description         = "VPN1"
-    omp_admin_distance_ipv4    = 1
-    omp_admin_distance_ipv6    = 1
-    enable_sdwan_remote_access = false
-    primary_dns_address_ipv4   = "1.2.3.4"
-    secondary_dns_address_ipv4 = "2.3.4.5"
-    primary_dns_address_ipv6   = "2001:0:0:1::0"
-    secondary_dns_address_ipv6 = "2001:0:0:2::0"
-    host_mappings = [
-      {
-        host_name   = "HOSTMAPPING1"
-        list_of_ips = ["1.2.3.4"]
-      }
-    ]
-    ipv4_static_routes = [
-      {
-        network_address = "1.2.3.4"
-        subnet_mask     = "0.0.0.0"
-        next_hops = [
-          {
-            address                 = "1.2.3.4"
-            administrative_distance = 1
-          }
-        ]
-      }
-    ]
-    ipv6_static_routes = [
-      {
-        prefix = "2001:0:0:1::0/12"
-        next_hops = [
-          {
-            address                 = "2001:0:0:1::0"
-            administrative_distance = 1
-          }
-        ]
-      }
-    ]
-    services = [
-      {
-        service_type   = "FW"
-        ipv4_addresses = ["1.2.3.4"]
-        tracking       = true
-      }
-    ]
-    service_routes = [
-      {
-        network_address = "1.2.3.4"
-        subnet_mask     = "0.0.0.0"
-        service         = "SIG"
-        vpn             = 0
-      }
-    ]
-    gre_routes = [
-      {
-        network_address = "1.2.3.4"
-        subnet_mask     = "0.0.0.0"
-        interface       = ["gre01"]
-        vpn             = 0
-      }
-    ]
-    ipsec_routes = [
-      {
-        network_address = "1.2.3.4"
-        subnet_mask     = "0.0.0.0"
-        interface       = ["ipsec01"]
-      }
-    ]
-    nat_pools = [
-      {
-        nat_pool_name = 1
-        prefix_length = 3
-        range_start   = "1.2.3.4"
-        range_end     = "2.3.4.5"
-        overload      = true
-        direction     = "inside"
-      }
-    ]
-    nat_port_forwards = [
-      {
-        nat_pool_name        = 2
-        source_port          = 122
-        translate_port       = 330
-        source_ip            = "1.2.3.4"
-        translated_source_ip = "2.3.4.5"
-        protocol             = "TCP"
-      }
-    ]
-    static_nats = [
-      {
-        nat_pool_name        = 3
-        source_ip            = "1.2.3.4"
-        translated_source_ip = "2.3.4.5"
-        static_nat_direction = "inside"
-      }
-    ]
-    nat_64_v4_pools = [
-      {
-        name        = "NATPOOL1"
-        range_start = "1.2.3.4"
-        range_end   = "2.3.4.5"
-        overload    = false
-      }
-    ]
-    ipv4_import_route_targets = [
-      {
-        route_target = "1.1.1.3:200"
-      }
-    ]
-    ipv4_export_route_targets = [
-      {
-        route_target = "1.1.1.3:200"
-      }
-    ]
-    ipv6_import_route_targets = [
-      {
-        route_target = "1.1.1.3:200"
-      }
-    ]
-    ipv6_export_route_targets = [
-      {
-        route_target = "1.1.1.3:200"
-      }
-    ]
+    name = "TF_TEST_SLAN"
+    feature_profile_id = sdwan_service_feature_profile.test.id
   }
