@@ -57,6 +57,11 @@ resource "sdwan_system_feature_profile" "test" {
   description = "My system feature profile 1"
 }
 
+resource "sdwan_system_basic_profile_parcel" "test" {
+  name = "BASIC_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+}
+
 resource "sdwan_configuration_group" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
