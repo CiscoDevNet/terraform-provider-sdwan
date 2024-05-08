@@ -1,0 +1,1 @@
+terraform import sdwan_transport_management_vpn_interface_ethernet_profile_parcel.example "f6b2c44c-693c-4763-b010-895aa3d236bd"

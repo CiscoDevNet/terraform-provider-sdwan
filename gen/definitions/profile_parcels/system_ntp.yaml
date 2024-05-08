@@ -1,7 +1,8 @@
 ---
 name: System NTP
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/ntp
-minimum_version: 20.9.0
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -14,10 +15,10 @@ attributes:
     attributes:
       - model_name: name
         tf_name: hostname_ip_address
+        id: true
         example: "1.1.1.1"
       - model_name: key
         tf_name: authentication_key
-        id: true
         example: 41673
       - model_name: vpn
         example: 1

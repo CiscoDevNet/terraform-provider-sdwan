@@ -121,6 +121,8 @@ Read-Only:
 - `hold_time_variable` (String) Variable name
 - `keepalive_time` (Number) Set how often to advertise keepalive messages to BGP peer
 - `keepalive_time_variable` (String) Variable name
+- `local_as` (Number) Set local autonomous number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
+- `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
 - `next_hop_self_variable` (String) Variable name
 - `password` (String) Set MD5 password on TCP connection with BGP peer
@@ -209,6 +211,8 @@ Read-Only:
 - `hold_time_variable` (String) Variable name
 - `keepalive_time` (Number) Interval (seconds) of keepalive messages sent to its BGP peer
 - `keepalive_time_variable` (String) Variable name
+- `local_as` (Number) Set local autonomous system number,Local-AS cannot have the local BGP protocol AS number or the AS number of the remote peer.The local-as is valid only if the peer is a true eBGP peer. It does not work for two peers in different sub-ASs in a confederation.
+- `local_as_variable` (String) Variable name
 - `next_hop_self` (Boolean) Set router to be next hop for routes advertised to neighbor
 - `next_hop_self_variable` (String) Variable name
 - `password` (String) Set MD5 password on TCP connection with BGP peer

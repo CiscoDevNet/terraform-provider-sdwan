@@ -1,0 +1,127 @@
+---
+name: Transport Management VPN Interface Ethernet
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn/%s/interface/ethernet
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - tf_name: transport_management_vpn_profile_parcel_id
+    reference: true
+    type: String
+    description: Transport Management VPN Profile Parcel ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_transport_management_vpn_profile_parcel.test.id
+  - model_name: shutdown
+    example: true
+  - model_name: interfaceName
+    mandatory: true
+    example: GigabitEthernet1
+  - model_name: description
+    tf_name: basic_configuration_description
+    example: Transport Management VPN Interface Ethernet
+  - model_name: dynamicDhcpDistance
+    tf_name: ipv4_dhcp_distance
+    data_path: [intfIpAddress, dynamic]
+    example: 1
+    exclude_test: true
+  - model_name: ipAddress
+    tf_name: ipv4_address
+    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    example: 1.2.3.4
+    minimum_test_value: '"1.2.3.4"'
+  - model_name: subnetMask
+    tf_name: ipv4_subnet_mask
+    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    example: 0.0.0.0
+    minimum_test_value: '"0.0.0.0"'
+  - model_name: staticIpV4AddressSecondary
+    tf_name: ipv4_secondary_addresses
+    data_path: [intfIpAddress, static]
+    attributes:
+    - model_name: ipAddress
+      tf_name: address
+      id: true
+      example: 1.2.3.4
+    - model_name: subnetMask
+      example: 0.0.0.0
+  - model_name: dhcpHelper
+    tf_name: ipv4_dhcp_helper
+    example: 1.2.3.4
+  - model_name: iperfServer
+    tf_name: ipv4_iperf_server
+    example: example 
+  - model_name: autoDetectBandwidth
+    tf_name: ipv4_auto_detect_bandwidth
+    example: false
+  - model_name: dhcpClient
+    tf_name: enable_dhcpv6
+    data_path: [intfIpV6Address, dynamic]
+    type: Bool
+    example: true
+    exclude_test: true
+  - model_name: address
+    tf_name: ipv6_address
+    data_path: [intfIpV6Address, static, primaryIpV6Address]
+    example: 2001:0:0:1::/64
+  - model_name: arp
+    tf_name: arp_entries
+    attributes:
+    - model_name: ipAddress
+      id: true
+      example: 1.2.3.4
+    - model_name: macAddress
+      id: true
+      example: "00-B0-D0-63-C2-26"
+  - model_name: duplex
+    data_path: [advanced]
+    example: full
+  - model_name: macAddress
+    data_path: [advanced]
+    example: "00-B0-D0-63-C2-26"
+  - model_name: ipMtu
+    data_path: [advanced]
+    example: 1500
+  - model_name: intrfMtu
+    tf_name: interface_mtu
+    data_path: [advanced]
+    example: 1500
+  - model_name: tcpMss
+    data_path: [advanced]
+    example: 505
+  - model_name: speed
+    data_path: [advanced]
+    example: 2500
+  - model_name: arpTimeout
+    data_path: [advanced]
+    example: 1200
+  - model_name: autonegotiate
+    data_path: [advanced]
+    example: false
+  - model_name: mediaType
+    data_path: [advanced]
+    example: rj45  
+  - model_name: loadInterval
+    data_path: [advanced]
+    example: 30
+  - model_name: icmpRedirectDisable
+    data_path: [advanced]
+    example: true
+  - model_name: ipDirectedBroadcast
+    data_path: [advanced]
+    example: false 
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_transport_management_vpn_profile_parcel" "test" {
+    name                            = "TF_TEST_VPN"
+    feature_profile_id              = sdwan_transport_feature_profile.test.id
+  }

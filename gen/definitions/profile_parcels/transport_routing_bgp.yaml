@@ -62,6 +62,8 @@ attributes:
       example: false
     - model_name: remoteAs
       example: 200
+    - model_name: localAs
+      example: 200
     - model_name: keepalive
       tf_name: keepalive_time
       example: 40
@@ -138,6 +140,8 @@ attributes:
     - model_name: shutdown
       example: false
     - model_name: remoteAs
+      example: 200
+    - model_name: localAs
       example: 200
     - model_name: keepalive
       tf_name: keepalive_time

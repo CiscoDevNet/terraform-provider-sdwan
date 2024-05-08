@@ -7,14 +7,30 @@ description: |-
 
 # Changelog
 
-## 0.3.9 (unreleased)
+## 0.3.10 (unreleased)
+
+- Add `sdwan_configuration_group_devices` resource and data source
+- Add `sdwan_configuration_group_device_variables` resource and data source
+- Add `sdwan_configuration_group_deploy` resource
+- Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_profile_parcel` resource and data source
+
+## 0.3.9
 
 - Fix issue with rendering feature template payloads
 - Add `sdwan_transport_routing_bgp_profile_parcel` resource and data source
 - Add `sdwan_service_lan_vpn_profile_parcel` resource and data source
 - Add `sdwan_system_ntp_profile_parcel` resource and data source
 - Add `sdwan_system_performance_monitoring_profile_parcel` resource and data source
-- Add `sdwan_service_lan_vpn_interface_ethernet_profile_parcel` resource and data source
+- Handle 429 responses with retry logic
+- Add `sdwan_system_remote_access_profile_parcel` resource and data source
+- Add `sdwan_transport_ipv6_tracker_profile_parcel` resource and data source
+- Add `sdwan_service_tracker_profile_parcel` resource and data source
+- Use existing variable values if none are provided with `sdwan_attach_feature_device_template` resource
+- Add `sdwan_cli_config_profile_parcel` resource and data source
+- Add `sdwan_system_logging_profile_parcel` resource and data source
+- Add `sdwan_transport_management_vpn_profile_parcel` resource and data source
+- Fix issue when updating certain policy definitions, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/230)
 
 ## 0.3.8
 

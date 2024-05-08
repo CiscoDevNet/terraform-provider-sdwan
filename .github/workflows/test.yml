@@ -42,6 +42,8 @@ jobs:
       - run: pip install yamale
       - run: yamale -s gen/schema/schema.yaml gen/definitions/
       - run: go mod download
+      - run: go generate
+      - run: git diff --exit-code
       - run: go build -v .
 
   # Run acceptance tests in a matrix with Terraform CLI versions

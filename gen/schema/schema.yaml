@@ -20,6 +20,9 @@ test_tags: list(str(), required=False) # List of test tags, tests are only execu
 test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
 remove_id: bool(required=False) # Set to true if default ID attribute should be removed
 type_value: str(required=False) # Set to a string which is being provided as a read-only "type" resource and data source attribute
+no_import: bool(required=False) # Set to true if the resource does not support importing
+no_data_source: bool(required=False) # Set to true if no data source should be created
+no_resource: bool(required=False) # Set to true if no resource should be created
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
@@ -31,6 +34,7 @@ attribute:
   model_type_string: bool(required=False) # Set to true if element should be added as string to payload
   bool_empty_string: bool(required=False) # Set to true if a boolean value of "true" should be expressed as an empty string in the payload
   data_path: list(str(), required=False) # Path to the attribute in the model structure
+  response_data_path: list(str(), required=False) # Path to the attribute in the response model structure
   keys: list(str(), required=False) # Keys according to feature template schema
   id: bool(required=False) # Set to true if the attribute is part of the ID
   reference: bool(required=False) # Indicates that the attribute is being used in the url path
@@ -61,6 +65,7 @@ attribute:
   default_value_empty_string: bool(required=False) # Set to true if default value should be an empty string
   value: any(str(), int(), bool(), required=False) # Hardcoded value for the attribute
   test_value: str(required=False) # Value used for acceptance test
+  minimum_test_value: any(str(), int(), bool(), num(), required=False) # Value used for "minimum" resource acceptance test
   always_include: bool(required=False) # Include attribute always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true

@@ -1,0 +1,606 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/transport/ipv6-tracker/post/request_schema.json",
+      "title": "WAN VPN Schema",
+      "description": "IPv6 Tracker profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "description": "Set the parcel name",
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 128
+          },
+          "description": {
+              "description": "Set the parcel description",
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "properties": {
+                  "trackerName": {
+                      "description": "Tracker Name",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "minLength": 1,
+                                      "maxLength": 128,
+                                      "type": "string"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "endpointApiUrl": {
+                      "description": "API url of endpoint",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maxLength": 512,
+                                      "minLength": 0,
+                                      "type": "string"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "endpointDnsName": {
+                      "description": "Endpoint DNS Name",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maxLength": 63,
+                                      "minLength": 0,
+                                      "type": "string"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "endpointIp": {
+                      "description": "Endpoint IP",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "format": "ipv6"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "interval": {
+                      "description": "Interval",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maximum": 600,
+                                      "minimum": 20,
+                                      "type": "integer",
+                                      "default": 60
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maximum": 60,
+                                      "minimum": 60,
+                                      "type": "integer"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "multiplier": {
+                      "description": "Multiplier",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maximum": 10,
+                                      "minimum": 1,
+                                      "type": "integer",
+                                      "default": 3
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maximum": 3,
+                                      "minimum": 3,
+                                      "type": "integer"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "threshold": {
+                      "description": "Threshold",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maximum": 1000,
+                                      "minimum": 100,
+                                      "type": "integer",
+                                      "default": 300
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "maximum": 300,
+                                      "minimum": 300,
+                                      "type": "integer"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "endpointTrackerType": {
+                      "description": "Endpoint Tracker Type",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "enum": [
+                                          "ipv6-interface"
+                                      ],
+                                      "type": "string",
+                                      "default": "ipv6-interface"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "enum": [
+                                          "ipv6-interface"
+                                      ],
+                                      "type": "string"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "trackerType": {
+                      "description": "Tracker Type",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "enum": [
+                                          "endpoint"
+                                      ],
+                                      "type": "string",
+                                      "default": "endpoint"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "enum": [
+                                          "endpoint"
+                                      ],
+                                      "type": "string"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  }
+              },
+              "required": [
+                  "trackerName",
+                  "trackerType"
+              ],
+              "additionalProperties": false
+          },
+          "metadata": {
+              "supportedDeviceTypes": [
+                  "asr",
+                  "c1100",
+                  "c8000be",
+                  "csr1000v",
+                  "ir8100",
+                  "ir8340",
+                  "isr",
+                  "ISRv",
+                  "ir1101"
+              ]
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for Transport WAN VPN profile parcel",
+              "examples": [
+                  {
+                      "data": {
+                          "trackerName": {
+                              "optionType": "global",
+                              "value": "tracker1"
+                          },
+                          "endpointApiUrl": {
+                              "optionType": "global",
+                              "value": "google.com"
+                          }
+                      },
+                      "description": "Cedge Transport Tracker Parcel config",
+                      "name": "Cedge_CG1_Transport_Tracker_parcel1"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "name",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "metadata",
+              "documentation"
+          ]
+      },
+      "additionalProperties": false
+  }
+}
