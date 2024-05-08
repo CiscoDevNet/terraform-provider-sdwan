@@ -16,28 +16,26 @@ This resource can manage a Transport Management VPN Interface Ethernet profile p
 
 ```terraform
 resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "example" {
-  name                                = "Example"
-  description                         = "My Example"
-  feature_profile_id                  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  profile_parcel_id                   = "140331f6-5418-4755-a059-13c77eb96037"
-  shutdown                            = true
-  interface_name                      = "GigabitEthernet1"
-  basic_configuration_description     = "Transport Management VPN Interface Ethernet"
-  ipv4_settings_dynamic_dhcp_distance = 1
-  ipv4_settings_ip_address            = "1.2.3.4"
-  ipv4_settings_subnet_mask           = "0.0.0.0"
-  ipv4_settings_secondary_ip_addresses = [
+  name                                       = "Example"
+  description                                = "My Example"
+  feature_profile_id                         = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  transport_management_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
+  shutdown                                   = true
+  interface_name                             = "GigabitEthernet1"
+  basic_configuration_description            = "Transport Management VPN Interface Ethernet"
+  ipv4_address                               = "1.2.3.4"
+  ipv4_subnet_mask                           = "0.0.0.0"
+  ipv4_secondary_addresses = [
     {
-      ip_address  = "1.2.3.4"
+      address     = "1.2.3.4"
       subnet_mask = "0.0.0.0"
     }
   ]
-  ipv4_settings_dhcp_helper           = ["1.2.3.4"]
-  ipv4_settings_iperf_server          = "example"
-  ipv4_settings_auto_detect_bandwidth = false
-  enable_dhcpv6                       = true
-  ipv6_settings_static_ip_address     = "2001:0:0:1::/64"
-  arp = [
+  ipv4_dhcp_helper           = ["1.2.3.4"]
+  ipv4_iperf_server          = "example"
+  ipv4_auto_detect_bandwidth = false
+  ipv6_address               = "2001:0:0:1::/64"
+  arp_entries = [
     {
       ip_address  = "1.2.3.4"
       mac_address = "00-B0-D0-63-C2-26"
@@ -68,7 +66,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 
 ### Optional
 
-- `arp` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arp))
+- `arp_entries` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arp_entries))
 - `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
   - Range: `0`-`2147483`
   - Default value: `1200`
@@ -98,24 +96,24 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
   - Range: `576`-`9216`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
-- `ipv4_settings_auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
+- `ipv4_address` (String) IP Address
+- `ipv4_address_variable` (String) Variable name
+- `ipv4_auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
   - Default value: `false`
-- `ipv4_settings_auto_detect_bandwidth_variable` (String) Variable name
-- `ipv4_settings_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
-- `ipv4_settings_dhcp_helper_variable` (String) Variable name
-- `ipv4_settings_dynamic_dhcp_distance` (Number) DHCP Distance
+- `ipv4_auto_detect_bandwidth_variable` (String) Variable name
+- `ipv4_dhcp_distance` (Number) DHCP Distance
   - Range: `1`-`65536`
-- `ipv4_settings_dynamic_dhcp_distance_variable` (String) Variable name
-- `ipv4_settings_ip_address` (String) IP Address
-- `ipv4_settings_ip_address_variable` (String) Variable name
-- `ipv4_settings_iperf_server` (String) Iperf server for auto bandwidth detect
-- `ipv4_settings_iperf_server_variable` (String) Variable name
-- `ipv4_settings_secondary_ip_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_settings_secondary_ip_addresses))
-- `ipv4_settings_subnet_mask` (String) Subnet Mask
+- `ipv4_dhcp_distance_variable` (String) Variable name
+- `ipv4_dhcp_helper` (Set of String) List of DHCP IPv4 helper addresses (min 1, max 8)
+- `ipv4_dhcp_helper_variable` (String) Variable name
+- `ipv4_iperf_server` (String) Iperf server for auto bandwidth detect
+- `ipv4_iperf_server_variable` (String) Variable name
+- `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_settings_subnet_mask_variable` (String) Variable name
-- `ipv6_settings_static_ip_address` (String) IPv6 Address Secondary
-- `ipv6_settings_static_ip_address_variable` (String) Variable name
+- `ipv4_subnet_mask_variable` (String) Variable name
+- `ipv6_address` (String) IPv6 Address Secondary
+- `ipv6_address_variable` (String) Variable name
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
   - Default value: `30`
@@ -125,7 +123,6 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 - `media_type` (String) Media type
   - Choices: `auto-select`, `rj45`, `sfp`
 - `media_type_variable` (String) Variable name
-- `profile_parcel_id` (String) Profile Profile ID
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed
@@ -134,14 +131,15 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name
+- `transport_management_vpn_profile_parcel_id` (String) Transport Management VPN Profile Parcel ID
 
 ### Read-Only
 
 - `id` (String) The id of the profile parcel
 - `version` (Number) The version of the profile parcel
 
-<a id="nestedatt--arp"></a>
-### Nested Schema for `arp`
+<a id="nestedatt--arp_entries"></a>
+### Nested Schema for `arp_entries`
 
 Optional:
 
@@ -151,13 +149,13 @@ Optional:
 - `mac_address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv4_settings_secondary_ip_addresses"></a>
-### Nested Schema for `ipv4_settings_secondary_ip_addresses`
+<a id="nestedatt--ipv4_secondary_addresses"></a>
+### Nested Schema for `ipv4_secondary_addresses`
 
 Optional:
 
-- `ip_address` (String) IpV4 Address
-- `ip_address_variable` (String) Variable name
+- `address` (String) IpV4 Address
+- `address_variable` (String) Variable name
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name

@@ -252,6 +252,7 @@ type YamlConfigAttribute struct {
 	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
 	Value                   string                         `yaml:"value"`
 	TestValue               string                         `yaml:"test_value"`
+	MinimumTestValue        string                         `yaml:"minimum_test_value"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
