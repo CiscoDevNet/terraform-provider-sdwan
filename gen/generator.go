@@ -708,17 +708,6 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
-
-		// 		<<<<<<< HEAD
-		// 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
-		// 		if value := r.Get("properties.optionType.enum.0"); value.Exists() {
-		// 			// if value := r.Get("properties.optionType.enum.0=\"global\""); value.Exists() {
-		// 			t = r
-		// 		} else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0)"); value.Exists() {
-		// 			// } else if value := r.Get("oneOf.#(properties.refId.properties.optionType.enum.0=\"global\")"); value.Exists() {
-		// 			t = r.Get("properties.refId")
-		// =======
-
 		onlyDefault := false
 
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
