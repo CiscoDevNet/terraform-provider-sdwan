@@ -139,7 +139,7 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	{{- range  .Attributes}}
-	{{- if or .Reference .Mandatory .MinimumTestValue}}
+	{{- if and (or .Reference .Mandatory .MinimumTestValue) (not .Optional)}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `	{{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"

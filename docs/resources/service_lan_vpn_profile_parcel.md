@@ -153,8 +153,6 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
-- `primary_dns_address_ipv4` (String) Primary DNS Address (IPv4)
-- `primary_dns_address_ipv6` (String) Primary DNS Address (IPv6)
 
 ### Optional
 
@@ -183,7 +181,9 @@ resource "sdwan_service_lan_vpn_profile_parcel" "example" {
 - `omp_admin_distance_ipv6` (Number) OMP Admin Distance IPv6
   - Range: `1`-`255`
 - `omp_admin_distance_ipv6_variable` (String) Variable name
+- `primary_dns_address_ipv4` (String) Primary DNS Address (IPv4)
 - `primary_dns_address_ipv4_variable` (String) Variable name
+- `primary_dns_address_ipv6` (String) Primary DNS Address (IPv6)
 - `primary_dns_address_ipv6_variable` (String) Variable name
 - `route_leak_from_global_vpns` (Attributes List) Enable route leaking from Global to Service VPN (see [below for nested schema](#nestedatt--route_leak_from_global_vpns))
 - `route_leak_from_other_services` (Attributes List) Enable route leak from another Service VPN to current Service VPN (see [below for nested schema](#nestedatt--route_leak_from_other_services))
