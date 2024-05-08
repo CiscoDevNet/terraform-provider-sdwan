@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -29,6 +30,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type MeshTopologyPolicyDefinition struct {
 	Id             types.String                          `tfsdk:"id"`
 	Version        types.Int64                           `tfsdk:"version"`
@@ -46,10 +50,16 @@ type MeshTopologyPolicyDefinitionRegions struct {
 	SiteListVersions types.List   `tfsdk:"site_list_versions"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data MeshTopologyPolicyDefinition) getPath() string {
 	return "/template/policy/definition/mesh/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -82,6 +92,9 @@ func (data MeshTopologyPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -124,6 +137,9 @@ func (data *MeshTopologyPolicyDefinition) fromBody(ctx context.Context, res gjso
 	data.updateVersions(ctx, &state)
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *MeshTopologyPolicyDefinition) hasChanges(ctx context.Context, state *MeshTopologyPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -150,6 +166,10 @@ func (data *MeshTopologyPolicyDefinition) hasChanges(ctx context.Context, state 
 	return hasChanges
 }
 
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
 func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context, state *MeshTopologyPolicyDefinition) {
 	data.VpnListVersion = state.VpnListVersion
 	for i := range data.Regions {
@@ -169,3 +189,5 @@ func (data *MeshTopologyPolicyDefinition) updateVersions(ctx context.Context, st
 		}
 	}
 }
+
+// End of section. //template:end updateVersions

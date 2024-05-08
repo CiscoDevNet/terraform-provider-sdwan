@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -29,6 +30,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type RoutePolicyDefinition struct {
 	Id            types.String                     `tfsdk:"id"`
 	Version       types.Int64                      `tfsdk:"version"`
@@ -90,10 +94,16 @@ type RoutePolicyDefinitionSequencesActionEntries struct {
 	Originator          types.String `tfsdk:"originator"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data RoutePolicyDefinition) getPath() string {
 	return "/template/policy/definition/vedgeroute/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -253,6 +263,9 @@ func (data RoutePolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -492,6 +505,9 @@ func (data *RoutePolicyDefinition) fromBody(ctx context.Context, res gjson.Resul
 	data.updateVersions(ctx, &state)
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RoutePolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -629,6 +645,10 @@ func (data *RoutePolicyDefinition) hasChanges(ctx context.Context, state *RouteP
 	return hasChanges
 }
 
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
 func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *RoutePolicyDefinition) {
 	for i := range data.Sequences {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Sequences[i].Id.ValueInt64()), fmt.Sprintf("%v", data.Sequences[i].Name.ValueString())}
@@ -685,3 +705,5 @@ func (data *RoutePolicyDefinition) updateVersions(ctx context.Context, state *Ro
 		}
 	}
 }
+
+// End of section. //template:end updateVersions

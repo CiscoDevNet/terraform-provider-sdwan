@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanIPv4DeviceACLPolicyDefinition(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_ipv4_device_acl_policy_definition.test", "name", "Example"))
@@ -49,6 +53,12 @@ func TestAccDataSourceSdwanIPv4DeviceACLPolicyDefinition(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanIPv4DeviceACLPolicyDefinitionConfig() string {
 	config := ""
 	config += `resource "sdwan_ipv4_device_acl_policy_definition" "test" {` + "\n"
@@ -77,3 +87,5 @@ func testAccDataSourceSdwanIPv4DeviceACLPolicyDefinitionConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

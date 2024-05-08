@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -28,6 +29,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type LocalizedPolicy struct {
 	Id                         types.String                 `tfsdk:"id"`
 	Version                    types.Int64                  `tfsdk:"version"`
@@ -52,10 +56,16 @@ type LocalizedPolicyDefinitions struct {
 	Type    types.String `tfsdk:"type"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data LocalizedPolicy) getPath() string {
 	return "/template/policy/vedge/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data LocalizedPolicy) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -141,6 +151,9 @@ func (data LocalizedPolicy) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *LocalizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("policyName"); value.Exists() {
@@ -256,6 +269,9 @@ func (data *LocalizedPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	data.updateVersions(ctx, &state)
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *LocalizedPolicy) hasChanges(ctx context.Context, state *LocalizedPolicy) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -309,6 +325,10 @@ func (data *LocalizedPolicy) hasChanges(ctx context.Context, state *LocalizedPol
 	return hasChanges
 }
 
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
 func (data *LocalizedPolicy) updateVersions(ctx context.Context, state *LocalizedPolicy) {
 	for i := range data.Definitions {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.Definitions[i].Id.ValueString())}
@@ -327,3 +347,5 @@ func (data *LocalizedPolicy) updateVersions(ctx context.Context, state *Localize
 		}
 	}
 }
+
+// End of section. //template:end updateVersions

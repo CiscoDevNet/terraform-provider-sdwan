@@ -2,8 +2,9 @@
 name: Configuration Group
 rest_endpoint: /v1/config-group/
 id_attribute: id
-doc_category: Configuration Groups
+minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
+doc_category: Configuration Groups
 attributes:
   - model_name: name
     type: String

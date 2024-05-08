@@ -49,6 +49,7 @@ func TestAccDataSourceSdwanTransportRoutingBGPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv4_neighbors.0.description", "neighbor1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv4_neighbors.0.shutdown", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv4_neighbors.0.remote_as", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv4_neighbors.0.local_as", "200"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv4_neighbors.0.keepalive_time", "40"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv4_neighbors.0.hold_time", "200"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv4_neighbors.0.update_source_interface", "GigabitEthernet0"))
@@ -69,6 +70,7 @@ func TestAccDataSourceSdwanTransportRoutingBGPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_neighbors.0.description", "neighbor2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_neighbors.0.shutdown", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_neighbors.0.remote_as", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_neighbors.0.local_as", "200"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_neighbors.0.keepalive_time", "180"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_neighbors.0.hold_time", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_bgp_profile_parcel.test", "ipv6_neighbors.0.update_source_interface", "Loopback1"))
@@ -143,6 +145,7 @@ func testAccDataSourceSdwanTransportRoutingBGPProfileParcelConfig() string {
 	config += `	  description = "neighbor1"` + "\n"
 	config += `	  shutdown = false` + "\n"
 	config += `	  remote_as = 200` + "\n"
+	config += `	  local_as = 200` + "\n"
 	config += `	  keepalive_time = 40` + "\n"
 	config += `	  hold_time = 200` + "\n"
 	config += `	  update_source_interface = "GigabitEthernet0"` + "\n"
@@ -168,6 +171,7 @@ func testAccDataSourceSdwanTransportRoutingBGPProfileParcelConfig() string {
 	config += `	  description = "neighbor2"` + "\n"
 	config += `	  shutdown = false` + "\n"
 	config += `	  remote_as = 200` + "\n"
+	config += `	  local_as = 200` + "\n"
 	config += `	  keepalive_time = 180` + "\n"
 	config += `	  hold_time = 60` + "\n"
 	config += `	  update_source_interface = "Loopback1"` + "\n"

@@ -27,6 +27,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"text/template"
 	"unicode"
@@ -205,6 +206,9 @@ type YamlConfig struct {
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 	TypeValue                string                `yaml:"type_value"`
+	NoImport                 bool                  `yaml:"no_import"`
+	NoResource               bool                  `yaml:"no_resource"`
+	NoDataSource             bool                  `yaml:"no_data_source"`
 }
 
 type YamlConfigAttribute struct {
@@ -876,6 +880,31 @@ func augmentGenericConfig(config *YamlConfig, type_ string) {
 	}
 }
 
+func getTemplateSection(content, name string) string {
+	scanner := bufio.NewScanner(strings.NewReader(content))
+	result := ""
+	foundSection := false
+	beginRegex := regexp.MustCompile(`\/\/template:begin\s` + name + `$`)
+	endRegex := regexp.MustCompile(`\/\/template:end\s` + name + `$`)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !foundSection {
+			match := beginRegex.MatchString(line)
+			if match {
+				foundSection = true
+				result += line + "\n"
+			}
+		} else {
+			result += line + "\n"
+			match := endRegex.MatchString(line)
+			if match {
+				foundSection = false
+			}
+		}
+	}
+	return result
+}
+
 func renderTemplate(templatePath, outputPath string, config interface{}) {
 	if c, ok := config.(YamlConfig); ok {
 		for _, s := range c.SkipTemplates {
@@ -906,20 +935,47 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 		log.Fatalf("Error parsing template: %v", err)
 	}
 
-	// create output file
-	outputFile := filepath.Join(outputPath)
-	os.MkdirAll(filepath.Dir(outputFile), 0755)
-	f, err := os.Create(outputFile)
-	if err != nil {
-		log.Fatalf("Error creating output file: %v", err)
-	}
-
 	output := new(bytes.Buffer)
 	err = template.Execute(output, config)
 	if err != nil {
 		log.Fatalf("Error executing template: %v", err)
 	}
 
+	outputFile := filepath.Join(outputPath)
+	existingFile, err := os.Open(outputPath)
+	if err != nil {
+		os.MkdirAll(filepath.Dir(outputFile), 0755)
+	} else if strings.HasSuffix(templatePath, ".go") {
+		existingScanner := bufio.NewScanner(existingFile)
+		var newContent string
+		currentSectionName := ""
+		beginRegex := regexp.MustCompile(`\/\/template:begin\s(.*?)$`)
+		endRegex := regexp.MustCompile(`\/\/template:end\s(.*?)$`)
+		for existingScanner.Scan() {
+			line := existingScanner.Text()
+			if currentSectionName == "" {
+				matches := beginRegex.FindStringSubmatch(line)
+				if len(matches) > 1 && matches[1] != "" {
+					currentSectionName = matches[1]
+				} else {
+					newContent += line + "\n"
+				}
+			} else {
+				matches := endRegex.FindStringSubmatch(line)
+				if len(matches) > 1 && matches[1] == currentSectionName {
+					currentSectionName = ""
+					newSection := getTemplateSection(string(output.Bytes()), matches[1])
+					newContent += newSection
+				}
+			}
+		}
+		output = bytes.NewBufferString(newContent)
+	}
+	// write to output file
+	f, err := os.Create(outputFile)
+	if err != nil {
+		log.Fatalf("Error creating output file: %v", err)
+	}
 	f.Write(output.Bytes())
 }
 
@@ -1007,6 +1063,16 @@ func main() {
 
 		// Iterate over templates and render files
 		for _, t := range genericTemplates {
+			if (genericConfigs[i].NoImport && t.path == "./gen/templates/generic/import.sh") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data_source.go") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data_source_test.go") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data-source.tf") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource.go") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource_test.go") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource.tf") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/import.sh") {
+				continue
+			}
 			renderTemplate(t.path, t.prefix+SnakeCase(genericConfigs[i].Name)+t.suffix, genericConfigs[i])
 		}
 	}

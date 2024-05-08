@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -30,6 +31,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
+
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
@@ -117,6 +122,9 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Configure(_ context.Context, re
 	d.client = req.ProviderData.(*SdwanProviderData).Client
 }
 
+// End of section. //template:end model
+
+// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *MeshTopologyPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config MeshTopologyPolicyDefinition
 
@@ -143,3 +151,5 @@ func (d *MeshTopologyPolicyDefinitionDataSource) Read(ctx context.Context, req d
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
+
+// End of section. //template:end read

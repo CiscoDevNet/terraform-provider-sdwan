@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin provider
 import (
 	"context"
 	"os"
@@ -320,6 +321,9 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewCLIFeatureProfileResource,
 		NewColorListPolicyObjectResource,
 		NewConfigurationGroupResource,
+		NewConfigurationGroupDeployResource,
+		NewConfigurationGroupDeviceVariablesResource,
+		NewConfigurationGroupDevicesResource,
 		NewCustomControlTopologyPolicyDefinitionResource,
 		NewDataFQDNPrefixListPolicyObjectResource,
 		NewDataIPv4PrefixListPolicyObjectResource,
@@ -454,6 +458,8 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewCLIFeatureProfileDataSource,
 		NewColorListPolicyObjectDataSource,
 		NewConfigurationGroupDataSource,
+		NewConfigurationGroupDeviceVariablesDataSource,
+		NewConfigurationGroupDevicesDataSource,
 		NewCustomControlTopologyPolicyDefinitionDataSource,
 		NewDataFQDNPrefixListPolicyObjectDataSource,
 		NewDataIPv4PrefixListPolicyObjectDataSource,
@@ -514,3 +520,5 @@ func New(version string) func() provider.Provider {
 		}
 	}
 }
+
+// End of section. //template:end provider

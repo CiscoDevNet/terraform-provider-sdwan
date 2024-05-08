@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 	"fmt"
@@ -28,6 +29,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type QoSMapPolicyDefinition struct {
 	Id            types.String                          `tfsdk:"id"`
 	Version       types.Int64                           `tfsdk:"version"`
@@ -48,10 +52,16 @@ type QoSMapPolicyDefinitionQosSchedulers struct {
 	SchedulingType   types.String `tfsdk:"scheduling_type"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data QoSMapPolicyDefinition) getPath() string {
 	return "/template/policy/definition/qosmap/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -94,6 +104,9 @@ func (data QoSMapPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -156,6 +169,9 @@ func (data *QoSMapPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 	data.updateVersions(ctx, &state)
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *QoSMapPolicyDefinition) hasChanges(ctx context.Context, state *QoSMapPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -194,6 +210,10 @@ func (data *QoSMapPolicyDefinition) hasChanges(ctx context.Context, state *QoSMa
 	return hasChanges
 }
 
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
 func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context, state *QoSMapPolicyDefinition) {
 	for i := range data.QosSchedulers {
 		dataKeys := [...]string{fmt.Sprintf("%v", data.QosSchedulers[i].Queue.ValueInt64())}
@@ -212,3 +232,5 @@ func (data *QoSMapPolicyDefinition) updateVersions(ctx context.Context, state *Q
 		}
 	}
 }
+
+// End of section. //template:end updateVersions

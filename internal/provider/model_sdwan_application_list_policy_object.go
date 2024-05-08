@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 
@@ -27,6 +28,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type ApplicationListPolicyObject struct {
 	Id      types.String                         `tfsdk:"id"`
 	Version types.Int64                          `tfsdk:"version"`
@@ -39,10 +43,16 @@ type ApplicationListPolicyObjectEntries struct {
 	ApplicationFamily types.String `tfsdk:"application_family"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data ApplicationListPolicyObject) getPath() string {
 	return "/template/policy/list/app/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data ApplicationListPolicyObject) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -67,6 +77,9 @@ func (data ApplicationListPolicyObject) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *ApplicationListPolicyObject) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
@@ -97,6 +110,9 @@ func (data *ApplicationListPolicyObject) fromBody(ctx context.Context, res gjson
 	}
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *ApplicationListPolicyObject) hasChanges(ctx context.Context, state *ApplicationListPolicyObject) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -116,3 +132,9 @@ func (data *ApplicationListPolicyObject) hasChanges(ctx context.Context, state *
 	}
 	return hasChanges
 }
+
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+// End of section. //template:end updateVersions

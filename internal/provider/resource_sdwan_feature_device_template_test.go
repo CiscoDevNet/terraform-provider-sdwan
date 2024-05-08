@@ -19,12 +19,16 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanFeatureDeviceTemplate(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_feature_device_template.test", "name", "Example"))
@@ -43,6 +47,9 @@ func TestAccSdwanFeatureDeviceTemplate(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAcc
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanFeatureDeviceTemplatePrerequisitesConfig = `
 resource "sdwan_cisco_system_feature_template" "system" {
   name = "TF_SYSTEM_1"
@@ -57,6 +64,9 @@ resource "sdwan_cisco_system_feature_template" "system" {
 
 `
 
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanFeatureDeviceTemplateConfig_all() string {
 	config := `resource "sdwan_feature_device_template" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
@@ -69,3 +79,5 @@ func testAccSdwanFeatureDeviceTemplateConfig_all() string {
 	config += `}` + "\n"
 	return config
 }
+
+// End of section. //template:end testAccConfigAll

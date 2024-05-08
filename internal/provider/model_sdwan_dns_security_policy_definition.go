@@ -19,6 +19,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 
@@ -28,6 +29,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type DNSSecurityPolicyDefinition struct {
 	Id                                        types.String                            `tfsdk:"id"`
 	Version                                   types.Int64                             `tfsdk:"version"`
@@ -52,10 +56,16 @@ type DNSSecurityPolicyDefinitionTargetVpns struct {
 	LocalDomainBypassEnabled types.Bool   `tfsdk:"local_domain_bypass_enabled"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data DNSSecurityPolicyDefinition) getPath() string {
 	return "/template/policy/definition/dnssecurity/"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data DNSSecurityPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -136,6 +146,9 @@ func (data DNSSecurityPolicyDefinition) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *DNSSecurityPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	state := *data
 	if value := res.Get("name"); value.Exists() {
@@ -242,6 +255,9 @@ func (data *DNSSecurityPolicyDefinition) fromBody(ctx context.Context, res gjson
 	data.updateVersions(ctx, &state)
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *DNSSecurityPolicyDefinition) hasChanges(ctx context.Context, state *DNSSecurityPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
@@ -292,7 +308,13 @@ func (data *DNSSecurityPolicyDefinition) hasChanges(ctx context.Context, state *
 	return hasChanges
 }
 
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
 func (data *DNSSecurityPolicyDefinition) updateVersions(ctx context.Context, state *DNSSecurityPolicyDefinition) {
 	data.DomainListVersion = state.DomainListVersion
 	data.CiscoSigCredentialsFeatureTemplateVersion = state.CiscoSigCredentialsFeatureTemplateVersion
 }
+
+// End of section. //template:end updateVersions
