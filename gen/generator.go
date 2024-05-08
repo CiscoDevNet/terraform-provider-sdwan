@@ -252,6 +252,7 @@ type YamlConfigAttribute struct {
 	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
 	Value                   string                         `yaml:"value"`
 	TestValue               string                         `yaml:"test_value"`
+	MinimumTestValue        string                         `yaml:"minimum_test_value"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
@@ -764,6 +765,8 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				// if value := t.Get("properties.value.items.maximum"); value.Exists() {
 				//  attr.MaxInt = value.Int()
 				// }
+			} else if t.Get("properties.value.const").String() == "true" || t.Get("properties.value.const").String() == "false" {
+				attr.Type = "Bool"
 			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" {
 				attr.Type = "String"
 			} else {

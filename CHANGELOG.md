@@ -20,6 +20,7 @@
 - Add `sdwan_system_logging_profile_parcel` resource and data source
 - Add `sdwan_transport_management_vpn_profile_parcel` resource and data source
 - Fix issue when updating certain policy definitions, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/230)
+- Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
 
 ## 0.3.8
 
