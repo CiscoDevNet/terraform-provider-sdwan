@@ -3,6 +3,7 @@
 - Add `sdwan_configuration_group_devices` resource and data source
 - Add `sdwan_configuration_group_device_variables` resource and data source
 - Add `sdwan_configuration_group_deploy` resource
+- Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
 
 ## 0.3.9
 
@@ -20,7 +21,6 @@
 - Add `sdwan_system_logging_profile_parcel` resource and data source
 - Add `sdwan_transport_management_vpn_profile_parcel` resource and data source
 - Fix issue when updating certain policy definitions, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/230)
-- Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
 
 ## 0.3.8
 
