@@ -27,6 +27,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"text/template"
 	"unicode"
@@ -205,6 +206,9 @@ type YamlConfig struct {
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 	TypeValue                string                `yaml:"type_value"`
+	NoImport                 bool                  `yaml:"no_import"`
+	NoResource               bool                  `yaml:"no_resource"`
+	NoDataSource             bool                  `yaml:"no_data_source"`
 }
 
 type YamlConfigAttribute struct {
@@ -223,6 +227,7 @@ type YamlConfigAttribute struct {
 	Reference               bool                           `yaml:"reference"`
 	Variable                bool                           `yaml:"variable"`
 	Mandatory               bool                           `yaml:"mandatory"`
+	Optional                bool                           `yaml:"optional"`
 	WriteOnly               bool                           `yaml:"write_only"`
 	TfOnly                  bool                           `yaml:"tf_only"`
 	ExcludeTest             bool                           `yaml:"exclude_test"`
@@ -248,6 +253,7 @@ type YamlConfigAttribute struct {
 	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
 	Value                   string                         `yaml:"value"`
 	TestValue               string                         `yaml:"test_value"`
+	MinimumTestValue        string                         `yaml:"minimum_test_value"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
@@ -708,7 +714,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
-		onlyDefault := false
+		noGlobal := false
 
 		t := r.Get("oneOf.#(properties.optionType.enum.0=\"global\")")
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "global" {
@@ -760,16 +766,18 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				// if value := t.Get("properties.value.items.maximum"); value.Exists() {
 				//  attr.MaxInt = value.Int()
 				// }
+			} else if t.Get("properties.value.const").String() == "true" || t.Get("properties.value.const").String() == "false" {
+				attr.Type = "Bool"
 			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" {
 				attr.Type = "String"
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
 			}
-			if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
-				attr.Variable = true
-			}
 		} else {
-			onlyDefault = true
+			noGlobal = true
+		}
+		if r.Get("oneOf.#(properties.optionType.enum.0=\"variable\")").Exists() {
+			attr.Variable = true
 		}
 
 		d := r.Get("oneOf.#(properties.optionType.enum.0=\"default\")")
@@ -782,7 +790,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if onlyDefault {
+					if noGlobal {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
@@ -792,14 +800,14 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value.String() == "" {
 					attr.DefaultValueEmptyString = true
 				} else {
-					if onlyDefault {
+					if noGlobal {
 						attr.Value = value.String()
 					} else {
 						attr.DefaultValue = value.String()
 					}
 				}
 			} else if value := d.Get("properties.value.minimum"); value.Exists() {
-				if onlyDefault {
+				if noGlobal {
 					attr.Value = value.String()
 				} else {
 					attr.DefaultValue = value.String()
@@ -874,6 +882,31 @@ func augmentGenericConfig(config *YamlConfig, type_ string) {
 	}
 }
 
+func getTemplateSection(content, name string) string {
+	scanner := bufio.NewScanner(strings.NewReader(content))
+	result := ""
+	foundSection := false
+	beginRegex := regexp.MustCompile(`\/\/template:begin\s` + name + `$`)
+	endRegex := regexp.MustCompile(`\/\/template:end\s` + name + `$`)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !foundSection {
+			match := beginRegex.MatchString(line)
+			if match {
+				foundSection = true
+				result += line + "\n"
+			}
+		} else {
+			result += line + "\n"
+			match := endRegex.MatchString(line)
+			if match {
+				foundSection = false
+			}
+		}
+	}
+	return result
+}
+
 func renderTemplate(templatePath, outputPath string, config interface{}) {
 	if c, ok := config.(YamlConfig); ok {
 		for _, s := range c.SkipTemplates {
@@ -904,20 +937,47 @@ func renderTemplate(templatePath, outputPath string, config interface{}) {
 		log.Fatalf("Error parsing template: %v", err)
 	}
 
-	// create output file
-	outputFile := filepath.Join(outputPath)
-	os.MkdirAll(filepath.Dir(outputFile), 0755)
-	f, err := os.Create(outputFile)
-	if err != nil {
-		log.Fatalf("Error creating output file: %v", err)
-	}
-
 	output := new(bytes.Buffer)
 	err = template.Execute(output, config)
 	if err != nil {
 		log.Fatalf("Error executing template: %v", err)
 	}
 
+	outputFile := filepath.Join(outputPath)
+	existingFile, err := os.Open(outputPath)
+	if err != nil {
+		os.MkdirAll(filepath.Dir(outputFile), 0755)
+	} else if strings.HasSuffix(templatePath, ".go") {
+		existingScanner := bufio.NewScanner(existingFile)
+		var newContent string
+		currentSectionName := ""
+		beginRegex := regexp.MustCompile(`\/\/template:begin\s(.*?)$`)
+		endRegex := regexp.MustCompile(`\/\/template:end\s(.*?)$`)
+		for existingScanner.Scan() {
+			line := existingScanner.Text()
+			if currentSectionName == "" {
+				matches := beginRegex.FindStringSubmatch(line)
+				if len(matches) > 1 && matches[1] != "" {
+					currentSectionName = matches[1]
+				} else {
+					newContent += line + "\n"
+				}
+			} else {
+				matches := endRegex.FindStringSubmatch(line)
+				if len(matches) > 1 && matches[1] == currentSectionName {
+					currentSectionName = ""
+					newSection := getTemplateSection(string(output.Bytes()), matches[1])
+					newContent += newSection
+				}
+			}
+		}
+		output = bytes.NewBufferString(newContent)
+	}
+	// write to output file
+	f, err := os.Create(outputFile)
+	if err != nil {
+		log.Fatalf("Error creating output file: %v", err)
+	}
 	f.Write(output.Bytes())
 }
 
@@ -1005,6 +1065,16 @@ func main() {
 
 		// Iterate over templates and render files
 		for _, t := range genericTemplates {
+			if (genericConfigs[i].NoImport && t.path == "./gen/templates/generic/import.sh") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data_source.go") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data_source_test.go") ||
+				(genericConfigs[i].NoDataSource && t.path == "./gen/templates/generic/data-source.tf") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource.go") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource_test.go") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/resource.tf") ||
+				(genericConfigs[i].NoResource && t.path == "./gen/templates/generic/import.sh") {
+				continue
+			}
 			renderTemplate(t.path, t.prefix+SnakeCase(genericConfigs[i].Name)+t.suffix, genericConfigs[i])
 		}
 	}

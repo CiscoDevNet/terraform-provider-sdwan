@@ -1,0 +1,332 @@
+---
+name: Service LAN VPN Interface Ethernet
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/ethernet
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - tf_name: service_lan_vpn_profile_parcel_id
+    reference: true
+    type: String
+    description: Service LAN VPN Profile Profile ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_service_lan_vpn_profile_parcel.test.id
+  - model_name: shutdown
+    example: false
+  - model_name: interfaceName
+    example: GigabitEthernet3
+    minimum_test_value: '"GigabitEthernet3"'
+  - model_name: description
+    tf_name: config_description
+    example: LAN
+  - model_name: dynamicDhcpDistance
+    tf_name: ipv4_dhcp_distance
+    data_path: [intfIpAddress, dynamic]
+    exclude_test: true
+    example: 1
+  - model_name: ipAddress
+    tf_name: ipv4_address
+    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    example: 1.2.3.4
+    minimum_test_value: '"1.2.3.4"'
+  - model_name: subnetMask
+    tf_name: ipv4_subnet_mask
+    data_path: [intfIpAddress, static, staticIpV4AddressPrimary]
+    example: 0.0.0.0
+    minimum_test_value: '"0.0.0.0"'
+  - model_name: staticIpV4AddressSecondary
+    tf_name: ipv4_secondary_addresses
+    data_path: [intfIpAddress, static]
+    attributes:
+    - model_name: ipAddress
+      tf_name: address
+      id: true
+      example: 1.2.3.5
+    - model_name: subnetMask
+      example: 0.0.0.0
+  - model_name: dhcpHelper
+    tf_name: ipv4_dhcp_helper
+    example: 1.2.3.4
+  - model_name: dhcpClient
+    tf_name: enable_dhcpv6
+    data_path: [intfIpV6Address, dynamic]
+    exclude_test: true
+    example: false
+  - model_name: secondaryIpV6Address
+    tf_name: ipv6_dhcp_secondary_addresses
+    data_path: [intfIpV6Address, dynamic]
+    exclude_null: true
+    exclude_test: true
+    attributes:
+    - model_name: address
+      id: true
+      example: 2001:0:0:1::0
+  - model_name: address
+    tf_name: ipv6_address
+    data_path: [intfIpV6Address, static, primaryIpV6Address]
+    exclude_test: true
+    example: 2001:0:0:1::0
+  - model_name: secondaryIpV6Address
+    tf_name: ipv6_secondary_address
+    data_path: [intfIpV6Address, static]
+    exclude_null: true
+    exclude_test: true
+    attributes:
+    - model_name: address
+      tf_name: address
+      id: true
+      example: 2001:0:0:1::0
+  - model_name: dhcpHelperV6
+    tf_name: ipv6_dhcp_helpers
+    data_path: [intfIpV6Address, static]
+    exclude_null: true
+    attributes:
+    - model_name: ipAddress
+      tf_name: address
+      id: true
+      example: 2001:0:0:1::0
+    - model_name: vpn
+      tf_name: dhcpv6_helper_vpn
+      id: true
+      example: 1
+  - model_name: nat
+    tf_name: ipv4_nat
+    example: false
+  - model_name: natType
+    tf_name: ipv4_nat_type
+    data_path: [natAttributesIpv4]
+    example: pool
+    minimum_test_value: '"pool"'
+  - model_name: rangeStart
+    tf_name: ipv4_nat_range_start
+    data_path: [natAttributesIpv4, natPool]
+    example: 1.2.3.4
+  - model_name: rangeEnd
+    tf_name: ipv4_nat_range_end
+    data_path: [natAttributesIpv4, natPool]
+    example: 4.5.6.7
+  - model_name: prefixLength
+    tf_name: ipv4_nat_prefix_length
+    data_path: [natAttributesIpv4, natPool]
+    example: 1
+  - model_name: overload
+    tf_name: ipv4_nat_overload
+    data_path: [natAttributesIpv4, natPool]
+    example: true
+  - model_name: natLookback
+    tf_name: ipv4_nat_loopback
+    data_path: [natAttributesIpv4]
+    example: 123
+  - model_name: udpTimeout
+    tf_name: ipv4_nat_udp_timeout
+    data_path: [natAttributesIpv4]
+    example: 123
+  - model_name: tcpTimeout
+    tf_name: ipv4_nat_tcp_timeout
+    data_path: [natAttributesIpv4]
+    example: 123
+  - model_name: newStaticNat
+    tf_name: static_nats
+    data_path: [natAttributesIpv4]
+    attributes:
+    - model_name: sourceIp
+      id: true
+      example: 1.2.3.4
+    - model_name: translateIp
+      id: true
+      example: 2.3.4.5
+    - model_name: staticNatDirection
+      tf_name: direction
+      id: true
+      example: inside
+    - model_name: sourceVpn
+      id: true
+      example: 0
+  - model_name: natIpv6
+    tf_name: ipv6_nat
+    example: true
+  - model_name: nat64
+    tf_name: enable_nat64
+    data_path: [natAttributesIpv6]
+    exclude_null: true
+    example: false
+  - model_name: shapingRate
+    tf_name: acl_shaping_rate
+    data_path: [aclQos]
+    example: 12
+  - model_name: refId
+    tf_name: acl_ipv4_egress_policy_id
+    data_path: [aclQos, ipv4AclEgress]
+    optional: true
+    exclude_test: true
+    example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+  - model_name: refId
+    tf_name: acl_ipv4_ingress_policy_id
+    data_path: [aclQos, ipv4AclIngress]
+    optional: true
+    exclude_test: true
+    example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+  - model_name: refId
+    tf_name: acl_ipv6_egress_policy_id
+    data_path: [aclQos, ipv6AclEgress]
+    optional: true
+    exclude_test: true
+    example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+  - model_name: refId
+    tf_name: acl_ipv6_ingress_policy_id
+    data_path: [aclQos, ipv6AclIngress]
+    optional: true
+    exclude_test: true
+    example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+  - model_name: vrrpIpv6
+    tf_name: ipv6_vrrps
+    attributes:
+    - model_name: groupId
+      id: true
+      example: 1
+    - model_name: priority
+      example: 100
+    - model_name: timer
+      example: 1000
+    - model_name: trackOmp
+      example: false
+    - model_name: ipv6
+      tf_name: addresses
+      attributes:
+      - model_name: ipv6LinkLocal
+        tf_name: link_local_address
+        id: true
+        example: 1::1
+      - model_name: prefix
+        tf_name: global_address
+        example: 1::1/24
+  - model_name: vrrp
+    tf_name: ipv4_vrrps
+    attributes:
+    - model_name: group_id
+      tf_name: group_id
+      id: true
+      example: 1
+    - model_name: priority
+      example: 100
+    - model_name: timer
+      example: 1000
+    - model_name: trackOmp
+      example: false
+    - model_name: ipAddress
+      example: 1.2.3.4
+    - model_name: ipAddressSecondary
+      tf_name: secondary_addresses
+      attributes:
+      - model_name: ipAddress
+        tf_name: address
+        id: true
+        example: 2.3.4.5
+      - model_name: subnetMask
+        example: 0.0.0.0
+    - model_name: tlocPrefChange
+      tf_name: tloc_prefix_change
+      example: true
+    - model_name: tlocPrefChangeValue
+      example: 100
+    # - model_name: trackingObject
+    #   tf_name: tracking_objects
+    #   exclude_test: true
+    #   attributes:
+    #   - model_name: trackerId
+    #     tf_name: tracker_policy_id
+    #     id: true
+    #     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+    #   - model_name: trackerAction
+    #     example: decrement
+    #   - model_name: decrementValue
+    #     example: 100
+  - model_name: arp
+    tf_name: arps
+    attributes:
+    - model_name: ipAddress 
+      id: true
+      example: 1.2.3.4
+    - model_name: macAddress
+      id: true
+      example: 00-B0-D0-63-C2-26
+  - model_name: enableSGTPropogation
+    tf_name: trustsec_enable_sgt_propogation
+    data_path: [trustsec]
+    example: false
+  - model_name: propogate
+    tf_name: trustsec_propogate
+    data_path: [trustsec]
+    example: true
+  - model_name: securityGroupTag
+    tf_name: trustsec_security_group_tag
+    data_path: [trustsec]
+    example: 123
+  - model_name: enableEnforcedPropogation
+    tf_name: trustsec_enable_enforced_propogation
+    data_path: [trustsec]
+    example: false
+  - model_name: enforcedSecurityGroupTag
+    tf_name: trustsec_enforced_security_group_tag
+    data_path: [trustsec]
+    example: 1234
+  - model_name: duplex
+    data_path: [advanced]
+    example: full
+  - model_name: macAddress
+    data_path: [advanced]
+    example: 00-B0-D0-63-C2-26
+  - model_name: ipMtu
+    data_path: [advanced]
+    example: 1500
+  - model_name: intrfMtu
+    tf_name: interface_mtu
+    data_path: [advanced]
+    example: 1500
+  - model_name: tcpMss
+    data_path: [advanced]
+    example: 500
+  - model_name: speed
+    data_path: [advanced]
+    example: 1000
+  - model_name: arpTimeout
+    data_path: [advanced]
+    example: 1200
+  - model_name: autonegotiate
+    data_path: [advanced]
+    example: false
+  - model_name: mediaType
+    data_path: [advanced]
+    example: auto-select
+  - model_name: loadInterval
+    data_path: [advanced]
+    example: 30
+  - model_name: tracker
+    data_path: [advanced]
+    example: TRACKER1
+  - model_name: icmpRedirectDisable
+    data_path: [advanced]
+    example: true
+  - model_name: xconnect
+    data_path: [advanced]
+    example: 1
+  - model_name: ipDirectedBroadcast
+    data_path: [advanced]
+    example: false
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_service_lan_vpn_profile_parcel" "test" {
+    name = "TF_TEST_SLAN"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+  }
