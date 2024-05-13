@@ -14,6 +14,7 @@ description: |-
 - Add `sdwan_configuration_group_deploy` resource
 - Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
 - Add `sdwan_service_lan_vpn_interface_ethernet_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_profile_parcel` resource and data source
 
 ## 0.3.9
 
