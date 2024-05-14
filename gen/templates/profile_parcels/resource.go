@@ -413,7 +413,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Create(ctx context.Context, r
 		return
 	}
 
-	plan.Id = types.StringValue(res.Get("parcelId").String())
+	plan.Id = types.StringValue(res.Get({{if .IdAttribute}}"{{.IdAttribute}}"{{else}}"parcelId"{{end}}).String())
 	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))
