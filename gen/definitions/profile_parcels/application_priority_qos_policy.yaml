@@ -27,6 +27,7 @@ attributes:
       - model_name: drops 
         example: tail-drop
       - model_name: queue
+        id: true
         example: 0
       - model_name: bandwidthPercent
         tf_name: bandwidth
