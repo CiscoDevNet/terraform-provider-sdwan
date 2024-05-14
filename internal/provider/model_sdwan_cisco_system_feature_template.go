@@ -57,7 +57,7 @@ type CiscoSystem struct {
 	GeoFencingSmsPhoneNumbers         []CiscoSystemGeoFencingSmsPhoneNumbers `tfsdk:"geo_fencing_sms_phone_numbers"`
 	DeviceGroups                      types.Set                              `tfsdk:"device_groups"`
 	DeviceGroupsVariable              types.String                           `tfsdk:"device_groups_variable"`
-	ControllerGroupList               types.Set                              `tfsdk:"controller_group_list"`
+	ControllerGroupList               types.List                             `tfsdk:"controller_group_list"`
 	ControllerGroupListVariable       types.String                           `tfsdk:"controller_group_list_variable"`
 	SystemIp                          types.String                           `tfsdk:"system_ip"`
 	SystemIpVariable                  types.String                           `tfsdk:"system_ip_variable"`
@@ -1179,21 +1179,21 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "controller-group-list.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.ControllerGroupList = types.SetNull(types.Int64Type)
+			data.ControllerGroupList = types.ListNull(types.Int64Type)
 
 			v := res.Get(path + "controller-group-list.vipVariableName")
 			data.ControllerGroupListVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.ControllerGroupList = types.SetNull(types.Int64Type)
+			data.ControllerGroupList = types.ListNull(types.Int64Type)
 			data.ControllerGroupListVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "controller-group-list.vipValue")
-			data.ControllerGroupList = helpers.GetInt64Set(v.Array())
+			data.ControllerGroupList = helpers.GetInt64List(v.Array())
 			data.ControllerGroupListVariable = types.StringNull()
 		}
 	} else {
-		data.ControllerGroupList = types.SetNull(types.Int64Type)
+		data.ControllerGroupList = types.ListNull(types.Int64Type)
 		data.ControllerGroupListVariable = types.StringNull()
 	}
 	if value := res.Get(path + "system-ip.vipType"); value.Exists() {

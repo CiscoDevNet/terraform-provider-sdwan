@@ -35,6 +35,7 @@ attributes:
   - model_name: device-groups
     example: group1
   - model_name: controller-group-list
+    type: List
     example: 1
   - model_name: system-ip
     example: 5.5.5.5

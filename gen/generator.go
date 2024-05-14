@@ -578,7 +578,9 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 				attr.EnumValues = append(attr.EnumValues, v.Get("key").String())
 			}
 		} else if t == "enumList" {
-			attr.Type = "Set"
+			if attr.Type == "" {
+				attr.Type = "Set"
+			}
 			attr.ElementType = "String"
 		} else if t == "radioButtonList" {
 			attr.Type = "String"
@@ -605,7 +607,9 @@ func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result
 			attr.Type = "Bool"
 		}
 	} else if r.Get("objectType").String() == "list" {
-		attr.Type = "Set"
+		if attr.Type == "" {
+			attr.Type = "Set"
+		}
 		if r.Get("dataType.type").String() == "number" {
 			attr.ElementType = "Int64"
 
