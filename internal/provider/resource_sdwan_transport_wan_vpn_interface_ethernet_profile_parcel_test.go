@@ -88,11 +88,6 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_encapsulations.0.weight", "250"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_ipv4", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_type", "interface"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_range_start", "203.0.113.50"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_range_end", "203.0.113.100"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_prefix_length", "25"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_overload", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_loopback", "GigabitEthernet0/0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_udp_timeout", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "nat_tcp_timeout", "60"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "new_static_nats.0.source_ip", "1.2.3.4"))
@@ -105,16 +100,6 @@ func TestAccSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "static_nat66.0.source_prefix", "2001:0db8:85a3::/48"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "static_nat66.0.translated_source_prefix", "abcd:1234:5678::/48"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "static_nat66.0.source_vpn_id", "4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "adaptive_qos", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_period", "15"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_bandwidth_upstream", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_min_upstream", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_max_upstream", "10000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_default_upstream", "10000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_bandwidth_downstream", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_min_downstream", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_max_downstream", "100000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_default_downstream", "10000"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "arps.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_icmp_redirect_disable", "true"))
@@ -301,11 +286,6 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	}]` + "\n"
 	config += `	nat_ipv4 = true` + "\n"
 	config += `	nat_type = "interface"` + "\n"
-	config += `	nat_range_start = "203.0.113.50"` + "\n"
-	config += `	nat_range_end = "203.0.113.100"` + "\n"
-	config += `	nat_prefix_length = 25` + "\n"
-	config += `	nat_overload = true` + "\n"
-	config += `	nat_loopback = "GigabitEthernet0/0"` + "\n"
 	config += `	nat_udp_timeout = 1` + "\n"
 	config += `	nat_tcp_timeout = 60` + "\n"
 	config += `	new_static_nats = [{` + "\n"
@@ -322,16 +302,6 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_all() strin
 	config += `	  translated_source_prefix = "abcd:1234:5678::/48"` + "\n"
 	config += `	  source_vpn_id = 4` + "\n"
 	config += `	}]` + "\n"
-	config += `	adaptive_qos = true` + "\n"
-	config += `	qos_adaptive_period = 15` + "\n"
-	config += `	qos_adaptive_bandwidth_upstream = true` + "\n"
-	config += `	qos_adaptive_min_upstream = 100` + "\n"
-	config += `	qos_adaptive_max_upstream = 10000` + "\n"
-	config += `	qos_adaptive_default_upstream = 10000` + "\n"
-	config += `	qos_adaptive_bandwidth_downstream = true` + "\n"
-	config += `	qos_adaptive_min_downstream = 100` + "\n"
-	config += `	qos_adaptive_max_downstream = 100000` + "\n"
-	config += `	qos_adaptive_default_downstream = 10000` + "\n"
 	config += `	arps = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"

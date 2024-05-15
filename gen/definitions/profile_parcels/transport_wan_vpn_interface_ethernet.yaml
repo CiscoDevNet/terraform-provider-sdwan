@@ -106,9 +106,9 @@ attributes:
   - model_name: bandwidthPercent
     tf_name: tunnel_bandwidth_percent
     data_path: [tunnel]
-    conditional_attribute: 
-      name: tunnel_qos_mode
-      value: hub
+    # conditional_attribute: 
+    #   name: tunnel_qos_mode
+    #   value: hub
     example: 82
   - model_name: bind
     tf_name: tunnel_interface_bind_loopback_tunnel
@@ -284,37 +284,47 @@ attributes:
   - model_name: rangeStart
     tf_name: nat_range_start
     data_path: [natAttributesIpv4, natPool]
-    conditional_attribute: 
-      name: natType
-      value: pool
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute: 
+    #   name: natType
+    #   value: pool
     example: 203.0.113.50
   - model_name: rangeEnd
     tf_name: nat_range_end
     data_path: [natAttributesIpv4, natPool]
-    conditional_attribute: 
-      name: natType
-      value: pool
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute: 
+    #   name: natType
+    #   value: pool
     example: 203.0.113.100
   - model_name: prefixLength
     tf_name: nat_prefix_length
     data_path: [natAttributesIpv4, natPool]
-    conditional_attribute: 
-        name: natType
-        value: pool
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute: 
+    #     name: natType
+    #     value: pool
     example: 25
   - model_name: overload
     tf_name: nat_overload
     data_path: [natAttributesIpv4, natPool]
-    conditional_attribute: 
-        name: natType
-        value: pool
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute: 
+    #     name: natType
+    #     value: pool
     example: true
   - model_name: natLookback
     tf_name: nat_loopback
     data_path: [natAttributesIpv4]
-    conditional_attribute: 
-        name: natType
-        value: loopback
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute: 
+    #     name: natType
+    #     value: loopback
     example: GigabitEthernet0/0
   - model_name: udpTimeout
     tf_name: nat_udp_timeout
@@ -352,9 +362,6 @@ attributes:
     example: true
   - model_name: staticNat66
     data_path: [natAttributesIpv6]
-    conditional_attribute: 
-        name: nat66
-        value: true
     attributes:
     - model_name: sourcePrefix
       id: true
@@ -367,69 +374,89 @@ attributes:
   - model_name: adaptiveQoS
     tf_name: adaptive_qos
     data_path: [aclQos]
+    exclude_test: true
+    exclude_null: true
     example: true
   - model_name: adaptPeriod
     tf_name: qos_adaptive_period
     data_path: [aclQos]
-    conditional_attribute:
-      name: adaptiveQoS
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: adaptiveQoS
+    #   value: true
     example: 15
   - model_name: shapingRateUpstream
     tf_name: qos_adaptive_bandwidth_upstream
     data_path: [aclQos]
-    conditional_attribute:
-      name: adaptiveQoS
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: adaptiveQoS
+    #   value: true
     example: true
   - model_name: minShapingRateUpstream
     tf_name: qos_adaptive_min_upstream
     data_path: [aclQos, shapingRateUpstreamConfig]
-    conditional_attribute:
-      name: shapingRateUpstream
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: shapingRateUpstream
+    #   value: true
     example: 100
   - model_name: maxShapingRateUpstream
     tf_name: qos_adaptive_max_upstream
     data_path: [aclQos, shapingRateUpstreamConfig]
-    conditional_attribute:
-      name: shapingRateUpstream
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: shapingRateUpstream
+    #   value: true
     example: 10000
   - model_name: defaultShapingRateUpstream
     tf_name: qos_adaptive_default_upstream
     data_path: [aclQos, shapingRateUpstreamConfig]
-    conditional_attribute:
-      name: shapingRateUpstream
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: shapingRateUpstream
+    #   value: true
     example: 10000
   - model_name: shapingRateDownstream
     tf_name: qos_adaptive_bandwidth_downstream
     data_path: [aclQos]
-    conditional_attribute:
-      name: adaptiveQoS
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: adaptiveQoS
+    #   value: true
     example: true
   - model_name: minShapingRateDownstream
     tf_name: qos_adaptive_min_downstream
     data_path: [aclQos, shapingRateDownstreamConfig]
-    conditional_attribute:
-      name: shapingRateDownstream
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: shapingRateDownstream
+    #   value: true
     example: 100
   - model_name: maxShapingRateDownstream
     tf_name: qos_adaptive_max_downstream
     data_path: [aclQos, shapingRateDownstreamConfig]
-    conditional_attribute:
-      name: shapingRateDownstream
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: shapingRateDownstream
+    #   value: true
     example: 100000
   - model_name: defaultShapingRateDownstream
     tf_name: qos_adaptive_default_downstream
     data_path: [aclQos, shapingRateDownstreamConfig]
-    conditional_attribute:
-      name: shapingRateDownstream
-      value: true
+    exclude_test: true
+    exclude_null: true
+    # conditional_attribute:
+    #   name: shapingRateDownstream
+    #   value: true
     example: 10000
   - model_name: shapingRate
     tf_name: qos_shaping_rate

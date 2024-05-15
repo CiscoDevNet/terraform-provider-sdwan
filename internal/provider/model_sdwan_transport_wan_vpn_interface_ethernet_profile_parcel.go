@@ -955,10 +955,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	if !data.NatRangeStartVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "variable")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.NatRangeStartVariable.ValueString())
-	} else if data.NatRangeStart.IsNull() {
-		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "default")
-
-	} else {
+	} else if !data.NatRangeStart.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeStart.value", data.NatRangeStart.ValueString())
 	}
@@ -966,10 +963,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	if !data.NatRangeEndVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "variable")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.NatRangeEndVariable.ValueString())
-	} else if data.NatRangeEnd.IsNull() {
-		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "default")
-
-	} else {
+	} else if !data.NatRangeEnd.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.rangeEnd.value", data.NatRangeEnd.ValueString())
 	}
@@ -977,10 +971,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	if !data.NatPrefixLengthVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "variable")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.NatPrefixLengthVariable.ValueString())
-	} else if data.NatPrefixLength.IsNull() {
-		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "default")
-
-	} else {
+	} else if !data.NatPrefixLength.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.prefixLength.value", data.NatPrefixLength.ValueInt64())
 	}
@@ -988,10 +979,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	if !data.NatOverloadVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "variable")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.NatOverloadVariable.ValueString())
-	} else if data.NatOverload.IsNull() {
-		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "default")
-		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", true)
-	} else {
+	} else if !data.NatOverload.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natPool.overload.value", data.NatOverload.ValueBool())
 	}
@@ -999,10 +987,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	if !data.NatLoopbackVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "variable")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.NatLoopbackVariable.ValueString())
-	} else if data.NatLoopback.IsNull() {
-		body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "default")
-
-	} else {
+	} else if !data.NatLoopback.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.natLookback.value", data.NatLoopback.ValueString())
 	}
@@ -1124,10 +1109,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		}
 		body, _ = sjson.SetRaw(body, path+"natAttributesIpv6.staticNat66.-1", itemBody)
 	}
-	if data.AdaptiveQos.IsNull() {
-		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.optionType", "default")
-		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", false)
-	} else {
+	if !data.AdaptiveQos.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.optionType", "global")
 		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", data.AdaptiveQos.ValueBool())
 	}
@@ -1135,17 +1117,11 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 	if !data.QosAdaptivePeriodVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "variable")
 		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", data.QosAdaptivePeriodVariable.ValueString())
-	} else if data.QosAdaptivePeriod.IsNull() {
-		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "default")
-		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", 15)
-	} else {
+	} else if !data.QosAdaptivePeriod.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "global")
 		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", data.QosAdaptivePeriod.ValueInt64())
 	}
-	if data.QosAdaptiveBandwidthUpstream.IsNull() {
-		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.optionType", "default")
-		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.value", false)
-	} else {
+	if !data.QosAdaptiveBandwidthUpstream.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.optionType", "global")
 		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.value", data.QosAdaptiveBandwidthUpstream.ValueBool())
 	}
@@ -1173,10 +1149,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.optionType", "global")
 		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.value", data.QosAdaptiveDefaultUpstream.ValueInt64())
 	}
-	if data.QosAdaptiveBandwidthDownstream.IsNull() {
-		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.optionType", "default")
-		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.value", false)
-	} else {
+	if !data.QosAdaptiveBandwidthDownstream.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.optionType", "global")
 		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.value", data.QosAdaptiveBandwidthDownstream.ValueBool())
 	}

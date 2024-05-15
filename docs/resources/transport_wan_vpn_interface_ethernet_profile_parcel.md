@@ -83,15 +83,10 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
       weight        = 250
     }
   ]
-  nat_ipv4          = true
-  nat_type          = "interface"
-  nat_range_start   = "203.0.113.50"
-  nat_range_end     = "203.0.113.100"
-  nat_prefix_length = 25
-  nat_overload      = true
-  nat_loopback      = "GigabitEthernet0/0"
-  nat_udp_timeout   = 1
-  nat_tcp_timeout   = 60
+  nat_ipv4        = true
+  nat_type        = "interface"
+  nat_udp_timeout = 1
+  nat_tcp_timeout = 60
   new_static_nats = [
     {
       source_ip     = "1.2.3.4"
@@ -110,16 +105,6 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
       source_vpn_id            = 4
     }
   ]
-  adaptive_qos                      = true
-  qos_adaptive_period               = 15
-  qos_adaptive_bandwidth_upstream   = true
-  qos_adaptive_min_upstream         = 100
-  qos_adaptive_max_upstream         = 10000
-  qos_adaptive_default_upstream     = 10000
-  qos_adaptive_bandwidth_downstream = true
-  qos_adaptive_min_downstream       = 100
-  qos_adaptive_max_downstream       = 100000
-  qos_adaptive_default_downstream   = 10000
   arps = [
     {
       ip_address  = "1.2.3.4"
