@@ -214,7 +214,7 @@ func (r *CiscoSystemFeatureTemplateResource) Schema(ctx context.Context, req res
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"controller_group_list": schema.SetAttribute{
+			"controller_group_list": schema.ListAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure a list of comma-separated device groups").String,
 				ElementType:         types.Int64Type,
 				Optional:            true,

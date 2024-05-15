@@ -182,7 +182,7 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"controller_group_list": schema.SetAttribute{
+			"controller_group_list": schema.ListAttribute{
 				MarkdownDescription: "Configure a list of comma-separated device groups",
 				ElementType:         types.Int64Type,
 				Computed:            true,
