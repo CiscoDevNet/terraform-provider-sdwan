@@ -25,7 +25,6 @@ attributes:
   - model_name: description
     tf_name: config_description
     example: WAN
-
   - model_name: dynamicDhcpDistance
     tf_name: ipv4_dhcp_distance
     data_path: [intfIpAddress, dynamic]
@@ -51,12 +50,9 @@ attributes:
       example: 1.2.3.4
     - model_name: subnetMask
       example: 0.0.0.0
-
-
   - model_name: dhcpHelper
     tf_name: ipv4_dhcp_helper
     example: 1.2.3.4
-    
   - model_name: dhcpClient
     tf_name: enable_dhcpv6
     data_path: [intfIpV6Address, dynamic]
@@ -224,14 +220,16 @@ attributes:
     tf_name: tunnel_interface_allow_dhcp
     data_path: [allowService]
     example: true
-  # - model_name: ntp
-  #   tf_name: tunnel_interface_allow_ntp
-  #   data_path: [allowService]
-  #   example: false
-  # - model_name: ssh
-  #   tf_name: tunnel_interface_allow_ssh
-  #   data_path: [allowService]
-  #   example: false
+  - model_name: ntp
+    tf_name: tunnel_interface_allow_ntp
+    data_path: [allowService]
+    exclude_null: true
+    example: false
+  - model_name: ssh
+    tf_name: tunnel_interface_allow_ssh
+    data_path: [allowService]
+    exclude_null: true
+    example: false
   - model_name: dns
     tf_name: tunnel_interface_allow_dbs
     data_path: [allowService]
@@ -366,94 +364,104 @@ attributes:
       example: abcd:1234:5678::/48
     - model_name: sourceVpnId
       example: 4
-
-  # - model_name: adaptiveQoS
-  #   tf_name: adaptive_qos
-  #   data_path: [aclQos]
-  #   example: true
-  # - model_name: adaptPeriod
-  #   tf_name: qos_adaptive_period
-  #   data_path: [aclQos]
-  #   example: 15
-  # - model_name: shapingRateUpstream
-  #   tf_name: qos_adaptive_bandwidth_upstream
-  #   data_path: [aclQos]
-  #   example: true
-  # - model_name: minShapingRateUpstream
-  #   tf_name: qos_adaptive_min_upstream
-  #   data_path: [aclQos, shapingRateUpstreamConfig]
-  #   conditional_attribute:
-  #     name: shapingRateUpstream
-  #     value: true
-  #   example: 100
-  # - model_name: maxShapingRateUpstream
-  #   tf_name: qos_adaptive_max_upstream
-  #   data_path: [aclQos, shapingRateUpstreamConfig]
-  #   # conditional_attribute:
-  #   #   name: shapingRateUpstream
-  #   #   value: true
-  #   example: 10000
-  # - model_name: defaultShapingRateUpstream
-  #   tf_name: qos_adaptive_default_upstream
-  #   data_path: [aclQos, shapingRateUpstreamConfig]
-  #   # conditional_attribute:
-  #   #   name: shapingRateUpstream
-  #   #   value: true
-  #   example: 10000
-  # - model_name: shapingRateDownstream
-  #   tf_name: qos_adaptive_bandwidth_downstream
-  #   data_path: [aclQos]
-  #   example: true
-  # - model_name: minShapingRateDownstream
-  #   tf_name: qos_adaptive_min_downstream
-  #   data_path: [aclQos, shapingRateDownstreamConfig]
-  #   # conditional_attribute:
-  #   #   name: shapingRateDownstream
-  #   #   value: true
-  #   example: 100
-  # - model_name: maxShapingRateDownstream
-  #   tf_name: qos_adaptive_max_downstream
-  #   data_path: [aclQos, shapingRateDownstreamConfig]
-  #   # conditional_attribute:
-  #   #   name: shapingRateDownstream
-  #   #   value: true
-  #   example: 100000
-  # - model_name: defaultShapingRateDownstream
-  #   tf_name: qos_adaptive_default_downstream
-  #   data_path: [aclQos, shapingRateDownstreamConfig]
-  #   # conditional_attribute:
-  #   #   name: shapingRateDownstream
-  #   #   value: true
-  #   example: 10000
-  # - model_name: shapingRate
-  #   tf_name: qos_shaping_rate
-  #   data_path: [aclQos]
-  #   example: 16
-
-  # ==== ACL IPv4 and ACL IPv6 Not Supported By Provider ====
+  - model_name: adaptiveQoS
+    tf_name: adaptive_qos
+    data_path: [aclQos]
+    example: true
+  - model_name: adaptPeriod
+    tf_name: qos_adaptive_period
+    data_path: [aclQos]
+    conditional_attribute:
+      name: adaptiveQoS
+      value: true
+    example: 15
+  - model_name: shapingRateUpstream
+    tf_name: qos_adaptive_bandwidth_upstream
+    data_path: [aclQos]
+    conditional_attribute:
+      name: adaptiveQoS
+      value: true
+    example: true
+  - model_name: minShapingRateUpstream
+    tf_name: qos_adaptive_min_upstream
+    data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      name: shapingRateUpstream
+      value: true
+    example: 100
+  - model_name: maxShapingRateUpstream
+    tf_name: qos_adaptive_max_upstream
+    data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      name: shapingRateUpstream
+      value: true
+    example: 10000
+  - model_name: defaultShapingRateUpstream
+    tf_name: qos_adaptive_default_upstream
+    data_path: [aclQos, shapingRateUpstreamConfig]
+    conditional_attribute:
+      name: shapingRateUpstream
+      value: true
+    example: 10000
+  - model_name: shapingRateDownstream
+    tf_name: qos_adaptive_bandwidth_downstream
+    data_path: [aclQos]
+    conditional_attribute:
+      name: adaptiveQoS
+      value: true
+    example: true
+  - model_name: minShapingRateDownstream
+    tf_name: qos_adaptive_min_downstream
+    data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      name: shapingRateDownstream
+      value: true
+    example: 100
+  - model_name: maxShapingRateDownstream
+    tf_name: qos_adaptive_max_downstream
+    data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      name: shapingRateDownstream
+      value: true
+    example: 100000
+  - model_name: defaultShapingRateDownstream
+    tf_name: qos_adaptive_default_downstream
+    data_path: [aclQos, shapingRateDownstreamConfig]
+    conditional_attribute:
+      name: shapingRateDownstream
+      value: true
+    example: 10000
+  - model_name: shapingRate
+    tf_name: qos_shaping_rate
+    data_path: [aclQos]
+    exclude_test: true
+    exclude_null: true
+    example: 16
+  # ==== ACL IPv4 and ACL IPv6 Not Supported By Provider (Being Worked On) ====
   # - model_name: refId
   #   tf_name: acl_ipv4_egress_reference_id
   #   data_path: [aclQos, ipv4AclEgress]
   #   type: String
+  #   exclude_test: true
   #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
   # - model_name: refId
   #   tf_name: acl_ipv4_ingress_reference_id
   #   data_path: [aclQos, ipv4AclIngress]
   #   type: String
+  #   exclude_test: true
   #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-
-  # ==== ACL IPv4 and ACL IPv6 Not Supported By Provider ====
   # - model_name: refId
   #   tf_name: acl_ipv6_egress_reference_id
   #   data_path: [aclQos, ipv6AclEgress]
   #   type: String
+  #   exclude_test: true
   #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
   # - model_name: refId
   #   tf_name: acl_ipv6_ingress_reference_id
   #   data_path: [aclQos, ipv6AclIngress]
   #   type: String
+  #   exclude_test: true
   #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-
   - model_name: arp
     tf_name: arps
     attributes:

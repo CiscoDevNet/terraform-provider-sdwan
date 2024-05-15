@@ -73,6 +73,8 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_all", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_bgp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_dhcp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_ntp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_ssh", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_dbs", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_icmp", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tunnel_interface_allow_https", "true"))
@@ -103,6 +105,16 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "static_nat66.0.source_prefix", "2001:0db8:85a3::/48"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "static_nat66.0.translated_source_prefix", "abcd:1234:5678::/48"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "static_nat66.0.source_vpn_id", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "adaptive_qos", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_period", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_bandwidth_upstream", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_min_upstream", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_max_upstream", "10000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_default_upstream", "10000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_bandwidth_downstream", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_min_downstream", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_max_downstream", "100000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "qos_adaptive_default_downstream", "10000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "arps.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_icmp_redirect_disable", "true"))
@@ -252,6 +264,8 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig()
 	config += `	tunnel_interface_allow_all = false` + "\n"
 	config += `	tunnel_interface_allow_bgp = false` + "\n"
 	config += `	tunnel_interface_allow_dhcp = true` + "\n"
+	config += `	tunnel_interface_allow_ntp = false` + "\n"
+	config += `	tunnel_interface_allow_ssh = false` + "\n"
 	config += `	tunnel_interface_allow_dbs = true` + "\n"
 	config += `	tunnel_interface_allow_icmp = true` + "\n"
 	config += `	tunnel_interface_allow_https = true` + "\n"
@@ -288,6 +302,16 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig()
 	config += `	  translated_source_prefix = "abcd:1234:5678::/48"` + "\n"
 	config += `	  source_vpn_id = 4` + "\n"
 	config += `	}]` + "\n"
+	config += `	adaptive_qos = true` + "\n"
+	config += `	qos_adaptive_period = 15` + "\n"
+	config += `	qos_adaptive_bandwidth_upstream = true` + "\n"
+	config += `	qos_adaptive_min_upstream = 100` + "\n"
+	config += `	qos_adaptive_max_upstream = 10000` + "\n"
+	config += `	qos_adaptive_default_upstream = 10000` + "\n"
+	config += `	qos_adaptive_bandwidth_downstream = true` + "\n"
+	config += `	qos_adaptive_min_downstream = 100` + "\n"
+	config += `	qos_adaptive_max_downstream = 100000` + "\n"
+	config += `	qos_adaptive_default_downstream = 10000` + "\n"
 	config += `	arps = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"

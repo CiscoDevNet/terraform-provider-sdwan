@@ -66,6 +66,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
   tunnel_interface_allow_all                     = false
   tunnel_interface_allow_bgp                     = false
   tunnel_interface_allow_dhcp                    = true
+  tunnel_interface_allow_ntp                     = false
+  tunnel_interface_allow_ssh                     = false
   tunnel_interface_allow_dbs                     = true
   tunnel_interface_allow_icmp                    = true
   tunnel_interface_allow_https                   = true
@@ -108,6 +110,16 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
       source_vpn_id            = 4
     }
   ]
+  adaptive_qos                      = true
+  qos_adaptive_period               = 15
+  qos_adaptive_bandwidth_upstream   = true
+  qos_adaptive_min_upstream         = 100
+  qos_adaptive_max_upstream         = 10000
+  qos_adaptive_default_upstream     = 10000
+  qos_adaptive_bandwidth_downstream = true
+  qos_adaptive_min_downstream       = 100
+  qos_adaptive_max_downstream       = 100000
+  qos_adaptive_default_downstream   = 10000
   arps = [
     {
       ip_address  = "1.2.3.4"
@@ -145,6 +157,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 
 ### Optional
 
+- `adaptive_qos` (Boolean) Adaptive QoS
+  - Default value: `false`
 - `advanced_arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
   - Range: `0`-`2147483`
   - Default value: `1200`
@@ -263,6 +277,35 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
   - Default value: `false`
 - `per_tunnel_qos_variable` (String) Variable name
+- `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
+  - Default value: `false`
+- `qos_adaptive_bandwidth_upstream` (Boolean) Shaping Rate Upstream
+  - Default value: `false`
+- `qos_adaptive_default_downstream` (Number) Adaptive QoS default downstream bandwidth (kbps)
+  - Range: `8`-`100000000`
+- `qos_adaptive_default_downstream_variable` (String) Variable name
+- `qos_adaptive_default_upstream` (Number) Adaptive QoS default upstream bandwidth (kbps)
+  - Range: `8`-`100000000`
+- `qos_adaptive_default_upstream_variable` (String) Variable name
+- `qos_adaptive_max_downstream` (Number) Downstream max bandwidth limit (kbps)
+  - Range: `8`-`100000000`
+- `qos_adaptive_max_downstream_variable` (String) Variable name
+- `qos_adaptive_max_upstream` (Number) Upstream max bandwidth limit (kbps)
+  - Range: `8`-`100000000`
+- `qos_adaptive_max_upstream_variable` (String) Variable name
+- `qos_adaptive_min_downstream` (Number) Downstream min bandwidth limit (kbps)
+  - Range: `8`-`100000000`
+- `qos_adaptive_min_downstream_variable` (String) Variable name
+- `qos_adaptive_min_upstream` (Number) Upstream min bandwidth limit (kbps)
+  - Range: `8`-`100000000`
+- `qos_adaptive_min_upstream_variable` (String) Variable name
+- `qos_adaptive_period` (Number) Adapt Period(Minutes)
+  - Range: `1`-`720`
+  - Default value: `15`
+- `qos_adaptive_period_variable` (String) Variable name
+- `qos_shaping_rate` (Number) Shaping Rate (Kbps)
+  - Range: `8`-`100000000`
+- `qos_shaping_rate_variable` (String) Variable name
 - `service_provider` (String) Service Provider Name
 - `service_provider_variable` (String) Variable name
 - `shutdown` (Boolean) - Default value: `true`
@@ -299,12 +342,18 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `tunnel_interface_allow_netconf` (Boolean) Allow/Deny NETCONF
   - Default value: `false`
 - `tunnel_interface_allow_netconf_variable` (String) Variable name
+- `tunnel_interface_allow_ntp` (Boolean) Allow/Deny NTP
+  - Default value: `true`
+- `tunnel_interface_allow_ntp_variable` (String) Variable name
 - `tunnel_interface_allow_ospf` (Boolean) Allow/Deny OSPF
   - Default value: `false`
 - `tunnel_interface_allow_ospf_variable` (String) Variable name
 - `tunnel_interface_allow_snmp` (Boolean) Allow/Deny SNMP
   - Default value: `false`
 - `tunnel_interface_allow_snmp_variable` (String) Variable name
+- `tunnel_interface_allow_ssh` (Boolean) Allow/Deny SSH
+  - Default value: `true`
+- `tunnel_interface_allow_ssh_variable` (String) Variable name
 - `tunnel_interface_allow_stun` (Boolean) Allow/Deny STUN
   - Default value: `false`
 - `tunnel_interface_allow_stun_variable` (String) Variable name

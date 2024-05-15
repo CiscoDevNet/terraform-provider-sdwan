@@ -127,6 +127,10 @@ type TransportWANVPNInterfaceEthernet struct {
 	TunnelInterfaceAllowBgpVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_bgp_variable"`
 	TunnelInterfaceAllowDhcp                           types.Bool                                                      `tfsdk:"tunnel_interface_allow_dhcp"`
 	TunnelInterfaceAllowDhcpVariable                   types.String                                                    `tfsdk:"tunnel_interface_allow_dhcp_variable"`
+	TunnelInterfaceAllowNtp                            types.Bool                                                      `tfsdk:"tunnel_interface_allow_ntp"`
+	TunnelInterfaceAllowNtpVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_ntp_variable"`
+	TunnelInterfaceAllowSsh                            types.Bool                                                      `tfsdk:"tunnel_interface_allow_ssh"`
+	TunnelInterfaceAllowSshVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_ssh_variable"`
 	TunnelInterfaceAllowDbs                            types.Bool                                                      `tfsdk:"tunnel_interface_allow_dbs"`
 	TunnelInterfaceAllowDbsVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_dbs_variable"`
 	TunnelInterfaceAllowIcmp                           types.Bool                                                      `tfsdk:"tunnel_interface_allow_icmp"`
@@ -168,6 +172,25 @@ type TransportWANVPNInterfaceEthernet struct {
 	Nat64                                              types.Bool                                                      `tfsdk:"nat64"`
 	Nat66                                              types.Bool                                                      `tfsdk:"nat66"`
 	StaticNat66                                        []TransportWANVPNInterfaceEthernetStaticNat66                   `tfsdk:"static_nat66"`
+	AdaptiveQos                                        types.Bool                                                      `tfsdk:"adaptive_qos"`
+	QosAdaptivePeriod                                  types.Int64                                                     `tfsdk:"qos_adaptive_period"`
+	QosAdaptivePeriodVariable                          types.String                                                    `tfsdk:"qos_adaptive_period_variable"`
+	QosAdaptiveBandwidthUpstream                       types.Bool                                                      `tfsdk:"qos_adaptive_bandwidth_upstream"`
+	QosAdaptiveMinUpstream                             types.Int64                                                     `tfsdk:"qos_adaptive_min_upstream"`
+	QosAdaptiveMinUpstreamVariable                     types.String                                                    `tfsdk:"qos_adaptive_min_upstream_variable"`
+	QosAdaptiveMaxUpstream                             types.Int64                                                     `tfsdk:"qos_adaptive_max_upstream"`
+	QosAdaptiveMaxUpstreamVariable                     types.String                                                    `tfsdk:"qos_adaptive_max_upstream_variable"`
+	QosAdaptiveDefaultUpstream                         types.Int64                                                     `tfsdk:"qos_adaptive_default_upstream"`
+	QosAdaptiveDefaultUpstreamVariable                 types.String                                                    `tfsdk:"qos_adaptive_default_upstream_variable"`
+	QosAdaptiveBandwidthDownstream                     types.Bool                                                      `tfsdk:"qos_adaptive_bandwidth_downstream"`
+	QosAdaptiveMinDownstream                           types.Int64                                                     `tfsdk:"qos_adaptive_min_downstream"`
+	QosAdaptiveMinDownstreamVariable                   types.String                                                    `tfsdk:"qos_adaptive_min_downstream_variable"`
+	QosAdaptiveMaxDownstream                           types.Int64                                                     `tfsdk:"qos_adaptive_max_downstream"`
+	QosAdaptiveMaxDownstreamVariable                   types.String                                                    `tfsdk:"qos_adaptive_max_downstream_variable"`
+	QosAdaptiveDefaultDownstream                       types.Int64                                                     `tfsdk:"qos_adaptive_default_downstream"`
+	QosAdaptiveDefaultDownstreamVariable               types.String                                                    `tfsdk:"qos_adaptive_default_downstream_variable"`
+	QosShapingRate                                     types.Int64                                                     `tfsdk:"qos_shaping_rate"`
+	QosShapingRateVariable                             types.String                                                    `tfsdk:"qos_shaping_rate_variable"`
 	Arps                                               []TransportWANVPNInterfaceEthernetArps                          `tfsdk:"arps"`
 	AdvancedIcmpRedirectDisable                        types.Bool                                                      `tfsdk:"advanced_icmp_redirect_disable"`
 	AdvancedIcmpRedirectDisableVariable                types.String                                                    `tfsdk:"advanced_icmp_redirect_disable_variable"`
@@ -772,6 +795,22 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"allowService.dhcp.value", data.TunnelInterfaceAllowDhcp.ValueBool())
 	}
 
+	if !data.TunnelInterfaceAllowNtpVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"allowService.ntp.optionType", "variable")
+		body, _ = sjson.Set(body, path+"allowService.ntp.value", data.TunnelInterfaceAllowNtpVariable.ValueString())
+	} else if !data.TunnelInterfaceAllowNtp.IsNull() {
+		body, _ = sjson.Set(body, path+"allowService.ntp.optionType", "global")
+		body, _ = sjson.Set(body, path+"allowService.ntp.value", data.TunnelInterfaceAllowNtp.ValueBool())
+	}
+
+	if !data.TunnelInterfaceAllowSshVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"allowService.ssh.optionType", "variable")
+		body, _ = sjson.Set(body, path+"allowService.ssh.value", data.TunnelInterfaceAllowSshVariable.ValueString())
+	} else if !data.TunnelInterfaceAllowSsh.IsNull() {
+		body, _ = sjson.Set(body, path+"allowService.ssh.optionType", "global")
+		body, _ = sjson.Set(body, path+"allowService.ssh.value", data.TunnelInterfaceAllowSsh.ValueBool())
+	}
+
 	if !data.TunnelInterfaceAllowDbsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"allowService.dns.optionType", "variable")
 		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDbsVariable.ValueString())
@@ -1084,6 +1123,94 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 			itemBody, _ = sjson.Set(itemBody, "sourceVpnId.value", item.SourceVpnId.ValueInt64())
 		}
 		body, _ = sjson.SetRaw(body, path+"natAttributesIpv6.staticNat66.-1", itemBody)
+	}
+	if data.AdaptiveQos.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.optionType", "default")
+		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", false)
+	} else {
+		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", data.AdaptiveQos.ValueBool())
+	}
+
+	if !data.QosAdaptivePeriodVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", data.QosAdaptivePeriodVariable.ValueString())
+	} else if data.QosAdaptivePeriod.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "default")
+		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", 15)
+	} else {
+		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.adaptPeriod.value", data.QosAdaptivePeriod.ValueInt64())
+	}
+	if data.QosAdaptiveBandwidthUpstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.optionType", "default")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.value", false)
+	} else {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstream.value", data.QosAdaptiveBandwidthUpstream.ValueBool())
+	}
+
+	if !data.QosAdaptiveMinUpstreamVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.value", data.QosAdaptiveMinUpstreamVariable.ValueString())
+	} else if !data.QosAdaptiveMinUpstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.value", data.QosAdaptiveMinUpstream.ValueInt64())
+	}
+
+	if !data.QosAdaptiveMaxUpstreamVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.value", data.QosAdaptiveMaxUpstreamVariable.ValueString())
+	} else if !data.QosAdaptiveMaxUpstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.value", data.QosAdaptiveMaxUpstream.ValueInt64())
+	}
+
+	if !data.QosAdaptiveDefaultUpstreamVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.value", data.QosAdaptiveDefaultUpstreamVariable.ValueString())
+	} else if !data.QosAdaptiveDefaultUpstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.value", data.QosAdaptiveDefaultUpstream.ValueInt64())
+	}
+	if data.QosAdaptiveBandwidthDownstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.optionType", "default")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.value", false)
+	} else {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstream.value", data.QosAdaptiveBandwidthDownstream.ValueBool())
+	}
+
+	if !data.QosAdaptiveMinDownstreamVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.value", data.QosAdaptiveMinDownstreamVariable.ValueString())
+	} else if !data.QosAdaptiveMinDownstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.value", data.QosAdaptiveMinDownstream.ValueInt64())
+	}
+
+	if !data.QosAdaptiveMaxDownstreamVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.value", data.QosAdaptiveMaxDownstreamVariable.ValueString())
+	} else if !data.QosAdaptiveMaxDownstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.value", data.QosAdaptiveMaxDownstream.ValueInt64())
+	}
+
+	if !data.QosAdaptiveDefaultDownstreamVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.value", data.QosAdaptiveDefaultDownstreamVariable.ValueString())
+	} else if !data.QosAdaptiveDefaultDownstream.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.value", data.QosAdaptiveDefaultDownstream.ValueInt64())
+	}
+
+	if !data.QosShapingRateVariable.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRate.optionType", "variable")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.QosShapingRateVariable.ValueString())
+	} else if !data.QosShapingRate.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRate.optionType", "global")
+		body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.QosShapingRate.ValueInt64())
 	}
 	body, _ = sjson.Set(body, path+"arp", []interface{}{})
 	for _, item := range data.Arps {
@@ -1792,6 +1919,26 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceAllowDhcp = types.BoolValue(va.Bool())
 		}
 	}
+	data.TunnelInterfaceAllowNtp = types.BoolNull()
+	data.TunnelInterfaceAllowNtpVariable = types.StringNull()
+	if t := res.Get(path + "allowService.ntp.optionType"); t.Exists() {
+		va := res.Get(path + "allowService.ntp.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceAllowNtpVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceAllowNtp = types.BoolValue(va.Bool())
+		}
+	}
+	data.TunnelInterfaceAllowSsh = types.BoolNull()
+	data.TunnelInterfaceAllowSshVariable = types.StringNull()
+	if t := res.Get(path + "allowService.ssh.optionType"); t.Exists() {
+		va := res.Get(path + "allowService.ssh.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceAllowSshVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceAllowSsh = types.BoolValue(va.Bool())
+		}
+	}
 	data.TunnelInterfaceAllowDbs = types.BoolNull()
 	data.TunnelInterfaceAllowDbsVariable = types.StringNull()
 	if t := res.Get(path + "allowService.dns.optionType"); t.Exists() {
@@ -2107,6 +2254,110 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			data.StaticNat66 = append(data.StaticNat66, item)
 			return true
 		})
+	}
+	data.AdaptiveQos = types.BoolNull()
+
+	if t := res.Get(path + "aclQos.adaptiveQoS.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.adaptiveQoS.value")
+		if t.String() == "global" {
+			data.AdaptiveQos = types.BoolValue(va.Bool())
+		}
+	}
+	data.QosAdaptivePeriod = types.Int64Null()
+	data.QosAdaptivePeriodVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.adaptPeriod.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.adaptPeriod.value")
+		if t.String() == "variable" {
+			data.QosAdaptivePeriodVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptivePeriod = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveBandwidthUpstream = types.BoolNull()
+
+	if t := res.Get(path + "aclQos.shapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstream.value")
+		if t.String() == "global" {
+			data.QosAdaptiveBandwidthUpstream = types.BoolValue(va.Bool())
+		}
+	}
+	data.QosAdaptiveMinUpstream = types.Int64Null()
+	data.QosAdaptiveMinUpstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMinUpstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMinUpstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveMaxUpstream = types.Int64Null()
+	data.QosAdaptiveMaxUpstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMaxUpstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMaxUpstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveDefaultUpstream = types.Int64Null()
+	data.QosAdaptiveDefaultUpstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveDefaultUpstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveDefaultUpstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveBandwidthDownstream = types.BoolNull()
+
+	if t := res.Get(path + "aclQos.shapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstream.value")
+		if t.String() == "global" {
+			data.QosAdaptiveBandwidthDownstream = types.BoolValue(va.Bool())
+		}
+	}
+	data.QosAdaptiveMinDownstream = types.Int64Null()
+	data.QosAdaptiveMinDownstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMinDownstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMinDownstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveMaxDownstream = types.Int64Null()
+	data.QosAdaptiveMaxDownstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMaxDownstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMaxDownstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveDefaultDownstream = types.Int64Null()
+	data.QosAdaptiveDefaultDownstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveDefaultDownstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveDefaultDownstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosShapingRate = types.Int64Null()
+	data.QosShapingRateVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRate.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRate.value")
+		if t.String() == "variable" {
+			data.QosShapingRateVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosShapingRate = types.Int64Value(va.Int())
+		}
 	}
 	if value := res.Get(path + "arp"); value.Exists() {
 		data.Arps = make([]TransportWANVPNInterfaceEthernetArps, 0)
@@ -2856,6 +3107,26 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 			data.TunnelInterfaceAllowDhcp = types.BoolValue(va.Bool())
 		}
 	}
+	data.TunnelInterfaceAllowNtp = types.BoolNull()
+	data.TunnelInterfaceAllowNtpVariable = types.StringNull()
+	if t := res.Get(path + "allowService.ntp.optionType"); t.Exists() {
+		va := res.Get(path + "allowService.ntp.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceAllowNtpVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceAllowNtp = types.BoolValue(va.Bool())
+		}
+	}
+	data.TunnelInterfaceAllowSsh = types.BoolNull()
+	data.TunnelInterfaceAllowSshVariable = types.StringNull()
+	if t := res.Get(path + "allowService.ssh.optionType"); t.Exists() {
+		va := res.Get(path + "allowService.ssh.value")
+		if t.String() == "variable" {
+			data.TunnelInterfaceAllowSshVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.TunnelInterfaceAllowSsh = types.BoolValue(va.Bool())
+		}
+	}
 	data.TunnelInterfaceAllowDbs = types.BoolNull()
 	data.TunnelInterfaceAllowDbsVariable = types.StringNull()
 	if t := res.Get(path + "allowService.dns.optionType"); t.Exists() {
@@ -3227,6 +3498,110 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 			} else if t.String() == "global" {
 				data.StaticNat66[i].SourceVpnId = types.Int64Value(va.Int())
 			}
+		}
+	}
+	data.AdaptiveQos = types.BoolNull()
+
+	if t := res.Get(path + "aclQos.adaptiveQoS.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.adaptiveQoS.value")
+		if t.String() == "global" {
+			data.AdaptiveQos = types.BoolValue(va.Bool())
+		}
+	}
+	data.QosAdaptivePeriod = types.Int64Null()
+	data.QosAdaptivePeriodVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.adaptPeriod.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.adaptPeriod.value")
+		if t.String() == "variable" {
+			data.QosAdaptivePeriodVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptivePeriod = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveBandwidthUpstream = types.BoolNull()
+
+	if t := res.Get(path + "aclQos.shapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstream.value")
+		if t.String() == "global" {
+			data.QosAdaptiveBandwidthUpstream = types.BoolValue(va.Bool())
+		}
+	}
+	data.QosAdaptiveMinUpstream = types.Int64Null()
+	data.QosAdaptiveMinUpstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstreamConfig.minShapingRateUpstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMinUpstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMinUpstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveMaxUpstream = types.Int64Null()
+	data.QosAdaptiveMaxUpstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstreamConfig.maxShapingRateUpstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMaxUpstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMaxUpstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveDefaultUpstream = types.Int64Null()
+	data.QosAdaptiveDefaultUpstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateUpstreamConfig.defaultShapingRateUpstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveDefaultUpstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveDefaultUpstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveBandwidthDownstream = types.BoolNull()
+
+	if t := res.Get(path + "aclQos.shapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstream.value")
+		if t.String() == "global" {
+			data.QosAdaptiveBandwidthDownstream = types.BoolValue(va.Bool())
+		}
+	}
+	data.QosAdaptiveMinDownstream = types.Int64Null()
+	data.QosAdaptiveMinDownstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstreamConfig.minShapingRateDownstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMinDownstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMinDownstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveMaxDownstream = types.Int64Null()
+	data.QosAdaptiveMaxDownstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstreamConfig.maxShapingRateDownstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveMaxDownstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveMaxDownstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosAdaptiveDefaultDownstream = types.Int64Null()
+	data.QosAdaptiveDefaultDownstreamVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRateDownstreamConfig.defaultShapingRateDownstream.value")
+		if t.String() == "variable" {
+			data.QosAdaptiveDefaultDownstreamVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosAdaptiveDefaultDownstream = types.Int64Value(va.Int())
+		}
+	}
+	data.QosShapingRate = types.Int64Null()
+	data.QosShapingRateVariable = types.StringNull()
+	if t := res.Get(path + "aclQos.shapingRate.optionType"); t.Exists() {
+		va := res.Get(path + "aclQos.shapingRate.value")
+		if t.String() == "variable" {
+			data.QosShapingRateVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.QosShapingRate = types.Int64Value(va.Int())
 		}
 	}
 	for i := range data.Arps {
@@ -3709,6 +4084,18 @@ func (data *TransportWANVPNInterfaceEthernet) isNull(ctx context.Context, res gj
 	if !data.TunnelInterfaceAllowDhcpVariable.IsNull() {
 		return false
 	}
+	if !data.TunnelInterfaceAllowNtp.IsNull() {
+		return false
+	}
+	if !data.TunnelInterfaceAllowNtpVariable.IsNull() {
+		return false
+	}
+	if !data.TunnelInterfaceAllowSsh.IsNull() {
+		return false
+	}
+	if !data.TunnelInterfaceAllowSshVariable.IsNull() {
+		return false
+	}
 	if !data.TunnelInterfaceAllowDbs.IsNull() {
 		return false
 	}
@@ -3830,6 +4217,63 @@ func (data *TransportWANVPNInterfaceEthernet) isNull(ctx context.Context, res gj
 		return false
 	}
 	if len(data.StaticNat66) > 0 {
+		return false
+	}
+	if !data.AdaptiveQos.IsNull() {
+		return false
+	}
+	if !data.QosAdaptivePeriod.IsNull() {
+		return false
+	}
+	if !data.QosAdaptivePeriodVariable.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveBandwidthUpstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMinUpstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMinUpstreamVariable.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMaxUpstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMaxUpstreamVariable.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveDefaultUpstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveDefaultUpstreamVariable.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveBandwidthDownstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMinDownstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMinDownstreamVariable.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMaxDownstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveMaxDownstreamVariable.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveDefaultDownstream.IsNull() {
+		return false
+	}
+	if !data.QosAdaptiveDefaultDownstreamVariable.IsNull() {
+		return false
+	}
+	if !data.QosShapingRate.IsNull() {
+		return false
+	}
+	if !data.QosShapingRateVariable.IsNull() {
 		return false
 	}
 	if len(data.Arps) > 0 {

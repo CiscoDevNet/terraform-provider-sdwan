@@ -477,6 +477,22 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"tunnel_interface_allow_ntp": schema.BoolAttribute{
+				MarkdownDescription: "Allow/Deny NTP",
+				Computed:            true,
+			},
+			"tunnel_interface_allow_ntp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"tunnel_interface_allow_ssh": schema.BoolAttribute{
+				MarkdownDescription: "Allow/Deny SSH",
+				Computed:            true,
+			},
+			"tunnel_interface_allow_ssh_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
 			"tunnel_interface_allow_dbs": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny DNS",
 				Computed:            true,
@@ -724,6 +740,82 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 						},
 					},
 				},
+			},
+			"adaptive_qos": schema.BoolAttribute{
+				MarkdownDescription: "Adaptive QoS",
+				Computed:            true,
+			},
+			"qos_adaptive_period": schema.Int64Attribute{
+				MarkdownDescription: "Adapt Period(Minutes)",
+				Computed:            true,
+			},
+			"qos_adaptive_period_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"qos_adaptive_bandwidth_upstream": schema.BoolAttribute{
+				MarkdownDescription: "Shaping Rate Upstream",
+				Computed:            true,
+			},
+			"qos_adaptive_min_upstream": schema.Int64Attribute{
+				MarkdownDescription: "Upstream min bandwidth limit (kbps)",
+				Computed:            true,
+			},
+			"qos_adaptive_min_upstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"qos_adaptive_max_upstream": schema.Int64Attribute{
+				MarkdownDescription: "Upstream max bandwidth limit (kbps)",
+				Computed:            true,
+			},
+			"qos_adaptive_max_upstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"qos_adaptive_default_upstream": schema.Int64Attribute{
+				MarkdownDescription: "Adaptive QoS default upstream bandwidth (kbps)",
+				Computed:            true,
+			},
+			"qos_adaptive_default_upstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"qos_adaptive_bandwidth_downstream": schema.BoolAttribute{
+				MarkdownDescription: "Shaping Rate Downstream",
+				Computed:            true,
+			},
+			"qos_adaptive_min_downstream": schema.Int64Attribute{
+				MarkdownDescription: "Downstream min bandwidth limit (kbps)",
+				Computed:            true,
+			},
+			"qos_adaptive_min_downstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"qos_adaptive_max_downstream": schema.Int64Attribute{
+				MarkdownDescription: "Downstream max bandwidth limit (kbps)",
+				Computed:            true,
+			},
+			"qos_adaptive_max_downstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"qos_adaptive_default_downstream": schema.Int64Attribute{
+				MarkdownDescription: "Adaptive QoS default downstream bandwidth (kbps)",
+				Computed:            true,
+			},
+			"qos_adaptive_default_downstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"qos_shaping_rate": schema.Int64Attribute{
+				MarkdownDescription: "Shaping Rate (Kbps)",
+				Computed:            true,
+			},
+			"qos_shaping_rate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
 			},
 			"arps": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure ARP entries",

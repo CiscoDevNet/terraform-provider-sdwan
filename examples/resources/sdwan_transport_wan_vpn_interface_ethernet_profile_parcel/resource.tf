@@ -49,6 +49,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
   tunnel_interface_allow_all                     = false
   tunnel_interface_allow_bgp                     = false
   tunnel_interface_allow_dhcp                    = true
+  tunnel_interface_allow_ntp                     = false
+  tunnel_interface_allow_ssh                     = false
   tunnel_interface_allow_dbs                     = true
   tunnel_interface_allow_icmp                    = true
   tunnel_interface_allow_https                   = true
@@ -91,6 +93,16 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
       source_vpn_id            = 4
     }
   ]
+  adaptive_qos                      = true
+  qos_adaptive_period               = 15
+  qos_adaptive_bandwidth_upstream   = true
+  qos_adaptive_min_upstream         = 100
+  qos_adaptive_max_upstream         = 10000
+  qos_adaptive_default_upstream     = 10000
+  qos_adaptive_bandwidth_downstream = true
+  qos_adaptive_min_downstream       = 100
+  qos_adaptive_max_downstream       = 100000
+  qos_adaptive_default_downstream   = 10000
   arps = [
     {
       ip_address  = "1.2.3.4"

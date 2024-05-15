@@ -548,6 +548,22 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
+			"tunnel_interface_allow_ntp": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny NTP").AddDefaultValueDescription("true").String,
+				Optional:            true,
+			},
+			"tunnel_interface_allow_ntp_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"tunnel_interface_allow_ssh": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny SSH").AddDefaultValueDescription("true").String,
+				Optional:            true,
+			},
+			"tunnel_interface_allow_ssh_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
 			"tunnel_interface_allow_dbs": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Allow/Deny DNS").AddDefaultValueDescription("true").String,
 				Optional:            true,
@@ -834,6 +850,106 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 						},
 					},
 				},
+			},
+			"adaptive_qos": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"qos_adaptive_period": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Adapt Period(Minutes)").AddIntegerRangeDescription(1, 720).AddDefaultValueDescription("15").String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(1, 720),
+				},
+			},
+			"qos_adaptive_period_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"qos_adaptive_bandwidth_upstream": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate Upstream").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"qos_adaptive_min_upstream": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Upstream min bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(8, 100000000),
+				},
+			},
+			"qos_adaptive_min_upstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"qos_adaptive_max_upstream": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Upstream max bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(8, 100000000),
+				},
+			},
+			"qos_adaptive_max_upstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"qos_adaptive_default_upstream": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS default upstream bandwidth (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(8, 100000000),
+				},
+			},
+			"qos_adaptive_default_upstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"qos_adaptive_bandwidth_downstream": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate Downstream").AddDefaultValueDescription("false").String,
+				Optional:            true,
+			},
+			"qos_adaptive_min_downstream": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Downstream min bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(8, 100000000),
+				},
+			},
+			"qos_adaptive_min_downstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"qos_adaptive_max_downstream": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Downstream max bandwidth limit (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(8, 100000000),
+				},
+			},
+			"qos_adaptive_max_downstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"qos_adaptive_default_downstream": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Adaptive QoS default downstream bandwidth (kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(8, 100000000),
+				},
+			},
+			"qos_adaptive_default_downstream_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"qos_shaping_rate": schema.Int64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Shaping Rate (Kbps)").AddIntegerRangeDescription(8, 100000000).String,
+				Optional:            true,
+				Validators: []validator.Int64{
+					int64validator.Between(8, 100000000),
+				},
+			},
+			"qos_shaping_rate_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
 			},
 			"arps": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure ARP entries").String,

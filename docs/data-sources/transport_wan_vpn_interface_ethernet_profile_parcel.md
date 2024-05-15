@@ -31,6 +31,7 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 
 ### Read-Only
 
+- `adaptive_qos` (Boolean) Adaptive QoS
 - `advanced_arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
 - `advanced_arp_timeout_variable` (String) Variable name
 - `advanced_autonegotiate` (Boolean) Link autonegotiation
@@ -119,6 +120,24 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `new_static_nats` (Attributes List) static NAT (see [below for nested schema](#nestedatt--new_static_nats))
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
 - `per_tunnel_qos_variable` (String) Variable name
+- `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
+- `qos_adaptive_bandwidth_upstream` (Boolean) Shaping Rate Upstream
+- `qos_adaptive_default_downstream` (Number) Adaptive QoS default downstream bandwidth (kbps)
+- `qos_adaptive_default_downstream_variable` (String) Variable name
+- `qos_adaptive_default_upstream` (Number) Adaptive QoS default upstream bandwidth (kbps)
+- `qos_adaptive_default_upstream_variable` (String) Variable name
+- `qos_adaptive_max_downstream` (Number) Downstream max bandwidth limit (kbps)
+- `qos_adaptive_max_downstream_variable` (String) Variable name
+- `qos_adaptive_max_upstream` (Number) Upstream max bandwidth limit (kbps)
+- `qos_adaptive_max_upstream_variable` (String) Variable name
+- `qos_adaptive_min_downstream` (Number) Downstream min bandwidth limit (kbps)
+- `qos_adaptive_min_downstream_variable` (String) Variable name
+- `qos_adaptive_min_upstream` (Number) Upstream min bandwidth limit (kbps)
+- `qos_adaptive_min_upstream_variable` (String) Variable name
+- `qos_adaptive_period` (Number) Adapt Period(Minutes)
+- `qos_adaptive_period_variable` (String) Variable name
+- `qos_shaping_rate` (Number) Shaping Rate (Kbps)
+- `qos_shaping_rate_variable` (String) Variable name
 - `service_provider` (String) Service Provider Name
 - `service_provider_variable` (String) Variable name
 - `shutdown` (Boolean)
@@ -143,10 +162,14 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `tunnel_interface_allow_icmp_variable` (String) Variable name
 - `tunnel_interface_allow_netconf` (Boolean) Allow/Deny NETCONF
 - `tunnel_interface_allow_netconf_variable` (String) Variable name
+- `tunnel_interface_allow_ntp` (Boolean) Allow/Deny NTP
+- `tunnel_interface_allow_ntp_variable` (String) Variable name
 - `tunnel_interface_allow_ospf` (Boolean) Allow/Deny OSPF
 - `tunnel_interface_allow_ospf_variable` (String) Variable name
 - `tunnel_interface_allow_snmp` (Boolean) Allow/Deny SNMP
 - `tunnel_interface_allow_snmp_variable` (String) Variable name
+- `tunnel_interface_allow_ssh` (Boolean) Allow/Deny SSH
+- `tunnel_interface_allow_ssh_variable` (String) Variable name
 - `tunnel_interface_allow_stun` (Boolean) Allow/Deny STUN
 - `tunnel_interface_allow_stun_variable` (String) Variable name
 - `tunnel_interface_bind_loopback_tunnel` (String) Bind loopback tunnel interface to a physical interface
