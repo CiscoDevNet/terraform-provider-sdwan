@@ -80,7 +80,7 @@ type ServiceLANVPNInterfaceEthernet struct {
 	Ipv4NatTcpTimeoutVariable                types.String                                               `tfsdk:"ipv4_nat_tcp_timeout_variable"`
 	StaticNats                               []ServiceLANVPNInterfaceEthernetStaticNats                 `tfsdk:"static_nats"`
 	Ipv6Nat                                  types.Bool                                                 `tfsdk:"ipv6_nat"`
-	EnableNat64                              types.Bool                                                 `tfsdk:"enable_nat64"`
+	Nat64                                    types.Bool                                                 `tfsdk:"nat64"`
 	AclShapingRate                           types.Int64                                                `tfsdk:"acl_shaping_rate"`
 	AclShapingRateVariable                   types.String                                               `tfsdk:"acl_shaping_rate_variable"`
 	AclIpv4EgressPolicyId                    types.String                                               `tfsdk:"acl_ipv4_egress_policy_id"`
@@ -515,9 +515,9 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"natIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"natIpv6.value", data.Ipv6Nat.ValueBool())
 	}
-	if !data.EnableNat64.IsNull() {
+	if !data.Nat64.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.optionType", "global")
-		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.value", data.EnableNat64.ValueBool())
+		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.value", data.Nat64.ValueBool())
 	}
 
 	if !data.AclShapingRateVariable.IsNull() {
@@ -1254,12 +1254,12 @@ func (data *ServiceLANVPNInterfaceEthernet) fromBody(ctx context.Context, res gj
 			data.Ipv6Nat = types.BoolValue(va.Bool())
 		}
 	}
-	data.EnableNat64 = types.BoolNull()
+	data.Nat64 = types.BoolNull()
 
 	if t := res.Get(path + "natAttributesIpv6.nat64.optionType"); t.Exists() {
 		va := res.Get(path + "natAttributesIpv6.nat64.value")
 		if t.String() == "global" {
-			data.EnableNat64 = types.BoolValue(va.Bool())
+			data.Nat64 = types.BoolValue(va.Bool())
 		}
 	}
 	data.AclShapingRate = types.Int64Null()
@@ -2120,12 +2120,12 @@ func (data *ServiceLANVPNInterfaceEthernet) updateFromBody(ctx context.Context, 
 			data.Ipv6Nat = types.BoolValue(va.Bool())
 		}
 	}
-	data.EnableNat64 = types.BoolNull()
+	data.Nat64 = types.BoolNull()
 
 	if t := res.Get(path + "natAttributesIpv6.nat64.optionType"); t.Exists() {
 		va := res.Get(path + "natAttributesIpv6.nat64.value")
 		if t.String() == "global" {
-			data.EnableNat64 = types.BoolValue(va.Bool())
+			data.Nat64 = types.BoolValue(va.Bool())
 		}
 	}
 	data.AclShapingRate = types.Int64Null()
@@ -2783,7 +2783,7 @@ func (data *ServiceLANVPNInterfaceEthernet) isNull(ctx context.Context, res gjso
 	if !data.Ipv6Nat.IsNull() {
 		return false
 	}
-	if !data.EnableNat64.IsNull() {
+	if !data.Nat64.IsNull() {
 		return false
 	}
 	if !data.AclShapingRate.IsNull() {

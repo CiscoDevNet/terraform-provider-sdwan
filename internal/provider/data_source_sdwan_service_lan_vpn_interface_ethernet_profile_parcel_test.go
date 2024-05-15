@@ -56,7 +56,7 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testin
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "static_nats.0.direction", "inside"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "static_nats.0.source_vpn", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_nat", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "enable_nat64", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "nat64", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "acl_shaping_rate", "12"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.group_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.priority", "100"))
@@ -160,7 +160,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig() s
 	config += `	  source_vpn = 0` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_nat = true` + "\n"
-	config += `	enable_nat64 = false` + "\n"
+	config += `	nat64 = false` + "\n"
 	config += `	acl_shaping_rate = 12` + "\n"
 	config += `	ipv6_vrrps = [{` + "\n"
 	config += `	  group_id = 1` + "\n"

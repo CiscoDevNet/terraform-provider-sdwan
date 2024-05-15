@@ -340,7 +340,7 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: "enable Network Address Translation ipv6 on this interface",
 				Computed:            true,
 			},
-			"enable_nat64": schema.BoolAttribute{
+			"nat64": schema.BoolAttribute{
 				MarkdownDescription: "NAT64 on this interface",
 				Computed:            true,
 			},

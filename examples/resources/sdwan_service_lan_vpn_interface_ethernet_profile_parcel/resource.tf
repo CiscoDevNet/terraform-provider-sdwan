@@ -39,7 +39,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
     }
   ]
   ipv6_nat         = true
-  enable_nat64     = false
+  nat64            = false
   acl_shaping_rate = 12
   ipv6_vrrps = [
     {

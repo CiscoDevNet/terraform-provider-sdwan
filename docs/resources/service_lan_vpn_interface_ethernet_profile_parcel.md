@@ -56,7 +56,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
     }
   ]
   ipv6_nat         = true
-  enable_nat64     = false
+  nat64            = false
   acl_shaping_rate = 12
   ipv6_vrrps = [
     {
@@ -148,8 +148,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   - Choices: `full`, `half`, `auto`
 - `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
-- `enable_nat64` (Boolean) NAT64 on this interface
-  - Default value: `false`
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
   - Default value: `true`
 - `icmp_redirect_disable_variable` (String) Variable name
@@ -220,6 +218,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `media_type` (String) Media type
   - Choices: `auto-select`, `rj45`, `sfp`
 - `media_type_variable` (String) Variable name
+- `nat64` (Boolean) NAT64 on this interface
+  - Default value: `false`
 - `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Profile ID
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name

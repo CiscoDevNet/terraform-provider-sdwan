@@ -48,7 +48,6 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `duplex` (String) Duplex mode
 - `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
-- `enable_nat64` (Boolean) NAT64 on this interface
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
 - `icmp_redirect_disable_variable` (String) Variable name
 - `interface_mtu` (Number) Interface MTU
@@ -100,6 +99,7 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `media_type` (String) Media type
 - `media_type_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
+- `nat64` (Boolean) NAT64 on this interface
 - `shutdown` (Boolean)
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed

@@ -399,7 +399,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation ipv6 on this interface").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"enable_nat64": schema.BoolAttribute{
+			"nat64": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("NAT64 on this interface").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
