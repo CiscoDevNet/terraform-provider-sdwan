@@ -17,6 +17,7 @@ description: |-
 - Fix type of `controller_group_list` attribute of `sdwan_cisco_system_feature_template` resource and data source, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/243)
 - Add `sdwan_application_priority_feature_profile` resource and data source
 - Add `sdwan_application_priority_qos_policy_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_profile_parcel` resource and data source
 
 ## 0.3.9
 
