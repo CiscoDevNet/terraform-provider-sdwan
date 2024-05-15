@@ -102,22 +102,22 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "static_nat66.0.source_vpn_id", "4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "arps.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_icmp_redirect_disable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_duplex", "full"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_mac_address", "00-B0-D0-63-C2-26"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_interface_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_tcp_mss", "505"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_speed", "2500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_arp_timeout", "1200"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_autonegotiate", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_media_type", "rj45"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_tloc_extension", "tloc"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_gre_tunnel_source_ip", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_xconnect", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_load_interval", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_tracker", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "advanced_ip_directed_broadcast", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "icmp_redirect_disable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "duplex", "full"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "mac_address", "00-B0-D0-63-C2-26"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "intrf_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tcp_mss", "505"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "speed", "2500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "arp_timeout", "1200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "autonegotiate", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "media_type", "rj45"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tloc_extension", "tloc"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "gre_tunnel_source_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "xconnect", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "load_interval", "30"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "tracker", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test", "ip_directed_broadcast", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -194,6 +194,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "test" {
     }
   ]
 }
+
 `
 
 // End of section. //template:end testPrerequisites
@@ -286,22 +287,22 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig()
 	config += `	  ip_address = "1.2.3.4"` + "\n"
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
 	config += `	}]` + "\n"
-	config += `	advanced_icmp_redirect_disable = true` + "\n"
-	config += `	advanced_duplex = "full"` + "\n"
-	config += `	advanced_mac_address = "00-B0-D0-63-C2-26"` + "\n"
-	config += `	advanced_ip_mtu = 1500` + "\n"
-	config += `	advanced_interface_mtu = 1500` + "\n"
-	config += `	advanced_tcp_mss = 505` + "\n"
-	config += `	advanced_speed = "2500"` + "\n"
-	config += `	advanced_arp_timeout = 1200` + "\n"
-	config += `	advanced_autonegotiate = false` + "\n"
-	config += `	advanced_media_type = "rj45"` + "\n"
-	config += `	advanced_tloc_extension = "tloc"` + "\n"
-	config += `	advanced_gre_tunnel_source_ip = "1.2.3.4"` + "\n"
-	config += `	advanced_xconnect = "example"` + "\n"
-	config += `	advanced_load_interval = 30` + "\n"
-	config += `	advanced_tracker = "example"` + "\n"
-	config += `	advanced_ip_directed_broadcast = false` + "\n"
+	config += `	icmp_redirect_disable = true` + "\n"
+	config += `	duplex = "full"` + "\n"
+	config += `	mac_address = "00-B0-D0-63-C2-26"` + "\n"
+	config += `	ip_mtu = 1500` + "\n"
+	config += `	intrf_mtu = 1500` + "\n"
+	config += `	tcp_mss = 505` + "\n"
+	config += `	speed = "2500"` + "\n"
+	config += `	arp_timeout = 1200` + "\n"
+	config += `	autonegotiate = false` + "\n"
+	config += `	media_type = "rj45"` + "\n"
+	config += `	tloc_extension = "tloc"` + "\n"
+	config += `	gre_tunnel_source_ip = "1.2.3.4"` + "\n"
+	config += `	xconnect = "example"` + "\n"
+	config += `	load_interval = 30` + "\n"
+	config += `	tracker = "example"` + "\n"
+	config += `	ip_directed_broadcast = false` + "\n"
 	config += `}` + "\n"
 
 	config += `

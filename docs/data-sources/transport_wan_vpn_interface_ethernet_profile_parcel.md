@@ -32,41 +32,13 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 ### Read-Only
 
 - `adaptive_qos` (Boolean) Adaptive QoS
-- `advanced_arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
-- `advanced_arp_timeout_variable` (String) Variable name
-- `advanced_autonegotiate` (Boolean) Link autonegotiation
-- `advanced_autonegotiate_variable` (String) Variable name
-- `advanced_duplex` (String) Duplex mode
-- `advanced_duplex_variable` (String) Variable name
-- `advanced_gre_tunnel_source_ip` (String) GRE tunnel source IP
-- `advanced_gre_tunnel_source_ip_variable` (String) Variable name
-- `advanced_icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
-- `advanced_icmp_redirect_disable_variable` (String) Variable name
-- `advanced_interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
-- `advanced_interface_mtu_variable` (String) Variable name
-- `advanced_ip_directed_broadcast` (Boolean) IP Directed-Broadcast
-- `advanced_ip_directed_broadcast_variable` (String) Variable name
-- `advanced_ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
-- `advanced_ip_mtu_variable` (String) Variable name
-- `advanced_load_interval` (Number) Interval for interface load calculation
-- `advanced_load_interval_variable` (String) Variable name
-- `advanced_mac_address` (String) MAC Address
-- `advanced_mac_address_variable` (String) Variable name
-- `advanced_media_type` (String) Media type
-- `advanced_media_type_variable` (String) Variable name
-- `advanced_speed` (String) Set interface speed
-- `advanced_speed_variable` (String) Variable name
-- `advanced_tcp_mss` (Number) TCP MSS on SYN packets, in bytes
-- `advanced_tcp_mss_variable` (String) Variable name
-- `advanced_tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
-- `advanced_tloc_extension_variable` (String) Variable name
-- `advanced_tracker` (String) Enable tracker for this interface
-- `advanced_tracker_variable` (String) Variable name
-- `advanced_xconnect` (String) Extend remote TLOC over a GRE tunnel to a local WAN interface
-- `advanced_xconnect_variable` (String) Variable name
+- `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
+- `arp_timeout_variable` (String) Variable name
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
 - `auto_detect_bandwidth_variable` (String) Variable name
+- `autonegotiate` (Boolean) Link autonegotiation
+- `autonegotiate_variable` (String) Variable name
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
 - `bandwidth_downstream_variable` (String) Variable name
 - `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps
@@ -76,9 +48,21 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `config_description` (String)
 - `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
+- `duplex` (String) Duplex mode
+- `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
+- `gre_tunnel_source_ip` (String) GRE tunnel source IP
+- `gre_tunnel_source_ip_variable` (String) Variable name
+- `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
+- `icmp_redirect_disable_variable` (String) Variable name
 - `interface_name` (String)
 - `interface_name_variable` (String) Variable name
+- `intrf_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
+- `intrf_mtu_variable` (String) Variable name
+- `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
+- `ip_directed_broadcast_variable` (String) Variable name
+- `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
+- `ip_mtu_variable` (String) Variable name
 - `iperf_server` (String) Iperf server for auto bandwidth detect
 - `iperf_server_variable` (String) Variable name
 - `ipv4_address` (String) IP Address
@@ -90,10 +74,16 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ipv4_secondary_addresses` (Attributes List) Secondary IpV4 Addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
 - `ipv4_subnet_mask` (String) Subnet Mask
 - `ipv4_subnet_mask_variable` (String) Variable name
-- `ipv6__dhcp_secondary_address` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6__dhcp_secondary_address))
 - `ipv6_address` (String) IPv6 Address Secondary
 - `ipv6_address_variable` (String) Variable name
-- `ipv6_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_address))
+- `ipv6_dhcp_secondary_address` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_address))
+- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
+- `load_interval` (Number) Interval for interface load calculation
+- `load_interval_variable` (String) Variable name
+- `mac_address` (String) MAC Address
+- `mac_address_variable` (String) Variable name
+- `media_type` (String) Media type
+- `media_type_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
 - `nat64` (Boolean) NAT64 on this interface
 - `nat66` (Boolean) NAT66 on this interface
@@ -142,7 +132,15 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `service_provider_variable` (String) Variable name
 - `shutdown` (Boolean)
 - `shutdown_variable` (String) Variable name
+- `speed` (String) Set interface speed
+- `speed_variable` (String) Variable name
 - `static_nat66` (Attributes List) static NAT66 (see [below for nested schema](#nestedatt--static_nat66))
+- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
+- `tcp_mss_variable` (String) Variable name
+- `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
+- `tloc_extension_variable` (String) Variable name
+- `tracker` (String) Enable tracker for this interface
+- `tracker_variable` (String) Variable name
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
 - `tunnel_bandwidth_percent_variable` (String) Variable name
 - `tunnel_interface` (Boolean) Tunnel Interface on/off
@@ -218,6 +216,8 @@ data "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `tunnel_qos_mode` (String) Set tunnel QoS mode
 - `tunnel_qos_mode_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
+- `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local WAN interface
+- `xconnect_variable` (String) Variable name
 
 <a id="nestedatt--arps"></a>
 ### Nested Schema for `arps`
@@ -241,8 +241,8 @@ Read-Only:
 - `subnet_mask_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6__dhcp_secondary_address"></a>
-### Nested Schema for `ipv6__dhcp_secondary_address`
+<a id="nestedatt--ipv6_dhcp_secondary_address"></a>
+### Nested Schema for `ipv6_dhcp_secondary_address`
 
 Read-Only:
 
@@ -250,8 +250,8 @@ Read-Only:
 - `address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_secondary_address"></a>
-### Nested Schema for `ipv6_secondary_address`
+<a id="nestedatt--ipv6_secondary_addresses"></a>
+### Nested Schema for `ipv6_secondary_addresses`
 
 Read-Only:
 

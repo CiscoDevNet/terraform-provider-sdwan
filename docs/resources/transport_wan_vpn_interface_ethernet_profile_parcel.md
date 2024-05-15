@@ -111,22 +111,22 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
       mac_address = "00-B0-D0-63-C2-26"
     }
   ]
-  advanced_icmp_redirect_disable = true
-  advanced_duplex                = "full"
-  advanced_mac_address           = "00-B0-D0-63-C2-26"
-  advanced_ip_mtu                = 1500
-  advanced_interface_mtu         = 1500
-  advanced_tcp_mss               = 505
-  advanced_speed                 = "2500"
-  advanced_arp_timeout           = 1200
-  advanced_autonegotiate         = false
-  advanced_media_type            = "rj45"
-  advanced_tloc_extension        = "tloc"
-  advanced_gre_tunnel_source_ip  = "1.2.3.4"
-  advanced_xconnect              = "example"
-  advanced_load_interval         = 30
-  advanced_tracker               = "example"
-  advanced_ip_directed_broadcast = false
+  icmp_redirect_disable = true
+  duplex                = "full"
+  mac_address           = "00-B0-D0-63-C2-26"
+  ip_mtu                = 1500
+  intrf_mtu             = 1500
+  tcp_mss               = 505
+  speed                 = "2500"
+  arp_timeout           = 1200
+  autonegotiate         = false
+  media_type            = "rj45"
+  tloc_extension        = "tloc"
+  gre_tunnel_source_ip  = "1.2.3.4"
+  xconnect              = "example"
+  load_interval         = 30
+  tracker               = "example"
+  ip_directed_broadcast = false
 }
 ```
 
@@ -144,56 +144,16 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 
 - `adaptive_qos` (Boolean) Adaptive QoS
   - Default value: `false`
-- `advanced_arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
+- `arp_timeout` (Number) Timeout value for dynamically learned ARP entries, <0..2678400> seconds
   - Range: `0`-`2147483`
   - Default value: `1200`
-- `advanced_arp_timeout_variable` (String) Variable name
-- `advanced_autonegotiate` (Boolean) Link autonegotiation
-- `advanced_autonegotiate_variable` (String) Variable name
-- `advanced_duplex` (String) Duplex mode
-  - Choices: `full`, `half`, `auto`
-- `advanced_duplex_variable` (String) Variable name
-- `advanced_gre_tunnel_source_ip` (String) GRE tunnel source IP
-- `advanced_gre_tunnel_source_ip_variable` (String) Variable name
-- `advanced_icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
-  - Default value: `true`
-- `advanced_icmp_redirect_disable_variable` (String) Variable name
-- `advanced_interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
-  - Range: `1500`-`9216`
-  - Default value: `1500`
-- `advanced_interface_mtu_variable` (String) Variable name
-- `advanced_ip_directed_broadcast` (Boolean) IP Directed-Broadcast
-  - Default value: `false`
-- `advanced_ip_directed_broadcast_variable` (String) Variable name
-- `advanced_ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
-  - Range: `576`-`9216`
-  - Default value: `1500`
-- `advanced_ip_mtu_variable` (String) Variable name
-- `advanced_load_interval` (Number) Interval for interface load calculation
-  - Range: `30`-`600`
-  - Default value: `30`
-- `advanced_load_interval_variable` (String) Variable name
-- `advanced_mac_address` (String) MAC Address
-- `advanced_mac_address_variable` (String) Variable name
-- `advanced_media_type` (String) Media type
-  - Choices: `auto-select`, `rj45`, `sfp`
-- `advanced_media_type_variable` (String) Variable name
-- `advanced_speed` (String) Set interface speed
-  - Choices: `10`, `100`, `1000`, `2500`, `10000`
-- `advanced_speed_variable` (String) Variable name
-- `advanced_tcp_mss` (Number) TCP MSS on SYN packets, in bytes
-  - Range: `500`-`1460`
-- `advanced_tcp_mss_variable` (String) Variable name
-- `advanced_tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
-- `advanced_tloc_extension_variable` (String) Variable name
-- `advanced_tracker` (String) Enable tracker for this interface
-- `advanced_tracker_variable` (String) Variable name
-- `advanced_xconnect` (String) Extend remote TLOC over a GRE tunnel to a local WAN interface
-- `advanced_xconnect_variable` (String) Variable name
+- `arp_timeout_variable` (String) Variable name
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
   - Default value: `false`
 - `auto_detect_bandwidth_variable` (String) Variable name
+- `autonegotiate` (Boolean) Link autonegotiation
+- `autonegotiate_variable` (String) Variable name
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
 - `bandwidth_downstream_variable` (String) Variable name
@@ -206,9 +166,28 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `config_description` (String)
 - `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
+- `duplex` (String) Duplex mode
+  - Choices: `full`, `half`, `auto`
+- `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
+- `gre_tunnel_source_ip` (String) GRE tunnel source IP
+- `gre_tunnel_source_ip_variable` (String) Variable name
+- `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
+  - Default value: `true`
+- `icmp_redirect_disable_variable` (String) Variable name
 - `interface_name` (String)
 - `interface_name_variable` (String) Variable name
+- `intrf_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
+  - Range: `1500`-`9216`
+  - Default value: `1500`
+- `intrf_mtu_variable` (String) Variable name
+- `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
+  - Default value: `false`
+- `ip_directed_broadcast_variable` (String) Variable name
+- `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
+  - Range: `576`-`9216`
+  - Default value: `1500`
+- `ip_mtu_variable` (String) Variable name
 - `iperf_server` (String) Iperf server for auto bandwidth detect
 - `iperf_server_variable` (String) Variable name
 - `ipv4_address` (String) IP Address
@@ -222,10 +201,19 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ipv4_subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
-- `ipv6__dhcp_secondary_address` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6__dhcp_secondary_address))
 - `ipv6_address` (String) IPv6 Address Secondary
 - `ipv6_address_variable` (String) Variable name
-- `ipv6_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_address))
+- `ipv6_dhcp_secondary_address` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_address))
+- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
+- `load_interval` (Number) Interval for interface load calculation
+  - Range: `30`-`600`
+  - Default value: `30`
+- `load_interval_variable` (String) Variable name
+- `mac_address` (String) MAC Address
+- `mac_address_variable` (String) Variable name
+- `media_type` (String) Media type
+  - Choices: `auto-select`, `rj45`, `sfp`
+- `media_type_variable` (String) Variable name
 - `nat64` (Boolean) NAT64 on this interface
   - Default value: `false`
 - `nat66` (Boolean) NAT66 on this interface
@@ -295,7 +283,17 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `service_provider_variable` (String) Variable name
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
+- `speed` (String) Set interface speed
+  - Choices: `10`, `100`, `1000`, `2500`, `10000`
+- `speed_variable` (String) Variable name
 - `static_nat66` (Attributes List) static NAT66 (see [below for nested schema](#nestedatt--static_nat66))
+- `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
+  - Range: `500`-`1460`
+- `tcp_mss_variable` (String) Variable name
+- `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
+- `tloc_extension_variable` (String) Variable name
+- `tracker` (String) Enable tracker for this interface
+- `tracker_variable` (String) Variable name
 - `transport_wan_vpn_profile_parcel_id` (String) Transport WAN VPN Profile Parcel ID
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
   - Range: `1`-`100`
@@ -412,6 +410,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `tunnel_qos_mode` (String) Set tunnel QoS mode
   - Choices: `hub`, `spoke`
 - `tunnel_qos_mode_variable` (String) Variable name
+- `xconnect` (String) Extend remote TLOC over a GRE tunnel to a local WAN interface
+- `xconnect_variable` (String) Variable name
 
 ### Read-Only
 
@@ -441,8 +441,8 @@ Optional:
 - `subnet_mask_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6__dhcp_secondary_address"></a>
-### Nested Schema for `ipv6__dhcp_secondary_address`
+<a id="nestedatt--ipv6_dhcp_secondary_address"></a>
+### Nested Schema for `ipv6_dhcp_secondary_address`
 
 Optional:
 
@@ -450,8 +450,8 @@ Optional:
 - `address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_secondary_address"></a>
-### Nested Schema for `ipv6_secondary_address`
+<a id="nestedatt--ipv6_secondary_addresses"></a>
+### Nested Schema for `ipv6_secondary_addresses`
 
 Optional:
 

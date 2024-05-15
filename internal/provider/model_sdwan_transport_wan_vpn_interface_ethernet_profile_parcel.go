@@ -56,10 +56,10 @@ type TransportWANVPNInterfaceEthernet struct {
 	Ipv4DhcpHelper                                     types.Set                                                       `tfsdk:"ipv4_dhcp_helper"`
 	Ipv4DhcpHelperVariable                             types.String                                                    `tfsdk:"ipv4_dhcp_helper_variable"`
 	EnableDhcpv6                                       types.Bool                                                      `tfsdk:"enable_dhcpv6"`
-	Ipv6DhcpSecondaryAddress                           []TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress      `tfsdk:"ipv6__dhcp_secondary_address"`
+	Ipv6DhcpSecondaryAddress                           []TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress      `tfsdk:"ipv6_dhcp_secondary_address"`
 	Ipv6Address                                        types.String                                                    `tfsdk:"ipv6_address"`
 	Ipv6AddressVariable                                types.String                                                    `tfsdk:"ipv6_address_variable"`
-	Ipv6SecondaryAddress                               []TransportWANVPNInterfaceEthernetIpv6SecondaryAddress          `tfsdk:"ipv6_secondary_address"`
+	Ipv6SecondaryAddresses                             []TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses        `tfsdk:"ipv6_secondary_addresses"`
 	IperfServer                                        types.String                                                    `tfsdk:"iperf_server"`
 	IperfServerVariable                                types.String                                                    `tfsdk:"iperf_server_variable"`
 	BlockNonSourceIp                                   types.Bool                                                      `tfsdk:"block_non_source_ip"`
@@ -192,38 +192,38 @@ type TransportWANVPNInterfaceEthernet struct {
 	QosShapingRate                                     types.Int64                                                     `tfsdk:"qos_shaping_rate"`
 	QosShapingRateVariable                             types.String                                                    `tfsdk:"qos_shaping_rate_variable"`
 	Arps                                               []TransportWANVPNInterfaceEthernetArps                          `tfsdk:"arps"`
-	AdvancedIcmpRedirectDisable                        types.Bool                                                      `tfsdk:"advanced_icmp_redirect_disable"`
-	AdvancedIcmpRedirectDisableVariable                types.String                                                    `tfsdk:"advanced_icmp_redirect_disable_variable"`
-	AdvancedDuplex                                     types.String                                                    `tfsdk:"advanced_duplex"`
-	AdvancedDuplexVariable                             types.String                                                    `tfsdk:"advanced_duplex_variable"`
-	AdvancedMacAddress                                 types.String                                                    `tfsdk:"advanced_mac_address"`
-	AdvancedMacAddressVariable                         types.String                                                    `tfsdk:"advanced_mac_address_variable"`
-	AdvancedIpMtu                                      types.Int64                                                     `tfsdk:"advanced_ip_mtu"`
-	AdvancedIpMtuVariable                              types.String                                                    `tfsdk:"advanced_ip_mtu_variable"`
-	AdvancedInterfaceMtu                               types.Int64                                                     `tfsdk:"advanced_interface_mtu"`
-	AdvancedInterfaceMtuVariable                       types.String                                                    `tfsdk:"advanced_interface_mtu_variable"`
-	AdvancedTcpMss                                     types.Int64                                                     `tfsdk:"advanced_tcp_mss"`
-	AdvancedTcpMssVariable                             types.String                                                    `tfsdk:"advanced_tcp_mss_variable"`
-	AdvancedSpeed                                      types.String                                                    `tfsdk:"advanced_speed"`
-	AdvancedSpeedVariable                              types.String                                                    `tfsdk:"advanced_speed_variable"`
-	AdvancedArpTimeout                                 types.Int64                                                     `tfsdk:"advanced_arp_timeout"`
-	AdvancedArpTimeoutVariable                         types.String                                                    `tfsdk:"advanced_arp_timeout_variable"`
-	AdvancedAutonegotiate                              types.Bool                                                      `tfsdk:"advanced_autonegotiate"`
-	AdvancedAutonegotiateVariable                      types.String                                                    `tfsdk:"advanced_autonegotiate_variable"`
-	AdvancedMediaType                                  types.String                                                    `tfsdk:"advanced_media_type"`
-	AdvancedMediaTypeVariable                          types.String                                                    `tfsdk:"advanced_media_type_variable"`
-	AdvancedTlocExtension                              types.String                                                    `tfsdk:"advanced_tloc_extension"`
-	AdvancedTlocExtensionVariable                      types.String                                                    `tfsdk:"advanced_tloc_extension_variable"`
-	AdvancedGreTunnelSourceIp                          types.String                                                    `tfsdk:"advanced_gre_tunnel_source_ip"`
-	AdvancedGreTunnelSourceIpVariable                  types.String                                                    `tfsdk:"advanced_gre_tunnel_source_ip_variable"`
-	AdvancedXconnect                                   types.String                                                    `tfsdk:"advanced_xconnect"`
-	AdvancedXconnectVariable                           types.String                                                    `tfsdk:"advanced_xconnect_variable"`
-	AdvancedLoadInterval                               types.Int64                                                     `tfsdk:"advanced_load_interval"`
-	AdvancedLoadIntervalVariable                       types.String                                                    `tfsdk:"advanced_load_interval_variable"`
-	AdvancedTracker                                    types.String                                                    `tfsdk:"advanced_tracker"`
-	AdvancedTrackerVariable                            types.String                                                    `tfsdk:"advanced_tracker_variable"`
-	AdvancedIpDirectedBroadcast                        types.Bool                                                      `tfsdk:"advanced_ip_directed_broadcast"`
-	AdvancedIpDirectedBroadcastVariable                types.String                                                    `tfsdk:"advanced_ip_directed_broadcast_variable"`
+	IcmpRedirectDisable                                types.Bool                                                      `tfsdk:"icmp_redirect_disable"`
+	IcmpRedirectDisableVariable                        types.String                                                    `tfsdk:"icmp_redirect_disable_variable"`
+	Duplex                                             types.String                                                    `tfsdk:"duplex"`
+	DuplexVariable                                     types.String                                                    `tfsdk:"duplex_variable"`
+	MacAddress                                         types.String                                                    `tfsdk:"mac_address"`
+	MacAddressVariable                                 types.String                                                    `tfsdk:"mac_address_variable"`
+	IpMtu                                              types.Int64                                                     `tfsdk:"ip_mtu"`
+	IpMtuVariable                                      types.String                                                    `tfsdk:"ip_mtu_variable"`
+	IntrfMtu                                           types.Int64                                                     `tfsdk:"intrf_mtu"`
+	IntrfMtuVariable                                   types.String                                                    `tfsdk:"intrf_mtu_variable"`
+	TcpMss                                             types.Int64                                                     `tfsdk:"tcp_mss"`
+	TcpMssVariable                                     types.String                                                    `tfsdk:"tcp_mss_variable"`
+	Speed                                              types.String                                                    `tfsdk:"speed"`
+	SpeedVariable                                      types.String                                                    `tfsdk:"speed_variable"`
+	ArpTimeout                                         types.Int64                                                     `tfsdk:"arp_timeout"`
+	ArpTimeoutVariable                                 types.String                                                    `tfsdk:"arp_timeout_variable"`
+	Autonegotiate                                      types.Bool                                                      `tfsdk:"autonegotiate"`
+	AutonegotiateVariable                              types.String                                                    `tfsdk:"autonegotiate_variable"`
+	MediaType                                          types.String                                                    `tfsdk:"media_type"`
+	MediaTypeVariable                                  types.String                                                    `tfsdk:"media_type_variable"`
+	TlocExtension                                      types.String                                                    `tfsdk:"tloc_extension"`
+	TlocExtensionVariable                              types.String                                                    `tfsdk:"tloc_extension_variable"`
+	GreTunnelSourceIp                                  types.String                                                    `tfsdk:"gre_tunnel_source_ip"`
+	GreTunnelSourceIpVariable                          types.String                                                    `tfsdk:"gre_tunnel_source_ip_variable"`
+	Xconnect                                           types.String                                                    `tfsdk:"xconnect"`
+	XconnectVariable                                   types.String                                                    `tfsdk:"xconnect_variable"`
+	LoadInterval                                       types.Int64                                                     `tfsdk:"load_interval"`
+	LoadIntervalVariable                               types.String                                                    `tfsdk:"load_interval_variable"`
+	Tracker                                            types.String                                                    `tfsdk:"tracker"`
+	TrackerVariable                                    types.String                                                    `tfsdk:"tracker_variable"`
+	IpDirectedBroadcast                                types.Bool                                                      `tfsdk:"ip_directed_broadcast"`
+	IpDirectedBroadcastVariable                        types.String                                                    `tfsdk:"ip_directed_broadcast_variable"`
 }
 
 type TransportWANVPNInterfaceEthernetIpv4SecondaryAddresses struct {
@@ -238,7 +238,7 @@ type TransportWANVPNInterfaceEthernetIpv6DhcpSecondaryAddress struct {
 	AddressVariable types.String `tfsdk:"address_variable"`
 }
 
-type TransportWANVPNInterfaceEthernetIpv6SecondaryAddress struct {
+type TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses struct {
 	Address         types.String `tfsdk:"address"`
 	AddressVariable types.String `tfsdk:"address_variable"`
 }
@@ -413,7 +413,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.value", data.Ipv6Address.ValueString())
 	}
 
-	for _, item := range data.Ipv6SecondaryAddress {
+	for _, item := range data.Ipv6SecondaryAddresses {
 		itemBody := ""
 
 		if !item.AddressVariable.IsNull() {
@@ -1213,180 +1213,180 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		body, _ = sjson.SetRaw(body, path+"arp.-1", itemBody)
 	}
 
-	if !data.AdvancedIcmpRedirectDisableVariable.IsNull() {
+	if !data.IcmpRedirectDisableVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", data.AdvancedIcmpRedirectDisableVariable.ValueString())
-	} else if data.AdvancedIcmpRedirectDisable.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", data.IcmpRedirectDisableVariable.ValueString())
+	} else if data.IcmpRedirectDisable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.optionType", "default")
 		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", data.AdvancedIcmpRedirectDisable.ValueBool())
+		body, _ = sjson.Set(body, path+"advanced.icmpRedirectDisable.value", data.IcmpRedirectDisable.ValueBool())
 	}
 
-	if !data.AdvancedDuplexVariable.IsNull() {
+	if !data.DuplexVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.duplex.value", data.AdvancedDuplexVariable.ValueString())
-	} else if data.AdvancedDuplex.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.duplex.value", data.DuplexVariable.ValueString())
+	} else if data.Duplex.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.duplex.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.duplex.value", data.AdvancedDuplex.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.duplex.value", data.Duplex.ValueString())
 	}
 
-	if !data.AdvancedMacAddressVariable.IsNull() {
+	if !data.MacAddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.AdvancedMacAddressVariable.ValueString())
-	} else if data.AdvancedMacAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.MacAddressVariable.ValueString())
+	} else if data.MacAddress.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.macAddress.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.AdvancedMacAddress.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.macAddress.value", data.MacAddress.ValueString())
 	}
 
-	if !data.AdvancedIpMtuVariable.IsNull() {
+	if !data.IpMtuVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.ipMtu.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.ipMtu.value", data.AdvancedIpMtuVariable.ValueString())
-	} else if data.AdvancedIpMtu.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.ipMtu.value", data.IpMtuVariable.ValueString())
+	} else if data.IpMtu.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.ipMtu.optionType", "default")
 		body, _ = sjson.Set(body, path+"advanced.ipMtu.value", 1500)
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.ipMtu.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.ipMtu.value", data.AdvancedIpMtu.ValueInt64())
+		body, _ = sjson.Set(body, path+"advanced.ipMtu.value", data.IpMtu.ValueInt64())
 	}
 
-	if !data.AdvancedInterfaceMtuVariable.IsNull() {
+	if !data.IntrfMtuVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.AdvancedInterfaceMtuVariable.ValueString())
-	} else if data.AdvancedInterfaceMtu.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.IntrfMtuVariable.ValueString())
+	} else if data.IntrfMtu.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.AdvancedInterfaceMtu.ValueInt64())
+		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.IntrfMtu.ValueInt64())
 	}
 
-	if !data.AdvancedTcpMssVariable.IsNull() {
+	if !data.TcpMssVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.AdvancedTcpMssVariable.ValueString())
-	} else if data.AdvancedTcpMss.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.TcpMssVariable.ValueString())
+	} else if data.TcpMss.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.tcpMss.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.AdvancedTcpMss.ValueInt64())
+		body, _ = sjson.Set(body, path+"advanced.tcpMss.value", data.TcpMss.ValueInt64())
 	}
 
-	if !data.AdvancedSpeedVariable.IsNull() {
+	if !data.SpeedVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.speed.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.speed.value", data.AdvancedSpeedVariable.ValueString())
-	} else if data.AdvancedSpeed.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.speed.value", data.SpeedVariable.ValueString())
+	} else if data.Speed.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.speed.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.speed.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.speed.value", data.AdvancedSpeed.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.speed.value", data.Speed.ValueString())
 	}
 
-	if !data.AdvancedArpTimeoutVariable.IsNull() {
+	if !data.ArpTimeoutVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.arpTimeout.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", data.AdvancedArpTimeoutVariable.ValueString())
-	} else if data.AdvancedArpTimeout.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", data.ArpTimeoutVariable.ValueString())
+	} else if data.ArpTimeout.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.arpTimeout.optionType", "default")
 		body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", 1200)
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.arpTimeout.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", data.AdvancedArpTimeout.ValueInt64())
+		body, _ = sjson.Set(body, path+"advanced.arpTimeout.value", data.ArpTimeout.ValueInt64())
 	}
 
-	if !data.AdvancedAutonegotiateVariable.IsNull() {
+	if !data.AutonegotiateVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.autonegotiate.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.autonegotiate.value", data.AdvancedAutonegotiateVariable.ValueString())
-	} else if data.AdvancedAutonegotiate.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.autonegotiate.value", data.AutonegotiateVariable.ValueString())
+	} else if data.Autonegotiate.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.autonegotiate.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.autonegotiate.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.autonegotiate.value", data.AdvancedAutonegotiate.ValueBool())
+		body, _ = sjson.Set(body, path+"advanced.autonegotiate.value", data.Autonegotiate.ValueBool())
 	}
 
-	if !data.AdvancedMediaTypeVariable.IsNull() {
+	if !data.MediaTypeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.AdvancedMediaTypeVariable.ValueString())
-	} else if data.AdvancedMediaType.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.MediaTypeVariable.ValueString())
+	} else if data.MediaType.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.mediaType.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.AdvancedMediaType.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.mediaType.value", data.MediaType.ValueString())
 	}
 
-	if !data.AdvancedTlocExtensionVariable.IsNull() {
+	if !data.TlocExtensionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtension.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.tlocExtension.value", data.AdvancedTlocExtensionVariable.ValueString())
-	} else if data.AdvancedTlocExtension.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.tlocExtension.value", data.TlocExtensionVariable.ValueString())
+	} else if data.TlocExtension.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtension.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtension.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.tlocExtension.value", data.AdvancedTlocExtension.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.tlocExtension.value", data.TlocExtension.ValueString())
 	}
 
-	if !data.AdvancedGreTunnelSourceIpVariable.IsNull() {
+	if !data.GreTunnelSourceIpVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.sourceIp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.sourceIp.value", data.AdvancedGreTunnelSourceIpVariable.ValueString())
-	} else if data.AdvancedGreTunnelSourceIp.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.sourceIp.value", data.GreTunnelSourceIpVariable.ValueString())
+	} else if data.GreTunnelSourceIp.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.sourceIp.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.sourceIp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.sourceIp.value", data.AdvancedGreTunnelSourceIp.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.sourceIp.value", data.GreTunnelSourceIp.ValueString())
 	}
 
-	if !data.AdvancedXconnectVariable.IsNull() {
+	if !data.XconnectVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.xconnect.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.xconnect.value", data.AdvancedXconnectVariable.ValueString())
-	} else if data.AdvancedXconnect.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.xconnect.value", data.XconnectVariable.ValueString())
+	} else if data.Xconnect.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.xconnect.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.xconnect.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.xconnect.value", data.AdvancedXconnect.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.tlocExtensionGreFrom.xconnect.value", data.Xconnect.ValueString())
 	}
 
-	if !data.AdvancedLoadIntervalVariable.IsNull() {
+	if !data.LoadIntervalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.loadInterval.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.loadInterval.value", data.AdvancedLoadIntervalVariable.ValueString())
-	} else if data.AdvancedLoadInterval.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.loadInterval.value", data.LoadIntervalVariable.ValueString())
+	} else if data.LoadInterval.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.loadInterval.optionType", "default")
 		body, _ = sjson.Set(body, path+"advanced.loadInterval.value", 30)
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.loadInterval.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.loadInterval.value", data.AdvancedLoadInterval.ValueInt64())
+		body, _ = sjson.Set(body, path+"advanced.loadInterval.value", data.LoadInterval.ValueInt64())
 	}
 
-	if !data.AdvancedTrackerVariable.IsNull() {
+	if !data.TrackerVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tracker.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.tracker.value", data.AdvancedTrackerVariable.ValueString())
-	} else if data.AdvancedTracker.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.tracker.value", data.TrackerVariable.ValueString())
+	} else if data.Tracker.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.tracker.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.tracker.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.tracker.value", data.AdvancedTracker.ValueString())
+		body, _ = sjson.Set(body, path+"advanced.tracker.value", data.Tracker.ValueString())
 	}
 
-	if !data.AdvancedIpDirectedBroadcastVariable.IsNull() {
+	if !data.IpDirectedBroadcastVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", data.AdvancedIpDirectedBroadcastVariable.ValueString())
-	} else if data.AdvancedIpDirectedBroadcast.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", data.IpDirectedBroadcastVariable.ValueString())
+	} else if data.IpDirectedBroadcast.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.optionType", "default")
 		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", data.AdvancedIpDirectedBroadcast.ValueBool())
+		body, _ = sjson.Set(body, path+"advanced.ipDirectedBroadcast.value", data.IpDirectedBroadcast.ValueBool())
 	}
 	return body
 }
@@ -1537,9 +1537,9 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 		}
 	}
 	if value := res.Get(path + "intfIpV6Address.static.secondaryIpV6Address"); value.Exists() {
-		data.Ipv6SecondaryAddress = make([]TransportWANVPNInterfaceEthernetIpv6SecondaryAddress, 0)
+		data.Ipv6SecondaryAddresses = make([]TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportWANVPNInterfaceEthernetIpv6SecondaryAddress{}
+			item := TransportWANVPNInterfaceEthernetIpv6SecondaryAddresses{}
 			item.Address = types.StringNull()
 			item.AddressVariable = types.StringNull()
 			if t := v.Get("address.optionType"); t.Exists() {
@@ -1550,7 +1550,7 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 					item.Address = types.StringValue(va.String())
 				}
 			}
-			data.Ipv6SecondaryAddress = append(data.Ipv6SecondaryAddress, item)
+			data.Ipv6SecondaryAddresses = append(data.Ipv6SecondaryAddresses, item)
 			return true
 		})
 	}
@@ -2360,164 +2360,164 @@ func (data *TransportWANVPNInterfaceEthernet) fromBody(ctx context.Context, res 
 			return true
 		})
 	}
-	data.AdvancedIcmpRedirectDisable = types.BoolNull()
-	data.AdvancedIcmpRedirectDisableVariable = types.StringNull()
+	data.IcmpRedirectDisable = types.BoolNull()
+	data.IcmpRedirectDisableVariable = types.StringNull()
 	if t := res.Get(path + "advanced.icmpRedirectDisable.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.icmpRedirectDisable.value")
 		if t.String() == "variable" {
-			data.AdvancedIcmpRedirectDisableVariable = types.StringValue(va.String())
+			data.IcmpRedirectDisableVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedIcmpRedirectDisable = types.BoolValue(va.Bool())
+			data.IcmpRedirectDisable = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvancedDuplex = types.StringNull()
-	data.AdvancedDuplexVariable = types.StringNull()
+	data.Duplex = types.StringNull()
+	data.DuplexVariable = types.StringNull()
 	if t := res.Get(path + "advanced.duplex.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.duplex.value")
 		if t.String() == "variable" {
-			data.AdvancedDuplexVariable = types.StringValue(va.String())
+			data.DuplexVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedDuplex = types.StringValue(va.String())
+			data.Duplex = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedMacAddress = types.StringNull()
-	data.AdvancedMacAddressVariable = types.StringNull()
+	data.MacAddress = types.StringNull()
+	data.MacAddressVariable = types.StringNull()
 	if t := res.Get(path + "advanced.macAddress.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.macAddress.value")
 		if t.String() == "variable" {
-			data.AdvancedMacAddressVariable = types.StringValue(va.String())
+			data.MacAddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedMacAddress = types.StringValue(va.String())
+			data.MacAddress = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedIpMtu = types.Int64Null()
-	data.AdvancedIpMtuVariable = types.StringNull()
+	data.IpMtu = types.Int64Null()
+	data.IpMtuVariable = types.StringNull()
 	if t := res.Get(path + "advanced.ipMtu.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.ipMtu.value")
 		if t.String() == "variable" {
-			data.AdvancedIpMtuVariable = types.StringValue(va.String())
+			data.IpMtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedIpMtu = types.Int64Value(va.Int())
+			data.IpMtu = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedInterfaceMtu = types.Int64Null()
-	data.AdvancedInterfaceMtuVariable = types.StringNull()
+	data.IntrfMtu = types.Int64Null()
+	data.IntrfMtuVariable = types.StringNull()
 	if t := res.Get(path + "advanced.intrfMtu.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.intrfMtu.value")
 		if t.String() == "variable" {
-			data.AdvancedInterfaceMtuVariable = types.StringValue(va.String())
+			data.IntrfMtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedInterfaceMtu = types.Int64Value(va.Int())
+			data.IntrfMtu = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedTcpMss = types.Int64Null()
-	data.AdvancedTcpMssVariable = types.StringNull()
+	data.TcpMss = types.Int64Null()
+	data.TcpMssVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tcpMss.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tcpMss.value")
 		if t.String() == "variable" {
-			data.AdvancedTcpMssVariable = types.StringValue(va.String())
+			data.TcpMssVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedTcpMss = types.Int64Value(va.Int())
+			data.TcpMss = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedSpeed = types.StringNull()
-	data.AdvancedSpeedVariable = types.StringNull()
+	data.Speed = types.StringNull()
+	data.SpeedVariable = types.StringNull()
 	if t := res.Get(path + "advanced.speed.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.speed.value")
 		if t.String() == "variable" {
-			data.AdvancedSpeedVariable = types.StringValue(va.String())
+			data.SpeedVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedSpeed = types.StringValue(va.String())
+			data.Speed = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedArpTimeout = types.Int64Null()
-	data.AdvancedArpTimeoutVariable = types.StringNull()
+	data.ArpTimeout = types.Int64Null()
+	data.ArpTimeoutVariable = types.StringNull()
 	if t := res.Get(path + "advanced.arpTimeout.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.arpTimeout.value")
 		if t.String() == "variable" {
-			data.AdvancedArpTimeoutVariable = types.StringValue(va.String())
+			data.ArpTimeoutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedArpTimeout = types.Int64Value(va.Int())
+			data.ArpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedAutonegotiate = types.BoolNull()
-	data.AdvancedAutonegotiateVariable = types.StringNull()
+	data.Autonegotiate = types.BoolNull()
+	data.AutonegotiateVariable = types.StringNull()
 	if t := res.Get(path + "advanced.autonegotiate.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.autonegotiate.value")
 		if t.String() == "variable" {
-			data.AdvancedAutonegotiateVariable = types.StringValue(va.String())
+			data.AutonegotiateVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedAutonegotiate = types.BoolValue(va.Bool())
+			data.Autonegotiate = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvancedMediaType = types.StringNull()
-	data.AdvancedMediaTypeVariable = types.StringNull()
+	data.MediaType = types.StringNull()
+	data.MediaTypeVariable = types.StringNull()
 	if t := res.Get(path + "advanced.mediaType.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.mediaType.value")
 		if t.String() == "variable" {
-			data.AdvancedMediaTypeVariable = types.StringValue(va.String())
+			data.MediaTypeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedMediaType = types.StringValue(va.String())
+			data.MediaType = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedTlocExtension = types.StringNull()
-	data.AdvancedTlocExtensionVariable = types.StringNull()
+	data.TlocExtension = types.StringNull()
+	data.TlocExtensionVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tlocExtension.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tlocExtension.value")
 		if t.String() == "variable" {
-			data.AdvancedTlocExtensionVariable = types.StringValue(va.String())
+			data.TlocExtensionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedTlocExtension = types.StringValue(va.String())
+			data.TlocExtension = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedGreTunnelSourceIp = types.StringNull()
-	data.AdvancedGreTunnelSourceIpVariable = types.StringNull()
+	data.GreTunnelSourceIp = types.StringNull()
+	data.GreTunnelSourceIpVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tlocExtensionGreFrom.sourceIp.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tlocExtensionGreFrom.sourceIp.value")
 		if t.String() == "variable" {
-			data.AdvancedGreTunnelSourceIpVariable = types.StringValue(va.String())
+			data.GreTunnelSourceIpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedGreTunnelSourceIp = types.StringValue(va.String())
+			data.GreTunnelSourceIp = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedXconnect = types.StringNull()
-	data.AdvancedXconnectVariable = types.StringNull()
+	data.Xconnect = types.StringNull()
+	data.XconnectVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tlocExtensionGreFrom.xconnect.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tlocExtensionGreFrom.xconnect.value")
 		if t.String() == "variable" {
-			data.AdvancedXconnectVariable = types.StringValue(va.String())
+			data.XconnectVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedXconnect = types.StringValue(va.String())
+			data.Xconnect = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedLoadInterval = types.Int64Null()
-	data.AdvancedLoadIntervalVariable = types.StringNull()
+	data.LoadInterval = types.Int64Null()
+	data.LoadIntervalVariable = types.StringNull()
 	if t := res.Get(path + "advanced.loadInterval.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.loadInterval.value")
 		if t.String() == "variable" {
-			data.AdvancedLoadIntervalVariable = types.StringValue(va.String())
+			data.LoadIntervalVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedLoadInterval = types.Int64Value(va.Int())
+			data.LoadInterval = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedTracker = types.StringNull()
-	data.AdvancedTrackerVariable = types.StringNull()
+	data.Tracker = types.StringNull()
+	data.TrackerVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tracker.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tracker.value")
 		if t.String() == "variable" {
-			data.AdvancedTrackerVariable = types.StringValue(va.String())
+			data.TrackerVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedTracker = types.StringValue(va.String())
+			data.Tracker = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedIpDirectedBroadcast = types.BoolNull()
-	data.AdvancedIpDirectedBroadcastVariable = types.StringNull()
+	data.IpDirectedBroadcast = types.BoolNull()
+	data.IpDirectedBroadcastVariable = types.StringNull()
 	if t := res.Get(path + "advanced.ipDirectedBroadcast.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.ipDirectedBroadcast.value")
 		if t.String() == "variable" {
-			data.AdvancedIpDirectedBroadcastVariable = types.StringValue(va.String())
+			data.IpDirectedBroadcastVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedIpDirectedBroadcast = types.BoolValue(va.Bool())
+			data.IpDirectedBroadcast = types.BoolValue(va.Bool())
 		}
 	}
 }
@@ -2705,10 +2705,10 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 			data.Ipv6Address = types.StringValue(va.String())
 		}
 	}
-	for i := range data.Ipv6SecondaryAddress {
+	for i := range data.Ipv6SecondaryAddresses {
 		keys := [...]string{"address"}
-		keyValues := [...]string{data.Ipv6SecondaryAddress[i].Address.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6SecondaryAddress[i].AddressVariable.ValueString()}
+		keyValues := [...]string{data.Ipv6SecondaryAddresses[i].Address.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6SecondaryAddresses[i].AddressVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "intfIpV6Address.static.secondaryIpV6Address").ForEach(
@@ -2731,14 +2731,14 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 				return true
 			},
 		)
-		data.Ipv6SecondaryAddress[i].Address = types.StringNull()
-		data.Ipv6SecondaryAddress[i].AddressVariable = types.StringNull()
+		data.Ipv6SecondaryAddresses[i].Address = types.StringNull()
+		data.Ipv6SecondaryAddresses[i].AddressVariable = types.StringNull()
 		if t := r.Get("address.optionType"); t.Exists() {
 			va := r.Get("address.value")
 			if t.String() == "variable" {
-				data.Ipv6SecondaryAddress[i].AddressVariable = types.StringValue(va.String())
+				data.Ipv6SecondaryAddresses[i].AddressVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv6SecondaryAddress[i].Address = types.StringValue(va.String())
+				data.Ipv6SecondaryAddresses[i].Address = types.StringValue(va.String())
 			}
 		}
 	}
@@ -3624,164 +3624,164 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 			}
 		}
 	}
-	data.AdvancedIcmpRedirectDisable = types.BoolNull()
-	data.AdvancedIcmpRedirectDisableVariable = types.StringNull()
+	data.IcmpRedirectDisable = types.BoolNull()
+	data.IcmpRedirectDisableVariable = types.StringNull()
 	if t := res.Get(path + "advanced.icmpRedirectDisable.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.icmpRedirectDisable.value")
 		if t.String() == "variable" {
-			data.AdvancedIcmpRedirectDisableVariable = types.StringValue(va.String())
+			data.IcmpRedirectDisableVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedIcmpRedirectDisable = types.BoolValue(va.Bool())
+			data.IcmpRedirectDisable = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvancedDuplex = types.StringNull()
-	data.AdvancedDuplexVariable = types.StringNull()
+	data.Duplex = types.StringNull()
+	data.DuplexVariable = types.StringNull()
 	if t := res.Get(path + "advanced.duplex.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.duplex.value")
 		if t.String() == "variable" {
-			data.AdvancedDuplexVariable = types.StringValue(va.String())
+			data.DuplexVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedDuplex = types.StringValue(va.String())
+			data.Duplex = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedMacAddress = types.StringNull()
-	data.AdvancedMacAddressVariable = types.StringNull()
+	data.MacAddress = types.StringNull()
+	data.MacAddressVariable = types.StringNull()
 	if t := res.Get(path + "advanced.macAddress.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.macAddress.value")
 		if t.String() == "variable" {
-			data.AdvancedMacAddressVariable = types.StringValue(va.String())
+			data.MacAddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedMacAddress = types.StringValue(va.String())
+			data.MacAddress = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedIpMtu = types.Int64Null()
-	data.AdvancedIpMtuVariable = types.StringNull()
+	data.IpMtu = types.Int64Null()
+	data.IpMtuVariable = types.StringNull()
 	if t := res.Get(path + "advanced.ipMtu.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.ipMtu.value")
 		if t.String() == "variable" {
-			data.AdvancedIpMtuVariable = types.StringValue(va.String())
+			data.IpMtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedIpMtu = types.Int64Value(va.Int())
+			data.IpMtu = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedInterfaceMtu = types.Int64Null()
-	data.AdvancedInterfaceMtuVariable = types.StringNull()
+	data.IntrfMtu = types.Int64Null()
+	data.IntrfMtuVariable = types.StringNull()
 	if t := res.Get(path + "advanced.intrfMtu.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.intrfMtu.value")
 		if t.String() == "variable" {
-			data.AdvancedInterfaceMtuVariable = types.StringValue(va.String())
+			data.IntrfMtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedInterfaceMtu = types.Int64Value(va.Int())
+			data.IntrfMtu = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedTcpMss = types.Int64Null()
-	data.AdvancedTcpMssVariable = types.StringNull()
+	data.TcpMss = types.Int64Null()
+	data.TcpMssVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tcpMss.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tcpMss.value")
 		if t.String() == "variable" {
-			data.AdvancedTcpMssVariable = types.StringValue(va.String())
+			data.TcpMssVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedTcpMss = types.Int64Value(va.Int())
+			data.TcpMss = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedSpeed = types.StringNull()
-	data.AdvancedSpeedVariable = types.StringNull()
+	data.Speed = types.StringNull()
+	data.SpeedVariable = types.StringNull()
 	if t := res.Get(path + "advanced.speed.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.speed.value")
 		if t.String() == "variable" {
-			data.AdvancedSpeedVariable = types.StringValue(va.String())
+			data.SpeedVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedSpeed = types.StringValue(va.String())
+			data.Speed = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedArpTimeout = types.Int64Null()
-	data.AdvancedArpTimeoutVariable = types.StringNull()
+	data.ArpTimeout = types.Int64Null()
+	data.ArpTimeoutVariable = types.StringNull()
 	if t := res.Get(path + "advanced.arpTimeout.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.arpTimeout.value")
 		if t.String() == "variable" {
-			data.AdvancedArpTimeoutVariable = types.StringValue(va.String())
+			data.ArpTimeoutVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedArpTimeout = types.Int64Value(va.Int())
+			data.ArpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedAutonegotiate = types.BoolNull()
-	data.AdvancedAutonegotiateVariable = types.StringNull()
+	data.Autonegotiate = types.BoolNull()
+	data.AutonegotiateVariable = types.StringNull()
 	if t := res.Get(path + "advanced.autonegotiate.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.autonegotiate.value")
 		if t.String() == "variable" {
-			data.AdvancedAutonegotiateVariable = types.StringValue(va.String())
+			data.AutonegotiateVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedAutonegotiate = types.BoolValue(va.Bool())
+			data.Autonegotiate = types.BoolValue(va.Bool())
 		}
 	}
-	data.AdvancedMediaType = types.StringNull()
-	data.AdvancedMediaTypeVariable = types.StringNull()
+	data.MediaType = types.StringNull()
+	data.MediaTypeVariable = types.StringNull()
 	if t := res.Get(path + "advanced.mediaType.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.mediaType.value")
 		if t.String() == "variable" {
-			data.AdvancedMediaTypeVariable = types.StringValue(va.String())
+			data.MediaTypeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedMediaType = types.StringValue(va.String())
+			data.MediaType = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedTlocExtension = types.StringNull()
-	data.AdvancedTlocExtensionVariable = types.StringNull()
+	data.TlocExtension = types.StringNull()
+	data.TlocExtensionVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tlocExtension.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tlocExtension.value")
 		if t.String() == "variable" {
-			data.AdvancedTlocExtensionVariable = types.StringValue(va.String())
+			data.TlocExtensionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedTlocExtension = types.StringValue(va.String())
+			data.TlocExtension = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedGreTunnelSourceIp = types.StringNull()
-	data.AdvancedGreTunnelSourceIpVariable = types.StringNull()
+	data.GreTunnelSourceIp = types.StringNull()
+	data.GreTunnelSourceIpVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tlocExtensionGreFrom.sourceIp.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tlocExtensionGreFrom.sourceIp.value")
 		if t.String() == "variable" {
-			data.AdvancedGreTunnelSourceIpVariable = types.StringValue(va.String())
+			data.GreTunnelSourceIpVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedGreTunnelSourceIp = types.StringValue(va.String())
+			data.GreTunnelSourceIp = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedXconnect = types.StringNull()
-	data.AdvancedXconnectVariable = types.StringNull()
+	data.Xconnect = types.StringNull()
+	data.XconnectVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tlocExtensionGreFrom.xconnect.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tlocExtensionGreFrom.xconnect.value")
 		if t.String() == "variable" {
-			data.AdvancedXconnectVariable = types.StringValue(va.String())
+			data.XconnectVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedXconnect = types.StringValue(va.String())
+			data.Xconnect = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedLoadInterval = types.Int64Null()
-	data.AdvancedLoadIntervalVariable = types.StringNull()
+	data.LoadInterval = types.Int64Null()
+	data.LoadIntervalVariable = types.StringNull()
 	if t := res.Get(path + "advanced.loadInterval.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.loadInterval.value")
 		if t.String() == "variable" {
-			data.AdvancedLoadIntervalVariable = types.StringValue(va.String())
+			data.LoadIntervalVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedLoadInterval = types.Int64Value(va.Int())
+			data.LoadInterval = types.Int64Value(va.Int())
 		}
 	}
-	data.AdvancedTracker = types.StringNull()
-	data.AdvancedTrackerVariable = types.StringNull()
+	data.Tracker = types.StringNull()
+	data.TrackerVariable = types.StringNull()
 	if t := res.Get(path + "advanced.tracker.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.tracker.value")
 		if t.String() == "variable" {
-			data.AdvancedTrackerVariable = types.StringValue(va.String())
+			data.TrackerVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedTracker = types.StringValue(va.String())
+			data.Tracker = types.StringValue(va.String())
 		}
 	}
-	data.AdvancedIpDirectedBroadcast = types.BoolNull()
-	data.AdvancedIpDirectedBroadcastVariable = types.StringNull()
+	data.IpDirectedBroadcast = types.BoolNull()
+	data.IpDirectedBroadcastVariable = types.StringNull()
 	if t := res.Get(path + "advanced.ipDirectedBroadcast.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.ipDirectedBroadcast.value")
 		if t.String() == "variable" {
-			data.AdvancedIpDirectedBroadcastVariable = types.StringValue(va.String())
+			data.IpDirectedBroadcastVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AdvancedIpDirectedBroadcast = types.BoolValue(va.Bool())
+			data.IpDirectedBroadcast = types.BoolValue(va.Bool())
 		}
 	}
 }
@@ -3853,7 +3853,7 @@ func (data *TransportWANVPNInterfaceEthernet) isNull(ctx context.Context, res gj
 	if !data.Ipv6AddressVariable.IsNull() {
 		return false
 	}
-	if len(data.Ipv6SecondaryAddress) > 0 {
+	if len(data.Ipv6SecondaryAddresses) > 0 {
 		return false
 	}
 	if !data.IperfServer.IsNull() {
@@ -4252,100 +4252,100 @@ func (data *TransportWANVPNInterfaceEthernet) isNull(ctx context.Context, res gj
 	if len(data.Arps) > 0 {
 		return false
 	}
-	if !data.AdvancedIcmpRedirectDisable.IsNull() {
+	if !data.IcmpRedirectDisable.IsNull() {
 		return false
 	}
-	if !data.AdvancedIcmpRedirectDisableVariable.IsNull() {
+	if !data.IcmpRedirectDisableVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedDuplex.IsNull() {
+	if !data.Duplex.IsNull() {
 		return false
 	}
-	if !data.AdvancedDuplexVariable.IsNull() {
+	if !data.DuplexVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedMacAddress.IsNull() {
+	if !data.MacAddress.IsNull() {
 		return false
 	}
-	if !data.AdvancedMacAddressVariable.IsNull() {
+	if !data.MacAddressVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedIpMtu.IsNull() {
+	if !data.IpMtu.IsNull() {
 		return false
 	}
-	if !data.AdvancedIpMtuVariable.IsNull() {
+	if !data.IpMtuVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedInterfaceMtu.IsNull() {
+	if !data.IntrfMtu.IsNull() {
 		return false
 	}
-	if !data.AdvancedInterfaceMtuVariable.IsNull() {
+	if !data.IntrfMtuVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedTcpMss.IsNull() {
+	if !data.TcpMss.IsNull() {
 		return false
 	}
-	if !data.AdvancedTcpMssVariable.IsNull() {
+	if !data.TcpMssVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedSpeed.IsNull() {
+	if !data.Speed.IsNull() {
 		return false
 	}
-	if !data.AdvancedSpeedVariable.IsNull() {
+	if !data.SpeedVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedArpTimeout.IsNull() {
+	if !data.ArpTimeout.IsNull() {
 		return false
 	}
-	if !data.AdvancedArpTimeoutVariable.IsNull() {
+	if !data.ArpTimeoutVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedAutonegotiate.IsNull() {
+	if !data.Autonegotiate.IsNull() {
 		return false
 	}
-	if !data.AdvancedAutonegotiateVariable.IsNull() {
+	if !data.AutonegotiateVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedMediaType.IsNull() {
+	if !data.MediaType.IsNull() {
 		return false
 	}
-	if !data.AdvancedMediaTypeVariable.IsNull() {
+	if !data.MediaTypeVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedTlocExtension.IsNull() {
+	if !data.TlocExtension.IsNull() {
 		return false
 	}
-	if !data.AdvancedTlocExtensionVariable.IsNull() {
+	if !data.TlocExtensionVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedGreTunnelSourceIp.IsNull() {
+	if !data.GreTunnelSourceIp.IsNull() {
 		return false
 	}
-	if !data.AdvancedGreTunnelSourceIpVariable.IsNull() {
+	if !data.GreTunnelSourceIpVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedXconnect.IsNull() {
+	if !data.Xconnect.IsNull() {
 		return false
 	}
-	if !data.AdvancedXconnectVariable.IsNull() {
+	if !data.XconnectVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedLoadInterval.IsNull() {
+	if !data.LoadInterval.IsNull() {
 		return false
 	}
-	if !data.AdvancedLoadIntervalVariable.IsNull() {
+	if !data.LoadIntervalVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedTracker.IsNull() {
+	if !data.Tracker.IsNull() {
 		return false
 	}
-	if !data.AdvancedTrackerVariable.IsNull() {
+	if !data.TrackerVariable.IsNull() {
 		return false
 	}
-	if !data.AdvancedIpDirectedBroadcast.IsNull() {
+	if !data.IpDirectedBroadcast.IsNull() {
 		return false
 	}
-	if !data.AdvancedIpDirectedBroadcastVariable.IsNull() {
+	if !data.IpDirectedBroadcastVariable.IsNull() {
 		return false
 	}
 	return true

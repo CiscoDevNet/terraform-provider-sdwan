@@ -168,7 +168,7 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: "Enable DHCPv6",
 				Computed:            true,
 			},
-			"ipv6__dhcp_secondary_address": schema.ListNestedAttribute{
+			"ipv6_dhcp_secondary_address": schema.ListNestedAttribute{
 				MarkdownDescription: "secondary IPv6 addresses",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -192,7 +192,7 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ipv6_secondary_address": schema.ListNestedAttribute{
+			"ipv6_secondary_addresses": schema.ListNestedAttribute{
 				MarkdownDescription: "Static secondary IPv6 addresses",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -841,131 +841,131 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 					},
 				},
 			},
-			"advanced_icmp_redirect_disable": schema.BoolAttribute{
+			"icmp_redirect_disable": schema.BoolAttribute{
 				MarkdownDescription: "ICMP/ICMPv6 Redirect Disable",
 				Computed:            true,
 			},
-			"advanced_icmp_redirect_disable_variable": schema.StringAttribute{
+			"icmp_redirect_disable_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_duplex": schema.StringAttribute{
+			"duplex": schema.StringAttribute{
 				MarkdownDescription: "Duplex mode",
 				Computed:            true,
 			},
-			"advanced_duplex_variable": schema.StringAttribute{
+			"duplex_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_mac_address": schema.StringAttribute{
+			"mac_address": schema.StringAttribute{
 				MarkdownDescription: "MAC Address",
 				Computed:            true,
 			},
-			"advanced_mac_address_variable": schema.StringAttribute{
+			"mac_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_ip_mtu": schema.Int64Attribute{
+			"ip_mtu": schema.Int64Attribute{
 				MarkdownDescription: "IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes",
 				Computed:            true,
 			},
-			"advanced_ip_mtu_variable": schema.StringAttribute{
+			"ip_mtu_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_interface_mtu": schema.Int64Attribute{
+			"intrf_mtu": schema.Int64Attribute{
 				MarkdownDescription: "Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes",
 				Computed:            true,
 			},
-			"advanced_interface_mtu_variable": schema.StringAttribute{
+			"intrf_mtu_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_tcp_mss": schema.Int64Attribute{
+			"tcp_mss": schema.Int64Attribute{
 				MarkdownDescription: "TCP MSS on SYN packets, in bytes",
 				Computed:            true,
 			},
-			"advanced_tcp_mss_variable": schema.StringAttribute{
+			"tcp_mss_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_speed": schema.StringAttribute{
+			"speed": schema.StringAttribute{
 				MarkdownDescription: "Set interface speed",
 				Computed:            true,
 			},
-			"advanced_speed_variable": schema.StringAttribute{
+			"speed_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_arp_timeout": schema.Int64Attribute{
+			"arp_timeout": schema.Int64Attribute{
 				MarkdownDescription: "Timeout value for dynamically learned ARP entries, <0..2678400> seconds",
 				Computed:            true,
 			},
-			"advanced_arp_timeout_variable": schema.StringAttribute{
+			"arp_timeout_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_autonegotiate": schema.BoolAttribute{
+			"autonegotiate": schema.BoolAttribute{
 				MarkdownDescription: "Link autonegotiation",
 				Computed:            true,
 			},
-			"advanced_autonegotiate_variable": schema.StringAttribute{
+			"autonegotiate_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_media_type": schema.StringAttribute{
+			"media_type": schema.StringAttribute{
 				MarkdownDescription: "Media type",
 				Computed:            true,
 			},
-			"advanced_media_type_variable": schema.StringAttribute{
+			"media_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_tloc_extension": schema.StringAttribute{
+			"tloc_extension": schema.StringAttribute{
 				MarkdownDescription: "Extends a local TLOC to a remote node only for vpn 0",
 				Computed:            true,
 			},
-			"advanced_tloc_extension_variable": schema.StringAttribute{
+			"tloc_extension_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_gre_tunnel_source_ip": schema.StringAttribute{
+			"gre_tunnel_source_ip": schema.StringAttribute{
 				MarkdownDescription: "GRE tunnel source IP",
 				Computed:            true,
 			},
-			"advanced_gre_tunnel_source_ip_variable": schema.StringAttribute{
+			"gre_tunnel_source_ip_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_xconnect": schema.StringAttribute{
+			"xconnect": schema.StringAttribute{
 				MarkdownDescription: "Extend remote TLOC over a GRE tunnel to a local WAN interface",
 				Computed:            true,
 			},
-			"advanced_xconnect_variable": schema.StringAttribute{
+			"xconnect_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_load_interval": schema.Int64Attribute{
+			"load_interval": schema.Int64Attribute{
 				MarkdownDescription: "Interval for interface load calculation",
 				Computed:            true,
 			},
-			"advanced_load_interval_variable": schema.StringAttribute{
+			"load_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_tracker": schema.StringAttribute{
+			"tracker": schema.StringAttribute{
 				MarkdownDescription: "Enable tracker for this interface",
 				Computed:            true,
 			},
-			"advanced_tracker_variable": schema.StringAttribute{
+			"tracker_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"advanced_ip_directed_broadcast": schema.BoolAttribute{
+			"ip_directed_broadcast": schema.BoolAttribute{
 				MarkdownDescription: "IP Directed-Broadcast",
 				Computed:            true,
 			},
-			"advanced_ip_directed_broadcast_variable": schema.StringAttribute{
+			"ip_directed_broadcast_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
