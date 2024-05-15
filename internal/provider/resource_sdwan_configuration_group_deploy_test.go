@@ -96,6 +96,20 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "test" {
   vpn                = 0
 }
 
+resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "test" {
+  name                                = "WAN_VPN_INT_TF"
+  feature_profile_id                  = sdwan_transport_feature_profile.test.id
+  transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id
+  interface_name                      = "GigabitEthernet1"
+  ipv4_dhcp_distance                  = 1
+  tunnel_interface                    = true
+  tunnel_interface_encapsulations = [
+    {
+      encapsulation = "ipsec"
+    }
+  ]
+}
+
 resource "sdwan_configuration_group" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
@@ -107,6 +121,15 @@ resource "sdwan_configuration_group" "test" {
     {
       id = sdwan_transport_feature_profile.test.id
     }
+  ]
+
+  depends_on = [
+    sdwan_system_basic_profile_parcel.test,
+    sdwan_system_aaa_profile_parcel.test,
+    sdwan_system_bfd_profile_parcel.test,
+    sdwan_system_global_profile_parcel.test,
+    sdwan_system_logging_profile_parcel.test,
+    sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test
   ]
 }
 

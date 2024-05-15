@@ -284,7 +284,7 @@ func (data ServiceLANVPNInterfaceEthernet) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())
 	}
-	body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
+
 	for _, item := range data.Ipv4SecondaryAddresses {
 		itemBody := ""
 

@@ -353,7 +353,7 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())
 	}
-	body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressSecondary", []interface{}{})
+
 	for _, item := range data.Ipv4SecondaryAddresses {
 		itemBody := ""
 
@@ -1063,17 +1063,11 @@ func (data TransportWANVPNInterfaceEthernet) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"natIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"natIpv6.value", data.NatIpv6.ValueBool())
 	}
-	if data.Nat64.IsNull() {
-		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.optionType", "default")
-		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.value", false)
-	} else {
+	if !data.Nat64.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat64.value", data.Nat64.ValueBool())
 	}
-	if data.Nat66.IsNull() {
-		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat66.optionType", "default")
-		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat66.value", false)
-	} else {
+	if !data.Nat66.IsNull() {
 		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat66.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv6.nat66.value", data.Nat66.ValueBool())
 	}

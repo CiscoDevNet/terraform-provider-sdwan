@@ -212,7 +212,6 @@ func testAccSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig_minimum() s
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
-	config += `	nat_ipv6 = true` + "\n"
 	config += `}` + "\n"
 	return config
 }

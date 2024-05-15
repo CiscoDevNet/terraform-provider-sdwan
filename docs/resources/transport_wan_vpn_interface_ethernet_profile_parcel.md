@@ -137,8 +137,6 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
-- `nat_ipv6` (Boolean) enable Network Address Translation ipv6 on this interface
-  - Default value: `false`
 
 ### Optional
 
@@ -221,6 +219,8 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `nat_ipv4` (Boolean) enable Network Address Translation on this interface
   - Default value: `false`
 - `nat_ipv4_variable` (String) Variable name
+- `nat_ipv6` (Boolean) enable Network Address Translation ipv6 on this interface
+  - Default value: `false`
 - `nat_ipv6_variable` (String) Variable name
 - `nat_loopback` (String) NAT Inside Source Loopback Interface
 - `nat_loopback_variable` (String) Variable name

@@ -796,7 +796,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 			},
 			"nat_ipv6": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("enable Network Address Translation ipv6 on this interface").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"nat_ipv6_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

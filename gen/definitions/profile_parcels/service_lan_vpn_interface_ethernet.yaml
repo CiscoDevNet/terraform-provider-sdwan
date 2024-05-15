@@ -152,7 +152,7 @@ attributes:
     tf_name: ipv6_nat
     example: true
   - model_name: nat64
-    tf_name: enable_nat64
+    tf_name: nat64
     data_path: [natAttributesIpv6]
     exclude_null: true
     example: false

@@ -352,16 +352,18 @@ attributes:
         example: 3
   - model_name: natIpv6
     tf_name: nat_ipv6
-    mandatory: true
     example: true
   - model_name: nat64
     data_path: [natAttributesIpv6]
+    exclude_null: true
     example: false
   - model_name: nat66
     data_path: [natAttributesIpv6]
+    exclude_null: true
     example: true
   - model_name: staticNat66
     data_path: [natAttributesIpv6]
+    exclude_null: true
     attributes:
     - model_name: sourcePrefix
       id: true

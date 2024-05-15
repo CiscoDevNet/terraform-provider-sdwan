@@ -569,7 +569,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMask.ValueString())
 		}
-		itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nextHopContainer.nextHop", []interface{}{})
+
 		for _, childItem := range item.NextHops {
 			itemChildBody := ""
 
@@ -590,7 +590,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 			}
 			itemBody, _ = sjson.SetRaw(itemBody, "oneOfIpRoute.nextHopContainer.nextHop.-1", itemChildBody)
 		}
-		itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nextHopContainer.nextHopWithTracker", []interface{}{})
+
 		for _, childItem := range item.NextHopWithTrackers {
 			itemChildBody := ""
 
@@ -640,7 +640,7 @@ func (data ServiceLANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 		}
-		itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nextHopContainer.nextHop", []interface{}{})
+
 		for _, childItem := range item.NextHops {
 			itemChildBody := ""
 

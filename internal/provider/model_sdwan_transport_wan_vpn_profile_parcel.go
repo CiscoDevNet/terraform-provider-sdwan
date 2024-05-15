@@ -281,7 +281,7 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
 		}
-		itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nextHopContainer.nextHop", []interface{}{})
+
 		for _, childItem := range item.NextHops {
 			itemChildBody := ""
 

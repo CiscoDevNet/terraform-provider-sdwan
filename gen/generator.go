@@ -832,6 +832,9 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		if r.Get("maxItems").Exists() {
 			attr.MaxList = r.Get("maxItems").Int()
 		}
+		if isOneOfAttribute {
+			attr.ExcludeNull = true
+		}
 		for a := range attr.Attributes {
 			parseProfileParcelAttribute(&attr.Attributes[a], r.Get("items"), isOneOfAttribute)
 		}
