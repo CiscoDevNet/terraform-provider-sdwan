@@ -38,7 +38,7 @@ data "sdwan_cisco_system_feature_template" "example" {
 - `console_baud_rate_variable` (String) Variable name
 - `control_session_pps` (Number) Set the policer rate for control sessions
 - `control_session_pps_variable` (String) Variable name
-- `controller_group_list` (Set of Number) Configure a list of comma-separated device groups
+- `controller_group_list` (List of Number) Configure a list of comma-separated device groups
 - `controller_group_list_variable` (String) Variable name
 - `description` (String) The description of the feature template
 - `device_groups` (Set of String) Device groups (Use comma(,) for multiple groups)

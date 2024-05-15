@@ -103,7 +103,7 @@ resource "sdwan_cisco_system_feature_template" "example" {
   - Range: `1`-`65535`
   - Default value: `300`
 - `control_session_pps_variable` (String) Variable name
-- `controller_group_list` (Set of Number) Configure a list of comma-separated device groups
+- `controller_group_list` (List of Number) Configure a list of comma-separated device groups
 - `controller_group_list_variable` (String) Variable name
 - `device_groups` (Set of String) Device groups (Use comma(,) for multiple groups)
 - `device_groups_variable` (String) Variable name
