@@ -1,0 +1,238 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/application-priority/qos-policy/post/request_schema.json",
+    "title": "Policy qos  Parcel Schema",
+    "description": "Policy qos profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Set the parcel name",
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "description": "Set the feature description",
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "description": "Interfaces",
+            "type": "object",
+            "properties": {
+              "interfaces": {
+                "description": "interfaces",
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["global"]
+                      },
+                      "value": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "additionalProperties": false,
+                        "uniqueItems": true,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["optionType", "value"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "properties": {
+                      "optionType": {
+                        "type": "string",
+                        "enum": ["variable"]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": ["interfaces"],
+            "additionalProperties": false
+          },
+          "qosMap": {
+            "description": "qos-map",
+            "type": "object",
+            "properties": {
+              "qosSchedulers": {
+                "description": "qosSchedulers",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "classMapRef": {
+                      "description": "classMapRef",
+                      "type": "object",
+                      "properties": {
+                        "refId": {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "type": "string",
+                              "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "drops": {
+                      "description": "drops",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "queue": {
+                      "description": "queue",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "bandwidthPercent": {
+                      "description": "bandwidthPercent",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "scheduling": {
+                      "description": "scheduling",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      },
+      "documentation": {
+        "description": "This is the documentation for POST request schema for [parcelType] profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "target": {
+                "interfaces": {
+                  "optionType": "global",
+                  "value": "{{interface_var_1}}"
+                }
+              },
+              "qosMap": {
+                "qosSchedulers": [
+                  {
+                    "classMapRef": {
+                      "refId": {
+                        "optionType": "global",
+                        "value": "bdffc357-766e-4985-8066-f208bc4e8631"
+                      }
+                    },
+                    "drops": {
+                      "optionType": "global",
+                      "value": "tail-drop"
+                    },
+                    "queue": {
+                      "optionType": "global",
+                      "value": "0"
+                    },
+                    "bandwidthPercent": {
+                      "optionType": "global",
+                      "value": "10"
+                    },
+                    "scheduling": {
+                      "optionType": "global",
+                      "value": "llq"
+                    }
+                  }
+                ]
+              }
+            },
+            "description": "Qos Parcel For East Coast",
+            "name": "Qos2"
+          }
+        ]
+      }
+    },
+    "required": ["data"],
+    "not": {
+      "required": ["documentation", "metadata"]
+    },
+    "additionalProperties": false
+  }
+}

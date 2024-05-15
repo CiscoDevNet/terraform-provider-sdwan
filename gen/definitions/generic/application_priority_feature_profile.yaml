@@ -1,0 +1,18 @@
+---
+name: Application Priority Feature Profile
+rest_endpoint: /v1/feature-profile/sdwan/application-priority/
+id_attribute: id
+doc_category: Feature Profiles
+test_tags: [SDWAN_2012]
+attributes:
+  - model_name: name
+    response_model_name: profileName
+    type: String
+    mandatory: true
+    description: The name of the service feature profile
+    example: APPLICATION_PRIORITY_FP_1
+  - model_name: description
+    type: String
+    mandatory: true
+    description: Description
+    example: My application priority feature profile 1
