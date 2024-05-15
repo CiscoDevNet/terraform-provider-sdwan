@@ -28,7 +28,7 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanApplicationPriorityQosPolicyProfileParcel(t *testing.T) {
+func TestAccSdwanApplicationPriorityQoSPolicyProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
@@ -42,10 +42,10 @@ func TestAccSdwanApplicationPriorityQosPolicyProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanApplicationPriorityQosPolicyPrerequisitesProfileParcelConfig + testAccSdwanApplicationPriorityQosPolicyProfileParcelConfig_minimum(),
+				Config: testAccSdwanApplicationPriorityQoSPolicyPrerequisitesProfileParcelConfig + testAccSdwanApplicationPriorityQoSPolicyProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanApplicationPriorityQosPolicyPrerequisitesProfileParcelConfig + testAccSdwanApplicationPriorityQosPolicyProfileParcelConfig_all(),
+				Config: testAccSdwanApplicationPriorityQoSPolicyPrerequisitesProfileParcelConfig + testAccSdwanApplicationPriorityQoSPolicyProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -55,7 +55,7 @@ func TestAccSdwanApplicationPriorityQosPolicyProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanApplicationPriorityQosPolicyPrerequisitesProfileParcelConfig = `
+const testAccSdwanApplicationPriorityQoSPolicyPrerequisitesProfileParcelConfig = `
 resource "sdwan_application_priority_feature_profile" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
@@ -65,7 +65,7 @@ resource "sdwan_application_priority_feature_profile" "test" {
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanApplicationPriorityQosPolicyProfileParcelConfig_minimum() string {
+func testAccSdwanApplicationPriorityQoSPolicyProfileParcelConfig_minimum() string {
 	config := `resource "sdwan_application_priority_qos_policy_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
@@ -77,7 +77,7 @@ func testAccSdwanApplicationPriorityQosPolicyProfileParcelConfig_minimum() strin
 // End of section. //template:end testAccConfigMinimum
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
-func testAccSdwanApplicationPriorityQosPolicyProfileParcelConfig_all() string {
+func testAccSdwanApplicationPriorityQoSPolicyProfileParcelConfig_all() string {
 	config := `resource "sdwan_application_priority_qos_policy_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"

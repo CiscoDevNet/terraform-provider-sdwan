@@ -71,7 +71,7 @@ func (r *ApplicationPriorityFeatureProfileResource) Schema(ctx context.Context, 
 				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The name of the service feature profile").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the application priority feature profile").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{

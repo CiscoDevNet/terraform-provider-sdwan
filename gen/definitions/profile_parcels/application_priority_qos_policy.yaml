@@ -1,5 +1,5 @@
 ---
-name: Application Priority Qos Policy
+name: Application Priority QoS Policy
 rest_endpoint: /v1/feature-profile/sdwan/application-priority/%v/qos-policy
 minimum_version: 20.12.0
 id_attribute: id

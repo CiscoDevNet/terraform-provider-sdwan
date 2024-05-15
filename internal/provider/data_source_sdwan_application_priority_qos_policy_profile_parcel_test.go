@@ -28,7 +28,7 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
-func TestAccDataSourceSdwanApplicationPriorityQosPolicyProfileParcel(t *testing.T) {
+func TestAccDataSourceSdwanApplicationPriorityQoSPolicyProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
@@ -42,7 +42,7 @@ func TestAccDataSourceSdwanApplicationPriorityQosPolicyProfileParcel(t *testing.
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanApplicationPriorityQosPolicyPrerequisitesProfileParcelConfig + testAccDataSourceSdwanApplicationPriorityQosPolicyProfileParcelConfig(),
+				Config: testAccDataSourceSdwanApplicationPriorityQoSPolicyPrerequisitesProfileParcelConfig + testAccDataSourceSdwanApplicationPriorityQoSPolicyProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -52,7 +52,7 @@ func TestAccDataSourceSdwanApplicationPriorityQosPolicyProfileParcel(t *testing.
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccDataSourceSdwanApplicationPriorityQosPolicyPrerequisitesProfileParcelConfig = `
+const testAccDataSourceSdwanApplicationPriorityQoSPolicyPrerequisitesProfileParcelConfig = `
 resource "sdwan_application_priority_feature_profile" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
@@ -62,7 +62,7 @@ resource "sdwan_application_priority_feature_profile" "test" {
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
-func testAccDataSourceSdwanApplicationPriorityQosPolicyProfileParcelConfig() string {
+func testAccDataSourceSdwanApplicationPriorityQoSPolicyProfileParcelConfig() string {
 	config := `resource "sdwan_application_priority_qos_policy_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"

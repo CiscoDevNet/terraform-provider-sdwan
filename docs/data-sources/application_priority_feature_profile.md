@@ -28,4 +28,4 @@ data "sdwan_application_priority_feature_profile" "example" {
 ### Read-Only
 
 - `description` (String) Description
-- `name` (String) The name of the service feature profile
+- `name` (String) The name of the application priority feature profile

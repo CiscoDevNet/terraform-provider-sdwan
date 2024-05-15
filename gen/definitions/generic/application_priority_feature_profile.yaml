@@ -9,7 +9,7 @@ attributes:
     response_model_name: profileName
     type: String
     mandatory: true
-    description: The name of the service feature profile
+    description: The name of the application priority feature profile
     example: APPLICATION_PRIORITY_FP_1
   - model_name: description
     type: String

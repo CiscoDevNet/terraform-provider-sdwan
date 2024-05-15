@@ -3,13 +3,13 @@
 page_title: "sdwan_application_priority_qos_policy_profile_parcel Resource - terraform-provider-sdwan"
 subcategory: "Profile Parcels"
 description: |-
-  This resource can manage a Application Priority Qos Policy profile parcel.
+  This resource can manage a Application Priority QoS Policy profile parcel.
   Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_application_priority_qos_policy_profile_parcel (Resource)
 
-This resource can manage a Application Priority Qos Policy profile parcel.
+This resource can manage a Application Priority QoS Policy profile parcel.
   - Minimum SD-WAN Manager version: `20.12.0`
 
 ## Example Usage

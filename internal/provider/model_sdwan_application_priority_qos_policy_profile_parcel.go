@@ -32,7 +32,7 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type ApplicationPriorityQosPolicy struct {
+type ApplicationPriorityQoSPolicy struct {
 	Id                      types.String                                `tfsdk:"id"`
 	Version                 types.Int64                                 `tfsdk:"version"`
 	Name                    types.String                                `tfsdk:"name"`
@@ -40,10 +40,10 @@ type ApplicationPriorityQosPolicy struct {
 	FeatureProfileId        types.String                                `tfsdk:"feature_profile_id"`
 	TargetInterface         types.Set                                   `tfsdk:"target_interface"`
 	TargetInterfaceVariable types.String                                `tfsdk:"target_interface_variable"`
-	QosSchedulers           []ApplicationPriorityQosPolicyQosSchedulers `tfsdk:"qos_schedulers"`
+	QosSchedulers           []ApplicationPriorityQoSPolicyQosSchedulers `tfsdk:"qos_schedulers"`
 }
 
-type ApplicationPriorityQosPolicyQosSchedulers struct {
+type ApplicationPriorityQoSPolicyQosSchedulers struct {
 	ForwardingClassId types.String `tfsdk:"forwarding_class_id"`
 	Drops             types.String `tfsdk:"drops"`
 	Queue             types.String `tfsdk:"queue"`
@@ -54,21 +54,21 @@ type ApplicationPriorityQosPolicyQosSchedulers struct {
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data ApplicationPriorityQosPolicy) getModel() string {
+func (data ApplicationPriorityQoSPolicy) getModel() string {
 	return "application_priority_qos_policy"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data ApplicationPriorityQosPolicy) getPath() string {
+func (data ApplicationPriorityQoSPolicy) getPath() string {
 	return fmt.Sprintf("/v1/feature-profile/sdwan/application-priority/%v/qos-policy", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ApplicationPriorityQosPolicy) toBody(ctx context.Context) string {
+func (data ApplicationPriorityQoSPolicy) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -114,7 +114,7 @@ func (data ApplicationPriorityQosPolicy) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ApplicationPriorityQosPolicy) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ApplicationPriorityQoSPolicy) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -133,9 +133,9 @@ func (data *ApplicationPriorityQosPolicy) fromBody(ctx context.Context, res gjso
 		}
 	}
 	if value := res.Get(path + "qosMap.qosSchedulers"); value.Exists() {
-		data.QosSchedulers = make([]ApplicationPriorityQosPolicyQosSchedulers, 0)
+		data.QosSchedulers = make([]ApplicationPriorityQoSPolicyQosSchedulers, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ApplicationPriorityQosPolicyQosSchedulers{}
+			item := ApplicationPriorityQoSPolicyQosSchedulers{}
 			item.ForwardingClassId = types.StringNull()
 
 			if t := v.Get("classMapRef.refId.optionType"); t.Exists() {
@@ -185,7 +185,7 @@ func (data *ApplicationPriorityQosPolicy) fromBody(ctx context.Context, res gjso
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ApplicationPriorityQosPolicy) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *ApplicationPriorityQoSPolicy) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -275,7 +275,7 @@ func (data *ApplicationPriorityQosPolicy) updateFromBody(ctx context.Context, re
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *ApplicationPriorityQosPolicy) isNull(ctx context.Context, res gjson.Result) bool {
+func (data *ApplicationPriorityQoSPolicy) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}

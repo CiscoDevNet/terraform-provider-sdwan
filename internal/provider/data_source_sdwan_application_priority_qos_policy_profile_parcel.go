@@ -37,26 +37,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &ApplicationPriorityQosPolicyProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure = &ApplicationPriorityQosPolicyProfileParcelDataSource{}
+	_ datasource.DataSource              = &ApplicationPriorityQoSPolicyProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure = &ApplicationPriorityQoSPolicyProfileParcelDataSource{}
 )
 
-func NewApplicationPriorityQosPolicyProfileParcelDataSource() datasource.DataSource {
-	return &ApplicationPriorityQosPolicyProfileParcelDataSource{}
+func NewApplicationPriorityQoSPolicyProfileParcelDataSource() datasource.DataSource {
+	return &ApplicationPriorityQoSPolicyProfileParcelDataSource{}
 }
 
-type ApplicationPriorityQosPolicyProfileParcelDataSource struct {
+type ApplicationPriorityQoSPolicyProfileParcelDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *ApplicationPriorityQosPolicyProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (d *ApplicationPriorityQoSPolicyProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_application_priority_qos_policy_profile_parcel"
 }
 
-func (d *ApplicationPriorityQosPolicyProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *ApplicationPriorityQoSPolicyProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Application Priority Qos Policy profile parcel.",
+		MarkdownDescription: "This data source can read the Application Priority QoS Policy profile parcel.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -120,7 +120,7 @@ func (d *ApplicationPriorityQosPolicyProfileParcelDataSource) Schema(ctx context
 	}
 }
 
-func (d *ApplicationPriorityQosPolicyProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *ApplicationPriorityQoSPolicyProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -131,8 +131,8 @@ func (d *ApplicationPriorityQosPolicyProfileParcelDataSource) Configure(_ contex
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *ApplicationPriorityQosPolicyProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ApplicationPriorityQosPolicy
+func (d *ApplicationPriorityQoSPolicyProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config ApplicationPriorityQoSPolicy
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

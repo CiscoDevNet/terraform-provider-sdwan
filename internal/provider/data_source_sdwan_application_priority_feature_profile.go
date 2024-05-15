@@ -62,7 +62,7 @@ func (d *ApplicationPriorityFeatureProfileDataSource) Schema(ctx context.Context
 				Required:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the service feature profile",
+				MarkdownDescription: "The name of the application priority feature profile",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{

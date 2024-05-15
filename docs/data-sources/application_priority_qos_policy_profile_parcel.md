@@ -3,12 +3,12 @@
 page_title: "sdwan_application_priority_qos_policy_profile_parcel Data Source - terraform-provider-sdwan"
 subcategory: "Profile Parcels"
 description: |-
-  This data source can read the Application Priority Qos Policy profile parcel.
+  This data source can read the Application Priority QoS Policy profile parcel.
 ---
 
 # sdwan_application_priority_qos_policy_profile_parcel (Data Source)
 
-This data source can read the Application Priority Qos Policy profile parcel.
+This data source can read the Application Priority QoS Policy profile parcel.
 
 ## Example Usage
 

@@ -43,26 +43,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &ApplicationPriorityQosPolicyProfileParcelResource{}
-var _ resource.ResourceWithImportState = &ApplicationPriorityQosPolicyProfileParcelResource{}
+var _ resource.Resource = &ApplicationPriorityQoSPolicyProfileParcelResource{}
+var _ resource.ResourceWithImportState = &ApplicationPriorityQoSPolicyProfileParcelResource{}
 
-func NewApplicationPriorityQosPolicyProfileParcelResource() resource.Resource {
-	return &ApplicationPriorityQosPolicyProfileParcelResource{}
+func NewApplicationPriorityQoSPolicyProfileParcelResource() resource.Resource {
+	return &ApplicationPriorityQoSPolicyProfileParcelResource{}
 }
 
-type ApplicationPriorityQosPolicyProfileParcelResource struct {
+type ApplicationPriorityQoSPolicyProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_application_priority_qos_policy_profile_parcel"
 }
 
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Application Priority Qos Policy profile parcel.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Application Priority QoS Policy profile parcel.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -132,7 +132,7 @@ func (r *ApplicationPriorityQosPolicyProfileParcelResource) Schema(ctx context.C
 	}
 }
 
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -144,8 +144,8 @@ func (r *ApplicationPriorityQosPolicyProfileParcelResource) Configure(_ context.
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ApplicationPriorityQosPolicy
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan ApplicationPriorityQoSPolicy
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -177,8 +177,8 @@ func (r *ApplicationPriorityQosPolicyProfileParcelResource) Create(ctx context.C
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state ApplicationPriorityQosPolicy
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state ApplicationPriorityQoSPolicy
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -214,8 +214,8 @@ func (r *ApplicationPriorityQosPolicyProfileParcelResource) Read(ctx context.Con
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ApplicationPriorityQosPolicy
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state ApplicationPriorityQoSPolicy
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -250,8 +250,8 @@ func (r *ApplicationPriorityQosPolicyProfileParcelResource) Update(ctx context.C
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ApplicationPriorityQosPolicy
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state ApplicationPriorityQoSPolicy
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -276,7 +276,7 @@ func (r *ApplicationPriorityQosPolicyProfileParcelResource) Delete(ctx context.C
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *ApplicationPriorityQosPolicyProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *ApplicationPriorityQoSPolicyProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
