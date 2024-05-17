@@ -745,12 +745,23 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			} else if t.Get("properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
 			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
-				attr.Type = "Int64"
-				if value := t.Get("properties.value.minimum"); value.Exists() {
-					attr.MinInt = value.Int()
-				}
-				if value := t.Get("properties.value.maximum"); value.Exists() {
-					attr.MaxInt = value.Int()
+
+				if value := t.Get("properties.value.multipleOf"); value.Exists() {
+					attr.Type = "Float64"
+					if value := t.Get("properties.value.minimum"); value.Exists() {
+						attr.MinFloat = value.Float()
+					}
+					if value := t.Get("properties.value.maximum"); value.Exists() {
+						attr.MaxFloat = value.Float()
+					}
+				} else {
+					attr.Type = "Int64"
+					if value := t.Get("properties.value.minimum"); value.Exists() {
+						attr.MinInt = value.Int()
+					}
+					if value := t.Get("properties.value.maximum"); value.Exists() {
+						attr.MaxInt = value.Int()
+					}
 				}
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
 				attr.Type = "Set"

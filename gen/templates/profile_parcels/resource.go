@@ -137,11 +137,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 				},
 				{{- else if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 				Validators: []validator.Float64{
-					{{- if and (ne .MinFloat 0) (ne .MaxFloat 0)}}
+					{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 					float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
-					{{- else if and (ne .MinFloat 0) (eq .MaxFloat 0)}}
+					{{- else if and (ne .MinFloat 0.0) (eq .MaxFloat 0.0)}}
 					float64validator.AtLeast({{.MinFloat}}),
-					{{- else if and (eq .MinFloat 0) (ne .MaxFloat 0)}}
+					{{- else if and (eq .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 					float64validator.AtMost({{.MaxFloat}}),
 					{{- end}}
 				},
@@ -199,11 +199,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 							},
 							{{- else if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 							Validators: []validator.Float64{
-								{{- if and (ne .MinFloat 0) (ne .MaxFloat 0)}}
+								{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 								float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
-								{{- else if and (ne .MinFloat 0) (eq .MaxFloat 0)}}
+								{{- else if and (ne .MinFloat 0.0) (eq .MaxFloat 0.0)}}
 								float64validator.AtLeast({{.MinFloat}}),
-								{{- else if and (eq .MinFloat 0) (ne .MaxFloat 0)}}
+								{{- else if and (eq .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 								float64validator.AtMost({{.MaxFloat}}),
 								{{- end}}
 							},
@@ -261,11 +261,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 										},
 										{{- else if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 										Validators: []validator.Float64{
-											{{- if and (ne .MinFloat 0) (ne .MaxFloat 0)}}
+											{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 											float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
-											{{- else if and (ne .MinFloat 0) (eq .MaxFloat 0)}}
+											{{- else if and (ne .MinFloat 0.0) (eq .MaxFloat 0.0)}}
 											float64validator.AtLeast({{.MinFloat}}),
-											{{- else if and (eq .MinFloat 0) (ne .MaxFloat 0)}}
+											{{- else if and (eq .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 											float64validator.AtMost({{.MaxFloat}}),
 											{{- end}}
 										},
@@ -323,11 +323,11 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 													},
 													{{- else if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 													Validators: []validator.Float64{
-														{{- if and (ne .MinFloat 0) (ne .MaxFloat 0)}}
+														{{- if and (ne .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 														float64validator.Between({{.MinFloat}}, {{.MaxFloat}}),
-														{{- else if and (ne .MinFloat 0) (eq .MaxFloat 0)}}
+														{{- else if and (ne .MinFloat 0.0) (eq .MaxFloat 0.0)}}
 														float64validator.AtLeast({{.MinFloat}}),
-														{{- else if and (eq .MinFloat 0) (ne .MaxFloat 0)}}
+														{{- else if and (eq .MinFloat 0.0) (ne .MaxFloat 0.0)}}
 														float64validator.AtMost({{.MaxFloat}}),
 														{{- end}}
 													},
