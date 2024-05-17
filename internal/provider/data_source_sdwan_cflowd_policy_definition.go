@@ -135,6 +135,14 @@ func (d *CflowdPolicyDefinitionDataSource) Schema(ctx context.Context, req datas
 							MarkdownDescription: "Export spreading",
 							Computed:            true,
 						},
+						"bfd_metrics_exporting": schema.BoolAttribute{
+							MarkdownDescription: "BFD metrics exporting",
+							Computed:            true,
+						},
+						"exporting_interval": schema.Int64Attribute{
+							MarkdownDescription: "Exporting interval",
+							Computed:            true,
+						},
 					},
 				},
 			},

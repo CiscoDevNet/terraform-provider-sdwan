@@ -25,12 +25,14 @@ resource "sdwan_cflowd_policy_definition" "example" {
   remarked_dscp         = true
   collectors = [
     {
-      vpn_id           = 1
-      ip_address       = "10.0.0.1"
-      port             = 12345
-      transport        = "transport_tcp"
-      source_interface = "Ethernet1"
-      export_spreading = "enable"
+      vpn_id                = 1
+      ip_address            = "10.0.0.1"
+      port                  = 12345
+      transport             = "transport_tcp"
+      source_interface      = "Ethernet1"
+      export_spreading      = "enable"
+      bfd_metrics_exporting = true
+      exporting_interval    = 86400
     }
   ]
 }
@@ -71,8 +73,10 @@ resource "sdwan_cflowd_policy_definition" "example" {
 
 Optional:
 
+- `bfd_metrics_exporting` (Boolean) BFD metrics exporting
 - `export_spreading` (String) Export spreading
   - Choices: `enable`, `disable`
+- `exporting_interval` (Number) Exporting interval
 - `ip_address` (String) IP address
 - `port` (Number) Port
   - Range: `1024`-`65535`
