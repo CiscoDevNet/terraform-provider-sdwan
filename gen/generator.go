@@ -788,7 +788,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
-		if d.Exists() && !isOneOfAttribute {
+		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
 			attr.DefaultValuePresent = true
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
 				if value.String() == "" {
