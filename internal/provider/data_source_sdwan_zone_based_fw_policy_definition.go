@@ -143,6 +143,10 @@ func (d *ZoneBasedFWPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "Type of action entry",
 										Computed:            true,
 									},
+									"parameter": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
 								},
 							},
 						},

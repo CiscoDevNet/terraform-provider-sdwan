@@ -60,6 +60,7 @@ Read-Only:
 
 Read-Only:
 
+- `parameter` (String)
 - `type` (String) Type of action entry
 
 

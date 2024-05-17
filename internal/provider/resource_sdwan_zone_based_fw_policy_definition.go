@@ -144,10 +144,10 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Schema(ctx context.Context, req re
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolNameList", "protocol", "app").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolNameList", "protocol", "app", "ruleSetList").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolNameList", "protocol", "app"),
+											stringvalidator.OneOf("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolNameList", "protocol", "app", "ruleSetList"),
 										},
 									},
 									"policy_id": schema.StringAttribute{
@@ -170,7 +170,14 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Schema(ctx context.Context, req re
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("log", "connectionEvents").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("log", "connectionEvents"),
+										},
+									},
+									"parameter": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 									},
 								},

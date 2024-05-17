@@ -37,7 +37,8 @@ resource "sdwan_zone_based_fw_policy_definition" "example" {
       ]
       action_entries = [
         {
-          type = "log"
+          type      = "log"
+          parameter = ""
         }
       ]
     }
@@ -94,7 +95,7 @@ Optional:
 Required:
 
 - `type` (String) Type of match entry
-  - Choices: `sourceFqdnList`, `sourceDataPrefixList`, `sourceGeoLocationList`, `sourcePortList`, `destinationFqdnList`, `destinationDataPrefixList`, `destinationGeoLocationList`, `destinationPortList`, `appList`, `protocolNameList`, `sourceIp`, `sourcePort`, `sourceFqdn`, `destinationIp`, `destinationPort`, `sourceGeoLocation`, `destinationGeoLocation`, `protocolNameList`, `protocol`, `app`
+  - Choices: `sourceFqdnList`, `sourceDataPrefixList`, `sourceGeoLocationList`, `sourcePortList`, `destinationFqdnList`, `destinationDataPrefixList`, `destinationGeoLocationList`, `destinationPortList`, `appList`, `protocolNameList`, `sourceIp`, `sourcePort`, `sourceFqdn`, `destinationIp`, `destinationPort`, `sourceGeoLocation`, `destinationGeoLocation`, `protocolNameList`, `protocol`, `app`, `ruleSetList`
 
 Optional:
 
@@ -107,7 +108,9 @@ Optional:
 
 Optional:
 
+- `parameter` (String)
 - `type` (String) Type of action entry
+  - Choices: `log`, `connectionEvents`
 
 ## Import
 

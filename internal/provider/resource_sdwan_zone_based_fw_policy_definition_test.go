@@ -39,6 +39,7 @@ func TestAccSdwanZoneBasedFWPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.base_action", "inspect"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.match_entries.0.type", "sourceGeoLocationList"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.action_entries.0.type", "log"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.action_entries.0.parameter", ""))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -98,6 +99,7 @@ func testAccSdwanZoneBasedFWPolicyDefinitionConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	  action_entries = [{` + "\n"
 	config += `		type = "log"` + "\n"
+	config += `		parameter = ""` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
