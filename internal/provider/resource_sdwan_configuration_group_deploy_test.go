@@ -85,6 +85,11 @@ resource "sdwan_system_logging_profile_parcel" "test" {
   feature_profile_id = sdwan_system_feature_profile.test.id
 }
 
+resource "sdwan_system_omp_profile_parcel" "test" {
+  name               = "OMP_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+} 
+
 resource "sdwan_transport_feature_profile" "test" {
   name        = "TRANSPORT_TF"
   description = "My transport feature profile 1"
@@ -129,6 +134,7 @@ resource "sdwan_configuration_group" "test" {
     sdwan_system_bfd_profile_parcel.test,
     sdwan_system_global_profile_parcel.test,
     sdwan_system_logging_profile_parcel.test,
+    sdwan_system_omp_profile_parcel.test,
     sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test
   ]
 }
