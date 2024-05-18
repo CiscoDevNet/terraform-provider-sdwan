@@ -17,7 +17,6 @@ attributes:
     description: Transport WAN VPN Profile Parcel ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_profile_parcel.test.id
-
   - model_name: ifName
     tf_name: interface_name
     mandatory: true
@@ -27,7 +26,6 @@ attributes:
   - model_name: description
     tf_name: interface_description
     example: ipsec987
-
   - model_name: address
     tf_name: interface_address
     data_path: [address]
@@ -38,7 +36,6 @@ attributes:
     data_path: [address]
     mandatory: true
     example: 255.255.255.0
-
   - model_name: address
     tf_name: tunnel_source_address
     data_path: [tunnelSource]
@@ -49,12 +46,10 @@ attributes:
     data_path: [tunnelSource]
     mandatory: true
     example: 255.255.255.0
-  
   - model_name: tunnelSourceInterface
     tf_name: tunnel_source_interface
     mandatory: true
     example: GigabitEthernet8
-  
   - model_name: address
     tf_name: tunnel_destination_address
     data_path: [tunnelDestination]
@@ -65,7 +60,6 @@ attributes:
     data_path: [tunnelDestination]
     mandatory: true
     example: 255.255.255.0
-
   - model_name: application
     tf_name: application_tunnel_type
     mandatory: true
@@ -78,17 +72,14 @@ attributes:
   - model_name: mtu
     tf_name: ip_mtu
     example: 1500
-
   - model_name: dpdInterval
     example: 10
   - model_name: dpdRetries 
     example: 3
-
   - model_name: preSharedSecret
     tf_name: preshared_key_for_ike
     mandatory: true
     example: 123
-
   - model_name: ikeVersion
     example: 1
   - model_name: ikeMode
@@ -107,7 +98,6 @@ attributes:
   - model_name: ikeRemoteId
     tf_name: ike_id_for_remote_end_point
     example: xxx
-
   - model_name: ipsecRekeyInterval 
     example: 3600
   - model_name: ipsecReplayWindow
@@ -116,7 +106,6 @@ attributes:
     example: aes256-gcm
   - model_name: perfectForwardSecrecy
     example: group-16
-
   - model_name: tracker
     tf_name: tracker_id
     exclude_test: true
