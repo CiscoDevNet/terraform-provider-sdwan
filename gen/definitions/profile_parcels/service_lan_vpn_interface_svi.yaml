@@ -1,0 +1,208 @@
+---
+name: Service LAN VPN Interface SVI
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/svi
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - tf_name: service_lan_vpn_profile_parcel_id
+    reference: true
+    type: String
+    description: Service LAN VPN Profile Profile ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_service_lan_vpn_profile_parcel.test.id
+  - model_name: shutdown
+    example: false
+  - model_name: interfaceName
+    mandatory: true
+    example: Vlan1
+  - model_name: description
+    tf_name: interface_description
+    example: SVI
+  - model_name: ifMtu
+    tf_name: interface_mtu
+    example: 1500
+  - model_name: ipMtu
+    tf_name: ip_mtu
+    example: 1500
+  - model_name: ipAddress
+    tf_name: ipv4_address
+    data_path: [ipv4, addressV4]
+    mandatory: true
+    example: 1.2.3.4
+  - model_name: subnetMask
+    data_path: [ipv4, addressV4]
+    mandatory: true
+    example: 0.0.0.0
+  - model_name: secondaryAddressV4
+    tf_name: ipv4_secondary_addresses
+    data_path: [ipv4]
+    example: 5.6.7.8
+    attributes:
+    - model_name: ipAddress
+      tf_name: ipv4_address
+      id: true
+      example: 2.3.4.5
+    - model_name: subnetMask
+      example: 0.0.0.0
+  - model_name: dhcpHelperV4
+    tf_name: dhcp_helper_ipv4_addresses
+    data_path: [ipv4]
+    example: 4.5.6.7
+  - model_name: addressV6
+    tf_name: ipv6_address
+    data_path: [ipv6]
+    example: 2001:0:0:1::0/32
+  - model_name: secondaryAddressV6
+    tf_name: ipv6_secondary_addresses
+    data_path: [ipv6]
+    attributes:
+    - model_name: address
+      tf_name: ipv6_address
+      id: true
+      example: ::2/32
+  - model_name: dhcpHelperV6
+    tf_name: ipv6_dhcp_helpers
+    data_path: [ipv6]
+    attributes:
+    - model_name: address
+      id: true
+      example: 2001:0:0:1::0
+    - model_name: vpn
+      example: 1
+  # ==== ACL IPv4 and ACL IPv6 Not Supported By Provider (Being Worked On) ====
+  # - model_name: refId
+  #   tf_name: acl_ipv4_egress_reference_id
+  #   data_path: [aclQos, ipv4AclEgress]
+  #   type: String
+  #   exclude_test: true
+  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  # - model_name: refId
+  #   tf_name: acl_ipv4_ingress_reference_id
+  #   data_path: [aclQos, ipv4AclIngress]
+  #   type: String
+  #   exclude_test: true
+  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  # - model_name: refId
+  #   tf_name: acl_ipv6_egress_reference_id
+  #   data_path: [aclQos, ipv6AclEgress]
+  #   type: String
+  #   exclude_test: true
+  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  # - model_name: refId
+  #   tf_name: acl_ipv6_ingress_reference_id
+  #   data_path: [aclQos, ipv6AclIngress]
+  #   type: String
+  #   exclude_test: true
+  #   example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+  - model_name: arp
+    tf_name: arps
+    attributes:
+    - model_name: ipAddress
+      id: true
+      example: 1.2.3.4
+    - model_name: macAddress
+      id: true
+      example: "00-B0-D0-63-C2-26"
+  - model_name: vrrp
+    tf_name: ipv4_vrrps
+    attributes:
+    - model_name: group_id
+      tf_name: group_id
+      id: true
+      example: 1
+    - model_name: priority
+      example: 100
+    - model_name: timer
+      example: 1000
+    - model_name: trackOmp
+      example: false
+    - model_name: prefixList
+      example: prefix
+    - model_name: ipAddress
+      example: 1.2.3.4
+    - model_name: ipAddressSecondary
+      tf_name: secondary_addresses
+      attributes:
+      - model_name: address
+        id: true
+        example: 2.3.4.5
+    - model_name: tlocPrefChange
+      tf_name: tloc_prefix_change
+      example: true
+    - model_name: tlocPrefChangeValue
+      example: 100
+    # - model_name: trackingObject
+    #   tf_name: tracking_objects
+    #   exclude_test: true
+    #   attributes:
+    #   - model_name: trackerId
+    #     tf_name: tracker_policy_id
+    #     id: true
+    #     example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
+    #   - model_name: trackerAction
+    #     example: decrement
+    #   - model_name: decrementValue
+    #     example: 100
+  - model_name: vrrpIpv6
+    tf_name: ipv6_vrrps
+    attributes:
+    - model_name: groupId
+      id: true
+      example: 1
+    - model_name: priority
+      example: 100
+    - model_name: timer
+      example: 1000
+    - model_name: trackOmp
+      example: false
+    - model_name: trackPrefixList
+      example: 1
+    - model_name: ipv6
+      tf_name: addresses
+      attributes:
+      - model_name: ipv6LinkLocal
+        tf_name: link_local_address
+        id: true
+        example: 1::1
+      - model_name: prefix
+        tf_name: global_address
+        example: 1::1/24
+    - model_name: ipv6Secondary
+      tf_name: secondary_addresses
+      attributes:
+      - model_name: prefix
+        id: true
+        example: ::20/32
+  - model_name: dhcpClientV6
+    tf_name: enable_dhcpv6
+    example: false
+  - model_name: tcpMss
+    data_path: [advanced]
+    example: 1024
+  - model_name: arpTimeout
+    data_path: [advanced]
+    example: 1200
+  - model_name: ipDirectedBroadcast
+    data_path: [advanced]
+    example: false
+  - model_name: icmpRedirectDisable
+    data_path: [advanced]
+    example: true
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_service_lan_vpn_profile_parcel" "test" {
+    name = "TF_TEST_SLAN"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+  }
