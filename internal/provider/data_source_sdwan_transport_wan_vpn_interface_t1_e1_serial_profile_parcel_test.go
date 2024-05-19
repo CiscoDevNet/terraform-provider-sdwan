@@ -47,7 +47,7 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *te
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "per_tunnel_qos_aggregator", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_qos_mode", "hub"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_color", "mpls"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_color_restrict", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_restrict", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_groups", "42949672"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_border", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_max_control_connections", "62"))
@@ -186,7 +186,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 	config += `	per_tunnel_qos_aggregator = false` + "\n"
 	config += `	tunnel_qos_mode = "hub"` + "\n"
 	config += `	tunnel_interface_color = "mpls"` + "\n"
-	config += `	tunnel_interface_color_restrict = true` + "\n"
+	config += `	tunnel_interface_restrict = true` + "\n"
 	config += `	tunnel_interface_groups = 42949672` + "\n"
 	config += `	tunnel_interface_border = false` + "\n"
 	config += `	tunnel_interface_max_control_connections = 62` + "\n"

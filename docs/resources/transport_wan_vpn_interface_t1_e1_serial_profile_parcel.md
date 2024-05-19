@@ -34,7 +34,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
   per_tunnel_qos_aggregator                      = false
   tunnel_qos_mode                                = "hub"
   tunnel_interface_color                         = "mpls"
-  tunnel_interface_color_restrict                = true
+  tunnel_interface_restrict                      = true
   tunnel_interface_groups                        = 42949672
   tunnel_interface_border                        = false
   tunnel_interface_max_control_connections       = 62
@@ -195,9 +195,6 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
 - `tunnel_interface_color` (String) Set color for TLOC
   - Choices: `default`, `mpls`, `metro-ethernet`, `biz-internet`, `public-internet`, `lte`, `3g`, `red`, `green`, `blue`, `gold`, `silver`, `bronze`, `custom1`, `custom2`, `custom3`, `private1`, `private2`, `private3`, `private4`, `private5`, `private6`
   - Default value: `default`
-- `tunnel_interface_color_restrict` (Boolean) Restrict this TLOC behavior
-  - Default value: `false`
-- `tunnel_interface_color_restrict_variable` (String) Variable name
 - `tunnel_interface_color_variable` (String) Variable name
 - `tunnel_interface_encapsulations` (Attributes List) Encapsulation for TLOC (see [below for nested schema](#nestedatt--tunnel_interface_encapsulations))
 - `tunnel_interface_exclude_controller_group_list` (Set of Number) Exclude the following controller groups defined in this list
@@ -229,6 +226,9 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
 - `tunnel_interface_port_hop` (Boolean) Disallow port hopping on the tunnel interface
   - Default value: `true`
 - `tunnel_interface_port_hop_variable` (String) Variable name
+- `tunnel_interface_restrict` (Boolean) Restrict this TLOC behavior
+  - Default value: `false`
+- `tunnel_interface_restrict_variable` (String) Variable name
 - `tunnel_interface_tunnel_tcp_mss` (Number) Tunnel TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tunnel_interface_tunnel_tcp_mss_variable` (String) Variable name

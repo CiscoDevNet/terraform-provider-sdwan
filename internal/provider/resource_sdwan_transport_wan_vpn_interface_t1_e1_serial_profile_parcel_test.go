@@ -47,7 +47,7 @@ func TestAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "per_tunnel_qos_aggregator", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_qos_mode", "hub"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_color", "mpls"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_color_restrict", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_restrict", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_groups", "42949672"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_border", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_max_control_connections", "62"))
@@ -177,6 +177,7 @@ func testAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig_minimum()
 	config += `	transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id` + "\n"
 	config += `	interface_name = "Serial0"` + "\n"
 	config += `	tunnel_interface = true` + "\n"
+	config += `	tunnel_interface_color = "mpls"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -204,7 +205,7 @@ func testAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig_all() str
 	config += `	per_tunnel_qos_aggregator = false` + "\n"
 	config += `	tunnel_qos_mode = "hub"` + "\n"
 	config += `	tunnel_interface_color = "mpls"` + "\n"
-	config += `	tunnel_interface_color_restrict = true` + "\n"
+	config += `	tunnel_interface_restrict = true` + "\n"
 	config += `	tunnel_interface_groups = 42949672` + "\n"
 	config += `	tunnel_interface_border = false` + "\n"
 	config += `	tunnel_interface_max_control_connections = 62` + "\n"

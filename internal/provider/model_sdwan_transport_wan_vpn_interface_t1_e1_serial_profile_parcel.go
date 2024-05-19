@@ -67,8 +67,8 @@ type TransportWANVPNInterfaceT1E1Serial struct {
 	TunnelQosModeVariable                              types.String                                                      `tfsdk:"tunnel_qos_mode_variable"`
 	TunnelInterfaceColor                               types.String                                                      `tfsdk:"tunnel_interface_color"`
 	TunnelInterfaceColorVariable                       types.String                                                      `tfsdk:"tunnel_interface_color_variable"`
-	TunnelInterfaceColorRestrict                       types.Bool                                                        `tfsdk:"tunnel_interface_color_restrict"`
-	TunnelInterfaceColorRestrictVariable               types.String                                                      `tfsdk:"tunnel_interface_color_restrict_variable"`
+	TunnelInterfaceRestrict                            types.Bool                                                        `tfsdk:"tunnel_interface_restrict"`
+	TunnelInterfaceRestrictVariable                    types.String                                                      `tfsdk:"tunnel_interface_restrict_variable"`
 	TunnelInterfaceGroups                              types.Int64                                                       `tfsdk:"tunnel_interface_groups"`
 	TunnelInterfaceGroupsVariable                      types.String                                                      `tfsdk:"tunnel_interface_groups_variable"`
 	TunnelInterfaceBorder                              types.Bool                                                        `tfsdk:"tunnel_interface_border"`
@@ -314,15 +314,15 @@ func (data TransportWANVPNInterfaceT1E1Serial) toBody(ctx context.Context) strin
 		body, _ = sjson.Set(body, path+"tunnel.color.value", data.TunnelInterfaceColor.ValueString())
 	}
 
-	if !data.TunnelInterfaceColorRestrictVariable.IsNull() {
+	if !data.TunnelInterfaceRestrictVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel.restrict.optionType", "variable")
-		body, _ = sjson.Set(body, path+"tunnel.restrict.value", data.TunnelInterfaceColorRestrictVariable.ValueString())
-	} else if data.TunnelInterfaceColorRestrict.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnel.restrict.value", data.TunnelInterfaceRestrictVariable.ValueString())
+	} else if data.TunnelInterfaceRestrict.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnel.restrict.optionType", "default")
 		body, _ = sjson.Set(body, path+"tunnel.restrict.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"tunnel.restrict.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnel.restrict.value", data.TunnelInterfaceColorRestrict.ValueBool())
+		body, _ = sjson.Set(body, path+"tunnel.restrict.value", data.TunnelInterfaceRestrict.ValueBool())
 	}
 
 	if !data.TunnelInterfaceGroupsVariable.IsNull() {
@@ -885,14 +885,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) fromBody(ctx context.Context, re
 			data.TunnelInterfaceColor = types.StringValue(va.String())
 		}
 	}
-	data.TunnelInterfaceColorRestrict = types.BoolNull()
-	data.TunnelInterfaceColorRestrictVariable = types.StringNull()
+	data.TunnelInterfaceRestrict = types.BoolNull()
+	data.TunnelInterfaceRestrictVariable = types.StringNull()
 	if t := res.Get(path + "tunnel.restrict.optionType"); t.Exists() {
 		va := res.Get(path + "tunnel.restrict.value")
 		if t.String() == "variable" {
-			data.TunnelInterfaceColorRestrictVariable = types.StringValue(va.String())
+			data.TunnelInterfaceRestrictVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelInterfaceColorRestrict = types.BoolValue(va.Bool())
+			data.TunnelInterfaceRestrict = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfaceGroups = types.Int64Null()
@@ -1432,14 +1432,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) updateFromBody(ctx context.Conte
 			data.TunnelInterfaceColor = types.StringValue(va.String())
 		}
 	}
-	data.TunnelInterfaceColorRestrict = types.BoolNull()
-	data.TunnelInterfaceColorRestrictVariable = types.StringNull()
+	data.TunnelInterfaceRestrict = types.BoolNull()
+	data.TunnelInterfaceRestrictVariable = types.StringNull()
 	if t := res.Get(path + "tunnel.restrict.optionType"); t.Exists() {
 		va := res.Get(path + "tunnel.restrict.value")
 		if t.String() == "variable" {
-			data.TunnelInterfaceColorRestrictVariable = types.StringValue(va.String())
+			data.TunnelInterfaceRestrictVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelInterfaceColorRestrict = types.BoolValue(va.Bool())
+			data.TunnelInterfaceRestrict = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfaceGroups = types.Int64Null()
@@ -1940,10 +1940,10 @@ func (data *TransportWANVPNInterfaceT1E1Serial) isNull(ctx context.Context, res 
 	if !data.TunnelInterfaceColorVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelInterfaceColorRestrict.IsNull() {
+	if !data.TunnelInterfaceRestrict.IsNull() {
 		return false
 	}
-	if !data.TunnelInterfaceColorRestrictVariable.IsNull() {
+	if !data.TunnelInterfaceRestrictVariable.IsNull() {
 		return false
 	}
 	if !data.TunnelInterfaceGroups.IsNull() {

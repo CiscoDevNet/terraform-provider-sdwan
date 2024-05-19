@@ -229,11 +229,11 @@ func (r *TransportWANVPNInterfaceT1E1SerialProfileParcelResource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tunnel_interface_color_restrict": schema.BoolAttribute{
+			"tunnel_interface_restrict": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Restrict this TLOC behavior").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"tunnel_interface_color_restrict_variable": schema.StringAttribute{
+			"tunnel_interface_restrict_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

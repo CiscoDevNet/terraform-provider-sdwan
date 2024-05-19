@@ -17,7 +17,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
   per_tunnel_qos_aggregator                      = false
   tunnel_qos_mode                                = "hub"
   tunnel_interface_color                         = "mpls"
-  tunnel_interface_color_restrict                = true
+  tunnel_interface_restrict                      = true
   tunnel_interface_groups                        = 42949672
   tunnel_interface_border                        = false
   tunnel_interface_max_control_connections       = 62

@@ -59,9 +59,10 @@ attributes:
     tf_name: tunnel_interface_color
     exclude_ignore: true
     data_path: [tunnel]
+    minimum_test_value: '"mpls"'
     example: mpls
   - model_name: restrict
-    tf_name: tunnel_interface_color_restrict
+    tf_name: tunnel_interface_restrict
     data_path: [tunnel]
     example: true
   - model_name: group
