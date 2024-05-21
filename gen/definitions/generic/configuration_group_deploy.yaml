@@ -5,6 +5,7 @@ no_data_source: true
 no_import: true
 remove_id: true
 minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
 doc_category: Configuration Group
 attributes:
   - tf_name: configuration_group_id
