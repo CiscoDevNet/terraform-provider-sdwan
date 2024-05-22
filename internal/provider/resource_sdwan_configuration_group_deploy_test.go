@@ -122,10 +122,10 @@ resource "sdwan_configuration_group" "test" {
   solution    = "sdwan"
   feature_profiles = [
     {
-      id = sdwan_system_feature_profile.test.id
+      id = sdwan_transport_feature_profile.test.id
     },
     {
-      id = sdwan_transport_feature_profile.test.id
+      id = sdwan_system_feature_profile.test.id
     }
   ]
 

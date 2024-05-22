@@ -39,7 +39,7 @@ resource "sdwan_configuration_group" "example" {
 
 ### Optional
 
-- `feature_profiles` (Attributes List) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
+- `feature_profiles` (Attributes Set) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
 - `topology_devices` (Attributes List) List of topology device types (see [below for nested schema](#nestedatt--topology_devices))
 - `topology_site_devices` (Number) Number of devices per site
   - Range: `1`-`20`
