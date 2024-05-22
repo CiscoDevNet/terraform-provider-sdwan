@@ -17,6 +17,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
 	"testing"
@@ -24,13 +25,16 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
 	if os.Getenv("SDWAN_209") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_209")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "8420F3EE"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "F57E6428"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.device_type", "vedge"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -44,6 +48,12 @@ func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanVEdgeInventoryConfig() string {
 	config := ""
 
@@ -53,3 +63,5 @@ func testAccDataSourceSdwanVEdgeInventoryConfig() string {
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig
