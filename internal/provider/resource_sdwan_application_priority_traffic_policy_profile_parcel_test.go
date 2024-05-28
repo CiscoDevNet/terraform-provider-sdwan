@@ -34,6 +34,7 @@ func TestAccSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_profile_parcel.test", "default_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_profile_parcel.test", "simple_flow", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_profile_parcel.test", "target_direction", "all"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_profile_parcel.test", "sequences.0.sequence_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_profile_parcel.test", "sequences.0.name", "RULE_1"))
@@ -114,6 +115,7 @@ func testAccSdwanApplicationPriorityTrafficPolicyProfileParcelConfig_minimum() s
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_application_priority_feature_profile.test.id` + "\n"
 	config += `	default_action = "accept"` + "\n"
+	config += `	simple_flow = false` + "\n"
 	config += `	vpn = ["1"]` + "\n"
 	config += `	target_direction = "all"` + "\n"
 	config += `}` + "\n"
@@ -129,6 +131,7 @@ func testAccSdwanApplicationPriorityTrafficPolicyProfileParcelConfig_all() strin
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_application_priority_feature_profile.test.id` + "\n"
 	config += `	default_action = "accept"` + "\n"
+	config += `	simple_flow = false` + "\n"
 	config += `	vpn = ["1"]` + "\n"
 	config += `	target_direction = "all"` + "\n"
 	config += `	sequences = [{` + "\n"

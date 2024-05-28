@@ -96,6 +96,10 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 					stringvalidator.OneOf("drop", "accept"),
 				},
 			},
+			"simple_flow": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				Required:            true,
+			},
 			"vpn": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				ElementType:         types.StringType,
@@ -229,6 +233,13 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.OneOf("core", "service", "access"),
 										},
 									},
+									"traffic_class": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Traffic Class").AddStringEnumDescription("gold-voip-telephony", "gold-broadcast-video", "gold-real-time-interactive", "gold-multimedia-conferencing", "gold-multimedia-streaming", "gold-network-control", "gold-signaling", "gold-ops-admin-mgmt", "gold-transactional-data", "gold-bulk-data", "silver", "bronze").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("gold-voip-telephony", "gold-broadcast-video", "gold-real-time-interactive", "gold-multimedia-conferencing", "gold-multimedia-streaming", "gold-network-control", "gold-signaling", "gold-ops-admin-mgmt", "gold-transactional-data", "gold-bulk-data", "silver", "bronze"),
+										},
+									},
 								},
 							},
 						},
@@ -277,6 +288,15 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													Optional:            true,
 												},
 												"fallback_to_best_path": schema.BoolAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("").String,
+													Optional:            true,
+												},
+												"preferred_remote_color": schema.SetAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("").String,
+													ElementType:         types.StringType,
+													Optional:            true,
+												},
+												"remote_color_restrict": schema.BoolAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,
 													Optional:            true,
 												},
@@ -336,6 +356,15 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 													Validators: []validator.String{
 														stringvalidator.OneOf("ipsec", "gre"),
 													},
+												},
+												"preferred_remote_color_id": schema.SetAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("").String,
+													ElementType:         types.StringType,
+													Optional:            true,
+												},
+												"preferred_remote_color_restrict": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("").String,
+													Optional:            true,
 												},
 												"tloc_ip": schema.StringAttribute{
 													MarkdownDescription: helpers.NewAttributeDescription("").String,

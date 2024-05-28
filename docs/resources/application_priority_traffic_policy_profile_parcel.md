@@ -20,6 +20,7 @@ resource "sdwan_application_priority_traffic_policy_profile_parcel" "example" {
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   default_action     = "accept"
+  simple_flow        = false
   vpn                = ["1"]
   target_direction   = "all"
   sequences = [
@@ -107,6 +108,7 @@ resource "sdwan_application_priority_traffic_policy_profile_parcel" "example" {
 - `default_action` (String) - Choices: `drop`, `accept`
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
+- `simple_flow` (Boolean)
 - `target_direction` (String) - Choices: `service`, `tunnel`, `all`
 - `vpn` (Set of String)
 
@@ -178,6 +180,8 @@ Optional:
 - `next_hop_ipv6` (String)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
+- `preferred_remote_color_id` (Set of String)
+- `preferred_remote_color_restrict` (String)
 - `service_chain_encapsulation` (String) - Choices: `ipsec`, `gre`
 - `service_chain_fallback_to_routing` (Boolean)
 - `service_chain_id` (String)
@@ -207,6 +211,8 @@ Optional:
 - `fallback_to_best_path` (Boolean)
 - `preferred_color` (Set of String)
 - `preferred_color_group_id` (String)
+- `preferred_remote_color` (Set of String)
+- `remote_color_restrict` (Boolean)
 - `sla_class_list_id` (String)
 - `strict_drop` (Boolean)
 
@@ -233,6 +239,8 @@ Optional:
 - `source_data_prefix_list_id` (String)
 - `tcp` (String) TCP States
   - Choices: `syn`
+- `traffic_class` (String) Traffic Class
+  - Choices: `gold-voip-telephony`, `gold-broadcast-video`, `gold-real-time-interactive`, `gold-multimedia-conferencing`, `gold-multimedia-streaming`, `gold-network-control`, `gold-signaling`, `gold-ops-admin-mgmt`, `gold-transactional-data`, `gold-bulk-data`, `silver`, `bronze`
 - `traffic_to` (String) Traffic to
   - Choices: `core`, `service`, `access`
 

@@ -3,6 +3,7 @@ resource "sdwan_application_priority_traffic_policy_profile_parcel" "example" {
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   default_action     = "accept"
+  simple_flow        = false
   vpn                = ["1"]
   target_direction   = "all"
   sequences = [

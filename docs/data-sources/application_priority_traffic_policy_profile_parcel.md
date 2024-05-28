@@ -33,6 +33,7 @@ data "sdwan_application_priority_traffic_policy_profile_parcel" "example" {
 - `description` (String) The description of the profile parcel
 - `name` (String) The name of the profile parcel
 - `sequences` (Attributes List) Traffic policy sequence list (see [below for nested schema](#nestedatt--sequences))
+- `simple_flow` (Boolean)
 - `target_direction` (String)
 - `version` (Number) The version of the profile parcel
 - `vpn` (Set of String)
@@ -92,6 +93,8 @@ Read-Only:
 - `next_hop_ipv6` (String)
 - `policer_id` (String)
 - `preferred_color_group_id` (String)
+- `preferred_remote_color_id` (Set of String)
+- `preferred_remote_color_restrict` (String)
 - `service_chain_encapsulation` (String)
 - `service_chain_fallback_to_routing` (Boolean)
 - `service_chain_id` (String)
@@ -121,6 +124,8 @@ Read-Only:
 - `fallback_to_best_path` (Boolean)
 - `preferred_color` (Set of String)
 - `preferred_color_group_id` (String)
+- `preferred_remote_color` (Set of String)
+- `remote_color_restrict` (Boolean)
 - `sla_class_list_id` (String)
 - `strict_drop` (Boolean)
 
@@ -143,4 +148,5 @@ Read-Only:
 - `source_data_ipv6_prefix_list_id` (String)
 - `source_data_prefix_list_id` (String)
 - `tcp` (String) TCP States
+- `traffic_class` (String) Traffic Class
 - `traffic_to` (String) Traffic to

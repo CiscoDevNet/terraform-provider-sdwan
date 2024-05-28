@@ -82,6 +82,10 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: "",
 				Computed:            true,
 			},
+			"simple_flow": schema.BoolAttribute{
+				MarkdownDescription: "",
+				Computed:            true,
+			},
 			"vpn": schema.SetAttribute{
 				MarkdownDescription: "",
 				ElementType:         types.StringType,
@@ -170,6 +174,10 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "Traffic to",
 										Computed:            true,
 									},
+									"traffic_class": schema.StringAttribute{
+										MarkdownDescription: "Traffic Class",
+										Computed:            true,
+									},
 								},
 							},
 						},
@@ -212,6 +220,15 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													MarkdownDescription: "",
 													Computed:            true,
 												},
+												"preferred_remote_color": schema.SetAttribute{
+													MarkdownDescription: "",
+													ElementType:         types.StringType,
+													Computed:            true,
+												},
+												"remote_color_restrict": schema.BoolAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
 											},
 										},
 									},
@@ -251,6 +268,15 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 													Computed:            true,
 												},
 												"local_tloc_list_encapsulation": schema.StringAttribute{
+													MarkdownDescription: "",
+													Computed:            true,
+												},
+												"preferred_remote_color_id": schema.SetAttribute{
+													MarkdownDescription: "",
+													ElementType:         types.StringType,
+													Computed:            true,
+												},
+												"preferred_remote_color_restrict": schema.StringAttribute{
 													MarkdownDescription: "",
 													Computed:            true,
 												},

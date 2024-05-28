@@ -39,6 +39,7 @@ type ApplicationPriorityTrafficPolicy struct {
 	Description      types.String                                `tfsdk:"description"`
 	FeatureProfileId types.String                                `tfsdk:"feature_profile_id"`
 	DefaultAction    types.String                                `tfsdk:"default_action"`
+	SimpleFlow       types.Bool                                  `tfsdk:"simple_flow"`
 	Vpn              types.Set                                   `tfsdk:"vpn"`
 	TargetDirection  types.String                                `tfsdk:"target_direction"`
 	Sequences        []ApplicationPriorityTrafficPolicySequences `tfsdk:"sequences"`
@@ -67,6 +68,7 @@ type ApplicationPriorityTrafficPolicySequencesMatches struct {
 	DestinationRegion               types.String `tfsdk:"destination_region"`
 	Tcp                             types.String `tfsdk:"tcp"`
 	TrafficTo                       types.String `tfsdk:"traffic_to"`
+	TrafficClass                    types.String `tfsdk:"traffic_class"`
 }
 type ApplicationPriorityTrafficPolicySequencesActions struct {
 	Counter                   types.String                                               `tfsdk:"counter"`
@@ -100,6 +102,8 @@ type ApplicationPriorityTrafficPolicySequencesActionsSlaClass struct {
 	PreferredColorGroupId types.String `tfsdk:"preferred_color_group_id"`
 	StrictDrop            types.Bool   `tfsdk:"strict_drop"`
 	FallbackToBestPath    types.Bool   `tfsdk:"fallback_to_best_path"`
+	PreferredRemoteColor  types.Set    `tfsdk:"preferred_remote_color"`
+	RemoteColorRestrict   types.Bool   `tfsdk:"remote_color_restrict"`
 }
 type ApplicationPriorityTrafficPolicySequencesActionsSets struct {
 	Dscp                          types.Int64  `tfsdk:"dscp"`
@@ -109,6 +113,8 @@ type ApplicationPriorityTrafficPolicySequencesActionsSets struct {
 	LocalTlocListColor            types.Set    `tfsdk:"local_tloc_list_color"`
 	LocalTlocRestrict             types.String `tfsdk:"local_tloc_restrict"`
 	LocalTlocListEncapsulation    types.String `tfsdk:"local_tloc_list_encapsulation"`
+	PreferredRemoteColorId        types.Set    `tfsdk:"preferred_remote_color_id"`
+	PreferredRemoteColorRestrict  types.String `tfsdk:"preferred_remote_color_restrict"`
 	TlocIp                        types.String `tfsdk:"tloc_ip"`
 	TlocColor                     types.Set    `tfsdk:"tloc_color"`
 	TlocEncapsulation             types.String `tfsdk:"tloc_encapsulation"`
@@ -157,6 +163,10 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 	if !data.DefaultAction.IsNull() {
 		body, _ = sjson.Set(body, path+"dataDefaultAction.optionType", "global")
 		body, _ = sjson.Set(body, path+"dataDefaultAction.value", data.DefaultAction.ValueString())
+	}
+	if !data.SimpleFlow.IsNull() {
+		body, _ = sjson.Set(body, path+"simpleFlow.optionType", "global")
+		body, _ = sjson.Set(body, path+"simpleFlow.value", data.SimpleFlow.ValueBool())
 	}
 	if !data.Vpn.IsNull() {
 		body, _ = sjson.Set(body, path+"target.vpn.optionType", "global")
@@ -244,6 +254,10 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 				itemChildBody, _ = sjson.Set(itemChildBody, "trafficTo.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "trafficTo.value", childItem.TrafficTo.ValueString())
 			}
+			if !childItem.TrafficClass.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "trafficClass.optionType", "global")
+				itemChildBody, _ = sjson.Set(itemChildBody, "trafficClass.value", childItem.TrafficClass.ValueString())
+			}
 			itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 		}
 		itemBody, _ = sjson.Set(itemBody, "actions", []interface{}{})
@@ -281,6 +295,16 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 				if !childChildItem.FallbackToBestPath.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "fallbackToBestPath.optionType", "global")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "fallbackToBestPath.value", childChildItem.FallbackToBestPath.ValueBool())
+				}
+				if !childChildItem.PreferredRemoteColor.IsNull() {
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.optionType", "global")
+					var values []string
+					childChildItem.PreferredRemoteColor.ElementsAs(ctx, &values, false)
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.value", values)
+				}
+				if !childChildItem.RemoteColorRestrict.IsNull() {
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "remoteColorRestrict.optionType", "global")
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "remoteColorRestrict.value", childChildItem.RemoteColorRestrict.ValueBool())
 				}
 				itemChildBody, _ = sjson.SetRaw(itemChildBody, "slaClass.-1", itemChildChildBody)
 			}
@@ -322,6 +346,16 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 				if !childChildItem.LocalTlocListEncapsulation.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.encap.optionType", "global")
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "localTlocList.encap.value", childChildItem.LocalTlocListEncapsulation.ValueString())
+				}
+				if !childChildItem.PreferredRemoteColorId.IsNull() {
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.color.optionType", "global")
+					var values []string
+					childChildItem.PreferredRemoteColorId.ElementsAs(ctx, &values, false)
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.color.value", values)
+				}
+				if !childChildItem.PreferredRemoteColorRestrict.IsNull() {
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.remoteColorRestrict.optionType", "global")
+					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "preferredRemoteColor.remoteColorRestrict.value", childChildItem.PreferredRemoteColorRestrict.ValueString())
 				}
 				if !childChildItem.TlocIp.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "tloc.ip.optionType", "global")
@@ -517,6 +551,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
+	data.SimpleFlow = types.BoolNull()
+
+	if t := res.Get(path + "simpleFlow.optionType"); t.Exists() {
+		va := res.Get(path + "simpleFlow.value")
+		if t.String() == "global" {
+			data.SimpleFlow = types.BoolValue(va.Bool())
+		}
+	}
 	data.Vpn = types.SetNull(types.StringType)
 
 	if t := res.Get(path + "target.vpn.optionType"); t.Exists() {
@@ -677,6 +719,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.TrafficTo = types.StringValue(va.String())
 						}
 					}
+					cItem.TrafficClass = types.StringNull()
+
+					if t := cv.Get("trafficClass.optionType"); t.Exists() {
+						va := cv.Get("trafficClass.value")
+						if t.String() == "global" {
+							cItem.TrafficClass = types.StringValue(va.String())
+						}
+					}
 					item.Matches = append(item.Matches, cItem)
 					return true
 				})
@@ -743,6 +793,22 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 								va := ccv.Get("fallbackToBestPath.value")
 								if t.String() == "global" {
 									ccItem.FallbackToBestPath = types.BoolValue(va.Bool())
+								}
+							}
+							ccItem.PreferredRemoteColor = types.SetNull(types.StringType)
+
+							if t := ccv.Get("preferredRemoteColor.optionType"); t.Exists() {
+								va := ccv.Get("preferredRemoteColor.value")
+								if t.String() == "global" {
+									ccItem.PreferredRemoteColor = helpers.GetStringSet(va.Array())
+								}
+							}
+							ccItem.RemoteColorRestrict = types.BoolNull()
+
+							if t := ccv.Get("remoteColorRestrict.optionType"); t.Exists() {
+								va := ccv.Get("remoteColorRestrict.value")
+								if t.String() == "global" {
+									ccItem.RemoteColorRestrict = types.BoolValue(va.Bool())
 								}
 							}
 							cItem.SlaClass = append(cItem.SlaClass, ccItem)
@@ -815,6 +881,22 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 								va := ccv.Get("localTlocList.encap.value")
 								if t.String() == "global" {
 									ccItem.LocalTlocListEncapsulation = types.StringValue(va.String())
+								}
+							}
+							ccItem.PreferredRemoteColorId = types.SetNull(types.StringType)
+
+							if t := ccv.Get("preferredRemoteColor.color.optionType"); t.Exists() {
+								va := ccv.Get("preferredRemoteColor.color.value")
+								if t.String() == "global" {
+									ccItem.PreferredRemoteColorId = helpers.GetStringSet(va.Array())
+								}
+							}
+							ccItem.PreferredRemoteColorRestrict = types.StringNull()
+
+							if t := ccv.Get("preferredRemoteColor.remoteColorRestrict.optionType"); t.Exists() {
+								va := ccv.Get("preferredRemoteColor.remoteColorRestrict.value")
+								if t.String() == "global" {
+									ccItem.PreferredRemoteColorRestrict = types.StringValue(va.String())
 								}
 							}
 							ccItem.TlocIp = types.StringNull()
@@ -1162,6 +1244,14 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 			data.DefaultAction = types.StringValue(va.String())
 		}
 	}
+	data.SimpleFlow = types.BoolNull()
+
+	if t := res.Get(path + "simpleFlow.optionType"); t.Exists() {
+		va := res.Get(path + "simpleFlow.value")
+		if t.String() == "global" {
+			data.SimpleFlow = types.BoolValue(va.Bool())
+		}
+	}
 	data.Vpn = types.SetNull(types.StringType)
 
 	if t := res.Get(path + "target.vpn.optionType"); t.Exists() {
@@ -1366,6 +1456,14 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					data.Sequences[i].Matches[ci].TrafficTo = types.StringValue(va.String())
 				}
 			}
+			data.Sequences[i].Matches[ci].TrafficClass = types.StringNull()
+
+			if t := cr.Get("trafficClass.optionType"); t.Exists() {
+				va := cr.Get("trafficClass.value")
+				if t.String() == "global" {
+					data.Sequences[i].Matches[ci].TrafficClass = types.StringValue(va.String())
+				}
+			}
 		}
 		for ci := range data.Sequences[i].Actions {
 			keys := [...]string{}
@@ -1475,6 +1573,22 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 						data.Sequences[i].Actions[ci].SlaClass[cci].FallbackToBestPath = types.BoolValue(va.Bool())
 					}
 				}
+				data.Sequences[i].Actions[ci].SlaClass[cci].PreferredRemoteColor = types.SetNull(types.StringType)
+
+				if t := ccr.Get("preferredRemoteColor.optionType"); t.Exists() {
+					va := ccr.Get("preferredRemoteColor.value")
+					if t.String() == "global" {
+						data.Sequences[i].Actions[ci].SlaClass[cci].PreferredRemoteColor = helpers.GetStringSet(va.Array())
+					}
+				}
+				data.Sequences[i].Actions[ci].SlaClass[cci].RemoteColorRestrict = types.BoolNull()
+
+				if t := ccr.Get("remoteColorRestrict.optionType"); t.Exists() {
+					va := ccr.Get("remoteColorRestrict.value")
+					if t.String() == "global" {
+						data.Sequences[i].Actions[ci].SlaClass[cci].RemoteColorRestrict = types.BoolValue(va.Bool())
+					}
+				}
 			}
 			data.Sequences[i].Actions[ci].BackupSlaPreferredColor = types.SetNull(types.StringType)
 
@@ -1564,6 +1678,22 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					va := ccr.Get("localTlocList.encap.value")
 					if t.String() == "global" {
 						data.Sequences[i].Actions[ci].Sets[cci].LocalTlocListEncapsulation = types.StringValue(va.String())
+					}
+				}
+				data.Sequences[i].Actions[ci].Sets[cci].PreferredRemoteColorId = types.SetNull(types.StringType)
+
+				if t := ccr.Get("preferredRemoteColor.color.optionType"); t.Exists() {
+					va := ccr.Get("preferredRemoteColor.color.value")
+					if t.String() == "global" {
+						data.Sequences[i].Actions[ci].Sets[cci].PreferredRemoteColorId = helpers.GetStringSet(va.Array())
+					}
+				}
+				data.Sequences[i].Actions[ci].Sets[cci].PreferredRemoteColorRestrict = types.StringNull()
+
+				if t := ccr.Get("preferredRemoteColor.remoteColorRestrict.optionType"); t.Exists() {
+					va := ccr.Get("preferredRemoteColor.remoteColorRestrict.value")
+					if t.String() == "global" {
+						data.Sequences[i].Actions[ci].Sets[cci].PreferredRemoteColorRestrict = types.StringValue(va.String())
 					}
 				}
 				data.Sequences[i].Actions[ci].Sets[cci].TlocIp = types.StringNull()
@@ -1891,6 +2021,9 @@ func (data *ApplicationPriorityTrafficPolicy) isNull(ctx context.Context, res gj
 		return false
 	}
 	if !data.DefaultAction.IsNull() {
+		return false
+	}
+	if !data.SimpleFlow.IsNull() {
 		return false
 	}
 	if !data.Vpn.IsNull() {

@@ -15,14 +15,11 @@ attributes:
     tf_name: default_action
     example: accept
     
-  # - model_name: simpleFlow
-    # tf_name: 
-    # data_path: 
-    # example: 
+  - model_name: simpleFlow
+    example: false
   # - model_name: hasCorViaSig
     # tf_name: 
-    # data_path: 
-    # example: 
+    # example: false
 
   - model_name: vpn
     data_path: [target]
@@ -52,7 +49,6 @@ attributes:
         data_path: [appList]
         exclude_test: true
         example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-
       - model_name: refId
         tf_name: dns_application_list_id
         data_path: [dnsAppList]
@@ -67,7 +63,6 @@ attributes:
         example: 123
       - model_name: protocol
         example: 2
-
       - model_name: refId
         tf_name: source_data_prefix_list_id
         data_path: [sourceDataPrefixList]
@@ -102,35 +97,30 @@ attributes:
       # - model_name: refId
       #   tf_name: saas_application_list_id
       #   data_path: [saasAppList]
+      #   exclude_test: true
       #   example: exchange
 
       - model_name: tcp 
         example: gre
-
       - model_name: trafficTo 
         example: core
+      - model_name: trafficClass
+        exclude_test: true
+        example: silver
 
-      # - model_name: trafficClass
-        # tf_name: 
-        # data_path: 
-        # example: 
       # - model_name: icmpMessage
         # tf_name: 
-        # data_path: 
-        # example: 
+        # example: administratively-prohibited
       # - model_name: icmp6Message
         # tf_name: 
-        # data_path: 
-        # example: 
+        # example: beyond-scope
 
       # - model_name: serviceArea
         # tf_name: 
-        # data_path: 
-        # example: 
+        # example: common
       # - model_name: trafficCategory
         # tf_name: 
-        # data_path: 
-        # example: 
+        # example: optimize-allow
 
       # - model_name: sourceIp
         # tf_name: 
@@ -157,7 +147,6 @@ attributes:
         example: COUNTER_1
       - model_name: log
         example: false
-
       - model_name: slaClass
         attributes: 
         - model_name: refId
@@ -177,14 +166,14 @@ attributes:
           example: true
         - model_name: fallbackToBestPath
           example: false
-      #   - model_name: preferredRemoteColor
-      #     # example: 
-      #   - model_name: remoteColorRestrict
-      #     # example: true
-
+        - model_name: preferredRemoteColor
+          exclude_test: true
+          example: 3g
+        - model_name: remoteColorRestrict
+          exclude_test: true
+          example: true
       - model_name: backupSlaPreferredColor
         example: default
-
       - model_name: set
         tf_name: sets
         attributes: 
@@ -205,7 +194,6 @@ attributes:
           data_path: [forwardingClass]
           exclude_test: true
           example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-
         - model_name: color
           tf_name: local_tloc_list_color
           data_path: [localTlocList]
@@ -218,18 +206,16 @@ attributes:
           tf_name: local_tloc_list_encapsulation
           data_path: [localTlocList]
           example: gre
-
-        # - model_name: color
-        #   tf_name: preferred_remote_color_id
-        #   data_path: [preferredRemoteColor]
-        #   exclude_test: true
-        #   example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-        # - model_name: remoteColorRestrict
-        #   tf_name: preferred_remote_color_restrict
-        #   data_path: [preferredRemoteColor]
-        #   exclude_test: true
-        #   example: false
-
+        - model_name: color
+          tf_name: preferred_remote_color_id
+          data_path: [preferredRemoteColor]
+          exclude_test: true
+          example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
+        - model_name: remoteColorRestrict
+          tf_name: preferred_remote_color_restrict
+          data_path: [preferredRemoteColor]
+          exclude_test: true
+          example: false
         - model_name: ip
           tf_name: tloc_ip
           data_path: [tloc]
@@ -247,7 +233,6 @@ attributes:
           data_path: [tlocList]
           exclude_test: true
           example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-
         - model_name: type
           tf_name: service_type
           data_path: [service]
@@ -273,7 +258,6 @@ attributes:
           data_path: [service, tlocList]
           exclude_test: true
           example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-
         # ==== 20.14 ====
         - model_name: type
           tf_name: service_chain_type
@@ -308,15 +292,12 @@ attributes:
           data_path: [serviceChain, tlocList]
           exclude_test: true
           example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
-
         - model_name: nextHop
           example: 1.2.3.4
         - model_name: nextHopIpv6
           example: 2001:0:0:1::/64
-
         - model_name: vpn
           example: 1
-
       - model_name: field
         tf_name: redirect_dns_field
         data_path: [redirectDns]
@@ -325,7 +306,6 @@ attributes:
         tf_name: redirect_dns_value
         data_path: [redirectDns]
         example: umbrella
-
       # ==== 20.14 ====
       - model_name: tcpOptimization
         data_path: [appqoeOptimization]
@@ -336,7 +316,6 @@ attributes:
       - model_name: serviceNodeGroup
         data_path: [appqoeOptimization]
         example: SNG-APPQOE1
-
       # ==== 20.14 ====
       - model_name: lossCorrectionType
         data_path: [lossCorrection]
@@ -348,15 +327,13 @@ attributes:
 
       # - model_name: cloudSaas
       #   # tf_name: 
-      #   # data_path: 
-      #   # example: 
+      #   # example: false
       # - model_name: cloudProbe
       #   # tf_name: 
-      #   # data_path: 
-      #   # example: 
+      #   # example: false
+
       - model_name: cflowd
         example: true
-
       - model_name: natPool
         example: 2
       - model_name: useVpn
@@ -367,7 +344,6 @@ attributes:
         tf_name: nat_fallback
         data_path: [nat]
         example: false
-
       # ==== 20.14 ====
       - model_name: bypass
         tf_name: nat_bypass
@@ -381,13 +357,11 @@ attributes:
         tf_name: nat_dia_interface
         data_path: [nat]
         example: ethernet
-
       - model_name: sig
         tf_name: secure_internet_gateway
         example: true
       - model_name: fallbackToRouting
         example: true
-
         # ==== 20.14 ====
       - model_name: secureServiceEdge
         data_path: [sse]
