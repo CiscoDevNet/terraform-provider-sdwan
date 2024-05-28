@@ -236,6 +236,10 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "Loss correction FEC",
 										Computed:            true,
 									},
+									"loss_correction_packet_duplication": schema.StringAttribute{
+										MarkdownDescription: "Loss correction packet duplication",
+										Computed:            true,
+									},
 									"loss_correction_fec_threshold": schema.Int64Attribute{
 										MarkdownDescription: "Loss correction FEC threshold",
 										Computed:            true,
