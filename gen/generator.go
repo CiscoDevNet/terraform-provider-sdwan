@@ -726,7 +726,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		}
 
 		if t.Exists() {
-			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" || t.Get("oneOf.0.properties.optionType.type").String() == "string" {
+			if t.Get("properties.value.type").String() == "string" || t.Get("properties.value.anyOf.0.type").String() == "string" || t.Get("properties.value.oneOf.0.type").String() == "string" {
 				attr.Type = "String"
 				if value := t.Get("properties.value.minLength"); value.Exists() {
 					attr.StringMinLength = value.Int()
@@ -752,7 +752,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				if value := t.Get("properties.value.maximum"); value.Exists() {
 					attr.MaxInt = value.Int()
 				}
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
+			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {

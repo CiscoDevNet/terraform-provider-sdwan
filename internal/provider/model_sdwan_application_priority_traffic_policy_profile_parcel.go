@@ -63,8 +63,10 @@ type ApplicationPriorityTrafficPolicySequencesMatches struct {
 	Protocol                        types.Set    `tfsdk:"protocol"`
 	SourceDataPrefixListId          types.String `tfsdk:"source_data_prefix_list_id"`
 	SourceDataIpv6PrefixListId      types.String `tfsdk:"source_data_ipv6_prefix_list_id"`
+	SourcePort                      types.Set    `tfsdk:"source_port"`
 	DestinationDataPrefixListId     types.String `tfsdk:"destination_data_prefix_list_id"`
 	DestinationDataIpv6PrefixListId types.String `tfsdk:"destination_data_ipv6_prefix_list_id"`
+	DestinationPort                 types.Set    `tfsdk:"destination_port"`
 	DestinationRegion               types.String `tfsdk:"destination_region"`
 	Tcp                             types.String `tfsdk:"tcp"`
 	TrafficTo                       types.String `tfsdk:"traffic_to"`
@@ -234,6 +236,12 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 				itemChildBody, _ = sjson.Set(itemChildBody, "sourceDataIpv6PrefixList.refId.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "sourceDataIpv6PrefixList.refId.value", childItem.SourceDataIpv6PrefixListId.ValueString())
 			}
+			if !childItem.SourcePort.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "sourcePort.optionType", "global")
+				var values []string
+				childItem.SourcePort.ElementsAs(ctx, &values, false)
+				itemChildBody, _ = sjson.Set(itemChildBody, "sourcePort.value", values)
+			}
 			if !childItem.DestinationDataPrefixListId.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataPrefixList.refId.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataPrefixList.refId.value", childItem.DestinationDataPrefixListId.ValueString())
@@ -241,6 +249,12 @@ func (data ApplicationPriorityTrafficPolicy) toBody(ctx context.Context) string 
 			if !childItem.DestinationDataIpv6PrefixListId.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataIpv6PrefixList.refId.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "destinationDataIpv6PrefixList.refId.value", childItem.DestinationDataIpv6PrefixListId.ValueString())
+			}
+			if !childItem.DestinationPort.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "destinationPort.optionType", "global")
+				var values []string
+				childItem.DestinationPort.ElementsAs(ctx, &values, false)
+				itemChildBody, _ = sjson.Set(itemChildBody, "destinationPort.value", values)
 			}
 			if !childItem.DestinationRegion.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "destinationRegion.optionType", "global")
@@ -679,6 +693,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 							cItem.SourceDataIpv6PrefixListId = types.StringValue(va.String())
 						}
 					}
+					cItem.SourcePort = types.SetNull(types.StringType)
+
+					if t := cv.Get("sourcePort.optionType"); t.Exists() {
+						va := cv.Get("sourcePort.value")
+						if t.String() == "global" {
+							cItem.SourcePort = helpers.GetStringSet(va.Array())
+						}
+					}
 					cItem.DestinationDataPrefixListId = types.StringNull()
 
 					if t := cv.Get("destinationDataPrefixList.refId.optionType"); t.Exists() {
@@ -693,6 +715,14 @@ func (data *ApplicationPriorityTrafficPolicy) fromBody(ctx context.Context, res 
 						va := cv.Get("destinationDataIpv6PrefixList.refId.value")
 						if t.String() == "global" {
 							cItem.DestinationDataIpv6PrefixListId = types.StringValue(va.String())
+						}
+					}
+					cItem.DestinationPort = types.SetNull(types.StringType)
+
+					if t := cv.Get("destinationPort.optionType"); t.Exists() {
+						va := cv.Get("destinationPort.value")
+						if t.String() == "global" {
+							cItem.DestinationPort = helpers.GetStringSet(va.Array())
 						}
 					}
 					cItem.DestinationRegion = types.StringNull()
@@ -1416,6 +1446,14 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 					data.Sequences[i].Matches[ci].SourceDataIpv6PrefixListId = types.StringValue(va.String())
 				}
 			}
+			data.Sequences[i].Matches[ci].SourcePort = types.SetNull(types.StringType)
+
+			if t := cr.Get("sourcePort.optionType"); t.Exists() {
+				va := cr.Get("sourcePort.value")
+				if t.String() == "global" {
+					data.Sequences[i].Matches[ci].SourcePort = helpers.GetStringSet(va.Array())
+				}
+			}
 			data.Sequences[i].Matches[ci].DestinationDataPrefixListId = types.StringNull()
 
 			if t := cr.Get("destinationDataPrefixList.refId.optionType"); t.Exists() {
@@ -1430,6 +1468,14 @@ func (data *ApplicationPriorityTrafficPolicy) updateFromBody(ctx context.Context
 				va := cr.Get("destinationDataIpv6PrefixList.refId.value")
 				if t.String() == "global" {
 					data.Sequences[i].Matches[ci].DestinationDataIpv6PrefixListId = types.StringValue(va.String())
+				}
+			}
+			data.Sequences[i].Matches[ci].DestinationPort = types.SetNull(types.StringType)
+
+			if t := cr.Get("destinationPort.optionType"); t.Exists() {
+				va := cr.Get("destinationPort.value")
+				if t.String() == "global" {
+					data.Sequences[i].Matches[ci].DestinationPort = helpers.GetStringSet(va.Array())
 				}
 			}
 			data.Sequences[i].Matches[ci].DestinationRegion = types.StringNull()

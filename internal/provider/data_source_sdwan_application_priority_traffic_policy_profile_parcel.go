@@ -154,12 +154,22 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "",
 										Computed:            true,
 									},
+									"source_port": schema.SetAttribute{
+										MarkdownDescription: "Source Port (0-65535) range or individual number separated by space",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"destination_data_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
 									"destination_data_ipv6_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"destination_port": schema.SetAttribute{
+										MarkdownDescription: "Destination Port (0-65535) range or individual number separated by space",
+										ElementType:         types.StringType,
 										Computed:            true,
 									},
 									"destination_region": schema.StringAttribute{

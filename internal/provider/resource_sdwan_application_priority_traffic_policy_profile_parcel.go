@@ -198,6 +198,11 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
+									"source_port": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source Port (0-65535) range or individual number separated by space").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
 									"destination_data_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
@@ -211,6 +216,11 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
+									},
+									"destination_port": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Port (0-65535) range or individual number separated by space").String,
+										ElementType:         types.StringType,
+										Optional:            true,
 									},
 									"destination_region": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Region").AddStringEnumDescription("primary-region", "secondary-region", "other-region").String,

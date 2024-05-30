@@ -139,6 +139,7 @@ Read-Only:
 - `application_list_id` (String)
 - `destination_data_ipv6_prefix_list_id` (String)
 - `destination_data_prefix_list_id` (String)
+- `destination_port` (Set of String) Destination Port (0-65535) range or individual number separated by space
 - `destination_region` (String) Destination Region
 - `dns` (String) Dns
 - `dns_application_list_id` (String)
@@ -147,6 +148,7 @@ Read-Only:
 - `protocol` (Set of String) protocol (0-255) range or individual number separated by space
 - `source_data_ipv6_prefix_list_id` (String)
 - `source_data_prefix_list_id` (String)
+- `source_port` (Set of String) Source Port (0-65535) range or individual number separated by space
 - `tcp` (String) TCP States
 - `traffic_class` (String) Traffic Class
 - `traffic_to` (String) Traffic to
