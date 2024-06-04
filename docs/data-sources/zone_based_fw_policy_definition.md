@@ -72,3 +72,4 @@ Read-Only:
 - `policy_id` (String) policy id for selected match entry
 - `type` (String) Type of match entry
 - `value` (String) value for selected match entry
+- `value_variable` (String) variable value for selected match entry if it has variable option (sourceIp & destinationIp)

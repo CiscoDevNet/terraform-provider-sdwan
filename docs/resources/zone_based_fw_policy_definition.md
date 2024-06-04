@@ -101,6 +101,7 @@ Optional:
 
 - `policy_id` (String) policy id for selected match entry
 - `value` (String) value for selected match entry
+- `value_variable` (String) variable value for selected match entry if it has variable option (sourceIp & destinationIp)
 
 
 <a id="nestedatt--rules--action_entries"></a>

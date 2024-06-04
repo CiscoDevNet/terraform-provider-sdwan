@@ -158,6 +158,10 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Schema(ctx context.Context, req re
 										MarkdownDescription: helpers.NewAttributeDescription("value for selected match entry").String,
 										Optional:            true,
 									},
+									"value_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("variable value for selected match entry if it has variable option (sourceIp & destinationIp)").String,
+										Optional:            true,
+									},
 								},
 							},
 							Validators: []validator.List{

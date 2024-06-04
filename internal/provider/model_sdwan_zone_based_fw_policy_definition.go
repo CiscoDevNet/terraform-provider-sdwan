@@ -54,9 +54,10 @@ type ZoneBasedFWPolicyDefinitionRules struct {
 }
 
 type ZoneBasedFWPolicyDefinitionRulesMatchEntries struct {
-	Type     types.String `tfsdk:"type"`
-	PolicyId types.String `tfsdk:"policy_id"`
-	Value    types.String `tfsdk:"value"`
+	Type          types.String `tfsdk:"type"`
+	PolicyId      types.String `tfsdk:"policy_id"`
+	Value         types.String `tfsdk:"value"`
+	ValueVariable types.String `tfsdk:"value_variable"`
 }
 type ZoneBasedFWPolicyDefinitionRulesActionEntries struct {
 	Type      types.String `tfsdk:"type"`
@@ -131,6 +132,9 @@ func (data ZoneBasedFWPolicyDefinition) toBody(ctx context.Context) string {
 					}
 					if !childItem.Value.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Value.ValueString())
+					}
+					if !childItem.ValueVariable.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.ValueVariable.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "definition.match.entries.-1", itemChildBody)
 				}
@@ -238,6 +242,11 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 					} else {
 						cItem.Value = types.StringNull()
 					}
+					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() {
+						cItem.ValueVariable = types.StringValue(ccValue.String())
+					} else {
+						cItem.ValueVariable = types.StringNull()
+					}
 					item.MatchEntries = append(item.MatchEntries, cItem)
 					return true
 				})
@@ -331,6 +340,9 @@ func (data *ZoneBasedFWPolicyDefinition) hasChanges(ctx context.Context, state *
 						hasChanges = true
 					}
 					if !data.Rules[i].MatchEntries[ii].Value.Equal(state.Rules[i].MatchEntries[ii].Value) {
+						hasChanges = true
+					}
+					if !data.Rules[i].MatchEntries[ii].ValueVariable.Equal(state.Rules[i].MatchEntries[ii].ValueVariable) {
 						hasChanges = true
 					}
 				}
