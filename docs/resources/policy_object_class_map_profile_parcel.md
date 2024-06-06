@@ -18,7 +18,7 @@ This resource can manage a Policy Object Class Map profile parcel.
 resource "sdwan_policy_object_class_map_profile_parcel" "example" {
   name               = "Example"
   description        = "My Example"
-  feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"
+  feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   entries = [
     {
       queue = "0"
@@ -32,13 +32,13 @@ resource "sdwan_policy_object_class_map_profile_parcel" "example" {
 
 ### Required
 
+- `entries` (Attributes List) class map List (see [below for nested schema](#nestedatt--entries))
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
 
 ### Optional
 
 - `description` (String) The description of the profile parcel
-- `entries` (Attributes List) class map List (see [below for nested schema](#nestedatt--entries))
 
 ### Read-Only
 

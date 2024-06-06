@@ -56,7 +56,7 @@ func testAccDataSourceSdwanPolicyObjectColorProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_color_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = e4d9392a-7765-4a64-b719-a4bcaf534f25` + "\n"
+	config += `	feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  color = "blue"` + "\n"
 	config += `	}]` + "\n"
@@ -65,7 +65,7 @@ func testAccDataSourceSdwanPolicyObjectColorProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_color_profile_parcel" "test" {
 			id = sdwan_policy_object_color_profile_parcel.test.id
-			feature_profile_id = e4d9392a-7765-4a64-b719-a4bcaf534f25
+			feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"
 		}
 	`
 	return config

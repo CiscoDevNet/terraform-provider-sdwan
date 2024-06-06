@@ -60,6 +60,9 @@ func testAccSdwanPolicyObjectClassMapProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"` + "\n"
+	config += `	entries = [{` + "\n"
+	config += `	  queue = 0` + "\n"
+	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config
 }

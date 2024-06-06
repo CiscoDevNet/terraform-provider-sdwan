@@ -89,7 +89,7 @@ func (r *PolicyObjectClassMapProfileParcelResource) Schema(ctx context.Context, 
 			},
 			"entries": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("class map List").String,
-				Optional:            true,
+				Required:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"queue": schema.StringAttribute{

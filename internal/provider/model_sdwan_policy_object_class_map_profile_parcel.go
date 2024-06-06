@@ -119,9 +119,9 @@ func (data *PolicyObjectClassMap) updateFromBody(ctx context.Context, res gjson.
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{}
-		keyValues := [...]string{}
-		keyValuesVariables := [...]string{}
+		keys := [...]string{"queue"}
+		keyValues := [...]string{data.Entries[i].Queue.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(
