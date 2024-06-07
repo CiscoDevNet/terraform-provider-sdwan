@@ -40,10 +40,10 @@ func TestAccSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPolicyObjectMirrorProfileParcelConfig_minimum(),
+				Config: testAccSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectMirrorProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanPolicyObjectMirrorProfileParcelConfig_all(),
+				Config: testAccSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectMirrorProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -53,6 +53,13 @@ func TestAccSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+const testAccSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig = `
+resource "sdwan_policy_object_feature_profile" "test" {
+  name        = "TF_TEST"
+  description = "Terraform test"
+}
+`
+
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
@@ -60,7 +67,7 @@ func testAccSdwanPolicyObjectMirrorProfileParcelConfig_minimum() string {
 	config := `resource "sdwan_policy_object_mirror_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
 	config += `	  source_ip = "10.0.0.2"` + "\n"
@@ -76,7 +83,7 @@ func testAccSdwanPolicyObjectMirrorProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_mirror_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
 	config += `	  source_ip = "10.0.0.2"` + "\n"

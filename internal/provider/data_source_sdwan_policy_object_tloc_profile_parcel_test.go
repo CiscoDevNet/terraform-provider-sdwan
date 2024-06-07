@@ -42,7 +42,7 @@ func TestAccDataSourceSdwanPolicyObjectTLOCProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanPolicyObjectTLOCProfileParcelConfig(),
+				Config: testAccDataSourceSdwanPolicyObjectTLOCPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectTLOCProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -52,6 +52,13 @@ func TestAccDataSourceSdwanPolicyObjectTLOCProfileParcel(t *testing.T) {
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+const testAccDataSourceSdwanPolicyObjectTLOCPrerequisitesProfileParcelConfig = `
+resource "sdwan_policy_object_feature_profile" "test" {
+  name        = "TF_TEST"
+  description = "Terraform test"
+}
+`
+
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
@@ -59,7 +66,7 @@ func testAccDataSourceSdwanPolicyObjectTLOCProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_tloc_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  tloc = "10.0.0.0"` + "\n"
 	config += `	  color = "3g"` + "\n"
@@ -71,7 +78,7 @@ func testAccDataSourceSdwanPolicyObjectTLOCProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_tloc_profile_parcel" "test" {
 			id = sdwan_policy_object_tloc_profile_parcel.test.id
-			feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
 		}
 	`
 	return config

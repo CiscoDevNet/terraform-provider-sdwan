@@ -10,8 +10,7 @@ attributes:
     mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: '"e4d9392a-7765-4a64-b719-a4bcaf534f25"'
-    # test_value: sdwan_policy_object_feature_profile.test.id
+    test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
     attributes:
@@ -21,8 +20,8 @@ attributes:
       example: blue
       minimum_test_value: '"blue"'
 
-# test_prerequisites: |
-#   resource "sdwan_policy_object_feature_profile" "test" {
-#     name        = "TF_TEST"
-#     description = "Terraform test"
-#   }
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
