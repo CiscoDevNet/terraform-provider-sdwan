@@ -38,10 +38,10 @@ func TestAccSdwanPolicyObjectExpandedCommunityProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_minimum(),
+				Config: testAccSdwanPolicyObjectExpandedCommunityPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_all(),
+				Config: testAccSdwanPolicyObjectExpandedCommunityPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -51,6 +51,13 @@ func TestAccSdwanPolicyObjectExpandedCommunityProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+const testAccSdwanPolicyObjectExpandedCommunityPrerequisitesProfileParcelConfig = `
+resource "sdwan_policy_object_feature_profile" "test" {
+  name        = "TF_TEST"
+  description = "Terraform test"
+}
+`
+
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
@@ -58,7 +65,7 @@ func testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_minimum() stri
 	config := `resource "sdwan_policy_object_expanded_community_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	expanded_community_lists = ["abcd"]` + "\n"
 	config += `}` + "\n"
 	return config
@@ -71,7 +78,7 @@ func testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_expanded_community_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "e4d9392a-7765-4a64-b719-a4bcaf534f25"` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	expanded_community_lists = ["abcd"]` + "\n"
 	config += `}` + "\n"
 	return config
