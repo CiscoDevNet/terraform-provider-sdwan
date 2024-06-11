@@ -107,6 +107,8 @@ attributes:
         example: 2000
       - model_name: threshold
         data_path: [maxPrefixConfig]
+        default_value: 75
+        default_value_present: true
         example: 75
       - model_name: policyType
         data_path: [maxPrefixConfig]
@@ -181,6 +183,8 @@ attributes:
         example: 2000
       - model_name: threshold
         data_path: [maxPrefixConfig]
+        default_value: 75
+        default_value_present: true
         example: 75
       - model_name: policyType
         data_path: [maxPrefixConfig]

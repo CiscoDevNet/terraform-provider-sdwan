@@ -26,6 +26,7 @@ import (
 	"sync"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -122,22 +123,22 @@ func (r *SystemBasicProfileParcelResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"gps_longitude": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the device physical longitude").AddIntegerRangeDescription(-180, 180).String,
+			"gps_longitude": schema.Float64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the device physical longitude").AddFloatRangeDescription(-180, 180).String,
 				Optional:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(-180, 180),
+				Validators: []validator.Float64{
+					float64validator.Between(-180, 180),
 				},
 			},
 			"gps_longitude_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"gps_latitude": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set the device physical latitude").AddIntegerRangeDescription(-90, 90).String,
+			"gps_latitude": schema.Float64Attribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the device physical latitude").AddFloatRangeDescription(-90, 90).String,
 				Optional:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(-90, 90),
+				Validators: []validator.Float64{
+					float64validator.Between(-90, 90),
 				},
 			},
 			"gps_latitude_variable": schema.StringAttribute{
