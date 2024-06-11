@@ -255,10 +255,10 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("cflowd", "count", "dreOptimization", "fallbackToRouting", "log", "lossProtect", "lossProtectFec", "nat", "redirectDns", "serviceNodeGroup", "set", "sig", "tcpOptimization").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of action entry").AddStringEnumDescription("cflowd", "count", "dreOptimization", "fallbackToRouting", "log", "lossProtect", "lossProtectPktDup", "lossProtectFec", "nat", "redirectDns", "serviceNodeGroup", "set", "sig", "tcpOptimization").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("cflowd", "count", "dreOptimization", "fallbackToRouting", "log", "lossProtect", "lossProtectFec", "nat", "redirectDns", "serviceNodeGroup", "set", "sig", "tcpOptimization"),
+											stringvalidator.OneOf("cflowd", "count", "dreOptimization", "fallbackToRouting", "log", "lossProtect", "lossProtectPktDup", "lossProtectFec", "nat", "redirectDns", "serviceNodeGroup", "set", "sig", "tcpOptimization"),
 										},
 									},
 									"cflowd": schema.BoolAttribute{
@@ -290,6 +290,13 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 									},
 									"loss_correction_fec": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Loss correction FEC").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("fecAdaptive", "fecAlways", "packetDuplication"),
+										},
+									},
+									"loss_correction_packet_duplication": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Loss correction packet duplication").AddStringEnumDescription("fecAdaptive", "fecAlways", "packetDuplication").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("fecAdaptive", "fecAlways", "packetDuplication"),
