@@ -44,6 +44,8 @@ func TestAccDataSourceSdwanCflowdPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.transport", "transport_tcp"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.source_interface", "Ethernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.export_spreading", "enable"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.bfd_metrics_exporting", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_cflowd_policy_definition.test", "collectors.0.exporting_interval", "86400"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -81,6 +83,8 @@ func testAccDataSourceSdwanCflowdPolicyDefinitionConfig() string {
 	config += `	  transport = "transport_tcp"` + "\n"
 	config += `	  source_interface = "Ethernet1"` + "\n"
 	config += `	  export_spreading = "enable"` + "\n"
+	config += `	  bfd_metrics_exporting = true` + "\n"
+	config += `	  exporting_interval = 86400` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

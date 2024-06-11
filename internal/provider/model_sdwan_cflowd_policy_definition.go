@@ -47,12 +47,14 @@ type CflowdPolicyDefinition struct {
 }
 
 type CflowdPolicyDefinitionCollectors struct {
-	VpnId           types.Int64  `tfsdk:"vpn_id"`
-	IpAddress       types.String `tfsdk:"ip_address"`
-	Port            types.Int64  `tfsdk:"port"`
-	Transport       types.String `tfsdk:"transport"`
-	SourceInterface types.String `tfsdk:"source_interface"`
-	ExportSpreading types.String `tfsdk:"export_spreading"`
+	VpnId               types.Int64  `tfsdk:"vpn_id"`
+	IpAddress           types.String `tfsdk:"ip_address"`
+	Port                types.Int64  `tfsdk:"port"`
+	Transport           types.String `tfsdk:"transport"`
+	SourceInterface     types.String `tfsdk:"source_interface"`
+	ExportSpreading     types.String `tfsdk:"export_spreading"`
+	BfdMetricsExporting types.Bool   `tfsdk:"bfd_metrics_exporting"`
+	ExportingInterval   types.Int64  `tfsdk:"exporting_interval"`
 }
 
 // End of section. //template:end types
@@ -126,6 +128,16 @@ func (data CflowdPolicyDefinition) toBody(ctx context.Context) string {
 			}
 			if !item.ExportSpreading.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "exportSpread", item.ExportSpreading.ValueString())
+			}
+			if !item.BfdMetricsExporting.IsNull() {
+				if false && item.BfdMetricsExporting.ValueBool() {
+					itemBody, _ = sjson.Set(itemBody, "bfd-metrics-export", "")
+				} else {
+					itemBody, _ = sjson.Set(itemBody, "bfd-metrics-export", item.BfdMetricsExporting.ValueBool())
+				}
+			}
+			if !item.ExportingInterval.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "export-interval", item.ExportingInterval.ValueInt64())
 			}
 			body, _ = sjson.SetRaw(body, "definition.collectors.-1", itemBody)
 		}
@@ -224,6 +236,20 @@ func (data *CflowdPolicyDefinition) fromBody(ctx context.Context, res gjson.Resu
 			} else {
 				item.ExportSpreading = types.StringNull()
 			}
+			if cValue := v.Get("bfd-metrics-export"); cValue.Exists() {
+				if false && cValue.String() == "" {
+					item.BfdMetricsExporting = types.BoolValue(true)
+				} else {
+					item.BfdMetricsExporting = types.BoolValue(cValue.Bool())
+				}
+			} else {
+				item.BfdMetricsExporting = types.BoolNull()
+			}
+			if cValue := v.Get("export-interval"); cValue.Exists() {
+				item.ExportingInterval = types.Int64Value(cValue.Int())
+			} else {
+				item.ExportingInterval = types.Int64Null()
+			}
 			data.Collectors = append(data.Collectors, item)
 			return true
 		})
@@ -286,6 +312,12 @@ func (data *CflowdPolicyDefinition) hasChanges(ctx context.Context, state *Cflow
 				hasChanges = true
 			}
 			if !data.Collectors[i].ExportSpreading.Equal(state.Collectors[i].ExportSpreading) {
+				hasChanges = true
+			}
+			if !data.Collectors[i].BfdMetricsExporting.Equal(state.Collectors[i].BfdMetricsExporting) {
+				hasChanges = true
+			}
+			if !data.Collectors[i].ExportingInterval.Equal(state.Collectors[i].ExportingInterval) {
 				hasChanges = true
 			}
 		}

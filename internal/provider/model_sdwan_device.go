@@ -17,6 +17,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 
@@ -25,6 +26,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type Device struct {
 	Id           types.String    `tfsdk:"id"`
 	SerialNumber types.String    `tfsdk:"serial_number"`
@@ -43,10 +47,16 @@ type DeviceDevices struct {
 	State        types.String `tfsdk:"state"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data Device) getPath() string {
 	return "/device"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data Device) toBody(ctx context.Context) string {
 	body := ""
 	if !data.SerialNumber.IsNull() {
@@ -89,6 +99,9 @@ func (data Device) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("board-serial"); value.Exists() {
 		data.SerialNumber = types.StringValue(value.String())
@@ -154,6 +167,9 @@ func (data *Device) fromBody(ctx context.Context, res gjson.Result) {
 	}
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *Device) hasChanges(ctx context.Context, state *Device) bool {
 	hasChanges := false
 	if !data.SerialNumber.Equal(state.SerialNumber) {
@@ -194,3 +210,9 @@ func (data *Device) hasChanges(ctx context.Context, state *Device) bool {
 	}
 	return hasChanges
 }
+
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+// End of section. //template:end updateVersions

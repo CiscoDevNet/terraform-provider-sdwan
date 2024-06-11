@@ -124,6 +124,8 @@ func (r *ConfigurationGroupDeployResource) Create(ctx context.Context, req resou
 		return
 	}
 
+	plan.Id = plan.ConfigurationGroupId
+
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.ConfigurationGroupId.ValueString()))
 
 	diags = resp.State.Set(ctx, &plan)

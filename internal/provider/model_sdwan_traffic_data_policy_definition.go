@@ -74,25 +74,26 @@ type TrafficDataPolicyDefinitionSequencesMatchEntries struct {
 	TrafficTo                        types.String `tfsdk:"traffic_to"`
 }
 type TrafficDataPolicyDefinitionSequencesActionEntries struct {
-	Type                       types.String                                                     `tfsdk:"type"`
-	Cflowd                     types.Bool                                                       `tfsdk:"cflowd"`
-	Counter                    types.String                                                     `tfsdk:"counter"`
-	DreOptimization            types.Bool                                                       `tfsdk:"dre_optimization"`
-	FallbackToRouting          types.Bool                                                       `tfsdk:"fallback_to_routing"`
-	Log                        types.Bool                                                       `tfsdk:"log"`
-	LossCorrection             types.String                                                     `tfsdk:"loss_correction"`
-	LossCorrectionFec          types.String                                                     `tfsdk:"loss_correction_fec"`
-	LossCorrectionFecThreshold types.Int64                                                      `tfsdk:"loss_correction_fec_threshold"`
-	NatPool                    types.String                                                     `tfsdk:"nat_pool"`
-	NatPoolId                  types.Int64                                                      `tfsdk:"nat_pool_id"`
-	RedirectDns                types.String                                                     `tfsdk:"redirect_dns"`
-	RedirectDnsType            types.String                                                     `tfsdk:"redirect_dns_type"`
-	RedirectDnsAddress         types.String                                                     `tfsdk:"redirect_dns_address"`
-	ServiceNodeGroup           types.String                                                     `tfsdk:"service_node_group"`
-	SecureInternetGateway      types.Bool                                                       `tfsdk:"secure_internet_gateway"`
-	TcpOptimization            types.Bool                                                       `tfsdk:"tcp_optimization"`
-	SetParameters              []TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
-	NatParameters              []TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters `tfsdk:"nat_parameters"`
+	Type                            types.String                                                     `tfsdk:"type"`
+	Cflowd                          types.Bool                                                       `tfsdk:"cflowd"`
+	Counter                         types.String                                                     `tfsdk:"counter"`
+	DreOptimization                 types.Bool                                                       `tfsdk:"dre_optimization"`
+	FallbackToRouting               types.Bool                                                       `tfsdk:"fallback_to_routing"`
+	Log                             types.Bool                                                       `tfsdk:"log"`
+	LossCorrection                  types.String                                                     `tfsdk:"loss_correction"`
+	LossCorrectionFec               types.String                                                     `tfsdk:"loss_correction_fec"`
+	LossCorrectionPacketDuplication types.String                                                     `tfsdk:"loss_correction_packet_duplication"`
+	LossCorrectionFecThreshold      types.Int64                                                      `tfsdk:"loss_correction_fec_threshold"`
+	NatPool                         types.String                                                     `tfsdk:"nat_pool"`
+	NatPoolId                       types.Int64                                                      `tfsdk:"nat_pool_id"`
+	RedirectDns                     types.String                                                     `tfsdk:"redirect_dns"`
+	RedirectDnsType                 types.String                                                     `tfsdk:"redirect_dns_type"`
+	RedirectDnsAddress              types.String                                                     `tfsdk:"redirect_dns_address"`
+	ServiceNodeGroup                types.String                                                     `tfsdk:"service_node_group"`
+	SecureInternetGateway           types.Bool                                                       `tfsdk:"secure_internet_gateway"`
+	TcpOptimization                 types.Bool                                                       `tfsdk:"tcp_optimization"`
+	SetParameters                   []TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters `tfsdk:"set_parameters"`
+	NatParameters                   []TrafficDataPolicyDefinitionSequencesActionEntriesNatParameters `tfsdk:"nat_parameters"`
 }
 
 type TrafficDataPolicyDefinitionSequencesActionEntriesSetParameters struct {
@@ -266,6 +267,9 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					}
 					if !childItem.LossCorrectionFec.IsNull() && childItem.Type.ValueString() == "lossProtectFec" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.LossCorrectionFec.ValueString())
+					}
+					if !childItem.LossCorrectionPacketDuplication.IsNull() && childItem.Type.ValueString() == "lossProtectPktDup" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.LossCorrectionPacketDuplication.ValueString())
 					}
 					if !childItem.LossCorrectionFecThreshold.IsNull() && childItem.Type.ValueString() == "lossProtectFec" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.LossCorrectionFecThreshold.ValueInt64())
@@ -610,6 +614,11 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.LossCorrectionFec = types.StringValue(ccValue.String())
 					} else {
 						cItem.LossCorrectionFec = types.StringNull()
+					}
+					if ccValue := cv.Get("parameter"); ccValue.Exists() && cItem.Type.ValueString() == "lossProtectPktDup" {
+						cItem.LossCorrectionPacketDuplication = types.StringValue(ccValue.String())
+					} else {
+						cItem.LossCorrectionPacketDuplication = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "lossProtectFec" {
 						cItem.LossCorrectionFecThreshold = types.Int64Value(ccValue.Int())
@@ -963,6 +972,9 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 						hasChanges = true
 					}
 					if !data.Sequences[i].ActionEntries[ii].LossCorrectionFec.Equal(state.Sequences[i].ActionEntries[ii].LossCorrectionFec) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].ActionEntries[ii].LossCorrectionPacketDuplication.Equal(state.Sequences[i].ActionEntries[ii].LossCorrectionPacketDuplication) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].ActionEntries[ii].LossCorrectionFecThreshold.Equal(state.Sequences[i].ActionEntries[ii].LossCorrectionFecThreshold) {

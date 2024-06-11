@@ -60,6 +60,7 @@ Read-Only:
 - `loss_correction` (String) Loss correction
 - `loss_correction_fec` (String) Loss correction FEC
 - `loss_correction_fec_threshold` (Number) Loss correction FEC threshold
+- `loss_correction_packet_duplication` (String) Loss correction packet duplication
 - `nat_parameters` (Attributes List) List of NAT parameters (see [below for nested schema](#nestedatt--sequences--action_entries--nat_parameters))
 - `nat_pool` (String) NAT pool
 - `nat_pool_id` (Number) NAT pool ID

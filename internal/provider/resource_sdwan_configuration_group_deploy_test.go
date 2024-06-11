@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanConfigurationGroupDeploy(t *testing.T) {
-	if os.Getenv("CONFIG_GROUP_DEPLOY") == "" {
-		t.Skip("skipping test, set environment variable CONFIG_GROUP_DEPLOY")
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_configuration_group_deploy.test", "devices.0.id", "C8K-15411CCC-D476-0B3B-21F2-5D6AC387EE7B"))
@@ -85,6 +85,11 @@ resource "sdwan_system_logging_profile_parcel" "test" {
   feature_profile_id = sdwan_system_feature_profile.test.id
 }
 
+resource "sdwan_system_omp_profile_parcel" "test" {
+  name               = "OMP_TF"
+  feature_profile_id = sdwan_system_feature_profile.test.id
+} 
+
 resource "sdwan_transport_feature_profile" "test" {
   name        = "TRANSPORT_TF"
   description = "My transport feature profile 1"
@@ -101,6 +106,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "test" {
   feature_profile_id                  = sdwan_transport_feature_profile.test.id
   transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id
   interface_name                      = "GigabitEthernet1"
+  shutdown                            = false
   ipv4_dhcp_distance                  = 1
   tunnel_interface                    = true
   tunnel_interface_encapsulations = [
@@ -116,10 +122,10 @@ resource "sdwan_configuration_group" "test" {
   solution    = "sdwan"
   feature_profiles = [
     {
-      id = sdwan_system_feature_profile.test.id
+      id = sdwan_transport_feature_profile.test.id
     },
     {
-      id = sdwan_transport_feature_profile.test.id
+      id = sdwan_system_feature_profile.test.id
     }
   ]
 
@@ -129,6 +135,7 @@ resource "sdwan_configuration_group" "test" {
     sdwan_system_bfd_profile_parcel.test,
     sdwan_system_global_profile_parcel.test,
     sdwan_system_logging_profile_parcel.test,
+    sdwan_system_omp_profile_parcel.test,
     sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test
   ]
 }

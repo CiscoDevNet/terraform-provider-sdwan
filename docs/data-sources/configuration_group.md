@@ -28,7 +28,7 @@ data "sdwan_configuration_group" "example" {
 ### Read-Only
 
 - `description` (String) Description
-- `feature_profiles` (Attributes List) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
+- `feature_profiles` (Attributes Set) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
 - `name` (String) The name of the configuration group
 - `solution` (String) Type of solution
 - `topology_devices` (Attributes List) List of topology device types (see [below for nested schema](#nestedatt--topology_devices))

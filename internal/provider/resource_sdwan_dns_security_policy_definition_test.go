@@ -39,7 +39,7 @@ func TestAccSdwanDNSSecurityPolicyDefinition(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "match_all_vpn", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "dnscrypt", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "umbrella_dns_default", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "cisco_sig_credentials_feature_template_id", "22e8bd63-df16-4487-bf49-745064b941ee"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_dns_security_policy_definition.test", "cisco_sig_credentials_feature_template_id", "885c3bce-eab6-4d45-8ff3-488f0df4072a"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -79,7 +79,7 @@ func testAccSdwanDNSSecurityPolicyDefinitionConfig_all() string {
 	config += `	match_all_vpn = true` + "\n"
 	config += `	dnscrypt = true` + "\n"
 	config += `	umbrella_dns_default = true` + "\n"
-	config += `	cisco_sig_credentials_feature_template_id = "22e8bd63-df16-4487-bf49-745064b941ee"` + "\n"
+	config += `	cisco_sig_credentials_feature_template_id = "885c3bce-eab6-4d45-8ff3-488f0df4072a"` + "\n"
 	config += `}` + "\n"
 	return config
 }

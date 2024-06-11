@@ -311,6 +311,7 @@ Optional:
 - `restart_interval_variable` (String) Variable name
 - `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
   - Range: `1`-`100`
+  - Default value: `75`
 - `threshold_variable` (String) Variable name
 
 
@@ -419,6 +420,7 @@ Optional:
 - `restart_interval_variable` (String) Variable name
 - `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
   - Range: `1`-`100`
+  - Default value: `75`
 - `threshold_variable` (String) Variable name
 
 
