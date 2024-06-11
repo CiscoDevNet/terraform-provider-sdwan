@@ -61,7 +61,6 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 
 ### Required
 
-- `interface_name` (String)
 - `name` (String) The name of the profile parcel
 
 ### Optional
@@ -88,6 +87,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
   - Range: `1500`-`9216`
   - Default value: `1500`
 - `interface_mtu_variable` (String) Variable name
+- `interface_name` (String)
 - `interface_name_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
   - Default value: `false`
