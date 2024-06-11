@@ -19,9 +19,8 @@ description: |-
 - Add `sdwan_application_priority_qos_policy_profile_parcel` resource and data source
 - Add `sdwan_transport_wan_vpn_interface_ethernet_profile_parcel` resource and data source
 - Add support for `bfd_metrics_exporting` and `exporting_interval` in `sdwan_cflowd_policy_definition` resource and data source, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/122)
-- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/266)
-- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/266)
-
+- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
+- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
 
 ## 0.3.9
 
