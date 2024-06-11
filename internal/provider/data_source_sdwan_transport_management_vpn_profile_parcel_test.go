@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanTransportManagementVPNProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_profile_parcel.test", "basic_configuration_description", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_profile_parcel.test", "interface_description", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_profile_parcel.test", "primary_dns_address_ipv4", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_profile_parcel.test", "secondary_dns_address_ipv4", "2.3.4.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_management_vpn_profile_parcel.test", "primary_dns_address_ipv6", "2001:0:0:1::0"))
@@ -79,7 +79,7 @@ func testAccDataSourceSdwanTransportManagementVPNProfileParcelConfig() string {
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	basic_configuration_description = "example"` + "\n"
+	config += `	interface_description = "example"` + "\n"
 	config += `	primary_dns_address_ipv4 = "1.2.3.4"` + "\n"
 	config += `	secondary_dns_address_ipv4 = "2.3.4.5"` + "\n"
 	config += `	primary_dns_address_ipv6 = "2001:0:0:1::0"` + "\n"

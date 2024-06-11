@@ -22,7 +22,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
   transport_management_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                                   = true
   interface_name                             = "GigabitEthernet1"
-  basic_configuration_description            = "Transport Management VPN Interface Ethernet"
+  interface_description                      = "Transport Management VPN Interface Ethernet"
   ipv4_address                               = "1.2.3.4"
   ipv4_subnet_mask                           = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -72,8 +72,6 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 - `arp_timeout_variable` (String) Variable name
 - `autonegotiate` (Boolean) Link autonegotiation
 - `autonegotiate_variable` (String) Variable name
-- `basic_configuration_description` (String)
-- `basic_configuration_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `duplex` (String) Duplex mode
   - Choices: `full`, `half`, `auto`
@@ -83,6 +81,8 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
   - Default value: `true`
 - `icmp_redirect_disable_variable` (String) Variable name
+- `interface_description` (String)
+- `interface_description_variable` (String) Variable name
 - `interface_mtu` (Number) Interface MTU
   - Range: `1500`-`9216`
   - Default value: `1500`

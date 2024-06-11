@@ -29,9 +29,9 @@ data "sdwan_transport_management_vpn_profile_parcel" "example" {
 
 ### Read-Only
 
-- `basic_configuration_description` (String) Name
-- `basic_configuration_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
+- `interface_description` (String) Name
+- `interface_description_variable` (String) Variable name
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
 - `name` (String) The name of the profile parcel

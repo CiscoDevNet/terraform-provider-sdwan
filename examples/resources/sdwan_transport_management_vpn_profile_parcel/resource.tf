@@ -1,12 +1,12 @@
 resource "sdwan_transport_management_vpn_profile_parcel" "example" {
-  name                            = "Example"
-  description                     = "My Example"
-  feature_profile_id              = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  basic_configuration_description = "example"
-  primary_dns_address_ipv4        = "1.2.3.4"
-  secondary_dns_address_ipv4      = "2.3.4.5"
-  primary_dns_address_ipv6        = "2001:0:0:1::0"
-  secondary_dns_address_ipv6      = "2001:0:0:2::0"
+  name                       = "Example"
+  description                = "My Example"
+  feature_profile_id         = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  interface_description      = "example"
+  primary_dns_address_ipv4   = "1.2.3.4"
+  secondary_dns_address_ipv4 = "2.3.4.5"
+  primary_dns_address_ipv6   = "2001:0:0:1::0"
+  secondary_dns_address_ipv6 = "2001:0:0:2::0"
   new_host_mappings = [
     {
       host_name            = "example"

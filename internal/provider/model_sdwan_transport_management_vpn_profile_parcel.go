@@ -33,24 +33,24 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportManagementVPN struct {
-	Id                                    types.String                             `tfsdk:"id"`
-	Version                               types.Int64                              `tfsdk:"version"`
-	Name                                  types.String                             `tfsdk:"name"`
-	Description                           types.String                             `tfsdk:"description"`
-	FeatureProfileId                      types.String                             `tfsdk:"feature_profile_id"`
-	BasicConfigurationDescription         types.String                             `tfsdk:"basic_configuration_description"`
-	BasicConfigurationDescriptionVariable types.String                             `tfsdk:"basic_configuration_description_variable"`
-	PrimaryDnsAddressIpv4                 types.String                             `tfsdk:"primary_dns_address_ipv4"`
-	PrimaryDnsAddressIpv4Variable         types.String                             `tfsdk:"primary_dns_address_ipv4_variable"`
-	SecondaryDnsAddressIpv4               types.String                             `tfsdk:"secondary_dns_address_ipv4"`
-	SecondaryDnsAddressIpv4Variable       types.String                             `tfsdk:"secondary_dns_address_ipv4_variable"`
-	PrimaryDnsAddressIpv6                 types.String                             `tfsdk:"primary_dns_address_ipv6"`
-	PrimaryDnsAddressIpv6Variable         types.String                             `tfsdk:"primary_dns_address_ipv6_variable"`
-	SecondaryDnsAddressIpv6               types.String                             `tfsdk:"secondary_dns_address_ipv6"`
-	SecondaryDnsAddressIpv6Variable       types.String                             `tfsdk:"secondary_dns_address_ipv6_variable"`
-	NewHostMappings                       []TransportManagementVPNNewHostMappings  `tfsdk:"new_host_mappings"`
-	Ipv4StaticRoutes                      []TransportManagementVPNIpv4StaticRoutes `tfsdk:"ipv4_static_routes"`
-	Ipv6StaticRoutes                      []TransportManagementVPNIpv6StaticRoutes `tfsdk:"ipv6_static_routes"`
+	Id                              types.String                             `tfsdk:"id"`
+	Version                         types.Int64                              `tfsdk:"version"`
+	Name                            types.String                             `tfsdk:"name"`
+	Description                     types.String                             `tfsdk:"description"`
+	FeatureProfileId                types.String                             `tfsdk:"feature_profile_id"`
+	InterfaceDescription            types.String                             `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable    types.String                             `tfsdk:"interface_description_variable"`
+	PrimaryDnsAddressIpv4           types.String                             `tfsdk:"primary_dns_address_ipv4"`
+	PrimaryDnsAddressIpv4Variable   types.String                             `tfsdk:"primary_dns_address_ipv4_variable"`
+	SecondaryDnsAddressIpv4         types.String                             `tfsdk:"secondary_dns_address_ipv4"`
+	SecondaryDnsAddressIpv4Variable types.String                             `tfsdk:"secondary_dns_address_ipv4_variable"`
+	PrimaryDnsAddressIpv6           types.String                             `tfsdk:"primary_dns_address_ipv6"`
+	PrimaryDnsAddressIpv6Variable   types.String                             `tfsdk:"primary_dns_address_ipv6_variable"`
+	SecondaryDnsAddressIpv6         types.String                             `tfsdk:"secondary_dns_address_ipv6"`
+	SecondaryDnsAddressIpv6Variable types.String                             `tfsdk:"secondary_dns_address_ipv6_variable"`
+	NewHostMappings                 []TransportManagementVPNNewHostMappings  `tfsdk:"new_host_mappings"`
+	Ipv4StaticRoutes                []TransportManagementVPNIpv4StaticRoutes `tfsdk:"ipv4_static_routes"`
+	Ipv6StaticRoutes                []TransportManagementVPNIpv6StaticRoutes `tfsdk:"ipv6_static_routes"`
 }
 
 type TransportManagementVPNNewHostMappings struct {
@@ -119,15 +119,15 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, path+"vpnId.optionType", "default")
 	body, _ = sjson.Set(body, path+"vpnId.value", 512)
 
-	if !data.BasicConfigurationDescriptionVariable.IsNull() {
+	if !data.InterfaceDescriptionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"name.optionType", "variable")
-		body, _ = sjson.Set(body, path+"name.value", data.BasicConfigurationDescriptionVariable.ValueString())
-	} else if data.BasicConfigurationDescription.IsNull() {
+		body, _ = sjson.Set(body, path+"name.value", data.InterfaceDescriptionVariable.ValueString())
+	} else if data.InterfaceDescription.IsNull() {
 		body, _ = sjson.Set(body, path+"name.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"name.optionType", "global")
-		body, _ = sjson.Set(body, path+"name.value", data.BasicConfigurationDescription.ValueString())
+		body, _ = sjson.Set(body, path+"name.value", data.InterfaceDescription.ValueString())
 	}
 
 	if !data.PrimaryDnsAddressIpv4Variable.IsNull() {
@@ -319,14 +319,14 @@ func (data *TransportManagementVPN) fromBody(ctx context.Context, res gjson.Resu
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.BasicConfigurationDescription = types.StringNull()
-	data.BasicConfigurationDescriptionVariable = types.StringNull()
+	data.InterfaceDescription = types.StringNull()
+	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "name.optionType"); t.Exists() {
 		va := res.Get(path + "name.value")
 		if t.String() == "variable" {
-			data.BasicConfigurationDescriptionVariable = types.StringValue(va.String())
+			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.BasicConfigurationDescription = types.StringValue(va.String())
+			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
 	data.PrimaryDnsAddressIpv4 = types.StringNull()
@@ -548,14 +548,14 @@ func (data *TransportManagementVPN) updateFromBody(ctx context.Context, res gjso
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.BasicConfigurationDescription = types.StringNull()
-	data.BasicConfigurationDescriptionVariable = types.StringNull()
+	data.InterfaceDescription = types.StringNull()
+	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "name.optionType"); t.Exists() {
 		va := res.Get(path + "name.value")
 		if t.String() == "variable" {
-			data.BasicConfigurationDescriptionVariable = types.StringValue(va.String())
+			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.BasicConfigurationDescription = types.StringValue(va.String())
+			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
 	data.PrimaryDnsAddressIpv4 = types.StringNull()
@@ -868,10 +868,10 @@ func (data *TransportManagementVPN) isNull(ctx context.Context, res gjson.Result
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
-	if !data.BasicConfigurationDescription.IsNull() {
+	if !data.InterfaceDescription.IsNull() {
 		return false
 	}
-	if !data.BasicConfigurationDescriptionVariable.IsNull() {
+	if !data.InterfaceDescriptionVariable.IsNull() {
 		return false
 	}
 	if !data.PrimaryDnsAddressIpv4.IsNull() {
