@@ -22,8 +22,7 @@ resource "sdwan_zone_based_fw_policy_definition" "example" {
       ]
       action_entries = [
         {
-          type      = "log"
-          parameter = ""
+          type = "log"
         }
       ]
     }

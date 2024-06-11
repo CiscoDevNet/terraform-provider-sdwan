@@ -180,10 +180,6 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Schema(ctx context.Context, req re
 											stringvalidator.OneOf("log", "connectionEvents"),
 										},
 									},
-									"parameter": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("").String,
-										Optional:            true,
-									},
 								},
 							},
 						},

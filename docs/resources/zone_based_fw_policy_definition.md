@@ -37,8 +37,7 @@ resource "sdwan_zone_based_fw_policy_definition" "example" {
       ]
       action_entries = [
         {
-          type      = "log"
-          parameter = ""
+          type = "log"
         }
       ]
     }
@@ -109,7 +108,6 @@ Optional:
 
 Optional:
 
-- `parameter` (String)
 - `type` (String) Type of action entry
   - Choices: `log`, `connectionEvents`
 

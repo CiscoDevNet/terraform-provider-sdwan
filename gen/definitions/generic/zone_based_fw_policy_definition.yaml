@@ -128,10 +128,6 @@ attributes:
           description: Type of action entry
           enum_values: [log, connectionEvents]
           example: log
-        - model_name: parameter
-          tf_name: parameter
-          type: String
-          example: ""
 
 test_prerequisites: |
   resource "sdwan_zone_list_policy_object" "test" {

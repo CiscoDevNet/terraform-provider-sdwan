@@ -60,8 +60,7 @@ type ZoneBasedFWPolicyDefinitionRulesMatchEntries struct {
 	ValueVariable types.String `tfsdk:"value_variable"`
 }
 type ZoneBasedFWPolicyDefinitionRulesActionEntries struct {
-	Type      types.String `tfsdk:"type"`
-	Parameter types.String `tfsdk:"parameter"`
+	Type types.String `tfsdk:"type"`
 }
 
 // End of section. //template:end types
@@ -145,9 +144,6 @@ func (data ZoneBasedFWPolicyDefinition) toBody(ctx context.Context) string {
 					itemChildBody := ""
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "type", childItem.Type.ValueString())
-					}
-					if !childItem.Parameter.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.Parameter.ValueString())
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "definition.actions.-1", itemChildBody)
 				}
@@ -264,11 +260,6 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 					} else {
 						cItem.Type = types.StringNull()
 					}
-					if ccValue := cv.Get("parameter"); ccValue.Exists() {
-						cItem.Parameter = types.StringValue(ccValue.String())
-					} else {
-						cItem.Parameter = types.StringNull()
-					}
 					item.ActionEntries = append(item.ActionEntries, cItem)
 					return true
 				})
@@ -352,9 +343,6 @@ func (data *ZoneBasedFWPolicyDefinition) hasChanges(ctx context.Context, state *
 			} else {
 				for ii := range data.Rules[i].ActionEntries {
 					if !data.Rules[i].ActionEntries[ii].Type.Equal(state.Rules[i].ActionEntries[ii].Type) {
-						hasChanges = true
-					}
-					if !data.Rules[i].ActionEntries[ii].Parameter.Equal(state.Rules[i].ActionEntries[ii].Parameter) {
 						hasChanges = true
 					}
 				}
