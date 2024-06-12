@@ -54,14 +54,14 @@ Read-Only:
 - `administrative_distance` (Number) Administrative distance
 - `administrative_distance_variable` (String) Variable name
 - `gateway` (String) Gateway
-- `ipv4_route_gateway_next_ho` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho))
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
+- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
 - `subnet_mask` (String) Subnet Mask
 - `subnet_mask_variable` (String) Variable name
 
-<a id="nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho"></a>
-### Nested Schema for `ipv4_static_routes.ipv4_route_gateway_next_ho`
+<a id="nestedatt--ipv4_static_routes--next_hops"></a>
+### Nested Schema for `ipv4_static_routes.next_hops`
 
 Read-Only:
 

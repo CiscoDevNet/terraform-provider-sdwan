@@ -169,7 +169,7 @@ func (d *TransportManagementVPNProfileParcelDataSource) Schema(ctx context.Conte
 							MarkdownDescription: "Gateway",
 							Computed:            true,
 						},
-						"ipv4_route_gateway_next_ho": schema.ListNestedAttribute{
+						"next_hops": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv4 Route Gateway Next Hop",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
