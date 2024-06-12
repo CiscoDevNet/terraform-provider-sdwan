@@ -40,7 +40,6 @@ resource "sdwan_service_tracker_profile_parcel" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the profile parcel
-- `tracker_name` (String) Tracker Name
 
 ### Optional
 
@@ -71,6 +70,7 @@ resource "sdwan_service_tracker_profile_parcel" "example" {
   - Range: `100`-`1000`
   - Default value: `300`
 - `threshold_variable` (String) Variable name
+- `tracker_name` (String) Tracker Name
 - `tracker_name_variable` (String) Variable name
 - `tracker_type` (String) Tracker Type
   - Choices: `endpoint`

@@ -89,6 +89,10 @@ func (r *LocalApplicationListPolicyObjectResource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Application name").String,
 							Optional:            true,
 						},
+						"application_family": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Application family name").String,
+							Optional:            true,
+						},
 					},
 				},
 				Validators: []validator.List{

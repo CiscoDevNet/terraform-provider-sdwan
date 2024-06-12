@@ -91,7 +91,7 @@ func (r *ServiceTrackerProfileParcelResource) Schema(ctx context.Context, req re
 			},
 			"tracker_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tracker Name").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
 					stringvalidator.RegexMatches(regexp.MustCompile(`^[^<! ]+$`), ""),

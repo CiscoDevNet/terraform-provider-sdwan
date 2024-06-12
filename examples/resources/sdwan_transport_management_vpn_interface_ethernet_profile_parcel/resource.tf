@@ -5,7 +5,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
   transport_management_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                                   = true
   interface_name                             = "GigabitEthernet1"
-  basic_configuration_description            = "Transport Management VPN Interface Ethernet"
+  interface_description                      = "Transport Management VPN Interface Ethernet"
   ipv4_address                               = "1.2.3.4"
   ipv4_subnet_mask                           = "0.0.0.0"
   ipv4_secondary_addresses = [

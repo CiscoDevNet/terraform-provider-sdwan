@@ -91,7 +91,7 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"as_number": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set autonomous system number <1..4294967295> or <XX.YY>").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"as_number_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,

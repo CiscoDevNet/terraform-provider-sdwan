@@ -89,14 +89,14 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Optional:            true,
 			},
-			"basic_configuration_description": schema.StringAttribute{
+			"interface_description": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Name").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(244),
 				},
 			},
-			"basic_configuration_description_variable": schema.StringAttribute{
+			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -191,7 +191,7 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 								stringvalidator.OneOf("nextHop", "dhcp", "null0"),
 							},
 						},
-						"ipv4_route_gateway_next_ho": schema.ListNestedAttribute{
+						"next_hops": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{

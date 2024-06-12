@@ -99,11 +99,11 @@ func (d *TransportManagementVPNInterfaceEthernetProfileParcelDataSource) Schema(
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"basic_configuration_description": schema.StringAttribute{
+			"interface_description": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"basic_configuration_description_variable": schema.StringAttribute{
+			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

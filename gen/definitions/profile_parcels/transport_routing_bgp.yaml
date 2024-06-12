@@ -12,8 +12,8 @@ attributes:
     test_value: sdwan_transport_feature_profile.test.id
   - model_name: asNum
     tf_name: as_number
-    mandatory: true
     example: 429
+    minimum_test_value: '429'
   - model_name: routerId
     tf_name: router_id
     example: "1.2.3.4"

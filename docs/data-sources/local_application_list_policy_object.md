@@ -37,3 +37,4 @@ data "sdwan_local_application_list_policy_object" "example" {
 Read-Only:
 
 - `application` (String) Application name
+- `application_family` (String) Application family name
