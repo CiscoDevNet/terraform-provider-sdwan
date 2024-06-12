@@ -12,8 +12,8 @@ attributes:
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_feature_profile.test.id
   - model_name: trackerName
-    mandatory: true
     example: TRACKER_1
+    minimum_test_value: '"TRACKER_1"'
   - model_name: endpointApiUrl
     example: google.com
   - model_name: endpointDnsName
