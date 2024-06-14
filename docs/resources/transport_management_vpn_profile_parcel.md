@@ -19,7 +19,7 @@ resource "sdwan_transport_management_vpn_profile_parcel" "example" {
   name                       = "Example"
   description                = "My Example"
   feature_profile_id         = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  interface_description      = "example"
+  vpn_description            = "example"
   primary_dns_address_ipv4   = "1.2.3.4"
   secondary_dns_address_ipv4 = "2.3.4.5"
   primary_dns_address_ipv6   = "2001:0:0:1::0"
@@ -69,8 +69,6 @@ resource "sdwan_transport_management_vpn_profile_parcel" "example" {
 
 - `description` (String) The description of the profile parcel
 - `feature_profile_id` (String) Feature Profile ID
-- `interface_description` (String) Name
-- `interface_description_variable` (String) Variable name
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
 - `new_host_mappings` (Attributes List) (see [below for nested schema](#nestedatt--new_host_mappings))
@@ -82,6 +80,8 @@ resource "sdwan_transport_management_vpn_profile_parcel" "example" {
 - `secondary_dns_address_ipv4_variable` (String) Variable name
 - `secondary_dns_address_ipv6` (String) Secondary DNS Address (IPv6)
 - `secondary_dns_address_ipv6_variable` (String) Variable name
+- `vpn_description` (String) Name
+- `vpn_description_variable` (String) Variable name
 
 ### Read-Only
 

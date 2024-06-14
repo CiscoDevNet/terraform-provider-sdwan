@@ -79,11 +79,11 @@ func (d *TransportManagementVPNProfileParcelDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"interface_description": schema.StringAttribute{
+			"vpn_description": schema.StringAttribute{
 				MarkdownDescription: "Name",
 				Computed:            true,
 			},
-			"interface_description_variable": schema.StringAttribute{
+			"vpn_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
