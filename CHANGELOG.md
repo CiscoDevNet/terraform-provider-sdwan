@@ -14,6 +14,7 @@
 - BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
 - BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
 - BREAKING CHANGE: Rename `ipv4_route_gateway_next_ho` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `next_hops`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/266)
+- Add `sdwan_system_ipv4_device_access_profile_parcel` resource and data source
 
 ## 0.3.9
 
