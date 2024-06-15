@@ -32,7 +32,7 @@ data "sdwan_cisco_system_feature_template" "example" {
 - `admin_tech_on_failure_variable` (String) Variable name
 - `affinity_group_number` (Number) Set the affinity group number for router
 - `affinity_group_number_variable` (String) Variable name
-- `affinity_group_preference` (Set of Number) Set the affinity group preference
+- `affinity_group_preference` (List of Number) Set the affinity group preference
 - `affinity_group_preference_variable` (String) Variable name
 - `console_baud_rate` (String) Set the console baud rate
 - `console_baud_rate_variable` (String) Variable name
