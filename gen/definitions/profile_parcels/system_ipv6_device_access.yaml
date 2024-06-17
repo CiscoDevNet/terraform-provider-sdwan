@@ -1,0 +1,60 @@
+---
+name: System IPv6 Device Access
+rest_endpoint: /v1/feature-profile/sdwan/system/%v/ipv6-device-access-policy
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_system_feature_profile.test.id
+  - model_name: defaultAction
+    example: drop
+  - model_name: sequences
+    attributes:
+    - model_name: sequenceId
+      tf_name: id
+      id: true
+      example: 1
+    - model_name: sequenceName
+      tf_name: name
+      example: SEQ_1
+    - model_name: baseAction
+      example: accept
+    - model_name: destinationPort
+      tf_name: device_access_protocol
+      data_path: [matchEntries]
+      example: 22
+    - model_name: refId
+      tf_name: destination_data_prefix_list_id
+      data_path: [matchEntries, destinationDataPrefix, destinationDataPrefixList]
+      exclude_test: true
+      example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+    - model_name: destinationIpPrefixList
+      tf_name: destination_ip_prefix_list
+      data_path: [matchEntries, destinationDataPrefix]
+      exclude_test: true
+      example: "2001:0:0:1::/64"
+    - model_name: sourcePorts
+      data_path: [matchEntries]
+      exclude_test: true
+      example: 11
+    - model_name: refId
+      tf_name: source_data_prefix_list_id
+      data_path: [matchEntries, sourceDataPrefix, sourceDataPrefixList]
+      exclude_test: true
+      example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+    - model_name: sourceIpPrefixList
+      tf_name: source_ip_prefix_list
+      data_path: [matchEntries, sourceDataPrefix]
+      exclude_test: true
+      example: "2001:0:0:7::/64"
+
+test_prerequisites: |
+  resource "sdwan_system_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

@@ -1,0 +1,482 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema#",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/system/ipv6-device-access-policy/common/request_schema.json",
+    "title": "Ipv6 Device Access Policy Parcel Schema",
+    "description": "Ipv6 device access policy profile parcel schema for POST/PUT request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Set the parcel name",
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "defaultAction": {
+            "description": "Default Action",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "default": "drop",
+                    "enum": ["drop", "accept"],
+                    "type": "string"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": ["drop"]
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "sequences": {
+            "description": "Device Access Control List",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "sequenceId": {
+                  "description": "Sequence Id",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minimum": 1,
+                          "maximum": 65536,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "sequenceName": {
+                  "description": "Sequence Name",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 19
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "matchEntries": {
+                  "description": "Define match conditions",
+                  "type": "object",
+                  "properties": {
+                    "destinationPort": {
+                      "description": "device access protocol",
+                      "type": "object",
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "enum": [161, 22],
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    "sourceDataPrefix": {
+                      "description": "Source Data Prefix",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "sourceDataPrefixList": {
+                              "description": "Source Data Prefix Parcel",
+                              "type": "object",
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            }
+                          },
+                          "required": ["sourceDataPrefixList"],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "sourceIpPrefixList": {
+                              "description": "Source Data IP Prefix List",
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "items": {
+                                        "type": "string",
+                                        "format": "ipv4"
+                                      },
+                                      "additionalProperties": false,
+                                      "uniqueItems": true,
+                                      "type": "array"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["variable"]
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "required": ["sourceIpPrefixList"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "sourcePorts": {
+                      "description": "Source Port List",
+                      "type": "object",
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "items": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                          }
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    "destinationDataPrefix": {
+                      "description": "Destination Data Prefix",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "destinationDataPrefixList": {
+                              "description": "Destination Data Prefix Parcel",
+                              "type": "object",
+                              "properties": {
+                                "refId": {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                }
+                              }
+                            }
+                          },
+                          "required": ["destinationDataPrefixList"],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "destinationIpPrefixList": {
+                              "description": "Destination Data IP Prefix List",
+                              "type": "object",
+                              "oneOf": [
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["global"]
+                                    },
+                                    "value": {
+                                      "items": {
+                                        "type": "string",
+                                        "format": "ipv4"
+                                      },
+                                      "additionalProperties": false,
+                                      "uniqueItems": true,
+                                      "type": "array"
+                                    }
+                                  },
+                                  "required": ["optionType", "value"],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "properties": {
+                                    "optionType": {
+                                      "type": "string",
+                                      "enum": ["variable"]
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "required": ["destinationIpPrefixList"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["destinationPort"],
+                  "additionalProperties": false
+                },
+                "baseAction": {
+                  "description": "Base Action",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "default": "accept",
+                          "enum": ["drop", "accept"],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["default"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "enum": ["accept"]
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "sequenceId",
+                "sequenceName",
+                "matchEntries",
+                "baseAction"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["defaultAction"],
+        "additionalProperties": false
+      },
+      "metadata": {
+        "supportedDeviceTypes": [
+          "asr",
+          "c1100",
+          "c8000be",
+          "csr1000v",
+          "ir8100",
+          "ir8340",
+          "isr",
+          "ISRv",
+          "ir1101"
+        ],
+        "minVManageVersion": "20.15.1"
+      },
+      "documentation": {
+        "description": "This is the documentation for POST/PUT request schema for ipv6 device access policy profile parcel",
+        "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+        "details-2": "variable name should not be present if optionType value is NOT variable",
+        "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+        "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+        "examples": [
+          {
+            "data": {
+              "defaultAction": {
+                "optionType": "default",
+                "value": "drop"
+              },
+              "sequences": [
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 1
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "seq1"
+                  },
+                  "matchEntries": {
+                    "destinationPort": {
+                      "optionType": "global",
+                      "value": 22
+                    },
+                    "sourceDataPrefix": {
+                      "sourceIpPrefixList": {
+                        "optionType": "global",
+                        "value": ["2001:0:0:1::/64", "2001:0:0:2::/64"]
+                      }
+                    },
+                    "sourcePorts": {
+                      "optionType": "global",
+                      "value": [31, 32]
+                    },
+                    "destinationDataPrefix": {
+                      "destinationDataPrefixList": {
+                        "refId": {
+                          "optionType": "global",
+                          "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                        }
+                      }
+                    }
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "drop"
+                  }
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 1
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "seq1"
+                  },
+                  "matchEntries": {
+                    "destinationPort": {
+                      "optionType": "global",
+                      "value": 161
+                    },
+                    "sourceDataPrefix": {
+                      "sourceDataPrefixList": {
+                        "refId": {
+                          "optionType": "global",
+                          "value": "38C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51D"
+                        }
+                      }
+                    },
+                    "sourcePorts": {
+                      "optionType": "global",
+                      "value": [1, 2, 3]
+                    },
+                    "destinationDataPrefix": {
+                      "destinationIpPrefixList": {
+                        "optionType": "global",
+                        "value": ["2001:0:0:7::/64", "2001:0:0:8::/64"]
+                      }
+                    }
+                  },
+                  "baseAction": {
+                    "optionType": "global",
+                    "value": "accept"
+                  }
+                },
+                {
+                  "sequenceId": {
+                    "optionType": "global",
+                    "value": 2
+                  },
+                  "sequenceName": {
+                    "optionType": "global",
+                    "value": "seq2"
+                  },
+                  "baseAction": {
+                    "optionType": "default",
+                    "value": "accept"
+                  },
+                  "matchEntries": {
+                    "destinationPort": {
+                      "optionType": "global",
+                      "value": 161
+                    }
+                  }
+                }
+              ]
+            },
+            "name": "dap"
+          }
+        ]
+      }
+    },
+    "required": ["name", "data"],
+    "not": {
+      "required": ["documentation", "metadata"]
+    },
+    "additionalProperties": false
+  }
+}
