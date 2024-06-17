@@ -24,7 +24,7 @@ attributes:
     example: sdwan
   - model_name: profiles
     tf_name: feature_profiles
-    type: List
+    type: Set
     description: List of feature profiles
     attributes:
       - model_name: id

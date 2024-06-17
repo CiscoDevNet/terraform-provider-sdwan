@@ -91,7 +91,7 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"as_number": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set autonomous system number <1..4294967295> or <XX.YY>").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"as_number_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -393,7 +393,7 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 										Optional:            true,
 									},
 									"threshold": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message").AddIntegerRangeDescription(1, 100).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("75").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 100),
@@ -609,7 +609,7 @@ func (r *TransportRoutingBGPProfileParcelResource) Schema(ctx context.Context, r
 										Optional:            true,
 									},
 									"threshold": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message").AddIntegerRangeDescription(1, 100).String,
+										MarkdownDescription: helpers.NewAttributeDescription("Set threshold(1 to 100) at which to generate a warning message").AddIntegerRangeDescription(1, 100).AddDefaultValueDescription("75").String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 100),

@@ -90,7 +90,7 @@ func (r *TransportIPv6TrackerProfileParcelResource) Schema(ctx context.Context, 
 			},
 			"tracker_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Tracker Name").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
 				},

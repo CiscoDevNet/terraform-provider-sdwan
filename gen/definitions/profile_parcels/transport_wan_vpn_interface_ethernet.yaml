@@ -270,7 +270,6 @@ attributes:
       id: true
       example: gre
     - model_name: preference
-      id: true
       example: 4294967
     - model_name: weight
       example: 250

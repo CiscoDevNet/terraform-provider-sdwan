@@ -86,7 +86,7 @@ Optional:
 Required:
 
 - `type` (String) Type of action entry
-  - Choices: `cflowd`, `count`, `dreOptimization`, `fallbackToRouting`, `log`, `lossProtect`, `lossProtectFec`, `nat`, `redirectDns`, `serviceNodeGroup`, `set`, `sig`, `tcpOptimization`
+  - Choices: `cflowd`, `count`, `dreOptimization`, `fallbackToRouting`, `log`, `lossProtect`, `lossProtectPktDup`, `lossProtectFec`, `nat`, `redirectDns`, `serviceNodeGroup`, `set`, `sig`, `tcpOptimization`
 
 Optional:
 
@@ -101,6 +101,8 @@ Optional:
   - Choices: `fecAdaptive`, `fecAlways`, `packetDuplication`
 - `loss_correction_fec_threshold` (Number) Loss correction FEC threshold
   - Range: `1`-`5`
+- `loss_correction_packet_duplication` (String) Loss correction packet duplication
+  - Choices: `fecAdaptive`, `fecAlways`, `packetDuplication`
 - `nat_parameters` (Attributes List) List of NAT parameters (see [below for nested schema](#nestedatt--sequences--action_entries--nat_parameters))
 - `nat_pool` (String) NAT pool
   - Choices: `pool`

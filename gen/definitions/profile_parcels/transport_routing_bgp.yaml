@@ -12,8 +12,8 @@ attributes:
     test_value: sdwan_transport_feature_profile.test.id
   - model_name: asNum
     tf_name: as_number
-    mandatory: true
     example: 429
+    minimum_test_value: '429'
   - model_name: routerId
     tf_name: router_id
     example: "1.2.3.4"
@@ -107,6 +107,8 @@ attributes:
         example: 2000
       - model_name: threshold
         data_path: [maxPrefixConfig]
+        default_value: 75
+        default_value_present: true
         example: 75
       - model_name: policyType
         data_path: [maxPrefixConfig]
@@ -181,6 +183,8 @@ attributes:
         example: 2000
       - model_name: threshold
         data_path: [maxPrefixConfig]
+        default_value: 75
+        default_value_present: true
         example: 75
       - model_name: policyType
         data_path: [maxPrefixConfig]

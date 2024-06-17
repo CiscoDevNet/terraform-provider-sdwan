@@ -73,7 +73,7 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 				MarkdownDescription: "Type of solution",
 				Computed:            true,
 			},
-			"feature_profiles": schema.ListNestedAttribute{
+			"feature_profiles": schema.SetNestedAttribute{
 				MarkdownDescription: "List of feature profiles",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

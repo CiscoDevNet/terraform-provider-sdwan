@@ -35,7 +35,7 @@ func TestAccSdwanTransportManagementVPNInterfaceEthernetProfileParcel(t *testing
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "interface_name", "GigabitEthernet1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "basic_configuration_description", "Transport Management VPN Interface Ethernet"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "interface_description", "Transport Management VPN Interface Ethernet"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_secondary_addresses.0.address", "1.2.3.4"))
@@ -114,7 +114,7 @@ func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_all(
 	config += `	transport_management_vpn_profile_parcel_id = sdwan_transport_management_vpn_profile_parcel.test.id` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
-	config += `	basic_configuration_description = "Transport Management VPN Interface Ethernet"` + "\n"
+	config += `	interface_description = "Transport Management VPN Interface Ethernet"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"

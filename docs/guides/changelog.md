@@ -18,6 +18,11 @@ description: |-
 - Add `sdwan_application_priority_feature_profile` resource and data source
 - Add `sdwan_application_priority_qos_policy_profile_parcel` resource and data source
 - Add `sdwan_transport_wan_vpn_interface_ethernet_profile_parcel` resource and data source
+- Add support for `bfd_metrics_exporting` and `exporting_interval` in `sdwan_cflowd_policy_definition` resource and data source, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/122)
+- Add `sdwan_zone_based_fw_policy_definition` resource and data source, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/246)
+- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
+- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
+- BREAKING CHANGE: Rename `ipv4_route_gateway_next_ho` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `next_hops`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/266)
 - Add `sdwan_service_lan_vpn_interface_ipsec_profile_parcel` resource and data source
 - Add `sdwan_service_lan_vpn_interface_gre_profile_parcel` resource and data source
 - Add `sdwan_service_lan_vpn_interface_svi_profile_parcel` resource and data source

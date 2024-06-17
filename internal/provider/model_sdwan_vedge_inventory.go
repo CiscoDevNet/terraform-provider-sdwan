@@ -17,6 +17,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"context"
 
@@ -25,6 +26,9 @@ import (
 	"github.com/tidwall/sjson"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin types
 type VEdgeInventory struct {
 	Id      types.String            `tfsdk:"id"`
 	Devices []VEdgeInventoryDevices `tfsdk:"devices"`
@@ -39,10 +43,16 @@ type VEdgeInventoryDevices struct {
 	DeviceType    types.String `tfsdk:"device_type"`
 }
 
+// End of section. //template:end types
+
+// Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data VEdgeInventory) getPath() string {
 	return "/device/vedgeinventory/detail"
 }
 
+// End of section. //template:end getPath
+
+// Section below is generated&owned by "gen/generator.go". //template:begin toBody
 func (data VEdgeInventory) toBody(ctx context.Context) string {
 	body := ""
 	if true {
@@ -73,6 +83,9 @@ func (data VEdgeInventory) toBody(ctx context.Context) string {
 	return body
 }
 
+// End of section. //template:end toBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin fromBody
 func (data *VEdgeInventory) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("data"); value.Exists() && len(value.Array()) > 0 {
 		data.Devices = make([]VEdgeInventoryDevices, 0)
@@ -118,6 +131,9 @@ func (data *VEdgeInventory) fromBody(ctx context.Context, res gjson.Result) {
 	}
 }
 
+// End of section. //template:end fromBody
+
+// Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
 func (data *VEdgeInventory) hasChanges(ctx context.Context, state *VEdgeInventory) bool {
 	hasChanges := false
 	if len(data.Devices) != len(state.Devices) {
@@ -146,3 +162,9 @@ func (data *VEdgeInventory) hasChanges(ctx context.Context, state *VEdgeInventor
 	}
 	return hasChanges
 }
+
+// End of section. //template:end hasChanges
+
+// Section below is generated&owned by "gen/generator.go". //template:begin updateVersions
+
+// End of section. //template:end updateVersions

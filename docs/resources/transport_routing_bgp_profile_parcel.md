@@ -136,7 +136,6 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
 
 ### Required
 
-- `as_number` (Number) Set autonomous system number <1..4294967295> or <XX.YY>
 - `name` (String) The name of the profile parcel
 
 ### Optional
@@ -144,6 +143,7 @@ resource "sdwan_transport_routing_bgp_profile_parcel" "example" {
 - `always_compare_med` (Boolean) Compare MEDs from all ASs when selecting active BGP paths
   - Default value: `false`
 - `always_compare_med_variable` (String) Variable name
+- `as_number` (Number) Set autonomous system number <1..4294967295> or <XX.YY>
 - `as_number_variable` (String) Variable name
 - `compare_router_id` (Boolean) Compare router IDs when selecting active BGP paths
   - Default value: `false`
@@ -311,6 +311,7 @@ Optional:
 - `restart_interval_variable` (String) Variable name
 - `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
   - Range: `1`-`100`
+  - Default value: `75`
 - `threshold_variable` (String) Variable name
 
 
@@ -419,6 +420,7 @@ Optional:
 - `restart_interval_variable` (String) Variable name
 - `threshold` (Number) Set threshold(1 to 100) at which to generate a warning message
   - Range: `1`-`100`
+  - Default value: `75`
 - `threshold_variable` (String) Variable name
 
 

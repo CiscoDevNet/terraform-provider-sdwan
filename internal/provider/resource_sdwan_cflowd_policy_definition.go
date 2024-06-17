@@ -176,6 +176,14 @@ func (r *CflowdPolicyDefinitionResource) Schema(ctx context.Context, req resourc
 								stringvalidator.OneOf("enable", "disable"),
 							},
 						},
+						"bfd_metrics_exporting": schema.BoolAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("BFD metrics exporting").String,
+							Optional:            true,
+						},
+						"exporting_interval": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Exporting interval").String,
+							Optional:            true,
+						},
 					},
 				},
 			},

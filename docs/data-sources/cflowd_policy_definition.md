@@ -45,7 +45,9 @@ data "sdwan_cflowd_policy_definition" "example" {
 
 Read-Only:
 
+- `bfd_metrics_exporting` (Boolean) BFD metrics exporting
 - `export_spreading` (String) Export spreading
+- `exporting_interval` (Number) Exporting interval
 - `ip_address` (String) IP address
 - `port` (Number) Port
 - `source_interface` (String) Source interface

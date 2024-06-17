@@ -173,6 +173,7 @@ attributes:
     example: 5
   - model_name: preference
     tf_name: affinity_group_preference
+    type: List
     example: 1
   - model_name: transport-gateway
     example: true

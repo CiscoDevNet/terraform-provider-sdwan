@@ -88,7 +88,7 @@ func (r *ConfigurationGroupResource) Schema(ctx context.Context, req resource.Sc
 					stringvalidator.OneOf("mobility", "sdwan", "nfvirtual"),
 				},
 			},
-			"feature_profiles": schema.ListNestedAttribute{
+			"feature_profiles": schema.SetNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of feature profiles").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{

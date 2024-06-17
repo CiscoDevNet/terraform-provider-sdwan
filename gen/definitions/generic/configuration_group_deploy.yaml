@@ -5,7 +5,7 @@ no_data_source: true
 no_import: true
 remove_id: true
 minimum_version: 20.12.0
-test_tags: [CONFIG_GROUP_DEPLOY]
+test_tags: [SDWAN_2012]
 doc_category: Configuration Group
 attributes:
   - tf_name: configuration_group_id
@@ -62,6 +62,11 @@ test_prerequisites: |
     feature_profile_id = sdwan_system_feature_profile.test.id
   }
 
+  resource "sdwan_system_omp_profile_parcel" "test" {
+    name               = "OMP_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  } 
+
   resource "sdwan_transport_feature_profile" "test" {
     name        = "TRANSPORT_TF"
     description = "My transport feature profile 1"
@@ -78,6 +83,7 @@ test_prerequisites: |
     feature_profile_id                  = sdwan_transport_feature_profile.test.id
     transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id
     interface_name                      = "GigabitEthernet1"
+    shutdown                            = false
     ipv4_dhcp_distance                  = 1
     tunnel_interface                    = true
     tunnel_interface_encapsulations = [
@@ -93,10 +99,10 @@ test_prerequisites: |
     solution    = "sdwan"
     feature_profiles = [
       {
-        id = sdwan_system_feature_profile.test.id
+        id = sdwan_transport_feature_profile.test.id
       },
       {
-        id = sdwan_transport_feature_profile.test.id
+        id = sdwan_system_feature_profile.test.id
       }
     ]
 
@@ -106,6 +112,7 @@ test_prerequisites: |
       sdwan_system_bfd_profile_parcel.test,
       sdwan_system_global_profile_parcel.test,
       sdwan_system_logging_profile_parcel.test,
+      sdwan_system_omp_profile_parcel.test,
       sdwan_transport_wan_vpn_interface_ethernet_profile_parcel.test
     ]
   }

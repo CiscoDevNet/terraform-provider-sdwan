@@ -25,3 +25,9 @@ attributes:
         type: String
         description: Application name
         example: cisco-collab-video
+      - model_name: appFamily
+        tf_name: application_family
+        type: String
+        description: Application family name
+        exclude_test: true
+        example: network-service
