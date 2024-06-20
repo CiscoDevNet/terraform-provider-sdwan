@@ -373,7 +373,7 @@ func (p *SdwanProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewURLFilteringPolicyDefinitionResource,
 		NewVPNListPolicyObjectResource,
 		NewVPNMembershipPolicyDefinitionResource,
-		NewZoneBasedFWPolicyDefinitionResource,
+		NewZoneBasedFirewallPolicyDefinitionResource,
 		NewZoneListPolicyObjectResource,
 		NewAttachFeatureDeviceTemplateResource,
 		NewActivateCentralizedPolicyResource,
@@ -516,7 +516,7 @@ func (p *SdwanProvider) DataSources(ctx context.Context) []func() datasource.Dat
 		NewVEdgeInventoryDataSource,
 		NewVPNListPolicyObjectDataSource,
 		NewVPNMembershipPolicyDefinitionDataSource,
-		NewZoneBasedFWPolicyDefinitionDataSource,
+		NewZoneBasedFirewallPolicyDefinitionDataSource,
 		NewZoneListPolicyObjectDataSource,
 	}
 }

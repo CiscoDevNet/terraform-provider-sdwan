@@ -27,25 +27,24 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanZoneBasedFWPolicyDefinition(t *testing.T) {
+func TestAccSdwanZoneBasedFirewallPolicyDefinition(t *testing.T) {
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "name", "Example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "description", "My description"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "mode", "security"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "apply_zone_pairs.0.source_zone", "self"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "default_action", "pass"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.rule_order", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.rule_name", "RULE_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.base_action", "inspect"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.match_entries.0.type", "sourceGeoLocationList"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.action_entries.0.type", "log"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_fw_policy_definition.test", "rules.0.action_entries.0.parameter", ""))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "name", "Example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "description", "My description"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "mode", "security"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "apply_zone_pairs.0.source_zone", "self"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "default_action", "pass"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.rule_order", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.rule_name", "RULE_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.base_action", "inspect"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.match_entries.0.type", "sourceGeoLocationList"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_zone_based_firewall_policy_definition.test", "rules.0.action_entries.0.type", "log"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanZoneBasedFWPolicyDefinitionPrerequisitesConfig + testAccSdwanZoneBasedFWPolicyDefinitionConfig_all(),
+				Config: testAccSdwanZoneBasedFirewallPolicyDefinitionPrerequisitesConfig + testAccSdwanZoneBasedFirewallPolicyDefinitionConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -55,7 +54,7 @@ func TestAccSdwanZoneBasedFWPolicyDefinition(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanZoneBasedFWPolicyDefinitionPrerequisitesConfig = `
+const testAccSdwanZoneBasedFirewallPolicyDefinitionPrerequisitesConfig = `
 resource "sdwan_zone_list_policy_object" "test" {
   name = "TF_TEST"
   entries = [
@@ -79,8 +78,8 @@ resource "sdwan_geo_location_list_policy_object" "test" {
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
-func testAccSdwanZoneBasedFWPolicyDefinitionConfig_all() string {
-	config := `resource "sdwan_zone_based_fw_policy_definition" "test" {` + "\n"
+func testAccSdwanZoneBasedFirewallPolicyDefinitionConfig_all() string {
+	config := `resource "sdwan_zone_based_firewall_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
 	config += `	mode = "security"` + "\n"
@@ -99,7 +98,6 @@ func testAccSdwanZoneBasedFWPolicyDefinitionConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	  action_entries = [{` + "\n"
 	config += `		type = "log"` + "\n"
-	config += `		parameter = ""` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"

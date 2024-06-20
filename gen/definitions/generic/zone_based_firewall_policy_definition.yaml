@@ -1,5 +1,5 @@
 ---
-name: Zone Based FW Policy Definition
+name: Zone Based Firewall Policy Definition
 rest_endpoint: /template/policy/definition/zonebasedfw/
 has_version: true
 id_attribute: definitionId
@@ -83,7 +83,7 @@ attributes:
       value: zoneBasedFW
     - model_name: entries
       tf_name: match_entries
-      data_path: [definition, match]
+      data_path: [match]
       type: List
       mandatory: true
       min_list: 1
@@ -117,7 +117,6 @@ attributes:
         example: 2
     - model_name: actions
       tf_name: action_entries
-      data_path: [definition]
       type: List
       description: List of actions entries
       attributes:

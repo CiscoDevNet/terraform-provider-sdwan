@@ -1,4 +1,4 @@
-resource "sdwan_zone_based_fw_policy_definition" "example" {
+resource "sdwan_zone_based_firewall_policy_definition" "example" {
   name        = "Example"
   description = "My description"
   mode        = "security"
@@ -22,8 +22,7 @@ resource "sdwan_zone_based_fw_policy_definition" "example" {
       ]
       action_entries = [
         {
-          type      = "log"
-          parameter = ""
+          type = "log"
         }
       ]
     }
