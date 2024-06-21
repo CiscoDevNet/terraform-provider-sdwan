@@ -544,7 +544,10 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
-	{{if not .RemoveId}}
+	{{if .GetBeforeDelete}}
+	_, _ = r.client.Get(state.getPath())
+	{{- end}}
+	{{- if not .RemoveId}}
 	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	{{- else}}
 	res, err := r.client.Delete(plan.getPath())

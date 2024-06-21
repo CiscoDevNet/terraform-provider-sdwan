@@ -209,6 +209,7 @@ type YamlConfig struct {
 	NoImport                 bool                  `yaml:"no_import"`
 	NoResource               bool                  `yaml:"no_resource"`
 	NoDataSource             bool                  `yaml:"no_data_source"`
+	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 }
 
 type YamlConfigAttribute struct {
