@@ -95,7 +95,7 @@ attributes:
         id: true
         mandatory: true
         description: Type of match entry
-        enum_values: [sourceFqdnList, sourceDataPrefixList, sourceGeoLocationList, sourcePortList, destinationFqdnList, destinationDataPrefixList, destinationGeoLocationList, destinationPortList, appList, protocolNameList, sourceIp, sourcePort, sourceFqdn, destinationIp, destinationPort, sourceGeoLocation, destinationGeoLocation, protocolName, protocol, app, ruleSetList]
+        enum_values: [sourceFqdnList, sourceDataPrefixList, sourceGeoLocationList, sourcePortList, destinationFqdnList, destinationDataPrefixList, destinationGeoLocationList, destinationPortList, appList, protocolNameList, sourceIp, sourcePort, sourceFqdn, destinationIp, destinationFqdn, destinationPort, sourceGeoLocation, destinationGeoLocation, protocolName, protocol, app, ruleSetList]
         example: sourceGeoLocationList
       - model_name: ref
         tf_name: policy_id

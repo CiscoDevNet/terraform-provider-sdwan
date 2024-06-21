@@ -144,10 +144,10 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationFqdn", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList"),
+											stringvalidator.OneOf("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationFqdn", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList"),
 										},
 									},
 									"policy_id": schema.StringAttribute{
