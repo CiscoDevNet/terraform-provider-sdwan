@@ -29,51 +29,51 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type ZoneBasedFWPolicyDefinition struct {
-	Id             types.String                                `tfsdk:"id"`
-	Version        types.Int64                                 `tfsdk:"version"`
-	Name           types.String                                `tfsdk:"name"`
-	Description    types.String                                `tfsdk:"description"`
-	Mode           types.String                                `tfsdk:"mode"`
-	ApplyZonePairs []ZoneBasedFWPolicyDefinitionApplyZonePairs `tfsdk:"apply_zone_pairs"`
-	DefaultAction  types.String                                `tfsdk:"default_action"`
-	Rules          []ZoneBasedFWPolicyDefinitionRules          `tfsdk:"rules"`
+type ZoneBasedFirewallPolicyDefinition struct {
+	Id             types.String                                      `tfsdk:"id"`
+	Version        types.Int64                                       `tfsdk:"version"`
+	Name           types.String                                      `tfsdk:"name"`
+	Description    types.String                                      `tfsdk:"description"`
+	Mode           types.String                                      `tfsdk:"mode"`
+	ApplyZonePairs []ZoneBasedFirewallPolicyDefinitionApplyZonePairs `tfsdk:"apply_zone_pairs"`
+	DefaultAction  types.String                                      `tfsdk:"default_action"`
+	Rules          []ZoneBasedFirewallPolicyDefinitionRules          `tfsdk:"rules"`
 }
 
-type ZoneBasedFWPolicyDefinitionApplyZonePairs struct {
+type ZoneBasedFirewallPolicyDefinitionApplyZonePairs struct {
 	SourceZone      types.String `tfsdk:"source_zone"`
 	DestinationZone types.String `tfsdk:"destination_zone"`
 }
 
-type ZoneBasedFWPolicyDefinitionRules struct {
-	RuleOrder     types.Int64                                     `tfsdk:"rule_order"`
-	RuleName      types.String                                    `tfsdk:"rule_name"`
-	BaseAction    types.String                                    `tfsdk:"base_action"`
-	MatchEntries  []ZoneBasedFWPolicyDefinitionRulesMatchEntries  `tfsdk:"match_entries"`
-	ActionEntries []ZoneBasedFWPolicyDefinitionRulesActionEntries `tfsdk:"action_entries"`
+type ZoneBasedFirewallPolicyDefinitionRules struct {
+	RuleOrder     types.Int64                                           `tfsdk:"rule_order"`
+	RuleName      types.String                                          `tfsdk:"rule_name"`
+	BaseAction    types.String                                          `tfsdk:"base_action"`
+	MatchEntries  []ZoneBasedFirewallPolicyDefinitionRulesMatchEntries  `tfsdk:"match_entries"`
+	ActionEntries []ZoneBasedFirewallPolicyDefinitionRulesActionEntries `tfsdk:"action_entries"`
 }
 
-type ZoneBasedFWPolicyDefinitionRulesMatchEntries struct {
+type ZoneBasedFirewallPolicyDefinitionRulesMatchEntries struct {
 	Type          types.String `tfsdk:"type"`
 	PolicyId      types.String `tfsdk:"policy_id"`
 	Value         types.String `tfsdk:"value"`
 	ValueVariable types.String `tfsdk:"value_variable"`
 }
-type ZoneBasedFWPolicyDefinitionRulesActionEntries struct {
+type ZoneBasedFirewallPolicyDefinitionRulesActionEntries struct {
 	Type types.String `tfsdk:"type"`
 }
 
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data ZoneBasedFWPolicyDefinition) getPath() string {
+func (data ZoneBasedFirewallPolicyDefinition) getPath() string {
 	return "/template/policy/definition/zonebasedfw/"
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ZoneBasedFWPolicyDefinition) toBody(ctx context.Context) string {
+func (data ZoneBasedFirewallPolicyDefinition) toBody(ctx context.Context) string {
 	body := ""
 	if true {
 		body, _ = sjson.Set(body, "type", "zoneBasedFW")
@@ -120,7 +120,7 @@ func (data ZoneBasedFWPolicyDefinition) toBody(ctx context.Context) string {
 				itemBody, _ = sjson.Set(itemBody, "sequenceType", "zoneBasedFW")
 			}
 			if true {
-				itemBody, _ = sjson.Set(itemBody, "definition.match.entries", []interface{}{})
+				itemBody, _ = sjson.Set(itemBody, "match.entries", []interface{}{})
 				for _, childItem := range item.MatchEntries {
 					itemChildBody := ""
 					if !childItem.Type.IsNull() {
@@ -135,17 +135,17 @@ func (data ZoneBasedFWPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.ValueVariable.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.ValueVariable.ValueString())
 					}
-					itemBody, _ = sjson.SetRaw(itemBody, "definition.match.entries.-1", itemChildBody)
+					itemBody, _ = sjson.SetRaw(itemBody, "match.entries.-1", itemChildBody)
 				}
 			}
 			if true {
-				itemBody, _ = sjson.Set(itemBody, "definition.actions", []interface{}{})
+				itemBody, _ = sjson.Set(itemBody, "actions", []interface{}{})
 				for _, childItem := range item.ActionEntries {
 					itemChildBody := ""
 					if !childItem.Type.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "type", childItem.Type.ValueString())
 					}
-					itemBody, _ = sjson.SetRaw(itemBody, "definition.actions.-1", itemChildBody)
+					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
 				}
 			}
 			body, _ = sjson.SetRaw(body, "definition.sequences.-1", itemBody)
@@ -157,7 +157,7 @@ func (data ZoneBasedFWPolicyDefinition) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ZoneBasedFirewallPolicyDefinition) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get("name"); value.Exists() {
 		data.Name = types.StringValue(value.String())
 	} else {
@@ -174,9 +174,9 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 		data.Mode = types.StringNull()
 	}
 	if value := res.Get("definition.entries"); value.Exists() && len(value.Array()) > 0 {
-		data.ApplyZonePairs = make([]ZoneBasedFWPolicyDefinitionApplyZonePairs, 0)
+		data.ApplyZonePairs = make([]ZoneBasedFirewallPolicyDefinitionApplyZonePairs, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ZoneBasedFWPolicyDefinitionApplyZonePairs{}
+			item := ZoneBasedFirewallPolicyDefinitionApplyZonePairs{}
 			if cValue := v.Get("sourceZone"); cValue.Exists() {
 				item.SourceZone = types.StringValue(cValue.String())
 			} else {
@@ -192,7 +192,7 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 		})
 	} else {
 		if len(data.ApplyZonePairs) > 0 {
-			data.ApplyZonePairs = []ZoneBasedFWPolicyDefinitionApplyZonePairs{}
+			data.ApplyZonePairs = []ZoneBasedFirewallPolicyDefinitionApplyZonePairs{}
 		}
 	}
 	if value := res.Get("definition.defaultAction.type"); value.Exists() {
@@ -201,9 +201,9 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 		data.DefaultAction = types.StringNull()
 	}
 	if value := res.Get("definition.sequences"); value.Exists() && len(value.Array()) > 0 {
-		data.Rules = make([]ZoneBasedFWPolicyDefinitionRules, 0)
+		data.Rules = make([]ZoneBasedFirewallPolicyDefinitionRules, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ZoneBasedFWPolicyDefinitionRules{}
+			item := ZoneBasedFirewallPolicyDefinitionRules{}
 			if cValue := v.Get("sequenceId"); cValue.Exists() {
 				item.RuleOrder = types.Int64Value(cValue.Int())
 			} else {
@@ -219,10 +219,10 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 			} else {
 				item.BaseAction = types.StringNull()
 			}
-			if cValue := v.Get("definition.match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.MatchEntries = make([]ZoneBasedFWPolicyDefinitionRulesMatchEntries, 0)
+			if cValue := v.Get("match.entries"); cValue.Exists() && len(cValue.Array()) > 0 {
+				item.MatchEntries = make([]ZoneBasedFirewallPolicyDefinitionRulesMatchEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ZoneBasedFWPolicyDefinitionRulesMatchEntries{}
+					cItem := ZoneBasedFirewallPolicyDefinitionRulesMatchEntries{}
 					if ccValue := cv.Get("field"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
@@ -248,13 +248,13 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 				})
 			} else {
 				if len(item.MatchEntries) > 0 {
-					item.MatchEntries = []ZoneBasedFWPolicyDefinitionRulesMatchEntries{}
+					item.MatchEntries = []ZoneBasedFirewallPolicyDefinitionRulesMatchEntries{}
 				}
 			}
-			if cValue := v.Get("definition.actions"); cValue.Exists() && len(cValue.Array()) > 0 {
-				item.ActionEntries = make([]ZoneBasedFWPolicyDefinitionRulesActionEntries, 0)
+			if cValue := v.Get("actions"); cValue.Exists() && len(cValue.Array()) > 0 {
+				item.ActionEntries = make([]ZoneBasedFirewallPolicyDefinitionRulesActionEntries, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ZoneBasedFWPolicyDefinitionRulesActionEntries{}
+					cItem := ZoneBasedFirewallPolicyDefinitionRulesActionEntries{}
 					if ccValue := cv.Get("type"); ccValue.Exists() {
 						cItem.Type = types.StringValue(ccValue.String())
 					} else {
@@ -265,7 +265,7 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 				})
 			} else {
 				if len(item.ActionEntries) > 0 {
-					item.ActionEntries = []ZoneBasedFWPolicyDefinitionRulesActionEntries{}
+					item.ActionEntries = []ZoneBasedFirewallPolicyDefinitionRulesActionEntries{}
 				}
 			}
 			data.Rules = append(data.Rules, item)
@@ -273,7 +273,7 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 		})
 	} else {
 		if len(data.Rules) > 0 {
-			data.Rules = []ZoneBasedFWPolicyDefinitionRules{}
+			data.Rules = []ZoneBasedFirewallPolicyDefinitionRules{}
 		}
 	}
 }
@@ -281,7 +281,7 @@ func (data *ZoneBasedFWPolicyDefinition) fromBody(ctx context.Context, res gjson
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin hasChanges
-func (data *ZoneBasedFWPolicyDefinition) hasChanges(ctx context.Context, state *ZoneBasedFWPolicyDefinition) bool {
+func (data *ZoneBasedFirewallPolicyDefinition) hasChanges(ctx context.Context, state *ZoneBasedFirewallPolicyDefinition) bool {
 	hasChanges := false
 	if !data.Name.Equal(state.Name) {
 		hasChanges = true

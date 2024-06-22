@@ -3,6 +3,7 @@ name: Rewrite Rule Policy Definition
 rest_endpoint: /template/policy/definition/rewriterule/
 has_version: true
 id_attribute: definitionId
+get_before_delete: true
 type_value: rewriteRule
 doc_category: Localized Policies
 attributes:

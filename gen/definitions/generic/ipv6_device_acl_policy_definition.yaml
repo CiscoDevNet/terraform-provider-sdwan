@@ -3,6 +3,7 @@ name: IPv6 Device ACL Policy Definition
 rest_endpoint: /template/policy/definition/deviceaccesspolicyv6/
 has_version: true
 id_attribute: definitionId
+get_before_delete: true
 type_value: deviceAccessPolicyv6
 doc_category: Localized Policies
 attributes:
