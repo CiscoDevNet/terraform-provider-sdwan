@@ -35,26 +35,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &ZoneBasedFWPolicyDefinitionDataSource{}
-	_ datasource.DataSourceWithConfigure = &ZoneBasedFWPolicyDefinitionDataSource{}
+	_ datasource.DataSource              = &ZoneBasedFirewallPolicyDefinitionDataSource{}
+	_ datasource.DataSourceWithConfigure = &ZoneBasedFirewallPolicyDefinitionDataSource{}
 )
 
-func NewZoneBasedFWPolicyDefinitionDataSource() datasource.DataSource {
-	return &ZoneBasedFWPolicyDefinitionDataSource{}
+func NewZoneBasedFirewallPolicyDefinitionDataSource() datasource.DataSource {
+	return &ZoneBasedFirewallPolicyDefinitionDataSource{}
 }
 
-type ZoneBasedFWPolicyDefinitionDataSource struct {
+type ZoneBasedFirewallPolicyDefinitionDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *ZoneBasedFWPolicyDefinitionDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_zone_based_fw_policy_definition"
+func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_zone_based_firewall_policy_definition"
 }
 
-func (d *ZoneBasedFWPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Zone Based FW Policy Definition .",
+		MarkdownDescription: "This data source can read the Zone Based Firewall Policy Definition .",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -157,7 +157,7 @@ func (d *ZoneBasedFWPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 	}
 }
 
-func (d *ZoneBasedFWPolicyDefinitionDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -168,8 +168,8 @@ func (d *ZoneBasedFWPolicyDefinitionDataSource) Configure(_ context.Context, req
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *ZoneBasedFWPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ZoneBasedFWPolicyDefinition
+func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config ZoneBasedFirewallPolicyDefinition
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

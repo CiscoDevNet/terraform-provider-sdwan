@@ -44,26 +44,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &ZoneBasedFWPolicyDefinitionResource{}
-var _ resource.ResourceWithImportState = &ZoneBasedFWPolicyDefinitionResource{}
+var _ resource.Resource = &ZoneBasedFirewallPolicyDefinitionResource{}
+var _ resource.ResourceWithImportState = &ZoneBasedFirewallPolicyDefinitionResource{}
 
-func NewZoneBasedFWPolicyDefinitionResource() resource.Resource {
-	return &ZoneBasedFWPolicyDefinitionResource{}
+func NewZoneBasedFirewallPolicyDefinitionResource() resource.Resource {
+	return &ZoneBasedFirewallPolicyDefinitionResource{}
 }
 
-type ZoneBasedFWPolicyDefinitionResource struct {
+type ZoneBasedFirewallPolicyDefinitionResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *ZoneBasedFWPolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_zone_based_fw_policy_definition"
+func (r *ZoneBasedFirewallPolicyDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_zone_based_firewall_policy_definition"
 }
 
-func (r *ZoneBasedFWPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Zone Based FW Policy Definition .").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Zone Based Firewall Policy Definition .").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -144,10 +144,10 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Schema(ctx context.Context, req re
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationFqdn", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList"),
+											stringvalidator.OneOf("sourceFqdnList", "sourceDataPrefixList", "sourceGeoLocationList", "sourcePortList", "destinationFqdnList", "destinationDataPrefixList", "destinationGeoLocationList", "destinationPortList", "appList", "protocolNameList", "sourceIp", "sourcePort", "sourceFqdn", "destinationIp", "destinationFqdn", "destinationPort", "sourceGeoLocation", "destinationGeoLocation", "protocolName", "protocol", "app", "ruleSetList"),
 										},
 									},
 									"policy_id": schema.StringAttribute{
@@ -193,7 +193,7 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Schema(ctx context.Context, req re
 	}
 }
 
-func (r *ZoneBasedFWPolicyDefinitionResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *ZoneBasedFirewallPolicyDefinitionResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -205,8 +205,8 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Configure(_ context.Context, req r
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *ZoneBasedFWPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ZoneBasedFWPolicyDefinition
+func (r *ZoneBasedFirewallPolicyDefinitionResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan ZoneBasedFirewallPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -237,8 +237,8 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Create(ctx context.Context, req re
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *ZoneBasedFWPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state ZoneBasedFWPolicyDefinition
+func (r *ZoneBasedFirewallPolicyDefinitionResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state ZoneBasedFirewallPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -269,8 +269,8 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Read(ctx context.Context, req reso
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *ZoneBasedFWPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ZoneBasedFWPolicyDefinition
+func (r *ZoneBasedFirewallPolicyDefinitionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state ZoneBasedFirewallPolicyDefinition
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -316,8 +316,8 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Update(ctx context.Context, req re
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *ZoneBasedFWPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ZoneBasedFWPolicyDefinition
+func (r *ZoneBasedFirewallPolicyDefinitionResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state ZoneBasedFirewallPolicyDefinition
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -342,7 +342,7 @@ func (r *ZoneBasedFWPolicyDefinitionResource) Delete(ctx context.Context, req re
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *ZoneBasedFWPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *ZoneBasedFirewallPolicyDefinitionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
