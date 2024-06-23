@@ -12,6 +12,9 @@
 - BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
 - BREAKING CHANGE: Rename `ipv4_route_gateway_next_ho` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `next_hops`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/266)
 - Add workaround for issue when deleting localized policy objects where the reference count is not updated
+- Add `sdwan_service_lan_vpn_interface_ipsec_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_interface_gre_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_interface_svi_profile_parcel` resource and data source
 
 ## 0.3.9
 
