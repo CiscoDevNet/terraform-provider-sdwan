@@ -47,7 +47,7 @@ type SystemIPv6DeviceAccessSequences struct {
 	Id                              types.Int64  `tfsdk:"id"`
 	Name                            types.String `tfsdk:"name"`
 	BaseAction                      types.String `tfsdk:"base_action"`
-	DeviceAccessProtocol            types.Int64  `tfsdk:"device_access_protocol"`
+	DeviceAccessPort                types.Int64  `tfsdk:"device_access_port"`
 	DestinationDataPrefixListId     types.String `tfsdk:"destination_data_prefix_list_id"`
 	DestinationIpPrefixList         types.Set    `tfsdk:"destination_ip_prefix_list"`
 	DestinationIpPrefixListVariable types.String `tfsdk:"destination_ip_prefix_list_variable"`
@@ -104,9 +104,9 @@ func (data SystemIPv6DeviceAccess) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
 		}
-		if !item.DeviceAccessProtocol.IsNull() {
+		if !item.DeviceAccessPort.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationPort.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationPort.value", item.DeviceAccessProtocol.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationPort.value", item.DeviceAccessPort.ValueInt64())
 		}
 		if !item.DestinationDataPrefixListId.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationDataPrefixList.refId.optionType", "global")
@@ -194,12 +194,12 @@ func (data *SystemIPv6DeviceAccess) fromBody(ctx context.Context, res gjson.Resu
 					item.BaseAction = types.StringValue(va.String())
 				}
 			}
-			item.DeviceAccessProtocol = types.Int64Null()
+			item.DeviceAccessPort = types.Int64Null()
 
 			if t := v.Get("matchEntries.destinationPort.optionType"); t.Exists() {
 				va := v.Get("matchEntries.destinationPort.value")
 				if t.String() == "global" {
-					item.DeviceAccessProtocol = types.Int64Value(va.Int())
+					item.DeviceAccessPort = types.Int64Value(va.Int())
 				}
 			}
 			item.DestinationDataPrefixListId = types.StringNull()
@@ -321,12 +321,12 @@ func (data *SystemIPv6DeviceAccess) updateFromBody(ctx context.Context, res gjso
 				data.Sequences[i].BaseAction = types.StringValue(va.String())
 			}
 		}
-		data.Sequences[i].DeviceAccessProtocol = types.Int64Null()
+		data.Sequences[i].DeviceAccessPort = types.Int64Null()
 
 		if t := r.Get("matchEntries.destinationPort.optionType"); t.Exists() {
 			va := r.Get("matchEntries.destinationPort.value")
 			if t.String() == "global" {
-				data.Sequences[i].DeviceAccessProtocol = types.Int64Value(va.Int())
+				data.Sequences[i].DeviceAccessPort = types.Int64Value(va.Int())
 			}
 		}
 		data.Sequences[i].DestinationDataPrefixListId = types.StringNull()

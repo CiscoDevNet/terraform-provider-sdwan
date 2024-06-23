@@ -100,7 +100,7 @@ func (d *SystemIPv6DeviceAccessProfileParcelDataSource) Schema(ctx context.Conte
 							MarkdownDescription: "Base Action",
 							Computed:            true,
 						},
-						"device_access_protocol": schema.Int64Attribute{
+						"device_access_port": schema.Int64Attribute{
 							MarkdownDescription: "device access protocol",
 							Computed:            true,
 						},

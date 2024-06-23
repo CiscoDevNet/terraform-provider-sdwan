@@ -25,7 +25,7 @@ attributes:
     - model_name: baseAction
       example: accept
     - model_name: destinationPort
-      tf_name: device_access_protocol
+      tf_name: device_access_port
       data_path: [matchEntries]
       example: 161
     - model_name: refId

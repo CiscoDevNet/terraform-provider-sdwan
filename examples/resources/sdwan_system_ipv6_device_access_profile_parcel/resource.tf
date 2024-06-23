@@ -5,10 +5,10 @@ resource "sdwan_system_ipv6_device_access_profile_parcel" "example" {
   default_action     = "drop"
   sequences = [
     {
-      id                     = 1
-      name                   = "SEQ_1"
-      base_action            = "accept"
-      device_access_protocol = 22
+      id                 = 1
+      name               = "SEQ_1"
+      base_action        = "accept"
+      device_access_port = 22
     }
   ]
 }

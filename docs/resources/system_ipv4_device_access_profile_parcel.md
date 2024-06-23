@@ -22,10 +22,10 @@ resource "sdwan_system_ipv4_device_access_profile_parcel" "example" {
   default_action     = "drop"
   sequences = [
     {
-      id                     = 1
-      name                   = "SEQ_1"
-      base_action            = "accept"
-      device_access_protocol = 161
+      id                 = 1
+      name               = "SEQ_1"
+      base_action        = "accept"
+      device_access_port = 161
     }
   ]
 }
@@ -62,7 +62,7 @@ Optional:
 - `destination_data_prefix_list_id` (String)
 - `destination_ip_prefix_list` (Set of String) Destination Data IP Prefix List
 - `destination_ip_prefix_list_variable` (String) Variable name
-- `device_access_protocol` (Number) device access protocol
+- `device_access_port` (Number) device access protocol
 - `id` (Number) Sequence Id
   - Range: `1`-`65536`
 - `name` (String) Sequence Name

@@ -44,7 +44,7 @@ Read-Only:
 - `destination_data_prefix_list_id` (String)
 - `destination_ip_prefix_list` (Set of String) Destination Data IP Prefix List
 - `destination_ip_prefix_list_variable` (String) Variable name
-- `device_access_protocol` (Number) device access protocol
+- `device_access_port` (Number) device access protocol
 - `id` (Number) Sequence Id
 - `name` (String) Sequence Name
 - `source_data_prefix_list_id` (String)

@@ -37,7 +37,7 @@ func TestAccSdwanSystemIPv4DeviceAccessProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.name", "SEQ_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.base_action", "accept"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.device_access_protocol", "161"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.device_access_port", "161"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -89,7 +89,7 @@ func testAccSdwanSystemIPv4DeviceAccessProfileParcelConfig_all() string {
 	config += `	  id = 1` + "\n"
 	config += `	  name = "SEQ_1"` + "\n"
 	config += `	  base_action = "accept"` + "\n"
-	config += `	  device_access_protocol = 161` + "\n"
+	config += `	  device_access_port = 161` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config

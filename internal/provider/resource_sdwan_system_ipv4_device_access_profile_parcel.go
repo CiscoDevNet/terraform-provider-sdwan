@@ -122,7 +122,7 @@ func (r *SystemIPv4DeviceAccessProfileParcelResource) Schema(ctx context.Context
 								stringvalidator.OneOf("drop", "accept"),
 							},
 						},
-						"device_access_protocol": schema.Int64Attribute{
+						"device_access_port": schema.Int64Attribute{
 							MarkdownDescription: helpers.NewAttributeDescription("device access protocol").String,
 							Optional:            true,
 						},
