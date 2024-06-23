@@ -43,8 +43,8 @@ type TransportManagementVPNInterfaceEthernet struct {
 	ShutdownVariable                      types.String                                                    `tfsdk:"shutdown_variable"`
 	InterfaceName                         types.String                                                    `tfsdk:"interface_name"`
 	InterfaceNameVariable                 types.String                                                    `tfsdk:"interface_name_variable"`
-	BasicConfigurationDescription         types.String                                                    `tfsdk:"basic_configuration_description"`
-	BasicConfigurationDescriptionVariable types.String                                                    `tfsdk:"basic_configuration_description_variable"`
+	InterfaceDescription                  types.String                                                    `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable          types.String                                                    `tfsdk:"interface_description_variable"`
 	Ipv4DhcpDistance                      types.Int64                                                     `tfsdk:"ipv4_dhcp_distance"`
 	Ipv4DhcpDistanceVariable              types.String                                                    `tfsdk:"ipv4_dhcp_distance_variable"`
 	Ipv4Address                           types.String                                                    `tfsdk:"ipv4_address"`
@@ -144,15 +144,15 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 		body, _ = sjson.Set(body, path+"interfaceName.value", data.InterfaceName.ValueString())
 	}
 
-	if !data.BasicConfigurationDescriptionVariable.IsNull() {
+	if !data.InterfaceDescriptionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"description.optionType", "variable")
-		body, _ = sjson.Set(body, path+"description.value", data.BasicConfigurationDescriptionVariable.ValueString())
-	} else if data.BasicConfigurationDescription.IsNull() {
+		body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescriptionVariable.ValueString())
+	} else if data.InterfaceDescription.IsNull() {
 		body, _ = sjson.Set(body, path+"description.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"description.optionType", "global")
-		body, _ = sjson.Set(body, path+"description.value", data.BasicConfigurationDescription.ValueString())
+		body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescription.ValueString())
 	}
 
 	if !data.Ipv4DhcpDistanceVariable.IsNull() {
@@ -433,14 +433,14 @@ func (data *TransportManagementVPNInterfaceEthernet) fromBody(ctx context.Contex
 			data.InterfaceName = types.StringValue(va.String())
 		}
 	}
-	data.BasicConfigurationDescription = types.StringNull()
-	data.BasicConfigurationDescriptionVariable = types.StringNull()
+	data.InterfaceDescription = types.StringNull()
+	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "description.optionType"); t.Exists() {
 		va := res.Get(path + "description.value")
 		if t.String() == "variable" {
-			data.BasicConfigurationDescriptionVariable = types.StringValue(va.String())
+			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.BasicConfigurationDescription = types.StringValue(va.String())
+			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4DhcpDistance = types.Int64Null()
@@ -730,14 +730,14 @@ func (data *TransportManagementVPNInterfaceEthernet) updateFromBody(ctx context.
 			data.InterfaceName = types.StringValue(va.String())
 		}
 	}
-	data.BasicConfigurationDescription = types.StringNull()
-	data.BasicConfigurationDescriptionVariable = types.StringNull()
+	data.InterfaceDescription = types.StringNull()
+	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "description.optionType"); t.Exists() {
 		va := res.Get(path + "description.value")
 		if t.String() == "variable" {
-			data.BasicConfigurationDescriptionVariable = types.StringValue(va.String())
+			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.BasicConfigurationDescription = types.StringValue(va.String())
+			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4DhcpDistance = types.Int64Null()
@@ -1056,10 +1056,10 @@ func (data *TransportManagementVPNInterfaceEthernet) isNull(ctx context.Context,
 	if !data.InterfaceNameVariable.IsNull() {
 		return false
 	}
-	if !data.BasicConfigurationDescription.IsNull() {
+	if !data.InterfaceDescription.IsNull() {
 		return false
 	}
-	if !data.BasicConfigurationDescriptionVariable.IsNull() {
+	if !data.InterfaceDescriptionVariable.IsNull() {
 		return false
 	}
 	if !data.Ipv4DhcpDistance.IsNull() {

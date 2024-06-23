@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -3175,9 +3174,9 @@ func (data *TransportWANVPNInterfaceEthernet) updateFromBody(ctx context.Context
 		}
 	}
 	for i := range data.TunnelInterfaceEncapsulations {
-		keys := [...]string{"encap", "preference"}
-		keyValues := [...]string{data.TunnelInterfaceEncapsulations[i].Encapsulation.ValueString(), strconv.FormatInt(data.TunnelInterfaceEncapsulations[i].Preference.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{"", data.TunnelInterfaceEncapsulations[i].PreferenceVariable.ValueString()}
+		keys := [...]string{"encap"}
+		keyValues := [...]string{data.TunnelInterfaceEncapsulations[i].Encapsulation.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "encapsulation").ForEach(

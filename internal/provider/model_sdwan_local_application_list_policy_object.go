@@ -37,7 +37,8 @@ type LocalApplicationListPolicyObject struct {
 }
 
 type LocalApplicationListPolicyObjectEntries struct {
-	Application types.String `tfsdk:"application"`
+	Application       types.String `tfsdk:"application"`
+	ApplicationFamily types.String `tfsdk:"application_family"`
 }
 
 // End of section. //template:end types
@@ -65,6 +66,9 @@ func (data LocalApplicationListPolicyObject) toBody(ctx context.Context) string 
 			if !item.Application.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "app", item.Application.ValueString())
 			}
+			if !item.ApplicationFamily.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "appFamily", item.ApplicationFamily.ValueString())
+			}
 			body, _ = sjson.SetRaw(body, "entries.-1", itemBody)
 		}
 	}
@@ -89,6 +93,11 @@ func (data *LocalApplicationListPolicyObject) fromBody(ctx context.Context, res 
 			} else {
 				item.Application = types.StringNull()
 			}
+			if cValue := v.Get("appFamily"); cValue.Exists() {
+				item.ApplicationFamily = types.StringValue(cValue.String())
+			} else {
+				item.ApplicationFamily = types.StringNull()
+			}
 			data.Entries = append(data.Entries, item)
 			return true
 		})
@@ -112,6 +121,9 @@ func (data *LocalApplicationListPolicyObject) hasChanges(ctx context.Context, st
 	} else {
 		for i := range data.Entries {
 			if !data.Entries[i].Application.Equal(state.Entries[i].Application) {
+				hasChanges = true
+			}
+			if !data.Entries[i].ApplicationFamily.Equal(state.Entries[i].ApplicationFamily) {
 				hasChanges = true
 			}
 		}

@@ -209,6 +209,7 @@ type YamlConfig struct {
 	NoImport                 bool                  `yaml:"no_import"`
 	NoResource               bool                  `yaml:"no_resource"`
 	NoDataSource             bool                  `yaml:"no_data_source"`
+	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 }
 
 type YamlConfigAttribute struct {
@@ -745,12 +746,23 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 			} else if t.Get("properties.value.type").String() == "boolean" {
 				attr.Type = "Bool"
 			} else if t.Get("properties.value.type").String() == "integer" || t.Get("properties.value.type").String() == "number" || t.Get("properties.value.oneOf.0.type").String() == "integer" || t.Get("properties.value.oneOf.0.type").String() == "number" {
-				attr.Type = "Int64"
-				if value := t.Get("properties.value.minimum"); value.Exists() {
-					attr.MinInt = value.Int()
-				}
-				if value := t.Get("properties.value.maximum"); value.Exists() {
-					attr.MaxInt = value.Int()
+
+				if value := t.Get("properties.value.multipleOf"); value.Exists() {
+					attr.Type = "Float64"
+					if value := t.Get("properties.value.minimum"); value.Exists() {
+						attr.MinFloat = value.Float()
+					}
+					if value := t.Get("properties.value.maximum"); value.Exists() {
+						attr.MaxFloat = value.Float()
+					}
+				} else {
+					attr.Type = "Int64"
+					if value := t.Get("properties.value.minimum"); value.Exists() {
+						attr.MinInt = value.Int()
+					}
+					if value := t.Get("properties.value.maximum"); value.Exists() {
+						attr.MaxInt = value.Int()
+					}
 				}
 			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
 				attr.Type = "Set"
@@ -788,7 +800,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		if value := r.Get("properties.optionType.enum.0"); value.String() == "default" {
 			d = r
 		}
-		if d.Exists() && !isOneOfAttribute {
+		if d.Exists() && (!isOneOfAttribute || attr.DefaultValuePresent == true) {
 			attr.DefaultValuePresent = true
 			if value := d.Get("properties.value.enum.0"); value.Exists() {
 				if value.String() == "" {

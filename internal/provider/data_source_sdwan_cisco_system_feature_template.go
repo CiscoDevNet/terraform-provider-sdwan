@@ -528,7 +528,7 @@ func (d *CiscoSystemFeatureTemplateDataSource) Schema(ctx context.Context, req d
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"affinity_group_preference": schema.SetAttribute{
+			"affinity_group_preference": schema.ListAttribute{
 				MarkdownDescription: "Set the affinity group preference",
 				ElementType:         types.Int64Type,
 				Computed:            true,

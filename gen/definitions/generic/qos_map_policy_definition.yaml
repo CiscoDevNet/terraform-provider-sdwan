@@ -3,6 +3,7 @@ name: QoS Map Policy Definition
 rest_endpoint: /template/policy/definition/qosmap/
 has_version: true
 id_attribute: definitionId
+get_before_delete: true
 type_value: qosMap
 doc_category: Localized Policies
 attributes:

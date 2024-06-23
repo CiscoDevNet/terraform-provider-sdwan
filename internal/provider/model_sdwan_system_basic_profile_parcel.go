@@ -45,9 +45,9 @@ type SystemBasic struct {
 	ConfigDescriptionVariable        types.String                     `tfsdk:"config_description_variable"`
 	Location                         types.String                     `tfsdk:"location"`
 	LocationVariable                 types.String                     `tfsdk:"location_variable"`
-	GpsLongitude                     types.Int64                      `tfsdk:"gps_longitude"`
+	GpsLongitude                     types.Float64                    `tfsdk:"gps_longitude"`
 	GpsLongitudeVariable             types.String                     `tfsdk:"gps_longitude_variable"`
-	GpsLatitude                      types.Int64                      `tfsdk:"gps_latitude"`
+	GpsLatitude                      types.Float64                    `tfsdk:"gps_latitude"`
 	GpsLatitudeVariable              types.String                     `tfsdk:"gps_latitude_variable"`
 	GpsGeoFencingEnable              types.Bool                       `tfsdk:"gps_geo_fencing_enable"`
 	GpsGeoFencingRange               types.Int64                      `tfsdk:"gps_geo_fencing_range"`
@@ -177,7 +177,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "global")
-		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitude.ValueInt64())
+		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitude.ValueFloat64())
 	}
 
 	if !data.GpsLatitudeVariable.IsNull() {
@@ -188,7 +188,7 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "global")
-		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitude.ValueInt64())
+		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitude.ValueFloat64())
 	}
 	if data.GpsGeoFencingEnable.IsNull() {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.optionType", "default")
@@ -549,24 +549,24 @@ func (data *SystemBasic) fromBody(ctx context.Context, res gjson.Result) {
 			data.Location = types.StringValue(va.String())
 		}
 	}
-	data.GpsLongitude = types.Int64Null()
+	data.GpsLongitude = types.Float64Null()
 	data.GpsLongitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.longitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.longitude.value")
 		if t.String() == "variable" {
 			data.GpsLongitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GpsLongitude = types.Int64Value(va.Int())
+			data.GpsLongitude = types.Float64Value(va.Float())
 		}
 	}
-	data.GpsLatitude = types.Int64Null()
+	data.GpsLatitude = types.Float64Null()
 	data.GpsLatitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.latitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.latitude.value")
 		if t.String() == "variable" {
 			data.GpsLatitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GpsLatitude = types.Int64Value(va.Int())
+			data.GpsLatitude = types.Float64Value(va.Float())
 		}
 	}
 	data.GpsGeoFencingEnable = types.BoolNull()
@@ -904,24 +904,24 @@ func (data *SystemBasic) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.Location = types.StringValue(va.String())
 		}
 	}
-	data.GpsLongitude = types.Int64Null()
+	data.GpsLongitude = types.Float64Null()
 	data.GpsLongitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.longitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.longitude.value")
 		if t.String() == "variable" {
 			data.GpsLongitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GpsLongitude = types.Int64Value(va.Int())
+			data.GpsLongitude = types.Float64Value(va.Float())
 		}
 	}
-	data.GpsLatitude = types.Int64Null()
+	data.GpsLatitude = types.Float64Null()
 	data.GpsLatitudeVariable = types.StringNull()
 	if t := res.Get(path + "gpsLocation.latitude.optionType"); t.Exists() {
 		va := res.Get(path + "gpsLocation.latitude.value")
 		if t.String() == "variable" {
 			data.GpsLatitudeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GpsLatitude = types.Int64Value(va.Int())
+			data.GpsLatitude = types.Float64Value(va.Float())
 		}
 	}
 	data.GpsGeoFencingEnable = types.BoolNull()

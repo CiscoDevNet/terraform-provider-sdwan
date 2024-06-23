@@ -608,7 +608,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 			if !childItem.ThresholdVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.ThresholdVariable.ValueString())
-			} else if !childItem.Threshold.IsNull() {
+			} else if childItem.Threshold.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", 75)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.Threshold.ValueInt64())
 			}
@@ -817,7 +820,10 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 			if !childItem.ThresholdVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "variable")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.ThresholdVariable.ValueString())
-			} else if !childItem.Threshold.IsNull() {
+			} else if childItem.Threshold.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "default")
+				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", 75)
+			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "maxPrefixConfig.threshold.value", childItem.Threshold.ValueInt64())
 			}

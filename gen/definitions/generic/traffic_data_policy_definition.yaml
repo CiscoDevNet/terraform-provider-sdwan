@@ -293,6 +293,7 @@ attributes:
                 fallbackToRouting,
                 log,
                 lossProtect,
+                lossProtectPktDup,
                 lossProtectFec,
                 nat,
                 redirectDns,
@@ -359,7 +360,7 @@ attributes:
             type: String
             enum_values: [fecAdaptive, fecAlways, packetDuplication]
             description: Loss correction
-            example: fecAdaptive
+            example: packetDuplication
             exclude_test: true
           - model_name: parameter
             tf_name: loss_correction_fec
@@ -370,6 +371,16 @@ attributes:
             enum_values: [fecAdaptive, fecAlways, packetDuplication]
             description: Loss correction FEC
             example: fecAdaptive
+            exclude_test: true
+          - model_name: parameter
+            tf_name: loss_correction_packet_duplication
+            conditional_attribute:
+              name: type
+              value: lossProtectPktDup
+            type: String
+            enum_values: [fecAdaptive, fecAlways, packetDuplication]
+            description: Loss correction packet duplication
+            example: packetDuplication
             exclude_test: true
           - model_name: value
             tf_name: loss_correction_fec_threshold

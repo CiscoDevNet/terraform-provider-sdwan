@@ -1,0 +1,149 @@
+---
+name: Zone Based Firewall Policy Definition
+rest_endpoint: /template/policy/definition/zonebasedfw/
+has_version: true
+id_attribute: definitionId
+doc_category: Security Policies
+attributes:
+  - model_name: type
+    type: String
+    value: zoneBasedFW
+  - model_name: name
+    tf_name: name
+    type: String
+    mandatory: true
+    description: The name of the policy definition
+    example: Example
+  - model_name: description
+    tf_name: description
+    type: String
+    mandatory: true
+    description: The description of the policy definition
+    example: My description
+  - model_name: mode
+    tf_name: mode
+    type: String
+    mandatory: true
+    enum_values: [security, unified]
+    description: The policy mode
+    example: security
+  - model_name: entries
+    tf_name: apply_zone_pairs
+    data_path: [definition]
+    type: List
+    min_list: 1
+    mandatory: true
+    attributes:
+    - model_name: sourceZone
+      type: String
+      description: Source Zone
+      example: self
+    - model_name: destinationZone
+      type: String
+      description: Destination Zone
+      example: 0d26a366-4a11-4942-a5ea-82af9502889f
+      test_value: sdwan_zone_list_policy_object.test.id
+  - model_name: type
+    tf_name: default_action
+    data_path: [definition, defaultAction]
+    type: String
+    mandatory: true
+    description: Default Action
+    enum_values: [pass, drop] 
+    example: pass
+  - model_name: sequences
+    tf_name: rules
+    data_path: [definition]
+    type: List
+    min_list: 1
+    mandatory: true
+    attributes:
+    - model_name: sequenceId
+      tf_name: rule_order
+      type: Int64
+      id: true
+      mandatory: true
+      description: Rule 
+      example: 1
+    - model_name: sequenceName
+      tf_name: rule_name
+      type: String
+      mandatory: true
+      description: Rule name
+      example: RULE_1
+    - model_name: baseAction
+      tf_name: base_action
+      type: String
+      mandatory: true
+      description: Base action
+      enum_values: [pass, drop, inspect]
+      example: inspect
+    - model_name: sequenceType
+      type: String
+      value: zoneBasedFW
+    - model_name: entries
+      tf_name: match_entries
+      data_path: [match]
+      type: List
+      mandatory: true
+      min_list: 1
+      description: List of match entries
+      attributes:
+      - model_name: field
+        tf_name: type
+        type: String
+        id: true
+        mandatory: true
+        description: Type of match entry
+        enum_values: [sourceFqdnList, sourceDataPrefixList, sourceGeoLocationList, sourcePortList, destinationFqdnList, destinationDataPrefixList, destinationGeoLocationList, destinationPortList, appList, protocolNameList, sourceIp, sourcePort, sourceFqdn, destinationIp, destinationFqdn, destinationPort, sourceGeoLocation, destinationGeoLocation, protocolName, protocol, app, ruleSetList]
+        example: sourceGeoLocationList
+      - model_name: ref
+        tf_name: policy_id
+        type: String
+        description: policy id for selected match entry
+        example: 0d26a366-4a11-4942-a5ea-82af9502889f
+        test_value: sdwan_geo_location_list_policy_object.test.id
+      - model_name: value
+        tf_name: value
+        type: String
+        description: value for selected match entry
+        exclude_test: true
+        example: 2
+      - model_name: vipVariableName
+        tf_name: value_variable
+        type: String
+        description: variable value for selected match entry if it has variable option (sourceIp & destinationIp)
+        exclude_test: true
+        example: 2
+    - model_name: actions
+      tf_name: action_entries
+      type: List
+      description: List of actions entries
+      attributes:
+        - model_name: type
+          tf_name: type
+          type: String
+          id: true
+          description: Type of action entry
+          enum_values: [log, connectionEvents]
+          example: log
+
+test_prerequisites: |
+  resource "sdwan_zone_list_policy_object" "test" {
+    name = "TF_TEST"
+    entries = [
+      {
+        vpn = "1"
+      }
+    ]
+  }
+
+  resource "sdwan_geo_location_list_policy_object" "test" {
+    name = "Example"
+    entries = [
+      {
+        country   = "USA"
+        continent = "AS"
+      }
+    ]
+  }

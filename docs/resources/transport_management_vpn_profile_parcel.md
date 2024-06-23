@@ -16,14 +16,14 @@ This resource can manage a Transport Management VPN profile parcel.
 
 ```terraform
 resource "sdwan_transport_management_vpn_profile_parcel" "example" {
-  name                            = "Example"
-  description                     = "My Example"
-  feature_profile_id              = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  basic_configuration_description = "example"
-  primary_dns_address_ipv4        = "1.2.3.4"
-  secondary_dns_address_ipv4      = "2.3.4.5"
-  primary_dns_address_ipv6        = "2001:0:0:1::0"
-  secondary_dns_address_ipv6      = "2001:0:0:2::0"
+  name                       = "Example"
+  description                = "My Example"
+  feature_profile_id         = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  interface_description      = "example"
+  primary_dns_address_ipv4   = "1.2.3.4"
+  secondary_dns_address_ipv4 = "2.3.4.5"
+  primary_dns_address_ipv6   = "2001:0:0:1::0"
+  secondary_dns_address_ipv6 = "2001:0:0:2::0"
   new_host_mappings = [
     {
       host_name            = "example"
@@ -35,7 +35,7 @@ resource "sdwan_transport_management_vpn_profile_parcel" "example" {
       network_address = "1.2.3.4"
       subnet_mask     = "0.0.0.0"
       gateway         = "nextHop"
-      ipv4_route_gateway_next_ho = [
+      next_hops = [
         {
           address                 = "1.2.3.4"
           administrative_distance = 1
@@ -67,10 +67,10 @@ resource "sdwan_transport_management_vpn_profile_parcel" "example" {
 
 ### Optional
 
-- `basic_configuration_description` (String) Name
-- `basic_configuration_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `feature_profile_id` (String) Feature Profile ID
+- `interface_description` (String) Name
+- `interface_description_variable` (String) Variable name
 - `ipv4_static_routes` (Attributes List) IPv4 Static Route (see [below for nested schema](#nestedatt--ipv4_static_routes))
 - `ipv6_static_routes` (Attributes List) IPv6 Static Route (see [below for nested schema](#nestedatt--ipv6_static_routes))
 - `new_host_mappings` (Attributes List) (see [below for nested schema](#nestedatt--new_host_mappings))
@@ -100,15 +100,15 @@ Optional:
 - `gateway` (String) Gateway
   - Choices: `nextHop`, `dhcp`, `null0`
   - Default value: `nextHop`
-- `ipv4_route_gateway_next_ho` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho))
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
+- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name
 
-<a id="nestedatt--ipv4_static_routes--ipv4_route_gateway_next_ho"></a>
-### Nested Schema for `ipv4_static_routes.ipv4_route_gateway_next_ho`
+<a id="nestedatt--ipv4_static_routes--next_hops"></a>
+### Nested Schema for `ipv4_static_routes.next_hops`
 
 Optional:
 

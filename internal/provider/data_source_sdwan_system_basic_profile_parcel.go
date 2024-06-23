@@ -103,7 +103,7 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"gps_longitude": schema.Int64Attribute{
+			"gps_longitude": schema.Float64Attribute{
 				MarkdownDescription: "Set the device physical longitude",
 				Computed:            true,
 			},
@@ -111,7 +111,7 @@ func (d *SystemBasicProfileParcelDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"gps_latitude": schema.Int64Attribute{
+			"gps_latitude": schema.Float64Attribute{
 				MarkdownDescription: "Set the device physical latitude",
 				Computed:            true,
 			},

@@ -17,6 +17,7 @@
 
 package provider
 
+// Section below is generated&owned by "gen/generator.go". //template:begin imports
 import (
 	"os"
 	"testing"
@@ -24,15 +25,18 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+// End of section. //template:end imports
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanDevice(t *testing.T) {
 	if os.Getenv("SDWAN_209") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_209")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.device_id", "100.0.0.101"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "103989be-2fa6-4afc-bfa8-179c4ed63f39"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.uuid", "5c7e6840-a34f-41d6-8bd4-f9c30af01837"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.site_id", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "0DFF93B792354B08ABE5E43566347F09"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.serial_number", "A34E0D983DB44B0693F22B83747AAB8B"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.hostname", "Controller01"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.reachability", "reachable"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_device.test", "devices.0.status", "normal"))
@@ -49,14 +53,22 @@ func TestAccDataSourceSdwanDevice(t *testing.T) {
 	})
 }
 
+// End of section. //template:end testAccDataSource
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+// End of section. //template:end testPrerequisites
+
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanDeviceConfig() string {
 	config := ""
 
 	config += `
 		data "sdwan_device" "test" {
-			serial_number = "0DFF93B792354B08ABE5E43566347F09"
+			serial_number = "A34E0D983DB44B0693F22B83747AAB8B"
 			name = "Controller01"
 		}
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig

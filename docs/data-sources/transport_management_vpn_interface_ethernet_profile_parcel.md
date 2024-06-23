@@ -36,14 +36,14 @@ data "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "example
 - `arp_timeout_variable` (String) Variable name
 - `autonegotiate` (Boolean) Link autonegotiation
 - `autonegotiate_variable` (String) Variable name
-- `basic_configuration_description` (String)
-- `basic_configuration_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `duplex` (String) Duplex mode
 - `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
 - `icmp_redirect_disable_variable` (String) Variable name
+- `interface_description` (String)
+- `interface_description_variable` (String) Variable name
 - `interface_mtu` (Number) Interface MTU
 - `interface_mtu_variable` (String) Variable name
 - `interface_name` (String)

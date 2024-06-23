@@ -79,11 +79,11 @@ func (d *TransportManagementVPNProfileParcelDataSource) Schema(ctx context.Conte
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"basic_configuration_description": schema.StringAttribute{
+			"interface_description": schema.StringAttribute{
 				MarkdownDescription: "Name",
 				Computed:            true,
 			},
-			"basic_configuration_description_variable": schema.StringAttribute{
+			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -169,7 +169,7 @@ func (d *TransportManagementVPNProfileParcelDataSource) Schema(ctx context.Conte
 							MarkdownDescription: "Gateway",
 							Computed:            true,
 						},
-						"ipv4_route_gateway_next_ho": schema.ListNestedAttribute{
+						"next_hops": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv4 Route Gateway Next Hop",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{

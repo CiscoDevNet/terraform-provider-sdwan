@@ -116,3 +116,13 @@ attributes:
         enum_values: [enable, disable]
         description: Export spreading
         example: enable
+      - model_name: bfd-metrics-export
+        tf_name: bfd_metrics_exporting
+        type: Bool
+        description: BFD metrics exporting
+        example: true
+      - model_name: export-interval
+        tf_name: exporting_interval
+        type: Int64
+        description: Exporting interval
+        example: 86400
