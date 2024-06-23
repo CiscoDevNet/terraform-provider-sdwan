@@ -113,14 +113,14 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"config_description": schema.StringAttribute{
+			"interface_description": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 200),
 				},
 			},
-			"config_description_variable": schema.StringAttribute{
+			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -224,7 +224,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ipv6_secondary_address": schema.ListNestedAttribute{
+			"ipv6_secondary_addresses": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Static secondary IPv6 addresses").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -484,7 +484,7 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 							MarkdownDescription: helpers.NewAttributeDescription("Track OMP status").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
-						"addresses": schema.ListNestedAttribute{
+						"ipv6_addresses": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("IPv6 VRRP").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -556,11 +556,11 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 							MarkdownDescription: helpers.NewAttributeDescription("Track OMP status").AddDefaultValueDescription("false").String,
 							Optional:            true,
 						},
-						"ip_address": schema.StringAttribute{
+						"address": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("VRRP Ip Address").String,
 							Optional:            true,
 						},
-						"ip_address_variable": schema.StringAttribute{
+						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},

@@ -44,26 +44,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &ServiceLANVPNInterfaceIPSECProfileParcelResource{}
-var _ resource.ResourceWithImportState = &ServiceLANVPNInterfaceIPSECProfileParcelResource{}
+var _ resource.Resource = &ServiceLANVPNInterfaceIPSecProfileParcelResource{}
+var _ resource.ResourceWithImportState = &ServiceLANVPNInterfaceIPSecProfileParcelResource{}
 
-func NewServiceLANVPNInterfaceIPSECProfileParcelResource() resource.Resource {
-	return &ServiceLANVPNInterfaceIPSECProfileParcelResource{}
+func NewServiceLANVPNInterfaceIPSecProfileParcelResource() resource.Resource {
+	return &ServiceLANVPNInterfaceIPSecProfileParcelResource{}
 }
 
-type ServiceLANVPNInterfaceIPSECProfileParcelResource struct {
+type ServiceLANVPNInterfaceIPSecProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_service_lan_vpn_interface_ipsec_profile_parcel"
 }
 
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Interface IPSEC profile parcel.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Interface IPSec profile parcel.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -124,41 +124,41 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"interface_address": schema.StringAttribute{
+			"ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Required:            true,
 			},
-			"interface_address_variable": schema.StringAttribute{
+			"ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"mask": schema.StringAttribute{
+			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
-			"mask_variable": schema.StringAttribute{
+			"ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tunnel_source_address": schema.StringAttribute{
+			"tunnel_source_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Required:            true,
 			},
-			"tunnel_source_address_variable": schema.StringAttribute{
+			"tunnel_source_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tunnel_source_mask": schema.StringAttribute{
+			"tunnel_source_ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
-			"tunnel_source_mask_variable": schema.StringAttribute{
+			"tunnel_source_ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -174,22 +174,22 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tunnel_destination_address": schema.StringAttribute{
+			"tunnel_destination_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Required:            true,
 			},
-			"tunnel_destination_address_variable": schema.StringAttribute{
+			"tunnel_destination_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tunnel_destination_mask": schema.StringAttribute{
+			"tunnel_destination_ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
-			"tunnel_destination_mask_variable": schema.StringAttribute{
+			"tunnel_destination_ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -256,14 +256,14 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"preshared_key_for_ike": schema.StringAttribute{
+			"ike_preshared_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 127),
 				},
 			},
-			"preshared_key_for_ike_variable": schema.StringAttribute{
+			"ike_preshared_key_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -318,25 +318,25 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ike_id_for_local_end_point": schema.StringAttribute{
+			"ike_id_local_end_point": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("IKE ID for the local endpoint. Input IPv4 address, domain name, or email address").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 63),
 				},
 			},
-			"ike_id_for_local_end_point_variable": schema.StringAttribute{
+			"ike_id_local_end_point_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"ike_id_for_remote_end_point": schema.StringAttribute{
+			"ike_id_remote_end_point": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 63),
 				},
 			},
-			"ike_id_for_remote_end_point_variable": schema.StringAttribute{
+			"ike_id_remote_end_point_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -407,7 +407,7 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Schema(ctx context.Co
 	}
 }
 
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -419,8 +419,8 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Configure(_ context.C
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ServiceLANVPNInterfaceIPSEC
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan ServiceLANVPNInterfaceIPSec
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -452,8 +452,8 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Create(ctx context.Co
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state ServiceLANVPNInterfaceIPSEC
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state ServiceLANVPNInterfaceIPSec
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -489,8 +489,8 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Read(ctx context.Cont
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ServiceLANVPNInterfaceIPSEC
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state ServiceLANVPNInterfaceIPSec
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -525,8 +525,8 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Update(ctx context.Co
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ServiceLANVPNInterfaceIPSEC
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state ServiceLANVPNInterfaceIPSec
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -551,7 +551,7 @@ func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) Delete(ctx context.Co
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *ServiceLANVPNInterfaceIPSECProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 

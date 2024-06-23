@@ -35,7 +35,7 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testin
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "shutdown", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "interface_name", "GigabitEthernet3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "config_description", "LAN"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "interface_description", "LAN"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_secondary_addresses.0.address", "1.2.3.5"))
@@ -62,13 +62,13 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcel(t *testin
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.priority", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.timer", "1000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.track_omp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.addresses.0.link_local_address", "1::1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.addresses.0.global_address", "1::1/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.ipv6_addresses.0.link_local_address", "1::1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv6_vrrps.0.ipv6_addresses.0.global_address", "1::1/24"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.group_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.priority", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.timer", "1000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.track_omp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.ip_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.secondary_addresses.0.address", "2.3.4.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.secondary_addresses.0.subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ethernet_profile_parcel.test", "ipv4_vrrps.0.tloc_prefix_change", "true"))
@@ -132,7 +132,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig() s
 	config += `	service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id` + "\n"
 	config += `	shutdown = false` + "\n"
 	config += `	interface_name = "GigabitEthernet3"` + "\n"
-	config += `	config_description = "LAN"` + "\n"
+	config += `	interface_description = "LAN"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"
@@ -167,7 +167,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig() s
 	config += `	  priority = 100` + "\n"
 	config += `	  timer = 1000` + "\n"
 	config += `	  track_omp = false` + "\n"
-	config += `	  addresses = [{` + "\n"
+	config += `	  ipv6_addresses = [{` + "\n"
 	config += `		link_local_address = "1::1"` + "\n"
 	config += `		global_address = "1::1/24"` + "\n"
 	config += `	}]` + "\n"
@@ -177,7 +177,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig() s
 	config += `	  priority = 100` + "\n"
 	config += `	  timer = 1000` + "\n"
 	config += `	  track_omp = false` + "\n"
-	config += `	  ip_address = "1.2.3.4"` + "\n"
+	config += `	  address = "1.2.3.4"` + "\n"
 	config += `	  secondary_addresses = [{` + "\n"
 	config += `		address = "2.3.4.5"` + "\n"
 	config += `		subnet_mask = "0.0.0.0"` + "\n"

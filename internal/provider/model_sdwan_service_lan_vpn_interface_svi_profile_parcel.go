@@ -34,58 +34,58 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceLANVPNInterfaceSVI struct {
-	Id                              types.String                                      `tfsdk:"id"`
-	Version                         types.Int64                                       `tfsdk:"version"`
-	Name                            types.String                                      `tfsdk:"name"`
-	Description                     types.String                                      `tfsdk:"description"`
-	FeatureProfileId                types.String                                      `tfsdk:"feature_profile_id"`
-	ServiceLanVpnProfileParcelId    types.String                                      `tfsdk:"service_lan_vpn_profile_parcel_id"`
-	Shutdown                        types.Bool                                        `tfsdk:"shutdown"`
-	ShutdownVariable                types.String                                      `tfsdk:"shutdown_variable"`
-	InterfaceName                   types.String                                      `tfsdk:"interface_name"`
-	InterfaceNameVariable           types.String                                      `tfsdk:"interface_name_variable"`
-	InterfaceDescription            types.String                                      `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable    types.String                                      `tfsdk:"interface_description_variable"`
-	InterfaceMtu                    types.Int64                                       `tfsdk:"interface_mtu"`
-	InterfaceMtuVariable            types.String                                      `tfsdk:"interface_mtu_variable"`
-	IpMtu                           types.Int64                                       `tfsdk:"ip_mtu"`
-	IpMtuVariable                   types.String                                      `tfsdk:"ip_mtu_variable"`
-	Ipv4Address                     types.String                                      `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable             types.String                                      `tfsdk:"ipv4_address_variable"`
-	SubnetMask                      types.String                                      `tfsdk:"subnet_mask"`
-	SubnetMaskVariable              types.String                                      `tfsdk:"subnet_mask_variable"`
-	Ipv4SecondaryAddresses          []ServiceLANVPNInterfaceSVIIpv4SecondaryAddresses `tfsdk:"ipv4_secondary_addresses"`
-	DhcpHelperIpv4Addresses         types.Set                                         `tfsdk:"dhcp_helper_ipv4_addresses"`
-	DhcpHelperIpv4AddressesVariable types.String                                      `tfsdk:"dhcp_helper_ipv4_addresses_variable"`
-	Ipv6Address                     types.String                                      `tfsdk:"ipv6_address"`
-	Ipv6AddressVariable             types.String                                      `tfsdk:"ipv6_address_variable"`
-	Ipv6SecondaryAddresses          []ServiceLANVPNInterfaceSVIIpv6SecondaryAddresses `tfsdk:"ipv6_secondary_addresses"`
-	Ipv6DhcpHelpers                 []ServiceLANVPNInterfaceSVIIpv6DhcpHelpers        `tfsdk:"ipv6_dhcp_helpers"`
-	Arps                            []ServiceLANVPNInterfaceSVIArps                   `tfsdk:"arps"`
-	Ipv4Vrrps                       []ServiceLANVPNInterfaceSVIIpv4Vrrps              `tfsdk:"ipv4_vrrps"`
-	Ipv6Vrrps                       []ServiceLANVPNInterfaceSVIIpv6Vrrps              `tfsdk:"ipv6_vrrps"`
-	EnableDhcpv6                    types.Bool                                        `tfsdk:"enable_dhcpv6"`
-	EnableDhcpv6Variable            types.String                                      `tfsdk:"enable_dhcpv6_variable"`
-	TcpMss                          types.Int64                                       `tfsdk:"tcp_mss"`
-	TcpMssVariable                  types.String                                      `tfsdk:"tcp_mss_variable"`
-	ArpTimeout                      types.Int64                                       `tfsdk:"arp_timeout"`
-	ArpTimeoutVariable              types.String                                      `tfsdk:"arp_timeout_variable"`
-	IpDirectedBroadcast             types.Bool                                        `tfsdk:"ip_directed_broadcast"`
-	IpDirectedBroadcastVariable     types.String                                      `tfsdk:"ip_directed_broadcast_variable"`
-	IcmpRedirectDisable             types.Bool                                        `tfsdk:"icmp_redirect_disable"`
-	IcmpRedirectDisableVariable     types.String                                      `tfsdk:"icmp_redirect_disable_variable"`
+	Id                           types.String                                      `tfsdk:"id"`
+	Version                      types.Int64                                       `tfsdk:"version"`
+	Name                         types.String                                      `tfsdk:"name"`
+	Description                  types.String                                      `tfsdk:"description"`
+	FeatureProfileId             types.String                                      `tfsdk:"feature_profile_id"`
+	ServiceLanVpnProfileParcelId types.String                                      `tfsdk:"service_lan_vpn_profile_parcel_id"`
+	Shutdown                     types.Bool                                        `tfsdk:"shutdown"`
+	ShutdownVariable             types.String                                      `tfsdk:"shutdown_variable"`
+	InterfaceName                types.String                                      `tfsdk:"interface_name"`
+	InterfaceNameVariable        types.String                                      `tfsdk:"interface_name_variable"`
+	InterfaceDescription         types.String                                      `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable types.String                                      `tfsdk:"interface_description_variable"`
+	InterfaceMtu                 types.Int64                                       `tfsdk:"interface_mtu"`
+	InterfaceMtuVariable         types.String                                      `tfsdk:"interface_mtu_variable"`
+	IpMtu                        types.Int64                                       `tfsdk:"ip_mtu"`
+	IpMtuVariable                types.String                                      `tfsdk:"ip_mtu_variable"`
+	Ipv4Address                  types.String                                      `tfsdk:"ipv4_address"`
+	Ipv4AddressVariable          types.String                                      `tfsdk:"ipv4_address_variable"`
+	Ipv4SubnetMask               types.String                                      `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable       types.String                                      `tfsdk:"ipv4_subnet_mask_variable"`
+	Ipv4SecondaryAddresses       []ServiceLANVPNInterfaceSVIIpv4SecondaryAddresses `tfsdk:"ipv4_secondary_addresses"`
+	Ipv4DhcpHelpers              types.Set                                         `tfsdk:"ipv4_dhcp_helpers"`
+	Ipv4DhcpHelpersVariable      types.String                                      `tfsdk:"ipv4_dhcp_helpers_variable"`
+	Ipv6Address                  types.String                                      `tfsdk:"ipv6_address"`
+	Ipv6AddressVariable          types.String                                      `tfsdk:"ipv6_address_variable"`
+	Ipv6SecondaryAddresses       []ServiceLANVPNInterfaceSVIIpv6SecondaryAddresses `tfsdk:"ipv6_secondary_addresses"`
+	Ipv6DhcpHelpers              []ServiceLANVPNInterfaceSVIIpv6DhcpHelpers        `tfsdk:"ipv6_dhcp_helpers"`
+	Arps                         []ServiceLANVPNInterfaceSVIArps                   `tfsdk:"arps"`
+	Ipv4Vrrps                    []ServiceLANVPNInterfaceSVIIpv4Vrrps              `tfsdk:"ipv4_vrrps"`
+	Ipv6Vrrps                    []ServiceLANVPNInterfaceSVIIpv6Vrrps              `tfsdk:"ipv6_vrrps"`
+	EnableDhcpv6                 types.Bool                                        `tfsdk:"enable_dhcpv6"`
+	EnableDhcpv6Variable         types.String                                      `tfsdk:"enable_dhcpv6_variable"`
+	TcpMss                       types.Int64                                       `tfsdk:"tcp_mss"`
+	TcpMssVariable               types.String                                      `tfsdk:"tcp_mss_variable"`
+	ArpTimeout                   types.Int64                                       `tfsdk:"arp_timeout"`
+	ArpTimeoutVariable           types.String                                      `tfsdk:"arp_timeout_variable"`
+	IpDirectedBroadcast          types.Bool                                        `tfsdk:"ip_directed_broadcast"`
+	IpDirectedBroadcastVariable  types.String                                      `tfsdk:"ip_directed_broadcast_variable"`
+	IcmpRedirectDisable          types.Bool                                        `tfsdk:"icmp_redirect_disable"`
+	IcmpRedirectDisableVariable  types.String                                      `tfsdk:"icmp_redirect_disable_variable"`
 }
 
 type ServiceLANVPNInterfaceSVIIpv4SecondaryAddresses struct {
-	Ipv4Address         types.String `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable types.String `tfsdk:"ipv4_address_variable"`
-	SubnetMask          types.String `tfsdk:"subnet_mask"`
-	SubnetMaskVariable  types.String `tfsdk:"subnet_mask_variable"`
+	Address                types.String `tfsdk:"address"`
+	AddressVariable        types.String `tfsdk:"address_variable"`
+	Ipv4SubnetMask         types.String `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable types.String `tfsdk:"ipv4_subnet_mask_variable"`
 }
 
 type ServiceLANVPNInterfaceSVIIpv6SecondaryAddresses struct {
-	Ipv6Address         types.String `tfsdk:"ipv6_address"`
-	Ipv6AddressVariable types.String `tfsdk:"ipv6_address_variable"`
+	Address         types.String `tfsdk:"address"`
+	AddressVariable types.String `tfsdk:"address_variable"`
 }
 
 type ServiceLANVPNInterfaceSVIIpv6DhcpHelpers struct {
@@ -103,22 +103,22 @@ type ServiceLANVPNInterfaceSVIArps struct {
 }
 
 type ServiceLANVPNInterfaceSVIIpv4Vrrps struct {
-	GroupId                     types.Int64                                            `tfsdk:"group_id"`
-	GroupIdVariable             types.String                                           `tfsdk:"group_id_variable"`
-	Priority                    types.Int64                                            `tfsdk:"priority"`
-	PriorityVariable            types.String                                           `tfsdk:"priority_variable"`
-	Timer                       types.Int64                                            `tfsdk:"timer"`
-	TimerVariable               types.String                                           `tfsdk:"timer_variable"`
-	TrackOmp                    types.Bool                                             `tfsdk:"track_omp"`
-	TrackOmpVariable            types.String                                           `tfsdk:"track_omp_variable"`
-	PrefixList                  types.String                                           `tfsdk:"prefix_list"`
-	PrefixListVariable          types.String                                           `tfsdk:"prefix_list_variable"`
-	IpAddress                   types.String                                           `tfsdk:"ip_address"`
-	IpAddressVariable           types.String                                           `tfsdk:"ip_address_variable"`
-	SecondaryAddresses          []ServiceLANVPNInterfaceSVIIpv4VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
-	TlocPrefixChange            types.Bool                                             `tfsdk:"tloc_prefix_change"`
-	TlocPrefChangeValue         types.Int64                                            `tfsdk:"tloc_pref_change_value"`
-	TlocPrefChangeValueVariable types.String                                           `tfsdk:"tloc_pref_change_value_variable"`
+	GroupId                       types.Int64                                            `tfsdk:"group_id"`
+	GroupIdVariable               types.String                                           `tfsdk:"group_id_variable"`
+	Priority                      types.Int64                                            `tfsdk:"priority"`
+	PriorityVariable              types.String                                           `tfsdk:"priority_variable"`
+	Timer                         types.Int64                                            `tfsdk:"timer"`
+	TimerVariable                 types.String                                           `tfsdk:"timer_variable"`
+	TrackOmp                      types.Bool                                             `tfsdk:"track_omp"`
+	TrackOmpVariable              types.String                                           `tfsdk:"track_omp_variable"`
+	PrefixList                    types.String                                           `tfsdk:"prefix_list"`
+	PrefixListVariable            types.String                                           `tfsdk:"prefix_list_variable"`
+	Address                       types.String                                           `tfsdk:"address"`
+	AddressVariable               types.String                                           `tfsdk:"address_variable"`
+	SecondaryAddresses            []ServiceLANVPNInterfaceSVIIpv4VrrpsSecondaryAddresses `tfsdk:"secondary_addresses"`
+	TlocPrefixChange              types.Bool                                             `tfsdk:"tloc_prefix_change"`
+	TlocPrefixChangeValue         types.Int64                                            `tfsdk:"tloc_prefix_change_value"`
+	TlocPrefixChangeValueVariable types.String                                           `tfsdk:"tloc_prefix_change_value_variable"`
 }
 
 type ServiceLANVPNInterfaceSVIIpv6Vrrps struct {
@@ -235,45 +235,45 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ipv4.addressV4.ipAddress.value", data.Ipv4Address.ValueString())
 	}
 
-	if !data.SubnetMaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ipv4.addressV4.subnetMask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ipv4.addressV4.subnetMask.value", data.SubnetMaskVariable.ValueString())
-	} else if !data.SubnetMask.IsNull() {
+		body, _ = sjson.Set(body, path+"ipv4.addressV4.subnetMask.value", data.Ipv4SubnetMaskVariable.ValueString())
+	} else if !data.Ipv4SubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"ipv4.addressV4.subnetMask.optionType", "global")
-		body, _ = sjson.Set(body, path+"ipv4.addressV4.subnetMask.value", data.SubnetMask.ValueString())
+		body, _ = sjson.Set(body, path+"ipv4.addressV4.subnetMask.value", data.Ipv4SubnetMask.ValueString())
 	}
 	body, _ = sjson.Set(body, path+"ipv4.secondaryAddressV4", []interface{}{})
 	for _, item := range data.Ipv4SecondaryAddresses {
 		itemBody := ""
 
-		if !item.Ipv4AddressVariable.IsNull() {
+		if !item.AddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.Ipv4AddressVariable.ValueString())
-		} else if !item.Ipv4Address.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.AddressVariable.ValueString())
+		} else if !item.Address.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.Ipv4Address.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.Address.ValueString())
 		}
 
-		if !item.SubnetMaskVariable.IsNull() {
+		if !item.Ipv4SubnetMaskVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMaskVariable.ValueString())
-		} else if !item.SubnetMask.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.Ipv4SubnetMaskVariable.ValueString())
+		} else if !item.Ipv4SubnetMask.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMask.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.Ipv4SubnetMask.ValueString())
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv4.secondaryAddressV4.-1", itemBody)
 	}
 
-	if !data.DhcpHelperIpv4AddressesVariable.IsNull() {
+	if !data.Ipv4DhcpHelpersVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ipv4.dhcpHelperV4.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ipv4.dhcpHelperV4.value", data.DhcpHelperIpv4AddressesVariable.ValueString())
-	} else if data.DhcpHelperIpv4Addresses.IsNull() {
+		body, _ = sjson.Set(body, path+"ipv4.dhcpHelperV4.value", data.Ipv4DhcpHelpersVariable.ValueString())
+	} else if data.Ipv4DhcpHelpers.IsNull() {
 		body, _ = sjson.Set(body, path+"ipv4.dhcpHelperV4.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"ipv4.dhcpHelperV4.optionType", "global")
 		var values []string
-		data.DhcpHelperIpv4Addresses.ElementsAs(ctx, &values, false)
+		data.Ipv4DhcpHelpers.ElementsAs(ctx, &values, false)
 		body, _ = sjson.Set(body, path+"ipv4.dhcpHelperV4.value", values)
 	}
 
@@ -291,15 +291,15 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 	for _, item := range data.Ipv6SecondaryAddresses {
 		itemBody := ""
 
-		if !item.Ipv6AddressVariable.IsNull() {
+		if !item.AddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "address.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "address.value", item.Ipv6AddressVariable.ValueString())
-		} else if item.Ipv6Address.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "address.value", item.AddressVariable.ValueString())
+		} else if item.Address.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "address.optionType", "default")
 
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "address.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "address.value", item.Ipv6Address.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "address.value", item.Address.ValueString())
 		}
 		body, _ = sjson.SetRaw(body, path+"ipv6.secondaryAddressV6.-1", itemBody)
 	}
@@ -404,12 +404,12 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "prefixList.value", item.PrefixList.ValueString())
 		}
 
-		if !item.IpAddressVariable.IsNull() {
+		if !item.AddressVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddressVariable.ValueString())
-		} else if !item.IpAddress.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.AddressVariable.ValueString())
+		} else if !item.Address.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddress.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.Address.ValueString())
 		}
 		itemBody, _ = sjson.Set(itemBody, "ipAddressSecondary", []interface{}{})
 		for _, childItem := range item.SecondaryAddresses {
@@ -432,12 +432,12 @@ func (data ServiceLANVPNInterfaceSVI) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "tlocPrefChange.value", item.TlocPrefixChange.ValueBool())
 		}
 
-		if !item.TlocPrefChangeValueVariable.IsNull() {
+		if !item.TlocPrefixChangeValueVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.value", item.TlocPrefChangeValueVariable.ValueString())
-		} else if !item.TlocPrefChangeValue.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.value", item.TlocPrefixChangeValueVariable.ValueString())
+		} else if !item.TlocPrefixChangeValue.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.value", item.TlocPrefChangeValue.ValueInt64())
+			itemBody, _ = sjson.Set(itemBody, "tlocPrefChangeValue.value", item.TlocPrefixChangeValue.ValueInt64())
 		}
 		body, _ = sjson.SetRaw(body, path+"vrrp.-1", itemBody)
 	}
@@ -664,52 +664,52 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.SubnetMask = types.StringNull()
-	data.SubnetMaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "ipv4.addressV4.subnetMask.optionType"); t.Exists() {
 		va := res.Get(path + "ipv4.addressV4.subnetMask.value")
 		if t.String() == "variable" {
-			data.SubnetMaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SubnetMask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	if value := res.Get(path + "ipv4.secondaryAddressV4"); value.Exists() {
 		data.Ipv4SecondaryAddresses = make([]ServiceLANVPNInterfaceSVIIpv4SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceSVIIpv4SecondaryAddresses{}
-			item.Ipv4Address = types.StringNull()
-			item.Ipv4AddressVariable = types.StringNull()
+			item.Address = types.StringNull()
+			item.AddressVariable = types.StringNull()
 			if t := v.Get("ipAddress.optionType"); t.Exists() {
 				va := v.Get("ipAddress.value")
 				if t.String() == "variable" {
-					item.Ipv4AddressVariable = types.StringValue(va.String())
+					item.AddressVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Ipv4Address = types.StringValue(va.String())
+					item.Address = types.StringValue(va.String())
 				}
 			}
-			item.SubnetMask = types.StringNull()
-			item.SubnetMaskVariable = types.StringNull()
+			item.Ipv4SubnetMask = types.StringNull()
+			item.Ipv4SubnetMaskVariable = types.StringNull()
 			if t := v.Get("subnetMask.optionType"); t.Exists() {
 				va := v.Get("subnetMask.value")
 				if t.String() == "variable" {
-					item.SubnetMaskVariable = types.StringValue(va.String())
+					item.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.SubnetMask = types.StringValue(va.String())
+					item.Ipv4SubnetMask = types.StringValue(va.String())
 				}
 			}
 			data.Ipv4SecondaryAddresses = append(data.Ipv4SecondaryAddresses, item)
 			return true
 		})
 	}
-	data.DhcpHelperIpv4Addresses = types.SetNull(types.StringType)
-	data.DhcpHelperIpv4AddressesVariable = types.StringNull()
+	data.Ipv4DhcpHelpers = types.SetNull(types.StringType)
+	data.Ipv4DhcpHelpersVariable = types.StringNull()
 	if t := res.Get(path + "ipv4.dhcpHelperV4.optionType"); t.Exists() {
 		va := res.Get(path + "ipv4.dhcpHelperV4.value")
 		if t.String() == "variable" {
-			data.DhcpHelperIpv4AddressesVariable = types.StringValue(va.String())
+			data.Ipv4DhcpHelpersVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DhcpHelperIpv4Addresses = helpers.GetStringSet(va.Array())
+			data.Ipv4DhcpHelpers = helpers.GetStringSet(va.Array())
 		}
 	}
 	data.Ipv6Address = types.StringNull()
@@ -726,14 +726,14 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 		data.Ipv6SecondaryAddresses = make([]ServiceLANVPNInterfaceSVIIpv6SecondaryAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceLANVPNInterfaceSVIIpv6SecondaryAddresses{}
-			item.Ipv6Address = types.StringNull()
-			item.Ipv6AddressVariable = types.StringNull()
+			item.Address = types.StringNull()
+			item.AddressVariable = types.StringNull()
 			if t := v.Get("address.optionType"); t.Exists() {
 				va := v.Get("address.value")
 				if t.String() == "variable" {
-					item.Ipv6AddressVariable = types.StringValue(va.String())
+					item.AddressVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Ipv6Address = types.StringValue(va.String())
+					item.Address = types.StringValue(va.String())
 				}
 			}
 			data.Ipv6SecondaryAddresses = append(data.Ipv6SecondaryAddresses, item)
@@ -850,14 +850,14 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 					item.PrefixList = types.StringValue(va.String())
 				}
 			}
-			item.IpAddress = types.StringNull()
-			item.IpAddressVariable = types.StringNull()
+			item.Address = types.StringNull()
+			item.AddressVariable = types.StringNull()
 			if t := v.Get("ipAddress.optionType"); t.Exists() {
 				va := v.Get("ipAddress.value")
 				if t.String() == "variable" {
-					item.IpAddressVariable = types.StringValue(va.String())
+					item.AddressVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.IpAddress = types.StringValue(va.String())
+					item.Address = types.StringValue(va.String())
 				}
 			}
 			if cValue := v.Get("ipAddressSecondary"); cValue.Exists() {
@@ -886,14 +886,14 @@ func (data *ServiceLANVPNInterfaceSVI) fromBody(ctx context.Context, res gjson.R
 					item.TlocPrefixChange = types.BoolValue(va.Bool())
 				}
 			}
-			item.TlocPrefChangeValue = types.Int64Null()
-			item.TlocPrefChangeValueVariable = types.StringNull()
+			item.TlocPrefixChangeValue = types.Int64Null()
+			item.TlocPrefixChangeValueVariable = types.StringNull()
 			if t := v.Get("tlocPrefChangeValue.optionType"); t.Exists() {
 				va := v.Get("tlocPrefChangeValue.value")
 				if t.String() == "variable" {
-					item.TlocPrefChangeValueVariable = types.StringValue(va.String())
+					item.TlocPrefixChangeValueVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.TlocPrefChangeValue = types.Int64Value(va.Int())
+					item.TlocPrefixChangeValue = types.Int64Value(va.Int())
 				}
 			}
 			data.Ipv4Vrrps = append(data.Ipv4Vrrps, item)
@@ -1127,20 +1127,20 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.SubnetMask = types.StringNull()
-	data.SubnetMaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "ipv4.addressV4.subnetMask.optionType"); t.Exists() {
 		va := res.Get(path + "ipv4.addressV4.subnetMask.value")
 		if t.String() == "variable" {
-			data.SubnetMaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SubnetMask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	for i := range data.Ipv4SecondaryAddresses {
 		keys := [...]string{"ipAddress"}
-		keyValues := [...]string{data.Ipv4SecondaryAddresses[i].Ipv4Address.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv4SecondaryAddresses[i].Ipv4AddressVariable.ValueString()}
+		keyValues := [...]string{data.Ipv4SecondaryAddresses[i].Address.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv4SecondaryAddresses[i].AddressVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "ipv4.secondaryAddressV4").ForEach(
@@ -1163,35 +1163,35 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 				return true
 			},
 		)
-		data.Ipv4SecondaryAddresses[i].Ipv4Address = types.StringNull()
-		data.Ipv4SecondaryAddresses[i].Ipv4AddressVariable = types.StringNull()
+		data.Ipv4SecondaryAddresses[i].Address = types.StringNull()
+		data.Ipv4SecondaryAddresses[i].AddressVariable = types.StringNull()
 		if t := r.Get("ipAddress.optionType"); t.Exists() {
 			va := r.Get("ipAddress.value")
 			if t.String() == "variable" {
-				data.Ipv4SecondaryAddresses[i].Ipv4AddressVariable = types.StringValue(va.String())
+				data.Ipv4SecondaryAddresses[i].AddressVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv4SecondaryAddresses[i].Ipv4Address = types.StringValue(va.String())
+				data.Ipv4SecondaryAddresses[i].Address = types.StringValue(va.String())
 			}
 		}
-		data.Ipv4SecondaryAddresses[i].SubnetMask = types.StringNull()
-		data.Ipv4SecondaryAddresses[i].SubnetMaskVariable = types.StringNull()
+		data.Ipv4SecondaryAddresses[i].Ipv4SubnetMask = types.StringNull()
+		data.Ipv4SecondaryAddresses[i].Ipv4SubnetMaskVariable = types.StringNull()
 		if t := r.Get("subnetMask.optionType"); t.Exists() {
 			va := r.Get("subnetMask.value")
 			if t.String() == "variable" {
-				data.Ipv4SecondaryAddresses[i].SubnetMaskVariable = types.StringValue(va.String())
+				data.Ipv4SecondaryAddresses[i].Ipv4SubnetMaskVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv4SecondaryAddresses[i].SubnetMask = types.StringValue(va.String())
+				data.Ipv4SecondaryAddresses[i].Ipv4SubnetMask = types.StringValue(va.String())
 			}
 		}
 	}
-	data.DhcpHelperIpv4Addresses = types.SetNull(types.StringType)
-	data.DhcpHelperIpv4AddressesVariable = types.StringNull()
+	data.Ipv4DhcpHelpers = types.SetNull(types.StringType)
+	data.Ipv4DhcpHelpersVariable = types.StringNull()
 	if t := res.Get(path + "ipv4.dhcpHelperV4.optionType"); t.Exists() {
 		va := res.Get(path + "ipv4.dhcpHelperV4.value")
 		if t.String() == "variable" {
-			data.DhcpHelperIpv4AddressesVariable = types.StringValue(va.String())
+			data.Ipv4DhcpHelpersVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DhcpHelperIpv4Addresses = helpers.GetStringSet(va.Array())
+			data.Ipv4DhcpHelpers = helpers.GetStringSet(va.Array())
 		}
 	}
 	data.Ipv6Address = types.StringNull()
@@ -1206,8 +1206,8 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 	}
 	for i := range data.Ipv6SecondaryAddresses {
 		keys := [...]string{"address"}
-		keyValues := [...]string{data.Ipv6SecondaryAddresses[i].Ipv6Address.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6SecondaryAddresses[i].Ipv6AddressVariable.ValueString()}
+		keyValues := [...]string{data.Ipv6SecondaryAddresses[i].Address.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6SecondaryAddresses[i].AddressVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "ipv6.secondaryAddressV6").ForEach(
@@ -1230,14 +1230,14 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 				return true
 			},
 		)
-		data.Ipv6SecondaryAddresses[i].Ipv6Address = types.StringNull()
-		data.Ipv6SecondaryAddresses[i].Ipv6AddressVariable = types.StringNull()
+		data.Ipv6SecondaryAddresses[i].Address = types.StringNull()
+		data.Ipv6SecondaryAddresses[i].AddressVariable = types.StringNull()
 		if t := r.Get("address.optionType"); t.Exists() {
 			va := r.Get("address.value")
 			if t.String() == "variable" {
-				data.Ipv6SecondaryAddresses[i].Ipv6AddressVariable = types.StringValue(va.String())
+				data.Ipv6SecondaryAddresses[i].AddressVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv6SecondaryAddresses[i].Ipv6Address = types.StringValue(va.String())
+				data.Ipv6SecondaryAddresses[i].Address = types.StringValue(va.String())
 			}
 		}
 	}
@@ -1411,14 +1411,14 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 				data.Ipv4Vrrps[i].PrefixList = types.StringValue(va.String())
 			}
 		}
-		data.Ipv4Vrrps[i].IpAddress = types.StringNull()
-		data.Ipv4Vrrps[i].IpAddressVariable = types.StringNull()
+		data.Ipv4Vrrps[i].Address = types.StringNull()
+		data.Ipv4Vrrps[i].AddressVariable = types.StringNull()
 		if t := r.Get("ipAddress.optionType"); t.Exists() {
 			va := r.Get("ipAddress.value")
 			if t.String() == "variable" {
-				data.Ipv4Vrrps[i].IpAddressVariable = types.StringValue(va.String())
+				data.Ipv4Vrrps[i].AddressVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv4Vrrps[i].IpAddress = types.StringValue(va.String())
+				data.Ipv4Vrrps[i].Address = types.StringValue(va.String())
 			}
 		}
 		for ci := range data.Ipv4Vrrps[i].SecondaryAddresses {
@@ -1466,14 +1466,14 @@ func (data *ServiceLANVPNInterfaceSVI) updateFromBody(ctx context.Context, res g
 				data.Ipv4Vrrps[i].TlocPrefixChange = types.BoolValue(va.Bool())
 			}
 		}
-		data.Ipv4Vrrps[i].TlocPrefChangeValue = types.Int64Null()
-		data.Ipv4Vrrps[i].TlocPrefChangeValueVariable = types.StringNull()
+		data.Ipv4Vrrps[i].TlocPrefixChangeValue = types.Int64Null()
+		data.Ipv4Vrrps[i].TlocPrefixChangeValueVariable = types.StringNull()
 		if t := r.Get("tlocPrefChangeValue.optionType"); t.Exists() {
 			va := r.Get("tlocPrefChangeValue.value")
 			if t.String() == "variable" {
-				data.Ipv4Vrrps[i].TlocPrefChangeValueVariable = types.StringValue(va.String())
+				data.Ipv4Vrrps[i].TlocPrefixChangeValueVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv4Vrrps[i].TlocPrefChangeValue = types.Int64Value(va.Int())
+				data.Ipv4Vrrps[i].TlocPrefixChangeValue = types.Int64Value(va.Int())
 			}
 		}
 	}
@@ -1736,19 +1736,19 @@ func (data *ServiceLANVPNInterfaceSVI) isNull(ctx context.Context, res gjson.Res
 	if !data.Ipv4AddressVariable.IsNull() {
 		return false
 	}
-	if !data.SubnetMask.IsNull() {
+	if !data.Ipv4SubnetMask.IsNull() {
 		return false
 	}
-	if !data.SubnetMaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		return false
 	}
 	if len(data.Ipv4SecondaryAddresses) > 0 {
 		return false
 	}
-	if !data.DhcpHelperIpv4Addresses.IsNull() {
+	if !data.Ipv4DhcpHelpers.IsNull() {
 		return false
 	}
-	if !data.DhcpHelperIpv4AddressesVariable.IsNull() {
+	if !data.Ipv4DhcpHelpersVariable.IsNull() {
 		return false
 	}
 	if !data.Ipv6Address.IsNull() {

@@ -106,11 +106,11 @@ func (d *ServiceLANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"mask": schema.StringAttribute{
+			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"mask_variable": schema.StringAttribute{
+			"ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -122,11 +122,11 @@ func (d *ServiceLANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_source_ip_address": schema.StringAttribute{
+			"tunnel_source_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "Tunnel source IP Address",
 				Computed:            true,
 			},
-			"tunnel_source_ip_address_variable": schema.StringAttribute{
+			"tunnel_source_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -138,27 +138,27 @@ func (d *ServiceLANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"loopback_tunnel_source_interface": schema.StringAttribute{
+			"tunnel_source_interface_loopback": schema.StringAttribute{
 				MarkdownDescription: "<1..32 characters> Interface name",
 				Computed:            true,
 			},
-			"loopback_tunnel_source_interface_variable": schema.StringAttribute{
+			"tunnel_source_interface_loopback_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"loopback_tunnel_route_via": schema.StringAttribute{
+			"tunnel_route_via_loopback": schema.StringAttribute{
 				MarkdownDescription: "<1..32 characters> Interface name, can't be Loopback interface",
 				Computed:            true,
 			},
-			"loopback_tunnel_route_via_variable": schema.StringAttribute{
+			"tunnel_route_via_loopback_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"gre_destination_ip_address": schema.StringAttribute{
+			"tunnel_destination_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "Tunnel destination IP Address",
 				Computed:            true,
 			},
-			"gre_destination_ip_address_variable": schema.StringAttribute{
+			"tunnel_destination_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

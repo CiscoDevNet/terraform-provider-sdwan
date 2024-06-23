@@ -44,20 +44,20 @@ type ServiceLANVPNInterfaceGRE struct {
 	InterfaceDescriptionVariable          types.String `tfsdk:"interface_description_variable"`
 	Ipv4Address                           types.String `tfsdk:"ipv4_address"`
 	Ipv4AddressVariable                   types.String `tfsdk:"ipv4_address_variable"`
-	Mask                                  types.String `tfsdk:"mask"`
-	MaskVariable                          types.String `tfsdk:"mask_variable"`
+	Ipv4SubnetMask                        types.String `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable                types.String `tfsdk:"ipv4_subnet_mask_variable"`
 	Shutdown                              types.Bool   `tfsdk:"shutdown"`
 	ShutdownVariable                      types.String `tfsdk:"shutdown_variable"`
-	TunnelSourceIpAddress                 types.String `tfsdk:"tunnel_source_ip_address"`
-	TunnelSourceIpAddressVariable         types.String `tfsdk:"tunnel_source_ip_address_variable"`
+	TunnelSourceIpv4Address               types.String `tfsdk:"tunnel_source_ipv4_address"`
+	TunnelSourceIpv4AddressVariable       types.String `tfsdk:"tunnel_source_ipv4_address_variable"`
 	TunnelSourceInterface                 types.String `tfsdk:"tunnel_source_interface"`
 	TunnelSourceInterfaceVariable         types.String `tfsdk:"tunnel_source_interface_variable"`
-	LoopbackTunnelSourceInterface         types.String `tfsdk:"loopback_tunnel_source_interface"`
-	LoopbackTunnelSourceInterfaceVariable types.String `tfsdk:"loopback_tunnel_source_interface_variable"`
-	LoopbackTunnelRouteVia                types.String `tfsdk:"loopback_tunnel_route_via"`
-	LoopbackTunnelRouteViaVariable        types.String `tfsdk:"loopback_tunnel_route_via_variable"`
-	GreDestinationIpAddress               types.String `tfsdk:"gre_destination_ip_address"`
-	GreDestinationIpAddressVariable       types.String `tfsdk:"gre_destination_ip_address_variable"`
+	TunnelSourceInterfaceLoopback         types.String `tfsdk:"tunnel_source_interface_loopback"`
+	TunnelSourceInterfaceLoopbackVariable types.String `tfsdk:"tunnel_source_interface_loopback_variable"`
+	TunnelRouteViaLoopback                types.String `tfsdk:"tunnel_route_via_loopback"`
+	TunnelRouteViaLoopbackVariable        types.String `tfsdk:"tunnel_route_via_loopback_variable"`
+	TunnelDestinationIpv4Address          types.String `tfsdk:"tunnel_destination_ipv4_address"`
+	TunnelDestinationIpv4AddressVariable  types.String `tfsdk:"tunnel_destination_ipv4_address_variable"`
 	IpMtu                                 types.Int64  `tfsdk:"ip_mtu"`
 	IpMtuVariable                         types.String `tfsdk:"ip_mtu_variable"`
 	TcpMss                                types.Int64  `tfsdk:"tcp_mss"`
@@ -118,12 +118,12 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4Address.ValueString())
 	}
 
-	if !data.MaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.address.mask.value", data.MaskVariable.ValueString())
-	} else if !data.Mask.IsNull() {
+		body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
+	} else if !data.Ipv4SubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Mask.ValueString())
+		body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMask.ValueString())
 	}
 
 	if !data.ShutdownVariable.IsNull() {
@@ -137,12 +137,12 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"basic.shutdown.value", data.Shutdown.ValueBool())
 	}
 
-	if !data.TunnelSourceIpAddressVariable.IsNull() {
+	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpAddressVariable.ValueString())
-	} else if !data.TunnelSourceIpAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpv4AddressVariable.ValueString())
+	} else if !data.TunnelSourceIpv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.optionType", "global")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpAddress.ValueString())
+		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpv4Address.ValueString())
 	}
 
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
@@ -153,28 +153,28 @@ func (data ServiceLANVPNInterfaceGRE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterface.ValueString())
 	}
 
-	if !data.LoopbackTunnelSourceInterfaceVariable.IsNull() {
+	if !data.TunnelSourceInterfaceLoopbackVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.LoopbackTunnelSourceInterfaceVariable.ValueString())
-	} else if !data.LoopbackTunnelSourceInterface.IsNull() {
+		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopbackVariable.ValueString())
+	} else if !data.TunnelSourceInterfaceLoopback.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "global")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.LoopbackTunnelSourceInterface.ValueString())
+		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopback.ValueString())
 	}
 
-	if !data.LoopbackTunnelRouteViaVariable.IsNull() {
+	if !data.TunnelRouteViaLoopbackVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.LoopbackTunnelRouteViaVariable.ValueString())
-	} else if !data.LoopbackTunnelRouteVia.IsNull() {
+		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopbackVariable.ValueString())
+	} else if !data.TunnelRouteViaLoopback.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "global")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.LoopbackTunnelRouteVia.ValueString())
+		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopback.ValueString())
 	}
 
-	if !data.GreDestinationIpAddressVariable.IsNull() {
+	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelDestination.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.GreDestinationIpAddressVariable.ValueString())
-	} else if !data.GreDestinationIpAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.TunnelDestinationIpv4AddressVariable.ValueString())
+	} else if !data.TunnelDestinationIpv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelDestination.optionType", "global")
-		body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.GreDestinationIpAddress.ValueString())
+		body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.TunnelDestinationIpv4Address.ValueString())
 	}
 
 	if !data.IpMtuVariable.IsNull() {
@@ -261,14 +261,14 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.Mask = types.StringNull()
-	data.MaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "basic.address.mask.optionType"); t.Exists() {
 		va := res.Get(path + "basic.address.mask.value")
 		if t.String() == "variable" {
-			data.MaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Mask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.Shutdown = types.BoolNull()
@@ -281,14 +281,14 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 			data.Shutdown = types.BoolValue(va.Bool())
 		}
 	}
-	data.TunnelSourceIpAddress = types.StringNull()
-	data.TunnelSourceIpAddressVariable = types.StringNull()
+	data.TunnelSourceIpv4Address = types.StringNull()
+	data.TunnelSourceIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelSourceType.sourceIp.tunnelSource.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelSourceType.sourceIp.tunnelSource.value")
 		if t.String() == "variable" {
-			data.TunnelSourceIpAddressVariable = types.StringValue(va.String())
+			data.TunnelSourceIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelSourceIpAddress = types.StringValue(va.String())
+			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
 	}
 	data.TunnelSourceInterface = types.StringNull()
@@ -301,34 +301,34 @@ func (data *ServiceLANVPNInterfaceGRE) fromBody(ctx context.Context, res gjson.R
 			data.TunnelSourceInterface = types.StringValue(va.String())
 		}
 	}
-	data.LoopbackTunnelSourceInterface = types.StringNull()
-	data.LoopbackTunnelSourceInterfaceVariable = types.StringNull()
+	data.TunnelSourceInterfaceLoopback = types.StringNull()
+	data.TunnelSourceInterfaceLoopbackVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value")
 		if t.String() == "variable" {
-			data.LoopbackTunnelSourceInterfaceVariable = types.StringValue(va.String())
+			data.TunnelSourceInterfaceLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.LoopbackTunnelSourceInterface = types.StringValue(va.String())
+			data.TunnelSourceInterfaceLoopback = types.StringValue(va.String())
 		}
 	}
-	data.LoopbackTunnelRouteVia = types.StringNull()
-	data.LoopbackTunnelRouteViaVariable = types.StringNull()
+	data.TunnelRouteViaLoopback = types.StringNull()
+	data.TunnelRouteViaLoopbackVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value")
 		if t.String() == "variable" {
-			data.LoopbackTunnelRouteViaVariable = types.StringValue(va.String())
+			data.TunnelRouteViaLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.LoopbackTunnelRouteVia = types.StringValue(va.String())
+			data.TunnelRouteViaLoopback = types.StringValue(va.String())
 		}
 	}
-	data.GreDestinationIpAddress = types.StringNull()
-	data.GreDestinationIpAddressVariable = types.StringNull()
+	data.TunnelDestinationIpv4Address = types.StringNull()
+	data.TunnelDestinationIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelDestination.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelDestination.value")
 		if t.String() == "variable" {
-			data.GreDestinationIpAddressVariable = types.StringValue(va.String())
+			data.TunnelDestinationIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GreDestinationIpAddress = types.StringValue(va.String())
+			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
 	}
 	data.IpMtu = types.Int64Null()
@@ -414,14 +414,14 @@ func (data *ServiceLANVPNInterfaceGRE) updateFromBody(ctx context.Context, res g
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.Mask = types.StringNull()
-	data.MaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "basic.address.mask.optionType"); t.Exists() {
 		va := res.Get(path + "basic.address.mask.value")
 		if t.String() == "variable" {
-			data.MaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Mask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.Shutdown = types.BoolNull()
@@ -434,14 +434,14 @@ func (data *ServiceLANVPNInterfaceGRE) updateFromBody(ctx context.Context, res g
 			data.Shutdown = types.BoolValue(va.Bool())
 		}
 	}
-	data.TunnelSourceIpAddress = types.StringNull()
-	data.TunnelSourceIpAddressVariable = types.StringNull()
+	data.TunnelSourceIpv4Address = types.StringNull()
+	data.TunnelSourceIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelSourceType.sourceIp.tunnelSource.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelSourceType.sourceIp.tunnelSource.value")
 		if t.String() == "variable" {
-			data.TunnelSourceIpAddressVariable = types.StringValue(va.String())
+			data.TunnelSourceIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelSourceIpAddress = types.StringValue(va.String())
+			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
 	}
 	data.TunnelSourceInterface = types.StringNull()
@@ -454,34 +454,34 @@ func (data *ServiceLANVPNInterfaceGRE) updateFromBody(ctx context.Context, res g
 			data.TunnelSourceInterface = types.StringValue(va.String())
 		}
 	}
-	data.LoopbackTunnelSourceInterface = types.StringNull()
-	data.LoopbackTunnelSourceInterfaceVariable = types.StringNull()
+	data.TunnelSourceInterfaceLoopback = types.StringNull()
+	data.TunnelSourceInterfaceLoopbackVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value")
 		if t.String() == "variable" {
-			data.LoopbackTunnelSourceInterfaceVariable = types.StringValue(va.String())
+			data.TunnelSourceInterfaceLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.LoopbackTunnelSourceInterface = types.StringValue(va.String())
+			data.TunnelSourceInterfaceLoopback = types.StringValue(va.String())
 		}
 	}
-	data.LoopbackTunnelRouteVia = types.StringNull()
-	data.LoopbackTunnelRouteViaVariable = types.StringNull()
+	data.TunnelRouteViaLoopback = types.StringNull()
+	data.TunnelRouteViaLoopbackVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value")
 		if t.String() == "variable" {
-			data.LoopbackTunnelRouteViaVariable = types.StringValue(va.String())
+			data.TunnelRouteViaLoopbackVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.LoopbackTunnelRouteVia = types.StringValue(va.String())
+			data.TunnelRouteViaLoopback = types.StringValue(va.String())
 		}
 	}
-	data.GreDestinationIpAddress = types.StringNull()
-	data.GreDestinationIpAddressVariable = types.StringNull()
+	data.TunnelDestinationIpv4Address = types.StringNull()
+	data.TunnelDestinationIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "basic.tunnelDestination.optionType"); t.Exists() {
 		va := res.Get(path + "basic.tunnelDestination.value")
 		if t.String() == "variable" {
-			data.GreDestinationIpAddressVariable = types.StringValue(va.String())
+			data.TunnelDestinationIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.GreDestinationIpAddress = types.StringValue(va.String())
+			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
 	}
 	data.IpMtu = types.Int64Null()
@@ -554,10 +554,10 @@ func (data *ServiceLANVPNInterfaceGRE) isNull(ctx context.Context, res gjson.Res
 	if !data.Ipv4AddressVariable.IsNull() {
 		return false
 	}
-	if !data.Mask.IsNull() {
+	if !data.Ipv4SubnetMask.IsNull() {
 		return false
 	}
-	if !data.MaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		return false
 	}
 	if !data.Shutdown.IsNull() {
@@ -566,10 +566,10 @@ func (data *ServiceLANVPNInterfaceGRE) isNull(ctx context.Context, res gjson.Res
 	if !data.ShutdownVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelSourceIpAddress.IsNull() {
+	if !data.TunnelSourceIpv4Address.IsNull() {
 		return false
 	}
-	if !data.TunnelSourceIpAddressVariable.IsNull() {
+	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
 		return false
 	}
 	if !data.TunnelSourceInterface.IsNull() {
@@ -578,22 +578,22 @@ func (data *ServiceLANVPNInterfaceGRE) isNull(ctx context.Context, res gjson.Res
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
 		return false
 	}
-	if !data.LoopbackTunnelSourceInterface.IsNull() {
+	if !data.TunnelSourceInterfaceLoopback.IsNull() {
 		return false
 	}
-	if !data.LoopbackTunnelSourceInterfaceVariable.IsNull() {
+	if !data.TunnelSourceInterfaceLoopbackVariable.IsNull() {
 		return false
 	}
-	if !data.LoopbackTunnelRouteVia.IsNull() {
+	if !data.TunnelRouteViaLoopback.IsNull() {
 		return false
 	}
-	if !data.LoopbackTunnelRouteViaVariable.IsNull() {
+	if !data.TunnelRouteViaLoopbackVariable.IsNull() {
 		return false
 	}
-	if !data.GreDestinationIpAddress.IsNull() {
+	if !data.TunnelDestinationIpv4Address.IsNull() {
 		return false
 	}
-	if !data.GreDestinationIpAddressVariable.IsNull() {
+	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
 		return false
 	}
 	if !data.IpMtu.IsNull() {

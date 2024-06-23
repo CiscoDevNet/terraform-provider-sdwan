@@ -36,26 +36,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &ServiceLANVPNInterfaceIPSECProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure = &ServiceLANVPNInterfaceIPSECProfileParcelDataSource{}
+	_ datasource.DataSource              = &ServiceLANVPNInterfaceIPSecProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure = &ServiceLANVPNInterfaceIPSecProfileParcelDataSource{}
 )
 
-func NewServiceLANVPNInterfaceIPSECProfileParcelDataSource() datasource.DataSource {
-	return &ServiceLANVPNInterfaceIPSECProfileParcelDataSource{}
+func NewServiceLANVPNInterfaceIPSecProfileParcelDataSource() datasource.DataSource {
+	return &ServiceLANVPNInterfaceIPSecProfileParcelDataSource{}
 }
 
-type ServiceLANVPNInterfaceIPSECProfileParcelDataSource struct {
+type ServiceLANVPNInterfaceIPSecProfileParcelDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_service_lan_vpn_interface_ipsec_profile_parcel"
 }
 
-func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Service LAN VPN Interface IPSEC profile parcel.",
+		MarkdownDescription: "This data source can read the Service LAN VPN Interface IPSec profile parcel.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -106,35 +106,35 @@ func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"interface_address": schema.StringAttribute{
+			"ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"interface_address_variable": schema.StringAttribute{
+			"ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"mask": schema.StringAttribute{
+			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"mask_variable": schema.StringAttribute{
+			"ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_source_address": schema.StringAttribute{
+			"tunnel_source_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_source_address_variable": schema.StringAttribute{
+			"tunnel_source_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_source_mask": schema.StringAttribute{
+			"tunnel_source_ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_source_mask_variable": schema.StringAttribute{
+			"tunnel_source_ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -146,19 +146,19 @@ func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_destination_address": schema.StringAttribute{
+			"tunnel_destination_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_destination_address_variable": schema.StringAttribute{
+			"tunnel_destination_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_destination_mask": schema.StringAttribute{
+			"tunnel_destination_ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_destination_mask_variable": schema.StringAttribute{
+			"tunnel_destination_ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -210,11 +210,11 @@ func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"preshared_key_for_ike": schema.StringAttribute{
+			"ike_preshared_key": schema.StringAttribute{
 				MarkdownDescription: "Use preshared key to authenticate IKE peer",
 				Computed:            true,
 			},
-			"preshared_key_for_ike_variable": schema.StringAttribute{
+			"ike_preshared_key_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -254,19 +254,19 @@ func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx context.
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ike_id_for_local_end_point": schema.StringAttribute{
+			"ike_id_local_end_point": schema.StringAttribute{
 				MarkdownDescription: "IKE ID for the local endpoint. Input IPv4 address, domain name, or email address",
 				Computed:            true,
 			},
-			"ike_id_for_local_end_point_variable": schema.StringAttribute{
+			"ike_id_local_end_point_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ike_id_for_remote_end_point": schema.StringAttribute{
+			"ike_id_remote_end_point": schema.StringAttribute{
 				MarkdownDescription: "IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address",
 				Computed:            true,
 			},
-			"ike_id_for_remote_end_point_variable": schema.StringAttribute{
+			"ike_id_remote_end_point_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -322,7 +322,7 @@ func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx context.
 	}
 }
 
-func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -333,8 +333,8 @@ func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Configure(_ context
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *ServiceLANVPNInterfaceIPSECProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ServiceLANVPNInterfaceIPSEC
+func (d *ServiceLANVPNInterfaceIPSecProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config ServiceLANVPNInterfaceIPSec
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

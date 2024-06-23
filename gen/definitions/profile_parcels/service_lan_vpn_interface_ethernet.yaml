@@ -23,7 +23,7 @@ attributes:
     example: GigabitEthernet3
     minimum_test_value: '"GigabitEthernet3"'
   - model_name: description
-    tf_name: config_description
+    tf_name: interface_description
     example: LAN
   - model_name: dynamicDhcpDistance
     tf_name: ipv4_dhcp_distance
@@ -73,13 +73,12 @@ attributes:
     exclude_test: true
     example: 2001:0:0:1::0
   - model_name: secondaryIpV6Address
-    tf_name: ipv6_secondary_address
+    tf_name: ipv6_secondary_addresses
     data_path: [intfIpV6Address, static]
     exclude_null: true
     exclude_test: true
     attributes:
     - model_name: address
-      tf_name: address
       id: true
       example: 2001:0:0:1::0
   - model_name: dhcpHelperV6
@@ -197,7 +196,7 @@ attributes:
     - model_name: trackOmp
       example: false
     - model_name: ipv6
-      tf_name: addresses
+      tf_name: ipv6_addresses
       attributes:
       - model_name: ipv6LinkLocal
         tf_name: link_local_address
@@ -220,6 +219,7 @@ attributes:
     - model_name: trackOmp
       example: false
     - model_name: ipAddress
+      tf_name: address
       example: 1.2.3.4
     - model_name: ipAddressSecondary
       tf_name: secondary_addresses

@@ -9,18 +9,18 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
   interface_mtu                     = 1500
   ip_mtu                            = 1500
   ipv4_address                      = "1.2.3.4"
-  subnet_mask                       = "0.0.0.0"
+  ipv4_subnet_mask                  = "0.0.0.0"
   ipv4_secondary_addresses = [
     {
-      ipv4_address = "2.3.4.5"
-      subnet_mask  = "0.0.0.0"
+      address          = "2.3.4.5"
+      ipv4_subnet_mask = "0.0.0.0"
     }
   ]
-  dhcp_helper_ipv4_addresses = ["4.5.6.7"]
-  ipv6_address               = "2001:0:0:1::0/32"
+  ipv4_dhcp_helpers = ["4.5.6.7"]
+  ipv6_address      = "2001:0:0:1::0/32"
   ipv6_secondary_addresses = [
     {
-      ipv6_address = "::2/32"
+      address = "::2/32"
     }
   ]
   ipv6_dhcp_helpers = [
@@ -42,14 +42,14 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
       timer       = 1000
       track_omp   = false
       prefix_list = "prefix"
-      ip_address  = "1.2.3.4"
+      address     = "1.2.3.4"
       secondary_addresses = [
         {
           address = "2.3.4.5"
         }
       ]
-      tloc_prefix_change     = true
-      tloc_pref_change_value = 100
+      tloc_prefix_change       = true
+      tloc_prefix_change_value = 100
     }
   ]
   ipv6_vrrps = [

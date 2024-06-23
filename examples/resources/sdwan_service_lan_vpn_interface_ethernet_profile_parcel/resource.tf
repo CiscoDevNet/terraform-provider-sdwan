@@ -5,7 +5,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   service_lan_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                          = false
   interface_name                    = "GigabitEthernet3"
-  config_description                = "LAN"
+  interface_description             = "LAN"
   ipv4_address                      = "1.2.3.4"
   ipv4_subnet_mask                  = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -47,7 +47,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
       priority  = 100
       timer     = 1000
       track_omp = false
-      addresses = [
+      ipv6_addresses = [
         {
           link_local_address = "1::1"
           global_address     = "1::1/24"
@@ -57,11 +57,11 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   ]
   ipv4_vrrps = [
     {
-      group_id   = 1
-      priority   = 100
-      timer      = 1000
-      track_omp  = false
-      ip_address = "1.2.3.4"
+      group_id  = 1
+      priority  = 100
+      timer     = 1000
+      track_omp = false
+      address   = "1.2.3.4"
       secondary_addresses = [
         {
           address     = "2.3.4.5"

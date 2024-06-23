@@ -3,52 +3,52 @@
 page_title: "sdwan_service_lan_vpn_interface_ipsec_profile_parcel Resource - terraform-provider-sdwan"
 subcategory: "Profile Parcels"
 description: |-
-  This resource can manage a Service LAN VPN Interface IPSEC profile parcel.
+  This resource can manage a Service LAN VPN Interface IPSec profile parcel.
   Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_service_lan_vpn_interface_ipsec_profile_parcel (Resource)
 
-This resource can manage a Service LAN VPN Interface IPSEC profile parcel.
+This resource can manage a Service LAN VPN Interface IPSec profile parcel.
   - Minimum SD-WAN Manager version: `20.12.0`
 
 ## Example Usage
 
 ```terraform
 resource "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "example" {
-  name                              = "Example"
-  description                       = "My Example"
-  feature_profile_id                = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  service_lan_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
-  interface_name                    = "ipsec987"
-  shutdown                          = true
-  interface_description             = "ipsec987"
-  interface_address                 = "9.7.5.4"
-  mask                              = "255.255.255.0"
-  tunnel_source_address             = "1.3.5.88"
-  tunnel_source_mask                = "255.255.255.0"
-  tunnel_source_interface           = "GigabitEthernet8"
-  tunnel_destination_address        = "2.55.67.99"
-  tunnel_destination_mask           = "255.255.255.0"
-  application_tunnel_type           = "none"
-  tcp_mss                           = 1460
-  clear_dont_fragment               = false
-  ip_mtu                            = 1500
-  dpd_interval                      = 10
-  dpd_retries                       = 3
-  preshared_key_for_ike             = "123"
-  ike_version                       = 1
-  ike_integrity_protocol            = "main"
-  ike_rekey_interval                = 14400
-  ike_ciphersuite                   = "aes256-cbc-sha1"
-  ike_diffie_hellman_group          = "16"
-  ike_id_for_local_end_point        = "xxx"
-  ike_id_for_remote_end_point       = "xxx"
-  ipsec_rekey_interval              = 3600
-  ipsec_replay_window               = 512
-  ipsec_ciphersuite                 = "aes256-gcm"
-  perfect_forward_secrecy           = "group-16"
-  tunnel_route_via                  = "2222"
+  name                                = "Example"
+  description                         = "My Example"
+  feature_profile_id                  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  service_lan_vpn_profile_parcel_id   = "140331f6-5418-4755-a059-13c77eb96037"
+  interface_name                      = "ipsec987"
+  shutdown                            = true
+  interface_description               = "ipsec987"
+  ipv4_address                        = "9.7.5.4"
+  ipv4_subnet_mask                    = "255.255.255.0"
+  tunnel_source_ipv4_address          = "1.3.5.88"
+  tunnel_source_ipv4_subnet_mask      = "255.255.255.0"
+  tunnel_source_interface             = "GigabitEthernet8"
+  tunnel_destination_ipv4_address     = "2.55.67.99"
+  tunnel_destination_ipv4_subnet_mask = "255.255.255.0"
+  application_tunnel_type             = "none"
+  tcp_mss                             = 1460
+  clear_dont_fragment                 = false
+  ip_mtu                              = 1500
+  dpd_interval                        = 10
+  dpd_retries                         = 3
+  ike_preshared_key                   = "123"
+  ike_version                         = 1
+  ike_integrity_protocol              = "main"
+  ike_rekey_interval                  = 14400
+  ike_ciphersuite                     = "aes256-cbc-sha1"
+  ike_diffie_hellman_group            = "16"
+  ike_id_local_end_point              = "xxx"
+  ike_id_remote_end_point             = "xxx"
+  ipsec_rekey_interval                = 3600
+  ipsec_replay_window                 = 512
+  ipsec_ciphersuite                   = "aes256-gcm"
+  perfect_forward_secrecy             = "group-16"
+  tunnel_route_via                    = "2222"
 }
 ```
 
@@ -60,16 +60,16 @@ resource "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "example" {
 - `application_tunnel_type` (String) Enable Application Tunnel Type
   - Choices: `none`, `sig`
 - `feature_profile_id` (String) Feature Profile ID
-- `interface_address` (String)
+- `ike_preshared_key` (String) Use preshared key to authenticate IKE peer
 - `interface_name` (String) Interface name: IPsec when present
-- `mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_address` (String)
+- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `name` (String) The name of the profile parcel
-- `preshared_key_for_ike` (String) Use preshared key to authenticate IKE peer
-- `tunnel_destination_address` (String)
-- `tunnel_destination_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `tunnel_source_address` (String)
+- `tunnel_destination_ipv4_address` (String)
+- `tunnel_destination_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
-- `tunnel_source_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `tunnel_source_ipv4_address` (String)
+- `tunnel_source_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 
 ### Optional
 
@@ -94,14 +94,15 @@ resource "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "example" {
   - Choices: `2`, `14`, `15`, `16`, `19`, `20`, `21`, `24`
   - Default value: `16`
 - `ike_diffie_hellman_group_variable` (String) Variable name
-- `ike_id_for_local_end_point` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
-- `ike_id_for_local_end_point_variable` (String) Variable name
-- `ike_id_for_remote_end_point` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
-- `ike_id_for_remote_end_point_variable` (String) Variable name
+- `ike_id_local_end_point` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
+- `ike_id_local_end_point_variable` (String) Variable name
+- `ike_id_remote_end_point` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
+- `ike_id_remote_end_point_variable` (String) Variable name
 - `ike_integrity_protocol` (String) IKE integrity protocol
   - Choices: `main`, `aggressive`
   - Default value: `main`
 - `ike_integrity_protocol_variable` (String) Variable name
+- `ike_preshared_key_variable` (String) Variable name
 - `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
   - Range: `60`-`86400`
   - Default value: `14400`
@@ -109,7 +110,6 @@ resource "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "example" {
 - `ike_version` (Number) IKE Version <1..2>
   - Range: `1`-`2`
   - Default value: `1`
-- `interface_address_variable` (String) Variable name
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name_variable` (String) Variable name
@@ -129,12 +129,12 @@ resource "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "example" {
   - Range: `64`-`4096`
   - Default value: `512`
 - `ipsec_replay_window_variable` (String) Variable name
-- `mask_variable` (String) Variable name
+- `ipv4_address_variable` (String) Variable name
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
   - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
   - Default value: `group-16`
 - `perfect_forward_secrecy_variable` (String) Variable name
-- `preshared_key_for_ike_variable` (String) Variable name
 - `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Parcel ID
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
@@ -144,13 +144,13 @@ resource "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "example" {
 - `tcp_mss_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name
-- `tunnel_destination_address_variable` (String) Variable name
-- `tunnel_destination_mask_variable` (String) Variable name
+- `tunnel_destination_ipv4_address_variable` (String) Variable name
+- `tunnel_destination_ipv4_subnet_mask_variable` (String) Variable name
 - `tunnel_route_via` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_route_via_variable` (String) Variable name
-- `tunnel_source_address_variable` (String) Variable name
 - `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_mask_variable` (String) Variable name
+- `tunnel_source_ipv4_address_variable` (String) Variable name
+- `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name
 
 ### Read-Only
 

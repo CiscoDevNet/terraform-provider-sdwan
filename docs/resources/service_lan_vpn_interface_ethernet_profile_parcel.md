@@ -22,7 +22,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   service_lan_vpn_profile_parcel_id = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                          = false
   interface_name                    = "GigabitEthernet3"
-  config_description                = "LAN"
+  interface_description             = "LAN"
   ipv4_address                      = "1.2.3.4"
   ipv4_subnet_mask                  = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -64,7 +64,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
       priority  = 100
       timer     = 1000
       track_omp = false
-      addresses = [
+      ipv6_addresses = [
         {
           link_local_address = "1::1"
           global_address     = "1::1/24"
@@ -74,11 +74,11 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
   ]
   ipv4_vrrps = [
     {
-      group_id   = 1
-      priority   = 100
-      timer      = 1000
-      track_omp  = false
-      ip_address = "1.2.3.4"
+      group_id  = 1
+      priority  = 100
+      timer     = 1000
+      track_omp = false
+      address   = "1.2.3.4"
       secondary_addresses = [
         {
           address     = "2.3.4.5"
@@ -141,8 +141,6 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `autonegotiate` (Boolean) Link autonegotiation
 - `autonegotiate_variable` (String) Variable name
-- `config_description` (String)
-- `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `duplex` (String) Duplex mode
   - Choices: `full`, `half`, `auto`
@@ -151,6 +149,8 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
   - Default value: `true`
 - `icmp_redirect_disable_variable` (String) Variable name
+- `interface_description` (String)
+- `interface_description_variable` (String) Variable name
 - `interface_mtu` (Number) Interface MTU
   - Range: `1500`-`9216`
   - Default value: `1500`
@@ -207,7 +207,7 @@ resource "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
   - Default value: `false`
-- `ipv6_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_address))
+- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6 (see [below for nested schema](#nestedatt--ipv6_vrrps))
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`
@@ -279,11 +279,11 @@ Optional:
 
 Optional:
 
+- `address` (String) VRRP Ip Address
+- `address_variable` (String) Variable name
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name
-- `ip_address` (String) VRRP Ip Address
-- `ip_address_variable` (String) Variable name
 - `priority` (Number) Set priority
   - Range: `1`-`254`
   - Default value: `100`
@@ -334,8 +334,8 @@ Optional:
 - `address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_secondary_address"></a>
-### Nested Schema for `ipv6_secondary_address`
+<a id="nestedatt--ipv6_secondary_addresses"></a>
+### Nested Schema for `ipv6_secondary_addresses`
 
 Optional:
 
@@ -348,10 +348,10 @@ Optional:
 
 Optional:
 
-- `addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--addresses))
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name
+- `ipv6_addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--ipv6_addresses))
 - `priority` (Number) Set priority
   - Range: `1`-`254`
   - Default value: `100`
@@ -363,8 +363,8 @@ Optional:
 - `track_omp` (Boolean) Track OMP status
   - Default value: `false`
 
-<a id="nestedatt--ipv6_vrrps--addresses"></a>
-### Nested Schema for `ipv6_vrrps.addresses`
+<a id="nestedatt--ipv6_vrrps--ipv6_addresses"></a>
+### Nested Schema for `ipv6_vrrps.ipv6_addresses`
 
 Optional:
 

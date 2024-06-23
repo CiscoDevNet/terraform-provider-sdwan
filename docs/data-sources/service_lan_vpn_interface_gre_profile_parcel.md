@@ -36,8 +36,6 @@ data "sdwan_service_lan_vpn_interface_gre_profile_parcel" "example" {
 - `clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)
 - `clear_dont_fragment_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `gre_destination_ip_address` (String) Tunnel destination IP Address
-- `gre_destination_ip_address_variable` (String) Variable name
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name (1..255)
@@ -46,19 +44,21 @@ data "sdwan_service_lan_vpn_interface_gre_profile_parcel" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
-- `loopback_tunnel_route_via` (String) <1..32 characters> Interface name, can't be Loopback interface
-- `loopback_tunnel_route_via_variable` (String) Variable name
-- `loopback_tunnel_source_interface` (String) <1..32 characters> Interface name
-- `loopback_tunnel_source_interface_variable` (String) Variable name
-- `mask` (String)
-- `mask_variable` (String) Variable name
+- `ipv4_subnet_mask` (String)
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
 - `tcp_mss_variable` (String) Variable name
+- `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address
+- `tunnel_destination_ipv4_address_variable` (String) Variable name
+- `tunnel_route_via_loopback` (String) <1..32 characters> Interface name, can't be Loopback interface
+- `tunnel_route_via_loopback_variable` (String) Variable name
 - `tunnel_source_interface` (String) <1..32 characters> Interface name
+- `tunnel_source_interface_loopback` (String) <1..32 characters> Interface name
+- `tunnel_source_interface_loopback_variable` (String) Variable name
 - `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_ip_address` (String) Tunnel source IP Address
-- `tunnel_source_ip_address_variable` (String) Variable name
+- `tunnel_source_ipv4_address` (String) Tunnel source IP Address
+- `tunnel_source_ipv4_address_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel

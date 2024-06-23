@@ -35,8 +35,6 @@ data "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
 - `arp_timeout_variable` (String) Variable name
 - `arps` (Attributes List) Configure static ARP entries (see [below for nested schema](#nestedatt--arps))
 - `description` (String) The description of the profile parcel
-- `dhcp_helper_ipv4_addresses` (Set of String) List of DHCP helper addresses
-- `dhcp_helper_ipv4_addresses_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
 - `enable_dhcpv6_variable` (String) Variable name
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
@@ -53,7 +51,11 @@ data "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String) IP Address
 - `ipv4_address_variable` (String) Variable name
+- `ipv4_dhcp_helpers` (Set of String) List of DHCP helper addresses
+- `ipv4_dhcp_helpers_variable` (String) Variable name
 - `ipv4_secondary_addresses` (Attributes List) Assign secondary IP addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv4_vrrps` (Attributes List) Enable ipv4 VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
@@ -63,8 +65,6 @@ data "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
 - `name` (String) The name of the profile parcel
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
-- `subnet_mask` (String) Subnet Mask
-- `subnet_mask_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
 - `tcp_mss_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
@@ -85,10 +85,10 @@ Read-Only:
 
 Read-Only:
 
-- `ipv4_address` (String) IpV4 Address
-- `ipv4_address_variable` (String) Variable name
-- `subnet_mask` (String) Subnet Mask
-- `subnet_mask_variable` (String) Variable name
+- `address` (String) IpV4 Address
+- `address_variable` (String) Variable name
+- `ipv4_subnet_mask` (String) Subnet Mask
+- `ipv4_subnet_mask_variable` (String) Variable name
 
 
 <a id="nestedatt--ipv4_vrrps"></a>
@@ -96,10 +96,10 @@ Read-Only:
 
 Read-Only:
 
+- `address` (String) Assign IPV4 Address
+- `address_variable` (String) Variable name
 - `group_id` (Number) Group ID
 - `group_id_variable` (String) Variable name
-- `ip_address` (String) Assign IPV4 Address
-- `ip_address_variable` (String) Variable name
 - `prefix_list` (String) Track Prefix List
 - `prefix_list_variable` (String) Variable name
 - `priority` (Number) Set priority
@@ -107,9 +107,9 @@ Read-Only:
 - `secondary_addresses` (Attributes List) VRRP Secondary IPV4 address (see [below for nested schema](#nestedatt--ipv4_vrrps--secondary_addresses))
 - `timer` (Number) Timer interval for successive advertisements, in milliseconds
 - `timer_variable` (String) Variable name
-- `tloc_pref_change_value` (Number) Set tloc preference change value
-- `tloc_pref_change_value_variable` (String) Variable name
 - `tloc_prefix_change` (Boolean) change TLOC preference
+- `tloc_prefix_change_value` (Number) Set tloc preference change value
+- `tloc_prefix_change_value_variable` (String) Variable name
 - `track_omp` (Boolean) Track OMP status
 - `track_omp_variable` (String) Variable name
 
@@ -139,8 +139,8 @@ Read-Only:
 
 Read-Only:
 
-- `ipv6_address` (String) IPv6 Address
-- `ipv6_address_variable` (String) Variable name
+- `address` (String) IPv6 Address
+- `address_variable` (String) Variable name
 
 
 <a id="nestedatt--ipv6_vrrps"></a>

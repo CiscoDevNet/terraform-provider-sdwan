@@ -99,11 +99,11 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"config_description": schema.StringAttribute{
+			"interface_description": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"config_description_variable": schema.StringAttribute{
+			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -192,7 +192,7 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ipv6_secondary_address": schema.ListNestedAttribute{
+			"ipv6_secondary_addresses": schema.ListNestedAttribute{
 				MarkdownDescription: "Static secondary IPv6 addresses",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
@@ -401,7 +401,7 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 							MarkdownDescription: "Track OMP status",
 							Computed:            true,
 						},
-						"addresses": schema.ListNestedAttribute{
+						"ipv6_addresses": schema.ListNestedAttribute{
 							MarkdownDescription: "IPv6 VRRP",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
@@ -461,11 +461,11 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 							MarkdownDescription: "Track OMP status",
 							Computed:            true,
 						},
-						"ip_address": schema.StringAttribute{
+						"address": schema.StringAttribute{
 							MarkdownDescription: "VRRP Ip Address",
 							Computed:            true,
 						},
-						"ip_address_variable": schema.StringAttribute{
+						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

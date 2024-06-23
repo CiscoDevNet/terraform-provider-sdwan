@@ -42,14 +42,14 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `autonegotiate` (Boolean) Link autonegotiation
 - `autonegotiate_variable` (String) Variable name
-- `config_description` (String)
-- `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `duplex` (String) Duplex mode
 - `duplex_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
 - `icmp_redirect_disable` (Boolean) ICMP/ICMPv6 Redirect Disable
 - `icmp_redirect_disable_variable` (String) Variable name
+- `interface_description` (String)
+- `interface_description_variable` (String) Variable name
 - `interface_mtu` (Number) Interface MTU
 - `interface_mtu_variable` (String) Variable name
 - `interface_name` (String)
@@ -90,7 +90,7 @@ data "sdwan_service_lan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
 - `ipv6_dhcp_secondary_addresses` (Attributes List) secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_addresses))
 - `ipv6_nat` (Boolean) enable Network Address Translation ipv6 on this interface
-- `ipv6_secondary_address` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_address))
+- `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `ipv6_vrrps` (Attributes List) Enable VRRP Ipv6 (see [below for nested schema](#nestedatt--ipv6_vrrps))
 - `load_interval` (Number) Interval for interface load calculation
 - `load_interval_variable` (String) Variable name
@@ -147,10 +147,10 @@ Read-Only:
 
 Read-Only:
 
+- `address` (String) VRRP Ip Address
+- `address_variable` (String) Variable name
 - `group_id` (Number) Group ID
 - `group_id_variable` (String) Variable name
-- `ip_address` (String) VRRP Ip Address
-- `ip_address_variable` (String) Variable name
 - `priority` (Number) Set priority
 - `priority_variable` (String) Variable name
 - `secondary_addresses` (Attributes List) VRRP Secondary Ip Addresses (see [below for nested schema](#nestedatt--ipv4_vrrps--secondary_addresses))
@@ -192,8 +192,8 @@ Read-Only:
 - `address_variable` (String) Variable name
 
 
-<a id="nestedatt--ipv6_secondary_address"></a>
-### Nested Schema for `ipv6_secondary_address`
+<a id="nestedatt--ipv6_secondary_addresses"></a>
+### Nested Schema for `ipv6_secondary_addresses`
 
 Read-Only:
 
@@ -206,17 +206,17 @@ Read-Only:
 
 Read-Only:
 
-- `addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--addresses))
 - `group_id` (Number) Group ID
 - `group_id_variable` (String) Variable name
+- `ipv6_addresses` (Attributes List) IPv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps--ipv6_addresses))
 - `priority` (Number) Set priority
 - `priority_variable` (String) Variable name
 - `timer` (Number) Timer interval for successive advertisements, in milliseconds
 - `timer_variable` (String) Variable name
 - `track_omp` (Boolean) Track OMP status
 
-<a id="nestedatt--ipv6_vrrps--addresses"></a>
-### Nested Schema for `ipv6_vrrps.addresses`
+<a id="nestedatt--ipv6_vrrps--ipv6_addresses"></a>
+### Nested Schema for `ipv6_vrrps.ipv6_addresses`
 
 Read-Only:
 

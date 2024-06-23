@@ -39,11 +39,11 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) 
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "interface_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ip_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "subnet_mask", "0.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_secondary_addresses.0.ipv4_address", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_secondary_addresses.0.subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_secondary_addresses.0.address", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_secondary_addresses.0.ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_address", "2001:0:0:1::0/32"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_secondary_addresses.0.ipv6_address", "::2/32"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_secondary_addresses.0.address", "::2/32"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_dhcp_helpers.0.address", "2001:0:0:1::0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_dhcp_helpers.0.vpn", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "arps.0.ip_address", "1.2.3.4"))
@@ -53,10 +53,10 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) 
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.timer", "1000"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.track_omp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.prefix_list", "prefix"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.ip_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.secondary_addresses.0.address", "2.3.4.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.tloc_prefix_change", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.tloc_pref_change_value", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.tloc_prefix_change_value", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.group_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.priority", "100"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.timer", "1000"))
@@ -112,15 +112,15 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelConfig() string
 	config += `	interface_mtu = 1500` + "\n"
 	config += `	ip_mtu = 1500` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
-	config += `	subnet_mask = "0.0.0.0"` + "\n"
+	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"
-	config += `	  ipv4_address = "2.3.4.5"` + "\n"
-	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+	config += `	  address = "2.3.4.5"` + "\n"
+	config += `	  ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	}]` + "\n"
-	config += `	dhcp_helper_ipv4_addresses = ["4.5.6.7"]` + "\n"
+	config += `	ipv4_dhcp_helpers = ["4.5.6.7"]` + "\n"
 	config += `	ipv6_address = "2001:0:0:1::0/32"` + "\n"
 	config += `	ipv6_secondary_addresses = [{` + "\n"
-	config += `	  ipv6_address = "::2/32"` + "\n"
+	config += `	  address = "::2/32"` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_dhcp_helpers = [{` + "\n"
 	config += `	  address = "2001:0:0:1::0"` + "\n"
@@ -136,12 +136,12 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelConfig() string
 	config += `	  timer = 1000` + "\n"
 	config += `	  track_omp = false` + "\n"
 	config += `	  prefix_list = "prefix"` + "\n"
-	config += `	  ip_address = "1.2.3.4"` + "\n"
+	config += `	  address = "1.2.3.4"` + "\n"
 	config += `	  secondary_addresses = [{` + "\n"
 	config += `		address = "2.3.4.5"` + "\n"
 	config += `	}]` + "\n"
 	config += `	  tloc_prefix_change = true` + "\n"
-	config += `	  tloc_pref_change_value = 100` + "\n"
+	config += `	  tloc_prefix_change_value = 100` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_vrrps = [{` + "\n"
 	config += `	  group_id = 1` + "\n"

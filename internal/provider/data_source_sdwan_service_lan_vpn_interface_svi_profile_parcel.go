@@ -131,11 +131,11 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"subnet_mask": schema.StringAttribute{
+			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "Subnet Mask",
 				Computed:            true,
 			},
-			"subnet_mask_variable": schema.StringAttribute{
+			"ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -144,31 +144,31 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"ipv4_address": schema.StringAttribute{
+						"address": schema.StringAttribute{
 							MarkdownDescription: "IpV4 Address",
 							Computed:            true,
 						},
-						"ipv4_address_variable": schema.StringAttribute{
+						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"subnet_mask": schema.StringAttribute{
+						"ipv4_subnet_mask": schema.StringAttribute{
 							MarkdownDescription: "Subnet Mask",
 							Computed:            true,
 						},
-						"subnet_mask_variable": schema.StringAttribute{
+						"ipv4_subnet_mask_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},
 				},
 			},
-			"dhcp_helper_ipv4_addresses": schema.SetAttribute{
+			"ipv4_dhcp_helpers": schema.SetAttribute{
 				MarkdownDescription: "List of DHCP helper addresses",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
-			"dhcp_helper_ipv4_addresses_variable": schema.StringAttribute{
+			"ipv4_dhcp_helpers_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -185,11 +185,11 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"ipv6_address": schema.StringAttribute{
+						"address": schema.StringAttribute{
 							MarkdownDescription: "IPv6 Address",
 							Computed:            true,
 						},
-						"ipv6_address_variable": schema.StringAttribute{
+						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
@@ -289,11 +289,11 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"ip_address": schema.StringAttribute{
+						"address": schema.StringAttribute{
 							MarkdownDescription: "Assign IPV4 Address",
 							Computed:            true,
 						},
-						"ip_address_variable": schema.StringAttribute{
+						"address_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
@@ -317,11 +317,11 @@ func (d *ServiceLANVPNInterfaceSVIProfileParcelDataSource) Schema(ctx context.Co
 							MarkdownDescription: "change TLOC preference",
 							Computed:            true,
 						},
-						"tloc_pref_change_value": schema.Int64Attribute{
+						"tloc_prefix_change_value": schema.Int64Attribute{
 							MarkdownDescription: "Set tloc preference change value",
 							Computed:            true,
 						},
-						"tloc_pref_change_value_variable": schema.StringAttribute{
+						"tloc_prefix_change_value_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},

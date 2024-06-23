@@ -26,18 +26,18 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
   interface_mtu                     = 1500
   ip_mtu                            = 1500
   ipv4_address                      = "1.2.3.4"
-  subnet_mask                       = "0.0.0.0"
+  ipv4_subnet_mask                  = "0.0.0.0"
   ipv4_secondary_addresses = [
     {
-      ipv4_address = "2.3.4.5"
-      subnet_mask  = "0.0.0.0"
+      address          = "2.3.4.5"
+      ipv4_subnet_mask = "0.0.0.0"
     }
   ]
-  dhcp_helper_ipv4_addresses = ["4.5.6.7"]
-  ipv6_address               = "2001:0:0:1::0/32"
+  ipv4_dhcp_helpers = ["4.5.6.7"]
+  ipv6_address      = "2001:0:0:1::0/32"
   ipv6_secondary_addresses = [
     {
-      ipv6_address = "::2/32"
+      address = "::2/32"
     }
   ]
   ipv6_dhcp_helpers = [
@@ -59,14 +59,14 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
       timer       = 1000
       track_omp   = false
       prefix_list = "prefix"
-      ip_address  = "1.2.3.4"
+      address     = "1.2.3.4"
       secondary_addresses = [
         {
           address = "2.3.4.5"
         }
       ]
-      tloc_prefix_change     = true
-      tloc_pref_change_value = 100
+      tloc_prefix_change       = true
+      tloc_prefix_change_value = 100
     }
   ]
   ipv6_vrrps = [
@@ -105,9 +105,9 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
 - `feature_profile_id` (String) Feature Profile ID
 - `interface_name` (String) Interface name: VLAN 1 - VLAN 4094 when present
 - `ipv4_address` (String) IP Address
-- `name` (String) The name of the profile parcel
-- `subnet_mask` (String) Subnet Mask
+- `ipv4_subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `name` (String) The name of the profile parcel
 
 ### Optional
 
@@ -117,8 +117,6 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
 - `arp_timeout_variable` (String) Variable name
 - `arps` (Attributes List) Configure static ARP entries (see [below for nested schema](#nestedatt--arps))
 - `description` (String) The description of the profile parcel
-- `dhcp_helper_ipv4_addresses` (Set of String) List of DHCP helper addresses
-- `dhcp_helper_ipv4_addresses_variable` (String) Variable name
 - `enable_dhcpv6` (Boolean) Enable DHCPv6
   - Default value: `false`
 - `enable_dhcpv6_variable` (String) Variable name
@@ -140,7 +138,10 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address_variable` (String) Variable name
+- `ipv4_dhcp_helpers` (Set of String) List of DHCP helper addresses
+- `ipv4_dhcp_helpers_variable` (String) Variable name
 - `ipv4_secondary_addresses` (Attributes List) Assign secondary IP addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv4_vrrps` (Attributes List) Enable ipv4 VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
@@ -151,7 +152,6 @@ resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "example" {
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
-- `subnet_mask_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `552`-`1960`
 - `tcp_mss_variable` (String) Variable name
@@ -177,11 +177,11 @@ Optional:
 
 Optional:
 
-- `ipv4_address` (String) IpV4 Address
-- `ipv4_address_variable` (String) Variable name
-- `subnet_mask` (String) Subnet Mask
+- `address` (String) IpV4 Address
+- `address_variable` (String) Variable name
+- `ipv4_subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `subnet_mask_variable` (String) Variable name
+- `ipv4_subnet_mask_variable` (String) Variable name
 
 
 <a id="nestedatt--ipv4_vrrps"></a>
@@ -189,11 +189,11 @@ Optional:
 
 Optional:
 
+- `address` (String) Assign IPV4 Address
+- `address_variable` (String) Variable name
 - `group_id` (Number) Group ID
   - Range: `1`-`255`
 - `group_id_variable` (String) Variable name
-- `ip_address` (String) Assign IPV4 Address
-- `ip_address_variable` (String) Variable name
 - `prefix_list` (String) Track Prefix List
 - `prefix_list_variable` (String) Variable name
 - `priority` (Number) Set priority
@@ -205,11 +205,11 @@ Optional:
   - Range: `100`-`40950`
   - Default value: `1000`
 - `timer_variable` (String) Variable name
-- `tloc_pref_change_value` (Number) Set tloc preference change value
-  - Range: `1`-`4294967295`
-- `tloc_pref_change_value_variable` (String) Variable name
 - `tloc_prefix_change` (Boolean) change TLOC preference
   - Default value: `false`
+- `tloc_prefix_change_value` (Number) Set tloc preference change value
+  - Range: `1`-`4294967295`
+- `tloc_prefix_change_value_variable` (String) Variable name
 - `track_omp` (Boolean) Track OMP status
   - Default value: `false`
 - `track_omp_variable` (String) Variable name
@@ -241,8 +241,8 @@ Optional:
 
 Optional:
 
-- `ipv6_address` (String) IPv6 Address
-- `ipv6_address_variable` (String) Variable name
+- `address` (String) IPv6 Address
+- `address_variable` (String) Variable name
 
 
 <a id="nestedatt--ipv6_vrrps"></a>

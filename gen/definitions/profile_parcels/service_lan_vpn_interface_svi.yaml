@@ -38,6 +38,7 @@ attributes:
     example: 1.2.3.4
   - model_name: subnetMask
     data_path: [ipv4, addressV4]
+    tf_name: ipv4_subnet_mask
     mandatory: true
     example: 0.0.0.0
   - model_name: secondaryAddressV4
@@ -46,13 +47,14 @@ attributes:
     example: 5.6.7.8
     attributes:
     - model_name: ipAddress
-      tf_name: ipv4_address
+      tf_name: address
       id: true
       example: 2.3.4.5
     - model_name: subnetMask
+      tf_name: ipv4_subnet_mask
       example: 0.0.0.0
   - model_name: dhcpHelperV4
-    tf_name: dhcp_helper_ipv4_addresses
+    tf_name: ipv4_dhcp_helpers
     data_path: [ipv4]
     example: 4.5.6.7
   - model_name: addressV6
@@ -64,7 +66,7 @@ attributes:
     data_path: [ipv6]
     attributes:
     - model_name: address
-      tf_name: ipv6_address
+      tf_name: address
       id: true
       example: ::2/32
   - model_name: dhcpHelperV6
@@ -126,6 +128,7 @@ attributes:
     - model_name: prefixList
       example: prefix
     - model_name: ipAddress
+      tf_name: address
       example: 1.2.3.4
     - model_name: ipAddressSecondary
       tf_name: secondary_addresses
@@ -137,6 +140,7 @@ attributes:
       tf_name: tloc_prefix_change
       example: true
     - model_name: tlocPrefChangeValue
+      tf_name: tloc_prefix_change_value
       example: 100
     # - model_name: trackingObject
     #   tf_name: tracking_objects

@@ -6,10 +6,10 @@ resource "sdwan_service_lan_vpn_interface_gre_profile_parcel" "example" {
   interface_name                    = "gre1"
   interface_description             = "gre1"
   ipv4_address                      = "70.1.1.1"
-  mask                              = "255.255.255.0"
+  ipv4_subnet_mask                  = "255.255.255.0"
   shutdown                          = true
-  tunnel_source_ip_address          = "78.1.1.1"
-  gre_destination_ip_address        = "79.1.1.1"
+  tunnel_source_ipv4_address        = "78.1.1.1"
+  tunnel_destination_ipv4_address   = "79.1.1.1"
   ip_mtu                            = 1500
   tcp_mss                           = 1460
   clear_dont_fragment               = false
