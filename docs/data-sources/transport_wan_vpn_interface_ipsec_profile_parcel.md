@@ -44,17 +44,17 @@ data "sdwan_transport_wan_vpn_interface_ipsec_profile_parcel" "example" {
 - `ike_ciphersuite_variable` (String) Variable name
 - `ike_diffie_hellman_group` (String) IKE Diffie Hellman Groups
 - `ike_diffie_hellman_group_variable` (String) Variable name
-- `ike_id_for_local_end_point` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
-- `ike_id_for_local_end_point_variable` (String) Variable name
-- `ike_id_for_remote_end_point` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
-- `ike_id_for_remote_end_point_variable` (String) Variable name
+- `ike_id_local_end_point` (String) IKE ID for the local endpoint. Input IPv4 address, domain name, or email address
+- `ike_id_local_end_point_variable` (String) Variable name
+- `ike_id_remote_end_point` (String) IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address
+- `ike_id_remote_end_point_variable` (String) Variable name
 - `ike_integrity_protocol` (String) IKE integrity protocol
 - `ike_integrity_protocol_variable` (String) Variable name
+- `ike_preshared_key` (String) Use preshared key to authenticate IKE peer
+- `ike_preshared_key_variable` (String) Variable name
 - `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
 - `ike_rekey_interval_variable` (String) Variable name
 - `ike_version` (Number) IKE Version <1..2>
-- `interface_address` (String)
-- `interface_address_variable` (String) Variable name
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
 - `interface_name` (String) Interface name: IPsec when present
@@ -67,29 +67,29 @@ data "sdwan_transport_wan_vpn_interface_ipsec_profile_parcel" "example" {
 - `ipsec_rekey_interval_variable` (String) Variable name
 - `ipsec_replay_window` (Number) Replay window size 32..8192 (must be a power of 2)
 - `ipsec_replay_window_variable` (String) Variable name
-- `mask` (String)
-- `mask_variable` (String) Variable name
+- `ipv4_address` (String)
+- `ipv4_address_variable` (String) Variable name
+- `ipv4_subnet_mask` (String)
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
 - `perfect_forward_secrecy_variable` (String) Variable name
-- `preshared_key_for_ike` (String) Use preshared key to authenticate IKE peer
-- `preshared_key_for_ike_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
 - `tcp_mss_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name
-- `tunnel_destination_address` (String)
-- `tunnel_destination_address_variable` (String) Variable name
-- `tunnel_destination_mask` (String)
-- `tunnel_destination_mask_variable` (String) Variable name
+- `tunnel_destination_ipv4_address` (String)
+- `tunnel_destination_ipv4_address_variable` (String) Variable name
+- `tunnel_destination_ipv4_subnet_mask` (String)
+- `tunnel_destination_ipv4_subnet_mask_variable` (String) Variable name
 - `tunnel_route_via` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_route_via_variable` (String) Variable name
-- `tunnel_source_address` (String)
-- `tunnel_source_address_variable` (String) Variable name
 - `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_source_interface_variable` (String) Variable name
-- `tunnel_source_mask` (String)
-- `tunnel_source_mask_variable` (String) Variable name
+- `tunnel_source_ipv4_address` (String)
+- `tunnel_source_ipv4_address_variable` (String) Variable name
+- `tunnel_source_ipv4_subnet_mask` (String)
+- `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel

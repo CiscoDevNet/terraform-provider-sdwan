@@ -107,11 +107,11 @@ func (d *TransportWANVPNInterfaceT1E1SerialProfileParcelDataSource) Schema(ctx c
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ipv4_mask": schema.StringAttribute{
+			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"ipv4_mask_variable": schema.StringAttribute{
+			"ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -360,11 +360,11 @@ func (d *TransportWANVPNInterfaceT1E1SerialProfileParcelDataSource) Schema(ctx c
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_interface_allow_dbs": schema.BoolAttribute{
+			"tunnel_interface_allow_dns": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny DNS",
 				Computed:            true,
 			},
-			"tunnel_interface_allow_dbs_variable": schema.StringAttribute{
+			"tunnel_interface_allow_dns_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -468,11 +468,11 @@ func (d *TransportWANVPNInterfaceT1E1SerialProfileParcelDataSource) Schema(ctx c
 					},
 				},
 			},
-			"acl_shaping_rate": schema.Int64Attribute{
+			"qos_shaping_rate": schema.Int64Attribute{
 				MarkdownDescription: "1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps",
 				Computed:            true,
 			},
-			"acl_shaping_rate_variable": schema.StringAttribute{
+			"qos_shaping_rate_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

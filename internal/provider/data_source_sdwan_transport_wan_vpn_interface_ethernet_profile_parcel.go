@@ -99,11 +99,11 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"config_description": schema.StringAttribute{
+			"interface_description": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"config_description_variable": schema.StringAttribute{
+			"interface_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -493,11 +493,11 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_interface_allow_dbs": schema.BoolAttribute{
+			"tunnel_interface_allow_dns": schema.BoolAttribute{
 				MarkdownDescription: "Allow/Deny DNS",
 				Computed:            true,
 			},
-			"tunnel_interface_allow_dbs_variable": schema.StringAttribute{
+			"tunnel_interface_allow_dns_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -741,7 +741,7 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 					},
 				},
 			},
-			"adaptive_qos": schema.BoolAttribute{
+			"qos_adaptive": schema.BoolAttribute{
 				MarkdownDescription: "Adaptive QoS",
 				Computed:            true,
 			},
@@ -873,11 +873,11 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"intrf_mtu": schema.Int64Attribute{
+			"interface_mtu": schema.Int64Attribute{
 				MarkdownDescription: "Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes",
 				Computed:            true,
 			},
-			"intrf_mtu_variable": schema.StringAttribute{
+			"interface_mtu_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

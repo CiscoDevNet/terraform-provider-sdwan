@@ -22,7 +22,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
   transport_wan_vpn_profile_parcel_id            = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                                       = true
   interface_name                                 = "GigabitEthernet1"
-  config_description                             = "WAN"
+  interface_description                          = "WAN"
   ipv4_dhcp_helper                               = ["1.2.3.4"]
   service_provider                               = "example"
   bandwidth_upstream                             = 21474836
@@ -55,7 +55,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
   tunnel_interface_allow_dhcp                    = true
   tunnel_interface_allow_ntp                     = false
   tunnel_interface_allow_ssh                     = false
-  tunnel_interface_allow_dbs                     = true
+  tunnel_interface_allow_dns                     = true
   tunnel_interface_allow_icmp                    = true
   tunnel_interface_allow_https                   = true
   tunnel_interface_allow_ospf                    = false
@@ -80,7 +80,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
     }
   ]
   ip_mtu                = 1500
-  intrf_mtu             = 1500
+  interface_mtu         = 1500
   tcp_mss               = 505
   tloc_extension        = "tloc"
   tracker               = "example"
@@ -98,8 +98,6 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
 
 ### Optional
 
-- `adaptive_qos` (Boolean) Adaptive QoS
-  - Default value: `false`
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
@@ -107,15 +105,15 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
 - `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps
   - Range: `1`-`2147483647`
 - `bandwidth_upstream_variable` (String) Variable name
-- `config_description` (String)
-- `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `interface_name` (String)
-- `interface_name_variable` (String) Variable name
-- `intrf_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
+- `interface_description` (String)
+- `interface_description_variable` (String) Variable name
+- `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
   - Range: `1500`-`9216`
   - Default value: `1500`
-- `intrf_mtu_variable` (String) Variable name
+- `interface_mtu_variable` (String) Variable name
+- `interface_name` (String)
+- `interface_name_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
   - Default value: `false`
 - `ip_directed_broadcast_variable` (String) Variable name
@@ -139,6 +137,8 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
   - Default value: `false`
 - `per_tunnel_qos_variable` (String) Variable name
+- `qos_adaptive` (Boolean) Adaptive QoS
+  - Default value: `false`
 - `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
   - Default value: `false`
 - `qos_adaptive_bandwidth_upstream` (Boolean) Shaping Rate Upstream
@@ -195,12 +195,12 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
 - `tunnel_interface_allow_bgp` (Boolean) Allow/deny BGP
   - Default value: `false`
 - `tunnel_interface_allow_bgp_variable` (String) Variable name
-- `tunnel_interface_allow_dbs` (Boolean) Allow/Deny DNS
-  - Default value: `true`
-- `tunnel_interface_allow_dbs_variable` (String) Variable name
 - `tunnel_interface_allow_dhcp` (Boolean) Allow/Deny DHCP
   - Default value: `true`
 - `tunnel_interface_allow_dhcp_variable` (String) Variable name
+- `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS
+  - Default value: `true`
+- `tunnel_interface_allow_dns_variable` (String) Variable name
 - `tunnel_interface_allow_https` (Boolean) Allow/Deny HTTPS
   - Default value: `true`
 - `tunnel_interface_allow_https_variable` (String) Variable name

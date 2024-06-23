@@ -36,7 +36,7 @@ func TestAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "interface_name", "Serial0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ipv4_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ipv4_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ipv6_address", "2001:0:0:1::/64"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "bandwidth", "123456"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "bandwidth_downstream", "123456"))
@@ -67,7 +67,7 @@ func TestAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_all", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_bgp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_dhcp", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_dbs", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_dns", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_icmp", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_netconf", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_ntp", "false"))
@@ -194,7 +194,7 @@ func testAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig_all() str
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "Serial0"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
-	config += `	ipv4_mask = "0.0.0.0"` + "\n"
+	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv6_address = "2001:0:0:1::/64"` + "\n"
 	config += `	bandwidth = 123456` + "\n"
 	config += `	bandwidth_downstream = 123456` + "\n"
@@ -226,7 +226,7 @@ func testAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig_all() str
 	config += `	tunnel_interface_allow_all = false` + "\n"
 	config += `	tunnel_interface_allow_bgp = false` + "\n"
 	config += `	tunnel_interface_allow_dhcp = true` + "\n"
-	config += `	tunnel_interface_allow_dbs = true` + "\n"
+	config += `	tunnel_interface_allow_dns = true` + "\n"
 	config += `	tunnel_interface_allow_icmp = true` + "\n"
 	config += `	tunnel_interface_allow_netconf = false` + "\n"
 	config += `	tunnel_interface_allow_ntp = false` + "\n"

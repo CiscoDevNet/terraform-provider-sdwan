@@ -23,7 +23,7 @@ attributes:
     example: GigabitEthernet1
     minimum_test_value: '"GigabitEthernet1"'
   - model_name: description
-    tf_name: config_description
+    tf_name: interface_description
     example: WAN
   - model_name: dhcpHelper
     tf_name: ipv4_dhcp_helper
@@ -164,7 +164,7 @@ attributes:
     exclude_null: true
     example: false
   - model_name: dns
-    tf_name: tunnel_interface_allow_dbs
+    tf_name: tunnel_interface_allow_dns
     data_path: [allowService]
     example: true
   - model_name: icmp
@@ -203,7 +203,6 @@ attributes:
       id: true
       example: gre
     - model_name: preference
-      id: true
       example: 4294967
     - model_name: weight
       example: 250
@@ -219,7 +218,7 @@ attributes:
     data_path: [natAttributesIpv4]
     example: 60
   - model_name: adaptiveQoS
-    tf_name: adaptive_qos
+    tf_name: qos_adaptive
     data_path: [aclQos]
     exclude_test: true
     exclude_null: true
@@ -350,6 +349,7 @@ attributes:
     example: 1500
   - model_name: intrfMtu
     data_path: [advanced]
+    tf_name: interface_mtu
     example: 1500
   - model_name: tcpMss
     data_path: [advanced]

@@ -35,7 +35,7 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcel(t *test
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "interface_name", "GigabitEthernet1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "config_description", "WAN"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "interface_description", "WAN"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "service_provider", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "bandwidth_upstream", "21474836"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "bandwidth_downstream", "21474836"))
@@ -66,7 +66,7 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_dhcp", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_ntp", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_ssh", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_dbs", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_dns", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_icmp", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_https", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tunnel_interface_allow_ospf", "false"))
@@ -83,7 +83,7 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcel(t *test
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "arps.0.ip_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "intrf_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "interface_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tcp_mss", "505"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tloc_extension", "tloc"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_cellular_profile_parcel.test", "tracker", "example"))
@@ -178,7 +178,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcelConfig()
 	config += `	transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
-	config += `	config_description = "WAN"` + "\n"
+	config += `	interface_description = "WAN"` + "\n"
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
 	config += `	service_provider = "example"` + "\n"
 	config += `	bandwidth_upstream = 21474836` + "\n"
@@ -211,7 +211,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcelConfig()
 	config += `	tunnel_interface_allow_dhcp = true` + "\n"
 	config += `	tunnel_interface_allow_ntp = false` + "\n"
 	config += `	tunnel_interface_allow_ssh = false` + "\n"
-	config += `	tunnel_interface_allow_dbs = true` + "\n"
+	config += `	tunnel_interface_allow_dns = true` + "\n"
 	config += `	tunnel_interface_allow_icmp = true` + "\n"
 	config += `	tunnel_interface_allow_https = true` + "\n"
 	config += `	tunnel_interface_allow_ospf = false` + "\n"
@@ -232,7 +232,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcelConfig()
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
 	config += `	}]` + "\n"
 	config += `	ip_mtu = 1500` + "\n"
-	config += `	intrf_mtu = 1500` + "\n"
+	config += `	interface_mtu = 1500` + "\n"
 	config += `	tcp_mss = 505` + "\n"
 	config += `	tloc_extension = "tloc"` + "\n"
 	config += `	tracker = "example"` + "\n"

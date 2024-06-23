@@ -23,7 +23,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
   shutdown                                       = true
   interface_name                                 = "Serial0"
   ipv4_address                                   = "1.2.3.4"
-  ipv4_mask                                      = "0.0.0.0"
+  ipv4_subnet_mask                               = "0.0.0.0"
   ipv6_address                                   = "2001:0:0:1::/64"
   bandwidth                                      = 123456
   bandwidth_downstream                           = 123456
@@ -55,7 +55,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
   tunnel_interface_allow_all                     = false
   tunnel_interface_allow_bgp                     = false
   tunnel_interface_allow_dhcp                    = true
-  tunnel_interface_allow_dbs                     = true
+  tunnel_interface_allow_dns                     = true
   tunnel_interface_allow_icmp                    = true
   tunnel_interface_allow_netconf                 = false
   tunnel_interface_allow_ntp                     = false
@@ -90,9 +90,6 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
 
 ### Optional
 
-- `acl_shaping_rate` (Number) 1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps
-  - Range: `8`-`100000000`
-- `acl_shaping_rate_variable` (String) Variable name
 - `bandwidth` (Number) Interface bandwidth capacity, in kbps
   - Range: `1`-`200000000`
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
@@ -113,8 +110,8 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
-- `ipv4_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `ipv4_mask_variable` (String) Variable name
+- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
 - `mtu` (Number) Interface MTU <68...2000>, in bytes
@@ -127,6 +124,9 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
   - Default value: `false`
 - `per_tunnel_qos_aggregator_variable` (String) Variable name
 - `per_tunnel_qos_variable` (String) Variable name
+- `qos_shaping_rate` (Number) 1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps
+  - Range: `8`-`100000000`
+- `qos_shaping_rate_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name
@@ -147,12 +147,12 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
 - `tunnel_interface_allow_bgp` (Boolean) Allow/deny BGP
   - Default value: `false`
 - `tunnel_interface_allow_bgp_variable` (String) Variable name
-- `tunnel_interface_allow_dbs` (Boolean) Allow/Deny DNS
-  - Default value: `true`
-- `tunnel_interface_allow_dbs_variable` (String) Variable name
 - `tunnel_interface_allow_dhcp` (Boolean) Allow/Deny DHCP
   - Default value: `true`
 - `tunnel_interface_allow_dhcp_variable` (String) Variable name
+- `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS
+  - Default value: `true`
+- `tunnel_interface_allow_dns_variable` (String) Variable name
 - `tunnel_interface_allow_https` (Boolean) Allow/Deny Https
   - Default value: `true`
 - `tunnel_interface_allow_https_variable` (String) Variable name

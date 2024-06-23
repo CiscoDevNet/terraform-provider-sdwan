@@ -106,35 +106,35 @@ func (d *TransportWANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"interface_address": schema.StringAttribute{
+			"ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"interface_address_variable": schema.StringAttribute{
+			"ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"mask": schema.StringAttribute{
+			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"mask_variable": schema.StringAttribute{
+			"ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_source_address": schema.StringAttribute{
+			"tunnel_source_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_source_address_variable": schema.StringAttribute{
+			"tunnel_source_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_source_mask": schema.StringAttribute{
+			"tunnel_source_ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_source_mask_variable": schema.StringAttribute{
+			"tunnel_source_ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -146,19 +146,19 @@ func (d *TransportWANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_destination_address": schema.StringAttribute{
+			"tunnel_destination_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_destination_address_variable": schema.StringAttribute{
+			"tunnel_destination_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tunnel_destination_mask": schema.StringAttribute{
+			"tunnel_destination_ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"tunnel_destination_mask_variable": schema.StringAttribute{
+			"tunnel_destination_ipv4_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -210,11 +210,11 @@ func (d *TransportWANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"preshared_key_for_ike": schema.StringAttribute{
+			"ike_preshared_key": schema.StringAttribute{
 				MarkdownDescription: "Use preshared key to authenticate IKE peer",
 				Computed:            true,
 			},
-			"preshared_key_for_ike_variable": schema.StringAttribute{
+			"ike_preshared_key_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -254,19 +254,19 @@ func (d *TransportWANVPNInterfaceIPSECProfileParcelDataSource) Schema(ctx contex
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ike_id_for_local_end_point": schema.StringAttribute{
+			"ike_id_local_end_point": schema.StringAttribute{
 				MarkdownDescription: "IKE ID for the local endpoint. Input IPv4 address, domain name, or email address",
 				Computed:            true,
 			},
-			"ike_id_for_local_end_point_variable": schema.StringAttribute{
+			"ike_id_local_end_point_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"ike_id_for_remote_end_point": schema.StringAttribute{
+			"ike_id_remote_end_point": schema.StringAttribute{
 				MarkdownDescription: "IKE ID for the remote endpoint. Input IPv4 address, domain name, or email address",
 				Computed:            true,
 			},
-			"ike_id_for_remote_end_point_variable": schema.StringAttribute{
+			"ike_id_remote_end_point_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

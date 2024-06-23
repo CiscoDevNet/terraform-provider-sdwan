@@ -32,71 +32,71 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportWANVPNInterfaceIPSEC struct {
-	Id                               types.String `tfsdk:"id"`
-	Version                          types.Int64  `tfsdk:"version"`
-	Name                             types.String `tfsdk:"name"`
-	Description                      types.String `tfsdk:"description"`
-	FeatureProfileId                 types.String `tfsdk:"feature_profile_id"`
-	TransportWanVpnProfileParcelId   types.String `tfsdk:"transport_wan_vpn_profile_parcel_id"`
-	InterfaceName                    types.String `tfsdk:"interface_name"`
-	InterfaceNameVariable            types.String `tfsdk:"interface_name_variable"`
-	Shutdown                         types.Bool   `tfsdk:"shutdown"`
-	ShutdownVariable                 types.String `tfsdk:"shutdown_variable"`
-	InterfaceDescription             types.String `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable     types.String `tfsdk:"interface_description_variable"`
-	InterfaceAddress                 types.String `tfsdk:"interface_address"`
-	InterfaceAddressVariable         types.String `tfsdk:"interface_address_variable"`
-	Mask                             types.String `tfsdk:"mask"`
-	MaskVariable                     types.String `tfsdk:"mask_variable"`
-	TunnelSourceAddress              types.String `tfsdk:"tunnel_source_address"`
-	TunnelSourceAddressVariable      types.String `tfsdk:"tunnel_source_address_variable"`
-	TunnelSourceMask                 types.String `tfsdk:"tunnel_source_mask"`
-	TunnelSourceMaskVariable         types.String `tfsdk:"tunnel_source_mask_variable"`
-	TunnelSourceInterface            types.String `tfsdk:"tunnel_source_interface"`
-	TunnelSourceInterfaceVariable    types.String `tfsdk:"tunnel_source_interface_variable"`
-	TunnelDestinationAddress         types.String `tfsdk:"tunnel_destination_address"`
-	TunnelDestinationAddressVariable types.String `tfsdk:"tunnel_destination_address_variable"`
-	TunnelDestinationMask            types.String `tfsdk:"tunnel_destination_mask"`
-	TunnelDestinationMaskVariable    types.String `tfsdk:"tunnel_destination_mask_variable"`
-	ApplicationTunnelType            types.String `tfsdk:"application_tunnel_type"`
-	ApplicationTunnelTypeVariable    types.String `tfsdk:"application_tunnel_type_variable"`
-	TcpMss                           types.Int64  `tfsdk:"tcp_mss"`
-	TcpMssVariable                   types.String `tfsdk:"tcp_mss_variable"`
-	ClearDontFragment                types.Bool   `tfsdk:"clear_dont_fragment"`
-	ClearDontFragmentVariable        types.String `tfsdk:"clear_dont_fragment_variable"`
-	IpMtu                            types.Int64  `tfsdk:"ip_mtu"`
-	IpMtuVariable                    types.String `tfsdk:"ip_mtu_variable"`
-	DpdInterval                      types.Int64  `tfsdk:"dpd_interval"`
-	DpdIntervalVariable              types.String `tfsdk:"dpd_interval_variable"`
-	DpdRetries                       types.Int64  `tfsdk:"dpd_retries"`
-	DpdRetriesVariable               types.String `tfsdk:"dpd_retries_variable"`
-	PresharedKeyForIke               types.String `tfsdk:"preshared_key_for_ike"`
-	PresharedKeyForIkeVariable       types.String `tfsdk:"preshared_key_for_ike_variable"`
-	IkeVersion                       types.Int64  `tfsdk:"ike_version"`
-	IkeIntegrityProtocol             types.String `tfsdk:"ike_integrity_protocol"`
-	IkeIntegrityProtocolVariable     types.String `tfsdk:"ike_integrity_protocol_variable"`
-	IkeRekeyInterval                 types.Int64  `tfsdk:"ike_rekey_interval"`
-	IkeRekeyIntervalVariable         types.String `tfsdk:"ike_rekey_interval_variable"`
-	IkeCiphersuite                   types.String `tfsdk:"ike_ciphersuite"`
-	IkeCiphersuiteVariable           types.String `tfsdk:"ike_ciphersuite_variable"`
-	IkeDiffieHellmanGroup            types.String `tfsdk:"ike_diffie_hellman_group"`
-	IkeDiffieHellmanGroupVariable    types.String `tfsdk:"ike_diffie_hellman_group_variable"`
-	IkeIdForLocalEndPoint            types.String `tfsdk:"ike_id_for_local_end_point"`
-	IkeIdForLocalEndPointVariable    types.String `tfsdk:"ike_id_for_local_end_point_variable"`
-	IkeIdForRemoteEndPoint           types.String `tfsdk:"ike_id_for_remote_end_point"`
-	IkeIdForRemoteEndPointVariable   types.String `tfsdk:"ike_id_for_remote_end_point_variable"`
-	IpsecRekeyInterval               types.Int64  `tfsdk:"ipsec_rekey_interval"`
-	IpsecRekeyIntervalVariable       types.String `tfsdk:"ipsec_rekey_interval_variable"`
-	IpsecReplayWindow                types.Int64  `tfsdk:"ipsec_replay_window"`
-	IpsecReplayWindowVariable        types.String `tfsdk:"ipsec_replay_window_variable"`
-	IpsecCiphersuite                 types.String `tfsdk:"ipsec_ciphersuite"`
-	IpsecCiphersuiteVariable         types.String `tfsdk:"ipsec_ciphersuite_variable"`
-	PerfectForwardSecrecy            types.String `tfsdk:"perfect_forward_secrecy"`
-	PerfectForwardSecrecyVariable    types.String `tfsdk:"perfect_forward_secrecy_variable"`
-	TrackerId                        types.String `tfsdk:"tracker_id"`
-	TrackerIdVariable                types.String `tfsdk:"tracker_id_variable"`
-	TunnelRouteVia                   types.String `tfsdk:"tunnel_route_via"`
-	TunnelRouteViaVariable           types.String `tfsdk:"tunnel_route_via_variable"`
+	Id                                      types.String `tfsdk:"id"`
+	Version                                 types.Int64  `tfsdk:"version"`
+	Name                                    types.String `tfsdk:"name"`
+	Description                             types.String `tfsdk:"description"`
+	FeatureProfileId                        types.String `tfsdk:"feature_profile_id"`
+	TransportWanVpnProfileParcelId          types.String `tfsdk:"transport_wan_vpn_profile_parcel_id"`
+	InterfaceName                           types.String `tfsdk:"interface_name"`
+	InterfaceNameVariable                   types.String `tfsdk:"interface_name_variable"`
+	Shutdown                                types.Bool   `tfsdk:"shutdown"`
+	ShutdownVariable                        types.String `tfsdk:"shutdown_variable"`
+	InterfaceDescription                    types.String `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable            types.String `tfsdk:"interface_description_variable"`
+	Ipv4Address                             types.String `tfsdk:"ipv4_address"`
+	Ipv4AddressVariable                     types.String `tfsdk:"ipv4_address_variable"`
+	Ipv4SubnetMask                          types.String `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable                  types.String `tfsdk:"ipv4_subnet_mask_variable"`
+	TunnelSourceIpv4Address                 types.String `tfsdk:"tunnel_source_ipv4_address"`
+	TunnelSourceIpv4AddressVariable         types.String `tfsdk:"tunnel_source_ipv4_address_variable"`
+	TunnelSourceIpv4SubnetMask              types.String `tfsdk:"tunnel_source_ipv4_subnet_mask"`
+	TunnelSourceIpv4SubnetMaskVariable      types.String `tfsdk:"tunnel_source_ipv4_subnet_mask_variable"`
+	TunnelSourceInterface                   types.String `tfsdk:"tunnel_source_interface"`
+	TunnelSourceInterfaceVariable           types.String `tfsdk:"tunnel_source_interface_variable"`
+	TunnelDestinationIpv4Address            types.String `tfsdk:"tunnel_destination_ipv4_address"`
+	TunnelDestinationIpv4AddressVariable    types.String `tfsdk:"tunnel_destination_ipv4_address_variable"`
+	TunnelDestinationIpv4SubnetMask         types.String `tfsdk:"tunnel_destination_ipv4_subnet_mask"`
+	TunnelDestinationIpv4SubnetMaskVariable types.String `tfsdk:"tunnel_destination_ipv4_subnet_mask_variable"`
+	ApplicationTunnelType                   types.String `tfsdk:"application_tunnel_type"`
+	ApplicationTunnelTypeVariable           types.String `tfsdk:"application_tunnel_type_variable"`
+	TcpMss                                  types.Int64  `tfsdk:"tcp_mss"`
+	TcpMssVariable                          types.String `tfsdk:"tcp_mss_variable"`
+	ClearDontFragment                       types.Bool   `tfsdk:"clear_dont_fragment"`
+	ClearDontFragmentVariable               types.String `tfsdk:"clear_dont_fragment_variable"`
+	IpMtu                                   types.Int64  `tfsdk:"ip_mtu"`
+	IpMtuVariable                           types.String `tfsdk:"ip_mtu_variable"`
+	DpdInterval                             types.Int64  `tfsdk:"dpd_interval"`
+	DpdIntervalVariable                     types.String `tfsdk:"dpd_interval_variable"`
+	DpdRetries                              types.Int64  `tfsdk:"dpd_retries"`
+	DpdRetriesVariable                      types.String `tfsdk:"dpd_retries_variable"`
+	IkePresharedKey                         types.String `tfsdk:"ike_preshared_key"`
+	IkePresharedKeyVariable                 types.String `tfsdk:"ike_preshared_key_variable"`
+	IkeVersion                              types.Int64  `tfsdk:"ike_version"`
+	IkeIntegrityProtocol                    types.String `tfsdk:"ike_integrity_protocol"`
+	IkeIntegrityProtocolVariable            types.String `tfsdk:"ike_integrity_protocol_variable"`
+	IkeRekeyInterval                        types.Int64  `tfsdk:"ike_rekey_interval"`
+	IkeRekeyIntervalVariable                types.String `tfsdk:"ike_rekey_interval_variable"`
+	IkeCiphersuite                          types.String `tfsdk:"ike_ciphersuite"`
+	IkeCiphersuiteVariable                  types.String `tfsdk:"ike_ciphersuite_variable"`
+	IkeDiffieHellmanGroup                   types.String `tfsdk:"ike_diffie_hellman_group"`
+	IkeDiffieHellmanGroupVariable           types.String `tfsdk:"ike_diffie_hellman_group_variable"`
+	IkeIdLocalEndPoint                      types.String `tfsdk:"ike_id_local_end_point"`
+	IkeIdLocalEndPointVariable              types.String `tfsdk:"ike_id_local_end_point_variable"`
+	IkeIdRemoteEndPoint                     types.String `tfsdk:"ike_id_remote_end_point"`
+	IkeIdRemoteEndPointVariable             types.String `tfsdk:"ike_id_remote_end_point_variable"`
+	IpsecRekeyInterval                      types.Int64  `tfsdk:"ipsec_rekey_interval"`
+	IpsecRekeyIntervalVariable              types.String `tfsdk:"ipsec_rekey_interval_variable"`
+	IpsecReplayWindow                       types.Int64  `tfsdk:"ipsec_replay_window"`
+	IpsecReplayWindowVariable               types.String `tfsdk:"ipsec_replay_window_variable"`
+	IpsecCiphersuite                        types.String `tfsdk:"ipsec_ciphersuite"`
+	IpsecCiphersuiteVariable                types.String `tfsdk:"ipsec_ciphersuite_variable"`
+	PerfectForwardSecrecy                   types.String `tfsdk:"perfect_forward_secrecy"`
+	PerfectForwardSecrecyVariable           types.String `tfsdk:"perfect_forward_secrecy_variable"`
+	TrackerId                               types.String `tfsdk:"tracker_id"`
+	TrackerIdVariable                       types.String `tfsdk:"tracker_id_variable"`
+	TunnelRouteVia                          types.String `tfsdk:"tunnel_route_via"`
+	TunnelRouteViaVariable                  types.String `tfsdk:"tunnel_route_via_variable"`
 }
 
 // End of section. //template:end types
@@ -152,36 +152,36 @@ func (data TransportWANVPNInterfaceIPSEC) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescription.ValueString())
 	}
 
-	if !data.InterfaceAddressVariable.IsNull() {
+	if !data.Ipv4AddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"address.address.optionType", "variable")
-		body, _ = sjson.Set(body, path+"address.address.value", data.InterfaceAddressVariable.ValueString())
-	} else if !data.InterfaceAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"address.address.value", data.Ipv4AddressVariable.ValueString())
+	} else if !data.Ipv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"address.address.optionType", "global")
-		body, _ = sjson.Set(body, path+"address.address.value", data.InterfaceAddress.ValueString())
+		body, _ = sjson.Set(body, path+"address.address.value", data.Ipv4Address.ValueString())
 	}
 
-	if !data.MaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"address.mask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"address.mask.value", data.MaskVariable.ValueString())
-	} else if !data.Mask.IsNull() {
+		body, _ = sjson.Set(body, path+"address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
+	} else if !data.Ipv4SubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"address.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"address.mask.value", data.Mask.ValueString())
+		body, _ = sjson.Set(body, path+"address.mask.value", data.Ipv4SubnetMask.ValueString())
 	}
 
-	if !data.TunnelSourceAddressVariable.IsNull() {
+	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelSource.address.optionType", "variable")
-		body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceAddressVariable.ValueString())
-	} else if !data.TunnelSourceAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4AddressVariable.ValueString())
+	} else if !data.TunnelSourceIpv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelSource.address.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceAddress.ValueString())
+		body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4Address.ValueString())
 	}
 
-	if !data.TunnelSourceMaskVariable.IsNull() {
+	if !data.TunnelSourceIpv4SubnetMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceMaskVariable.ValueString())
-	} else if !data.TunnelSourceMask.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMaskVariable.ValueString())
+	} else if !data.TunnelSourceIpv4SubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceMask.ValueString())
+		body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMask.ValueString())
 	}
 
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
@@ -192,20 +192,20 @@ func (data TransportWANVPNInterfaceIPSEC) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"tunnelSourceInterface.value", data.TunnelSourceInterface.ValueString())
 	}
 
-	if !data.TunnelDestinationAddressVariable.IsNull() {
+	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelDestination.address.optionType", "variable")
-		body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationAddressVariable.ValueString())
-	} else if !data.TunnelDestinationAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4AddressVariable.ValueString())
+	} else if !data.TunnelDestinationIpv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelDestination.address.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationAddress.ValueString())
+		body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4Address.ValueString())
 	}
 
-	if !data.TunnelDestinationMaskVariable.IsNull() {
+	if !data.TunnelDestinationIpv4SubnetMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationMaskVariable.ValueString())
-	} else if !data.TunnelDestinationMask.IsNull() {
+		body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMaskVariable.ValueString())
+	} else if !data.TunnelDestinationIpv4SubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationMask.ValueString())
+		body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMask.ValueString())
 	}
 
 	if !data.ApplicationTunnelTypeVariable.IsNull() {
@@ -271,12 +271,12 @@ func (data TransportWANVPNInterfaceIPSEC) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"dpdRetries.value", data.DpdRetries.ValueInt64())
 	}
 
-	if !data.PresharedKeyForIkeVariable.IsNull() {
+	if !data.IkePresharedKeyVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"preSharedSecret.optionType", "variable")
-		body, _ = sjson.Set(body, path+"preSharedSecret.value", data.PresharedKeyForIkeVariable.ValueString())
-	} else if !data.PresharedKeyForIke.IsNull() {
+		body, _ = sjson.Set(body, path+"preSharedSecret.value", data.IkePresharedKeyVariable.ValueString())
+	} else if !data.IkePresharedKey.IsNull() {
 		body, _ = sjson.Set(body, path+"preSharedSecret.optionType", "global")
-		body, _ = sjson.Set(body, path+"preSharedSecret.value", data.PresharedKeyForIke.ValueString())
+		body, _ = sjson.Set(body, path+"preSharedSecret.value", data.IkePresharedKey.ValueString())
 	}
 	if data.IkeVersion.IsNull() {
 		body, _ = sjson.Set(body, path+"ikeVersion.optionType", "default")
@@ -330,26 +330,26 @@ func (data TransportWANVPNInterfaceIPSEC) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ikeGroup.value", data.IkeDiffieHellmanGroup.ValueString())
 	}
 
-	if !data.IkeIdForLocalEndPointVariable.IsNull() {
+	if !data.IkeIdLocalEndPointVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ikeLocalId.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ikeLocalId.value", data.IkeIdForLocalEndPointVariable.ValueString())
-	} else if data.IkeIdForLocalEndPoint.IsNull() {
+		body, _ = sjson.Set(body, path+"ikeLocalId.value", data.IkeIdLocalEndPointVariable.ValueString())
+	} else if data.IkeIdLocalEndPoint.IsNull() {
 		body, _ = sjson.Set(body, path+"ikeLocalId.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"ikeLocalId.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeLocalId.value", data.IkeIdForLocalEndPoint.ValueString())
+		body, _ = sjson.Set(body, path+"ikeLocalId.value", data.IkeIdLocalEndPoint.ValueString())
 	}
 
-	if !data.IkeIdForRemoteEndPointVariable.IsNull() {
+	if !data.IkeIdRemoteEndPointVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"ikeRemoteId.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ikeRemoteId.value", data.IkeIdForRemoteEndPointVariable.ValueString())
-	} else if data.IkeIdForRemoteEndPoint.IsNull() {
+		body, _ = sjson.Set(body, path+"ikeRemoteId.value", data.IkeIdRemoteEndPointVariable.ValueString())
+	} else if data.IkeIdRemoteEndPoint.IsNull() {
 		body, _ = sjson.Set(body, path+"ikeRemoteId.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"ikeRemoteId.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeRemoteId.value", data.IkeIdForRemoteEndPoint.ValueString())
+		body, _ = sjson.Set(body, path+"ikeRemoteId.value", data.IkeIdRemoteEndPoint.ValueString())
 	}
 
 	if !data.IpsecRekeyIntervalVariable.IsNull() {
@@ -461,44 +461,44 @@ func (data *TransportWANVPNInterfaceIPSEC) fromBody(ctx context.Context, res gjs
 			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
-	data.InterfaceAddress = types.StringNull()
-	data.InterfaceAddressVariable = types.StringNull()
+	data.Ipv4Address = types.StringNull()
+	data.Ipv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "address.address.optionType"); t.Exists() {
 		va := res.Get(path + "address.address.value")
 		if t.String() == "variable" {
-			data.InterfaceAddressVariable = types.StringValue(va.String())
+			data.Ipv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.InterfaceAddress = types.StringValue(va.String())
+			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.Mask = types.StringNull()
-	data.MaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "address.mask.optionType"); t.Exists() {
 		va := res.Get(path + "address.mask.value")
 		if t.String() == "variable" {
-			data.MaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Mask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
-	data.TunnelSourceAddress = types.StringNull()
-	data.TunnelSourceAddressVariable = types.StringNull()
+	data.TunnelSourceIpv4Address = types.StringNull()
+	data.TunnelSourceIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "tunnelSource.address.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelSource.address.value")
 		if t.String() == "variable" {
-			data.TunnelSourceAddressVariable = types.StringValue(va.String())
+			data.TunnelSourceIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelSourceAddress = types.StringValue(va.String())
+			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
 	}
-	data.TunnelSourceMask = types.StringNull()
-	data.TunnelSourceMaskVariable = types.StringNull()
+	data.TunnelSourceIpv4SubnetMask = types.StringNull()
+	data.TunnelSourceIpv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "tunnelSource.mask.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelSource.mask.value")
 		if t.String() == "variable" {
-			data.TunnelSourceMaskVariable = types.StringValue(va.String())
+			data.TunnelSourceIpv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelSourceMask = types.StringValue(va.String())
+			data.TunnelSourceIpv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.TunnelSourceInterface = types.StringNull()
@@ -511,24 +511,24 @@ func (data *TransportWANVPNInterfaceIPSEC) fromBody(ctx context.Context, res gjs
 			data.TunnelSourceInterface = types.StringValue(va.String())
 		}
 	}
-	data.TunnelDestinationAddress = types.StringNull()
-	data.TunnelDestinationAddressVariable = types.StringNull()
+	data.TunnelDestinationIpv4Address = types.StringNull()
+	data.TunnelDestinationIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "tunnelDestination.address.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelDestination.address.value")
 		if t.String() == "variable" {
-			data.TunnelDestinationAddressVariable = types.StringValue(va.String())
+			data.TunnelDestinationIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelDestinationAddress = types.StringValue(va.String())
+			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
 	}
-	data.TunnelDestinationMask = types.StringNull()
-	data.TunnelDestinationMaskVariable = types.StringNull()
+	data.TunnelDestinationIpv4SubnetMask = types.StringNull()
+	data.TunnelDestinationIpv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "tunnelDestination.mask.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelDestination.mask.value")
 		if t.String() == "variable" {
-			data.TunnelDestinationMaskVariable = types.StringValue(va.String())
+			data.TunnelDestinationIpv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelDestinationMask = types.StringValue(va.String())
+			data.TunnelDestinationIpv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.ApplicationTunnelType = types.StringNull()
@@ -591,14 +591,14 @@ func (data *TransportWANVPNInterfaceIPSEC) fromBody(ctx context.Context, res gjs
 			data.DpdRetries = types.Int64Value(va.Int())
 		}
 	}
-	data.PresharedKeyForIke = types.StringNull()
-	data.PresharedKeyForIkeVariable = types.StringNull()
+	data.IkePresharedKey = types.StringNull()
+	data.IkePresharedKeyVariable = types.StringNull()
 	if t := res.Get(path + "preSharedSecret.optionType"); t.Exists() {
 		va := res.Get(path + "preSharedSecret.value")
 		if t.String() == "variable" {
-			data.PresharedKeyForIkeVariable = types.StringValue(va.String())
+			data.IkePresharedKeyVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.PresharedKeyForIke = types.StringValue(va.String())
+			data.IkePresharedKey = types.StringValue(va.String())
 		}
 	}
 	data.IkeVersion = types.Int64Null()
@@ -649,24 +649,24 @@ func (data *TransportWANVPNInterfaceIPSEC) fromBody(ctx context.Context, res gjs
 			data.IkeDiffieHellmanGroup = types.StringValue(va.String())
 		}
 	}
-	data.IkeIdForLocalEndPoint = types.StringNull()
-	data.IkeIdForLocalEndPointVariable = types.StringNull()
+	data.IkeIdLocalEndPoint = types.StringNull()
+	data.IkeIdLocalEndPointVariable = types.StringNull()
 	if t := res.Get(path + "ikeLocalId.optionType"); t.Exists() {
 		va := res.Get(path + "ikeLocalId.value")
 		if t.String() == "variable" {
-			data.IkeIdForLocalEndPointVariable = types.StringValue(va.String())
+			data.IkeIdLocalEndPointVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IkeIdForLocalEndPoint = types.StringValue(va.String())
+			data.IkeIdLocalEndPoint = types.StringValue(va.String())
 		}
 	}
-	data.IkeIdForRemoteEndPoint = types.StringNull()
-	data.IkeIdForRemoteEndPointVariable = types.StringNull()
+	data.IkeIdRemoteEndPoint = types.StringNull()
+	data.IkeIdRemoteEndPointVariable = types.StringNull()
 	if t := res.Get(path + "ikeRemoteId.optionType"); t.Exists() {
 		va := res.Get(path + "ikeRemoteId.value")
 		if t.String() == "variable" {
-			data.IkeIdForRemoteEndPointVariable = types.StringValue(va.String())
+			data.IkeIdRemoteEndPointVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IkeIdForRemoteEndPoint = types.StringValue(va.String())
+			data.IkeIdRemoteEndPoint = types.StringValue(va.String())
 		}
 	}
 	data.IpsecRekeyInterval = types.Int64Null()
@@ -772,44 +772,44 @@ func (data *TransportWANVPNInterfaceIPSEC) updateFromBody(ctx context.Context, r
 			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
-	data.InterfaceAddress = types.StringNull()
-	data.InterfaceAddressVariable = types.StringNull()
+	data.Ipv4Address = types.StringNull()
+	data.Ipv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "address.address.optionType"); t.Exists() {
 		va := res.Get(path + "address.address.value")
 		if t.String() == "variable" {
-			data.InterfaceAddressVariable = types.StringValue(va.String())
+			data.Ipv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.InterfaceAddress = types.StringValue(va.String())
+			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.Mask = types.StringNull()
-	data.MaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "address.mask.optionType"); t.Exists() {
 		va := res.Get(path + "address.mask.value")
 		if t.String() == "variable" {
-			data.MaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Mask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
-	data.TunnelSourceAddress = types.StringNull()
-	data.TunnelSourceAddressVariable = types.StringNull()
+	data.TunnelSourceIpv4Address = types.StringNull()
+	data.TunnelSourceIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "tunnelSource.address.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelSource.address.value")
 		if t.String() == "variable" {
-			data.TunnelSourceAddressVariable = types.StringValue(va.String())
+			data.TunnelSourceIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelSourceAddress = types.StringValue(va.String())
+			data.TunnelSourceIpv4Address = types.StringValue(va.String())
 		}
 	}
-	data.TunnelSourceMask = types.StringNull()
-	data.TunnelSourceMaskVariable = types.StringNull()
+	data.TunnelSourceIpv4SubnetMask = types.StringNull()
+	data.TunnelSourceIpv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "tunnelSource.mask.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelSource.mask.value")
 		if t.String() == "variable" {
-			data.TunnelSourceMaskVariable = types.StringValue(va.String())
+			data.TunnelSourceIpv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelSourceMask = types.StringValue(va.String())
+			data.TunnelSourceIpv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.TunnelSourceInterface = types.StringNull()
@@ -822,24 +822,24 @@ func (data *TransportWANVPNInterfaceIPSEC) updateFromBody(ctx context.Context, r
 			data.TunnelSourceInterface = types.StringValue(va.String())
 		}
 	}
-	data.TunnelDestinationAddress = types.StringNull()
-	data.TunnelDestinationAddressVariable = types.StringNull()
+	data.TunnelDestinationIpv4Address = types.StringNull()
+	data.TunnelDestinationIpv4AddressVariable = types.StringNull()
 	if t := res.Get(path + "tunnelDestination.address.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelDestination.address.value")
 		if t.String() == "variable" {
-			data.TunnelDestinationAddressVariable = types.StringValue(va.String())
+			data.TunnelDestinationIpv4AddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelDestinationAddress = types.StringValue(va.String())
+			data.TunnelDestinationIpv4Address = types.StringValue(va.String())
 		}
 	}
-	data.TunnelDestinationMask = types.StringNull()
-	data.TunnelDestinationMaskVariable = types.StringNull()
+	data.TunnelDestinationIpv4SubnetMask = types.StringNull()
+	data.TunnelDestinationIpv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "tunnelDestination.mask.optionType"); t.Exists() {
 		va := res.Get(path + "tunnelDestination.mask.value")
 		if t.String() == "variable" {
-			data.TunnelDestinationMaskVariable = types.StringValue(va.String())
+			data.TunnelDestinationIpv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelDestinationMask = types.StringValue(va.String())
+			data.TunnelDestinationIpv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.ApplicationTunnelType = types.StringNull()
@@ -902,14 +902,14 @@ func (data *TransportWANVPNInterfaceIPSEC) updateFromBody(ctx context.Context, r
 			data.DpdRetries = types.Int64Value(va.Int())
 		}
 	}
-	data.PresharedKeyForIke = types.StringNull()
-	data.PresharedKeyForIkeVariable = types.StringNull()
+	data.IkePresharedKey = types.StringNull()
+	data.IkePresharedKeyVariable = types.StringNull()
 	if t := res.Get(path + "preSharedSecret.optionType"); t.Exists() {
 		va := res.Get(path + "preSharedSecret.value")
 		if t.String() == "variable" {
-			data.PresharedKeyForIkeVariable = types.StringValue(va.String())
+			data.IkePresharedKeyVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.PresharedKeyForIke = types.StringValue(va.String())
+			data.IkePresharedKey = types.StringValue(va.String())
 		}
 	}
 	data.IkeVersion = types.Int64Null()
@@ -960,24 +960,24 @@ func (data *TransportWANVPNInterfaceIPSEC) updateFromBody(ctx context.Context, r
 			data.IkeDiffieHellmanGroup = types.StringValue(va.String())
 		}
 	}
-	data.IkeIdForLocalEndPoint = types.StringNull()
-	data.IkeIdForLocalEndPointVariable = types.StringNull()
+	data.IkeIdLocalEndPoint = types.StringNull()
+	data.IkeIdLocalEndPointVariable = types.StringNull()
 	if t := res.Get(path + "ikeLocalId.optionType"); t.Exists() {
 		va := res.Get(path + "ikeLocalId.value")
 		if t.String() == "variable" {
-			data.IkeIdForLocalEndPointVariable = types.StringValue(va.String())
+			data.IkeIdLocalEndPointVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IkeIdForLocalEndPoint = types.StringValue(va.String())
+			data.IkeIdLocalEndPoint = types.StringValue(va.String())
 		}
 	}
-	data.IkeIdForRemoteEndPoint = types.StringNull()
-	data.IkeIdForRemoteEndPointVariable = types.StringNull()
+	data.IkeIdRemoteEndPoint = types.StringNull()
+	data.IkeIdRemoteEndPointVariable = types.StringNull()
 	if t := res.Get(path + "ikeRemoteId.optionType"); t.Exists() {
 		va := res.Get(path + "ikeRemoteId.value")
 		if t.String() == "variable" {
-			data.IkeIdForRemoteEndPointVariable = types.StringValue(va.String())
+			data.IkeIdRemoteEndPointVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IkeIdForRemoteEndPoint = types.StringValue(va.String())
+			data.IkeIdRemoteEndPoint = types.StringValue(va.String())
 		}
 	}
 	data.IpsecRekeyInterval = types.Int64Null()
@@ -1070,28 +1070,28 @@ func (data *TransportWANVPNInterfaceIPSEC) isNull(ctx context.Context, res gjson
 	if !data.InterfaceDescriptionVariable.IsNull() {
 		return false
 	}
-	if !data.InterfaceAddress.IsNull() {
+	if !data.Ipv4Address.IsNull() {
 		return false
 	}
-	if !data.InterfaceAddressVariable.IsNull() {
+	if !data.Ipv4AddressVariable.IsNull() {
 		return false
 	}
-	if !data.Mask.IsNull() {
+	if !data.Ipv4SubnetMask.IsNull() {
 		return false
 	}
-	if !data.MaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelSourceAddress.IsNull() {
+	if !data.TunnelSourceIpv4Address.IsNull() {
 		return false
 	}
-	if !data.TunnelSourceAddressVariable.IsNull() {
+	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelSourceMask.IsNull() {
+	if !data.TunnelSourceIpv4SubnetMask.IsNull() {
 		return false
 	}
-	if !data.TunnelSourceMaskVariable.IsNull() {
+	if !data.TunnelSourceIpv4SubnetMaskVariable.IsNull() {
 		return false
 	}
 	if !data.TunnelSourceInterface.IsNull() {
@@ -1100,16 +1100,16 @@ func (data *TransportWANVPNInterfaceIPSEC) isNull(ctx context.Context, res gjson
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelDestinationAddress.IsNull() {
+	if !data.TunnelDestinationIpv4Address.IsNull() {
 		return false
 	}
-	if !data.TunnelDestinationAddressVariable.IsNull() {
+	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelDestinationMask.IsNull() {
+	if !data.TunnelDestinationIpv4SubnetMask.IsNull() {
 		return false
 	}
-	if !data.TunnelDestinationMaskVariable.IsNull() {
+	if !data.TunnelDestinationIpv4SubnetMaskVariable.IsNull() {
 		return false
 	}
 	if !data.ApplicationTunnelType.IsNull() {
@@ -1148,10 +1148,10 @@ func (data *TransportWANVPNInterfaceIPSEC) isNull(ctx context.Context, res gjson
 	if !data.DpdRetriesVariable.IsNull() {
 		return false
 	}
-	if !data.PresharedKeyForIke.IsNull() {
+	if !data.IkePresharedKey.IsNull() {
 		return false
 	}
-	if !data.PresharedKeyForIkeVariable.IsNull() {
+	if !data.IkePresharedKeyVariable.IsNull() {
 		return false
 	}
 	if !data.IkeVersion.IsNull() {
@@ -1181,16 +1181,16 @@ func (data *TransportWANVPNInterfaceIPSEC) isNull(ctx context.Context, res gjson
 	if !data.IkeDiffieHellmanGroupVariable.IsNull() {
 		return false
 	}
-	if !data.IkeIdForLocalEndPoint.IsNull() {
+	if !data.IkeIdLocalEndPoint.IsNull() {
 		return false
 	}
-	if !data.IkeIdForLocalEndPointVariable.IsNull() {
+	if !data.IkeIdLocalEndPointVariable.IsNull() {
 		return false
 	}
-	if !data.IkeIdForRemoteEndPoint.IsNull() {
+	if !data.IkeIdRemoteEndPoint.IsNull() {
 		return false
 	}
-	if !data.IkeIdForRemoteEndPointVariable.IsNull() {
+	if !data.IkeIdRemoteEndPointVariable.IsNull() {
 		return false
 	}
 	if !data.IpsecRekeyInterval.IsNull() {

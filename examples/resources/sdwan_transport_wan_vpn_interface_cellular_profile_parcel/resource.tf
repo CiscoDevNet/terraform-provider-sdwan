@@ -5,7 +5,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
   transport_wan_vpn_profile_parcel_id            = "140331f6-5418-4755-a059-13c77eb96037"
   shutdown                                       = true
   interface_name                                 = "GigabitEthernet1"
-  config_description                             = "WAN"
+  interface_description                          = "WAN"
   ipv4_dhcp_helper                               = ["1.2.3.4"]
   service_provider                               = "example"
   bandwidth_upstream                             = 21474836
@@ -38,7 +38,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
   tunnel_interface_allow_dhcp                    = true
   tunnel_interface_allow_ntp                     = false
   tunnel_interface_allow_ssh                     = false
-  tunnel_interface_allow_dbs                     = true
+  tunnel_interface_allow_dns                     = true
   tunnel_interface_allow_icmp                    = true
   tunnel_interface_allow_https                   = true
   tunnel_interface_allow_ospf                    = false
@@ -63,7 +63,7 @@ resource "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
     }
   ]
   ip_mtu                = 1500
-  intrf_mtu             = 1500
+  interface_mtu         = 1500
   tcp_mss               = 505
   tloc_extension        = "tloc"
   tracker               = "example"

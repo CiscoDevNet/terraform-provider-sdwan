@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -44,8 +43,8 @@ type TransportWANVPNInterfaceCellular struct {
 	ShutdownVariable                                   types.String                                                    `tfsdk:"shutdown_variable"`
 	InterfaceName                                      types.String                                                    `tfsdk:"interface_name"`
 	InterfaceNameVariable                              types.String                                                    `tfsdk:"interface_name_variable"`
-	ConfigDescription                                  types.String                                                    `tfsdk:"config_description"`
-	ConfigDescriptionVariable                          types.String                                                    `tfsdk:"config_description_variable"`
+	InterfaceDescription                               types.String                                                    `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable                       types.String                                                    `tfsdk:"interface_description_variable"`
 	Ipv4DhcpHelper                                     types.Set                                                       `tfsdk:"ipv4_dhcp_helper"`
 	Ipv4DhcpHelperVariable                             types.String                                                    `tfsdk:"ipv4_dhcp_helper_variable"`
 	ServiceProvider                                    types.String                                                    `tfsdk:"service_provider"`
@@ -109,8 +108,8 @@ type TransportWANVPNInterfaceCellular struct {
 	TunnelInterfaceAllowNtpVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_ntp_variable"`
 	TunnelInterfaceAllowSsh                            types.Bool                                                      `tfsdk:"tunnel_interface_allow_ssh"`
 	TunnelInterfaceAllowSshVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_ssh_variable"`
-	TunnelInterfaceAllowDbs                            types.Bool                                                      `tfsdk:"tunnel_interface_allow_dbs"`
-	TunnelInterfaceAllowDbsVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_dbs_variable"`
+	TunnelInterfaceAllowDns                            types.Bool                                                      `tfsdk:"tunnel_interface_allow_dns"`
+	TunnelInterfaceAllowDnsVariable                    types.String                                                    `tfsdk:"tunnel_interface_allow_dns_variable"`
 	TunnelInterfaceAllowIcmp                           types.Bool                                                      `tfsdk:"tunnel_interface_allow_icmp"`
 	TunnelInterfaceAllowIcmpVariable                   types.String                                                    `tfsdk:"tunnel_interface_allow_icmp_variable"`
 	TunnelInterfaceAllowHttps                          types.Bool                                                      `tfsdk:"tunnel_interface_allow_https"`
@@ -132,7 +131,7 @@ type TransportWANVPNInterfaceCellular struct {
 	NatUdpTimeoutVariable                              types.String                                                    `tfsdk:"nat_udp_timeout_variable"`
 	NatTcpTimeout                                      types.Int64                                                     `tfsdk:"nat_tcp_timeout"`
 	NatTcpTimeoutVariable                              types.String                                                    `tfsdk:"nat_tcp_timeout_variable"`
-	AdaptiveQos                                        types.Bool                                                      `tfsdk:"adaptive_qos"`
+	QosAdaptive                                        types.Bool                                                      `tfsdk:"qos_adaptive"`
 	QosAdaptivePeriod                                  types.Int64                                                     `tfsdk:"qos_adaptive_period"`
 	QosAdaptivePeriodVariable                          types.String                                                    `tfsdk:"qos_adaptive_period_variable"`
 	QosAdaptiveBandwidthUpstream                       types.Bool                                                      `tfsdk:"qos_adaptive_bandwidth_upstream"`
@@ -154,8 +153,8 @@ type TransportWANVPNInterfaceCellular struct {
 	Arps                                               []TransportWANVPNInterfaceCellularArps                          `tfsdk:"arps"`
 	IpMtu                                              types.Int64                                                     `tfsdk:"ip_mtu"`
 	IpMtuVariable                                      types.String                                                    `tfsdk:"ip_mtu_variable"`
-	IntrfMtu                                           types.Int64                                                     `tfsdk:"intrf_mtu"`
-	IntrfMtuVariable                                   types.String                                                    `tfsdk:"intrf_mtu_variable"`
+	InterfaceMtu                                       types.Int64                                                     `tfsdk:"interface_mtu"`
+	InterfaceMtuVariable                               types.String                                                    `tfsdk:"interface_mtu_variable"`
 	TcpMss                                             types.Int64                                                     `tfsdk:"tcp_mss"`
 	TcpMssVariable                                     types.String                                                    `tfsdk:"tcp_mss_variable"`
 	TlocExtension                                      types.String                                                    `tfsdk:"tloc_extension"`
@@ -223,15 +222,15 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"interfaceName.value", data.InterfaceName.ValueString())
 	}
 
-	if !data.ConfigDescriptionVariable.IsNull() {
+	if !data.InterfaceDescriptionVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"description.optionType", "variable")
-		body, _ = sjson.Set(body, path+"description.value", data.ConfigDescriptionVariable.ValueString())
-	} else if data.ConfigDescription.IsNull() {
+		body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescriptionVariable.ValueString())
+	} else if data.InterfaceDescription.IsNull() {
 		body, _ = sjson.Set(body, path+"description.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"description.optionType", "global")
-		body, _ = sjson.Set(body, path+"description.value", data.ConfigDescription.ValueString())
+		body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescription.ValueString())
 	}
 
 	if !data.Ipv4DhcpHelperVariable.IsNull() {
@@ -577,15 +576,15 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"allowService.ssh.value", data.TunnelInterfaceAllowSsh.ValueBool())
 	}
 
-	if !data.TunnelInterfaceAllowDbsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDnsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"allowService.dns.optionType", "variable")
-		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDbsVariable.ValueString())
-	} else if data.TunnelInterfaceAllowDbs.IsNull() {
+		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDnsVariable.ValueString())
+	} else if data.TunnelInterfaceAllowDns.IsNull() {
 		body, _ = sjson.Set(body, path+"allowService.dns.optionType", "default")
 		body, _ = sjson.Set(body, path+"allowService.dns.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"allowService.dns.optionType", "global")
-		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDbs.ValueBool())
+		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDns.ValueBool())
 	}
 
 	if !data.TunnelInterfaceAllowIcmpVariable.IsNull() {
@@ -728,9 +727,9 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.optionType", "global")
 		body, _ = sjson.Set(body, path+"natAttributesIpv4.tcpTimeout.value", data.NatTcpTimeout.ValueInt64())
 	}
-	if !data.AdaptiveQos.IsNull() {
+	if !data.QosAdaptive.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.optionType", "global")
-		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", data.AdaptiveQos.ValueBool())
+		body, _ = sjson.Set(body, path+"aclQos.adaptiveQoS.value", data.QosAdaptive.ValueBool())
 	}
 
 	if !data.QosAdaptivePeriodVariable.IsNull() {
@@ -843,15 +842,15 @@ func (data TransportWANVPNInterfaceCellular) toBody(ctx context.Context) string 
 		body, _ = sjson.Set(body, path+"advanced.ipMtu.value", data.IpMtu.ValueInt64())
 	}
 
-	if !data.IntrfMtuVariable.IsNull() {
+	if !data.InterfaceMtuVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.IntrfMtuVariable.ValueString())
-	} else if data.IntrfMtu.IsNull() {
+		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtuVariable.ValueString())
+	} else if data.InterfaceMtu.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "default")
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", 1500)
 	} else {
 		body, _ = sjson.Set(body, path+"advanced.intrfMtu.optionType", "global")
-		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.IntrfMtu.ValueInt64())
+		body, _ = sjson.Set(body, path+"advanced.intrfMtu.value", data.InterfaceMtu.ValueInt64())
 	}
 
 	if !data.TcpMssVariable.IsNull() {
@@ -931,14 +930,14 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.InterfaceName = types.StringValue(va.String())
 		}
 	}
-	data.ConfigDescription = types.StringNull()
-	data.ConfigDescriptionVariable = types.StringNull()
+	data.InterfaceDescription = types.StringNull()
+	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "description.optionType"); t.Exists() {
 		va := res.Get(path + "description.value")
 		if t.String() == "variable" {
-			data.ConfigDescriptionVariable = types.StringValue(va.String())
+			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ConfigDescription = types.StringValue(va.String())
+			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
@@ -1259,14 +1258,14 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.TunnelInterfaceAllowSsh = types.BoolValue(va.Bool())
 		}
 	}
-	data.TunnelInterfaceAllowDbs = types.BoolNull()
-	data.TunnelInterfaceAllowDbsVariable = types.StringNull()
+	data.TunnelInterfaceAllowDns = types.BoolNull()
+	data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 	if t := res.Get(path + "allowService.dns.optionType"); t.Exists() {
 		va := res.Get(path + "allowService.dns.value")
 		if t.String() == "variable" {
-			data.TunnelInterfaceAllowDbsVariable = types.StringValue(va.String())
+			data.TunnelInterfaceAllowDnsVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelInterfaceAllowDbs = types.BoolValue(va.Bool())
+			data.TunnelInterfaceAllowDns = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfaceAllowIcmp = types.BoolNull()
@@ -1405,12 +1404,12 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.NatTcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.AdaptiveQos = types.BoolNull()
+	data.QosAdaptive = types.BoolNull()
 
 	if t := res.Get(path + "aclQos.adaptiveQoS.optionType"); t.Exists() {
 		va := res.Get(path + "aclQos.adaptiveQoS.value")
 		if t.String() == "global" {
-			data.AdaptiveQos = types.BoolValue(va.Bool())
+			data.QosAdaptive = types.BoolValue(va.Bool())
 		}
 	}
 	data.QosAdaptivePeriod = types.Int64Null()
@@ -1547,14 +1546,14 @@ func (data *TransportWANVPNInterfaceCellular) fromBody(ctx context.Context, res 
 			data.IpMtu = types.Int64Value(va.Int())
 		}
 	}
-	data.IntrfMtu = types.Int64Null()
-	data.IntrfMtuVariable = types.StringNull()
+	data.InterfaceMtu = types.Int64Null()
+	data.InterfaceMtuVariable = types.StringNull()
 	if t := res.Get(path + "advanced.intrfMtu.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.intrfMtu.value")
 		if t.String() == "variable" {
-			data.IntrfMtuVariable = types.StringValue(va.String())
+			data.InterfaceMtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IntrfMtu = types.Int64Value(va.Int())
+			data.InterfaceMtu = types.Int64Value(va.Int())
 		}
 	}
 	data.TcpMss = types.Int64Null()
@@ -1630,14 +1629,14 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 			data.InterfaceName = types.StringValue(va.String())
 		}
 	}
-	data.ConfigDescription = types.StringNull()
-	data.ConfigDescriptionVariable = types.StringNull()
+	data.InterfaceDescription = types.StringNull()
+	data.InterfaceDescriptionVariable = types.StringNull()
 	if t := res.Get(path + "description.optionType"); t.Exists() {
 		va := res.Get(path + "description.value")
 		if t.String() == "variable" {
-			data.ConfigDescriptionVariable = types.StringValue(va.String())
+			data.InterfaceDescriptionVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.ConfigDescription = types.StringValue(va.String())
+			data.InterfaceDescription = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4DhcpHelper = types.SetNull(types.StringType)
@@ -1958,14 +1957,14 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 			data.TunnelInterfaceAllowSsh = types.BoolValue(va.Bool())
 		}
 	}
-	data.TunnelInterfaceAllowDbs = types.BoolNull()
-	data.TunnelInterfaceAllowDbsVariable = types.StringNull()
+	data.TunnelInterfaceAllowDns = types.BoolNull()
+	data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 	if t := res.Get(path + "allowService.dns.optionType"); t.Exists() {
 		va := res.Get(path + "allowService.dns.value")
 		if t.String() == "variable" {
-			data.TunnelInterfaceAllowDbsVariable = types.StringValue(va.String())
+			data.TunnelInterfaceAllowDnsVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelInterfaceAllowDbs = types.BoolValue(va.Bool())
+			data.TunnelInterfaceAllowDns = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfaceAllowIcmp = types.BoolNull()
@@ -2039,9 +2038,9 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 		}
 	}
 	for i := range data.TunnelInterfaceEncapsulations {
-		keys := [...]string{"encap", "preference"}
-		keyValues := [...]string{data.TunnelInterfaceEncapsulations[i].Encapsulation.ValueString(), strconv.FormatInt(data.TunnelInterfaceEncapsulations[i].Preference.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{"", data.TunnelInterfaceEncapsulations[i].PreferenceVariable.ValueString()}
+		keys := [...]string{"encap"}
+		keyValues := [...]string{data.TunnelInterfaceEncapsulations[i].Encapsulation.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "encapsulation").ForEach(
@@ -2123,12 +2122,12 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 			data.NatTcpTimeout = types.Int64Value(va.Int())
 		}
 	}
-	data.AdaptiveQos = types.BoolNull()
+	data.QosAdaptive = types.BoolNull()
 
 	if t := res.Get(path + "aclQos.adaptiveQoS.optionType"); t.Exists() {
 		va := res.Get(path + "aclQos.adaptiveQoS.value")
 		if t.String() == "global" {
-			data.AdaptiveQos = types.BoolValue(va.Bool())
+			data.QosAdaptive = types.BoolValue(va.Bool())
 		}
 	}
 	data.QosAdaptivePeriod = types.Int64Null()
@@ -2284,14 +2283,14 @@ func (data *TransportWANVPNInterfaceCellular) updateFromBody(ctx context.Context
 			data.IpMtu = types.Int64Value(va.Int())
 		}
 	}
-	data.IntrfMtu = types.Int64Null()
-	data.IntrfMtuVariable = types.StringNull()
+	data.InterfaceMtu = types.Int64Null()
+	data.InterfaceMtuVariable = types.StringNull()
 	if t := res.Get(path + "advanced.intrfMtu.optionType"); t.Exists() {
 		va := res.Get(path + "advanced.intrfMtu.value")
 		if t.String() == "variable" {
-			data.IntrfMtuVariable = types.StringValue(va.String())
+			data.InterfaceMtuVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.IntrfMtu = types.Int64Value(va.Int())
+			data.InterfaceMtu = types.Int64Value(va.Int())
 		}
 	}
 	data.TcpMss = types.Int64Null()
@@ -2358,10 +2357,10 @@ func (data *TransportWANVPNInterfaceCellular) isNull(ctx context.Context, res gj
 	if !data.InterfaceNameVariable.IsNull() {
 		return false
 	}
-	if !data.ConfigDescription.IsNull() {
+	if !data.InterfaceDescription.IsNull() {
 		return false
 	}
-	if !data.ConfigDescriptionVariable.IsNull() {
+	if !data.InterfaceDescriptionVariable.IsNull() {
 		return false
 	}
 	if !data.Ipv4DhcpHelper.IsNull() {
@@ -2553,10 +2552,10 @@ func (data *TransportWANVPNInterfaceCellular) isNull(ctx context.Context, res gj
 	if !data.TunnelInterfaceAllowSshVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelInterfaceAllowDbs.IsNull() {
+	if !data.TunnelInterfaceAllowDns.IsNull() {
 		return false
 	}
-	if !data.TunnelInterfaceAllowDbsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDnsVariable.IsNull() {
 		return false
 	}
 	if !data.TunnelInterfaceAllowIcmp.IsNull() {
@@ -2622,7 +2621,7 @@ func (data *TransportWANVPNInterfaceCellular) isNull(ctx context.Context, res gj
 	if !data.NatTcpTimeoutVariable.IsNull() {
 		return false
 	}
-	if !data.AdaptiveQos.IsNull() {
+	if !data.QosAdaptive.IsNull() {
 		return false
 	}
 	if !data.QosAdaptivePeriod.IsNull() {
@@ -2688,10 +2687,10 @@ func (data *TransportWANVPNInterfaceCellular) isNull(ctx context.Context, res gj
 	if !data.IpMtuVariable.IsNull() {
 		return false
 	}
-	if !data.IntrfMtu.IsNull() {
+	if !data.InterfaceMtu.IsNull() {
 		return false
 	}
-	if !data.IntrfMtuVariable.IsNull() {
+	if !data.InterfaceMtuVariable.IsNull() {
 		return false
 	}
 	if !data.TcpMss.IsNull() {

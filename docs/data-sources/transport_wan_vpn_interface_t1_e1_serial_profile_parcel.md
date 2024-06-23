@@ -31,8 +31,6 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "example" {
 
 ### Read-Only
 
-- `acl_shaping_rate` (Number) 1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps
-- `acl_shaping_rate_variable` (String) Variable name
 - `bandwidth` (Number) Interface bandwidth capacity, in kbps
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
 - `bandwidth_downstream_variable` (String) Variable name
@@ -48,8 +46,8 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "example" {
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
-- `ipv4_mask` (String)
-- `ipv4_mask_variable` (String) Variable name
+- `ipv4_subnet_mask` (String)
+- `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) Assign IPv6 address
 - `ipv6_address_variable` (String) Variable name
 - `mtu` (Number) Interface MTU <68...2000>, in bytes
@@ -59,6 +57,8 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "example" {
 - `per_tunnel_qos_aggregator` (Boolean) Per-tunnel QoS Aggregator
 - `per_tunnel_qos_aggregator_variable` (String) Variable name
 - `per_tunnel_qos_variable` (String) Variable name
+- `qos_shaping_rate` (Number) 1ge  interfaces: [0..1000000]kbps; 10ge interfaces: [0..10000000]kbps
+- `qos_shaping_rate_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
 - `shutdown_variable` (String) Variable name
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
@@ -72,10 +72,10 @@ data "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "example" {
 - `tunnel_interface_allow_bfd_variable` (String) Variable name
 - `tunnel_interface_allow_bgp` (Boolean) Allow/deny BGP
 - `tunnel_interface_allow_bgp_variable` (String) Variable name
-- `tunnel_interface_allow_dbs` (Boolean) Allow/Deny DNS
-- `tunnel_interface_allow_dbs_variable` (String) Variable name
 - `tunnel_interface_allow_dhcp` (Boolean) Allow/Deny DHCP
 - `tunnel_interface_allow_dhcp_variable` (String) Variable name
+- `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS
+- `tunnel_interface_allow_dns_variable` (String) Variable name
 - `tunnel_interface_allow_https` (Boolean) Allow/Deny Https
 - `tunnel_interface_allow_https_variable` (String) Variable name
 - `tunnel_interface_allow_icmp` (Boolean) Allow/Deny ICMP

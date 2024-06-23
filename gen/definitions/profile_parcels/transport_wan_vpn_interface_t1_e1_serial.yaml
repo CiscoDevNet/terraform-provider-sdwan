@@ -27,7 +27,7 @@ attributes:
     data_path: [addressV4]
     example: 1.2.3.4
   - model_name: mask
-    tf_name: ipv4_mask
+    tf_name: ipv4_subnet_mask
     data_path: [addressV4]
     example: 0.0.0.0
   - model_name: addressV6
@@ -159,7 +159,7 @@ attributes:
     data_path: [allowService]
     example: true
   - model_name: dns
-    tf_name: tunnel_interface_allow_dbs
+    tf_name: tunnel_interface_allow_dns
     data_path: [allowService]
     example: true
   - model_name: icmp
@@ -213,7 +213,7 @@ attributes:
     - model_name: weight
       example: 250
   - model_name: shapingRate
-    tf_name: acl_shaping_rate
+    tf_name: qos_shaping_rate
     data_path: [aclQos]
     exclude_test: true
     exclude_null: true

@@ -6,7 +6,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
   shutdown                                       = true
   interface_name                                 = "Serial0"
   ipv4_address                                   = "1.2.3.4"
-  ipv4_mask                                      = "0.0.0.0"
+  ipv4_subnet_mask                               = "0.0.0.0"
   ipv6_address                                   = "2001:0:0:1::/64"
   bandwidth                                      = 123456
   bandwidth_downstream                           = 123456
@@ -38,7 +38,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "exampl
   tunnel_interface_allow_all                     = false
   tunnel_interface_allow_bgp                     = false
   tunnel_interface_allow_dhcp                    = true
-  tunnel_interface_allow_dbs                     = true
+  tunnel_interface_allow_dns                     = true
   tunnel_interface_allow_icmp                    = true
   tunnel_interface_allow_netconf                 = false
   tunnel_interface_allow_ntp                     = false

@@ -32,7 +32,7 @@ attributes:
     mandatory: true
     example: 70.1.1.1
   - model_name: mask
-    tf_name: mask
+    tf_name: ipv4_subnet_mask
     data_path: [basic, address]
     mandatory: true
     example: 255.255.255.0
@@ -40,7 +40,7 @@ attributes:
     data_path: [basic]
     example: true
   - model_name: tunnelSource
-    tf_name: tunnel_source_ip_address
+    tf_name: tunnel_source_ipv4_address
     data_path: [basic, tunnelSourceType, sourceIp]
     example: 78.1.1.1
   - model_name: tunnelSourceInterface
@@ -49,17 +49,17 @@ attributes:
     exclude_test: true
     example: INTERFACE_1
   - model_name: tunnelSourceInterface
-    tf_name: loopback_tunnel_source_interface
+    tf_name: tunnel_source_interface_loopback
     data_path: [basic, tunnelSourceType, sourceLoopback]
     exclude_test: true
     example: LOOPBACK_1
   - model_name: tunnelRouteVia
-    tf_name: loopback_tunnel_route_via
+    tf_name: tunnel_route_via_loopback
     data_path: [basic, tunnelSourceType, sourceLoopback]
     exclude_test: true
     example: 1
   - model_name: tunnelDestination
-    tf_name: gre_destination_ip_address
+    tf_name: tunnel_destination_ipv4_address
     data_path: [basic]
     mandatory: true
     example: 79.1.1.1

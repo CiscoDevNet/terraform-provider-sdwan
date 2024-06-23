@@ -31,19 +31,18 @@ data "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
 
 ### Read-Only
 
-- `adaptive_qos` (Boolean) Adaptive QoS
 - `arps` (Attributes List) Configure ARP entries (see [below for nested schema](#nestedatt--arps))
 - `bandwidth_downstream` (Number) Interface downstream bandwidth capacity, in kbps
 - `bandwidth_downstream_variable` (String) Variable name
 - `bandwidth_upstream` (Number) Interface upstream bandwidth capacity, in kbps
 - `bandwidth_upstream_variable` (String) Variable name
-- `config_description` (String)
-- `config_description_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
+- `interface_description` (String)
+- `interface_description_variable` (String) Variable name
+- `interface_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
+- `interface_mtu_variable` (String) Variable name
 - `interface_name` (String)
 - `interface_name_variable` (String) Variable name
-- `intrf_mtu` (Number) Interface MTU GigabitEthernet0 <1500..1518>, Other GigabitEthernet <1500..9216> in bytes
-- `intrf_mtu_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
 - `ip_directed_broadcast_variable` (String) Variable name
 - `ip_mtu` (Number) IP MTU for GigabitEthernet main <576..Interface MTU>, GigabitEthernet subinterface <576..9216>, Other Interfaces <576..2000> in bytes
@@ -59,6 +58,7 @@ data "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
 - `nat_udp_timeout_variable` (String) Variable name
 - `per_tunnel_qos` (Boolean) Per-tunnel Qos
 - `per_tunnel_qos_variable` (String) Variable name
+- `qos_adaptive` (Boolean) Adaptive QoS
 - `qos_adaptive_bandwidth_downstream` (Boolean) Shaping Rate Downstream
 - `qos_adaptive_bandwidth_upstream` (Boolean) Shaping Rate Upstream
 - `qos_adaptive_default_downstream` (Number) Adaptive QoS default downstream bandwidth (kbps)
@@ -96,10 +96,10 @@ data "sdwan_transport_wan_vpn_interface_cellular_profile_parcel" "example" {
 - `tunnel_interface_allow_bfd_variable` (String) Variable name
 - `tunnel_interface_allow_bgp` (Boolean) Allow/deny BGP
 - `tunnel_interface_allow_bgp_variable` (String) Variable name
-- `tunnel_interface_allow_dbs` (Boolean) Allow/Deny DNS
-- `tunnel_interface_allow_dbs_variable` (String) Variable name
 - `tunnel_interface_allow_dhcp` (Boolean) Allow/Deny DHCP
 - `tunnel_interface_allow_dhcp_variable` (String) Variable name
+- `tunnel_interface_allow_dns` (Boolean) Allow/Deny DNS
+- `tunnel_interface_allow_dns_variable` (String) Variable name
 - `tunnel_interface_allow_https` (Boolean) Allow/Deny HTTPS
 - `tunnel_interface_allow_https_variable` (String) Variable name
 - `tunnel_interface_allow_icmp` (Boolean) Allow/Deny ICMP

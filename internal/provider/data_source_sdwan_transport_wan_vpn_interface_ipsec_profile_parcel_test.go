@@ -36,27 +36,27 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcel(t *testing
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "interface_name", "ipsec987"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "interface_description", "ipsec987"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "interface_address", "9.7.5.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "mask", "255.255.255.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_address", "1.3.5.88"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ipv4_address", "9.7.5.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ipv4_subnet_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_ipv4_address", "1.3.5.88"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_interface", "GigabitEthernet8"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_destination_address", "2.55.67.99"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_destination_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_destination_ipv4_address", "2.55.67.99"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tunnel_destination_ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "application_tunnel_type", "none"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "tcp_mss", "1460"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "clear_dont_fragment", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ip_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "dpd_interval", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "dpd_retries", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "preshared_key_for_ike", "123"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_preshared_key", "123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_version", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_integrity_protocol", "main"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_rekey_interval", "14400"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_ciphersuite", "aes256-cbc-sha1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_diffie_hellman_group", "16"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_id_for_local_end_point", "xxx"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_id_for_remote_end_point", "xxx"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_id_local_end_point", "xxx"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ike_id_remote_end_point", "xxx"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ipsec_rekey_interval", "3600"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ipsec_replay_window", "512"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_ipsec_profile_parcel.test", "ipsec_ciphersuite", "aes256-gcm"))
@@ -153,27 +153,27 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceIPSECProfileParcelConfig() st
 	config += `	interface_name = "ipsec987"` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_description = "ipsec987"` + "\n"
-	config += `	interface_address = "9.7.5.4"` + "\n"
-	config += `	mask = "255.255.255.0"` + "\n"
-	config += `	tunnel_source_address = "1.3.5.88"` + "\n"
-	config += `	tunnel_source_mask = "255.255.255.0"` + "\n"
+	config += `	ipv4_address = "9.7.5.4"` + "\n"
+	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
+	config += `	tunnel_source_ipv4_address = "1.3.5.88"` + "\n"
+	config += `	tunnel_source_ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	tunnel_source_interface = "GigabitEthernet8"` + "\n"
-	config += `	tunnel_destination_address = "2.55.67.99"` + "\n"
-	config += `	tunnel_destination_mask = "255.255.255.0"` + "\n"
+	config += `	tunnel_destination_ipv4_address = "2.55.67.99"` + "\n"
+	config += `	tunnel_destination_ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	application_tunnel_type = "none"` + "\n"
 	config += `	tcp_mss = 1460` + "\n"
 	config += `	clear_dont_fragment = false` + "\n"
 	config += `	ip_mtu = 1500` + "\n"
 	config += `	dpd_interval = 10` + "\n"
 	config += `	dpd_retries = 3` + "\n"
-	config += `	preshared_key_for_ike = "123"` + "\n"
+	config += `	ike_preshared_key = "123"` + "\n"
 	config += `	ike_version = 1` + "\n"
 	config += `	ike_integrity_protocol = "main"` + "\n"
 	config += `	ike_rekey_interval = 14400` + "\n"
 	config += `	ike_ciphersuite = "aes256-cbc-sha1"` + "\n"
 	config += `	ike_diffie_hellman_group = "16"` + "\n"
-	config += `	ike_id_for_local_end_point = "xxx"` + "\n"
-	config += `	ike_id_for_remote_end_point = "xxx"` + "\n"
+	config += `	ike_id_local_end_point = "xxx"` + "\n"
+	config += `	ike_id_remote_end_point = "xxx"` + "\n"
 	config += `	ipsec_rekey_interval = 3600` + "\n"
 	config += `	ipsec_replay_window = 512` + "\n"
 	config += `	ipsec_ciphersuite = "aes256-gcm"` + "\n"

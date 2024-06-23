@@ -46,8 +46,8 @@ type TransportWANVPNInterfaceT1E1Serial struct {
 	InterfaceNameVariable                              types.String                                                      `tfsdk:"interface_name_variable"`
 	Ipv4Address                                        types.String                                                      `tfsdk:"ipv4_address"`
 	Ipv4AddressVariable                                types.String                                                      `tfsdk:"ipv4_address_variable"`
-	Ipv4Mask                                           types.String                                                      `tfsdk:"ipv4_mask"`
-	Ipv4MaskVariable                                   types.String                                                      `tfsdk:"ipv4_mask_variable"`
+	Ipv4SubnetMask                                     types.String                                                      `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable                             types.String                                                      `tfsdk:"ipv4_subnet_mask_variable"`
 	Ipv6Address                                        types.String                                                      `tfsdk:"ipv6_address"`
 	Ipv6AddressVariable                                types.String                                                      `tfsdk:"ipv6_address_variable"`
 	Bandwidth                                          types.Int64                                                       `tfsdk:"bandwidth"`
@@ -109,8 +109,8 @@ type TransportWANVPNInterfaceT1E1Serial struct {
 	TunnelInterfaceAllowBgpVariable                    types.String                                                      `tfsdk:"tunnel_interface_allow_bgp_variable"`
 	TunnelInterfaceAllowDhcp                           types.Bool                                                        `tfsdk:"tunnel_interface_allow_dhcp"`
 	TunnelInterfaceAllowDhcpVariable                   types.String                                                      `tfsdk:"tunnel_interface_allow_dhcp_variable"`
-	TunnelInterfaceAllowDbs                            types.Bool                                                        `tfsdk:"tunnel_interface_allow_dbs"`
-	TunnelInterfaceAllowDbsVariable                    types.String                                                      `tfsdk:"tunnel_interface_allow_dbs_variable"`
+	TunnelInterfaceAllowDns                            types.Bool                                                        `tfsdk:"tunnel_interface_allow_dns"`
+	TunnelInterfaceAllowDnsVariable                    types.String                                                      `tfsdk:"tunnel_interface_allow_dns_variable"`
 	TunnelInterfaceAllowIcmp                           types.Bool                                                        `tfsdk:"tunnel_interface_allow_icmp"`
 	TunnelInterfaceAllowIcmpVariable                   types.String                                                      `tfsdk:"tunnel_interface_allow_icmp_variable"`
 	TunnelInterfaceAllowNetconf                        types.Bool                                                        `tfsdk:"tunnel_interface_allow_netconf"`
@@ -130,8 +130,8 @@ type TransportWANVPNInterfaceT1E1Serial struct {
 	TunnelInterfaceAllowBfd                            types.Bool                                                        `tfsdk:"tunnel_interface_allow_bfd"`
 	TunnelInterfaceAllowBfdVariable                    types.String                                                      `tfsdk:"tunnel_interface_allow_bfd_variable"`
 	TunnelInterfaceEncapsulations                      []TransportWANVPNInterfaceT1E1SerialTunnelInterfaceEncapsulations `tfsdk:"tunnel_interface_encapsulations"`
-	AclShapingRate                                     types.Int64                                                       `tfsdk:"acl_shaping_rate"`
-	AclShapingRateVariable                             types.String                                                      `tfsdk:"acl_shaping_rate_variable"`
+	QosShapingRate                                     types.Int64                                                       `tfsdk:"qos_shaping_rate"`
+	QosShapingRateVariable                             types.String                                                      `tfsdk:"qos_shaping_rate_variable"`
 	TcpMss                                             types.Int64                                                       `tfsdk:"tcp_mss"`
 	TcpMssVariable                                     types.String                                                      `tfsdk:"tcp_mss_variable"`
 	Mtu                                                types.Int64                                                       `tfsdk:"mtu"`
@@ -203,12 +203,12 @@ func (data TransportWANVPNInterfaceT1E1Serial) toBody(ctx context.Context) strin
 		body, _ = sjson.Set(body, path+"addressV4.address.value", data.Ipv4Address.ValueString())
 	}
 
-	if !data.Ipv4MaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"addressV4.mask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"addressV4.mask.value", data.Ipv4MaskVariable.ValueString())
-	} else if !data.Ipv4Mask.IsNull() {
+		body, _ = sjson.Set(body, path+"addressV4.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
+	} else if !data.Ipv4SubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"addressV4.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"addressV4.mask.value", data.Ipv4Mask.ValueString())
+		body, _ = sjson.Set(body, path+"addressV4.mask.value", data.Ipv4SubnetMask.ValueString())
 	}
 
 	if !data.Ipv6AddressVariable.IsNull() {
@@ -547,15 +547,15 @@ func (data TransportWANVPNInterfaceT1E1Serial) toBody(ctx context.Context) strin
 		body, _ = sjson.Set(body, path+"allowService.dhcp.value", data.TunnelInterfaceAllowDhcp.ValueBool())
 	}
 
-	if !data.TunnelInterfaceAllowDbsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDnsVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"allowService.dns.optionType", "variable")
-		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDbsVariable.ValueString())
-	} else if data.TunnelInterfaceAllowDbs.IsNull() {
+		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDnsVariable.ValueString())
+	} else if data.TunnelInterfaceAllowDns.IsNull() {
 		body, _ = sjson.Set(body, path+"allowService.dns.optionType", "default")
 		body, _ = sjson.Set(body, path+"allowService.dns.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"allowService.dns.optionType", "global")
-		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDbs.ValueBool())
+		body, _ = sjson.Set(body, path+"allowService.dns.value", data.TunnelInterfaceAllowDns.ValueBool())
 	}
 
 	if !data.TunnelInterfaceAllowIcmpVariable.IsNull() {
@@ -682,12 +682,12 @@ func (data TransportWANVPNInterfaceT1E1Serial) toBody(ctx context.Context) strin
 		body, _ = sjson.SetRaw(body, path+"encapsulation.-1", itemBody)
 	}
 
-	if !data.AclShapingRateVariable.IsNull() {
+	if !data.QosShapingRateVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.shapingRate.optionType", "variable")
-		body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.AclShapingRateVariable.ValueString())
-	} else if !data.AclShapingRate.IsNull() {
+		body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.QosShapingRateVariable.ValueString())
+	} else if !data.QosShapingRate.IsNull() {
 		body, _ = sjson.Set(body, path+"aclQos.shapingRate.optionType", "global")
-		body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.AclShapingRate.ValueInt64())
+		body, _ = sjson.Set(body, path+"aclQos.shapingRate.value", data.QosShapingRate.ValueInt64())
 	}
 
 	if !data.TcpMssVariable.IsNull() {
@@ -777,14 +777,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) fromBody(ctx context.Context, re
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.Ipv4Mask = types.StringNull()
-	data.Ipv4MaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "addressV4.mask.optionType"); t.Exists() {
 		va := res.Get(path + "addressV4.mask.value")
 		if t.String() == "variable" {
-			data.Ipv4MaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Ipv4Mask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.Ipv6Address = types.StringNull()
@@ -1095,14 +1095,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) fromBody(ctx context.Context, re
 			data.TunnelInterfaceAllowDhcp = types.BoolValue(va.Bool())
 		}
 	}
-	data.TunnelInterfaceAllowDbs = types.BoolNull()
-	data.TunnelInterfaceAllowDbsVariable = types.StringNull()
+	data.TunnelInterfaceAllowDns = types.BoolNull()
+	data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 	if t := res.Get(path + "allowService.dns.optionType"); t.Exists() {
 		va := res.Get(path + "allowService.dns.value")
 		if t.String() == "variable" {
-			data.TunnelInterfaceAllowDbsVariable = types.StringValue(va.String())
+			data.TunnelInterfaceAllowDnsVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelInterfaceAllowDbs = types.BoolValue(va.Bool())
+			data.TunnelInterfaceAllowDns = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfaceAllowIcmp = types.BoolNull()
@@ -1231,14 +1231,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) fromBody(ctx context.Context, re
 			return true
 		})
 	}
-	data.AclShapingRate = types.Int64Null()
-	data.AclShapingRateVariable = types.StringNull()
+	data.QosShapingRate = types.Int64Null()
+	data.QosShapingRateVariable = types.StringNull()
 	if t := res.Get(path + "aclQos.shapingRate.optionType"); t.Exists() {
 		va := res.Get(path + "aclQos.shapingRate.value")
 		if t.String() == "variable" {
-			data.AclShapingRateVariable = types.StringValue(va.String())
+			data.QosShapingRateVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AclShapingRate = types.Int64Value(va.Int())
+			data.QosShapingRate = types.Int64Value(va.Int())
 		}
 	}
 	data.TcpMss = types.Int64Null()
@@ -1324,14 +1324,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) updateFromBody(ctx context.Conte
 			data.Ipv4Address = types.StringValue(va.String())
 		}
 	}
-	data.Ipv4Mask = types.StringNull()
-	data.Ipv4MaskVariable = types.StringNull()
+	data.Ipv4SubnetMask = types.StringNull()
+	data.Ipv4SubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "addressV4.mask.optionType"); t.Exists() {
 		va := res.Get(path + "addressV4.mask.value")
 		if t.String() == "variable" {
-			data.Ipv4MaskVariable = types.StringValue(va.String())
+			data.Ipv4SubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Ipv4Mask = types.StringValue(va.String())
+			data.Ipv4SubnetMask = types.StringValue(va.String())
 		}
 	}
 	data.Ipv6Address = types.StringNull()
@@ -1642,14 +1642,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) updateFromBody(ctx context.Conte
 			data.TunnelInterfaceAllowDhcp = types.BoolValue(va.Bool())
 		}
 	}
-	data.TunnelInterfaceAllowDbs = types.BoolNull()
-	data.TunnelInterfaceAllowDbsVariable = types.StringNull()
+	data.TunnelInterfaceAllowDns = types.BoolNull()
+	data.TunnelInterfaceAllowDnsVariable = types.StringNull()
 	if t := res.Get(path + "allowService.dns.optionType"); t.Exists() {
 		va := res.Get(path + "allowService.dns.value")
 		if t.String() == "variable" {
-			data.TunnelInterfaceAllowDbsVariable = types.StringValue(va.String())
+			data.TunnelInterfaceAllowDnsVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.TunnelInterfaceAllowDbs = types.BoolValue(va.Bool())
+			data.TunnelInterfaceAllowDns = types.BoolValue(va.Bool())
 		}
 	}
 	data.TunnelInterfaceAllowIcmp = types.BoolNull()
@@ -1797,14 +1797,14 @@ func (data *TransportWANVPNInterfaceT1E1Serial) updateFromBody(ctx context.Conte
 			}
 		}
 	}
-	data.AclShapingRate = types.Int64Null()
-	data.AclShapingRateVariable = types.StringNull()
+	data.QosShapingRate = types.Int64Null()
+	data.QosShapingRateVariable = types.StringNull()
 	if t := res.Get(path + "aclQos.shapingRate.optionType"); t.Exists() {
 		va := res.Get(path + "aclQos.shapingRate.value")
 		if t.String() == "variable" {
-			data.AclShapingRateVariable = types.StringValue(va.String())
+			data.QosShapingRateVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.AclShapingRate = types.Int64Value(va.Int())
+			data.QosShapingRate = types.Int64Value(va.Int())
 		}
 	}
 	data.TcpMss = types.Int64Null()
@@ -1877,10 +1877,10 @@ func (data *TransportWANVPNInterfaceT1E1Serial) isNull(ctx context.Context, res 
 	if !data.Ipv4AddressVariable.IsNull() {
 		return false
 	}
-	if !data.Ipv4Mask.IsNull() {
+	if !data.Ipv4SubnetMask.IsNull() {
 		return false
 	}
-	if !data.Ipv4MaskVariable.IsNull() {
+	if !data.Ipv4SubnetMaskVariable.IsNull() {
 		return false
 	}
 	if !data.Ipv6Address.IsNull() {
@@ -2066,10 +2066,10 @@ func (data *TransportWANVPNInterfaceT1E1Serial) isNull(ctx context.Context, res 
 	if !data.TunnelInterfaceAllowDhcpVariable.IsNull() {
 		return false
 	}
-	if !data.TunnelInterfaceAllowDbs.IsNull() {
+	if !data.TunnelInterfaceAllowDns.IsNull() {
 		return false
 	}
-	if !data.TunnelInterfaceAllowDbsVariable.IsNull() {
+	if !data.TunnelInterfaceAllowDnsVariable.IsNull() {
 		return false
 	}
 	if !data.TunnelInterfaceAllowIcmp.IsNull() {
@@ -2129,10 +2129,10 @@ func (data *TransportWANVPNInterfaceT1E1Serial) isNull(ctx context.Context, res 
 	if len(data.TunnelInterfaceEncapsulations) > 0 {
 		return false
 	}
-	if !data.AclShapingRate.IsNull() {
+	if !data.QosShapingRate.IsNull() {
 		return false
 	}
-	if !data.AclShapingRateVariable.IsNull() {
+	if !data.QosShapingRateVariable.IsNull() {
 		return false
 	}
 	if !data.TcpMss.IsNull() {

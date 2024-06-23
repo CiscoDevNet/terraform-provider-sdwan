@@ -36,10 +36,10 @@ func TestAccSdwanTransportWANVPNInterfaceGREProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "interface_name", "gre1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "interface_description", "gre1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "ipv4_address", "70.1.1.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "shutdown", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "tunnel_source_ip_address", "78.1.1.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "gre_destination_ip_address", "79.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "tunnel_source_ipv4_address", "78.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "tunnel_destination_ipv4_address", "79.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "ip_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "tcp_mss", "1460"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_wan_vpn_interface_gre_profile_parcel.test", "clear_dont_fragment", "false"))
@@ -137,8 +137,8 @@ func testAccSdwanTransportWANVPNInterfaceGREProfileParcelConfig_minimum() string
 	config += `	transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id` + "\n"
 	config += `	interface_name = "gre1"` + "\n"
 	config += `	ipv4_address = "70.1.1.1"` + "\n"
-	config += `	mask = "255.255.255.0"` + "\n"
-	config += `	gre_destination_ip_address = "79.1.1.1"` + "\n"
+	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
+	config += `	tunnel_destination_ipv4_address = "79.1.1.1"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -155,10 +155,10 @@ func testAccSdwanTransportWANVPNInterfaceGREProfileParcelConfig_all() string {
 	config += `	interface_name = "gre1"` + "\n"
 	config += `	interface_description = "gre1"` + "\n"
 	config += `	ipv4_address = "70.1.1.1"` + "\n"
-	config += `	mask = "255.255.255.0"` + "\n"
+	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
 	config += `	shutdown = true` + "\n"
-	config += `	tunnel_source_ip_address = "78.1.1.1"` + "\n"
-	config += `	gre_destination_ip_address = "79.1.1.1"` + "\n"
+	config += `	tunnel_source_ipv4_address = "78.1.1.1"` + "\n"
+	config += `	tunnel_destination_ipv4_address = "79.1.1.1"` + "\n"
 	config += `	ip_mtu = 1500` + "\n"
 	config += `	tcp_mss = 1460` + "\n"
 	config += `	clear_dont_fragment = false` + "\n"
