@@ -21,7 +21,7 @@ resource "sdwan_dns_security_policy_definition" "example" {
   match_all_vpn                             = true
   dnscrypt                                  = true
   umbrella_dns_default                      = true
-  cisco_sig_credentials_feature_template_id = "885c3bce-eab6-4d45-8ff3-488f0df4072a"
+  cisco_sig_credentials_feature_template_id = "d77f1f7f-b755-47f2-bc9d-8af572f3bf4b"
 }
 ```
 

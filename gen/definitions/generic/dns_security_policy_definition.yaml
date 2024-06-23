@@ -103,7 +103,7 @@ attributes:
     id: true
     mandatory: true
     description: Credentials feature template ID
-    example: "885c3bce-eab6-4d45-8ff3-488f0df4072a"
+    example: "d77f1f7f-b755-47f2-bc9d-8af572f3bf4b"
   - tf_name: cisco_sig_credentials_feature_template_version
     tf_only: true
     type: Version

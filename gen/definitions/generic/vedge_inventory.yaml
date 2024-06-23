@@ -21,18 +21,18 @@ attributes:
         tf_name: site_id
         type: String
         description: Site id for respective device
-        example: 1
+        example: 2101
         exclude_test: true
       - model_name: serialNumber
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: F57E6428
+        example: 57A015C0
       - model_name: host-name
         tf_name: hostname
         type: String
         description: Hostname for respective device
-        example: Edge1
+        example: SITE2101-C8KV-01
         exclude_test: true
       - model_name: validity
         type: String
