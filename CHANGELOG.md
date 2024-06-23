@@ -1,4 +1,4 @@
-## 0.3.10 (unreleased)
+## 0.3.10
 
 - Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
 - Add `sdwan_service_lan_vpn_interface_ethernet_profile_parcel` resource and data source
