@@ -101,7 +101,7 @@ type CiscoSystem struct {
 	RoleVariable                      types.String                           `tfsdk:"role_variable"`
 	AffinityGroupNumber               types.Int64                            `tfsdk:"affinity_group_number"`
 	AffinityGroupNumberVariable       types.String                           `tfsdk:"affinity_group_number_variable"`
-	AffinityGroupPreference           types.Set                              `tfsdk:"affinity_group_preference"`
+	AffinityGroupPreference           types.List                             `tfsdk:"affinity_group_preference"`
 	AffinityGroupPreferenceVariable   types.String                           `tfsdk:"affinity_group_preference_variable"`
 	TransportGateway                  types.Bool                             `tfsdk:"transport_gateway"`
 	TransportGatewayVariable          types.String                           `tfsdk:"transport_gateway_variable"`
@@ -1968,21 +1968,21 @@ func (data *CiscoSystem) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	if value := res.Get(path + "affinity-group.preference.vipType"); len(value.Array()) > 0 {
 		if value.String() == "variableName" {
-			data.AffinityGroupPreference = types.SetNull(types.Int64Type)
+			data.AffinityGroupPreference = types.ListNull(types.Int64Type)
 
 			v := res.Get(path + "affinity-group.preference.vipVariableName")
 			data.AffinityGroupPreferenceVariable = types.StringValue(v.String())
 
 		} else if value.String() == "ignore" {
-			data.AffinityGroupPreference = types.SetNull(types.Int64Type)
+			data.AffinityGroupPreference = types.ListNull(types.Int64Type)
 			data.AffinityGroupPreferenceVariable = types.StringNull()
 		} else if value.String() == "constant" {
 			v := res.Get(path + "affinity-group.preference.vipValue")
-			data.AffinityGroupPreference = helpers.GetInt64Set(v.Array())
+			data.AffinityGroupPreference = helpers.GetInt64List(v.Array())
 			data.AffinityGroupPreferenceVariable = types.StringNull()
 		}
 	} else {
-		data.AffinityGroupPreference = types.SetNull(types.Int64Type)
+		data.AffinityGroupPreference = types.ListNull(types.Int64Type)
 		data.AffinityGroupPreferenceVariable = types.StringNull()
 	}
 	if value := res.Get(path + "transport-gateway.vipType"); value.Exists() {

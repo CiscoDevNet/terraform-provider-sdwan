@@ -1,0 +1,91 @@
+---
+name: Service LAN VPN Interface GRE
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/lan/vpn/%s/interface/gre
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - tf_name: service_lan_vpn_profile_parcel_id
+    reference: true
+    type: String
+    description: Service LAN VPN Profile Parcel ID
+    example: 140331f6-5418-4755-a059-13c77eb96037
+    test_value: sdwan_service_lan_vpn_profile_parcel.test.id
+  - model_name: ifName
+    tf_name: interface_name
+    data_path: [basic]
+    mandatory: true
+    example: gre1
+  - model_name: description
+    tf_name: interface_description
+    data_path: [basic]
+    example: gre1
+  - model_name: address
+    tf_name: ipv4_address
+    data_path: [basic, address]
+    mandatory: true
+    example: 70.1.1.1
+  - model_name: mask
+    tf_name: mask
+    data_path: [basic, address]
+    mandatory: true
+    example: 255.255.255.0
+  - model_name: shutdown
+    data_path: [basic]
+    example: true
+  - model_name: tunnelSource
+    tf_name: tunnel_source_ip_address
+    data_path: [basic, tunnelSourceType, sourceIp]
+    example: 78.1.1.1
+  - model_name: tunnelSourceInterface
+    tf_name: tunnel_source_interface
+    data_path: [basic, tunnelSourceType, sourceNotLoopback]
+    exclude_test: true
+    example: INTERFACE_1
+  - model_name: tunnelSourceInterface
+    tf_name: loopback_tunnel_source_interface
+    data_path: [basic, tunnelSourceType, sourceLoopback]
+    exclude_test: true
+    example: LOOPBACK_1
+  - model_name: tunnelRouteVia
+    tf_name: loopback_tunnel_route_via
+    data_path: [basic, tunnelSourceType, sourceLoopback]
+    exclude_test: true
+    example: 1
+  - model_name: tunnelDestination
+    tf_name: gre_destination_ip_address
+    data_path: [basic]
+    mandatory: true
+    example: 79.1.1.1
+  - model_name: mtu
+    tf_name: ip_mtu
+    data_path: [basic]
+    example: 1500
+  - model_name: tcpMssAdjust
+    tf_name: tcp_mss
+    data_path: [basic]
+    example: 1460
+  - model_name: clearDontFragment
+    data_path: [basic]
+    example: false
+  - model_name: application
+    tf_name: application_tunnel_type
+    data_path: [advanced]
+    example: none
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_service_lan_vpn_profile_parcel" "test" {
+    name = "TF_TEST_SLAN"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+  }

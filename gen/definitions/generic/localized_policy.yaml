@@ -2,6 +2,7 @@
 name: Localized Policy
 rest_endpoint: /template/policy/vedge/
 get_rest_endpoint: /template/policy/vedge/definition/
+get_before_delete: true
 has_version: true
 id_attribute: policyId
 doc_category: Localized Policies

@@ -93,7 +93,7 @@ resource "sdwan_cisco_system_feature_template" "example" {
 - `affinity_group_number` (Number) Set the affinity group number for router
   - Range: `1`-`255`
 - `affinity_group_number_variable` (String) Variable name
-- `affinity_group_preference` (Set of Number) Set the affinity group preference
+- `affinity_group_preference` (List of Number) Set the affinity group preference
 - `affinity_group_preference_variable` (String) Variable name
 - `console_baud_rate` (String) Set the console baud rate
   - Choices: `1200`, `2400`, `4800`, `9600`, `19200`, `38400`, `57600`, `115200`
