@@ -89,14 +89,14 @@ func (r *TransportManagementVPNProfileParcelResource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Optional:            true,
 			},
-			"interface_description": schema.StringAttribute{
+			"vpn_description": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Name").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtMost(244),
 				},
 			},
-			"interface_description_variable": schema.StringAttribute{
+			"vpn_description_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
