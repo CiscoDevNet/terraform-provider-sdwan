@@ -1,0 +1,969 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/transport/wan/vpn/interface/gre/common/request_schema.json",
+        "title": "WAN VPN Interface GRE Parcel Schema",
+        "description": "WAN VPN Interface GRE profile parcel schema for request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "basic": {
+                        "description": "basic configuration",
+                        "type": "object",
+                        "properties": {
+                            "ifName": {
+                                "description": "Interface name (1..255)",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "minLength": 4,
+                                                "type": "string",
+                                                "maxLength": 6,
+                                                "pattern": "^gre([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])$"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "description": {
+                                "description": "Interface description",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "minLength": 1,
+                                                "type": "string",
+                                                "maxLength": 128
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "address": {
+                                "description": "Assign IPv4 address",
+                                "type": "object",
+                                "properties": {
+                                    "address": {
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "variable"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "string",
+                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "minLength": 1,
+                                                        "maxLength": 64
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "string",
+                                                        "format": "ipv4"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    },
+                                    "mask": {
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "variable"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "string",
+                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                        "minLength": 1,
+                                                        "maxLength": 64
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "optionType": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "global"
+                                                        ]
+                                                    },
+                                                    "value": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "255.255.255.255",
+                                                            "255.255.255.254",
+                                                            "255.255.255.252",
+                                                            "255.255.255.248",
+                                                            "255.255.255.240",
+                                                            "255.255.255.224",
+                                                            "255.255.255.192",
+                                                            "255.255.255.128",
+                                                            "255.255.255.0",
+                                                            "255.255.254.0",
+                                                            "255.255.252.0",
+                                                            "255.255.248.0",
+                                                            "255.255.240.0",
+                                                            "255.255.224.0",
+                                                            "255.255.192.0",
+                                                            "255.255.128.0",
+                                                            "255.255.0.0",
+                                                            "255.254.0.0",
+                                                            "255.252.0.0",
+                                                            "255.240.0.0",
+                                                            "255.224.0.0",
+                                                            "255.192.0.0",
+                                                            "255.128.0.0",
+                                                            "255.0.0.0",
+                                                            "254.0.0.0",
+                                                            "252.0.0.0",
+                                                            "248.0.0.0",
+                                                            "240.0.0.0",
+                                                            "224.0.0.0",
+                                                            "192.0.0.0",
+                                                            "128.0.0.0",
+                                                            "0.0.0.0"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "optionType",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "address",
+                                    "mask"
+                                ],
+                                "additionalProperties": false
+                            },
+                            "shutdown": {
+                                "description": "Administrative state",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false,
+                                                    true
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "tunnelSourceType": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "sourceIp": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "tunnelSource": {
+                                                        "description": "Tunnel source IP Address",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "format": "ipv4"
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "variable"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 64
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "tunnelSource"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        },
+                                        "required": [
+                                            "sourceIp"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "sourceNotLoopback": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "tunnelSourceInterface": {
+                                                        "description": "<1..32 characters> Interface name",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "minLength": 1,
+                                                                        "type": "string",
+                                                                        "maxLength": 32
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "variable"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 64
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "tunnelSourceInterface"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        },
+                                        "required": [
+                                            "sourceNotLoopback"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "sourceLoopback": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "tunnelSourceInterface": {
+                                                        "description": "<1..32 characters> Interface name",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "minLength": 1,
+                                                                        "type": "string",
+                                                                        "maxLength": 32
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "variable"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 64
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    },
+                                                    "tunnelRouteVia": {
+                                                        "description": "<1..32 characters> Interface name, can't be Loopback interface",
+                                                        "type": "object",
+                                                        "oneOf": [
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "global"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "minLength": 1,
+                                                                        "type": "string",
+                                                                        "maxLength": 32
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            {
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "variable"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                        "minLength": 1,
+                                                                        "maxLength": 64
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "tunnelSourceInterface",
+                                                    "tunnelRouteVia"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        },
+                                        "required": [
+                                            "sourceLoopback"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "tunnelDestination": {
+                                "description": "Tunnel destination IP Address",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "format": "ipv4"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "mtu": {
+                                "description": "Interface MTU <576..9976>, in bytes",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "default": 1500,
+                                                "minimum": 576,
+                                                "maximum": 9976,
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "integer",
+                                                "minimum": 1500,
+                                                "maximum": 1500
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "tcpMssAdjust": {
+                                "description": "TCP MSS on SYN packets, in bytes",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "minimum": 500,
+                                                "maximum": 1460,
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            },
+                            "clearDontFragment": {
+                                "description": "Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "default"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "ifName",
+                            "address",
+                            "tunnelDestination"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "advanced": {
+                        "description": "advanced",
+                        "type": "object",
+                        "properties": {
+                            "application": {
+                                "description": "Enable Application Tunnel Type",
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "global"
+                                                ]
+                                            },
+                                            "value": {
+                                                "default": "none",
+                                                "enum": [
+                                                    "none",
+                                                    "sig"
+                                                ],
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "properties": {
+                                            "optionType": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "variable"
+                                                ]
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                            }
+                                        },
+                                        "required": [
+                                            "optionType",
+                                            "value"
+                                        ],
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                    }
+                },
+                "required": [
+                    "basic"
+                ],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for request schema for WAN VPN GRE Interface profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "basic": {
+                                "ifName": {
+                                    "optionType": "global",
+                                    "value": "gre1"
+                                },
+                                "description": {
+                                    "optionType": "global",
+                                    "value": "gre1"
+                                },
+                                "address": {
+                                    "address": {
+                                        "optionType": "global",
+                                        "value": "70.1.1.1"
+                                    },
+                                    "mask": {
+                                        "optionType": "global",
+                                        "value": "255.255.255.0"
+                                    }
+                                },
+                                "tunnelSourceType": {
+                                    "sourceIp": {
+                                        "tunnelSource": {
+                                            "optionType": "global",
+                                            "value": "78.1.1.1"
+                                        }
+                                    }
+                                },
+                                "shutdown": {
+                                    "optionType": "default",
+                                    "value": true
+                                },
+                                "tunnelDestination": {
+                                    "optionType": "global",
+                                    "value": "79.1.1.1"
+                                },
+                                "mtu": {
+                                    "optionType": "default",
+                                    "value": 1500
+                                },
+                                "tcpMssAdjust": {
+                                    "optionType": "global",
+                                    "value": 1460
+                                },
+                                "clearDontFragment": {
+                                    "optionType": "default",
+                                    "value": false
+                                }
+                            },
+                            "advanced": {
+                                "application": {
+                                    "optionType": "global",
+                                    "value": "none"
+                                }
+                            },
+                            "name": "TransportWanVpnInterfaceGreParcelGlobalDefault"
+                        }
+                    }
+                ]
+            }
+        },
+        "required": [
+            "data"
+        ],
+        "not": {
+            "required": [
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

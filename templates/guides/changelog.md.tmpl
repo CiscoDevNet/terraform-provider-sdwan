@@ -24,6 +24,10 @@ description: |-
 - Add `sdwan_service_lan_vpn_interface_ipsec_profile_parcel` resource and data source
 - Add `sdwan_service_lan_vpn_interface_gre_profile_parcel` resource and data source
 - Add `sdwan_service_lan_vpn_interface_svi_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_gre_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ipsec_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_cellular_profile_parcel` resource and data source
 
 ## 0.3.9
 
