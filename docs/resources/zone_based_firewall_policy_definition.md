@@ -80,13 +80,22 @@ Required:
 
 - `base_action` (String) Base action
   - Choices: `pass`, `drop`, `inspect`
-- `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
 - `rule_name` (String) Rule name
 - `rule_order` (Number) Rule
 
 Optional:
 
 - `action_entries` (Attributes List) List of actions entries (see [below for nested schema](#nestedatt--rules--action_entries))
+- `match_entries` (Attributes List) List of match entries (see [below for nested schema](#nestedatt--rules--match_entries))
+
+<a id="nestedatt--rules--action_entries"></a>
+### Nested Schema for `rules.action_entries`
+
+Optional:
+
+- `type` (String) Type of action entry
+  - Choices: `log`, `connectionEvents`
+
 
 <a id="nestedatt--rules--match_entries"></a>
 ### Nested Schema for `rules.match_entries`
@@ -101,15 +110,6 @@ Optional:
 - `policy_id` (String) policy id for selected match entry
 - `value` (String) value for selected match entry
 - `value_variable` (String) variable value for selected match entry if it has variable option (sourceIp & destinationIp)
-
-
-<a id="nestedatt--rules--action_entries"></a>
-### Nested Schema for `rules.action_entries`
-
-Optional:
-
-- `type` (String) Type of action entry
-  - Choices: `log`, `connectionEvents`
 
 ## Import
 

@@ -140,7 +140,7 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 						},
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
-							Required:            true,
+							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{

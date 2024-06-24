@@ -85,7 +85,6 @@ attributes:
       tf_name: match_entries
       data_path: [match]
       type: List
-      mandatory: true
       min_list: 1
       description: List of match entries
       attributes:
