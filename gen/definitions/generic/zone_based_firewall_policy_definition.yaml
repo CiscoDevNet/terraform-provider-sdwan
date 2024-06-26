@@ -117,6 +117,7 @@ attributes:
     - model_name: actions
       tf_name: action_entries
       type: List
+      min_list: 1
       description: List of actions entries
       attributes:
         - model_name: type
