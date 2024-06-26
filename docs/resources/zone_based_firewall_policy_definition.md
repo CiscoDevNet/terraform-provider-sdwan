@@ -108,6 +108,7 @@ Required:
 Optional:
 
 - `policy_id` (String) policy id for selected match entry
+- `protocol_type` (String) Should be included with additionally entries for `destinationPort` and `protocol` whenever the type `protocolName` is used.
 - `value` (String) value for selected match entry
 - `value_variable` (String) variable value for selected match entry if it has variable option (sourceIp & destinationIp)
 
