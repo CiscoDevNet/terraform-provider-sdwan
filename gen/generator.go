@@ -210,6 +210,7 @@ type YamlConfig struct {
 	NoResource               bool                  `yaml:"no_resource"`
 	NoDataSource             bool                  `yaml:"no_data_source"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
+	DeleteMutex              bool                  `yaml:"delete_mutex"`
 }
 
 type YamlConfigAttribute struct {

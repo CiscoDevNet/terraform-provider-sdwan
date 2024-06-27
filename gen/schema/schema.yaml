@@ -24,6 +24,7 @@ no_import: bool(required=False) # Set to true if the resource does not support i
 no_data_source: bool(required=False) # Set to true if no data source should be created
 no_resource: bool(required=False) # Set to true if no resource should be created
 get_before_delete: bool(required=False) # This does a GET "all" before doing a DELETE, which is a workaround for an API issue with some endpoints where the reference count is not updated otherwise
+delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually exclusive with other DELETE operations
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)

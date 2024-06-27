@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.3.11 (unreleased)
+
+- Add workaround for issue when concurrently deleting localized policy objects where the reference count is not updated
+
 ## 0.3.10
 
 - Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
