@@ -57,7 +57,7 @@ func testAccDataSourceSdwanPolicyObjectDataPrefixProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_data_prefix_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
+	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  ipv4_address = "10.0.0.0"` + "\n"
 	config += `	  ipv4_prefix_length = 8` + "\n"
@@ -67,7 +67,7 @@ func testAccDataSourceSdwanPolicyObjectDataPrefixProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_data_prefix_profile_parcel" "test" {
 			id = sdwan_policy_object_data_prefix_profile_parcel.test.id
-			feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `
+			feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `
 		}
 	`
 	return config

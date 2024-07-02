@@ -55,14 +55,14 @@ func testAccDataSourceSdwanPolicyObjectExpandedCommunityProfileParcelConfig() st
 	config := `resource "sdwan_policy_object_expanded_community_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
+	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
 	config += `	expanded_community_lists = ["abcd"]` + "\n"
 	config += `}` + "\n"
 
 	config += `
 		data "sdwan_policy_object_expanded_community_profile_parcel" "test" {
 			id = sdwan_policy_object_expanded_community_profile_parcel.test.id
-			feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `
+			feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `
 		}
 	`
 	return config

@@ -58,7 +58,7 @@ func testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_minimum() stri
 	config := `resource "sdwan_policy_object_expanded_community_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
+	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
 	config += `	expanded_community_lists = ["abcd"]` + "\n"
 	config += `}` + "\n"
 	return config
@@ -71,7 +71,7 @@ func testAccSdwanPolicyObjectExpandedCommunityProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_expanded_community_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
+	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
 	config += `	expanded_community_lists = ["abcd"]` + "\n"
 	config += `}` + "\n"
 	return config
