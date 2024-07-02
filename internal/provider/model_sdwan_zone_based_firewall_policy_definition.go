@@ -57,6 +57,7 @@ type ZoneBasedFirewallPolicyDefinitionRulesMatchEntries struct {
 	Type          types.String `tfsdk:"type"`
 	PolicyId      types.String `tfsdk:"policy_id"`
 	Value         types.String `tfsdk:"value"`
+	ProtocolType  types.String `tfsdk:"protocol_type"`
 	ValueVariable types.String `tfsdk:"value_variable"`
 }
 type ZoneBasedFirewallPolicyDefinitionRulesActionEntries struct {
@@ -131,6 +132,9 @@ func (data ZoneBasedFirewallPolicyDefinition) toBody(ctx context.Context) string
 					}
 					if !childItem.Value.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Value.ValueString())
+					}
+					if !childItem.ProtocolType.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "app", childItem.ProtocolType.ValueString())
 					}
 					if !childItem.ValueVariable.IsNull() {
 						itemChildBody, _ = sjson.Set(itemChildBody, "vipVariableName", childItem.ValueVariable.ValueString())
@@ -238,6 +242,11 @@ func (data *ZoneBasedFirewallPolicyDefinition) fromBody(ctx context.Context, res
 					} else {
 						cItem.Value = types.StringNull()
 					}
+					if ccValue := cv.Get("app"); ccValue.Exists() {
+						cItem.ProtocolType = types.StringValue(ccValue.String())
+					} else {
+						cItem.ProtocolType = types.StringNull()
+					}
 					if ccValue := cv.Get("vipVariableName"); ccValue.Exists() {
 						cItem.ValueVariable = types.StringValue(ccValue.String())
 					} else {
@@ -331,6 +340,9 @@ func (data *ZoneBasedFirewallPolicyDefinition) hasChanges(ctx context.Context, s
 						hasChanges = true
 					}
 					if !data.Rules[i].MatchEntries[ii].Value.Equal(state.Rules[i].MatchEntries[ii].Value) {
+						hasChanges = true
+					}
+					if !data.Rules[i].MatchEntries[ii].ProtocolType.Equal(state.Rules[i].MatchEntries[ii].ProtocolType) {
 						hasChanges = true
 					}
 					if !data.Rules[i].MatchEntries[ii].ValueVariable.Equal(state.Rules[i].MatchEntries[ii].ValueVariable) {

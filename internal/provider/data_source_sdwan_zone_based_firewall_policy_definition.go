@@ -131,6 +131,10 @@ func (d *ZoneBasedFirewallPolicyDefinitionDataSource) Schema(ctx context.Context
 										MarkdownDescription: "value for selected match entry",
 										Computed:            true,
 									},
+									"protocol_type": schema.StringAttribute{
+										MarkdownDescription: "Should be included with additionally entries for `destinationPort` and `protocol` whenever the type `protocolName` is used.",
+										Computed:            true,
+									},
 									"value_variable": schema.StringAttribute{
 										MarkdownDescription: "variable value for selected match entry if it has variable option (sourceIp & destinationIp)",
 										Computed:            true,
