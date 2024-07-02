@@ -10,7 +10,7 @@ attributes:
     tf_name: serial_number
     type: String
     description: Serial number for device. Could be board or virtual identifier
-    example: A34E0D983DB44B0693F22B83747AAB8B
+    example: AEB355490B954ABAB3A430797E9F4A78
     query_param: true
   - model_name: host-name
     tf_name: name
@@ -32,7 +32,7 @@ attributes:
         type: String
         description: Unique identifier for device
         id: true
-        example: 5c7e6840-a34f-41d6-8bd4-f9c30af01837
+        example: 8d2f2f23-6e0f-4086-81de-cc3e749faf64
       - model_name: site-id
         tf_name: site_id
         type: String
@@ -42,7 +42,7 @@ attributes:
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: A34E0D983DB44B0693F22B83747AAB8B
+        example: AEB355490B954ABAB3A430797E9F4A78
       - model_name: host-name
         tf_name: hostname
         type: String

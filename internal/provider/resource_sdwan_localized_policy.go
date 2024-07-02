@@ -312,7 +312,9 @@ func (r *LocalizedPolicyResource) Delete(ctx context.Context, req resource.Delet
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
 	_, _ = r.client.Get(state.getPath())
+	r.updateMutex.Lock()
 	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	r.updateMutex.Unlock()
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return

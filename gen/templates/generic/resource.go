@@ -547,10 +547,16 @@ func (r *{{camelCase .Name}}Resource) Delete(ctx context.Context, req resource.D
 	{{if .GetBeforeDelete}}
 	_, _ = r.client.Get(state.getPath())
 	{{- end}}
+	{{- if .DeleteMutex}}
+	r.updateMutex.Lock()
+	{{- end}}
 	{{- if not .RemoveId}}
 	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
 	{{- else}}
 	res, err := r.client.Delete(plan.getPath())
+	{{- end}}
+	{{- if .DeleteMutex}}
+	r.updateMutex.Unlock()
 	{{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
