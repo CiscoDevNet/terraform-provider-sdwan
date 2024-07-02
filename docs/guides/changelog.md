@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## 0.3.11 (unreleased)
+## 0.3.11
 
 - Add workaround for issue when concurrently deleting localized policy objects where the reference count is not updated
 
