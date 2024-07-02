@@ -1,0 +1,146 @@
+{
+    "request": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-identity/post/request_schema.json",
+        "title": "security-identity Parcel Schema",
+        "description": "security-identity profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 32
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "entries": {
+                        "description": "Array of Users and User Groups",
+                        "type": "array",
+                        "maxItems": 16,
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "user": {
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "description": "Mustn't contain non standard unicode characters",
+                                                    "pattern": "^.*[a-zA-Z0-9]+.*$",
+                                                    "minLength": 1,
+                                                    "maxLength": 64
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "userGroup": {
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "description": "Mustn't contain non standard unicode characters",
+                                                    "pattern": "^.*[a-zA-Z0-9]+.*$",
+                                                    "maxLength": 96,
+                                                    "minLength": 1
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "user"
+                                    ]
+                                },
+                                {
+                                    "required": [
+                                        "userGroup"
+                                    ]
+                                }
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "entries"
+                ],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for security-identity profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "entries": [
+                                {
+                                    "user": {
+                                        "optionType": "global",
+                                        "value": "administrator"
+                                    }
+                                },
+                                {
+                                    "userGroup": {
+                                        "optionType": "global",
+                                        "value": "SDWAN-IDENTITY.CISCO.COM/Users/Domain Guests"
+                                    }
+                                }
+                            ]
+                        },
+                        "name": "testIdentityList"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "data",
+            "name"
+        ],
+        "not": {
+            "required": [
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}
