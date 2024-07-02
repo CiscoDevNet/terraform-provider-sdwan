@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2012") == "" && os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012 or POLICY_OBJECT_FEATURE_TEMPLATE_ID")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_mirror_profile_parcel.test", "entries.0.remote_destination_ip", "10.0.0.1"))
@@ -40,7 +40,7 @@ func TestAccDataSourceSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig(),
+				Config: testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -50,13 +50,6 @@ func TestAccDataSourceSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccDataSourceSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig = `
-resource "sdwan_policy_object_feature_profile" "test" {
-  name        = "TF_TEST"
-  description = "Terraform test"
-}
-`
-
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
@@ -64,7 +57,7 @@ func testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_mirror_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
 	config += `	  source_ip = "10.0.0.2"` + "\n"
@@ -74,7 +67,7 @@ func testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_mirror_profile_parcel" "test" {
 			id = sdwan_policy_object_mirror_profile_parcel.test.id
-			feature_profile_id = sdwan_policy_object_feature_profile.test.id
+			feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `
 		}
 	`
 	return config

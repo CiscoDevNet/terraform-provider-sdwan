@@ -255,6 +255,7 @@ type YamlConfigAttribute struct {
 	Value                   string                         `yaml:"value"`
 	TestValue               string                         `yaml:"test_value"`
 	MinimumTestValue        string                         `yaml:"minimum_test_value"`
+	TestEnvName             string                         `yaml:"test_env_name"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`

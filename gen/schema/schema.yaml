@@ -68,6 +68,7 @@ attribute:
   value: any(str(), int(), bool(), required=False) # Hardcoded value for the attribute
   test_value: str(required=False) # Value used for acceptance test
   minimum_test_value: any(str(), int(), bool(), num(), required=False) # Value used for "minimum" resource acceptance test
+  test_env_name: str(required=False) # Environment variable name for viable containing resource ID used for testing
   always_include: bool(required=False) # Include attribute always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true

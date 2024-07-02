@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyObjectColorProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2012") == "" && os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012 or POLICY_OBJECT_FEATURE_TEMPLATE_ID")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_color_profile_parcel.test", "entries.0.color", "blue"))
@@ -39,10 +39,10 @@ func TestAccSdwanPolicyObjectColorProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPolicyObjectColorPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectColorProfileParcelConfig_minimum(),
+				Config: testAccSdwanPolicyObjectColorProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanPolicyObjectColorPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectColorProfileParcelConfig_all(),
+				Config: testAccSdwanPolicyObjectColorProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -52,13 +52,6 @@ func TestAccSdwanPolicyObjectColorProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanPolicyObjectColorPrerequisitesProfileParcelConfig = `
-resource "sdwan_policy_object_feature_profile" "test" {
-  name        = "TF_TEST"
-  description = "Terraform test"
-}
-`
-
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
@@ -66,7 +59,7 @@ func testAccSdwanPolicyObjectColorProfileParcelConfig_minimum() string {
 	config := `resource "sdwan_policy_object_color_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  color = "blue"` + "\n"
 	config += `	}]` + "\n"
@@ -81,7 +74,7 @@ func testAccSdwanPolicyObjectColorProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_color_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  color = "blue"` + "\n"
 	config += `	}]` + "\n"

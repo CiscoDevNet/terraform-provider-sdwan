@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyObjectIPv6PrefixProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2012") == "" && os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012 or POLICY_OBJECT_FEATURE_TEMPLATE_ID")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_ipv6_prefix_profile_parcel.test", "entries.0.ipv6_address", "2001:db8:85a3::8a2e:370:7334"))
@@ -42,10 +42,10 @@ func TestAccSdwanPolicyObjectIPv6PrefixProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPolicyObjectIPv6PrefixPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectIPv6PrefixProfileParcelConfig_minimum(),
+				Config: testAccSdwanPolicyObjectIPv6PrefixProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanPolicyObjectIPv6PrefixPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectIPv6PrefixProfileParcelConfig_all(),
+				Config: testAccSdwanPolicyObjectIPv6PrefixProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -55,13 +55,6 @@ func TestAccSdwanPolicyObjectIPv6PrefixProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanPolicyObjectIPv6PrefixPrerequisitesProfileParcelConfig = `
-resource "sdwan_policy_object_feature_profile" "test" {
-  name        = "TF_TEST"
-  description = "Terraform test"
-}
-`
-
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
@@ -69,7 +62,7 @@ func testAccSdwanPolicyObjectIPv6PrefixProfileParcelConfig_minimum() string {
 	config := `resource "sdwan_policy_object_ipv6_prefix_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
 	config += `	  ipv6_prefix_length = 64` + "\n"
@@ -87,7 +80,7 @@ func testAccSdwanPolicyObjectIPv6PrefixProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_ipv6_prefix_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = ` + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
 	config += `	  ipv6_prefix_length = 64` + "\n"
