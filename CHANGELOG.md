@@ -1,6 +1,5 @@
-## 0.3.11
+## 0.3.12 (unreleased)
 
-- Add workaround for issue when concurrently deleting localized policy objects where the reference count is not updated
 - Add `sdwan_policy_object_feature_profile` resource and data source
 - Add `sdwan_policy_object_class_map_profile_parcel` resource and data source
 - Add `sdwan_policy_object_color_profile_parcel` resource and data source
@@ -13,6 +12,10 @@
 - Add `sdwan_policy_object_policer_profile_parcel` resource and data source
 - Add `sdwan_policy_object_prefix_profile_parcel` resource and data source
 - Add `sdwan_policy_object_ipv6_prefix_profile_parcel` resource and data source
+
+## 0.3.11
+
+- Add workaround for issue when concurrently deleting localized policy objects where the reference count is not updated
 
 ## 0.3.10
 
