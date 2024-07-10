@@ -140,7 +140,7 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 						},
 						"match_entries": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("List of match entries").String,
-							Required:            true,
+							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
@@ -156,6 +156,10 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 									},
 									"value": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("value for selected match entry").String,
+										Optional:            true,
+									},
+									"protocol_type": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Should be included with additionally entries for `destinationPort` and `protocol` whenever the type `protocolName` is used.").String,
 										Optional:            true,
 									},
 									"value_variable": schema.StringAttribute{
@@ -181,6 +185,9 @@ func (r *ZoneBasedFirewallPolicyDefinitionResource) Schema(ctx context.Context, 
 										},
 									},
 								},
+							},
+							Validators: []validator.List{
+								listvalidator.SizeAtLeast(1),
 							},
 						},
 					},
