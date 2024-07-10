@@ -10,6 +10,7 @@ description: |-
 ## 0.3.12 (unreleased)
 
 - Add `protocol_type` attribute to `sdwan_zone_based_firewall_policy_definition` resource and data source
+- Fix payload issue with `sdwan_cisco_sig_credentials_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/247)
 
 ## 0.3.11
 
