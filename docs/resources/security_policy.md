@@ -51,7 +51,6 @@ resource "sdwan_security_policy" "example" {
   - Choices: `allow`, `deny`
 - `failure_mode` (String) Failure mode
   - Choices: `open`, `close`
-  - Default value: `open`
 - `high_speed_logging_server_ip` (String) High Speed Logging Server IP
 - `high_speed_logging_server_port` (String) High Speed Logging Port
 - `high_speed_logging_vpn` (String) High Speed Logging VPN

@@ -10,6 +10,7 @@ description: |-
 ## 0.3.13 (unreleased)
 
 - Add workaround for issue when concurrently deleting security policy objects where the reference count is not updated
+- BREAKING CHANGE: Remove default value of `failure_mode` attribute of `sdwan_security_policy` resource
 
 ## 0.3.12
 

@@ -152,13 +152,11 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"failure_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Failure mode").AddStringEnumDescription("open", "close").AddDefaultValueDescription("open").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Failure mode").AddStringEnumDescription("open", "close").String,
 				Optional:            true,
-				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("open", "close"),
 				},
-				Default: stringdefault.StaticString("open"),
 			},
 			"high_speed_logging_server_ip": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Server IP").String,

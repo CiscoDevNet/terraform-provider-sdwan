@@ -96,7 +96,6 @@ attributes:
     data_path: [policyDefinition, settings]
     tf_name: failure_mode
     type: String
-    default_value: open
     enum_values: [open, close]
     description: Failure mode
     example: close
