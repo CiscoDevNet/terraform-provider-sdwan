@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.3.13 (unreleased)
+
+- Add workaround for issue when concurrently deleting security policy objects where the reference count is not updated
+
 ## 0.3.12
 
 - Add `protocol_type` attribute to `sdwan_zone_based_firewall_policy_definition` resource and data source
