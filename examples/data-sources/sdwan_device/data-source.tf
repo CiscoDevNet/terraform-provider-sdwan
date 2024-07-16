@@ -1,4 +1,4 @@
 data "sdwan_device" "example" {
-  serial_number = "AEB355490B954ABAB3A430797E9F4A78"
+  serial_number = "B668B2628BE74ED4A25BE4046E162330"
   name          = "Controller01"
 }

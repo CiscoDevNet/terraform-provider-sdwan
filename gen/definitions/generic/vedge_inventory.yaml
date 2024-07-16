@@ -16,23 +16,23 @@ attributes:
         type: String
         description: Chassis Number
         id: true
-        example: C8K-A5032213-D3C7-C452-187E-38CCE4C5AF87
+        example: C8K-E94D7B88-4B9E-3323-C6C3-F29079FAAC3B
       - model_name: site-id
         tf_name: site_id
         type: String
         description: Site id for respective device
-        example: 2101
+        example: 2102
         exclude_test: true
       - model_name: serialNumber
         tf_name: serial_number
         type: String
         description: Serial number for device. Could be board or virtual identifier
-        example: 7d81a6b0983e4f99b862fb3a36018912
+        example: B3E32500
       - model_name: host-name
         tf_name: hostname
         type: String
         description: Hostname for respective device
-        example: SITE2101-C8KV-01
+        example: SITE2102-C8KV-01
         exclude_test: true
       - model_name: validity
         type: String
