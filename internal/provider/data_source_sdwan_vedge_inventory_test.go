@@ -33,8 +33,8 @@ func TestAccDataSourceSdwanVEdgeInventory(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_209")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "C8K-E94D7B88-4B9E-3323-C6C3-F29079FAAC3B"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "B3E32500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.chassis_number", "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.serial_number", "52FD47D8"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_vedge_inventory.test", "devices.0.device_type", "vedge"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
