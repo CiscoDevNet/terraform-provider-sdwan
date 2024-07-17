@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## 0.3.14 (unreleased)
+
+- Fix issue when reading deleted `sdwan_cli_config_profile_parcel` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)
+
 ## 0.3.13
 
 - Add workaround for issue when concurrently deleting security policy objects where the reference count is not updated
