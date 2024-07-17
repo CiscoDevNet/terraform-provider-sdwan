@@ -1,3 +1,7 @@
+## 0.3.14 (unreleased)
+
+- Add `sdwan_transport_tracker_profile_parcel` resource and data source
+
 ## 0.3.13
 
 - Add workaround for issue when concurrently deleting security policy objects where the reference count is not updated
