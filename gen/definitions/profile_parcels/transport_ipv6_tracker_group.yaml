@@ -1,0 +1,51 @@
+---
+name: Transport IPv6 Tracker Group
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/ipv6-trackergroup
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+exclude_minimum_test: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: trackerGroupName
+    tf_name: tracker_name
+    mandatory: true
+    example: TRACKER_GROUP_1
+  - model_name: trackerRefs
+    tf_name: tracker_elements
+    attributes:
+    - model_name: refId
+      tf_name: tracker_id
+      data_path: [trackerRef]
+      id: true
+      example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+      test_value: sdwan_transport_ipv6_tracker_profile_parcel.test.id
+  - model_name: combineBoolean
+    tf_name: tracker_boolean
+    example: or
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_transport_ipv6_tracker_profile_parcel" "test" {
+    name                  = "TF_TEST"
+    description           = "Terraform Test"
+    feature_profile_id    = sdwan_transport_feature_profile.test.id
+    tracker_name          = "TRACKER_1"
+    endpoint_api_url      = "google.com"
+    endpoint_dns_name     = "google.com"
+    endpoint_ip           = "2001:0:0:1::0"
+    interval              = 30
+    multiplier            = 3
+    threshold             = 300
+    endpoint_tracker_type = "ipv6-interface"
+    tracker_type          = "endpoint"
+  }
