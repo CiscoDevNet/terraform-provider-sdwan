@@ -7,10 +7,9 @@ description: |-
 
 # Changelog
 
-## 0.3.13
+## 0.3.14 (unreleased)
 
-- Add workaround for issue when concurrently deleting security policy objects where the reference count is not updated
-- BREAKING CHANGE: Remove default value of `failure_mode` attribute of `sdwan_security_policy` resource
+- Fix issue when reading deleted `sdwan_cli_config_profile_parcel` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)
 - Add `sdwan_policy_object_feature_profile` resource and data source
 - Add `sdwan_policy_object_class_map_profile_parcel` resource and data source
 - Add `sdwan_policy_object_color_list_profile_parcel` resource and data source
@@ -23,6 +22,11 @@ description: |-
 - Add `sdwan_policy_object_policer_profile_parcel` resource and data source
 - Add `sdwan_policy_object_ipv4_prefix_list_profile_parcel` resource and data source
 - Add `sdwan_policy_object_ipv6_prefix_list_profile_parcel` resource and data source
+
+## 0.3.13
+
+- Add workaround for issue when concurrently deleting security policy objects where the reference count is not updated
+- BREAKING CHANGE: Remove default value of `failure_mode` attribute of `sdwan_security_policy` resource
 
 ## 0.3.12
 
