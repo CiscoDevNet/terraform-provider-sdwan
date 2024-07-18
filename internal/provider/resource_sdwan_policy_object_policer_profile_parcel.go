@@ -100,7 +100,7 @@ func (r *PolicyObjectPolicerProfileParcelResource) Schema(ctx context.Context, r
 								int64validator.Between(15000, 10000000),
 							},
 						},
-						"select_value": schema.StringAttribute{
+						"exceed_action": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Exceed options such as Drop or Remark").AddStringEnumDescription("drop", "remark").String,
 							Optional:            true,
 							Validators: []validator.String{

@@ -42,9 +42,9 @@ type PolicyObjectPolicer struct {
 }
 
 type PolicyObjectPolicerEntries struct {
-	BurstBytes  types.Int64  `tfsdk:"burst_bytes"`
-	SelectValue types.String `tfsdk:"select_value"`
-	RateBps     types.Int64  `tfsdk:"rate_bps"`
+	BurstBytes   types.Int64  `tfsdk:"burst_bytes"`
+	ExceedAction types.String `tfsdk:"exceed_action"`
+	RateBps      types.Int64  `tfsdk:"rate_bps"`
 }
 
 // End of section. //template:end types
@@ -76,9 +76,9 @@ func (data PolicyObjectPolicer) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "burst.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "burst.value", item.BurstBytes.ValueInt64())
 		}
-		if !item.SelectValue.IsNull() {
+		if !item.ExceedAction.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "exceed.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "exceed.value", item.SelectValue.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "exceed.value", item.ExceedAction.ValueString())
 		}
 		if !item.RateBps.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "rate.optionType", "global")
@@ -112,12 +112,12 @@ func (data *PolicyObjectPolicer) fromBody(ctx context.Context, res gjson.Result)
 					item.BurstBytes = types.Int64Value(va.Int())
 				}
 			}
-			item.SelectValue = types.StringNull()
+			item.ExceedAction = types.StringNull()
 
 			if t := v.Get("exceed.optionType"); t.Exists() {
 				va := v.Get("exceed.value")
 				if t.String() == "global" {
-					item.SelectValue = types.StringValue(va.String())
+					item.ExceedAction = types.StringValue(va.String())
 				}
 			}
 			item.RateBps = types.Int64Null()
@@ -147,7 +147,7 @@ func (data *PolicyObjectPolicer) updateFromBody(ctx context.Context, res gjson.R
 	path := "payload.data."
 	for i := range data.Entries {
 		keys := [...]string{"burst", "exceed", "rate"}
-		keyValues := [...]string{strconv.FormatInt(data.Entries[i].BurstBytes.ValueInt64(), 10), data.Entries[i].SelectValue.ValueString(), strconv.FormatInt(data.Entries[i].RateBps.ValueInt64(), 10)}
+		keyValues := [...]string{strconv.FormatInt(data.Entries[i].BurstBytes.ValueInt64(), 10), data.Entries[i].ExceedAction.ValueString(), strconv.FormatInt(data.Entries[i].RateBps.ValueInt64(), 10)}
 		keyValuesVariables := [...]string{"", "", ""}
 
 		var r gjson.Result
@@ -179,12 +179,12 @@ func (data *PolicyObjectPolicer) updateFromBody(ctx context.Context, res gjson.R
 				data.Entries[i].BurstBytes = types.Int64Value(va.Int())
 			}
 		}
-		data.Entries[i].SelectValue = types.StringNull()
+		data.Entries[i].ExceedAction = types.StringNull()
 
 		if t := r.Get("exceed.optionType"); t.Exists() {
 			va := r.Get("exceed.value")
 			if t.String() == "global" {
-				data.Entries[i].SelectValue = types.StringValue(va.String())
+				data.Entries[i].ExceedAction = types.StringValue(va.String())
 			}
 		}
 		data.Entries[i].RateBps = types.Int64Null()

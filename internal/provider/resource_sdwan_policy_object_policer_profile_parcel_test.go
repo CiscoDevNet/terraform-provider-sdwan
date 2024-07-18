@@ -34,7 +34,7 @@ func TestAccSdwanPolicyObjectPolicerProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_policer_profile_parcel.test", "entries.0.burst_bytes", "56500"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_policer_profile_parcel.test", "entries.0.select_value", "remark"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_policer_profile_parcel.test", "entries.0.exceed_action", "remark"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_policer_profile_parcel.test", "entries.0.rate_bps", "60000"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -64,7 +64,7 @@ func testAccSdwanPolicyObjectPolicerProfileParcelConfig_minimum() string {
 	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  burst_bytes = 56500` + "\n"
-	config += `	  select_value = "remark"` + "\n"
+	config += `	  exceed_action = "remark"` + "\n"
 	config += `	  rate_bps = 60000` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
@@ -81,7 +81,7 @@ func testAccSdwanPolicyObjectPolicerProfileParcelConfig_all() string {
 	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  burst_bytes = 56500` + "\n"
-	config += `	  select_value = "remark"` + "\n"
+	config += `	  exceed_action = "remark"` + "\n"
 	config += `	  rate_bps = 60000` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"

@@ -86,7 +86,7 @@ func (d *PolicyObjectPolicerProfileParcelDataSource) Schema(ctx context.Context,
 							MarkdownDescription: "Burst (Bytes)",
 							Computed:            true,
 						},
-						"select_value": schema.StringAttribute{
+						"exceed_action": schema.StringAttribute{
 							MarkdownDescription: "Exceed options such as Drop or Remark",
 							Computed:            true,
 						},

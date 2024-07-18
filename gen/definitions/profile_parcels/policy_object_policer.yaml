@@ -21,7 +21,7 @@ attributes:
       example: 56500
       minimum_test_value: '56500'
     - model_name: exceed
-      tf_name: select_value
+      tf_name: exceed_action
       id: true
       mandatory: true
       example: remark

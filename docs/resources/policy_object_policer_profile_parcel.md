@@ -21,9 +21,9 @@ resource "sdwan_policy_object_policer_profile_parcel" "example" {
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   entries = [
     {
-      burst_bytes  = 56500
-      select_value = "remark"
-      rate_bps     = 60000
+      burst_bytes   = 56500
+      exceed_action = "remark"
+      rate_bps      = 60000
     }
   ]
 }
@@ -54,10 +54,10 @@ Optional:
 
 - `burst_bytes` (Number) Burst (Bytes)
   - Range: `15000`-`10000000`
+- `exceed_action` (String) Exceed options such as Drop or Remark
+  - Choices: `drop`, `remark`
 - `rate_bps` (Number) Rate (bps)
   - Range: `8`-`100000000000`
-- `select_value` (String) Exceed options such as Drop or Remark
-  - Choices: `drop`, `remark`
 
 ## Import
 

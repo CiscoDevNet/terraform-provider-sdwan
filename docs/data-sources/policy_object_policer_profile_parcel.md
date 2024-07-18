@@ -40,5 +40,5 @@ data "sdwan_policy_object_policer_profile_parcel" "example" {
 Read-Only:
 
 - `burst_bytes` (Number) Burst (Bytes)
+- `exceed_action` (String) Exceed options such as Drop or Remark
 - `rate_bps` (Number) Rate (bps)
-- `select_value` (String) Exceed options such as Drop or Remark
