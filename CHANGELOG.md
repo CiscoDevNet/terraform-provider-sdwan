@@ -1,17 +1,24 @@
-## 0.3.12 (unreleased)
+## 0.3.13
 
+- Add workaround for issue when concurrently deleting security policy objects where the reference count is not updated
+- BREAKING CHANGE: Remove default value of `failure_mode` attribute of `sdwan_security_policy` resource
 - Add `sdwan_policy_object_feature_profile` resource and data source
 - Add `sdwan_policy_object_class_map_profile_parcel` resource and data source
-- Add `sdwan_policy_object_color_profile_parcel` resource and data source
-- Add `sdwan_policy_object_data_ipv6_prefix_profile_parcel` resource and data source
-- Add `sdwan_policy_object_data_prefix_profile_parcel` resource and data source
-- Add `sdwan_policy_object_tloc_profile_parcel` resource and data source
-- Add `sdwan_policy_object_expanded_community_profile_parcel` resource and data source
-- Add `sdwan_policy_object_extended_community_profile_parcel` resource and data source
+- Add `sdwan_policy_object_color_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_data_ipv6_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_data_ipv4_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_tloc_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_expanded_community_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_extended_community_list_profile_parcel` resource and data source
 - Add `sdwan_policy_object_mirror_profile_parcel` resource and data source
 - Add `sdwan_policy_object_policer_profile_parcel` resource and data source
-- Add `sdwan_policy_object_prefix_profile_parcel` resource and data source
-- Add `sdwan_policy_object_ipv6_prefix_profile_parcel` resource and data source
+- Add `sdwan_policy_object_ipv4_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_ipv6_prefix_list_profile_parcel` resource and data source
+
+## 0.3.12
+
+- Add `protocol_type` attribute to `sdwan_zone_based_firewall_policy_definition` resource and data source
+- Fix payload issue with `sdwan_cisco_sig_credentials_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/247)
 
 ## 0.3.11
 

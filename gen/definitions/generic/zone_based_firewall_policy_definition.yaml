@@ -85,7 +85,6 @@ attributes:
       tf_name: match_entries
       data_path: [match]
       type: List
-      mandatory: true
       min_list: 1
       description: List of match entries
       attributes:
@@ -109,6 +108,12 @@ attributes:
         description: value for selected match entry
         exclude_test: true
         example: 2
+      - model_name: app
+        tf_name: protocol_type
+        type: String
+        description: Should be included with additionally entries for `destinationPort` and `protocol` whenever the type `protocolName` is used.
+        exclude_test: true
+        example: dns
       - model_name: vipVariableName
         tf_name: value_variable
         type: String
@@ -118,6 +123,7 @@ attributes:
     - model_name: actions
       tf_name: action_entries
       type: List
+      min_list: 1
       description: List of actions entries
       attributes:
         - model_name: type

@@ -77,6 +77,7 @@ attribute:
   query_param: bool(required=False) # Set to true if attribute is a query parameter to be included in request url
   no_augment_config: bool(required=False) # If true do not augment with model data
   test_tags: list(str(), required=False) # List of test tags, attribute is only included in acceptance tests if an environment variable with one of these tags is configured
+  requires_const_and_var: bool(required=False) # If true will include both constant and variable values in payload
 
 conditional_attribute:
   name: str() # Reference to other attribute

@@ -264,6 +264,7 @@ type YamlConfigAttribute struct {
 	QueryParam              bool                           `yaml:"query_param"`
 	NoAugmentConfig         bool                           `yaml:"no_augment_config"`
 	TestTags                []string                       `yaml:"test_tags"`
+	RequiresConstAndVar     bool                           `yaml:"requires_const_and_var"`
 }
 
 type YamlConfigConditionalAttribute struct {

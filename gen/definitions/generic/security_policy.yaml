@@ -5,6 +5,7 @@ get_rest_endpoint: /template/policy/security/definition/
 has_version: true
 id_from_query_path: data
 id_from_query_path_attribute: policyId
+delete_mutex: true
 doc_category: Security Policies
 attributes:
   - model_name: policyType
@@ -95,7 +96,6 @@ attributes:
     data_path: [policyDefinition, settings]
     tf_name: failure_mode
     type: String
-    default_value: open
     enum_values: [open, close]
     description: Failure mode
     example: close

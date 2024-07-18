@@ -152,13 +152,11 @@ func (r *SecurityPolicyResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"failure_mode": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Failure mode").AddStringEnumDescription("open", "close").AddDefaultValueDescription("open").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Failure mode").AddStringEnumDescription("open", "close").String,
 				Optional:            true,
-				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("open", "close"),
 				},
-				Default: stringdefault.StaticString("open"),
 			},
 			"high_speed_logging_server_ip": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("High Speed Logging Server IP").String,
@@ -332,7 +330,9 @@ func (r *SecurityPolicyResource) Delete(ctx context.Context, req resource.Delete
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Delete", state.Name.ValueString()))
 
+	r.updateMutex.Lock()
 	res, err := r.client.Delete(state.getPath() + url.QueryEscape(state.Id.ValueString()))
+	r.updateMutex.Unlock()
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return
