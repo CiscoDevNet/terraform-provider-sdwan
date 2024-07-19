@@ -302,12 +302,9 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 											stringvalidator.OneOf("fecAdaptive", "fecAlways", "packetDuplication"),
 										},
 									},
-									"loss_correction_fec_threshold": schema.Int64Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Loss correction FEC threshold").AddIntegerRangeDescription(1, 5).String,
+									"loss_correction_fec_threshold": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Loss correction FEC threshold").String,
 										Optional:            true,
-										Validators: []validator.Int64{
-											int64validator.Between(1, 5),
-										},
 									},
 									"nat_pool": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("NAT pool").AddStringEnumDescription("pool").String,

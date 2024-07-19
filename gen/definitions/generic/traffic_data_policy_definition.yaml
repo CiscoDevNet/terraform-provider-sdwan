@@ -387,10 +387,10 @@ attributes:
             conditional_attribute:
               name: type
               value: lossProtectFec
-            type: Int64
+            type: String
             description: Loss correction FEC threshold
-            min_int: 1
-            max_int: 5
+            # min_int: 1
+            # max_int: 5
             example: 2
             exclude_test: true
           - model_name: field
