@@ -87,7 +87,7 @@ attributes:
         tf_name: type
         type: String
         mandatory: true
-        enum_values: [cisco_system, cisco_logging, cedge_aaa, cisco_bfd, cisco_omp, cisco_security, cisco_banner, cisco_snmp, cedge_global, cli-template, cisco_sig_credentials, switchport, cisco_thousandeyes, cisco_vpn]
+        enum_values: [cisco_system, cisco_logging, cedge_aaa, cisco_bfd, cisco_omp, cisco_security, cisco_banner, cisco_snmp, cedge_global, cli-template, cisco_sig_credentials, switchport, cisco_thousandeyes, cisco_vpn, application-utd]
         ignore_enum: true
         description: Feature template type
         example: cisco_system

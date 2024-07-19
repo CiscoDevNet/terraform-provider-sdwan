@@ -125,7 +125,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn", "application-utd").String,
 							Required:            true,
 						},
 						"sub_templates": schema.SetNestedAttribute{
