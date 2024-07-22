@@ -389,8 +389,6 @@ attributes:
               value: lossProtectFec
             type: String
             description: Loss correction FEC threshold
-            # min_int: 1
-            # max_int: 5
             example: 2
             exclude_test: true
           - model_name: field
