@@ -269,6 +269,7 @@ type YamlConfigAttribute struct {
 type YamlConfigConditionalAttribute struct {
 	Name  string `yaml:"name"`
 	Value string `yaml:"value"`
+	Type  string `yaml:"type"`
 }
 
 // Templating helper function to convert TF name to GO name

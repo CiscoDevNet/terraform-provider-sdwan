@@ -15,28 +15,38 @@ attributes:
     example: false
   - model_name: anyConnectEapAuth
     tf_name: any_connect_eap_authentication_type
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: user
-  - model_name: anyConnectProfileDownloadStatus
-    tf_name: any_connect_eap_profile_download_status
-    conditional_attribute:
-      name: any_connect_eap_authentication_type
-      value: device
-    example: INITIALIZED
-  - model_name: anyConnectProfileFileName
-    tf_name: any_connect_eap_profile_file_name
-    conditional_attribute:
-      name: any_connect_eap_authentication_type
-      value: device
-    example: "<form-data>"
+    # ==== Requires support for file upload ===
+  # - model_name: anyConnectProfileDownloadStatus
+  #   tf_name: any_connect_eap_profile_download_status
+  #   example: INITIALIZED
+      # conditional_attribute:
+      #     name: any_connect_eap_authentication_type
+      #     value: device
+  # - model_name: anyConnectProfileFileName
+  #   tf_name: any_connect_eap_profile_file_name
+  #   example: "<form-data>"
+      # conditional_attribute:
+      #     name: any_connect_eap_authentication_type
+      #     value: device
   - model_name: ipv4PoolSize
     example: 50
   - model_name: ipv6PoolSize
     example: 1024
   - model_name: enableCrlCheck
+    tf_name: enable_certificate_list_check
     example: false
   - model_name: pskSelection
     tf_name: psk_authentication_type
     data_path: [pskAuth]
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: aaa
   - model_name: preSharedKey
     tf_name: psk_authentication_pre_shared_key
@@ -59,12 +69,20 @@ attributes:
     exclude_test: true
     example: cisco123
   - model_name: deriveNameIdentity
-    tf_name: aaa_derive_name_identity
+    tf_name: aaa_derive_name_from_peer_identity
     data_path: [aaaPolicy]
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: MyPassword
   - model_name: deriveNameDomain
-    tf_name: aaa_derive_name_domain
+    tf_name: aaa_derive_name_from_peer_domain
     data_path: [aaaPolicy]
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     exclude_test: true
     example: MyPassword
   - model_name: enableAccounting
@@ -72,27 +90,59 @@ attributes:
     example: false
   - model_name: localIkev2IdentityType
     tf_name: ikev2_local_ike_identity_type
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: EMAIL
   - model_name: localIkev2IdentityValue
     tf_name: ikev2_local_ike_identity_value
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: abc@xyz.com
   - model_name: ikev2SaLifetime
     tf_name: ikev2_security_association_lifetime
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: 86400
   - model_name: antiDosThreshold
     tf_name: ikev2_anti_dos_threshold
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: 99
   - model_name: enableAntiReplay
     tf_name: ipsec_enable_anti_replay
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: false
   - model_name: antiReplayWindowSize
     tf_name: ipsec_anti_replay_window_size
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: 64
   - model_name: ipSecSaLifetime
     tf_name: ipsec_security_association_lifetime
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: 3600
   - model_name: enablePFS
     tf_name: ipsec_enable_perfect_foward_secrecy
+    conditional_attribute:
+      name: connection_type_ssl
+      value: false
+      type: Bool
     example: false
 
 test_prerequisites: |

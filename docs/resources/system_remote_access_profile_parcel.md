@@ -16,29 +16,27 @@ This resource can manage a System Remote Access profile parcel.
 
 ```terraform
 resource "sdwan_system_remote_access_profile_parcel" "example" {
-  name                                    = "Example"
-  description                             = "My Example"
-  feature_profile_id                      = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  connection_type_ssl                     = false
-  any_connect_eap_authentication_type     = "user"
-  any_connect_eap_profile_download_status = "INITIALIZED"
-  any_connect_eap_profile_file_name       = "<form-data>"
-  ipv4_pool_size                          = 50
-  ipv6_pool_size                          = 1024
-  enable_crl_check                        = false
-  psk_authentication_type                 = "aaa"
-  psk_authentication_pre_shared_key       = "Cisco123"
-  radius_group_name                       = "radius-1"
-  aaa_derive_name_identity                = "MyPassword"
-  aaa_enable_accounting                   = false
-  ikev2_local_ike_identity_type           = "EMAIL"
-  ikev2_local_ike_identity_value          = "abc@xyz.com"
-  ikev2_security_association_lifetime     = 86400
-  ikev2_anti_dos_threshold                = 99
-  ipsec_enable_anti_replay                = false
-  ipsec_anti_replay_window_size           = 64
-  ipsec_security_association_lifetime     = 3600
-  ipsec_enable_perfect_foward_secrecy     = false
+  name                                = "Example"
+  description                         = "My Example"
+  feature_profile_id                  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  connection_type_ssl                 = false
+  any_connect_eap_authentication_type = "user"
+  ipv4_pool_size                      = 50
+  ipv6_pool_size                      = 1024
+  enable_certificate_list_check       = false
+  psk_authentication_type             = "aaa"
+  psk_authentication_pre_shared_key   = "Cisco123"
+  radius_group_name                   = "radius-1"
+  aaa_derive_name_from_peer_identity  = "MyPassword"
+  aaa_enable_accounting               = false
+  ikev2_local_ike_identity_type       = "EMAIL"
+  ikev2_local_ike_identity_value      = "abc@xyz.com"
+  ikev2_security_association_lifetime = 86400
+  ikev2_anti_dos_threshold            = 99
+  ipsec_enable_anti_replay            = false
+  ipsec_anti_replay_window_size       = 64
+  ipsec_security_association_lifetime = 3600
+  ipsec_enable_perfect_foward_secrecy = false
 }
 ```
 
@@ -53,10 +51,10 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
 
 ### Optional
 
-- `aaa_derive_name_domain` (String)
-- `aaa_derive_name_domain_variable` (String) Variable name
-- `aaa_derive_name_identity` (String)
-- `aaa_derive_name_identity_variable` (String) Variable name
+- `aaa_derive_name_from_peer_domain` (String)
+- `aaa_derive_name_from_peer_domain_variable` (String) Variable name
+- `aaa_derive_name_from_peer_identity` (String)
+- `aaa_derive_name_from_peer_identity_variable` (String) Variable name
 - `aaa_enable_accounting` (Boolean) Enable Accounting
   - Default value: `true`
 - `aaa_enable_accounting_variable` (String) Variable name
@@ -64,16 +62,11 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
 - `aaa_specify_name_policy_name_variable` (String) Variable name
 - `aaa_specify_name_policy_password` (String)
 - `aaa_specify_name_policy_password_variable` (String) Variable name
-- `any_connect_eap_profile_download_status` (String) - Choices: `NONE`, `INITIALIZED`, `INITIALIZED_ERROR`, `COMPLETE`, `COMPLETE_ERROR`
-  - Default value: `NONE`
-- `any_connect_eap_profile_download_status_variable` (String) Variable name
-- `any_connect_eap_profile_file_name` (String)
-- `any_connect_eap_profile_file_name_variable` (String) Variable name
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
   - Default value: `false`
 - `description` (String) The description of the profile parcel
-- `enable_crl_check` (Boolean) - Default value: `false`
-- `enable_crl_check_variable` (String) Variable name
+- `enable_certificate_list_check` (Boolean) - Default value: `false`
+- `enable_certificate_list_check_variable` (String) Variable name
 - `feature_profile_id` (String) Feature Profile ID
 - `ikev2_anti_dos_threshold` (Number) Anti-DOS Threshold
   - Range: `10`-`1000`

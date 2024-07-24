@@ -126,80 +126,82 @@ func (data SystemBFD) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"defaultDscp.optionType", "global")
 		body, _ = sjson.Set(body, path+"defaultDscp.value", data.DefaultDscp.ValueInt64())
 	}
-	body, _ = sjson.Set(body, path+"colors", []interface{}{})
-	for _, item := range data.Colors {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"colors", []interface{}{})
+		for _, item := range data.Colors {
+			itemBody := ""
 
-		if !item.ColorVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "color.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "color.value", item.ColorVariable.ValueString())
+			if !item.ColorVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "color.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "color.value", item.ColorVariable.ValueString())
+				}
+			} else if !item.Color.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "color.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "color.value", item.Color.ValueString())
 			}
-		} else if !item.Color.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "color.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "color.value", item.Color.ValueString())
-		}
 
-		if !item.HelloIntervalVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "helloInterval.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "helloInterval.value", item.HelloIntervalVariable.ValueString())
+			if !item.HelloIntervalVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "helloInterval.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "helloInterval.value", item.HelloIntervalVariable.ValueString())
+				}
+			} else if item.HelloInterval.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "helloInterval.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "helloInterval.value", 1000)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "helloInterval.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "helloInterval.value", item.HelloInterval.ValueInt64())
 			}
-		} else if item.HelloInterval.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "helloInterval.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "helloInterval.value", 1000)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "helloInterval.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "helloInterval.value", item.HelloInterval.ValueInt64())
-		}
 
-		if !item.MultiplierVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "multiplier.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "multiplier.value", item.MultiplierVariable.ValueString())
+			if !item.MultiplierVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "multiplier.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "multiplier.value", item.MultiplierVariable.ValueString())
+				}
+			} else if item.Multiplier.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "multiplier.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "multiplier.value", 7)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "multiplier.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "multiplier.value", item.Multiplier.ValueInt64())
 			}
-		} else if item.Multiplier.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "multiplier.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "multiplier.value", 7)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "multiplier.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "multiplier.value", item.Multiplier.ValueInt64())
-		}
 
-		if !item.PmtuDiscoveryVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.value", item.PmtuDiscoveryVariable.ValueString())
+			if !item.PmtuDiscoveryVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.value", item.PmtuDiscoveryVariable.ValueString())
+				}
+			} else if item.PmtuDiscovery.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.value", true)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.value", item.PmtuDiscovery.ValueBool())
 			}
-		} else if item.PmtuDiscovery.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.value", true)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "pmtuDiscovery.value", item.PmtuDiscovery.ValueBool())
-		}
 
-		if !item.DscpVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "dscp.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "dscp.value", item.DscpVariable.ValueString())
+			if !item.DscpVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "dscp.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "dscp.value", item.DscpVariable.ValueString())
+				}
+			} else if item.Dscp.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "dscp.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "dscp.value", 48)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "dscp.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "dscp.value", item.Dscp.ValueInt64())
 			}
-		} else if item.Dscp.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "dscp.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "dscp.value", 48)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "dscp.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "dscp.value", item.Dscp.ValueInt64())
+			body, _ = sjson.SetRaw(body, path+"colors.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"colors.-1", itemBody)
 	}
 	return body
 }

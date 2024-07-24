@@ -198,224 +198,238 @@ func (data TransportWANVPN) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6.ValueString())
 	}
-	body, _ = sjson.Set(body, path+"newHostMapping", []interface{}{})
-	for _, item := range data.NewHostMappings {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"newHostMapping", []interface{}{})
+		for _, item := range data.NewHostMappings {
+			itemBody := ""
 
-		if !item.HostNameVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostNameVariable.ValueString())
+			if !item.HostNameVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostNameVariable.ValueString())
+				}
+			} else if !item.HostName.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostName.ValueString())
 			}
-		} else if !item.HostName.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostName.ValueString())
-		}
 
-		if !item.ListOfIpAddressesVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "listOfIp.value", item.ListOfIpAddressesVariable.ValueString())
+			if !item.ListOfIpAddressesVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "listOfIp.value", item.ListOfIpAddressesVariable.ValueString())
+				}
+			} else if !item.ListOfIpAddresses.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "global")
+				var values []string
+				item.ListOfIpAddresses.ElementsAs(ctx, &values, false)
+				itemBody, _ = sjson.Set(itemBody, "listOfIp.value", values)
 			}
-		} else if !item.ListOfIpAddresses.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "global")
-			var values []string
-			item.ListOfIpAddresses.ElementsAs(ctx, &values, false)
-			itemBody, _ = sjson.Set(itemBody, "listOfIp.value", values)
+			body, _ = sjson.SetRaw(body, path+"newHostMapping.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"newHostMapping.-1", itemBody)
 	}
-	body, _ = sjson.Set(body, path+"ipv4Route", []interface{}{})
-	for _, item := range data.Ipv4StaticRoutes {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"ipv4Route", []interface{}{})
+		for _, item := range data.Ipv4StaticRoutes {
+			itemBody := ""
 
-		if !item.NetworkAddressVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddressVariable.ValueString())
-			}
-		} else if !item.NetworkAddress.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddress.ValueString())
-		}
-
-		if !item.SubnetMaskVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMaskVariable.ValueString())
-			}
-		} else if !item.SubnetMask.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMask.ValueString())
-		}
-		if item.Gateway.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "gateway.value", "nextHop")
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "gateway.value", item.Gateway.ValueString())
-		}
-		itemBody, _ = sjson.Set(itemBody, "nextHop", []interface{}{})
-		for _, childItem := range item.NextHops {
-			itemChildBody := ""
-
-			if !childItem.AddressVariable.IsNull() {
+			if !item.NetworkAddressVariable.IsNull() {
 				if true {
-					itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
-					itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddressVariable.ValueString())
 				}
-			} else if !childItem.Address.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
+			} else if !item.NetworkAddress.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddress.ValueString())
 			}
 
-			if !childItem.AdministrativeDistanceVariable.IsNull() {
+			if !item.SubnetMaskVariable.IsNull() {
 				if true {
-					itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
-					itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMaskVariable.ValueString())
 				}
-			} else if childItem.AdministrativeDistance.IsNull() {
+			} else if !item.SubnetMask.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMask.ValueString())
+			}
+			if item.Gateway.IsNull() {
 				if true {
-					itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
-					itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
+					itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "gateway.value", "nextHop")
 				}
 			} else {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
+				itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "gateway.value", item.Gateway.ValueString())
 			}
-			itemBody, _ = sjson.SetRaw(itemBody, "nextHop.-1", itemChildBody)
-		}
+			if true && item.Gateway.ValueString() == "nextHop" {
+				itemBody, _ = sjson.Set(itemBody, "nextHop", []interface{}{})
+				for _, childItem := range item.NextHops {
+					itemChildBody := ""
 
-		if !item.AdministrativeDistanceVariable.IsNull() {
-			if true && item.Gateway.ValueString() == "null0" {
-				itemBody, _ = sjson.Set(itemBody, "distance.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "distance.value", item.AdministrativeDistanceVariable.ValueString())
-			}
-		} else if item.AdministrativeDistance.IsNull() {
-			if true && item.Gateway.ValueString() == "null0" {
-				itemBody, _ = sjson.Set(itemBody, "distance.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "distance.value", 1)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "distance.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "distance.value", item.AdministrativeDistance.ValueInt64())
-		}
-		body, _ = sjson.SetRaw(body, path+"ipv4Route.-1", itemBody)
-	}
-	body, _ = sjson.Set(body, path+"ipv6Route", []interface{}{})
-	for _, item := range data.Ipv6StaticRoutes {
-		itemBody := ""
+					if !childItem.AddressVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+						}
+					} else if !childItem.Address.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
+					}
 
-		if !item.PrefixVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "prefix.value", item.PrefixVariable.ValueString())
-			}
-		} else if !item.Prefix.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
-		}
-
-		for _, childItem := range item.NextHops {
-			itemChildBody := ""
-
-			if !childItem.AddressVariable.IsNull() {
-				if true {
-					itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
-					itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+					if !childItem.AdministrativeDistanceVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+						}
+					} else if childItem.AdministrativeDistance.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
+						}
+					} else {
+						itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
+						itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "nextHop.-1", itemChildBody)
 				}
-			} else if !childItem.Address.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
 			}
 
-			if !childItem.AdministrativeDistanceVariable.IsNull() {
-				if true {
-					itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
-					itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+			if !item.AdministrativeDistanceVariable.IsNull() {
+				if true && item.Gateway.ValueString() == "null0" {
+					itemBody, _ = sjson.Set(itemBody, "distance.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "distance.value", item.AdministrativeDistanceVariable.ValueString())
 				}
-			} else if !childItem.AdministrativeDistance.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
+			} else if item.AdministrativeDistance.IsNull() {
+				if true && item.Gateway.ValueString() == "null0" {
+					itemBody, _ = sjson.Set(itemBody, "distance.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "distance.value", 1)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "distance.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "distance.value", item.AdministrativeDistance.ValueInt64())
 			}
-			itemBody, _ = sjson.SetRaw(itemBody, "oneOfIpRoute.nextHopContainer.nextHop.-1", itemChildBody)
+			body, _ = sjson.SetRaw(body, path+"ipv4Route.-1", itemBody)
 		}
-		if !item.Null0.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
-		}
-
-		if !item.NatVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
-			}
-		} else if !item.Nat.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, path+"ipv6Route.-1", itemBody)
 	}
-	body, _ = sjson.Set(body, path+"service", []interface{}{})
-	for _, item := range data.Services {
-		itemBody := ""
-		if !item.ServiceType.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "serviceType.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "serviceType.value", item.ServiceType.ValueString())
+	if true {
+		body, _ = sjson.Set(body, path+"ipv6Route", []interface{}{})
+		for _, item := range data.Ipv6StaticRoutes {
+			itemBody := ""
+
+			if !item.PrefixVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "prefix.value", item.PrefixVariable.ValueString())
+				}
+			} else if !item.Prefix.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
+			}
+			if true {
+
+				for _, childItem := range item.NextHops {
+					itemChildBody := ""
+
+					if !childItem.AddressVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+						}
+					} else if !childItem.Address.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
+						itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
+					}
+
+					if !childItem.AdministrativeDistanceVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+						}
+					} else if !childItem.AdministrativeDistance.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
+						itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "oneOfIpRoute.nextHopContainer.nextHop.-1", itemChildBody)
+				}
+			}
+			if !item.Null0.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.null0.value", item.Null0.ValueBool())
+			}
+
+			if !item.NatVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
+				}
+			} else if !item.Nat.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, path+"ipv6Route.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"service.-1", itemBody)
 	}
-	body, _ = sjson.Set(body, path+"nat64V4Pool", []interface{}{})
-	for _, item := range data.Nat64V4Pools {
-		itemBody := ""
-
-		if !item.Nat64V4PoolNameVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.value", item.Nat64V4PoolNameVariable.ValueString())
+	if true {
+		body, _ = sjson.Set(body, path+"service", []interface{}{})
+		for _, item := range data.Services {
+			itemBody := ""
+			if !item.ServiceType.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "serviceType.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "serviceType.value", item.ServiceType.ValueString())
 			}
-		} else if !item.Nat64V4PoolName.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.value", item.Nat64V4PoolName.ValueString())
+			body, _ = sjson.SetRaw(body, path+"service.-1", itemBody)
 		}
+	}
+	if true {
+		body, _ = sjson.Set(body, path+"nat64V4Pool", []interface{}{})
+		for _, item := range data.Nat64V4Pools {
+			itemBody := ""
 
-		if !item.Nat64V4PoolRangeStartVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.value", item.Nat64V4PoolRangeStartVariable.ValueString())
+			if !item.Nat64V4PoolNameVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.value", item.Nat64V4PoolNameVariable.ValueString())
+				}
+			} else if !item.Nat64V4PoolName.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolName.value", item.Nat64V4PoolName.ValueString())
 			}
-		} else if !item.Nat64V4PoolRangeStart.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.value", item.Nat64V4PoolRangeStart.ValueString())
-		}
 
-		if !item.Nat64V4PoolRangeEndVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.value", item.Nat64V4PoolRangeEndVariable.ValueString())
+			if !item.Nat64V4PoolRangeStartVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.value", item.Nat64V4PoolRangeStartVariable.ValueString())
+				}
+			} else if !item.Nat64V4PoolRangeStart.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeStart.value", item.Nat64V4PoolRangeStart.ValueString())
 			}
-		} else if !item.Nat64V4PoolRangeEnd.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.value", item.Nat64V4PoolRangeEnd.ValueString())
-		}
 
-		if !item.Nat64V4PoolOverloadVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.value", item.Nat64V4PoolOverloadVariable.ValueString())
+			if !item.Nat64V4PoolRangeEndVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.value", item.Nat64V4PoolRangeEndVariable.ValueString())
+				}
+			} else if !item.Nat64V4PoolRangeEnd.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolRangeEnd.value", item.Nat64V4PoolRangeEnd.ValueString())
 			}
-		} else if item.Nat64V4PoolOverload.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.value", false)
+
+			if !item.Nat64V4PoolOverloadVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.value", item.Nat64V4PoolOverloadVariable.ValueString())
+				}
+			} else if item.Nat64V4PoolOverload.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.value", false)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.value", item.Nat64V4PoolOverload.ValueBool())
 			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "nat64V4PoolOverload.value", item.Nat64V4PoolOverload.ValueBool())
+			body, _ = sjson.SetRaw(body, path+"nat64V4Pool.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"nat64V4Pool.-1", itemBody)
 	}
 	return body
 }

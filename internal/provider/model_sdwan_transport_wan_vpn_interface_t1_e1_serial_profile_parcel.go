@@ -818,44 +818,46 @@ func (data TransportWANVPNInterfaceT1E1Serial) toBody(ctx context.Context) strin
 		body, _ = sjson.Set(body, path+"allowService.bfd.optionType", "global")
 		body, _ = sjson.Set(body, path+"allowService.bfd.value", data.TunnelInterfaceAllowBfd.ValueBool())
 	}
-	body, _ = sjson.Set(body, path+"encapsulation", []interface{}{})
-	for _, item := range data.TunnelInterfaceEncapsulations {
-		itemBody := ""
-		if !item.Encapsulation.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encap.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "encap.value", item.Encapsulation.ValueString())
-		}
+	if true {
+		body, _ = sjson.Set(body, path+"encapsulation", []interface{}{})
+		for _, item := range data.TunnelInterfaceEncapsulations {
+			itemBody := ""
+			if !item.Encapsulation.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "encap.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "encap.value", item.Encapsulation.ValueString())
+			}
 
-		if !item.PreferenceVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "preference.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "preference.value", item.PreferenceVariable.ValueString())
-			}
-		} else if item.Preference.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "preference.optionType", "default")
+			if !item.PreferenceVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "preference.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "preference.value", item.PreferenceVariable.ValueString())
+				}
+			} else if item.Preference.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "preference.optionType", "default")
 
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "preference.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "preference.value", item.Preference.ValueInt64())
 			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "preference.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "preference.value", item.Preference.ValueInt64())
-		}
 
-		if !item.WeightVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "weight.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "weight.value", item.WeightVariable.ValueString())
+			if !item.WeightVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "weight.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "weight.value", item.WeightVariable.ValueString())
+				}
+			} else if item.Weight.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "weight.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "weight.value", 1)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "weight.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "weight.value", item.Weight.ValueInt64())
 			}
-		} else if item.Weight.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "weight.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "weight.value", 1)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "weight.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "weight.value", item.Weight.ValueInt64())
+			body, _ = sjson.SetRaw(body, path+"encapsulation.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"encapsulation.-1", itemBody)
 	}
 
 	if !data.QosShapingRateVariable.IsNull() {

@@ -243,20 +243,22 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", data.GpsSmsEnable.ValueBool())
 	}
-	body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.mobileNumber", []interface{}{})
-	for _, item := range data.GpsSmsMobileNumbers {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.mobileNumber", []interface{}{})
+		for _, item := range data.GpsSmsMobileNumbers {
+			itemBody := ""
 
-		if !item.NumberVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "number.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "number.value", item.NumberVariable.ValueString())
+			if !item.NumberVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "number.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "number.value", item.NumberVariable.ValueString())
+				}
+			} else if !item.Number.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "number.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "number.value", item.Number.ValueString())
 			}
-		} else if !item.Number.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "number.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "number.value", item.Number.ValueString())
+			body, _ = sjson.SetRaw(body, path+"gpsLocation.geoFencing.sms.mobileNumber.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"gpsLocation.geoFencing.sms.mobileNumber.-1", itemBody)
 	}
 
 	if !data.DeviceGroupsVariable.IsNull() {
@@ -596,40 +598,42 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "global")
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", data.AffinityPreferenceAuto.ValueBool())
 	}
-	body, _ = sjson.Set(body, path+"affinityPerVrf", []interface{}{})
-	for _, item := range data.AffinityPerVrfs {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"affinityPerVrf", []interface{}{})
+		for _, item := range data.AffinityPerVrfs {
+			itemBody := ""
 
-		if !item.AffinityGroupNumberVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumberVariable.ValueString())
-			}
-		} else if item.AffinityGroupNumber.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "default")
+			if !item.AffinityGroupNumberVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumberVariable.ValueString())
+				}
+			} else if item.AffinityGroupNumber.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "default")
 
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumber.ValueInt64())
 			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumber.ValueInt64())
+
+			if !item.VrfRangeVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRangeVariable.ValueString())
+				}
+			} else if item.VrfRange.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "default")
+
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRange.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, path+"affinityPerVrf.-1", itemBody)
 		}
-
-		if !item.VrfRangeVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRangeVariable.ValueString())
-			}
-		} else if item.VrfRange.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "default")
-
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRange.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, path+"affinityPerVrf.-1", itemBody)
 	}
 	return body
 }

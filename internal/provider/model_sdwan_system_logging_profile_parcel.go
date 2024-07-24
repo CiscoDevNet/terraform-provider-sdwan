@@ -159,266 +159,272 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"disk.file.diskFileRotate.optionType", "global")
 		body, _ = sjson.Set(body, path+"disk.file.diskFileRotate.value", data.DiskFileRotate.ValueInt64())
 	}
-	body, _ = sjson.Set(body, path+"tlsProfile", []interface{}{})
-	for _, item := range data.TlsProfiles {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"tlsProfile", []interface{}{})
+		for _, item := range data.TlsProfiles {
+			itemBody := ""
 
-		if !item.ProfileVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "profile.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "profile.value", item.ProfileVariable.ValueString())
+			if !item.ProfileVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "profile.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "profile.value", item.ProfileVariable.ValueString())
+				}
+			} else if !item.Profile.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "profile.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "profile.value", item.Profile.ValueString())
 			}
-		} else if !item.Profile.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "profile.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "profile.value", item.Profile.ValueString())
-		}
 
-		if !item.TlsVersionVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", item.TlsVersionVariable.ValueString())
+			if !item.TlsVersionVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", item.TlsVersionVariable.ValueString())
+				}
+			} else if item.TlsVersion.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", "TLSv1.1")
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", item.TlsVersion.ValueString())
 			}
-		} else if item.TlsVersion.IsNull() {
 			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", "TLSv1.1")
+				itemBody, _ = sjson.Set(itemBody, "authType.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "authType.value", "Server")
 			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", item.TlsVersion.ValueString())
-		}
-		if true {
-			itemBody, _ = sjson.Set(itemBody, "authType.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "authType.value", "Server")
-		}
 
-		if !item.CipherSuitesVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.value", item.CipherSuitesVariable.ValueString())
-			}
-		} else if item.CipherSuites.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "default")
+			if !item.CipherSuitesVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.value", item.CipherSuitesVariable.ValueString())
+				}
+			} else if item.CipherSuites.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "default")
 
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "global")
+				var values []string
+				item.CipherSuites.ElementsAs(ctx, &values, false)
+				itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.value", values)
 			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "global")
-			var values []string
-			item.CipherSuites.ElementsAs(ctx, &values, false)
-			itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.value", values)
+			body, _ = sjson.SetRaw(body, path+"tlsProfile.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"tlsProfile.-1", itemBody)
 	}
-	body, _ = sjson.Set(body, path+"server", []interface{}{})
-	for _, item := range data.Ipv4Servers {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"server", []interface{}{})
+		for _, item := range data.Ipv4Servers {
+			itemBody := ""
 
-		if !item.HostnameIpVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpVariable.ValueString())
+			if !item.HostnameIpVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpVariable.ValueString())
+				}
+			} else if !item.HostnameIp.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
 			}
-		} else if !item.HostnameIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
+
+			if !item.VpnVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
+				}
+			} else if item.Vpn.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+			}
+
+			if !item.SourceInterfaceVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
+				}
+			} else if item.SourceInterface.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
+
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+			}
+
+			if !item.PriorityVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "priority.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "priority.value", item.PriorityVariable.ValueString())
+				}
+			} else if item.Priority.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "priority.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "priority.value", "informational")
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
+			}
+
+			if !item.TlsEnableVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnableVariable.ValueString())
+				}
+			} else if item.TlsEnable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", false)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
+			}
+
+			if !item.TlsPropertiesCustomProfileVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfileVariable.ValueString())
+				}
+			} else if item.TlsPropertiesCustomProfile.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", false)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
+			}
+
+			if !item.TlsPropertiesProfileVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfileVariable.ValueString())
+				}
+			} else if item.TlsPropertiesProfile.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "default")
+
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, path+"server.-1", itemBody)
 		}
-
-		if !item.VpnVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
-			}
-		} else if item.Vpn.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
-		}
-
-		if !item.SourceInterfaceVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-			}
-		} else if item.SourceInterface.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
-
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
-		}
-
-		if !item.PriorityVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "priority.value", item.PriorityVariable.ValueString())
-			}
-		} else if item.Priority.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "priority.value", "informational")
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
-		}
-
-		if !item.TlsEnableVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnableVariable.ValueString())
-			}
-		} else if item.TlsEnable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", false)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
-		}
-
-		if !item.TlsPropertiesCustomProfileVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfileVariable.ValueString())
-			}
-		} else if item.TlsPropertiesCustomProfile.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", false)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
-		}
-
-		if !item.TlsPropertiesProfileVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfileVariable.ValueString())
-			}
-		} else if item.TlsPropertiesProfile.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "default")
-
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, path+"server.-1", itemBody)
 	}
-	body, _ = sjson.Set(body, path+"ipv6Server", []interface{}{})
-	for _, item := range data.Ipv6Servers {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"ipv6Server", []interface{}{})
+		for _, item := range data.Ipv6Servers {
+			itemBody := ""
 
-		if !item.HostnameIpVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpVariable.ValueString())
+			if !item.HostnameIpVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpVariable.ValueString())
+				}
+			} else if !item.HostnameIp.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
 			}
-		} else if !item.HostnameIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
+
+			if !item.VpnVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
+				}
+			} else if item.Vpn.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+			}
+
+			if !item.SourceInterfaceVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
+				}
+			} else if item.SourceInterface.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
+
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+			}
+
+			if !item.PriorityVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "priority.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "priority.value", item.PriorityVariable.ValueString())
+				}
+			} else if item.Priority.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "priority.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "priority.value", "informational")
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
+			}
+
+			if !item.TlsEnableVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnableVariable.ValueString())
+				}
+			} else if item.TlsEnable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", false)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
+			}
+
+			if !item.TlsPropertiesCustomProfileVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfileVariable.ValueString())
+				}
+			} else if item.TlsPropertiesCustomProfile.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", false)
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
+			}
+
+			if !item.TlsPropertiesProfileVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfileVariable.ValueString())
+				}
+			} else if item.TlsPropertiesProfile.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "default")
+
+				}
+			} else {
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
+			}
+			body, _ = sjson.SetRaw(body, path+"ipv6Server.-1", itemBody)
 		}
-
-		if !item.VpnVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
-			}
-		} else if item.Vpn.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
-		}
-
-		if !item.SourceInterfaceVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-			}
-		} else if item.SourceInterface.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
-
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
-		}
-
-		if !item.PriorityVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "priority.value", item.PriorityVariable.ValueString())
-			}
-		} else if item.Priority.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "priority.value", "informational")
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
-		}
-
-		if !item.TlsEnableVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnableVariable.ValueString())
-			}
-		} else if item.TlsEnable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", false)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
-		}
-
-		if !item.TlsPropertiesCustomProfileVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfileVariable.ValueString())
-			}
-		} else if item.TlsPropertiesCustomProfile.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "default")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", false)
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
-		}
-
-		if !item.TlsPropertiesProfileVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfileVariable.ValueString())
-			}
-		} else if item.TlsPropertiesProfile.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "default")
-
-			}
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, path+"ipv6Server.-1", itemBody)
 	}
 	return body
 }

@@ -81,3 +81,4 @@ attribute:
 conditional_attribute:
   name: str() # Reference to other attribute
   value: str() # Attribute value
+  types: str()

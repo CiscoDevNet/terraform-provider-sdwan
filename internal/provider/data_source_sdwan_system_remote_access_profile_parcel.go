@@ -86,22 +86,6 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"any_connect_eap_profile_download_status": schema.StringAttribute{
-				MarkdownDescription: "",
-				Computed:            true,
-			},
-			"any_connect_eap_profile_download_status_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
-			"any_connect_eap_profile_file_name": schema.StringAttribute{
-				MarkdownDescription: "",
-				Computed:            true,
-			},
-			"any_connect_eap_profile_file_name_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Computed:            true,
-			},
 			"ipv4_pool_size": schema.Int64Attribute{
 				MarkdownDescription: "IPv4 Pool Size",
 				Computed:            true,
@@ -118,11 +102,11 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"enable_crl_check": schema.BoolAttribute{
+			"enable_certificate_list_check": schema.BoolAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"enable_crl_check_variable": schema.StringAttribute{
+			"enable_certificate_list_check_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -166,19 +150,19 @@ func (d *SystemRemoteAccessProfileParcelDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"aaa_derive_name_identity": schema.StringAttribute{
+			"aaa_derive_name_from_peer_identity": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"aaa_derive_name_identity_variable": schema.StringAttribute{
+			"aaa_derive_name_from_peer_identity_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"aaa_derive_name_domain": schema.StringAttribute{
+			"aaa_derive_name_from_peer_domain": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"aaa_derive_name_domain_variable": schema.StringAttribute{
+			"aaa_derive_name_from_peer_domain_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

@@ -194,30 +194,32 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpAddress.static.staticIpV4AddressPrimary.subnetMask.value", data.Ipv4SubnetMask.ValueString())
 	}
+	if true {
 
-	for _, item := range data.Ipv4SecondaryAddresses {
-		itemBody := ""
+		for _, item := range data.Ipv4SecondaryAddresses {
+			itemBody := ""
 
-		if !item.AddressVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.AddressVariable.ValueString())
+			if !item.AddressVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.AddressVariable.ValueString())
+				}
+			} else if !item.Address.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.Address.ValueString())
 			}
-		} else if !item.Address.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.Address.ValueString())
-		}
 
-		if !item.SubnetMaskVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMaskVariable.ValueString())
+			if !item.SubnetMaskVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMaskVariable.ValueString())
+				}
+			} else if !item.SubnetMask.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMask.ValueString())
 			}
-		} else if !item.SubnetMask.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "subnetMask.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "subnetMask.value", item.SubnetMask.ValueString())
+			body, _ = sjson.SetRaw(body, path+"intfIpAddress.static.staticIpV4AddressSecondary.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"intfIpAddress.static.staticIpV4AddressSecondary.-1", itemBody)
 	}
 
 	if !data.Ipv4DhcpHelperVariable.IsNull() {
@@ -280,30 +282,32 @@ func (data TransportManagementVPNInterfaceEthernet) toBody(ctx context.Context) 
 		body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.optionType", "global")
 		body, _ = sjson.Set(body, path+"intfIpV6Address.static.primaryIpV6Address.address.value", data.Ipv6Address.ValueString())
 	}
-	body, _ = sjson.Set(body, path+"arp", []interface{}{})
-	for _, item := range data.ArpEntries {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"arp", []interface{}{})
+		for _, item := range data.ArpEntries {
+			itemBody := ""
 
-		if !item.IpAddressVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddressVariable.ValueString())
+			if !item.IpAddressVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddressVariable.ValueString())
+				}
+			} else if !item.IpAddress.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddress.ValueString())
 			}
-		} else if !item.IpAddress.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipAddress.value", item.IpAddress.ValueString())
-		}
 
-		if !item.MacAddressVariable.IsNull() {
-			if true {
-				itemBody, _ = sjson.Set(itemBody, "macAddress.optionType", "variable")
-				itemBody, _ = sjson.Set(itemBody, "macAddress.value", item.MacAddressVariable.ValueString())
+			if !item.MacAddressVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "macAddress.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "macAddress.value", item.MacAddressVariable.ValueString())
+				}
+			} else if !item.MacAddress.IsNull() {
+				itemBody, _ = sjson.Set(itemBody, "macAddress.optionType", "global")
+				itemBody, _ = sjson.Set(itemBody, "macAddress.value", item.MacAddress.ValueString())
 			}
-		} else if !item.MacAddress.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "macAddress.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "macAddress.value", item.MacAddress.ValueString())
+			body, _ = sjson.SetRaw(body, path+"arp.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"arp.-1", itemBody)
 	}
 
 	if !data.DuplexVariable.IsNull() {
