@@ -720,6 +720,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
 
+	if attr.ConditionalAttribute.Name != "" {
+		attr.ConditionalAttribute.Name = SnakeCase(attr.ConditionalAttribute.Name)
+	}
+
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
 		noGlobal := false
 

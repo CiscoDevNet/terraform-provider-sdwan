@@ -114,52 +114,70 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.RekeyVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"rekey.optionType", "variable")
-		body, _ = sjson.Set(body, path+"rekey.value", data.RekeyVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"rekey.optionType", "variable")
+			body, _ = sjson.Set(body, path+"rekey.value", data.RekeyVariable.ValueString())
+		}
 	} else if data.Rekey.IsNull() {
-		body, _ = sjson.Set(body, path+"rekey.optionType", "default")
-		body, _ = sjson.Set(body, path+"rekey.value", 86400)
+		if true {
+			body, _ = sjson.Set(body, path+"rekey.optionType", "default")
+			body, _ = sjson.Set(body, path+"rekey.value", 86400)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"rekey.optionType", "global")
 		body, _ = sjson.Set(body, path+"rekey.value", data.Rekey.ValueInt64())
 	}
 
 	if !data.AntiReplayWindowVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"replayWindow.optionType", "variable")
-		body, _ = sjson.Set(body, path+"replayWindow.value", data.AntiReplayWindowVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"replayWindow.optionType", "variable")
+			body, _ = sjson.Set(body, path+"replayWindow.value", data.AntiReplayWindowVariable.ValueString())
+		}
 	} else if data.AntiReplayWindow.IsNull() {
-		body, _ = sjson.Set(body, path+"replayWindow.optionType", "default")
-		body, _ = sjson.Set(body, path+"replayWindow.value", "512")
+		if true {
+			body, _ = sjson.Set(body, path+"replayWindow.optionType", "default")
+			body, _ = sjson.Set(body, path+"replayWindow.value", "512")
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"replayWindow.optionType", "global")
 		body, _ = sjson.Set(body, path+"replayWindow.value", data.AntiReplayWindow.ValueString())
 	}
 
 	if !data.ExtendedAntiReplayWindowVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "variable")
-		body, _ = sjson.Set(body, path+"extendedArWindow.value", data.ExtendedAntiReplayWindowVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "variable")
+			body, _ = sjson.Set(body, path+"extendedArWindow.value", data.ExtendedAntiReplayWindowVariable.ValueString())
+		}
 	} else if data.ExtendedAntiReplayWindow.IsNull() {
-		body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "default")
-		body, _ = sjson.Set(body, path+"extendedArWindow.value", 256)
+		if true {
+			body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "default")
+			body, _ = sjson.Set(body, path+"extendedArWindow.value", 256)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"extendedArWindow.optionType", "global")
 		body, _ = sjson.Set(body, path+"extendedArWindow.value", data.ExtendedAntiReplayWindow.ValueInt64())
 	}
 
 	if !data.IpsecPairwiseKeyingVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"pairwiseKeying.optionType", "variable")
-		body, _ = sjson.Set(body, path+"pairwiseKeying.value", data.IpsecPairwiseKeyingVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"pairwiseKeying.optionType", "variable")
+			body, _ = sjson.Set(body, path+"pairwiseKeying.value", data.IpsecPairwiseKeyingVariable.ValueString())
+		}
 	} else if data.IpsecPairwiseKeying.IsNull() {
-		body, _ = sjson.Set(body, path+"pairwiseKeying.optionType", "default")
-		body, _ = sjson.Set(body, path+"pairwiseKeying.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"pairwiseKeying.optionType", "default")
+			body, _ = sjson.Set(body, path+"pairwiseKeying.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"pairwiseKeying.optionType", "global")
 		body, _ = sjson.Set(body, path+"pairwiseKeying.value", data.IpsecPairwiseKeying.ValueBool())
 	}
 
 	if !data.IntegrityTypeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"integrityType.optionType", "variable")
-		body, _ = sjson.Set(body, path+"integrityType.value", data.IntegrityTypeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"integrityType.optionType", "variable")
+			body, _ = sjson.Set(body, path+"integrityType.value", data.IntegrityTypeVariable.ValueString())
+		}
 	} else if !data.IntegrityType.IsNull() {
 		body, _ = sjson.Set(body, path+"integrityType.optionType", "global")
 		var values []string
@@ -192,38 +210,50 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 		}
 
 		if !item.SendIdVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sendId.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "sendId.value", item.SendIdVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sendId.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "sendId.value", item.SendIdVariable.ValueString())
+			}
 		} else if !item.SendId.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sendId.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sendId.value", item.SendId.ValueInt64())
 		}
 
 		if !item.ReceiverIdVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "recvId.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "recvId.value", item.ReceiverIdVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "recvId.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "recvId.value", item.ReceiverIdVariable.ValueString())
+			}
 		} else if !item.ReceiverId.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "recvId.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "recvId.value", item.ReceiverId.ValueInt64())
 		}
 
 		if !item.IncludeTcpOptionsVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.value", item.IncludeTcpOptionsVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.value", item.IncludeTcpOptionsVariable.ValueString())
+			}
 		} else if item.IncludeTcpOptions.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.value", false)
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.value", false)
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "includeTcpOptions.value", item.IncludeTcpOptions.ValueBool())
 		}
 
 		if !item.AcceptAoMismatchVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.value", item.AcceptAoMismatchVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.value", item.AcceptAoMismatchVariable.ValueString())
+			}
 		} else if item.AcceptAoMismatch.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.value", false)
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.value", false)
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "acceptAoMismatch.value", item.AcceptAoMismatch.ValueBool())
@@ -234,19 +264,25 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 		}
 
 		if !item.KeyStringVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "keyString.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "keyString.value", item.KeyStringVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "keyString.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "keyString.value", item.KeyStringVariable.ValueString())
+			}
 		} else if !item.KeyString.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "keyString.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "keyString.value", item.KeyString.ValueString())
 		}
 
 		if !item.SendLifeTimeLocalVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.value", item.SendLifeTimeLocalVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.value", item.SendLifeTimeLocalVariable.ValueString())
+			}
 		} else if item.SendLifeTimeLocal.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.value", false)
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.value", false)
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.local.value", item.SendLifeTimeLocal.ValueBool())
@@ -257,16 +293,20 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 		}
 
 		if !item.SendLifeTimeInfiniteVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.value", item.SendLifeTimeInfiniteVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.value", item.SendLifeTimeInfiniteVariable.ValueString())
+			}
 		} else if !item.SendLifeTimeInfinite.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.infinite.value", item.SendLifeTimeInfinite.ValueBool())
 		}
 
 		if !item.SendLifeTimeDurationVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.value", item.SendLifeTimeDurationVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.value", item.SendLifeTimeDurationVariable.ValueString())
+			}
 		} else if !item.SendLifeTimeDuration.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "sendLifetime.oneOfendChoice.duration.value", item.SendLifeTimeDuration.ValueInt64())
@@ -277,11 +317,15 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 		}
 
 		if !item.AcceptLifeTimeLocalVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.value", item.AcceptLifeTimeLocalVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.value", item.AcceptLifeTimeLocalVariable.ValueString())
+			}
 		} else if item.AcceptLifeTimeLocal.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.value", false)
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.value", false)
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.local.value", item.AcceptLifeTimeLocal.ValueBool())
@@ -292,16 +336,20 @@ func (data SystemSecurity) toBody(ctx context.Context) string {
 		}
 
 		if !item.AcceptLifeTimeInfiniteVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.value", item.AcceptLifeTimeInfiniteVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.value", item.AcceptLifeTimeInfiniteVariable.ValueString())
+			}
 		} else if !item.AcceptLifeTimeInfinite.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.infinite.value", item.AcceptLifeTimeInfinite.ValueBool())
 		}
 
 		if !item.AcceptLifeTimeDurationVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.value", item.AcceptLifeTimeDurationVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.value", item.AcceptLifeTimeDurationVariable.ValueString())
+			}
 		} else if !item.AcceptLifeTimeDuration.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "acceptLifetime.oneOfendChoice.duration.value", item.AcceptLifeTimeDuration.ValueInt64())

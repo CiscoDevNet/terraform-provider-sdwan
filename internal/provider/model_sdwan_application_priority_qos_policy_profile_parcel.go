@@ -75,8 +75,10 @@ func (data ApplicationPriorityQoSPolicy) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.TargetInterfaceVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"target.interfaces.optionType", "variable")
-		body, _ = sjson.Set(body, path+"target.interfaces.value", data.TargetInterfaceVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"target.interfaces.optionType", "variable")
+			body, _ = sjson.Set(body, path+"target.interfaces.value", data.TargetInterfaceVariable.ValueString())
+		}
 	} else if !data.TargetInterface.IsNull() {
 		body, _ = sjson.Set(body, path+"target.interfaces.optionType", "global")
 		var values []string

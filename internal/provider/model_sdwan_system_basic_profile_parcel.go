@@ -137,80 +137,108 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.TimezoneVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"clock.timezone.optionType", "variable")
-		body, _ = sjson.Set(body, path+"clock.timezone.value", data.TimezoneVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"clock.timezone.optionType", "variable")
+			body, _ = sjson.Set(body, path+"clock.timezone.value", data.TimezoneVariable.ValueString())
+		}
 	} else if data.Timezone.IsNull() {
-		body, _ = sjson.Set(body, path+"clock.timezone.optionType", "default")
-		body, _ = sjson.Set(body, path+"clock.timezone.value", "UTC")
+		if true {
+			body, _ = sjson.Set(body, path+"clock.timezone.optionType", "default")
+			body, _ = sjson.Set(body, path+"clock.timezone.value", "UTC")
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"clock.timezone.optionType", "global")
 		body, _ = sjson.Set(body, path+"clock.timezone.value", data.Timezone.ValueString())
 	}
 
 	if !data.ConfigDescriptionVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"description.optionType", "variable")
-		body, _ = sjson.Set(body, path+"description.value", data.ConfigDescriptionVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"description.optionType", "variable")
+			body, _ = sjson.Set(body, path+"description.value", data.ConfigDescriptionVariable.ValueString())
+		}
 	} else if data.ConfigDescription.IsNull() {
-		body, _ = sjson.Set(body, path+"description.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"description.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"description.optionType", "global")
 		body, _ = sjson.Set(body, path+"description.value", data.ConfigDescription.ValueString())
 	}
 
 	if !data.LocationVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"location.optionType", "variable")
-		body, _ = sjson.Set(body, path+"location.value", data.LocationVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"location.optionType", "variable")
+			body, _ = sjson.Set(body, path+"location.value", data.LocationVariable.ValueString())
+		}
 	} else if data.Location.IsNull() {
-		body, _ = sjson.Set(body, path+"location.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"location.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"location.optionType", "global")
 		body, _ = sjson.Set(body, path+"location.value", data.Location.ValueString())
 	}
 
 	if !data.GpsLongitudeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitudeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "variable")
+			body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitudeVariable.ValueString())
+		}
 	} else if data.GpsLongitude.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.longitude.value", data.GpsLongitude.ValueFloat64())
 	}
 
 	if !data.GpsLatitudeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitudeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "variable")
+			body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitudeVariable.ValueString())
+		}
 	} else if data.GpsLatitude.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.latitude.value", data.GpsLatitude.ValueFloat64())
 	}
 	if data.GpsGeoFencingEnable.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.optionType", "default")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.optionType", "default")
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.enable.value", data.GpsGeoFencingEnable.ValueBool())
 	}
 
 	if !data.GpsGeoFencingRangeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.GpsGeoFencingRangeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "variable")
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.GpsGeoFencingRangeVariable.ValueString())
+		}
 	} else if data.GpsGeoFencingRange.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "default")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", 100)
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "default")
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", 100)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.range.value", data.GpsGeoFencingRange.ValueInt64())
 	}
 	if data.GpsSmsEnable.IsNull() {
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "default")
-		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "default")
+			body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.optionType", "global")
 		body, _ = sjson.Set(body, path+"gpsLocation.geoFencing.sms.enable.value", data.GpsSmsEnable.ValueBool())
@@ -220,8 +248,10 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		itemBody := ""
 
 		if !item.NumberVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "number.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "number.value", item.NumberVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "number.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "number.value", item.NumberVariable.ValueString())
+			}
 		} else if !item.Number.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "number.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "number.value", item.Number.ValueString())
@@ -230,11 +260,15 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	}
 
 	if !data.DeviceGroupsVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"deviceGroups.optionType", "variable")
-		body, _ = sjson.Set(body, path+"deviceGroups.value", data.DeviceGroupsVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"deviceGroups.optionType", "variable")
+			body, _ = sjson.Set(body, path+"deviceGroups.value", data.DeviceGroupsVariable.ValueString())
+		}
 	} else if data.DeviceGroups.IsNull() {
-		body, _ = sjson.Set(body, path+"deviceGroups.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"deviceGroups.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"deviceGroups.optionType", "global")
 		var values []string
@@ -243,11 +277,15 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	}
 
 	if !data.ControllerGroupsVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "variable")
-		body, _ = sjson.Set(body, path+"controllerGroupList.value", data.ControllerGroupsVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "variable")
+			body, _ = sjson.Set(body, path+"controllerGroupList.value", data.ControllerGroupsVariable.ValueString())
+		}
 	} else if data.ControllerGroups.IsNull() {
-		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"controllerGroupList.optionType", "global")
 		var values []int64
@@ -256,187 +294,255 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	}
 
 	if !data.OverlayIdVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"overlayId.optionType", "variable")
-		body, _ = sjson.Set(body, path+"overlayId.value", data.OverlayIdVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"overlayId.optionType", "variable")
+			body, _ = sjson.Set(body, path+"overlayId.value", data.OverlayIdVariable.ValueString())
+		}
 	} else if data.OverlayId.IsNull() {
-		body, _ = sjson.Set(body, path+"overlayId.optionType", "default")
-		body, _ = sjson.Set(body, path+"overlayId.value", 1)
+		if true {
+			body, _ = sjson.Set(body, path+"overlayId.optionType", "default")
+			body, _ = sjson.Set(body, path+"overlayId.value", 1)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"overlayId.optionType", "global")
 		body, _ = sjson.Set(body, path+"overlayId.value", data.OverlayId.ValueInt64())
 	}
 
 	if !data.PortOffsetVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"portOffset.optionType", "variable")
-		body, _ = sjson.Set(body, path+"portOffset.value", data.PortOffsetVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"portOffset.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portOffset.value", data.PortOffsetVariable.ValueString())
+		}
 	} else if data.PortOffset.IsNull() {
-		body, _ = sjson.Set(body, path+"portOffset.optionType", "default")
-		body, _ = sjson.Set(body, path+"portOffset.value", 0)
+		if true {
+			body, _ = sjson.Set(body, path+"portOffset.optionType", "default")
+			body, _ = sjson.Set(body, path+"portOffset.value", 0)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"portOffset.optionType", "global")
 		body, _ = sjson.Set(body, path+"portOffset.value", data.PortOffset.ValueInt64())
 	}
 
 	if !data.PortHoppingVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"portHop.optionType", "variable")
-		body, _ = sjson.Set(body, path+"portHop.value", data.PortHoppingVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"portHop.optionType", "variable")
+			body, _ = sjson.Set(body, path+"portHop.value", data.PortHoppingVariable.ValueString())
+		}
 	} else if data.PortHopping.IsNull() {
-		body, _ = sjson.Set(body, path+"portHop.optionType", "default")
-		body, _ = sjson.Set(body, path+"portHop.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"portHop.optionType", "default")
+			body, _ = sjson.Set(body, path+"portHop.value", true)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"portHop.optionType", "global")
 		body, _ = sjson.Set(body, path+"portHop.value", data.PortHopping.ValueBool())
 	}
 
 	if !data.ControlSessionPpsVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"controlSessionPps.optionType", "variable")
-		body, _ = sjson.Set(body, path+"controlSessionPps.value", data.ControlSessionPpsVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"controlSessionPps.optionType", "variable")
+			body, _ = sjson.Set(body, path+"controlSessionPps.value", data.ControlSessionPpsVariable.ValueString())
+		}
 	} else if data.ControlSessionPps.IsNull() {
-		body, _ = sjson.Set(body, path+"controlSessionPps.optionType", "default")
-		body, _ = sjson.Set(body, path+"controlSessionPps.value", 300)
+		if true {
+			body, _ = sjson.Set(body, path+"controlSessionPps.optionType", "default")
+			body, _ = sjson.Set(body, path+"controlSessionPps.value", 300)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"controlSessionPps.optionType", "global")
 		body, _ = sjson.Set(body, path+"controlSessionPps.value", data.ControlSessionPps.ValueInt64())
 	}
 
 	if !data.TrackTransportVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"trackTransport.optionType", "variable")
-		body, _ = sjson.Set(body, path+"trackTransport.value", data.TrackTransportVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackTransport.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trackTransport.value", data.TrackTransportVariable.ValueString())
+		}
 	} else if data.TrackTransport.IsNull() {
-		body, _ = sjson.Set(body, path+"trackTransport.optionType", "default")
-		body, _ = sjson.Set(body, path+"trackTransport.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"trackTransport.optionType", "default")
+			body, _ = sjson.Set(body, path+"trackTransport.value", true)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"trackTransport.optionType", "global")
 		body, _ = sjson.Set(body, path+"trackTransport.value", data.TrackTransport.ValueBool())
 	}
 
 	if !data.TrackInterfaceTagVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "variable")
-		body, _ = sjson.Set(body, path+"trackInterfaceTag.value", data.TrackInterfaceTagVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trackInterfaceTag.value", data.TrackInterfaceTagVariable.ValueString())
+		}
 	} else if data.TrackInterfaceTag.IsNull() {
-		body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"trackInterfaceTag.optionType", "global")
 		body, _ = sjson.Set(body, path+"trackInterfaceTag.value", data.TrackInterfaceTag.ValueInt64())
 	}
 
 	if !data.ConsoleBaudRateVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"consoleBaudRate.optionType", "variable")
-		body, _ = sjson.Set(body, path+"consoleBaudRate.value", data.ConsoleBaudRateVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"consoleBaudRate.optionType", "variable")
+			body, _ = sjson.Set(body, path+"consoleBaudRate.value", data.ConsoleBaudRateVariable.ValueString())
+		}
 	} else if data.ConsoleBaudRate.IsNull() {
-		body, _ = sjson.Set(body, path+"consoleBaudRate.optionType", "default")
-		body, _ = sjson.Set(body, path+"consoleBaudRate.value", "9600")
+		if true {
+			body, _ = sjson.Set(body, path+"consoleBaudRate.optionType", "default")
+			body, _ = sjson.Set(body, path+"consoleBaudRate.value", "9600")
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"consoleBaudRate.optionType", "global")
 		body, _ = sjson.Set(body, path+"consoleBaudRate.value", data.ConsoleBaudRate.ValueString())
 	}
 
 	if !data.MaxOmpSessionsVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "variable")
-		body, _ = sjson.Set(body, path+"maxOmpSessions.value", data.MaxOmpSessionsVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "variable")
+			body, _ = sjson.Set(body, path+"maxOmpSessions.value", data.MaxOmpSessionsVariable.ValueString())
+		}
 	} else if data.MaxOmpSessions.IsNull() {
-		body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"maxOmpSessions.optionType", "global")
 		body, _ = sjson.Set(body, path+"maxOmpSessions.value", data.MaxOmpSessions.ValueInt64())
 	}
 
 	if !data.MultiTenantVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"multiTenant.optionType", "variable")
-		body, _ = sjson.Set(body, path+"multiTenant.value", data.MultiTenantVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"multiTenant.optionType", "variable")
+			body, _ = sjson.Set(body, path+"multiTenant.value", data.MultiTenantVariable.ValueString())
+		}
 	} else if data.MultiTenant.IsNull() {
-		body, _ = sjson.Set(body, path+"multiTenant.optionType", "default")
-		body, _ = sjson.Set(body, path+"multiTenant.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"multiTenant.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiTenant.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"multiTenant.optionType", "global")
 		body, _ = sjson.Set(body, path+"multiTenant.value", data.MultiTenant.ValueBool())
 	}
 
 	if !data.TrackDefaultGatewayVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"trackDefaultGateway.optionType", "variable")
-		body, _ = sjson.Set(body, path+"trackDefaultGateway.value", data.TrackDefaultGatewayVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackDefaultGateway.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trackDefaultGateway.value", data.TrackDefaultGatewayVariable.ValueString())
+		}
 	} else if data.TrackDefaultGateway.IsNull() {
-		body, _ = sjson.Set(body, path+"trackDefaultGateway.optionType", "default")
-		body, _ = sjson.Set(body, path+"trackDefaultGateway.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"trackDefaultGateway.optionType", "default")
+			body, _ = sjson.Set(body, path+"trackDefaultGateway.value", true)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"trackDefaultGateway.optionType", "global")
 		body, _ = sjson.Set(body, path+"trackDefaultGateway.value", data.TrackDefaultGateway.ValueBool())
 	}
 
 	if !data.AdminTechOnFailureVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"adminTechOnFailure.optionType", "variable")
-		body, _ = sjson.Set(body, path+"adminTechOnFailure.value", data.AdminTechOnFailureVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"adminTechOnFailure.optionType", "variable")
+			body, _ = sjson.Set(body, path+"adminTechOnFailure.value", data.AdminTechOnFailureVariable.ValueString())
+		}
 	} else if data.AdminTechOnFailure.IsNull() {
-		body, _ = sjson.Set(body, path+"adminTechOnFailure.optionType", "default")
-		body, _ = sjson.Set(body, path+"adminTechOnFailure.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"adminTechOnFailure.optionType", "default")
+			body, _ = sjson.Set(body, path+"adminTechOnFailure.value", true)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"adminTechOnFailure.optionType", "global")
 		body, _ = sjson.Set(body, path+"adminTechOnFailure.value", data.AdminTechOnFailure.ValueBool())
 	}
 
 	if !data.IdleTimeoutVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"idleTimeout.optionType", "variable")
-		body, _ = sjson.Set(body, path+"idleTimeout.value", data.IdleTimeoutVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"idleTimeout.optionType", "variable")
+			body, _ = sjson.Set(body, path+"idleTimeout.value", data.IdleTimeoutVariable.ValueString())
+		}
 	} else if data.IdleTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"idleTimeout.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"idleTimeout.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"idleTimeout.optionType", "global")
 		body, _ = sjson.Set(body, path+"idleTimeout.value", data.IdleTimeout.ValueInt64())
 	}
 
 	if !data.OnDemandEnableVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.optionType", "variable")
-		body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.value", data.OnDemandEnableVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.optionType", "variable")
+			body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.value", data.OnDemandEnableVariable.ValueString())
+		}
 	} else if data.OnDemandEnable.IsNull() {
-		body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.optionType", "default")
-		body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.optionType", "default")
+			body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.optionType", "global")
 		body, _ = sjson.Set(body, path+"onDemand.onDemandEnable.value", data.OnDemandEnable.ValueBool())
 	}
 
 	if !data.OnDemandIdleTimeoutVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.optionType", "variable")
-		body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.value", data.OnDemandIdleTimeoutVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.optionType", "variable")
+			body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.value", data.OnDemandIdleTimeoutVariable.ValueString())
+		}
 	} else if data.OnDemandIdleTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.optionType", "default")
-		body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.value", 10)
+		if true {
+			body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.optionType", "default")
+			body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.value", 10)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.optionType", "global")
 		body, _ = sjson.Set(body, path+"onDemand.onDemandIdleTimeout.value", data.OnDemandIdleTimeout.ValueInt64())
 	}
 
 	if !data.TransportGatewayVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"transportGateway.optionType", "variable")
-		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGatewayVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"transportGateway.optionType", "variable")
+			body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGatewayVariable.ValueString())
+		}
 	} else if data.TransportGateway.IsNull() {
-		body, _ = sjson.Set(body, path+"transportGateway.optionType", "default")
-		body, _ = sjson.Set(body, path+"transportGateway.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"transportGateway.optionType", "default")
+			body, _ = sjson.Set(body, path+"transportGateway.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"transportGateway.optionType", "global")
 		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueBool())
 	}
 
 	if !data.EnhancedAppAwareRoutingVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"epfr.optionType", "variable")
-		body, _ = sjson.Set(body, path+"epfr.value", data.EnhancedAppAwareRoutingVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"epfr.optionType", "variable")
+			body, _ = sjson.Set(body, path+"epfr.value", data.EnhancedAppAwareRoutingVariable.ValueString())
+		}
 	} else if data.EnhancedAppAwareRouting.IsNull() {
-		body, _ = sjson.Set(body, path+"epfr.optionType", "default")
-		body, _ = sjson.Set(body, path+"epfr.value", "disabled")
+		if true {
+			body, _ = sjson.Set(body, path+"epfr.optionType", "default")
+			body, _ = sjson.Set(body, path+"epfr.value", "disabled")
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"epfr.optionType", "global")
 		body, _ = sjson.Set(body, path+"epfr.value", data.EnhancedAppAwareRouting.ValueString())
 	}
 
 	if !data.SiteTypesVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"siteType.optionType", "variable")
-		body, _ = sjson.Set(body, path+"siteType.value", data.SiteTypesVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"siteType.optionType", "variable")
+			body, _ = sjson.Set(body, path+"siteType.value", data.SiteTypesVariable.ValueString())
+		}
 	} else if data.SiteTypes.IsNull() {
-		body, _ = sjson.Set(body, path+"siteType.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"siteType.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"siteType.optionType", "global")
 		var values []string
@@ -445,22 +551,30 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	}
 
 	if !data.AffinityGroupNumberVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "variable")
-		body, _ = sjson.Set(body, path+"affinityGroupNumber.value", data.AffinityGroupNumberVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "variable")
+			body, _ = sjson.Set(body, path+"affinityGroupNumber.value", data.AffinityGroupNumberVariable.ValueString())
+		}
 	} else if data.AffinityGroupNumber.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"affinityGroupNumber.optionType", "global")
 		body, _ = sjson.Set(body, path+"affinityGroupNumber.value", data.AffinityGroupNumber.ValueInt64())
 	}
 
 	if !data.AffinityGroupPreferencesVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "variable")
-		body, _ = sjson.Set(body, path+"affinityGroupPreference.value", data.AffinityGroupPreferencesVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "variable")
+			body, _ = sjson.Set(body, path+"affinityGroupPreference.value", data.AffinityGroupPreferencesVariable.ValueString())
+		}
 	} else if data.AffinityGroupPreferences.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"affinityGroupPreference.optionType", "global")
 		var values []int64
@@ -469,11 +583,15 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 	}
 
 	if !data.AffinityPreferenceAutoVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "variable")
-		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", data.AffinityPreferenceAutoVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "variable")
+			body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", data.AffinityPreferenceAutoVariable.ValueString())
+		}
 	} else if data.AffinityPreferenceAuto.IsNull() {
-		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "default")
-		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "default")
+			body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.optionType", "global")
 		body, _ = sjson.Set(body, path+"affinityPreferenceAuto.value", data.AffinityPreferenceAuto.ValueBool())
@@ -483,22 +601,30 @@ func (data SystemBasic) toBody(ctx context.Context) string {
 		itemBody := ""
 
 		if !item.AffinityGroupNumberVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumberVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumberVariable.ValueString())
+			}
 		} else if item.AffinityGroupNumber.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "default")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "default")
 
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "affinityGroupNumber.value", item.AffinityGroupNumber.ValueInt64())
 		}
 
 		if !item.VrfRangeVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRangeVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRangeVariable.ValueString())
+			}
 		} else if item.VrfRange.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "default")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "default")
 
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "vrfRange.value", item.VrfRange.ValueString())

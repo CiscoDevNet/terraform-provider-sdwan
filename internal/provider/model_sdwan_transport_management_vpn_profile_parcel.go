@@ -116,59 +116,82 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	body, _ = sjson.Set(body, path+"vpnId.optionType", "default")
-	body, _ = sjson.Set(body, path+"vpnId.value", 512)
+	// if true {
+	if true {
+		body, _ = sjson.Set(body, path+"vpnId.optionType", "default")
+		body, _ = sjson.Set(body, path+"vpnId.value", 512)
+	}
 
 	if !data.VpnDescriptionVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"name.optionType", "variable")
-		body, _ = sjson.Set(body, path+"name.value", data.VpnDescriptionVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"name.optionType", "variable")
+			body, _ = sjson.Set(body, path+"name.value", data.VpnDescriptionVariable.ValueString())
+		}
 	} else if data.VpnDescription.IsNull() {
-		body, _ = sjson.Set(body, path+"name.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"name.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"name.optionType", "global")
 		body, _ = sjson.Set(body, path+"name.value", data.VpnDescription.ValueString())
 	}
 
 	if !data.PrimaryDnsAddressIpv4Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4Variable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "variable")
+			body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4Variable.ValueString())
+		}
 	} else if data.PrimaryDnsAddressIpv4.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv4.primaryDnsAddressIpv4.value", data.PrimaryDnsAddressIpv4.ValueString())
 	}
 
 	if !data.SecondaryDnsAddressIpv4Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4Variable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "variable")
+			body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4Variable.ValueString())
+		}
 	} else if data.SecondaryDnsAddressIpv4.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv4.secondaryDnsAddressIpv4.value", data.SecondaryDnsAddressIpv4.ValueString())
 	}
 
 	if !data.PrimaryDnsAddressIpv6Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6Variable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6Variable.ValueString())
+		}
 	} else if data.PrimaryDnsAddressIpv6.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.primaryDnsAddressIpv6.value", data.PrimaryDnsAddressIpv6.ValueString())
 	}
 
 	if !data.SecondaryDnsAddressIpv6Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "variable")
-		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6Variable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6Variable.ValueString())
+		}
 	} else if data.SecondaryDnsAddressIpv6.IsNull() {
-		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.optionType", "global")
 		body, _ = sjson.Set(body, path+"dnsIpv6.secondaryDnsAddressIpv6.value", data.SecondaryDnsAddressIpv6.ValueString())
@@ -178,16 +201,20 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 		itemBody := ""
 
 		if !item.HostNameVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostNameVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostNameVariable.ValueString())
+			}
 		} else if !item.HostName.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "hostName.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "hostName.value", item.HostName.ValueString())
 		}
 
 		if !item.ListOfIpAddressesVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "listOfIp.value", item.ListOfIpAddressesVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "listOfIp.value", item.ListOfIpAddressesVariable.ValueString())
+			}
 		} else if !item.ListOfIpAddresses.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "listOfIp.optionType", "global")
 			var values []string
@@ -201,23 +228,29 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 		itemBody := ""
 
 		if !item.NetworkAddressVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddressVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddressVariable.ValueString())
+			}
 		} else if !item.NetworkAddress.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.ipAddress.value", item.NetworkAddress.ValueString())
 		}
 
 		if !item.SubnetMaskVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMaskVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMaskVariable.ValueString())
+			}
 		} else if !item.SubnetMask.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.subnetMask.value", item.SubnetMask.ValueString())
 		}
 		if item.Gateway.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "gateway.value", "nextHop")
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "gateway.value", "nextHop")
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "gateway.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "gateway.value", item.Gateway.ValueString())
@@ -227,19 +260,25 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 			itemChildBody := ""
 
 			if !childItem.AddressVariable.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
+					itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+				}
 			} else if !childItem.Address.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
 			}
 
 			if !childItem.AdministrativeDistanceVariable.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
+					itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+				}
 			} else if childItem.AdministrativeDistance.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "default")
+					itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", 1)
+				}
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
@@ -248,11 +287,15 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 		}
 
 		if !item.AdministrativeDistanceVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "distance.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "distance.value", item.AdministrativeDistanceVariable.ValueString())
+			if true && item.Gateway.ValueString() == "null0" {
+				itemBody, _ = sjson.Set(itemBody, "distance.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "distance.value", item.AdministrativeDistanceVariable.ValueString())
+			}
 		} else if item.AdministrativeDistance.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "distance.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "distance.value", 1)
+			if true && item.Gateway.ValueString() == "null0" {
+				itemBody, _ = sjson.Set(itemBody, "distance.optionType", "default")
+				itemBody, _ = sjson.Set(itemBody, "distance.value", 1)
+			}
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "distance.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "distance.value", item.AdministrativeDistance.ValueInt64())
@@ -264,8 +307,10 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 		itemBody := ""
 
 		if !item.PrefixVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.PrefixVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "prefix.value", item.PrefixVariable.ValueString())
+			}
 		} else if !item.Prefix.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "prefix.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "prefix.value", item.Prefix.ValueString())
@@ -275,16 +320,20 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 			itemChildBody := ""
 
 			if !childItem.AddressVariable.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "variable")
+					itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.AddressVariable.ValueString())
+				}
 			} else if !childItem.Address.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
 			}
 
 			if !childItem.AdministrativeDistanceVariable.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+				if true {
+					itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "variable")
+					itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistanceVariable.ValueString())
+				}
 			} else if !childItem.AdministrativeDistance.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.optionType", "global")
 				itemChildBody, _ = sjson.Set(itemChildBody, "distance.value", childItem.AdministrativeDistance.ValueInt64())
@@ -297,8 +346,10 @@ func (data TransportManagementVPN) toBody(ctx context.Context) string {
 		}
 
 		if !item.NatVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
+			if true {
+				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "variable")
+				itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.NatVariable.ValueString())
+			}
 		} else if !item.Nat.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.optionType", "global")
 			itemBody, _ = sjson.Set(itemBody, "oneOfIpRoute.nat.value", item.Nat.ValueString())

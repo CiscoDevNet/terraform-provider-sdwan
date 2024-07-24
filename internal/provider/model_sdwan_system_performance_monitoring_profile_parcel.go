@@ -69,8 +69,10 @@ func (data SystemPerformanceMonitoring) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 	if data.AppPerfMonitorEnabled.IsNull() {
-		body, _ = sjson.Set(body, path+"appPerfMonitorConfig.enabled.optionType", "default")
-		body, _ = sjson.Set(body, path+"appPerfMonitorConfig.enabled.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"appPerfMonitorConfig.enabled.optionType", "default")
+			body, _ = sjson.Set(body, path+"appPerfMonitorConfig.enabled.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"appPerfMonitorConfig.enabled.optionType", "global")
 		body, _ = sjson.Set(body, path+"appPerfMonitorConfig.enabled.value", data.AppPerfMonitorEnabled.ValueBool())
@@ -82,8 +84,10 @@ func (data SystemPerformanceMonitoring) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"appPerfMonitorConfig.policyFilters.appGroups.value", values)
 	}
 	if data.MonitoringConfigEnabled.IsNull() {
-		body, _ = sjson.Set(body, path+"umtsConfig.monitoringConfig.enabled.optionType", "default")
-		body, _ = sjson.Set(body, path+"umtsConfig.monitoringConfig.enabled.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"umtsConfig.monitoringConfig.enabled.optionType", "default")
+			body, _ = sjson.Set(body, path+"umtsConfig.monitoringConfig.enabled.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"umtsConfig.monitoringConfig.enabled.optionType", "global")
 		body, _ = sjson.Set(body, path+"umtsConfig.monitoringConfig.enabled.value", data.MonitoringConfigEnabled.ValueBool())
@@ -93,8 +97,10 @@ func (data SystemPerformanceMonitoring) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"umtsConfig.monitoringConfig.interval.value", data.MonitoringConfigInterval.ValueString())
 	}
 	if data.EventDrivenConfigEnabled.IsNull() {
-		body, _ = sjson.Set(body, path+"umtsConfig.eventDrivenConfig.enabled.optionType", "default")
-		body, _ = sjson.Set(body, path+"umtsConfig.eventDrivenConfig.enabled.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"umtsConfig.eventDrivenConfig.enabled.optionType", "default")
+			body, _ = sjson.Set(body, path+"umtsConfig.eventDrivenConfig.enabled.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"umtsConfig.eventDrivenConfig.enabled.optionType", "global")
 		body, _ = sjson.Set(body, path+"umtsConfig.eventDrivenConfig.enabled.value", data.EventDrivenConfigEnabled.ValueBool())

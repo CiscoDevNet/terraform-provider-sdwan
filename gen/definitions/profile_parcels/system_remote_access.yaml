@@ -19,13 +19,13 @@ attributes:
   - model_name: anyConnectProfileDownloadStatus
     tf_name: any_connect_eap_profile_download_status
     conditional_attribute:
-      name: anyConnectEapAuth
+      name: any_connect_eap_authentication_type
       value: device
     example: INITIALIZED
   - model_name: anyConnectProfileFileName
     tf_name: any_connect_eap_profile_file_name
     conditional_attribute:
-      name: anyConnectEapAuth
+      name: any_connect_eap_authentication_type
       value: device
     example: "<form-data>"
   - model_name: ipv4PoolSize
@@ -42,7 +42,7 @@ attributes:
     tf_name: psk_authentication_pre_shared_key
     data_path: [pskAuth]
     conditional_attribute:
-      name: pskSelection
+      name: psk_authentication_type
       value: group
     example: Cisco123
   - model_name: radiusGroupName

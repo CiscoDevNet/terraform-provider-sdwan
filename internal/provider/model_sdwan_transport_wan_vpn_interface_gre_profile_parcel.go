@@ -92,127 +92,165 @@ func (data TransportWANVPNInterfaceGRE) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.InterfaceNameVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.ifName.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.ifName.value", data.InterfaceNameVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.ifName.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.ifName.value", data.InterfaceNameVariable.ValueString())
+		}
 	} else if !data.InterfaceName.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.ifName.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.ifName.value", data.InterfaceName.ValueString())
 	}
 
 	if !data.InterfaceDescriptionVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.description.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.description.value", data.InterfaceDescriptionVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.description.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.description.value", data.InterfaceDescriptionVariable.ValueString())
+		}
 	} else if data.InterfaceDescription.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.description.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"basic.description.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"basic.description.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.description.value", data.InterfaceDescription.ValueString())
 	}
 
 	if !data.Ipv4AddressVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.address.address.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4AddressVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.address.address.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4AddressVariable.ValueString())
+		}
 	} else if !data.Ipv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.address.address.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.address.address.value", data.Ipv4Address.ValueString())
 	}
 
 	if !data.Ipv4SubnetMaskVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
+		}
 	} else if !data.Ipv4SubnetMask.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.address.mask.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.address.mask.value", data.Ipv4SubnetMask.ValueString())
 	}
 
 	if !data.ShutdownVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.shutdown.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.shutdown.value", data.ShutdownVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.shutdown.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.shutdown.value", data.ShutdownVariable.ValueString())
+		}
 	} else if data.Shutdown.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.shutdown.optionType", "default")
-		body, _ = sjson.Set(body, path+"basic.shutdown.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"basic.shutdown.optionType", "default")
+			body, _ = sjson.Set(body, path+"basic.shutdown.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"basic.shutdown.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.shutdown.value", data.Shutdown.ValueBool())
 	}
 
 	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpv4AddressVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpv4AddressVariable.ValueString())
+		}
 	} else if !data.TunnelSourceIpv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceIp.tunnelSource.value", data.TunnelSourceIpv4Address.ValueString())
 	}
 
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceVariable.ValueString())
+		}
 	} else if !data.TunnelSourceInterface.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceNotLoopback.tunnelSourceInterface.value", data.TunnelSourceInterface.ValueString())
 	}
 
 	if !data.TunnelSourceInterfaceLoopbackVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopbackVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopbackVariable.ValueString())
+		}
 	} else if !data.TunnelSourceInterfaceLoopback.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelSourceInterface.value", data.TunnelSourceInterfaceLoopback.ValueString())
 	}
 
 	if !data.TunnelRouteViaLoopbackVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopbackVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopbackVariable.ValueString())
+		}
 	} else if !data.TunnelRouteViaLoopback.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.tunnelSourceType.sourceLoopback.tunnelRouteVia.value", data.TunnelRouteViaLoopback.ValueString())
 	}
 
 	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.tunnelDestination.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.TunnelDestinationIpv4AddressVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.tunnelDestination.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.TunnelDestinationIpv4AddressVariable.ValueString())
+		}
 	} else if !data.TunnelDestinationIpv4Address.IsNull() {
 		body, _ = sjson.Set(body, path+"basic.tunnelDestination.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.tunnelDestination.value", data.TunnelDestinationIpv4Address.ValueString())
 	}
 
 	if !data.IpMtuVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.mtu.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.mtu.value", data.IpMtuVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.mtu.value", data.IpMtuVariable.ValueString())
+		}
 	} else if data.IpMtu.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.mtu.optionType", "default")
-		body, _ = sjson.Set(body, path+"basic.mtu.value", 1500)
+		if true {
+			body, _ = sjson.Set(body, path+"basic.mtu.optionType", "default")
+			body, _ = sjson.Set(body, path+"basic.mtu.value", 1500)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"basic.mtu.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.mtu.value", data.IpMtu.ValueInt64())
 	}
 
 	if !data.TcpMssVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.value", data.TcpMssVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.value", data.TcpMssVariable.ValueString())
+		}
 	} else if data.TcpMss.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "default")
 
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.tcpMssAdjust.value", data.TcpMss.ValueInt64())
 	}
 
 	if !data.ClearDontFragmentVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.clearDontFragment.optionType", "variable")
-		body, _ = sjson.Set(body, path+"basic.clearDontFragment.value", data.ClearDontFragmentVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"basic.clearDontFragment.optionType", "variable")
+			body, _ = sjson.Set(body, path+"basic.clearDontFragment.value", data.ClearDontFragmentVariable.ValueString())
+		}
 	} else if data.ClearDontFragment.IsNull() {
-		body, _ = sjson.Set(body, path+"basic.clearDontFragment.optionType", "default")
-		body, _ = sjson.Set(body, path+"basic.clearDontFragment.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"basic.clearDontFragment.optionType", "default")
+			body, _ = sjson.Set(body, path+"basic.clearDontFragment.value", false)
+		}
 	} else {
 		body, _ = sjson.Set(body, path+"basic.clearDontFragment.optionType", "global")
 		body, _ = sjson.Set(body, path+"basic.clearDontFragment.value", data.ClearDontFragment.ValueBool())
 	}
 
 	if !data.ApplicationTunnelTypeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advanced.application.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advanced.application.value", data.ApplicationTunnelTypeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advanced.application.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advanced.application.value", data.ApplicationTunnelTypeVariable.ValueString())
+		}
 	} else if !data.ApplicationTunnelType.IsNull() {
 		body, _ = sjson.Set(body, path+"advanced.application.optionType", "global")
 		body, _ = sjson.Set(body, path+"advanced.application.value", data.ApplicationTunnelType.ValueString())
