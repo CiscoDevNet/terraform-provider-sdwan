@@ -167,8 +167,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"authenticationGroup.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"authenticationGroup.optionType", "global")
-		body, _ = sjson.Set(body, path+"authenticationGroup.value", data.AuthenticationGroup.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"authenticationGroup.optionType", "global")
+			body, _ = sjson.Set(body, path+"authenticationGroup.value", data.AuthenticationGroup.ValueBool())
+		}
 	}
 
 	if !data.AccountingGroupVariable.IsNull() {
@@ -182,14 +184,18 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"accountingGroup.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"accountingGroup.optionType", "global")
-		body, _ = sjson.Set(body, path+"accountingGroup.value", data.AccountingGroup.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"accountingGroup.optionType", "global")
+			body, _ = sjson.Set(body, path+"accountingGroup.value", data.AccountingGroup.ValueBool())
+		}
 	}
 	if !data.ServerAuthOrder.IsNull() {
-		body, _ = sjson.Set(body, path+"serverAuthOrder.optionType", "global")
-		var values []string
-		data.ServerAuthOrder.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, path+"serverAuthOrder.value", values)
+		if true {
+			body, _ = sjson.Set(body, path+"serverAuthOrder.optionType", "global")
+			var values []string
+			data.ServerAuthOrder.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"serverAuthOrder.value", values)
+		}
 	}
 	if true {
 
@@ -202,8 +208,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.NameVariable.ValueString())
 				}
 			} else if !item.Name.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.Name.ValueString())
+				}
 			}
 
 			if !item.PasswordVariable.IsNull() {
@@ -212,8 +220,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.PasswordVariable.ValueString())
 				}
 			} else if !item.Password.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "password.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
+				}
 			}
 
 			if !item.PrivilegeVariable.IsNull() {
@@ -227,16 +237,20 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "privilege.value", "15")
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "privilege.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "privilege.value", item.Privilege.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "privilege.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "privilege.value", item.Privilege.ValueString())
+				}
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "pubkeyChain", []interface{}{})
 				for _, childItem := range item.PublicKeys {
 					itemChildBody := ""
 					if !childItem.KeyString.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyString.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyString.value", childItem.KeyString.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyString.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyString.value", childItem.KeyString.ValueString())
+						}
 					}
 
 					if !childItem.KeyTypeVariable.IsNull() {
@@ -250,8 +264,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
+						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "pubkeyChain.-1", itemChildBody)
 				}
@@ -264,8 +280,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		for _, item := range data.RadiusGroups {
 			itemBody := ""
 			if !item.GroupName.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
+				}
 			}
 			if item.Vpn.IsNull() {
 				if true {
@@ -273,8 +291,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				}
 			}
 
 			if !item.SourceInterfaceVariable.IsNull() {
@@ -288,16 +308,20 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				}
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "server", []interface{}{})
 				for _, childItem := range item.Servers {
 					itemChildBody := ""
 					if !childItem.Address.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
+						}
 					}
 
 					if !childItem.AuthPortVariable.IsNull() {
@@ -311,8 +335,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "authPort.value", 1812)
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "authPort.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "authPort.value", childItem.AuthPort.ValueInt64())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "authPort.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "authPort.value", childItem.AuthPort.ValueInt64())
+						}
 					}
 
 					if !childItem.AcctPortVariable.IsNull() {
@@ -326,8 +352,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.value", 1813)
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.value", childItem.AcctPort.ValueInt64())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "acctPort.value", childItem.AcctPort.ValueInt64())
+						}
 					}
 
 					if !childItem.TimeoutVariable.IsNull() {
@@ -341,8 +369,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", 5)
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.Timeout.ValueInt64())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.Timeout.ValueInt64())
+						}
 					}
 
 					if !childItem.RetransmitVariable.IsNull() {
@@ -356,12 +386,16 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.value", 3)
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.value", childItem.Retransmit.ValueInt64())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "retransmit.value", childItem.Retransmit.ValueInt64())
+						}
 					}
 					if !childItem.Key.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
+						}
 					}
 
 					if !childItem.SecretKeyVariable.IsNull() {
@@ -375,8 +409,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
+						}
 					}
 					if childItem.KeyEnum.IsNull() {
 						if true {
@@ -384,8 +420,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
+						}
 					}
 
 					if !childItem.KeyTypeVariable.IsNull() {
@@ -399,8 +437,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", "key")
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyType.value", childItem.KeyType.ValueString())
+						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "server.-1", itemChildBody)
 				}
@@ -413,8 +453,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		for _, item := range data.TacacsGroups {
 			itemBody := ""
 			if !item.GroupName.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "groupName.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "groupName.value", item.GroupName.ValueString())
+				}
 			}
 			if item.Vpn.IsNull() {
 				if true {
@@ -422,8 +464,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				}
 			}
 
 			if !item.SourceInterfaceVariable.IsNull() {
@@ -437,16 +481,20 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				}
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "server", []interface{}{})
 				for _, childItem := range item.Servers {
 					itemChildBody := ""
 					if !childItem.Address.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "address.value", childItem.Address.ValueString())
+						}
 					}
 
 					if !childItem.PortVariable.IsNull() {
@@ -460,8 +508,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "port.value", 49)
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "port.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "port.value", childItem.Port.ValueInt64())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "port.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "port.value", childItem.Port.ValueInt64())
+						}
 					}
 
 					if !childItem.TimeoutVariable.IsNull() {
@@ -475,12 +525,16 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", 5)
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.Timeout.ValueInt64())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "timeout.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "timeout.value", childItem.Timeout.ValueInt64())
+						}
 					}
 					if !childItem.Key.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "key.value", childItem.Key.ValueString())
+						}
 					}
 
 					if !childItem.SecretKeyVariable.IsNull() {
@@ -489,8 +543,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKeyVariable.ValueString())
 						}
 					} else if !childItem.SecretKey.IsNull() {
-						itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "secretKey.value", childItem.SecretKey.ValueString())
+						}
 					}
 					if childItem.KeyEnum.IsNull() {
 						if true {
@@ -498,8 +554,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 
 						}
 					} else {
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
-						itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "keyEnum.value", childItem.KeyEnum.ValueString())
+						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "server.-1", itemChildBody)
 				}
@@ -512,12 +570,16 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 		for _, item := range data.AccountingRules {
 			itemBody := ""
 			if !item.RuleId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "ruleId.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "ruleId.value", item.RuleId.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ruleId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ruleId.value", item.RuleId.ValueString())
+				}
 			}
 			if !item.Method.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "method.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "method.value", item.Method.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "method.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "method.value", item.Method.ValueString())
+				}
 			}
 			if item.Level.IsNull() {
 				if true {
@@ -525,8 +587,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "level.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "level.value", item.Level.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "level.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "level.value", item.Level.ValueString())
+				}
 			}
 
 			if !item.StartStopVariable.IsNull() {
@@ -540,14 +604,18 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "startStop.value", true)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "startStop.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "startStop.value", item.StartStop.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "startStop.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "startStop.value", item.StartStop.ValueBool())
+				}
 			}
 			if !item.Group.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "group.optionType", "global")
-				var values []string
-				item.Group.ElementsAs(ctx, &values, false)
-				itemBody, _ = sjson.Set(itemBody, "group.value", values)
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "group.optionType", "global")
+					var values []string
+					item.Group.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "group.value", values)
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"accountingRule.-1", itemBody)
 		}
@@ -564,8 +632,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"authorizationConsole.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"authorizationConsole.optionType", "global")
-		body, _ = sjson.Set(body, path+"authorizationConsole.value", data.AuthorizationConsole.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"authorizationConsole.optionType", "global")
+			body, _ = sjson.Set(body, path+"authorizationConsole.value", data.AuthorizationConsole.ValueBool())
+		}
 	}
 
 	if !data.AuthorizationConfigCommandsVariable.IsNull() {
@@ -579,30 +649,40 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"authorizationConfigCommands.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"authorizationConfigCommands.optionType", "global")
-		body, _ = sjson.Set(body, path+"authorizationConfigCommands.value", data.AuthorizationConfigCommands.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"authorizationConfigCommands.optionType", "global")
+			body, _ = sjson.Set(body, path+"authorizationConfigCommands.value", data.AuthorizationConfigCommands.ValueBool())
+		}
 	}
 	if true {
 		body, _ = sjson.Set(body, path+"authorizationRule", []interface{}{})
 		for _, item := range data.AuthorizationRules {
 			itemBody := ""
 			if !item.RuleId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "ruleId.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "ruleId.value", item.RuleId.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ruleId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ruleId.value", item.RuleId.ValueString())
+				}
 			}
 			if !item.Method.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "method.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "method.value", item.Method.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "method.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "method.value", item.Method.ValueString())
+				}
 			}
 			if !item.Level.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "level.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "level.value", item.Level.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "level.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "level.value", item.Level.ValueString())
+				}
 			}
 			if !item.Group.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "group.optionType", "global")
-				var values []string
-				item.Group.ElementsAs(ctx, &values, false)
-				itemBody, _ = sjson.Set(itemBody, "group.value", values)
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "group.optionType", "global")
+					var values []string
+					item.Group.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "group.value", values)
+				}
 			}
 			if item.IfAuthenticated.IsNull() {
 				if true {
@@ -610,8 +690,10 @@ func (data SystemAAA) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "ifAuthenticated.value", false)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "ifAuthenticated.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "ifAuthenticated.value", item.IfAuthenticated.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ifAuthenticated.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ifAuthenticated.value", item.IfAuthenticated.ValueBool())
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"authorizationRule.-1", itemBody)
 		}

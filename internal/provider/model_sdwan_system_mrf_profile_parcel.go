@@ -74,8 +74,10 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"regionId.optionType", "global")
-		body, _ = sjson.Set(body, path+"regionId.value", data.RegionId.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"regionId.optionType", "global")
+			body, _ = sjson.Set(body, path+"regionId.value", data.RegionId.ValueInt64())
+		}
 	}
 
 	if !data.SecondaryRegionIdVariable.IsNull() {
@@ -89,8 +91,10 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "global")
-		body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegionId.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"secondaryRegion.optionType", "global")
+			body, _ = sjson.Set(body, path+"secondaryRegion.value", data.SecondaryRegionId.ValueInt64())
+		}
 	}
 
 	if !data.RoleVariable.IsNull() {
@@ -104,8 +108,10 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"role.optionType", "global")
-		body, _ = sjson.Set(body, path+"role.value", data.Role.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"role.optionType", "global")
+			body, _ = sjson.Set(body, path+"role.value", data.Role.ValueString())
+		}
 	}
 	if data.EnableMigrationToMrf.IsNull() {
 		if true {
@@ -113,8 +119,10 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"enableMrfMigration.optionType", "global")
-		body, _ = sjson.Set(body, path+"enableMrfMigration.value", data.EnableMigrationToMrf.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"enableMrfMigration.optionType", "global")
+			body, _ = sjson.Set(body, path+"enableMrfMigration.value", data.EnableMigrationToMrf.ValueString())
+		}
 	}
 	if data.MigrationBgpCommunity.IsNull() {
 		if true {
@@ -122,8 +130,10 @@ func (data SystemMRF) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"migrationBgpCommunity.optionType", "global")
-		body, _ = sjson.Set(body, path+"migrationBgpCommunity.value", data.MigrationBgpCommunity.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"migrationBgpCommunity.optionType", "global")
+			body, _ = sjson.Set(body, path+"migrationBgpCommunity.value", data.MigrationBgpCommunity.ValueInt64())
+		}
 	}
 	return body
 }

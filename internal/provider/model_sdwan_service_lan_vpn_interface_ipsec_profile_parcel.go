@@ -128,8 +128,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ifName.value", data.InterfaceNameVariable.ValueString())
 		}
 	} else if !data.InterfaceName.IsNull() {
-		body, _ = sjson.Set(body, path+"ifName.optionType", "global")
-		body, _ = sjson.Set(body, path+"ifName.value", data.InterfaceName.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ifName.optionType", "global")
+			body, _ = sjson.Set(body, path+"ifName.value", data.InterfaceName.ValueString())
+		}
 	}
 
 	if !data.ShutdownVariable.IsNull() {
@@ -143,8 +145,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"shutdown.value", true)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"shutdown.optionType", "global")
-		body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"shutdown.optionType", "global")
+			body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
+		}
 	}
 
 	if !data.InterfaceDescriptionVariable.IsNull() {
@@ -158,8 +162,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"description.optionType", "global")
-		body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescription.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"description.optionType", "global")
+			body, _ = sjson.Set(body, path+"description.value", data.InterfaceDescription.ValueString())
+		}
 	}
 
 	if !data.Ipv4AddressVariable.IsNull() {
@@ -168,8 +174,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"address.address.value", data.Ipv4AddressVariable.ValueString())
 		}
 	} else if !data.Ipv4Address.IsNull() {
-		body, _ = sjson.Set(body, path+"address.address.optionType", "global")
-		body, _ = sjson.Set(body, path+"address.address.value", data.Ipv4Address.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"address.address.optionType", "global")
+			body, _ = sjson.Set(body, path+"address.address.value", data.Ipv4Address.ValueString())
+		}
 	}
 
 	if !data.Ipv4SubnetMaskVariable.IsNull() {
@@ -178,8 +186,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"address.mask.value", data.Ipv4SubnetMaskVariable.ValueString())
 		}
 	} else if !data.Ipv4SubnetMask.IsNull() {
-		body, _ = sjson.Set(body, path+"address.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"address.mask.value", data.Ipv4SubnetMask.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"address.mask.optionType", "global")
+			body, _ = sjson.Set(body, path+"address.mask.value", data.Ipv4SubnetMask.ValueString())
+		}
 	}
 
 	if !data.TunnelSourceIpv4AddressVariable.IsNull() {
@@ -188,8 +198,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4AddressVariable.ValueString())
 		}
 	} else if !data.TunnelSourceIpv4Address.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnelSource.address.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4Address.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelSource.address.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelSource.address.value", data.TunnelSourceIpv4Address.ValueString())
+		}
 	}
 
 	if !data.TunnelSourceIpv4SubnetMaskVariable.IsNull() {
@@ -198,8 +210,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMaskVariable.ValueString())
 		}
 	} else if !data.TunnelSourceIpv4SubnetMask.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMask.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelSource.mask.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelSource.mask.value", data.TunnelSourceIpv4SubnetMask.ValueString())
+		}
 	}
 
 	if !data.TunnelSourceInterfaceVariable.IsNull() {
@@ -208,8 +222,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"tunnelSourceInterface.value", data.TunnelSourceInterfaceVariable.ValueString())
 		}
 	} else if !data.TunnelSourceInterface.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnelSourceInterface.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelSourceInterface.value", data.TunnelSourceInterface.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelSourceInterface.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelSourceInterface.value", data.TunnelSourceInterface.ValueString())
+		}
 	}
 
 	if !data.TunnelDestinationIpv4AddressVariable.IsNull() {
@@ -218,8 +234,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4AddressVariable.ValueString())
 		}
 	} else if !data.TunnelDestinationIpv4Address.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnelDestination.address.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4Address.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelDestination.address.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelDestination.address.value", data.TunnelDestinationIpv4Address.ValueString())
+		}
 	}
 
 	if !data.TunnelDestinationIpv4SubnetMaskVariable.IsNull() {
@@ -228,8 +246,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMaskVariable.ValueString())
 		}
 	} else if !data.TunnelDestinationIpv4SubnetMask.IsNull() {
-		body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMask.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelDestination.mask.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelDestination.mask.value", data.TunnelDestinationIpv4SubnetMask.ValueString())
+		}
 	}
 
 	if !data.ApplicationTunnelTypeVariable.IsNull() {
@@ -238,8 +258,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"application.value", data.ApplicationTunnelTypeVariable.ValueString())
 		}
 	} else if !data.ApplicationTunnelType.IsNull() {
-		body, _ = sjson.Set(body, path+"application.optionType", "global")
-		body, _ = sjson.Set(body, path+"application.value", data.ApplicationTunnelType.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"application.optionType", "global")
+			body, _ = sjson.Set(body, path+"application.value", data.ApplicationTunnelType.ValueString())
+		}
 	}
 
 	if !data.TcpMssVariable.IsNull() {
@@ -253,8 +275,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"tcpMssAdjust.optionType", "global")
-		body, _ = sjson.Set(body, path+"tcpMssAdjust.value", data.TcpMss.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"tcpMssAdjust.optionType", "global")
+			body, _ = sjson.Set(body, path+"tcpMssAdjust.value", data.TcpMss.ValueInt64())
+		}
 	}
 
 	if !data.ClearDontFragmentVariable.IsNull() {
@@ -268,8 +292,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"clearDontFragment.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"clearDontFragment.optionType", "global")
-		body, _ = sjson.Set(body, path+"clearDontFragment.value", data.ClearDontFragment.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"clearDontFragment.optionType", "global")
+			body, _ = sjson.Set(body, path+"clearDontFragment.value", data.ClearDontFragment.ValueBool())
+		}
 	}
 
 	if !data.IpMtuVariable.IsNull() {
@@ -283,8 +309,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"mtu.value", 1500)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"mtu.optionType", "global")
-		body, _ = sjson.Set(body, path+"mtu.value", data.IpMtu.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"mtu.optionType", "global")
+			body, _ = sjson.Set(body, path+"mtu.value", data.IpMtu.ValueInt64())
+		}
 	}
 
 	if !data.DpdIntervalVariable.IsNull() {
@@ -298,8 +326,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"dpdInterval.value", 10)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"dpdInterval.optionType", "global")
-		body, _ = sjson.Set(body, path+"dpdInterval.value", data.DpdInterval.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"dpdInterval.optionType", "global")
+			body, _ = sjson.Set(body, path+"dpdInterval.value", data.DpdInterval.ValueInt64())
+		}
 	}
 
 	if !data.DpdRetriesVariable.IsNull() {
@@ -313,8 +343,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"dpdRetries.value", 3)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"dpdRetries.optionType", "global")
-		body, _ = sjson.Set(body, path+"dpdRetries.value", data.DpdRetries.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"dpdRetries.optionType", "global")
+			body, _ = sjson.Set(body, path+"dpdRetries.value", data.DpdRetries.ValueInt64())
+		}
 	}
 
 	if !data.IkePresharedKeyVariable.IsNull() {
@@ -323,8 +355,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"preSharedSecret.value", data.IkePresharedKeyVariable.ValueString())
 		}
 	} else if !data.IkePresharedKey.IsNull() {
-		body, _ = sjson.Set(body, path+"preSharedSecret.optionType", "global")
-		body, _ = sjson.Set(body, path+"preSharedSecret.value", data.IkePresharedKey.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"preSharedSecret.optionType", "global")
+			body, _ = sjson.Set(body, path+"preSharedSecret.value", data.IkePresharedKey.ValueString())
+		}
 	}
 	if data.IkeVersion.IsNull() {
 		if true {
@@ -332,8 +366,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ikeVersion.value", 1)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikeVersion.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeVersion.value", data.IkeVersion.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ikeVersion.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikeVersion.value", data.IkeVersion.ValueInt64())
+		}
 	}
 
 	if !data.IkeIntegrityProtocolVariable.IsNull() {
@@ -347,8 +383,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ikeMode.value", "main")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikeMode.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeMode.value", data.IkeIntegrityProtocol.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ikeMode.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikeMode.value", data.IkeIntegrityProtocol.ValueString())
+		}
 	}
 
 	if !data.IkeRekeyIntervalVariable.IsNull() {
@@ -362,8 +400,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ikeRekeyInterval.value", 14400)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikeRekeyInterval.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeRekeyInterval.value", data.IkeRekeyInterval.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ikeRekeyInterval.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikeRekeyInterval.value", data.IkeRekeyInterval.ValueInt64())
+		}
 	}
 
 	if !data.IkeCiphersuiteVariable.IsNull() {
@@ -377,8 +417,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ikeCiphersuite.value", "aes256-cbc-sha1")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikeCiphersuite.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeCiphersuite.value", data.IkeCiphersuite.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ikeCiphersuite.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikeCiphersuite.value", data.IkeCiphersuite.ValueString())
+		}
 	}
 
 	if !data.IkeDiffieHellmanGroupVariable.IsNull() {
@@ -392,8 +434,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ikeGroup.value", "16")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikeGroup.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeGroup.value", data.IkeDiffieHellmanGroup.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ikeGroup.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikeGroup.value", data.IkeDiffieHellmanGroup.ValueString())
+		}
 	}
 
 	if !data.IkeIdLocalEndPointVariable.IsNull() {
@@ -407,8 +451,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikeLocalId.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeLocalId.value", data.IkeIdLocalEndPoint.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ikeLocalId.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikeLocalId.value", data.IkeIdLocalEndPoint.ValueString())
+		}
 	}
 
 	if !data.IkeIdRemoteEndPointVariable.IsNull() {
@@ -422,8 +468,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikeRemoteId.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikeRemoteId.value", data.IkeIdRemoteEndPoint.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ikeRemoteId.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikeRemoteId.value", data.IkeIdRemoteEndPoint.ValueString())
+		}
 	}
 
 	if !data.IpsecRekeyIntervalVariable.IsNull() {
@@ -437,8 +485,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ipsecRekeyInterval.value", 3600)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ipsecRekeyInterval.optionType", "global")
-		body, _ = sjson.Set(body, path+"ipsecRekeyInterval.value", data.IpsecRekeyInterval.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ipsecRekeyInterval.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipsecRekeyInterval.value", data.IpsecRekeyInterval.ValueInt64())
+		}
 	}
 
 	if !data.IpsecReplayWindowVariable.IsNull() {
@@ -452,8 +502,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ipsecReplayWindow.value", 512)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ipsecReplayWindow.optionType", "global")
-		body, _ = sjson.Set(body, path+"ipsecReplayWindow.value", data.IpsecReplayWindow.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ipsecReplayWindow.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipsecReplayWindow.value", data.IpsecReplayWindow.ValueInt64())
+		}
 	}
 
 	if !data.IpsecCiphersuiteVariable.IsNull() {
@@ -467,8 +519,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ipsecCiphersuite.value", "aes256-gcm")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ipsecCiphersuite.optionType", "global")
-		body, _ = sjson.Set(body, path+"ipsecCiphersuite.value", data.IpsecCiphersuite.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ipsecCiphersuite.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipsecCiphersuite.value", data.IpsecCiphersuite.ValueString())
+		}
 	}
 
 	if !data.PerfectForwardSecrecyVariable.IsNull() {
@@ -482,8 +536,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"perfectForwardSecrecy.value", "group-16")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"perfectForwardSecrecy.optionType", "global")
-		body, _ = sjson.Set(body, path+"perfectForwardSecrecy.value", data.PerfectForwardSecrecy.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"perfectForwardSecrecy.optionType", "global")
+			body, _ = sjson.Set(body, path+"perfectForwardSecrecy.value", data.PerfectForwardSecrecy.ValueString())
+		}
 	}
 
 	if !data.TrackerIdVariable.IsNull() {
@@ -497,8 +553,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"tracker.optionType", "global")
-		body, _ = sjson.Set(body, path+"tracker.value", data.TrackerId.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"tracker.optionType", "global")
+			body, _ = sjson.Set(body, path+"tracker.value", data.TrackerId.ValueString())
+		}
 	}
 
 	if !data.TunnelRouteViaVariable.IsNull() {
@@ -512,8 +570,10 @@ func (data ServiceLANVPNInterfaceIPSec) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"tunnelRouteVia.optionType", "global")
-		body, _ = sjson.Set(body, path+"tunnelRouteVia.value", data.TunnelRouteVia.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"tunnelRouteVia.optionType", "global")
+			body, _ = sjson.Set(body, path+"tunnelRouteVia.value", data.TunnelRouteVia.ValueString())
+		}
 	}
 	return body
 }

@@ -85,20 +85,26 @@ func (data SystemIPv6DeviceAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"defaultAction.value", "drop")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"defaultAction.optionType", "global")
-		body, _ = sjson.Set(body, path+"defaultAction.value", data.DefaultAction.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"defaultAction.optionType", "global")
+			body, _ = sjson.Set(body, path+"defaultAction.value", data.DefaultAction.ValueString())
+		}
 	}
 	if true {
 		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
 		for _, item := range data.Sequences {
 			itemBody := ""
 			if !item.Id.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "sequenceId.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "sequenceId.value", item.Id.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sequenceId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sequenceId.value", item.Id.ValueInt64())
+				}
 			}
 			if !item.Name.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "sequenceName.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.Name.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sequenceName.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.Name.ValueString())
+				}
 			}
 			if item.BaseAction.IsNull() {
 				if true {
@@ -106,16 +112,22 @@ func (data SystemIPv6DeviceAccess) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "baseAction.value", "accept")
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
+				}
 			}
 			if !item.DeviceAccessPort.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationPort.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationPort.value", item.DeviceAccessPort.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationPort.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationPort.value", item.DeviceAccessPort.ValueInt64())
+				}
 			}
 			if !item.DestinationDataPrefixListId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationDataPrefixList.refId.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationDataPrefixList.refId.value", item.DestinationDataPrefixListId.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationDataPrefixList.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationDataPrefixList.refId.value", item.DestinationDataPrefixListId.ValueString())
+				}
 			}
 
 			if !item.DestinationIpPrefixListVariable.IsNull() {
@@ -124,20 +136,26 @@ func (data SystemIPv6DeviceAccess) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationIpPrefixList.value", item.DestinationIpPrefixListVariable.ValueString())
 				}
 			} else if !item.DestinationIpPrefixList.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationIpPrefixList.optionType", "global")
-				var values []string
-				item.DestinationIpPrefixList.ElementsAs(ctx, &values, false)
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationIpPrefixList.value", values)
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationIpPrefixList.optionType", "global")
+					var values []string
+					item.DestinationIpPrefixList.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.destinationDataPrefix.destinationIpPrefixList.value", values)
+				}
 			}
 			if !item.SourcePorts.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.sourcePorts.optionType", "global")
-				var values []int64
-				item.SourcePorts.ElementsAs(ctx, &values, false)
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.sourcePorts.value", values)
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.sourcePorts.optionType", "global")
+					var values []int64
+					item.SourcePorts.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.sourcePorts.value", values)
+				}
 			}
 			if !item.SourceDataPrefixListId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceDataPrefixList.refId.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceDataPrefixList.refId.value", item.SourceDataPrefixListId.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceDataPrefixList.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceDataPrefixList.refId.value", item.SourceDataPrefixListId.ValueString())
+				}
 			}
 
 			if !item.SourceIpPrefixListVariable.IsNull() {
@@ -146,10 +164,12 @@ func (data SystemIPv6DeviceAccess) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceIpPrefixList.value", item.SourceIpPrefixListVariable.ValueString())
 				}
 			} else if !item.SourceIpPrefixList.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceIpPrefixList.optionType", "global")
-				var values []string
-				item.SourceIpPrefixList.ElementsAs(ctx, &values, false)
-				itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceIpPrefixList.value", values)
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceIpPrefixList.optionType", "global")
+					var values []string
+					item.SourceIpPrefixList.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "matchEntries.sourceDataPrefix.sourceIpPrefixList.value", values)
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
 		}

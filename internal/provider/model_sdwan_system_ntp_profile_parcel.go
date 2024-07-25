@@ -106,8 +106,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddressVariable.ValueString())
 				}
 			} else if !item.HostnameIpAddress.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddress.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddress.ValueString())
+				}
 			}
 
 			if !item.AuthenticationKeyVariable.IsNull() {
@@ -121,8 +123,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "key.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "key.value", item.AuthenticationKey.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "key.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "key.value", item.AuthenticationKey.ValueInt64())
+				}
 			}
 
 			if !item.VpnVariable.IsNull() {
@@ -136,8 +140,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				}
 			}
 
 			if !item.NtpVersionVariable.IsNull() {
@@ -151,8 +157,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "version.value", 4)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "version.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "version.value", item.NtpVersion.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "version.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "version.value", item.NtpVersion.ValueInt64())
+				}
 			}
 
 			if !item.SourceInterfaceVariable.IsNull() {
@@ -166,8 +174,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				}
 			}
 
 			if !item.PreferThisNtpServerVariable.IsNull() {
@@ -181,8 +191,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "prefer.value", false)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "prefer.value", item.PreferThisNtpServer.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "prefer.value", item.PreferThisNtpServer.ValueBool())
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"server.-1", itemBody)
 		}
@@ -198,8 +210,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "keyId.value", item.KeyIdVariable.ValueString())
 				}
 			} else if !item.KeyId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "keyId.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "keyId.value", item.KeyId.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "keyId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "keyId.value", item.KeyId.ValueInt64())
+				}
 			}
 
 			if !item.Md5ValueVariable.IsNull() {
@@ -208,8 +222,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5ValueVariable.ValueString())
 				}
 			} else if !item.Md5Value.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5Value.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5Value.ValueString())
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"authentication.authenticationKeys.-1", itemBody)
 		}
@@ -226,10 +242,12 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "global")
-		var values []int64
-		data.TrustedKeys.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, path+"authentication.trustedKeys.value", values)
+		if true {
+			body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "global")
+			var values []int64
+			data.TrustedKeys.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"authentication.trustedKeys.value", values)
+		}
 	}
 
 	if !data.AuthoritativeNtpServerVariable.IsNull() {
@@ -243,8 +261,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"leader.enable.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"leader.enable.optionType", "global")
-		body, _ = sjson.Set(body, path+"leader.enable.value", data.AuthoritativeNtpServer.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.enable.optionType", "global")
+			body, _ = sjson.Set(body, path+"leader.enable.value", data.AuthoritativeNtpServer.ValueBool())
+		}
 	}
 
 	if !data.StratumVariable.IsNull() {
@@ -258,8 +278,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"leader.stratum.optionType", "global")
-		body, _ = sjson.Set(body, path+"leader.stratum.value", data.Stratum.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.stratum.optionType", "global")
+			body, _ = sjson.Set(body, path+"leader.stratum.value", data.Stratum.ValueInt64())
+		}
 	}
 
 	if !data.SourceInterfaceVariable.IsNull() {
@@ -273,8 +295,10 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"leader.source.optionType", "global")
-		body, _ = sjson.Set(body, path+"leader.source.value", data.SourceInterface.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.source.optionType", "global")
+			body, _ = sjson.Set(body, path+"leader.source.value", data.SourceInterface.ValueString())
+		}
 	}
 	return body
 }

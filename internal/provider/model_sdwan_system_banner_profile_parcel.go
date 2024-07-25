@@ -77,8 +77,10 @@ func (data SystemBanner) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"login.value", "")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"login.optionType", "global")
-		body, _ = sjson.Set(body, path+"login.value", data.Login.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"login.optionType", "global")
+			body, _ = sjson.Set(body, path+"login.value", data.Login.ValueString())
+		}
 	}
 
 	if !data.MotdVariable.IsNull() {
@@ -92,8 +94,10 @@ func (data SystemBanner) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"motd.value", "")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"motd.optionType", "global")
-		body, _ = sjson.Set(body, path+"motd.value", data.Motd.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"motd.optionType", "global")
+			body, _ = sjson.Set(body, path+"motd.value", data.Motd.ValueString())
+		}
 	}
 	return body
 }

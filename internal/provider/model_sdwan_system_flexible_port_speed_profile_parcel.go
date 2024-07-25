@@ -75,8 +75,10 @@ func (data SystemFlexiblePortSpeed) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"portType.value", "12 ports of 1/10GE + 3 ports 40GE")
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"portType.optionType", "global")
-		body, _ = sjson.Set(body, path+"portType.value", data.PortType.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"portType.optionType", "global")
+			body, _ = sjson.Set(body, path+"portType.value", data.PortType.ValueString())
+		}
 	}
 	return body
 }

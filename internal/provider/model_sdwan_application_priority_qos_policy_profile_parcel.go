@@ -80,34 +80,46 @@ func (data ApplicationPriorityQoSPolicy) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"target.interfaces.value", data.TargetInterfaceVariable.ValueString())
 		}
 	} else if !data.TargetInterface.IsNull() {
-		body, _ = sjson.Set(body, path+"target.interfaces.optionType", "global")
-		var values []string
-		data.TargetInterface.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, path+"target.interfaces.value", values)
+		if true {
+			body, _ = sjson.Set(body, path+"target.interfaces.optionType", "global")
+			var values []string
+			data.TargetInterface.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"target.interfaces.value", values)
+		}
 	}
 	if true {
 		body, _ = sjson.Set(body, path+"qosMap.qosSchedulers", []interface{}{})
 		for _, item := range data.QosSchedulers {
 			itemBody := ""
 			if !item.ForwardingClassId.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "classMapRef.refId.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "classMapRef.refId.value", item.ForwardingClassId.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "classMapRef.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "classMapRef.refId.value", item.ForwardingClassId.ValueString())
+				}
 			}
 			if !item.Drops.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "drops.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "drops.value", item.Drops.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "drops.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "drops.value", item.Drops.ValueString())
+				}
 			}
 			if !item.Queue.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "queue.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "queue.value", item.Queue.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "queue.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "queue.value", item.Queue.ValueString())
+				}
 			}
 			if !item.Bandwidth.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "bandwidthPercent.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "bandwidthPercent.value", item.Bandwidth.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "bandwidthPercent.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "bandwidthPercent.value", item.Bandwidth.ValueString())
+				}
 			}
 			if !item.SchedulingType.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "scheduling.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "scheduling.value", item.SchedulingType.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "scheduling.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "scheduling.value", item.SchedulingType.ValueString())
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"qosMap.qosSchedulers.-1", itemBody)
 		}

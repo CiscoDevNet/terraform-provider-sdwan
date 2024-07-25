@@ -126,8 +126,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"disk.diskEnable.value", true)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"disk.diskEnable.optionType", "global")
-		body, _ = sjson.Set(body, path+"disk.diskEnable.value", data.DiskEnable.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"disk.diskEnable.optionType", "global")
+			body, _ = sjson.Set(body, path+"disk.diskEnable.value", data.DiskEnable.ValueBool())
+		}
 	}
 
 	if !data.DiskFileSizeVariable.IsNull() {
@@ -141,8 +143,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"disk.file.diskFileSize.value", 10)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"disk.file.diskFileSize.optionType", "global")
-		body, _ = sjson.Set(body, path+"disk.file.diskFileSize.value", data.DiskFileSize.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"disk.file.diskFileSize.optionType", "global")
+			body, _ = sjson.Set(body, path+"disk.file.diskFileSize.value", data.DiskFileSize.ValueInt64())
+		}
 	}
 
 	if !data.DiskFileRotateVariable.IsNull() {
@@ -156,8 +160,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"disk.file.diskFileRotate.value", 10)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"disk.file.diskFileRotate.optionType", "global")
-		body, _ = sjson.Set(body, path+"disk.file.diskFileRotate.value", data.DiskFileRotate.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"disk.file.diskFileRotate.optionType", "global")
+			body, _ = sjson.Set(body, path+"disk.file.diskFileRotate.value", data.DiskFileRotate.ValueInt64())
+		}
 	}
 	if true {
 		body, _ = sjson.Set(body, path+"tlsProfile", []interface{}{})
@@ -170,8 +176,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "profile.value", item.ProfileVariable.ValueString())
 				}
 			} else if !item.Profile.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "profile.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "profile.value", item.Profile.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "profile.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "profile.value", item.Profile.ValueString())
+				}
 			}
 
 			if !item.TlsVersionVariable.IsNull() {
@@ -185,8 +193,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", "TLSv1.1")
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", item.TlsVersion.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsVersion.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tlsVersion.value", item.TlsVersion.ValueString())
+				}
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "authType.optionType", "default")
@@ -204,10 +214,12 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "global")
-				var values []string
-				item.CipherSuites.ElementsAs(ctx, &values, false)
-				itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.value", values)
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.optionType", "global")
+					var values []string
+					item.CipherSuites.ElementsAs(ctx, &values, false)
+					itemBody, _ = sjson.Set(itemBody, "cipherSuiteList.value", values)
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"tlsProfile.-1", itemBody)
 		}
@@ -223,8 +235,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpVariable.ValueString())
 				}
 			} else if !item.HostnameIp.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
+				}
 			}
 
 			if !item.VpnVariable.IsNull() {
@@ -238,8 +252,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				}
 			}
 
 			if !item.SourceInterfaceVariable.IsNull() {
@@ -253,8 +269,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				}
 			}
 
 			if !item.PriorityVariable.IsNull() {
@@ -268,8 +286,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "priority.value", "informational")
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
+				}
 			}
 
 			if !item.TlsEnableVariable.IsNull() {
@@ -283,8 +303,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", false)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
+				}
 			}
 
 			if !item.TlsPropertiesCustomProfileVariable.IsNull() {
@@ -298,8 +320,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", false)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
+				}
 			}
 
 			if !item.TlsPropertiesProfileVariable.IsNull() {
@@ -313,8 +337,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"server.-1", itemBody)
 		}
@@ -330,8 +356,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpVariable.ValueString())
 				}
 			} else if !item.HostnameIp.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIp.ValueString())
+				}
 			}
 
 			if !item.VpnVariable.IsNull() {
@@ -345,8 +373,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				}
 			}
 
 			if !item.SourceInterfaceVariable.IsNull() {
@@ -360,8 +390,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				}
 			}
 
 			if !item.PriorityVariable.IsNull() {
@@ -375,8 +407,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "priority.value", "informational")
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "priority.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "priority.value", item.Priority.ValueString())
+				}
 			}
 
 			if !item.TlsEnableVariable.IsNull() {
@@ -390,8 +424,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", false)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tlsEnable.value", item.TlsEnable.ValueBool())
+				}
 			}
 
 			if !item.TlsPropertiesCustomProfileVariable.IsNull() {
@@ -405,8 +441,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", false)
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesCustomProfile.value", item.TlsPropertiesCustomProfile.ValueBool())
+				}
 			}
 
 			if !item.TlsPropertiesProfileVariable.IsNull() {
@@ -420,8 +458,10 @@ func (data SystemLogging) toBody(ctx context.Context) string {
 
 				}
 			} else {
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
-				itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tlsPropertiesProfile.value", item.TlsPropertiesProfile.ValueString())
+				}
 			}
 			body, _ = sjson.SetRaw(body, path+"ipv6Server.-1", itemBody)
 		}

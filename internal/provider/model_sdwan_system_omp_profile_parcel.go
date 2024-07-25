@@ -132,8 +132,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"gracefulRestart.value", true)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "global")
-		body, _ = sjson.Set(body, path+"gracefulRestart.value", data.GracefulRestart.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "global")
+			body, _ = sjson.Set(body, path+"gracefulRestart.value", data.GracefulRestart.ValueBool())
+		}
 	}
 
 	if !data.OverlayAsVariable.IsNull() {
@@ -147,8 +149,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"overlayAs.optionType", "global")
-		body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAs.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"overlayAs.optionType", "global")
+			body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAs.ValueInt64())
+		}
 	}
 
 	if !data.PathsAdvertisedPerPrefixVariable.IsNull() {
@@ -162,8 +166,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"sendPathLimit.value", 4)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "global")
-		body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefix.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "global")
+			body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefix.ValueInt64())
+		}
 	}
 
 	if !data.EcmpLimitVariable.IsNull() {
@@ -177,8 +183,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ecmpLimit.value", 4)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "global")
-		body, _ = sjson.Set(body, path+"ecmpLimit.value", data.EcmpLimit.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "global")
+			body, _ = sjson.Set(body, path+"ecmpLimit.value", data.EcmpLimit.ValueInt64())
+		}
 	}
 
 	if !data.ShutdownVariable.IsNull() {
@@ -192,8 +200,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"shutdown.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"shutdown.optionType", "global")
-		body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"shutdown.optionType", "global")
+			body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
+		}
 	}
 
 	if !data.OmpAdminDistanceIpv4Variable.IsNull() {
@@ -207,8 +217,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", 251)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "global")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "global")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4.ValueInt64())
+		}
 	}
 
 	if !data.OmpAdminDistanceIpv6Variable.IsNull() {
@@ -222,8 +234,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", 251)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "global")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "global")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6.ValueInt64())
+		}
 	}
 
 	if !data.AdvertisementIntervalVariable.IsNull() {
@@ -237,8 +251,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertisementInterval.value", 1)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertisementInterval.value", data.AdvertisementInterval.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertisementInterval.value", data.AdvertisementInterval.ValueInt64())
+		}
 	}
 
 	if !data.GracefulRestartTimerVariable.IsNull() {
@@ -252,8 +268,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", 43200)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "global")
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", data.GracefulRestartTimer.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "global")
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", data.GracefulRestartTimer.ValueInt64())
+		}
 	}
 
 	if !data.EorTimerVariable.IsNull() {
@@ -267,8 +285,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"eorTimer.value", 300)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"eorTimer.optionType", "global")
-		body, _ = sjson.Set(body, path+"eorTimer.value", data.EorTimer.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"eorTimer.optionType", "global")
+			body, _ = sjson.Set(body, path+"eorTimer.value", data.EorTimer.ValueInt64())
+		}
 	}
 
 	if !data.HoldtimeVariable.IsNull() {
@@ -282,8 +302,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"holdtime.value", 60)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"holdtime.optionType", "global")
-		body, _ = sjson.Set(body, path+"holdtime.value", data.Holdtime.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"holdtime.optionType", "global")
+			body, _ = sjson.Set(body, path+"holdtime.value", data.Holdtime.ValueInt64())
+		}
 	}
 
 	if !data.AdvertiseIpv4BgpVariable.IsNull() {
@@ -297,8 +319,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", data.AdvertiseIpv4Bgp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", data.AdvertiseIpv4Bgp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4OspfVariable.IsNull() {
@@ -312,8 +336,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", data.AdvertiseIpv4Ospf.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", data.AdvertiseIpv4Ospf.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4OspfV3Variable.IsNull() {
@@ -327,8 +353,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4ConnectedVariable.IsNull() {
@@ -342,8 +370,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", true)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4Connected.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4Connected.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4StaticVariable.IsNull() {
@@ -357,8 +387,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", true)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4Static.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4Static.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4EigrpVariable.IsNull() {
@@ -372,8 +404,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", data.AdvertiseIpv4Eigrp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", data.AdvertiseIpv4Eigrp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4LispVariable.IsNull() {
@@ -387,8 +421,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", data.AdvertiseIpv4Lisp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", data.AdvertiseIpv4Lisp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4IsisVariable.IsNull() {
@@ -402,8 +438,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", data.AdvertiseIpv4Isis.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", data.AdvertiseIpv4Isis.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6BgpVariable.IsNull() {
@@ -417,8 +455,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", data.AdvertiseIpv6Bgp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", data.AdvertiseIpv6Bgp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6OspfVariable.IsNull() {
@@ -432,8 +472,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", data.AdvertiseIpv6Ospf.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", data.AdvertiseIpv6Ospf.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6ConnectedVariable.IsNull() {
@@ -447,8 +489,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", data.AdvertiseIpv6Connected.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", data.AdvertiseIpv6Connected.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6StaticVariable.IsNull() {
@@ -462,8 +506,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", data.AdvertiseIpv6Static.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", data.AdvertiseIpv6Static.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6EigrpVariable.IsNull() {
@@ -477,8 +523,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", data.AdvertiseIpv6Eigrp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", data.AdvertiseIpv6Eigrp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6LispVariable.IsNull() {
@@ -492,8 +540,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", data.AdvertiseIpv6Lisp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", data.AdvertiseIpv6Lisp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6IsisVariable.IsNull() {
@@ -507,8 +557,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", data.AdvertiseIpv6Isis.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", data.AdvertiseIpv6Isis.ValueBool())
+		}
 	}
 
 	if !data.IgnoreRegionPathLengthVariable.IsNull() {
@@ -522,8 +574,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "global")
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLength.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "global")
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLength.ValueBool())
+		}
 	}
 
 	if !data.TransportGatewayVariable.IsNull() {
@@ -537,8 +591,10 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"transportGateway.optionType", "global")
-		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"transportGateway.optionType", "global")
+			body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueString())
+		}
 	}
 
 	if !data.SiteTypesVariable.IsNull() {
@@ -552,10 +608,12 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"siteTypes.optionType", "global")
-		var values []string
-		data.SiteTypes.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, path+"siteTypes.value", values)
+		if true {
+			body, _ = sjson.Set(body, path+"siteTypes.optionType", "global")
+			var values []string
+			data.SiteTypes.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"siteTypes.value", values)
+		}
 	}
 	return body
 }

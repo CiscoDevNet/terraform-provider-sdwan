@@ -107,12 +107,16 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"enableSSLVPN.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"enableSSLVPN.optionType", "global")
-		body, _ = sjson.Set(body, path+"enableSSLVPN.value", data.ConnectionTypeSsl.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"enableSSLVPN.optionType", "global")
+			body, _ = sjson.Set(body, path+"enableSSLVPN.value", data.ConnectionTypeSsl.ValueBool())
+		}
 	}
 	if !data.AnyConnectEapAuthenticationType.IsNull() {
-		body, _ = sjson.Set(body, path+"anyConnectEapAuth.optionType", "global")
-		body, _ = sjson.Set(body, path+"anyConnectEapAuth.value", data.AnyConnectEapAuthenticationType.ValueString())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"anyConnectEapAuth.optionType", "global")
+			body, _ = sjson.Set(body, path+"anyConnectEapAuth.value", data.AnyConnectEapAuthenticationType.ValueString())
+		}
 	}
 
 	if !data.Ipv4PoolSizeVariable.IsNull() {
@@ -126,8 +130,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ipv4PoolSize.value", 1000)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ipv4PoolSize.optionType", "global")
-		body, _ = sjson.Set(body, path+"ipv4PoolSize.value", data.Ipv4PoolSize.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ipv4PoolSize.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipv4PoolSize.value", data.Ipv4PoolSize.ValueInt64())
+		}
 	}
 
 	if !data.Ipv6PoolSizeVariable.IsNull() {
@@ -141,8 +147,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ipv6PoolSize.value", 1024)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ipv6PoolSize.optionType", "global")
-		body, _ = sjson.Set(body, path+"ipv6PoolSize.value", data.Ipv6PoolSize.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ipv6PoolSize.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipv6PoolSize.value", data.Ipv6PoolSize.ValueInt64())
+		}
 	}
 
 	if !data.EnableCertificateListCheckVariable.IsNull() {
@@ -156,8 +164,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"enableCrlCheck.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"enableCrlCheck.optionType", "global")
-		body, _ = sjson.Set(body, path+"enableCrlCheck.value", data.EnableCertificateListCheck.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"enableCrlCheck.optionType", "global")
+			body, _ = sjson.Set(body, path+"enableCrlCheck.value", data.EnableCertificateListCheck.ValueBool())
+		}
 	}
 
 	if !data.PskAuthenticationTypeVariable.IsNull() {
@@ -171,8 +181,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"pskAuth.pskSelection.optionType", "global")
-		body, _ = sjson.Set(body, path+"pskAuth.pskSelection.value", data.PskAuthenticationType.ValueString())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"pskAuth.pskSelection.optionType", "global")
+			body, _ = sjson.Set(body, path+"pskAuth.pskSelection.value", data.PskAuthenticationType.ValueString())
+		}
 	}
 
 	if !data.PskAuthenticationPreSharedKeyVariable.IsNull() {
@@ -181,8 +193,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.value", data.PskAuthenticationPreSharedKeyVariable.ValueString())
 		}
 	} else if !data.PskAuthenticationPreSharedKey.IsNull() {
-		body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.optionType", "global")
-		body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.value", data.PskAuthenticationPreSharedKey.ValueString())
+		if true && data.PskAuthenticationType.ValueString() == "group" {
+			body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.optionType", "global")
+			body, _ = sjson.Set(body, path+"pskAuth.preSharedKey.value", data.PskAuthenticationPreSharedKey.ValueString())
+		}
 	}
 
 	if !data.RadiusGroupNameVariable.IsNull() {
@@ -191,8 +205,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"radiusGroupName.value", data.RadiusGroupNameVariable.ValueString())
 		}
 	} else if !data.RadiusGroupName.IsNull() {
-		body, _ = sjson.Set(body, path+"radiusGroupName.optionType", "global")
-		body, _ = sjson.Set(body, path+"radiusGroupName.value", data.RadiusGroupName.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"radiusGroupName.optionType", "global")
+			body, _ = sjson.Set(body, path+"radiusGroupName.value", data.RadiusGroupName.ValueString())
+		}
 	}
 
 	if !data.AaaSpecifyNamePolicyNameVariable.IsNull() {
@@ -201,8 +217,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.policyName.value", data.AaaSpecifyNamePolicyNameVariable.ValueString())
 		}
 	} else if !data.AaaSpecifyNamePolicyName.IsNull() {
-		body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.policyName.optionType", "global")
-		body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.policyName.value", data.AaaSpecifyNamePolicyName.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.policyName.optionType", "global")
+			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.policyName.value", data.AaaSpecifyNamePolicyName.ValueString())
+		}
 	}
 
 	if !data.AaaSpecifyNamePolicyPasswordVariable.IsNull() {
@@ -211,8 +229,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.value", data.AaaSpecifyNamePolicyPasswordVariable.ValueString())
 		}
 	} else if !data.AaaSpecifyNamePolicyPassword.IsNull() {
-		body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.optionType", "global")
-		body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.value", data.AaaSpecifyNamePolicyPassword.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.optionType", "global")
+			body, _ = sjson.Set(body, path+"aaaPolicy.specifyName.password.value", data.AaaSpecifyNamePolicyPassword.ValueString())
+		}
 	}
 
 	if !data.AaaDeriveNameFromPeerIdentityVariable.IsNull() {
@@ -221,8 +241,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameIdentity.value", data.AaaDeriveNameFromPeerIdentityVariable.ValueString())
 		}
 	} else if !data.AaaDeriveNameFromPeerIdentity.IsNull() {
-		body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameIdentity.optionType", "global")
-		body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameIdentity.value", data.AaaDeriveNameFromPeerIdentity.ValueString())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameIdentity.optionType", "global")
+			body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameIdentity.value", data.AaaDeriveNameFromPeerIdentity.ValueString())
+		}
 	}
 
 	if !data.AaaDeriveNameFromPeerDomainVariable.IsNull() {
@@ -231,8 +253,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameDomain.value", data.AaaDeriveNameFromPeerDomainVariable.ValueString())
 		}
 	} else if !data.AaaDeriveNameFromPeerDomain.IsNull() {
-		body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameDomain.optionType", "global")
-		body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameDomain.value", data.AaaDeriveNameFromPeerDomain.ValueString())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameDomain.optionType", "global")
+			body, _ = sjson.Set(body, path+"aaaPolicy.deriveNameDomain.value", data.AaaDeriveNameFromPeerDomain.ValueString())
+		}
 	}
 
 	if !data.AaaEnableAccountingVariable.IsNull() {
@@ -246,8 +270,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"enableAccounting.value", true)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"enableAccounting.optionType", "global")
-		body, _ = sjson.Set(body, path+"enableAccounting.value", data.AaaEnableAccounting.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"enableAccounting.optionType", "global")
+			body, _ = sjson.Set(body, path+"enableAccounting.value", data.AaaEnableAccounting.ValueBool())
+		}
 	}
 
 	if !data.Ikev2LocalIkeIdentityTypeVariable.IsNull() {
@@ -261,8 +287,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"localIkev2IdentityType.optionType", "global")
-		body, _ = sjson.Set(body, path+"localIkev2IdentityType.value", data.Ikev2LocalIkeIdentityType.ValueString())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"localIkev2IdentityType.optionType", "global")
+			body, _ = sjson.Set(body, path+"localIkev2IdentityType.value", data.Ikev2LocalIkeIdentityType.ValueString())
+		}
 	}
 
 	if !data.Ikev2LocalIkeIdentityValueVariable.IsNull() {
@@ -276,8 +304,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"localIkev2IdentityValue.optionType", "global")
-		body, _ = sjson.Set(body, path+"localIkev2IdentityValue.value", data.Ikev2LocalIkeIdentityValue.ValueString())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"localIkev2IdentityValue.optionType", "global")
+			body, _ = sjson.Set(body, path+"localIkev2IdentityValue.value", data.Ikev2LocalIkeIdentityValue.ValueString())
+		}
 	}
 
 	if !data.Ikev2SecurityAssociationLifetimeVariable.IsNull() {
@@ -291,8 +321,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ikev2SaLifetime.value", 86400)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ikev2SaLifetime.optionType", "global")
-		body, _ = sjson.Set(body, path+"ikev2SaLifetime.value", data.Ikev2SecurityAssociationLifetime.ValueInt64())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"ikev2SaLifetime.optionType", "global")
+			body, _ = sjson.Set(body, path+"ikev2SaLifetime.value", data.Ikev2SecurityAssociationLifetime.ValueInt64())
+		}
 	}
 
 	if !data.Ikev2AntiDosThresholdVariable.IsNull() {
@@ -306,8 +338,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"antiDosThreshold.value", 100)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"antiDosThreshold.optionType", "global")
-		body, _ = sjson.Set(body, path+"antiDosThreshold.value", data.Ikev2AntiDosThreshold.ValueInt64())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"antiDosThreshold.optionType", "global")
+			body, _ = sjson.Set(body, path+"antiDosThreshold.value", data.Ikev2AntiDosThreshold.ValueInt64())
+		}
 	}
 
 	if !data.IpsecEnableAntiReplayVariable.IsNull() {
@@ -321,8 +355,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"enableAntiReplay.value", true)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"enableAntiReplay.optionType", "global")
-		body, _ = sjson.Set(body, path+"enableAntiReplay.value", data.IpsecEnableAntiReplay.ValueBool())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"enableAntiReplay.optionType", "global")
+			body, _ = sjson.Set(body, path+"enableAntiReplay.value", data.IpsecEnableAntiReplay.ValueBool())
+		}
 	}
 
 	if !data.IpsecAntiReplayWindowSizeVariable.IsNull() {
@@ -336,8 +372,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"antiReplayWindowSize.value", 64)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"antiReplayWindowSize.optionType", "global")
-		body, _ = sjson.Set(body, path+"antiReplayWindowSize.value", data.IpsecAntiReplayWindowSize.ValueInt64())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"antiReplayWindowSize.optionType", "global")
+			body, _ = sjson.Set(body, path+"antiReplayWindowSize.value", data.IpsecAntiReplayWindowSize.ValueInt64())
+		}
 	}
 
 	if !data.IpsecSecurityAssociationLifetimeVariable.IsNull() {
@@ -351,8 +389,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"ipSecSaLifetime.value", 3600)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"ipSecSaLifetime.optionType", "global")
-		body, _ = sjson.Set(body, path+"ipSecSaLifetime.value", data.IpsecSecurityAssociationLifetime.ValueInt64())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"ipSecSaLifetime.optionType", "global")
+			body, _ = sjson.Set(body, path+"ipSecSaLifetime.value", data.IpsecSecurityAssociationLifetime.ValueInt64())
+		}
 	}
 
 	if !data.IpsecEnablePerfectFowardSecrecyVariable.IsNull() {
@@ -366,8 +406,10 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"enablePFS.value", false)
 		}
 	} else {
-		body, _ = sjson.Set(body, path+"enablePFS.optionType", "global")
-		body, _ = sjson.Set(body, path+"enablePFS.value", data.IpsecEnablePerfectFowardSecrecy.ValueBool())
+		if true && data.ConnectionTypeSsl.ValueBool() == false {
+			body, _ = sjson.Set(body, path+"enablePFS.optionType", "global")
+			body, _ = sjson.Set(body, path+"enablePFS.value", data.IpsecEnablePerfectFowardSecrecy.ValueBool())
+		}
 	}
 	return body
 }
