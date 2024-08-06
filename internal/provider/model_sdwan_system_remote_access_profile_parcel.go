@@ -362,17 +362,17 @@ func (data SystemRemoteAccess) toBody(ctx context.Context) string {
 	}
 
 	if !data.IpsecAntiReplayWindowSizeVariable.IsNull() {
-		if true && data.ConnectionTypeSsl.ValueBool() == false {
+		if true && data.IpsecEnableAntiReplay.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"antiReplayWindowSize.optionType", "variable")
 			body, _ = sjson.Set(body, path+"antiReplayWindowSize.value", data.IpsecAntiReplayWindowSizeVariable.ValueString())
 		}
 	} else if data.IpsecAntiReplayWindowSize.IsNull() {
-		if true && data.ConnectionTypeSsl.ValueBool() == false {
+		if true && data.IpsecEnableAntiReplay.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"antiReplayWindowSize.optionType", "default")
 			body, _ = sjson.Set(body, path+"antiReplayWindowSize.value", 64)
 		}
 	} else {
-		if true && data.ConnectionTypeSsl.ValueBool() == false {
+		if true && data.IpsecEnableAntiReplay.ValueBool() == true {
 			body, _ = sjson.Set(body, path+"antiReplayWindowSize.optionType", "global")
 			body, _ = sjson.Set(body, path+"antiReplayWindowSize.value", data.IpsecAntiReplayWindowSize.ValueInt64())
 		}

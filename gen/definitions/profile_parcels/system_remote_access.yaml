@@ -126,8 +126,8 @@ attributes:
   - model_name: antiReplayWindowSize
     tf_name: ipsec_anti_replay_window_size
     conditional_attribute:
-      name: connection_type_ssl
-      value: false
+      name: ipsec_enable_anti_replay
+      value: true
       type: Bool
     example: 64
   - model_name: ipSecSaLifetime
