@@ -99,28 +99,6 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 					stringvalidator.OneOf("user", "device"),
 				},
 			},
-			"any_connect_eap_profile_download_status": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("NONE", "INITIALIZED", "INITIALIZED_ERROR", "COMPLETE", "COMPLETE_ERROR").AddDefaultValueDescription("NONE").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("NONE", "INITIALIZED", "INITIALIZED_ERROR", "COMPLETE", "COMPLETE_ERROR"),
-				},
-			},
-			"any_connect_eap_profile_download_status_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
-			"any_connect_eap_profile_file_name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.LengthAtLeast(1),
-				},
-			},
-			"any_connect_eap_profile_file_name_variable": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
-				Optional:            true,
-			},
 			"ipv4_pool_size": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("IPv4 Pool Size").AddDefaultValueDescription("1000").String,
 				Optional:            true,
@@ -137,11 +115,11 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"enable_crl_check": schema.BoolAttribute{
+			"enable_certificate_list_check": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"enable_crl_check_variable": schema.StringAttribute{
+			"enable_certificate_list_check_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -200,25 +178,25 @@ func (r *SystemRemoteAccessProfileParcelResource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"aaa_derive_name_identity": schema.StringAttribute{
+			"aaa_derive_name_from_peer_identity": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 25),
 				},
 			},
-			"aaa_derive_name_identity_variable": schema.StringAttribute{
+			"aaa_derive_name_from_peer_identity_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"aaa_derive_name_domain": schema.StringAttribute{
+			"aaa_derive_name_from_peer_domain": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 25),
 				},
 			},
-			"aaa_derive_name_domain_variable": schema.StringAttribute{
+			"aaa_derive_name_from_peer_domain_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

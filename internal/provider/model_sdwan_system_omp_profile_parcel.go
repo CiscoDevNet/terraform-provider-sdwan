@@ -122,324 +122,498 @@ func (data SystemOMP) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.GracefulRestartVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gracefulRestart.value", data.GracefulRestartVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "variable")
+			body, _ = sjson.Set(body, path+"gracefulRestart.value", data.GracefulRestartVariable.ValueString())
+		}
 	} else if data.GracefulRestart.IsNull() {
-		body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "default")
-		body, _ = sjson.Set(body, path+"gracefulRestart.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "default")
+			body, _ = sjson.Set(body, path+"gracefulRestart.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "global")
-		body, _ = sjson.Set(body, path+"gracefulRestart.value", data.GracefulRestart.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestart.optionType", "global")
+			body, _ = sjson.Set(body, path+"gracefulRestart.value", data.GracefulRestart.ValueBool())
+		}
 	}
 
 	if !data.OverlayAsVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"overlayAs.optionType", "variable")
-		body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAsVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"overlayAs.optionType", "variable")
+			body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAsVariable.ValueString())
+		}
 	} else if data.OverlayAs.IsNull() {
-		body, _ = sjson.Set(body, path+"overlayAs.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"overlayAs.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"overlayAs.optionType", "global")
-		body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAs.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"overlayAs.optionType", "global")
+			body, _ = sjson.Set(body, path+"overlayAs.value", data.OverlayAs.ValueInt64())
+		}
 	}
 
 	if !data.PathsAdvertisedPerPrefixVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "variable")
-		body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefixVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "variable")
+			body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefixVariable.ValueString())
+		}
 	} else if data.PathsAdvertisedPerPrefix.IsNull() {
-		body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "default")
-		body, _ = sjson.Set(body, path+"sendPathLimit.value", 4)
+		if true {
+			body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "default")
+			body, _ = sjson.Set(body, path+"sendPathLimit.value", 4)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "global")
-		body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefix.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"sendPathLimit.optionType", "global")
+			body, _ = sjson.Set(body, path+"sendPathLimit.value", data.PathsAdvertisedPerPrefix.ValueInt64())
+		}
 	}
 
 	if !data.EcmpLimitVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ecmpLimit.value", data.EcmpLimitVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ecmpLimit.value", data.EcmpLimitVariable.ValueString())
+		}
 	} else if data.EcmpLimit.IsNull() {
-		body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "default")
-		body, _ = sjson.Set(body, path+"ecmpLimit.value", 4)
+		if true {
+			body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "default")
+			body, _ = sjson.Set(body, path+"ecmpLimit.value", 4)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "global")
-		body, _ = sjson.Set(body, path+"ecmpLimit.value", data.EcmpLimit.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ecmpLimit.optionType", "global")
+			body, _ = sjson.Set(body, path+"ecmpLimit.value", data.EcmpLimit.ValueInt64())
+		}
 	}
 
 	if !data.ShutdownVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"shutdown.optionType", "variable")
-		body, _ = sjson.Set(body, path+"shutdown.value", data.ShutdownVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"shutdown.optionType", "variable")
+			body, _ = sjson.Set(body, path+"shutdown.value", data.ShutdownVariable.ValueString())
+		}
 	} else if data.Shutdown.IsNull() {
-		body, _ = sjson.Set(body, path+"shutdown.optionType", "default")
-		body, _ = sjson.Set(body, path+"shutdown.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"shutdown.optionType", "default")
+			body, _ = sjson.Set(body, path+"shutdown.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"shutdown.optionType", "global")
-		body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"shutdown.optionType", "global")
+			body, _ = sjson.Set(body, path+"shutdown.value", data.Shutdown.ValueBool())
+		}
 	}
 
 	if !data.OmpAdminDistanceIpv4Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4Variable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4Variable.ValueString())
+		}
 	} else if data.OmpAdminDistanceIpv4.IsNull() {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "default")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", 251)
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "default")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", 251)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "global")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.optionType", "global")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv4.value", data.OmpAdminDistanceIpv4.ValueInt64())
+		}
 	}
 
 	if !data.OmpAdminDistanceIpv6Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6Variable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6Variable.ValueString())
+		}
 	} else if data.OmpAdminDistanceIpv6.IsNull() {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "default")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", 251)
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "default")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", 251)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "global")
-		body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.optionType", "global")
+			body, _ = sjson.Set(body, path+"ompAdminDistanceIpv6.value", data.OmpAdminDistanceIpv6.ValueInt64())
+		}
 	}
 
 	if !data.AdvertisementIntervalVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertisementInterval.value", data.AdvertisementIntervalVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertisementInterval.value", data.AdvertisementIntervalVariable.ValueString())
+		}
 	} else if data.AdvertisementInterval.IsNull() {
-		body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertisementInterval.value", 1)
+		if true {
+			body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertisementInterval.value", 1)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertisementInterval.value", data.AdvertisementInterval.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"advertisementInterval.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertisementInterval.value", data.AdvertisementInterval.ValueInt64())
+		}
 	}
 
 	if !data.GracefulRestartTimerVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "variable")
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", data.GracefulRestartTimerVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "variable")
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", data.GracefulRestartTimerVariable.ValueString())
+		}
 	} else if data.GracefulRestartTimer.IsNull() {
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "default")
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", 43200)
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "default")
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", 43200)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "global")
-		body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", data.GracefulRestartTimer.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.optionType", "global")
+			body, _ = sjson.Set(body, path+"gracefulRestartTimer.value", data.GracefulRestartTimer.ValueInt64())
+		}
 	}
 
 	if !data.EorTimerVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"eorTimer.optionType", "variable")
-		body, _ = sjson.Set(body, path+"eorTimer.value", data.EorTimerVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"eorTimer.optionType", "variable")
+			body, _ = sjson.Set(body, path+"eorTimer.value", data.EorTimerVariable.ValueString())
+		}
 	} else if data.EorTimer.IsNull() {
-		body, _ = sjson.Set(body, path+"eorTimer.optionType", "default")
-		body, _ = sjson.Set(body, path+"eorTimer.value", 300)
+		if true {
+			body, _ = sjson.Set(body, path+"eorTimer.optionType", "default")
+			body, _ = sjson.Set(body, path+"eorTimer.value", 300)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"eorTimer.optionType", "global")
-		body, _ = sjson.Set(body, path+"eorTimer.value", data.EorTimer.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"eorTimer.optionType", "global")
+			body, _ = sjson.Set(body, path+"eorTimer.value", data.EorTimer.ValueInt64())
+		}
 	}
 
 	if !data.HoldtimeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"holdtime.optionType", "variable")
-		body, _ = sjson.Set(body, path+"holdtime.value", data.HoldtimeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"holdtime.optionType", "variable")
+			body, _ = sjson.Set(body, path+"holdtime.value", data.HoldtimeVariable.ValueString())
+		}
 	} else if data.Holdtime.IsNull() {
-		body, _ = sjson.Set(body, path+"holdtime.optionType", "default")
-		body, _ = sjson.Set(body, path+"holdtime.value", 60)
+		if true {
+			body, _ = sjson.Set(body, path+"holdtime.optionType", "default")
+			body, _ = sjson.Set(body, path+"holdtime.value", 60)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"holdtime.optionType", "global")
-		body, _ = sjson.Set(body, path+"holdtime.value", data.Holdtime.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"holdtime.optionType", "global")
+			body, _ = sjson.Set(body, path+"holdtime.value", data.Holdtime.ValueInt64())
+		}
 	}
 
 	if !data.AdvertiseIpv4BgpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", data.AdvertiseIpv4BgpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", data.AdvertiseIpv4BgpVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv4Bgp.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", data.AdvertiseIpv4Bgp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.bgp.value", data.AdvertiseIpv4Bgp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4OspfVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", data.AdvertiseIpv4OspfVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", data.AdvertiseIpv4OspfVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv4Ospf.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", data.AdvertiseIpv4Ospf.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospf.value", data.AdvertiseIpv4Ospf.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4OspfV3Variable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3Variable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3Variable.ValueString())
+		}
 	} else if data.AdvertiseIpv4OspfV3.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.ospfv3.value", data.AdvertiseIpv4OspfV3.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4ConnectedVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4ConnectedVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4ConnectedVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv4Connected.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4Connected.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.connected.value", data.AdvertiseIpv4Connected.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4StaticVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4StaticVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4StaticVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv4Static.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4Static.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.static.value", data.AdvertiseIpv4Static.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4EigrpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", data.AdvertiseIpv4EigrpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", data.AdvertiseIpv4EigrpVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv4Eigrp.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", data.AdvertiseIpv4Eigrp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.eigrp.value", data.AdvertiseIpv4Eigrp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4LispVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", data.AdvertiseIpv4LispVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", data.AdvertiseIpv4LispVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv4Lisp.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", data.AdvertiseIpv4Lisp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.lisp.value", data.AdvertiseIpv4Lisp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv4IsisVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", data.AdvertiseIpv4IsisVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", data.AdvertiseIpv4IsisVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv4Isis.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", data.AdvertiseIpv4Isis.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv4.isis.value", data.AdvertiseIpv4Isis.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6BgpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", data.AdvertiseIpv6BgpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", data.AdvertiseIpv6BgpVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv6Bgp.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", data.AdvertiseIpv6Bgp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.bgp.value", data.AdvertiseIpv6Bgp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6OspfVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", data.AdvertiseIpv6OspfVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", data.AdvertiseIpv6OspfVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv6Ospf.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", data.AdvertiseIpv6Ospf.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.ospf.value", data.AdvertiseIpv6Ospf.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6ConnectedVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", data.AdvertiseIpv6ConnectedVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", data.AdvertiseIpv6ConnectedVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv6Connected.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", data.AdvertiseIpv6Connected.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.connected.value", data.AdvertiseIpv6Connected.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6StaticVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", data.AdvertiseIpv6StaticVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", data.AdvertiseIpv6StaticVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv6Static.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", data.AdvertiseIpv6Static.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.static.value", data.AdvertiseIpv6Static.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6EigrpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", data.AdvertiseIpv6EigrpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", data.AdvertiseIpv6EigrpVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv6Eigrp.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", data.AdvertiseIpv6Eigrp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.eigrp.value", data.AdvertiseIpv6Eigrp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6LispVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", data.AdvertiseIpv6LispVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", data.AdvertiseIpv6LispVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv6Lisp.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", data.AdvertiseIpv6Lisp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.lisp.value", data.AdvertiseIpv6Lisp.ValueBool())
+		}
 	}
 
 	if !data.AdvertiseIpv6IsisVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "variable")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", data.AdvertiseIpv6IsisVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "variable")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", data.AdvertiseIpv6IsisVariable.ValueString())
+		}
 	} else if data.AdvertiseIpv6Isis.IsNull() {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "default")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "default")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "global")
-		body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", data.AdvertiseIpv6Isis.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.optionType", "global")
+			body, _ = sjson.Set(body, path+"advertiseIpv6.isis.value", data.AdvertiseIpv6Isis.ValueBool())
+		}
 	}
 
 	if !data.IgnoreRegionPathLengthVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLengthVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLengthVariable.ValueString())
+		}
 	} else if data.IgnoreRegionPathLength.IsNull() {
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "default")
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "default")
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "global")
-		body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLength.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.optionType", "global")
+			body, _ = sjson.Set(body, path+"ignoreRegionPathLength.value", data.IgnoreRegionPathLength.ValueBool())
+		}
 	}
 
 	if !data.TransportGatewayVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"transportGateway.optionType", "variable")
-		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGatewayVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"transportGateway.optionType", "variable")
+			body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGatewayVariable.ValueString())
+		}
 	} else if data.TransportGateway.IsNull() {
-		body, _ = sjson.Set(body, path+"transportGateway.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"transportGateway.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"transportGateway.optionType", "global")
-		body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"transportGateway.optionType", "global")
+			body, _ = sjson.Set(body, path+"transportGateway.value", data.TransportGateway.ValueString())
+		}
 	}
 
 	if !data.SiteTypesVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"siteTypes.optionType", "variable")
-		body, _ = sjson.Set(body, path+"siteTypes.value", data.SiteTypesVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"siteTypes.optionType", "variable")
+			body, _ = sjson.Set(body, path+"siteTypes.value", data.SiteTypesVariable.ValueString())
+		}
 	} else if data.SiteTypes.IsNull() {
-		body, _ = sjson.Set(body, path+"siteTypes.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"siteTypes.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"siteTypes.optionType", "global")
-		var values []string
-		data.SiteTypes.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, path+"siteTypes.value", values)
+		if true {
+			body, _ = sjson.Set(body, path+"siteTypes.optionType", "global")
+			var values []string
+			data.SiteTypes.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"siteTypes.value", values)
+		}
 	}
 	return body
 }

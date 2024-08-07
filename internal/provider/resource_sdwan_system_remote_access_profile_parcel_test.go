@@ -35,15 +35,13 @@ func TestAccSdwanSystemRemoteAccessProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "connection_type_ssl", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_authentication_type", "user"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_profile_download_status", "INITIALIZED"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_profile_file_name", "<form-data>"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipv4_pool_size", "50"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipv6_pool_size", "1024"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "enable_crl_check", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "enable_certificate_list_check", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "psk_authentication_type", "aaa"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "psk_authentication_pre_shared_key", "Cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "radius_group_name", "radius-1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "aaa_derive_name_identity", "MyPassword"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "aaa_derive_name_from_peer_identity", "MyPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "aaa_enable_accounting", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ikev2_local_ike_identity_type", "EMAIL"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ikev2_local_ike_identity_value", "abc@xyz.com"))
@@ -76,7 +74,6 @@ resource "sdwan_system_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
-
 `
 
 // End of section. //template:end testPrerequisites
@@ -103,15 +100,13 @@ func testAccSdwanSystemRemoteAccessProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
 	config += `	connection_type_ssl = false` + "\n"
 	config += `	any_connect_eap_authentication_type = "user"` + "\n"
-	config += `	any_connect_eap_profile_download_status = "INITIALIZED"` + "\n"
-	config += `	any_connect_eap_profile_file_name = "<form-data>"` + "\n"
 	config += `	ipv4_pool_size = 50` + "\n"
 	config += `	ipv6_pool_size = 1024` + "\n"
-	config += `	enable_crl_check = false` + "\n"
+	config += `	enable_certificate_list_check = false` + "\n"
 	config += `	psk_authentication_type = "aaa"` + "\n"
 	config += `	psk_authentication_pre_shared_key = "Cisco123"` + "\n"
 	config += `	radius_group_name = "radius-1"` + "\n"
-	config += `	aaa_derive_name_identity = "MyPassword"` + "\n"
+	config += `	aaa_derive_name_from_peer_identity = "MyPassword"` + "\n"
 	config += `	aaa_enable_accounting = false` + "\n"
 	config += `	ikev2_local_ike_identity_type = "EMAIL"` + "\n"
 	config += `	ikev2_local_ike_identity_value = "abc@xyz.com"` + "\n"

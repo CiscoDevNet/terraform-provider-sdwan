@@ -95,140 +95,210 @@ func (data SystemNTP) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	body, _ = sjson.Set(body, path+"server", []interface{}{})
-	for _, item := range data.Servers {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"server", []interface{}{})
+		for _, item := range data.Servers {
+			itemBody := ""
 
-		if !item.HostnameIpAddressVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddressVariable.ValueString())
-		} else if !item.HostnameIpAddress.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddress.ValueString())
+			if !item.HostnameIpAddressVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddressVariable.ValueString())
+				}
+			} else if !item.HostnameIpAddress.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "name.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "name.value", item.HostnameIpAddress.ValueString())
+				}
+			}
+
+			if !item.AuthenticationKeyVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "key.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "key.value", item.AuthenticationKeyVariable.ValueString())
+				}
+			} else if item.AuthenticationKey.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "key.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "key.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "key.value", item.AuthenticationKey.ValueInt64())
+				}
+			}
+
+			if !item.VpnVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
+				}
+			} else if item.Vpn.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				}
+			}
+
+			if !item.NtpVersionVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "version.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "version.value", item.NtpVersionVariable.ValueString())
+				}
+			} else if item.NtpVersion.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "version.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "version.value", 4)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "version.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "version.value", item.NtpVersion.ValueInt64())
+				}
+			}
+
+			if !item.SourceInterfaceVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
+				}
+			} else if item.SourceInterface.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
+				}
+			}
+
+			if !item.PreferThisNtpServerVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "prefer.value", item.PreferThisNtpServerVariable.ValueString())
+				}
+			} else if item.PreferThisNtpServer.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "prefer.value", false)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "prefer.value", item.PreferThisNtpServer.ValueBool())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"server.-1", itemBody)
 		}
-
-		if !item.AuthenticationKeyVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "key.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "key.value", item.AuthenticationKeyVariable.ValueString())
-		} else if item.AuthenticationKey.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "key.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "key.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "key.value", item.AuthenticationKey.ValueInt64())
-		}
-
-		if !item.VpnVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
-		} else if item.Vpn.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "vpn.value", 0)
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
-		}
-
-		if !item.NtpVersionVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "version.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "version.value", item.NtpVersionVariable.ValueString())
-		} else if item.NtpVersion.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "version.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "version.value", 4)
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "version.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "version.value", item.NtpVersion.ValueInt64())
-		}
-
-		if !item.SourceInterfaceVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterfaceVariable.ValueString())
-		} else if item.SourceInterface.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "sourceInterface.value", item.SourceInterface.ValueString())
-		}
-
-		if !item.PreferThisNtpServerVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "prefer.value", item.PreferThisNtpServerVariable.ValueString())
-		} else if item.PreferThisNtpServer.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "prefer.value", false)
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "prefer.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "prefer.value", item.PreferThisNtpServer.ValueBool())
-		}
-		body, _ = sjson.SetRaw(body, path+"server.-1", itemBody)
 	}
-	body, _ = sjson.Set(body, path+"authentication.authenticationKeys", []interface{}{})
-	for _, item := range data.AuthenticationKeys {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"authentication.authenticationKeys", []interface{}{})
+		for _, item := range data.AuthenticationKeys {
+			itemBody := ""
 
-		if !item.KeyIdVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "keyId.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "keyId.value", item.KeyIdVariable.ValueString())
-		} else if !item.KeyId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "keyId.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "keyId.value", item.KeyId.ValueInt64())
-		}
+			if !item.KeyIdVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "keyId.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "keyId.value", item.KeyIdVariable.ValueString())
+				}
+			} else if !item.KeyId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "keyId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "keyId.value", item.KeyId.ValueInt64())
+				}
+			}
 
-		if !item.Md5ValueVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5ValueVariable.ValueString())
-		} else if !item.Md5Value.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5Value.ValueString())
+			if !item.Md5ValueVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5ValueVariable.ValueString())
+				}
+			} else if !item.Md5Value.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "md5Value.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "md5Value.value", item.Md5Value.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"authentication.authenticationKeys.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"authentication.authenticationKeys.-1", itemBody)
 	}
 
 	if !data.TrustedKeysVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "variable")
-		body, _ = sjson.Set(body, path+"authentication.trustedKeys.value", data.TrustedKeysVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "variable")
+			body, _ = sjson.Set(body, path+"authentication.trustedKeys.value", data.TrustedKeysVariable.ValueString())
+		}
 	} else if data.TrustedKeys.IsNull() {
-		body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "global")
-		var values []int64
-		data.TrustedKeys.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, path+"authentication.trustedKeys.value", values)
+		if true {
+			body, _ = sjson.Set(body, path+"authentication.trustedKeys.optionType", "global")
+			var values []int64
+			data.TrustedKeys.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"authentication.trustedKeys.value", values)
+		}
 	}
 
 	if !data.AuthoritativeNtpServerVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"leader.enable.optionType", "variable")
-		body, _ = sjson.Set(body, path+"leader.enable.value", data.AuthoritativeNtpServerVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.enable.optionType", "variable")
+			body, _ = sjson.Set(body, path+"leader.enable.value", data.AuthoritativeNtpServerVariable.ValueString())
+		}
 	} else if data.AuthoritativeNtpServer.IsNull() {
-		body, _ = sjson.Set(body, path+"leader.enable.optionType", "default")
-		body, _ = sjson.Set(body, path+"leader.enable.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"leader.enable.optionType", "default")
+			body, _ = sjson.Set(body, path+"leader.enable.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"leader.enable.optionType", "global")
-		body, _ = sjson.Set(body, path+"leader.enable.value", data.AuthoritativeNtpServer.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.enable.optionType", "global")
+			body, _ = sjson.Set(body, path+"leader.enable.value", data.AuthoritativeNtpServer.ValueBool())
+		}
 	}
 
 	if !data.StratumVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"leader.stratum.optionType", "variable")
-		body, _ = sjson.Set(body, path+"leader.stratum.value", data.StratumVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.stratum.optionType", "variable")
+			body, _ = sjson.Set(body, path+"leader.stratum.value", data.StratumVariable.ValueString())
+		}
 	} else if data.Stratum.IsNull() {
-		body, _ = sjson.Set(body, path+"leader.stratum.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"leader.stratum.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"leader.stratum.optionType", "global")
-		body, _ = sjson.Set(body, path+"leader.stratum.value", data.Stratum.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.stratum.optionType", "global")
+			body, _ = sjson.Set(body, path+"leader.stratum.value", data.Stratum.ValueInt64())
+		}
 	}
 
 	if !data.SourceInterfaceVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"leader.source.optionType", "variable")
-		body, _ = sjson.Set(body, path+"leader.source.value", data.SourceInterfaceVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.source.optionType", "variable")
+			body, _ = sjson.Set(body, path+"leader.source.value", data.SourceInterfaceVariable.ValueString())
+		}
 	} else if data.SourceInterface.IsNull() {
-		body, _ = sjson.Set(body, path+"leader.source.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"leader.source.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"leader.source.optionType", "global")
-		body, _ = sjson.Set(body, path+"leader.source.value", data.SourceInterface.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"leader.source.optionType", "global")
+			body, _ = sjson.Set(body, path+"leader.source.value", data.SourceInterface.ValueString())
+		}
 	}
 	return body
 }
