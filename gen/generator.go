@@ -257,6 +257,7 @@ type YamlConfigAttribute struct {
 	TestValue               string                         `yaml:"test_value"`
 	MinimumTestValue        string                         `yaml:"minimum_test_value"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
+	AlwaysIncludeParent     bool                           `yaml:"always_include_parent"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
 	ConditionalListLength   string                         `yaml:"conditional_list_length"`
@@ -718,6 +719,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	attr.Description = r.Get("description").String()
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
+	}
+
+	if attr.AlwaysIncludeParent {
+		fmt.Println(path)
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
