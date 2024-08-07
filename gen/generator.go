@@ -721,10 +721,6 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 		attr.TfName = SnakeCase(attr.ModelName)
 	}
 
-	if attr.AlwaysIncludeParent {
-		fmt.Println(path)
-	}
-
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {
 		noGlobal := false
 
