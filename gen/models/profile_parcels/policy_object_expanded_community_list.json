@@ -1,0 +1,110 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/expanded-community/common/request_schema.json",
+      "title": "Expanded Community List Parcel Schema",
+      "description": "expanded Community list profile parcel schema",
+      "type": "object",
+      "properties": {
+          "name": {
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 32
+          },
+          "description": {
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                  "expandedCommunityList": {
+                      "description": "Expanded Community List",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "array",
+                                      "items": {
+                                          "uniqueItems": true,
+                                          "type": "string",
+                                          "additionalProperties": false
+                                      }
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  }
+              },
+              "required": [
+                  "expandedCommunityList"
+              ],
+              "additionalProperties": false
+          },
+          "documentation": {
+              "description": "This is the documentation for expanded community profile parcel",
+              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+              "details-2": "variable name should not be present if optionType value is NOT variable",
+              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+              "examples": [
+                  {
+                      "data": {
+                          "expandedCommunityList": {
+                              "optionType": "global",
+                              "value": [
+                                  "123456any",
+                                  "abcd"
+                              ]
+                          }
+                      },
+                      "name": "expandedCommunityList"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "name",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "documentation"
+          ]
+      }
+  }
+}

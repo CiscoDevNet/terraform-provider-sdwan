@@ -256,6 +256,7 @@ type YamlConfigAttribute struct {
 	Value                   string                         `yaml:"value"`
 	TestValue               string                         `yaml:"test_value"`
 	MinimumTestValue        string                         `yaml:"minimum_test_value"`
+	TestEnvName             string                         `yaml:"test_env_name"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
 	AlwaysIncludeParent     bool                           `yaml:"always_include_parent"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
@@ -677,6 +678,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	if attr.ModelName == "" {
 		return
 	}
+
 	path := ""
 	for i, e := range attr.DataPath {
 		// Check if the next element is a oneOf
