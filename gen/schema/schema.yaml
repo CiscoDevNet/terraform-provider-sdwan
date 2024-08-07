@@ -70,6 +70,7 @@ attribute:
   test_value: str(required=False) # Value used for acceptance test
   minimum_test_value: any(str(), int(), bool(), num(), required=False) # Value used for "minimum" resource acceptance test
   always_include: bool(required=False) # Include attribute always in payload
+  always_include_parent: bool(required=False) # Include attributes parent always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true
   conditional_list_length: str(required=False) # Add attribute to payload only if referenced list has a length greater than 0
