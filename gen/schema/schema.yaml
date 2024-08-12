@@ -68,7 +68,9 @@ attribute:
   default_value_empty_string: bool(required=False) # Set to true if default value should be an empty string
   value: any(str(), int(), bool(), required=False) # Hardcoded value for the attribute
   test_value: str(required=False) # Value used for acceptance test
+  secondary_test_value: str(required=False) # Value used for acceptance test
   minimum_test_value: any(str(), int(), bool(), num(), required=False) # Value used for "minimum" resource acceptance test
+  exclude_minimum_test: bool(required=False)
   always_include: bool(required=False) # Include attribute always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true

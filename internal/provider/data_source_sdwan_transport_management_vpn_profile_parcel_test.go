@@ -86,23 +86,34 @@ func testAccDataSourceSdwanTransportManagementVPNProfileParcelConfig() string {
 	config += `	secondary_dns_address_ipv6 = "2001:0:0:2::0"` + "\n"
 	config += `	new_host_mappings = [{` + "\n"
 	config += `	  host_name = "example"` + "\n"
+
 	config += `	  list_of_ip_addresses = ["1.2.3.4"]` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv4_static_routes = [{` + "\n"
 	config += `	  network_address = "1.2.3.4"` + "\n"
+
 	config += `	  subnet_mask = "0.0.0.0"` + "\n"
+
 	config += `	  gateway = "nextHop"` + "\n"
+
 	config += `	  next_hops = [{` + "\n"
 	config += `		address = "1.2.3.4"` + "\n"
+
 	config += `		administrative_distance = 1` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	  administrative_distance = 1` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv6_static_routes = [{` + "\n"
 	config += `	  prefix = "2002::/16"` + "\n"
+
 	config += `	  next_hops = [{` + "\n"
 	config += `		address = "2001:0:0:1::1"` + "\n"
+
 	config += `		administrative_distance = 1` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"

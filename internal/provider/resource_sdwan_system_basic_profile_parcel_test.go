@@ -117,6 +117,7 @@ func testAccSdwanSystemBasicProfileParcelConfig_all() string {
 	config += `	gps_sms_enable = true` + "\n"
 	config += `	gps_sms_mobile_numbers = [{` + "\n"
 	config += `	  number = "+11111233"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	device_groups = ["example"]` + "\n"
 	config += `	controller_groups = [1]` + "\n"
@@ -142,7 +143,9 @@ func testAccSdwanSystemBasicProfileParcelConfig_all() string {
 	config += `	affinity_preference_auto = false` + "\n"
 	config += `	affinity_per_vrfs = [{` + "\n"
 	config += `	  affinity_group_number = 1` + "\n"
+
 	config += `	  vrf_range = "123-456"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config

@@ -76,10 +76,15 @@ func testAccDataSourceSdwanSystemBFDProfileParcelConfig() string {
 	config += `	default_dscp = 8` + "\n"
 	config += `	colors = [{` + "\n"
 	config += `	  color = "3g"` + "\n"
+
 	config += `	  hello_interval = 200` + "\n"
+
 	config += `	  multiplier = 3` + "\n"
+
 	config += `	  pmtu_discovery = true` + "\n"
+
 	config += `	  dscp = 16` + "\n"
+
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

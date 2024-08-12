@@ -34,7 +34,6 @@ func TestAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcel(t *testing.T) 
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_profile_parcel.test", "tracker_name", "TRACKER_GROUP_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_profile_parcel.test", "tracker_elements.0.tracker_id", "615d948f-34ee-4a2e-810e-a9bd8d3d48ec"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_profile_parcel.test", "tracker_boolean", "or"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -57,8 +56,23 @@ resource "sdwan_transport_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_transport_ipv6_tracker_profile_parcel" "test" {
-  name                  = "TF_TEST"
+resource "sdwan_transport_ipv6_tracker_profile_parcel" "test-1" {
+  name                  = "TF_TEST_1"
+  description           = "Terraform Test"
+  feature_profile_id    = sdwan_transport_feature_profile.test.id
+  tracker_name          = "TRACKER_1"
+  endpoint_api_url      = "google.com"
+  endpoint_dns_name     = "google.com"
+  endpoint_ip           = "2001:0:0:1::0"
+  interval              = 30
+  multiplier            = 3
+  threshold             = 300
+  endpoint_tracker_type = "ipv6-interface"
+  tracker_type          = "endpoint"
+}
+
+resource "sdwan_transport_ipv6_tracker_profile_parcel" "test-2" {
+  name                  = "TF_TEST_2"
   description           = "Terraform Test"
   feature_profile_id    = sdwan_transport_feature_profile.test.id
   tracker_name          = "TRACKER_1"
@@ -83,7 +97,9 @@ func testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelConfig() string
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	tracker_name = "TRACKER_GROUP_1"` + "\n"
 	config += `	tracker_elements = [{` + "\n"
-	config += `	  tracker_id = sdwan_transport_ipv6_tracker_profile_parcel.test.id` + "\n"
+	config += `	  tracker_id = sdwan_transport_ipv6_tracker_profile_parcel.test-1.id` + "\n"
+	config += `	}, {` + "\n"
+	config += `	  tracker_id = sdwan_transport_ipv6_tracker_profile_parcel.test-2.id` + "\n"
 	config += `	}]` + "\n"
 	config += `	tracker_boolean = "or"` + "\n"
 	config += `}` + "\n"

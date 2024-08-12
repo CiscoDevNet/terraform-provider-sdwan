@@ -238,8 +238,11 @@ func testAccSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig_all() str
 	config += `	tunnel_interface_allow_bfd = false` + "\n"
 	config += `	tunnel_interface_encapsulations = [{` + "\n"
 	config += `	  encapsulation = "gre"` + "\n"
+
 	config += `	  preference = 4294967` + "\n"
+
 	config += `	  weight = 250` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	tcp_mss = 1460` + "\n"
 	config += `	mtu = 1500` + "\n"

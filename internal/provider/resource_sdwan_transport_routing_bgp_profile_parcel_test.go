@@ -166,80 +166,133 @@ func testAccSdwanTransportRoutingBGPProfileParcelConfig_all() string {
 	config += `	multipath_relax = false` + "\n"
 	config += `	ipv4_neighbors = [{` + "\n"
 	config += `	  address = "1.2.3.4"` + "\n"
+
 	config += `	  description = "neighbor1"` + "\n"
+
 	config += `	  shutdown = false` + "\n"
+
 	config += `	  remote_as = 200` + "\n"
+
 	config += `	  local_as = 200` + "\n"
+
 	config += `	  keepalive_time = 40` + "\n"
+
 	config += `	  hold_time = 200` + "\n"
+
 	config += `	  update_source_interface = "GigabitEthernet0"` + "\n"
+
 	config += `	  next_hop_self = false` + "\n"
+
 	config += `	  send_community = true` + "\n"
+
 	config += `	  send_extended_community = true` + "\n"
+
 	config += `	  ebgp_multihop = 1` + "\n"
+
 	config += `	  password = "myPassword"` + "\n"
+
 	config += `	  send_label = true` + "\n"
+
 	config += `	  explicit_null = false` + "\n"
+
 	config += `	  as_override = false` + "\n"
+
 	config += `	  allowas_in_number = 1` + "\n"
+
 	config += `	  address_families = [{` + "\n"
 	config += `		family_type = "ipv4-unicast"` + "\n"
+
 	config += `		max_number_of_prefixes = 2000` + "\n"
+
 	config += `		threshold = 75` + "\n"
+
 	config += `		policy_type = "restart"` + "\n"
+
 	config += `		restart_interval = 30` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_neighbors = [{` + "\n"
 	config += `	  address = "2001::1"` + "\n"
+
 	config += `	  description = "neighbor2"` + "\n"
+
 	config += `	  shutdown = false` + "\n"
+
 	config += `	  remote_as = 200` + "\n"
+
 	config += `	  local_as = 200` + "\n"
+
 	config += `	  keepalive_time = 180` + "\n"
+
 	config += `	  hold_time = 60` + "\n"
+
 	config += `	  update_source_interface = "Loopback1"` + "\n"
+
 	config += `	  next_hop_self = true` + "\n"
+
 	config += `	  send_community = true` + "\n"
+
 	config += `	  send_extended_community = true` + "\n"
+
 	config += `	  ebgp_multihop = 3` + "\n"
+
 	config += `	  password = "myPassword"` + "\n"
+
 	config += `	  as_override = true` + "\n"
+
 	config += `	  allowas_in_number = 3` + "\n"
+
 	config += `	  address_families = [{` + "\n"
 	config += `		family_type = "ipv6-unicast"` + "\n"
+
 	config += `		max_number_of_prefixes = 2000` + "\n"
+
 	config += `		threshold = 75` + "\n"
+
 	config += `		policy_type = "restart"` + "\n"
+
 	config += `		restart_interval = 30` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv4_aggregate_addresses = [{` + "\n"
 	config += `	  network_address = "10.10.0.0"` + "\n"
+
 	config += `	  subnet_mask = "255.255.0.0"` + "\n"
+
 	config += `	  as_set_path = false` + "\n"
+
 	config += `	  summary_only = false` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv4_networks = [{` + "\n"
 	config += `	  network_address = "10.10.0.0"` + "\n"
+
 	config += `	  subnet_mask = "255.255.0.0"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv4_eibgp_maximum_paths = 1` + "\n"
 	config += `	ipv4_originate = false` + "\n"
 	config += `	ipv4_table_map_filter = false` + "\n"
 	config += `	ipv6_aggregate_addresses = [{` + "\n"
 	config += `	  aggregate_prefix = "3001::1/128"` + "\n"
+
 	config += `	  as_set_path = false` + "\n"
+
 	config += `	  summary_only = false` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv6_networks = [{` + "\n"
 	config += `	  network_prefix = "2001:0DB8:0000:000b::/64"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv6_eibgp_maximum_paths = 2` + "\n"
 	config += `	ipv6_originate = true` + "\n"
 	config += `	ipv6_table_map_filter = false` + "\n"
 	config += `	mpls_interfaces = [{` + "\n"
 	config += `	  interface_name = "GigabitEthernet1"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config

@@ -72,9 +72,13 @@ func testAccDataSourceSdwanSystemIPv6DeviceAccessProfileParcelConfig() string {
 	config += `	default_action = "drop"` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  id = 1` + "\n"
+
 	config += `	  name = "SEQ_1"` + "\n"
+
 	config += `	  base_action = "accept"` + "\n"
+
 	config += `	  device_access_port = 22` + "\n"
+
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

@@ -11,7 +11,7 @@ attributes:
     mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: sdwan_transport_feature_profile.test.id1
+    test_value: sdwan_transport_feature_profile.test.id
   - model_name: trackerRefs
     tf_name: tracker_elements
     attributes:
@@ -19,8 +19,10 @@ attributes:
       tf_name: tracker_id
       data_path: [trackerRef]
       id: true
+      mandatory: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
-      test_value: sdwan_transport_tracker_profile_parcel.test.id
+      test_value: sdwan_transport_tracker_profile_parcel.test-1.id
+      secondary_test_value: sdwan_transport_tracker_profile_parcel.test-2.id
   - model_name: combineBoolean
     tf_name: tracker_boolean
     example: or
@@ -31,8 +33,23 @@ test_prerequisites: |
     description = "Terraform test"
   }
 
-  resource "sdwan_transport_tracker_profile_parcel" "test" {
-    name                  = "TF_TEST"
+  resource "sdwan_transport_tracker_profile_parcel" "test-1" {
+    name                  = "TF_TEST_1"
+    description           = "Terraform Test"
+    feature_profile_id    = sdwan_transport_feature_profile.test.id
+    tracker_name          = "TRACKER_1"
+    endpoint_api_url      = "google.com"
+    endpoint_dns_name     = "google.com"
+    endpoint_ip           = "1.2.3.4"
+    interval              = 30
+    multiplier            = 3
+    threshold             = 300
+    endpoint_tracker_type = "interface"
+    tracker_type          = "endpoint"
+  }
+
+  resource "sdwan_transport_tracker_profile_parcel" "test-2" {
+    name                  = "TF_TEST_2"
     description           = "Terraform Test"
     feature_profile_id    = sdwan_transport_feature_profile.test.id
     tracker_name          = "TRACKER_1"

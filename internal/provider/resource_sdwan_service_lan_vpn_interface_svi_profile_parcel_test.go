@@ -134,46 +134,70 @@ func testAccSdwanServiceLANVPNInterfaceSVIProfileParcelConfig_all() string {
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"
 	config += `	  address = "2.3.4.5"` + "\n"
+
 	config += `	  ipv4_subnet_mask = "0.0.0.0"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv4_dhcp_helpers = ["4.5.6.7"]` + "\n"
 	config += `	ipv6_address = "2001:0:0:1::0/32"` + "\n"
 	config += `	ipv6_secondary_addresses = [{` + "\n"
 	config += `	  address = "::2/32"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv6_dhcp_helpers = [{` + "\n"
 	config += `	  address = "2001:0:0:1::0"` + "\n"
+
 	config += `	  vpn = 1` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	arps = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
+
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv4_vrrps = [{` + "\n"
 	config += `	  group_id = 1` + "\n"
+
 	config += `	  priority = 100` + "\n"
+
 	config += `	  timer = 1000` + "\n"
+
 	config += `	  track_omp = false` + "\n"
+
 	config += `	  prefix_list = "prefix"` + "\n"
+
 	config += `	  address = "1.2.3.4"` + "\n"
+
 	config += `	  secondary_addresses = [{` + "\n"
 	config += `		address = "2.3.4.5"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	  tloc_prefix_change = true` + "\n"
+
 	config += `	  tloc_prefix_change_value = 100` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	ipv6_vrrps = [{` + "\n"
 	config += `	  group_id = 1` + "\n"
+
 	config += `	  priority = 100` + "\n"
+
 	config += `	  timer = 1000` + "\n"
+
 	config += `	  track_omp = false` + "\n"
+
 	config += `	  track_prefix_list = "1"` + "\n"
+
 	config += `	  addresses = [{` + "\n"
 	config += `		link_local_address = "1::1"` + "\n"
+
 	config += `		global_address = "1::1/24"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	  secondary_addresses = [{` + "\n"
 	config += `		prefix = "::20/32"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `	enable_dhcpv6 = false` + "\n"

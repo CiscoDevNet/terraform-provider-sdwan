@@ -70,9 +70,13 @@ func testAccDataSourceSdwanApplicationPriorityQoSPolicyProfileParcelConfig() str
 	config += `	target_interface = ["{{interface_var_1}}"]` + "\n"
 	config += `	qos_schedulers = [{` + "\n"
 	config += `	  drops = "tail-drop"` + "\n"
+
 	config += `	  queue = "0"` + "\n"
+
 	config += `	  bandwidth = "10"` + "\n"
+
 	config += `	  scheduling_type = "llq"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

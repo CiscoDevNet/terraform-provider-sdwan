@@ -142,9 +142,9 @@ func (data *ServiceTrackerGroup) updateFromBody(ctx context.Context, res gjson.R
 	}
 	path := "payload.data."
 	for i := range data.TrackerElements {
-		keys := [...]string{}
-		keyValues := [...]string{}
-		keyValuesVariables := [...]string{}
+		keys := [...]string{"trackerRef.refId"}
+		keyValues := [...]string{data.TrackerElements[i].TrackerId.ValueString()}
+		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
 		res.Get(path + "trackerRefs").ForEach(

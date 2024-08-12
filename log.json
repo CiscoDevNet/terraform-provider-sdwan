@@ -1,0 +1,33 @@
+2024-08-12T12:54:38.462+0100 [INFO]  Terraform version: 1.5.4
+2024-08-12T12:54:38.463+0100 [DEBUG] using github.com/hashicorp/go-tfe v1.26.0
+2024-08-12T12:54:38.463+0100 [DEBUG] using github.com/hashicorp/hcl/v2 v2.16.2
+2024-08-12T12:54:38.463+0100 [DEBUG] using github.com/hashicorp/terraform-svchost v0.1.0
+2024-08-12T12:54:38.463+0100 [DEBUG] using github.com/zclconf/go-cty v1.12.2
+2024-08-12T12:54:38.463+0100 [INFO]  Go runtime version: go1.20.6
+2024-08-12T12:54:38.463+0100 [INFO]  CLI args: []string{"terraform", "fmt", "-recursive", "./examples/"}
+2024-08-12T12:54:38.463+0100 [DEBUG] Attempting to open CLI config file: /Users/seconroy/.terraformrc
+2024-08-12T12:54:38.463+0100 [INFO]  Loading CLI configuration from /Users/seconroy/.terraformrc
+2024-08-12T12:54:38.465+0100 [DEBUG] Explicit provider installation configuration is set
+2024-08-12T12:54:38.468+0100 [INFO]  CLI command args: []string{"fmt", "-recursive", "./examples/"}
+2024-08-12T13:13:25.208+0100 [INFO]  Terraform version: 1.5.4
+2024-08-12T13:13:25.209+0100 [DEBUG] using github.com/hashicorp/go-tfe v1.26.0
+2024-08-12T13:13:25.209+0100 [DEBUG] using github.com/hashicorp/hcl/v2 v2.16.2
+2024-08-12T13:13:25.209+0100 [DEBUG] using github.com/hashicorp/terraform-svchost v0.1.0
+2024-08-12T13:13:25.209+0100 [DEBUG] using github.com/zclconf/go-cty v1.12.2
+2024-08-12T13:13:25.209+0100 [INFO]  Go runtime version: go1.20.6
+2024-08-12T13:13:25.209+0100 [INFO]  CLI args: []string{"terraform", "fmt", "-recursive", "./examples/"}
+2024-08-12T13:13:25.210+0100 [DEBUG] Attempting to open CLI config file: /Users/seconroy/.terraformrc
+2024-08-12T13:13:25.210+0100 [INFO]  Loading CLI configuration from /Users/seconroy/.terraformrc
+2024-08-12T13:13:25.213+0100 [DEBUG] Explicit provider installation configuration is set
+2024-08-12T13:13:25.215+0100 [INFO]  CLI command args: []string{"fmt", "-recursive", "./examples/"}
+2024-08-12T13:18:41.360+0100 [INFO]  Terraform version: 1.5.4
+2024-08-12T13:18:41.361+0100 [DEBUG] using github.com/hashicorp/go-tfe v1.26.0
+2024-08-12T13:18:41.361+0100 [DEBUG] using github.com/hashicorp/hcl/v2 v2.16.2
+2024-08-12T13:18:41.361+0100 [DEBUG] using github.com/hashicorp/terraform-svchost v0.1.0
+2024-08-12T13:18:41.361+0100 [DEBUG] using github.com/zclconf/go-cty v1.12.2
+2024-08-12T13:18:41.361+0100 [INFO]  Go runtime version: go1.20.6
+2024-08-12T13:18:41.361+0100 [INFO]  CLI args: []string{"terraform", "fmt", "-recursive", "./examples/"}
+2024-08-12T13:18:41.362+0100 [DEBUG] Attempting to open CLI config file: /Users/seconroy/.terraformrc
+2024-08-12T13:18:41.362+0100 [INFO]  Loading CLI configuration from /Users/seconroy/.terraformrc
+2024-08-12T13:18:41.363+0100 [DEBUG] Explicit provider installation configuration is set
+2024-08-12T13:18:41.365+0100 [INFO]  CLI command args: []string{"fmt", "-recursive", "./examples/"}

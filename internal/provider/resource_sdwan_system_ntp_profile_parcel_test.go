@@ -91,15 +91,23 @@ func testAccSdwanSystemNTPProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
 	config += `	servers = [{` + "\n"
 	config += `	  hostname_ip_address = "1.1.1.1"` + "\n"
+
 	config += `	  authentication_key = 41673` + "\n"
+
 	config += `	  vpn = 1` + "\n"
+
 	config += `	  ntp_version = 4` + "\n"
+
 	config += `	  source_interface = "Ethernet"` + "\n"
+
 	config += `	  prefer_this_ntp_server = false` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	authentication_keys = [{` + "\n"
 	config += `	  key_id = 49737` + "\n"
+
 	config += `	  md5_value = "$CRYPT_CLUSTER"` + "\n"
+
 	config += `	}]` + "\n"
 	config += `	trusted_keys = [49737]` + "\n"
 	config += `	authoritative_ntp_server = false` + "\n"
