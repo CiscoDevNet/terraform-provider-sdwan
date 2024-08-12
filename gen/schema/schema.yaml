@@ -25,6 +25,7 @@ no_data_source: bool(required=False) # Set to true if no data source should be c
 no_resource: bool(required=False) # Set to true if no resource should be created
 get_before_delete: bool(required=False) # This does a GET "all" before doing a DELETE, which is a workaround for an API issue with some endpoints where the reference count is not updated otherwise
 delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually exclusive with other DELETE operations
+exclude_minimum_test: bool(required=False) # Set to true to prevent "minimum" resource acceptance testing
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
@@ -70,7 +71,6 @@ attribute:
   test_value: str(required=False) # Value used for acceptance test
   secondary_test_value: str(required=False) # Value used for acceptance test
   minimum_test_value: any(str(), int(), bool(), num(), required=False) # Value used for "minimum" resource acceptance test
-  exclude_minimum_test: bool(required=False)
   always_include: bool(required=False) # Include attribute always in payload
   always_include_parent: bool(required=False) # Include attributes parent always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
