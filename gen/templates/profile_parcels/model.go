@@ -171,6 +171,8 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if data.{{toGoName .TfName}}.IsNull() {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 		{{if or .DefaultValue .DefaultValueEmptyString}}body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+	} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 	} else {{else}}if !data.{{toGoName .TfName}}.IsNull(){{end}} {
 		body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 		{{- if isListSet .}}
@@ -197,6 +199,8 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 		} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if item.{{toGoName .TfName}}.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 			{{if or .DefaultValue .DefaultValueEmptyString}}itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+		} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
+			body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 		} else {{else}}if !item.{{toGoName .TfName}}.IsNull(){{end}} {
 			itemBody, _ = sjson.Set(itemBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 			{{- if isListSet .}}
@@ -223,6 +227,8 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 			} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childItem.{{toGoName .TfName}}.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 				{{if or .DefaultValue .DefaultValueEmptyString}}itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+			} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
+				body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 			} else {{else}}if !childItem.{{toGoName .TfName}}.IsNull(){{end}} {
 				itemChildBody, _ = sjson.Set(itemChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 				{{- if isListSet .}}
@@ -249,6 +255,8 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 				} else {{end}}{{if and .DefaultValuePresent (not .ExcludeNull)}}if childChildItem.{{toGoName .TfName}}.IsNull() {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "default")
 					{{if or .DefaultValue .DefaultValueEmptyString}}itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.value", {{if eq .Type "String"}}"{{end}}{{.DefaultValue}}{{if eq .Type "String"}}"{{end}}){{end}}
+				} else {{else if .AlwaysIncludeParent }}if data.{{toGoName .TfName}}.IsNull() {
+					body, _ = sjson.Set(body, path+"{{range .DataPath}}{{.}}.{{end}}optionType", "default")
 				} else {{else}}if !childChildItem.{{toGoName .TfName}}.IsNull(){{end}} {
 					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "{{range .DataPath}}{{.}}.{{end}}{{.ModelName}}.optionType", "global")
 					{{- if isListSet .}}

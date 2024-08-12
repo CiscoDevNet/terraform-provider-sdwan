@@ -937,7 +937,9 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"addressFamily.originate.optionType", "global")
 		body, _ = sjson.Set(body, path+"addressFamily.originate.value", data.Ipv4Originate.ValueBool())
 	}
-	if !data.Ipv4TableMapRoutePolicyId.IsNull() {
+	if data.Ipv4TableMapRoutePolicyId.IsNull() {
+		body, _ = sjson.Set(body, path+"addressFamily.name.optionType", "default")
+	} else {
 		body, _ = sjson.Set(body, path+"addressFamily.name.refId.optionType", "global")
 		body, _ = sjson.Set(body, path+"addressFamily.name.refId.value", data.Ipv4TableMapRoutePolicyId.ValueString())
 	}
@@ -1039,7 +1041,9 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.originate.optionType", "global")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.originate.value", data.Ipv6Originate.ValueBool())
 	}
-	if !data.Ipv6TableMapRoutePolicyId.IsNull() {
+	if data.Ipv6TableMapRoutePolicyId.IsNull() {
+		body, _ = sjson.Set(body, path+"ipv6AddressFamily.name.optionType", "default")
+	} else {
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.name.refId.optionType", "global")
 		body, _ = sjson.Set(body, path+"ipv6AddressFamily.name.refId.value", data.Ipv6TableMapRoutePolicyId.ValueString())
 	}
