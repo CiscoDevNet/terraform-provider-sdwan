@@ -190,7 +190,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `iperf_server_variable` (String) Variable name
 - `ipv4_address` (String) IP Address, Attribute conditional on `ipv4_configuration_type` being equal to `static`
 - `ipv4_address_variable` (String) Variable name
-- `ipv4_configuration_type` (String) test
+- `ipv4_configuration_type` (String) IPv4 Configuration Type
   - Choices: `dynamic`, `static`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
   - Range: `1`-`65536`
@@ -204,7 +204,7 @@ resource "sdwan_transport_wan_vpn_interface_ethernet_profile_parcel" "example" {
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` being equal to `static`
 - `ipv6_address_variable` (String) Variable name
-- `ipv6_configuration_type` (String) test
+- `ipv6_configuration_type` (String) IPv6 Configuration Type
   - Choices: `dynamic`, `static`, `none`
 - `ipv6_dhcp_secondary_address` (Attributes List) secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `dynamic` (see [below for nested schema](#nestedatt--ipv6_dhcp_secondary_address))
 - `ipv6_secondary_addresses` (Attributes List) Static secondary IPv6 addresses, Attribute conditional on `ipv6_configuration_type` being equal to `static` (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))

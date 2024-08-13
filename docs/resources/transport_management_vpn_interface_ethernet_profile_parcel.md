@@ -103,7 +103,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 - `ipv4_auto_detect_bandwidth` (Boolean) Interface auto detect bandwidth
   - Default value: `false`
 - `ipv4_auto_detect_bandwidth_variable` (String) Variable name
-- `ipv4_configuration_type` (String) test
+- `ipv4_configuration_type` (String) IPv4 Configuration Type
   - Choices: `dynamic`, `static`
 - `ipv4_dhcp_distance` (Number) DHCP Distance, Attribute conditional on `ipv4_configuration_type` being equal to `dynamic`
   - Range: `1`-`65536`
@@ -119,7 +119,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv6_address` (String) IPv6 Address Secondary, Attribute conditional on `ipv6_configuration_type` being equal to `static`
 - `ipv6_address_variable` (String) Variable name
-- `ipv6_configuration_type` (String) test
+- `ipv6_configuration_type` (String) IPv6 Configuration Type
   - Choices: `dynamic`, `static`, `none`
 - `load_interval` (Number) Interval for interface load calculation
   - Range: `30`-`600`

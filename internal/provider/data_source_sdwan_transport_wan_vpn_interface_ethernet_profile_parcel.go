@@ -108,7 +108,7 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				Computed:            true,
 			},
 			"ipv4_configuration_type": schema.StringAttribute{
-				MarkdownDescription: "test",
+				MarkdownDescription: "IPv4 Configuration Type",
 				Computed:            true,
 			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
@@ -169,7 +169,7 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				Computed:            true,
 			},
 			"ipv6_configuration_type": schema.StringAttribute{
-				MarkdownDescription: "test",
+				MarkdownDescription: "IPv6 Configuration Type",
 				Computed:            true,
 			},
 			"enable_dhcpv6": schema.BoolAttribute{

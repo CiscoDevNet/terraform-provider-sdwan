@@ -125,7 +125,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"ipv4_configuration_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("test").AddStringEnumDescription("dynamic", "static").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv4 Configuration Type").AddStringEnumDescription("dynamic", "static").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("dynamic", "static"),
@@ -198,7 +198,7 @@ func (r *TransportWANVPNInterfaceEthernetProfileParcelResource) Schema(ctx conte
 				Optional:            true,
 			},
 			"ipv6_configuration_type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("test").AddStringEnumDescription("dynamic", "static", "none").String,
+				MarkdownDescription: helpers.NewAttributeDescription("IPv6 Configuration Type").AddStringEnumDescription("dynamic", "static", "none").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("dynamic", "static", "none"),
