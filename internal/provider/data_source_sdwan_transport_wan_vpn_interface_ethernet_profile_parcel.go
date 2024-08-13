@@ -107,6 +107,10 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
+			"ipv4_configuration_type": schema.StringAttribute{
+				MarkdownDescription: "test",
+				Computed:            true,
+			},
 			"ipv4_dhcp_distance": schema.Int64Attribute{
 				MarkdownDescription: "DHCP Distance",
 				Computed:            true,
@@ -162,6 +166,10 @@ func (d *TransportWANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx con
 			},
 			"ipv4_dhcp_helper_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"ipv6_configuration_type": schema.StringAttribute{
+				MarkdownDescription: "test",
 				Computed:            true,
 			},
 			"enable_dhcpv6": schema.BoolAttribute{

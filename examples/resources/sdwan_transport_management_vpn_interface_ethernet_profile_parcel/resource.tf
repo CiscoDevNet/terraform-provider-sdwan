@@ -6,6 +6,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
   shutdown                                   = true
   interface_name                             = "GigabitEthernet1"
   interface_description                      = "Transport Management VPN Interface Ethernet"
+  ipv4_configuration_type                    = "static"
   ipv4_address                               = "1.2.3.4"
   ipv4_subnet_mask                           = "0.0.0.0"
   ipv4_secondary_addresses = [
@@ -17,6 +18,7 @@ resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "exa
   ipv4_dhcp_helper           = ["1.2.3.4"]
   ipv4_iperf_server          = "example"
   ipv4_auto_detect_bandwidth = false
+  ipv6_configuration_type    = "static"
   ipv6_address               = "2001:0:0:1::/64"
   arp_entries = [
     {
