@@ -65,11 +65,15 @@ attributes:
       - model_name: distance
         tf_name: administrative_distance
         example: 1
+        default_value: 1
+        default_value_present: true
     - model_name: distance
       tf_name: administrative_distance
       conditional_attribute:
         name: gateway
         value: null0
+      default_value: 1
+      default_value_present: true
       example: 1
   - model_name: ipv6Route
     tf_name: ipv6_static_routes
@@ -77,10 +81,19 @@ attributes:
       - model_name: prefix
         id: true
         example: 2002::/16
+      - tf_name: gateway
+        type: String
+        tf_only: true
+        description: Gateway
+        enum_values: [next_hop, null0, nat]
+        example: next_hop
       - model_name: nextHop
         tf_name: next_hops
         data_path: [oneOfIpRoute, nextHopContainer]
         mandatory: true
+        conditional_attribute:
+          name: gateway
+          value: next_hop
         attributes:
           - model_name: address
             id: true
@@ -88,13 +101,21 @@ attributes:
           - model_name: distance
             tf_name: administrative_distance
             example: 1
+            default_value: 1
+            default_value_present: true
       - model_name: null0
         data_path: [oneOfIpRoute]
         exclude_test: true
+        conditional_attribute:
+          name: gateway
+          value: null0
         example: true
       - model_name: nat
         data_path: [oneOfIpRoute]
         exclude_test: true
+        conditional_attribute:
+          name: gateway
+          value: nat
         example: NAT64
 
 test_prerequisites: |

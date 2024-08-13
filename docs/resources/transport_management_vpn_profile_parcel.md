@@ -46,7 +46,8 @@ resource "sdwan_transport_management_vpn_profile_parcel" "example" {
   ]
   ipv6_static_routes = [
     {
-      prefix = "2002::/16"
+      prefix  = "2002::/16"
+      gateway = "next_hop"
       next_hops = [
         {
           address                 = "2001:0:0:1::1"
@@ -126,11 +127,13 @@ Optional:
 
 Optional:
 
-- `nat` (String) IPv6 Nat
+- `gateway` (String) Gateway
+  - Choices: `next_hop`, `null0`, `nat`
+- `nat` (String) IPv6 Nat, Attribute conditional on `gateway` being equal to `nat`
   - Choices: `NAT64`, `NAT66`
 - `nat_variable` (String) Variable name
-- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
-- `null0` (Boolean) IPv6 Route Gateway Next Hop
+- `next_hops` (Attributes List) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `next_hop` (see [below for nested schema](#nestedatt--ipv6_static_routes--next_hops))
+- `null0` (Boolean) IPv6 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `null0`
 - `prefix` (String) Prefix
 - `prefix_variable` (String) Variable name
 
@@ -143,6 +146,7 @@ Optional:
 - `address_variable` (String) Variable name
 - `administrative_distance` (Number) Administrative distance
   - Range: `1`-`254`
+  - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
 
 
