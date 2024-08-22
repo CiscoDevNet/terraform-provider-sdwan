@@ -15,6 +15,7 @@ description: |-
 - Add `sdwan_service_tracker_group_profile_parcel` resource and data source
 - Add `sdwan_transport_ipv6_tracker_group_profile_parcel` resource and data source
 - Add `sdwan_service_object_tracker_profile_parcel` resource and data source
+- Add `sdwan_service_object_tracker_group_profile_parcel` resource and data source
 
 ## 0.3.13
 
