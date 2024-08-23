@@ -1,0 +1,31 @@
+---
+name: Transport GPS
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/gps
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: enable
+    example: false
+  - model_name: mode
+    example: "ms-based"
+  - model_name: nmea
+    example: false
+  - model_name: sourceAddress
+    example: 1.2.3.4
+  - model_name: destinationAddress
+    example: 2.3.4.5
+  - model_name: destinationPort
+    example: 22
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
