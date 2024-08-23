@@ -1,0 +1,247 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/transport/ipv6-trackergroup/common/request_schema.json",
+      "title": "transport ipv6 tracker group Schema",
+      "description": "IPv6 TrackerGroup profile parcel schema for common request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "description": "Set the feature name",
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 128
+          },
+          "description": {
+              "description": "Set the feature description",
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "properties": {
+                  "trackerGroupName": {
+                      "description": "Tracker Name",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "minLength": 1,
+                                      "maxLength": 128,
+                                      "type": "string"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "trackerRefs": {
+                      "description": "trackers ref list",
+                      "type": "array",
+                      "items": {
+                          "type": "object",
+                          "properties": {
+                              "trackerRef": {
+                                  "properties": {
+                                      "refId": {
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "type": "string",
+                                                  "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  },
+                                  "required": [
+                                      "refId"
+                                  ],
+                                  "additionalProperties": false
+                              }
+                          },
+                          "required": [
+                              "trackerRef"
+                          ],
+                          "additionalProperties": false
+                      },
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "uniqueItems": true
+                  },
+                  "combineBoolean": {
+                      "description": "tracker ref list combine boolean and or",
+                      "type": "object",
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "variable"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "enum": [
+                                          "and",
+                                          "or"
+                                      ]
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "enum": [
+                                          "or"
+                                      ]
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  }
+              },
+              "required": [
+                  "trackerGroupName",
+                  "trackerRefs",
+                  "combineBoolean"
+              ],
+              "additionalProperties": false
+          },
+          "metadata": {
+              "parcelRefDefinition": [
+                  {
+                      "refIdPath": "data.trackerRefs[*].trackerRef",
+                      "parcelType": [
+                          "ipv6-tracker"
+                      ]
+                  }
+              ]
+          },
+          "documentation": {
+              "description": "This is the documentation for common request schema for WAN VPN ipv6-trackergroup profile parcel",
+              "examples": [
+                  {
+                      "data": {
+                          "trackerRefs": [
+                              {
+                                  "trackerRef": {
+                                      "refId": {
+                                          "optionType": "global",
+                                          "value": "615d948f-34ee-4a2e-810e-a9bd8d3d48ec"
+                                      }
+                                  }
+                              },
+                              {
+                                  "trackerRef": {
+                                      "refId": {
+                                          "optionType": "global",
+                                          "value": "615d948f-34ee-4a2e-810e-a9bd8d3d48ec12"
+                                      }
+                                  }
+                              }
+                          ],
+                          "combineBoolean": {
+                              "optionType": "global",
+                              "value": "and"
+                          }
+                      },
+                      "description": "common_track_group_cedge_parcel_1",
+                      "name": "common_track_group_cedge_parcel_1"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "name",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "metadata",
+              "documentation"
+          ]
+      },
+      "additionalProperties": false
+  }
+}

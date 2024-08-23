@@ -1,0 +1,56 @@
+name: Service Object Tracker Group
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/objecttrackergroup
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+skip_minimum_test: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: objectId
+    tf_name: object_tracker_id
+    mandatory: true
+    example: 10
+    test_value: '10'
+  - model_name: trackerRefs
+    tf_name: tracker_elements
+    attributes:
+    - model_name: refId
+      tf_name: object_tracker_id
+      data_path: [trackerRef]
+      id: true
+      mandatory: true
+      example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+      test_value: sdwan_service_object_tracker_profile_parcel.test-1.id
+      secondary_test_value: sdwan_service_object_tracker_profile_parcel.test-2.id
+  - model_name: criteria
+    tf_name: reachable
+    example: or
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
+
+  resource "sdwan_service_object_tracker_profile_parcel" "test-1" {
+    name               = "TF_TEST_1"
+    description        = "My Example"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+    object_tracker_id  = 11
+    tracker_type       = "Interface"
+    interface          = "GigabitEthernet1"
+  }
+
+  resource "sdwan_service_object_tracker_profile_parcel" "test-2" {
+    name               = "TF_TEST_2"
+    description        = "My Example"
+    feature_profile_id = sdwan_service_feature_profile.test.id
+    object_tracker_id  = 12
+    tracker_type       = "Interface"
+    interface          = "GigabitEthernet1"
+  }

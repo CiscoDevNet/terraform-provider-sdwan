@@ -1,0 +1,39 @@
+---
+name: Service Object Tracker
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/objecttracker
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: objectId
+    tf_name: object_tracker_id
+    mandatory: true
+    example: 10
+    test_value: '10'
+  - model_name: objectTrackerType
+    mandatory: true
+    example: Interface
+  - model_name: interface
+    example: GigabitEthernet1
+    minimum_test_value: '"GigabitEthernet1"'
+  - model_name: routeIp
+    example: 1.2.3.4
+    exclude_test: true
+  - model_name: routeMask
+    example: 0.0.0.0
+    exclude_test: true
+  - model_name: vpn
+    example: 1
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

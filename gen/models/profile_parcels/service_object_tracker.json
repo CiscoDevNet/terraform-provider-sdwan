@@ -1,0 +1,419 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/common/objecttracker/common/request_schema.json",
+    "title": "common object tracker Feature Schema",
+    "description": "object tracker profile feature schema for common request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Set the tracker name",
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "objectId": {
+            "description": "Object tracker ID",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "objectTrackerType": {
+            "description": "objectTrackerType:Interface SIG Route",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "enum": ["Interface", "SIG", "Route"],
+                    "type": "string"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "interface": {
+            "description": "interface name",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)",
+                    "minLength": 3,
+                    "maxLength": 32
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "routeIp": {
+            "description": "IP address",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "format": "ipv4"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "routeMask": {
+            "description": "IP mask",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "255.255.255.255",
+                      "255.255.255.254",
+                      "255.255.255.252",
+                      "255.255.255.248",
+                      "255.255.255.240",
+                      "255.255.255.224",
+                      "255.255.255.192",
+                      "255.255.255.128",
+                      "255.255.255.0",
+                      "255.255.254.0",
+                      "255.255.252.0",
+                      "255.255.248.0",
+                      "255.255.240.0",
+                      "255.255.224.0",
+                      "255.255.192.0",
+                      "255.255.128.0",
+                      "255.255.0.0",
+                      "255.254.0.0",
+                      "255.252.0.0",
+                      "255.240.0.0",
+                      "255.224.0.0",
+                      "255.192.0.0",
+                      "255.128.0.0",
+                      "255.0.0.0",
+                      "254.0.0.0",
+                      "252.0.0.0",
+                      "248.0.0.0",
+                      "240.0.0.0",
+                      "224.0.0.0",
+                      "192.0.0.0",
+                      "128.0.0.0",
+                      "0.0.0.0"
+                    ]
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  },
+                  "value": {
+                    "enum": ["0.0.0.0"],
+                    "type": "string"
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "vpn": {
+            "description": "VPN",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65530
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  }
+                },
+                "required": ["optionType"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "objectTrackerType": {
+                  "properties": {
+                    "value": {
+                      "const": "Interface"
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": ["objectId", "interface"]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "objectTrackerType": {
+                  "properties": {
+                    "value": {
+                      "const": "Route"
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": ["objectId", "routeIp", "routeMask", "vpn"]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "objectTrackerType": {
+                  "properties": {
+                    "value": {
+                      "const": "SIG"
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": ["objectId"]
+            }
+          }
+        ],
+        "additionalProperties": false
+      },
+      "documentation": {
+        "description": "This is the documentation for common request schema for common LAN VPN profile feature",
+        "examples": [
+          {
+            "name": "zjtest-object-tracker-interface",
+            "description": "zjtest-object-tracker-interface",
+            "data": {
+              "objectId": {
+                "optionType": "global",
+                "value": 10
+              },
+              "interface": {
+                "optionType": "global",
+                "value": "GigabitEthernet1"
+              },
+              "objectTrackerType": {
+                "optionType": "global",
+                "value": "Interface"
+              }
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "minVManageVersion": "20.15.1"
+      }
+    },
+    "required": ["data"],
+    "not": {
+      "required": ["documentation", "metadata"]
+    },
+    "additionalProperties": false
+  }
+}
