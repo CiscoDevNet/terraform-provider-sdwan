@@ -185,13 +185,17 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
-		{{if .SecondaryTestValue}}config += `		}, {` + "\n"
-		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"{{end}}
+		{{- if .SecondaryTestValue}}
+		config += `		}, {` + "\n"
+		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 				{{- else}}
 	config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
-	{{if .SecondaryTestValue}}config += `	}, {` + "\n"
-	config += `		{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"{{end}}
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `		{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 				{{- end}}
 				{{- end}}
 				{{- end}}
@@ -203,13 +207,17 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
-		{{if .SecondaryTestValue}}config += `	}, {` + "\n"
-		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"{{end}}
+		{{- if .SecondaryTestValue}}
+		config += `	}, {` + "\n"
+		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 			{{- else}}
 	config += `		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
-	{{if .SecondaryTestValue}}config += `	}, {` + "\n"
-	config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"{{end}}
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 			{{- end}}
 			{{- end}}
 			{{- end}}
@@ -222,13 +230,17 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `	  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
-		{{if .SecondaryTestValue}}config += `	}, {` + "\n"
-		config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"{{end}}
+		{{- if .SecondaryTestValue}}
+		config += `	}, {` + "\n"
+		config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 			{{- else}}
 	config += `	  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
-	{{if .SecondaryTestValue}}config += `	}, {` + "\n"
-	config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"{{end}}
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 		{{- end}}
 		{{- end}}
 		{{- end}}

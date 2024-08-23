@@ -221,20 +221,15 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceCellularProfileParcelConfig()
 	config += `	tunnel_interface_allow_bfd = false` + "\n"
 	config += `	tunnel_interface_encapsulations = [{` + "\n"
 	config += `	  encapsulation = "gre"` + "\n"
-
 	config += `	  preference = 4294967` + "\n"
-
 	config += `	  weight = 250` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	nat_ipv4 = true` + "\n"
 	config += `	nat_udp_timeout = 1` + "\n"
 	config += `	nat_tcp_timeout = 60` + "\n"
 	config += `	arps = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
-
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	ip_mtu = 1500` + "\n"
 	config += `	interface_mtu = 1500` + "\n"

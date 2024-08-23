@@ -213,9 +213,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig()
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"
 	config += `	  address = "1.2.3.4"` + "\n"
-
 	config += `	  subnet_mask = "0.0.0.0"` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
 	config += `	iperf_server = "example"` + "\n"
@@ -264,11 +262,8 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig()
 	config += `	tunnel_interface_allow_bfd = false` + "\n"
 	config += `	tunnel_interface_encapsulations = [{` + "\n"
 	config += `	  encapsulation = "gre"` + "\n"
-
 	config += `	  preference = 4294967` + "\n"
-
 	config += `	  weight = 250` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	nat_ipv4 = true` + "\n"
 	config += `	nat_type = "interface"` + "\n"
@@ -276,30 +271,21 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceEthernetProfileParcelConfig()
 	config += `	nat_tcp_timeout = 60` + "\n"
 	config += `	new_static_nats = [{` + "\n"
 	config += `	  source_ip = "1.2.3.4"` + "\n"
-
 	config += `	  translated_ip = "2.3.4.5"` + "\n"
-
 	config += `	  direction = "inside"` + "\n"
-
 	config += `	  source_vpn = 3` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	nat_ipv6 = true` + "\n"
 	config += `	nat64 = false` + "\n"
 	config += `	nat66 = true` + "\n"
 	config += `	static_nat66 = [{` + "\n"
 	config += `	  source_prefix = "2001:0db8:85a3::/48"` + "\n"
-
 	config += `	  translated_source_prefix = "abcd:1234:5678::/48"` + "\n"
-
 	config += `	  source_vpn_id = 4` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	arps = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
-
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	icmp_redirect_disable = true` + "\n"
 	config += `	duplex = "full"` + "\n"

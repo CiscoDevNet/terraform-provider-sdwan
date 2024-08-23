@@ -103,43 +103,26 @@ func testAccSdwanSystemLoggingProfileParcelConfig_all() string {
 	config += `	disk_file_rotate = 10` + "\n"
 	config += `	tls_profiles = [{` + "\n"
 	config += `	  profile = "test"` + "\n"
-
 	config += `	  tls_version = "TLSv1.1"` + "\n"
-
 	config += `	  cipher_suites = ["aes-128-cbc-sha"]` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	ipv4_servers = [{` + "\n"
 	config += `	  hostname_ip = "1.1.1.1"` + "\n"
-
 	config += `	  vpn = 512` + "\n"
-
 	config += `	  source_interface = "GigabitEthernet1"` + "\n"
-
 	config += `	  priority = "informational"` + "\n"
-
 	config += `	  tls_enable = true` + "\n"
-
 	config += `	  tls_properties_custom_profile = true` + "\n"
-
 	config += `	  tls_properties_profile = "test"` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	ipv6_servers = [{` + "\n"
 	config += `	  hostname_ip = "1.1.1.1"` + "\n"
-
 	config += `	  vpn = 512` + "\n"
-
 	config += `	  source_interface = "GigabitEthernet1"` + "\n"
-
 	config += `	  priority = "informational"` + "\n"
-
 	config += `	  tls_enable = true` + "\n"
-
 	config += `	  tls_properties_custom_profile = true` + "\n"
-
 	config += `	  tls_properties_profile = "test"` + "\n"
-
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 	return config

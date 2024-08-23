@@ -119,9 +119,7 @@ func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_all(
 	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `	ipv4_secondary_addresses = [{` + "\n"
 	config += `	  address = "1.2.3.4"` + "\n"
-
 	config += `	  subnet_mask = "0.0.0.0"` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	ipv4_dhcp_helper = ["1.2.3.4"]` + "\n"
 	config += `	ipv4_iperf_server = "example"` + "\n"
@@ -129,9 +127,7 @@ func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_all(
 	config += `	ipv6_address = "2001:0:0:1::/64"` + "\n"
 	config += `	arp_entries = [{` + "\n"
 	config += `	  ip_address = "1.2.3.4"` + "\n"
-
 	config += `	  mac_address = "00-B0-D0-63-C2-26"` + "\n"
-
 	config += `	}]` + "\n"
 	config += `	duplex = "full"` + "\n"
 	config += `	mac_address = "00-B0-D0-63-C2-26"` + "\n"
