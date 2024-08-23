@@ -100,7 +100,7 @@ func (r *ServiceObjectTrackerProfileParcelResource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"tracker_type": schema.StringAttribute{
+			"object_tracker_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("objectTrackerType:Interface SIG Route").AddStringEnumDescription("Interface", "SIG", "Route").String,
 				Required:            true,
 				Validators: []validator.String{
@@ -127,14 +127,14 @@ func (r *ServiceObjectTrackerProfileParcelResource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"route_ip_mask": schema.StringAttribute{
+			"route_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("IP mask").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").AddDefaultValueDescription("0.0.0.0").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
 			},
-			"route_ip_mask_variable": schema.StringAttribute{
+			"route_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

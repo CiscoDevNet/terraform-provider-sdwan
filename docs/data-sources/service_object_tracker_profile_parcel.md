@@ -35,11 +35,11 @@ data "sdwan_service_object_tracker_profile_parcel" "example" {
 - `name` (String) The name of the profile parcel
 - `object_tracker_id` (Number) Object tracker ID
 - `object_tracker_id_variable` (String) Variable name
+- `object_tracker_type` (String) objectTrackerType:Interface SIG Route
 - `route_ip` (String) IP address
-- `route_ip_mask` (String) IP mask
-- `route_ip_mask_variable` (String) Variable name
 - `route_ip_variable` (String) Variable name
-- `tracker_type` (String) objectTrackerType:Interface SIG Route
+- `route_mask` (String) IP mask
+- `route_mask_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
 - `vpn` (Number) VPN
 - `vpn_variable` (String) Variable name

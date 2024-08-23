@@ -39,13 +39,13 @@ type ServiceObjectTracker struct {
 	FeatureProfileId        types.String `tfsdk:"feature_profile_id"`
 	ObjectTrackerId         types.Int64  `tfsdk:"object_tracker_id"`
 	ObjectTrackerIdVariable types.String `tfsdk:"object_tracker_id_variable"`
-	TrackerType             types.String `tfsdk:"tracker_type"`
+	ObjectTrackerType       types.String `tfsdk:"object_tracker_type"`
 	Interface               types.String `tfsdk:"interface"`
 	InterfaceVariable       types.String `tfsdk:"interface_variable"`
 	RouteIp                 types.String `tfsdk:"route_ip"`
 	RouteIpVariable         types.String `tfsdk:"route_ip_variable"`
-	RouteIpMask             types.String `tfsdk:"route_ip_mask"`
-	RouteIpMaskVariable     types.String `tfsdk:"route_ip_mask_variable"`
+	RouteMask               types.String `tfsdk:"route_mask"`
+	RouteMaskVariable       types.String `tfsdk:"route_mask_variable"`
 	Vpn                     types.Int64  `tfsdk:"vpn"`
 	VpnVariable             types.String `tfsdk:"vpn_variable"`
 }
@@ -80,9 +80,9 @@ func (data ServiceObjectTracker) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"objectId.optionType", "global")
 		body, _ = sjson.Set(body, path+"objectId.value", data.ObjectTrackerId.ValueInt64())
 	}
-	if !data.TrackerType.IsNull() {
+	if !data.ObjectTrackerType.IsNull() {
 		body, _ = sjson.Set(body, path+"objectTrackerType.optionType", "global")
-		body, _ = sjson.Set(body, path+"objectTrackerType.value", data.TrackerType.ValueString())
+		body, _ = sjson.Set(body, path+"objectTrackerType.value", data.ObjectTrackerType.ValueString())
 	}
 
 	if !data.InterfaceVariable.IsNull() {
@@ -101,15 +101,15 @@ func (data ServiceObjectTracker) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"routeIp.value", data.RouteIp.ValueString())
 	}
 
-	if !data.RouteIpMaskVariable.IsNull() {
+	if !data.RouteMaskVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"routeMask.optionType", "variable")
-		body, _ = sjson.Set(body, path+"routeMask.value", data.RouteIpMaskVariable.ValueString())
-	} else if data.RouteIpMask.IsNull() {
+		body, _ = sjson.Set(body, path+"routeMask.value", data.RouteMaskVariable.ValueString())
+	} else if data.RouteMask.IsNull() {
 		body, _ = sjson.Set(body, path+"routeMask.optionType", "default")
 		body, _ = sjson.Set(body, path+"routeMask.value", "0.0.0.0")
 	} else {
 		body, _ = sjson.Set(body, path+"routeMask.optionType", "global")
-		body, _ = sjson.Set(body, path+"routeMask.value", data.RouteIpMask.ValueString())
+		body, _ = sjson.Set(body, path+"routeMask.value", data.RouteMask.ValueString())
 	}
 
 	if !data.VpnVariable.IsNull() {
@@ -146,12 +146,12 @@ func (data *ServiceObjectTracker) fromBody(ctx context.Context, res gjson.Result
 			data.ObjectTrackerId = types.Int64Value(va.Int())
 		}
 	}
-	data.TrackerType = types.StringNull()
+	data.ObjectTrackerType = types.StringNull()
 
 	if t := res.Get(path + "objectTrackerType.optionType"); t.Exists() {
 		va := res.Get(path + "objectTrackerType.value")
 		if t.String() == "global" {
-			data.TrackerType = types.StringValue(va.String())
+			data.ObjectTrackerType = types.StringValue(va.String())
 		}
 	}
 	data.Interface = types.StringNull()
@@ -174,14 +174,14 @@ func (data *ServiceObjectTracker) fromBody(ctx context.Context, res gjson.Result
 			data.RouteIp = types.StringValue(va.String())
 		}
 	}
-	data.RouteIpMask = types.StringNull()
-	data.RouteIpMaskVariable = types.StringNull()
+	data.RouteMask = types.StringNull()
+	data.RouteMaskVariable = types.StringNull()
 	if t := res.Get(path + "routeMask.optionType"); t.Exists() {
 		va := res.Get(path + "routeMask.value")
 		if t.String() == "variable" {
-			data.RouteIpMaskVariable = types.StringValue(va.String())
+			data.RouteMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.RouteIpMask = types.StringValue(va.String())
+			data.RouteMask = types.StringValue(va.String())
 		}
 	}
 	data.Vpn = types.Int64Null()
@@ -217,12 +217,12 @@ func (data *ServiceObjectTracker) updateFromBody(ctx context.Context, res gjson.
 			data.ObjectTrackerId = types.Int64Value(va.Int())
 		}
 	}
-	data.TrackerType = types.StringNull()
+	data.ObjectTrackerType = types.StringNull()
 
 	if t := res.Get(path + "objectTrackerType.optionType"); t.Exists() {
 		va := res.Get(path + "objectTrackerType.value")
 		if t.String() == "global" {
-			data.TrackerType = types.StringValue(va.String())
+			data.ObjectTrackerType = types.StringValue(va.String())
 		}
 	}
 	data.Interface = types.StringNull()
@@ -245,14 +245,14 @@ func (data *ServiceObjectTracker) updateFromBody(ctx context.Context, res gjson.
 			data.RouteIp = types.StringValue(va.String())
 		}
 	}
-	data.RouteIpMask = types.StringNull()
-	data.RouteIpMaskVariable = types.StringNull()
+	data.RouteMask = types.StringNull()
+	data.RouteMaskVariable = types.StringNull()
 	if t := res.Get(path + "routeMask.optionType"); t.Exists() {
 		va := res.Get(path + "routeMask.value")
 		if t.String() == "variable" {
-			data.RouteIpMaskVariable = types.StringValue(va.String())
+			data.RouteMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.RouteIpMask = types.StringValue(va.String())
+			data.RouteMask = types.StringValue(va.String())
 		}
 	}
 	data.Vpn = types.Int64Null()
@@ -280,7 +280,7 @@ func (data *ServiceObjectTracker) isNull(ctx context.Context, res gjson.Result) 
 	if !data.ObjectTrackerIdVariable.IsNull() {
 		return false
 	}
-	if !data.TrackerType.IsNull() {
+	if !data.ObjectTrackerType.IsNull() {
 		return false
 	}
 	if !data.Interface.IsNull() {
@@ -295,10 +295,10 @@ func (data *ServiceObjectTracker) isNull(ctx context.Context, res gjson.Result) 
 	if !data.RouteIpVariable.IsNull() {
 		return false
 	}
-	if !data.RouteIpMask.IsNull() {
+	if !data.RouteMask.IsNull() {
 		return false
 	}
-	if !data.RouteIpMaskVariable.IsNull() {
+	if !data.RouteMaskVariable.IsNull() {
 		return false
 	}
 	if !data.Vpn.IsNull() {

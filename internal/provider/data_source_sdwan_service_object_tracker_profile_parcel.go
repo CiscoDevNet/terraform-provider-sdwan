@@ -86,7 +86,7 @@ func (d *ServiceObjectTrackerProfileParcelDataSource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"tracker_type": schema.StringAttribute{
+			"object_tracker_type": schema.StringAttribute{
 				MarkdownDescription: "objectTrackerType:Interface SIG Route",
 				Computed:            true,
 			},
@@ -106,11 +106,11 @@ func (d *ServiceObjectTrackerProfileParcelDataSource) Schema(ctx context.Context
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"route_ip_mask": schema.StringAttribute{
+			"route_mask": schema.StringAttribute{
 				MarkdownDescription: "IP mask",
 				Computed:            true,
 			},
-			"route_ip_mask_variable": schema.StringAttribute{
+			"route_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

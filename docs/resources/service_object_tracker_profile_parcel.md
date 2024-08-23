@@ -16,12 +16,12 @@ This resource can manage a Service Object Tracker profile parcel.
 
 ```terraform
 resource "sdwan_service_object_tracker_profile_parcel" "example" {
-  name               = "Example"
-  description        = "My Example"
-  feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  object_tracker_id  = 10
-  tracker_type       = "Interface"
-  interface          = "GigabitEthernet1"
+  name                = "Example"
+  description         = "My Example"
+  feature_profile_id  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  object_tracker_id   = 10
+  object_tracker_type = "Interface"
+  interface           = "GigabitEthernet1"
 }
 ```
 
@@ -34,7 +34,7 @@ resource "sdwan_service_object_tracker_profile_parcel" "example" {
 - `name` (String) The name of the profile parcel
 - `object_tracker_id` (Number) Object tracker ID
   - Range: `1`-`1000`
-- `tracker_type` (String) objectTrackerType:Interface SIG Route
+- `object_tracker_type` (String) objectTrackerType:Interface SIG Route
   - Choices: `Interface`, `SIG`, `Route`
 
 ### Optional
@@ -44,11 +44,11 @@ resource "sdwan_service_object_tracker_profile_parcel" "example" {
 - `interface_variable` (String) Variable name
 - `object_tracker_id_variable` (String) Variable name
 - `route_ip` (String) IP address
-- `route_ip_mask` (String) IP mask
+- `route_ip_variable` (String) Variable name
+- `route_mask` (String) IP mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
   - Default value: `0.0.0.0`
-- `route_ip_mask_variable` (String) Variable name
-- `route_ip_variable` (String) Variable name
+- `route_mask_variable` (String) Variable name
 - `vpn` (Number) VPN
   - Range: `0`-`65530`
 - `vpn_variable` (String) Variable name

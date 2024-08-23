@@ -33,7 +33,7 @@ func TestAccSdwanServiceObjectTrackerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_object_tracker_profile_parcel.test", "tracker_type", "Interface"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_object_tracker_profile_parcel.test", "object_tracker_type", "Interface"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_object_tracker_profile_parcel.test", "interface", "GigabitEthernet1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -70,7 +70,7 @@ func testAccSdwanServiceObjectTrackerProfileParcelConfig_minimum() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
 	config += `	object_tracker_id = 10` + "\n"
-	config += `	tracker_type = "Interface"` + "\n"
+	config += `	object_tracker_type = "Interface"` + "\n"
 	config += `	interface = "GigabitEthernet1"` + "\n"
 	config += `}` + "\n"
 	return config
@@ -85,7 +85,7 @@ func testAccSdwanServiceObjectTrackerProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
 	config += `	object_tracker_id = 10` + "\n"
-	config += `	tracker_type = "Interface"` + "\n"
+	config += `	object_tracker_type = "Interface"` + "\n"
 	config += `	interface = "GigabitEthernet1"` + "\n"
 	config += `}` + "\n"
 	return config
