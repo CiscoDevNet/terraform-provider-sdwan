@@ -113,7 +113,7 @@ func TestAccSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{{if not .ExcludeMinimumTest}}{
+			{{if not .SkipMinimumTest}}{
 				Config: {{if .TestPrerequisites}}testAccSdwan{{camelCase .Name}}PrerequisitesProfileParcelConfig+{{end}}testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum(),
 			},{{end}}
 			{
@@ -134,7 +134,7 @@ const testAccSdwan{{camelCase .Name}}PrerequisitesProfileParcelConfig = `
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-{{if not .ExcludeMinimumTest}}func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum() string {
+{{if not .SkipMinimumTest}}func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum() string {
 	config := `resource "sdwan_{{snakeCase $name}}_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"

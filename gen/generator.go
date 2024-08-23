@@ -203,7 +203,7 @@ type YamlConfig struct {
 	SkipTemplates            []string              `yaml:"skip_templates"`
 	Attributes               []YamlConfigAttribute `yaml:"attributes"`
 	TestTags                 []string              `yaml:"test_tags"`
-	ExcludeMinimumTest       bool                  `yaml:"exclude_minimum_test"`
+	SkipMinimumTest          bool                  `yaml:"skip_minimum_test"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 	TypeValue                string                `yaml:"type_value"`

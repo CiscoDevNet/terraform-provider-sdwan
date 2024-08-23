@@ -3,7 +3,7 @@ name: Service Tracker Group
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/trackergroup
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
-exclude_minimum_test: true
+skip_minimum_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
