@@ -9,6 +9,7 @@
 - Add `sdwan_service_object_tracker_group_profile_parcel` resource and data source
 - Add `sdwan_other_feature_profile` resource and data source
 - Add `sdwan_other_ucse_profile_parcel` resource and data source
+- Add `sdwan_other_thousandeyes_profile_parcel` resource and data source
 
 ## 0.3.13
 
