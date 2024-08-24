@@ -8,6 +8,7 @@
 - Add `sdwan_service_object_tracker_profile_parcel` resource and data source
 - Add `sdwan_service_object_tracker_group_profile_parcel` resource and data source
 - Add `sdwan_transport_routing_ospf_profile_parcel` resource and data source
+- Add `sdwan_transport_routing_ospfv3_ipv4_profile_parcel` resource and data source
 - Add `sdwan_service_routing_ospf_profile_parcel` resource and data source
 
 ## 0.3.13

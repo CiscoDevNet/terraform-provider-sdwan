@@ -789,7 +789,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				// }
 			} else if t.Get("properties.value.const").String() == "true" || t.Get("properties.value.const").String() == "false" {
 				attr.Type = "Bool"
-			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" {
+			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" || t.Get("properties.value.const").Exists() {
 				attr.Type = "String"
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
