@@ -1,5 +1,5 @@
 ---
-name: Service Routing BGP
+name: Service BGP Routing
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/bgp
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]

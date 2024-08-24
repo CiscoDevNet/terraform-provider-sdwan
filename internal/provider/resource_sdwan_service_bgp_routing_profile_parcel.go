@@ -44,26 +44,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &ServiceRoutingBGPProfileParcelResource{}
-var _ resource.ResourceWithImportState = &ServiceRoutingBGPProfileParcelResource{}
+var _ resource.Resource = &ServiceBGPRoutingProfileParcelResource{}
+var _ resource.ResourceWithImportState = &ServiceBGPRoutingProfileParcelResource{}
 
-func NewServiceRoutingBGPProfileParcelResource() resource.Resource {
-	return &ServiceRoutingBGPProfileParcelResource{}
+func NewServiceBGPRoutingProfileParcelResource() resource.Resource {
+	return &ServiceBGPRoutingProfileParcelResource{}
 }
 
-type ServiceRoutingBGPProfileParcelResource struct {
+type ServiceBGPRoutingProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *ServiceRoutingBGPProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_service_routing_bgp_profile_parcel"
+func (r *ServiceBGPRoutingProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_service_bgp_routing_profile_parcel"
 }
 
-func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *ServiceBGPRoutingProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Routing BGP profile parcel.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service BGP Routing profile parcel.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -892,7 +892,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Schema(ctx context.Context, req
 	}
 }
 
-func (r *ServiceRoutingBGPProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *ServiceBGPRoutingProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -904,8 +904,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Configure(_ context.Context, re
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *ServiceRoutingBGPProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ServiceRoutingBGP
+func (r *ServiceBGPRoutingProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan ServiceBGPRouting
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -937,8 +937,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Create(ctx context.Context, req
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *ServiceRoutingBGPProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state ServiceRoutingBGP
+func (r *ServiceBGPRoutingProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state ServiceBGPRouting
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -974,8 +974,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Read(ctx context.Context, req r
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *ServiceRoutingBGPProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ServiceRoutingBGP
+func (r *ServiceBGPRoutingProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state ServiceBGPRouting
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -1010,8 +1010,8 @@ func (r *ServiceRoutingBGPProfileParcelResource) Update(ctx context.Context, req
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *ServiceRoutingBGPProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ServiceRoutingBGP
+func (r *ServiceBGPRoutingProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state ServiceBGPRouting
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -1036,7 +1036,7 @@ func (r *ServiceRoutingBGPProfileParcelResource) Delete(ctx context.Context, req
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *ServiceRoutingBGPProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *ServiceBGPRoutingProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 

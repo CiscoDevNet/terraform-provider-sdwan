@@ -36,26 +36,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &ServiceRoutingBGPProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure = &ServiceRoutingBGPProfileParcelDataSource{}
+	_ datasource.DataSource              = &ServiceBGPRoutingProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure = &ServiceBGPRoutingProfileParcelDataSource{}
 )
 
-func NewServiceRoutingBGPProfileParcelDataSource() datasource.DataSource {
-	return &ServiceRoutingBGPProfileParcelDataSource{}
+func NewServiceBGPRoutingProfileParcelDataSource() datasource.DataSource {
+	return &ServiceBGPRoutingProfileParcelDataSource{}
 }
 
-type ServiceRoutingBGPProfileParcelDataSource struct {
+type ServiceBGPRoutingProfileParcelDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *ServiceRoutingBGPProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_service_routing_bgp_profile_parcel"
+func (d *ServiceBGPRoutingProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_service_bgp_routing_profile_parcel"
 }
 
-func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *ServiceBGPRoutingProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Service Routing BGP profile parcel.",
+		MarkdownDescription: "This data source can read the Service BGP Routing profile parcel.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -762,7 +762,7 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Schema(ctx context.Context, r
 	}
 }
 
-func (d *ServiceRoutingBGPProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *ServiceBGPRoutingProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -773,8 +773,8 @@ func (d *ServiceRoutingBGPProfileParcelDataSource) Configure(_ context.Context, 
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *ServiceRoutingBGPProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config ServiceRoutingBGP
+func (d *ServiceBGPRoutingProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config ServiceBGPRouting
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
