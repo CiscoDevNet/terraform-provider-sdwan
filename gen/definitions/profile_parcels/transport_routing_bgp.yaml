@@ -56,7 +56,6 @@ attributes:
     - model_name: address
       example: 1.2.3.4
     - model_name: description
-      id: true
       example: neighbor1
     - model_name: shutdown
       example: false
@@ -137,7 +136,6 @@ attributes:
     - model_name: address
       example: "2001::1"
     - model_name: description
-      id: true
       example: neighbor2
     - model_name: shutdown
       example: false
@@ -269,7 +267,6 @@ attributes:
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      id: true
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
       # test_value:
   - model_name: ipv6AggregateAddress
@@ -324,7 +321,6 @@ attributes:
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
-      id: true
       example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
       # test_value:
   - model_name: mplsInterface

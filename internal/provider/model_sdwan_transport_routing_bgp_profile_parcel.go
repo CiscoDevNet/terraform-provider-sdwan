@@ -22,6 +22,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -2562,9 +2563,9 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 		}
 	}
 	for i := range data.Ipv4Neighbors {
-		keys := [...]string{"description"}
-		keyValues := [...]string{data.Ipv4Neighbors[i].Description.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv4Neighbors[i].DescriptionVariable.ValueString()}
+		keys := [...]string{"address", "description", "shutdown", "remoteAs", "localAs", "keepalive", "holdtime", "ifName", "nextHopSelf", "sendCommunity", "sendExtCommunity", "ebgpMultihop", "password", "sendLabel", "sendLabelExplicit", "asOverride", "asNumber"}
+		keyValues := [...]string{data.Ipv4Neighbors[i].Address.ValueString(), data.Ipv4Neighbors[i].Description.ValueString(), strconv.FormatBool(data.Ipv4Neighbors[i].Shutdown.ValueBool()), strconv.FormatInt(data.Ipv4Neighbors[i].RemoteAs.ValueInt64(), 10), strconv.FormatInt(data.Ipv4Neighbors[i].LocalAs.ValueInt64(), 10), strconv.FormatInt(data.Ipv4Neighbors[i].KeepaliveTime.ValueInt64(), 10), strconv.FormatInt(data.Ipv4Neighbors[i].HoldTime.ValueInt64(), 10), data.Ipv4Neighbors[i].UpdateSourceInterface.ValueString(), strconv.FormatBool(data.Ipv4Neighbors[i].NextHopSelf.ValueBool()), strconv.FormatBool(data.Ipv4Neighbors[i].SendCommunity.ValueBool()), strconv.FormatBool(data.Ipv4Neighbors[i].SendExtendedCommunity.ValueBool()), strconv.FormatInt(data.Ipv4Neighbors[i].EbgpMultihop.ValueInt64(), 10), data.Ipv4Neighbors[i].Password.ValueString(), strconv.FormatBool(data.Ipv4Neighbors[i].SendLabel.ValueBool()), strconv.FormatBool(data.Ipv4Neighbors[i].ExplicitNull.ValueBool()), strconv.FormatBool(data.Ipv4Neighbors[i].AsOverride.ValueBool()), strconv.FormatInt(data.Ipv4Neighbors[i].AllowasInNumber.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{data.Ipv4Neighbors[i].AddressVariable.ValueString(), data.Ipv4Neighbors[i].DescriptionVariable.ValueString(), data.Ipv4Neighbors[i].ShutdownVariable.ValueString(), data.Ipv4Neighbors[i].RemoteAsVariable.ValueString(), data.Ipv4Neighbors[i].LocalAsVariable.ValueString(), data.Ipv4Neighbors[i].KeepaliveTimeVariable.ValueString(), data.Ipv4Neighbors[i].HoldTimeVariable.ValueString(), data.Ipv4Neighbors[i].UpdateSourceInterfaceVariable.ValueString(), data.Ipv4Neighbors[i].NextHopSelfVariable.ValueString(), data.Ipv4Neighbors[i].SendCommunityVariable.ValueString(), data.Ipv4Neighbors[i].SendExtendedCommunityVariable.ValueString(), data.Ipv4Neighbors[i].EbgpMultihopVariable.ValueString(), data.Ipv4Neighbors[i].PasswordVariable.ValueString(), "", data.Ipv4Neighbors[i].ExplicitNullVariable.ValueString(), data.Ipv4Neighbors[i].AsOverrideVariable.ValueString(), data.Ipv4Neighbors[i].AllowasInNumberVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "neighbor").ForEach(
@@ -2836,9 +2837,9 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 		}
 	}
 	for i := range data.Ipv6Neighbors {
-		keys := [...]string{"description"}
-		keyValues := [...]string{data.Ipv6Neighbors[i].Description.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6Neighbors[i].DescriptionVariable.ValueString()}
+		keys := [...]string{"address", "description", "shutdown", "remoteAs", "localAs", "keepalive", "holdtime", "ifName", "nextHopSelf", "sendCommunity", "sendExtCommunity", "ebgpMultihop", "password", "asOverride", "asNumber"}
+		keyValues := [...]string{data.Ipv6Neighbors[i].Address.ValueString(), data.Ipv6Neighbors[i].Description.ValueString(), strconv.FormatBool(data.Ipv6Neighbors[i].Shutdown.ValueBool()), strconv.FormatInt(data.Ipv6Neighbors[i].RemoteAs.ValueInt64(), 10), strconv.FormatInt(data.Ipv6Neighbors[i].LocalAs.ValueInt64(), 10), strconv.FormatInt(data.Ipv6Neighbors[i].KeepaliveTime.ValueInt64(), 10), strconv.FormatInt(data.Ipv6Neighbors[i].HoldTime.ValueInt64(), 10), data.Ipv6Neighbors[i].UpdateSourceInterface.ValueString(), strconv.FormatBool(data.Ipv6Neighbors[i].NextHopSelf.ValueBool()), strconv.FormatBool(data.Ipv6Neighbors[i].SendCommunity.ValueBool()), strconv.FormatBool(data.Ipv6Neighbors[i].SendExtendedCommunity.ValueBool()), strconv.FormatInt(data.Ipv6Neighbors[i].EbgpMultihop.ValueInt64(), 10), data.Ipv6Neighbors[i].Password.ValueString(), strconv.FormatBool(data.Ipv6Neighbors[i].AsOverride.ValueBool()), strconv.FormatInt(data.Ipv6Neighbors[i].AllowasInNumber.ValueInt64(), 10)}
+		keyValuesVariables := [...]string{data.Ipv6Neighbors[i].AddressVariable.ValueString(), data.Ipv6Neighbors[i].DescriptionVariable.ValueString(), data.Ipv6Neighbors[i].ShutdownVariable.ValueString(), data.Ipv6Neighbors[i].RemoteAsVariable.ValueString(), data.Ipv6Neighbors[i].LocalAsVariable.ValueString(), data.Ipv6Neighbors[i].KeepaliveTimeVariable.ValueString(), data.Ipv6Neighbors[i].HoldTimeVariable.ValueString(), data.Ipv6Neighbors[i].UpdateSourceInterfaceVariable.ValueString(), data.Ipv6Neighbors[i].NextHopSelfVariable.ValueString(), data.Ipv6Neighbors[i].SendCommunityVariable.ValueString(), data.Ipv6Neighbors[i].SendExtendedCommunityVariable.ValueString(), data.Ipv6Neighbors[i].EbgpMultihopVariable.ValueString(), data.Ipv6Neighbors[i].PasswordVariable.ValueString(), data.Ipv6Neighbors[i].AsOverrideVariable.ValueString(), data.Ipv6Neighbors[i].AllowasInNumberVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "ipv6Neighbor").ForEach(
@@ -3244,9 +3245,9 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 		}
 	}
 	for i := range data.Ipv4Redistributes {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"protocol", "routePolicy.refId"}
+		keyValues := [...]string{data.Ipv4Redistributes[i].Protocol.ValueString(), data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv4Redistributes[i].ProtocolVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "addressFamily.redistribute").ForEach(
@@ -3421,9 +3422,9 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 		}
 	}
 	for i := range data.Ipv6Redistributes {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"protocol", "routePolicy.refId"}
+		keyValues := [...]string{data.Ipv6Redistributes[i].Protocol.ValueString(), data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6Redistributes[i].ProtocolVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "ipv6AddressFamily.redistribute").ForEach(
