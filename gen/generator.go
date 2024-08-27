@@ -203,6 +203,7 @@ type YamlConfig struct {
 	SkipTemplates            []string              `yaml:"skip_templates"`
 	Attributes               []YamlConfigAttribute `yaml:"attributes"`
 	TestTags                 []string              `yaml:"test_tags"`
+	SkipMinimumTest          bool                  `yaml:"skip_minimum_test"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 	TypeValue                string                `yaml:"type_value"`
@@ -255,8 +256,10 @@ type YamlConfigAttribute struct {
 	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
 	Value                   string                         `yaml:"value"`
 	TestValue               string                         `yaml:"test_value"`
+	SecondaryTestValue      string                         `yaml:"secondary_test_value"`
 	MinimumTestValue        string                         `yaml:"minimum_test_value"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
+	AlwaysIncludeParent     bool                           `yaml:"always_include_parent"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
 	ConditionalListLength   string                         `yaml:"conditional_list_length"`

@@ -250,7 +250,7 @@ attributes:
   - model_name: refId
     tf_name: ipv4_table_map_route_policy_id
     data_path: [addressFamily, name]
-    # exclude_null: true
+    always_include_parent: true
     exclude_test: true
     example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
   #   # test_value:
@@ -305,7 +305,7 @@ attributes:
   - model_name: refId
     tf_name: ipv6_table_map_route_policy_id
     data_path: [ipv6AddressFamily, name]
-    # exclude_null: true
+    always_include_parent: true
     exclude_test: true
     example: a509839f-33aa-492a-ab8e-6a6fe70d7d79
     # test_value:
