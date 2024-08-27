@@ -332,6 +332,16 @@ func BuildPath(s []string) string {
 	return strings.Join(s, ".")
 }
 
+// Templating helper function to return true if id included in attributes
+func HasId(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Id {
+			return true
+		}
+	}
+	return false
+}
+
 // Templating helper function to determine if attributes list contains one or more version attributes
 func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
@@ -487,6 +497,7 @@ var functions = template.FuncMap{
 	"sprintf":              fmt.Sprintf,
 	"toLower":              strings.ToLower,
 	"path":                 BuildPath,
+	"hasId":                HasId,
 	"hasVersionAttribute":  HasVersionAttribute,
 	"getResponseModelPath": GetResponseModelPath,
 	"hasReference":         HasReference,

@@ -3143,9 +3143,9 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.Ipv4StaticRoutes[i].NextHopWithTrackers {
-			keys := [...]string{}
-			keyValues := [...]string{}
-			keyValuesVariables := [...]string{}
+			keys := [...]string{"address", "distance", "tracker.refId"}
+			keyValues := [...]string{data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].Address.ValueString(), strconv.FormatInt(data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].AdministrativeDistance.ValueInt64(), 10), data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].TrackerId.ValueString()}
+			keyValuesVariables := [...]string{data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].AddressVariable.ValueString(), data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].AdministrativeDistanceVariable.ValueString(), ""}
 
 			var cr gjson.Result
 			r.Get("oneOfIpRoute.nextHopContainer.nextHopWithTracker").ForEach(
