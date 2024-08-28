@@ -16,15 +16,15 @@ This resource can manage a Transport GPS profile parcel.
 
 ```terraform
 resource "sdwan_transport_gps_profile_parcel" "example" {
-  name                = "Example"
-  description         = "My Example"
-  feature_profile_id  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  enable              = false
-  mode                = "ms-based"
-  nmea                = false
-  source_address      = "1.2.3.4"
-  destination_address = "2.3.4.5"
-  destination_port    = 22
+  name                     = "Example"
+  description              = "My Example"
+  feature_profile_id       = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  gps_enable               = false
+  gps_mode                 = "ms-based"
+  nmea_enable              = false
+  nmea_source_address      = "1.2.3.4"
+  nmea_destination_address = "2.3.4.5"
+  nmea_destination_port    = 22
 }
 ```
 
@@ -39,23 +39,23 @@ resource "sdwan_transport_gps_profile_parcel" "example" {
 ### Optional
 
 - `description` (String) The description of the profile parcel
-- `destination_address` (String) Destination address
-- `destination_address_variable` (String) Variable name
-- `destination_port` (Number) Destination port
-  - Range: `1`-`65535`
-- `destination_port_variable` (String) Variable name
-- `enable` (Boolean) Enable/disable GPS
+- `gps_enable` (Boolean) Enable/disable GPS
   - Default value: `false`
-- `enable_variable` (String) Variable name
-- `mode` (String) Select GPS mode
+- `gps_enable_variable` (String) Variable name
+- `gps_mode` (String) Select GPS mode
   - Choices: `ms-based`, `standalone`
   - Default value: `ms-based`
-- `mode_variable` (String) Variable name
-- `nmea` (Boolean) Enable/disable NMEA data
+- `gps_mode_variable` (String) Variable name
+- `nmea_destination_address` (String) Destination address
+- `nmea_destination_address_variable` (String) Variable name
+- `nmea_destination_port` (Number) Destination port
+  - Range: `1`-`65535`
+- `nmea_destination_port_variable` (String) Variable name
+- `nmea_enable` (Boolean) Enable/disable NMEA data
   - Default value: `false`
-- `nmea_variable` (String) Variable name
-- `source_address` (String) Source address
-- `source_address_variable` (String) Variable name
+- `nmea_enable_variable` (String) Variable name
+- `nmea_source_address` (String) Source address
+- `nmea_source_address_variable` (String) Variable name
 
 ### Read-Only
 

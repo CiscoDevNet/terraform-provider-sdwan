@@ -88,57 +88,57 @@ func (r *TransportGPSProfileParcelResource) Schema(ctx context.Context, req reso
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
 			},
-			"enable": schema.BoolAttribute{
+			"gps_enable": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable/disable GPS").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"enable_variable": schema.StringAttribute{
+			"gps_enable_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"mode": schema.StringAttribute{
+			"gps_mode": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Select GPS mode").AddStringEnumDescription("ms-based", "standalone").AddDefaultValueDescription("ms-based").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ms-based", "standalone"),
 				},
 			},
-			"mode_variable": schema.StringAttribute{
+			"gps_mode_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"nmea": schema.BoolAttribute{
+			"nmea_enable": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable/disable NMEA data").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"nmea_variable": schema.StringAttribute{
+			"nmea_enable_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"source_address": schema.StringAttribute{
+			"nmea_source_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Source address").String,
 				Optional:            true,
 			},
-			"source_address_variable": schema.StringAttribute{
+			"nmea_source_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"destination_address": schema.StringAttribute{
+			"nmea_destination_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Destination address").String,
 				Optional:            true,
 			},
-			"destination_address_variable": schema.StringAttribute{
+			"nmea_destination_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"destination_port": schema.Int64Attribute{
+			"nmea_destination_port": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Destination port").AddIntegerRangeDescription(1, 65535).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
 			},
-			"destination_port_variable": schema.StringAttribute{
+			"nmea_destination_port_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},

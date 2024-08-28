@@ -30,17 +30,17 @@ data "sdwan_transport_gps_profile_parcel" "example" {
 ### Read-Only
 
 - `description` (String) The description of the profile parcel
-- `destination_address` (String) Destination address
-- `destination_address_variable` (String) Variable name
-- `destination_port` (Number) Destination port
-- `destination_port_variable` (String) Variable name
-- `enable` (Boolean) Enable/disable GPS
-- `enable_variable` (String) Variable name
-- `mode` (String) Select GPS mode
-- `mode_variable` (String) Variable name
+- `gps_enable` (Boolean) Enable/disable GPS
+- `gps_enable_variable` (String) Variable name
+- `gps_mode` (String) Select GPS mode
+- `gps_mode_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
-- `nmea` (Boolean) Enable/disable NMEA data
-- `nmea_variable` (String) Variable name
-- `source_address` (String) Source address
-- `source_address_variable` (String) Variable name
+- `nmea_destination_address` (String) Destination address
+- `nmea_destination_address_variable` (String) Variable name
+- `nmea_destination_port` (Number) Destination port
+- `nmea_destination_port_variable` (String) Variable name
+- `nmea_enable` (Boolean) Enable/disable NMEA data
+- `nmea_enable_variable` (String) Variable name
+- `nmea_source_address` (String) Source address
+- `nmea_source_address_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel

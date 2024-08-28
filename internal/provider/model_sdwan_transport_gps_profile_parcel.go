@@ -32,23 +32,23 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportGPS struct {
-	Id                         types.String `tfsdk:"id"`
-	Version                    types.Int64  `tfsdk:"version"`
-	Name                       types.String `tfsdk:"name"`
-	Description                types.String `tfsdk:"description"`
-	FeatureProfileId           types.String `tfsdk:"feature_profile_id"`
-	Enable                     types.Bool   `tfsdk:"enable"`
-	EnableVariable             types.String `tfsdk:"enable_variable"`
-	Mode                       types.String `tfsdk:"mode"`
-	ModeVariable               types.String `tfsdk:"mode_variable"`
-	Nmea                       types.Bool   `tfsdk:"nmea"`
-	NmeaVariable               types.String `tfsdk:"nmea_variable"`
-	SourceAddress              types.String `tfsdk:"source_address"`
-	SourceAddressVariable      types.String `tfsdk:"source_address_variable"`
-	DestinationAddress         types.String `tfsdk:"destination_address"`
-	DestinationAddressVariable types.String `tfsdk:"destination_address_variable"`
-	DestinationPort            types.Int64  `tfsdk:"destination_port"`
-	DestinationPortVariable    types.String `tfsdk:"destination_port_variable"`
+	Id                             types.String `tfsdk:"id"`
+	Version                        types.Int64  `tfsdk:"version"`
+	Name                           types.String `tfsdk:"name"`
+	Description                    types.String `tfsdk:"description"`
+	FeatureProfileId               types.String `tfsdk:"feature_profile_id"`
+	GpsEnable                      types.Bool   `tfsdk:"gps_enable"`
+	GpsEnableVariable              types.String `tfsdk:"gps_enable_variable"`
+	GpsMode                        types.String `tfsdk:"gps_mode"`
+	GpsModeVariable                types.String `tfsdk:"gps_mode_variable"`
+	NmeaEnable                     types.Bool   `tfsdk:"nmea_enable"`
+	NmeaEnableVariable             types.String `tfsdk:"nmea_enable_variable"`
+	NmeaSourceAddress              types.String `tfsdk:"nmea_source_address"`
+	NmeaSourceAddressVariable      types.String `tfsdk:"nmea_source_address_variable"`
+	NmeaDestinationAddress         types.String `tfsdk:"nmea_destination_address"`
+	NmeaDestinationAddressVariable types.String `tfsdk:"nmea_destination_address_variable"`
+	NmeaDestinationPort            types.Int64  `tfsdk:"nmea_destination_port"`
+	NmeaDestinationPortVariable    types.String `tfsdk:"nmea_destination_port_variable"`
 }
 
 // End of section. //template:end types
@@ -74,70 +74,70 @@ func (data TransportGPS) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 
-	if !data.EnableVariable.IsNull() {
+	if !data.GpsEnableVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"enable.optionType", "variable")
-		body, _ = sjson.Set(body, path+"enable.value", data.EnableVariable.ValueString())
-	} else if data.Enable.IsNull() {
+		body, _ = sjson.Set(body, path+"enable.value", data.GpsEnableVariable.ValueString())
+	} else if data.GpsEnable.IsNull() {
 		body, _ = sjson.Set(body, path+"enable.optionType", "default")
 		body, _ = sjson.Set(body, path+"enable.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"enable.optionType", "global")
-		body, _ = sjson.Set(body, path+"enable.value", data.Enable.ValueBool())
+		body, _ = sjson.Set(body, path+"enable.value", data.GpsEnable.ValueBool())
 	}
 
-	if !data.ModeVariable.IsNull() {
+	if !data.GpsModeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"mode.optionType", "variable")
-		body, _ = sjson.Set(body, path+"mode.value", data.ModeVariable.ValueString())
-	} else if data.Mode.IsNull() {
+		body, _ = sjson.Set(body, path+"mode.value", data.GpsModeVariable.ValueString())
+	} else if data.GpsMode.IsNull() {
 		body, _ = sjson.Set(body, path+"mode.optionType", "default")
 		body, _ = sjson.Set(body, path+"mode.value", "ms-based")
 	} else {
 		body, _ = sjson.Set(body, path+"mode.optionType", "global")
-		body, _ = sjson.Set(body, path+"mode.value", data.Mode.ValueString())
+		body, _ = sjson.Set(body, path+"mode.value", data.GpsMode.ValueString())
 	}
 
-	if !data.NmeaVariable.IsNull() {
+	if !data.NmeaEnableVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"nmea.optionType", "variable")
-		body, _ = sjson.Set(body, path+"nmea.value", data.NmeaVariable.ValueString())
-	} else if data.Nmea.IsNull() {
+		body, _ = sjson.Set(body, path+"nmea.value", data.NmeaEnableVariable.ValueString())
+	} else if data.NmeaEnable.IsNull() {
 		body, _ = sjson.Set(body, path+"nmea.optionType", "default")
 		body, _ = sjson.Set(body, path+"nmea.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"nmea.optionType", "global")
-		body, _ = sjson.Set(body, path+"nmea.value", data.Nmea.ValueBool())
+		body, _ = sjson.Set(body, path+"nmea.value", data.NmeaEnable.ValueBool())
 	}
 
-	if !data.SourceAddressVariable.IsNull() {
+	if !data.NmeaSourceAddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"sourceAddress.optionType", "variable")
-		body, _ = sjson.Set(body, path+"sourceAddress.value", data.SourceAddressVariable.ValueString())
-	} else if data.SourceAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"sourceAddress.value", data.NmeaSourceAddressVariable.ValueString())
+	} else if data.NmeaSourceAddress.IsNull() {
 		body, _ = sjson.Set(body, path+"sourceAddress.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"sourceAddress.optionType", "global")
-		body, _ = sjson.Set(body, path+"sourceAddress.value", data.SourceAddress.ValueString())
+		body, _ = sjson.Set(body, path+"sourceAddress.value", data.NmeaSourceAddress.ValueString())
 	}
 
-	if !data.DestinationAddressVariable.IsNull() {
+	if !data.NmeaDestinationAddressVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"destinationAddress.optionType", "variable")
-		body, _ = sjson.Set(body, path+"destinationAddress.value", data.DestinationAddressVariable.ValueString())
-	} else if data.DestinationAddress.IsNull() {
+		body, _ = sjson.Set(body, path+"destinationAddress.value", data.NmeaDestinationAddressVariable.ValueString())
+	} else if data.NmeaDestinationAddress.IsNull() {
 		body, _ = sjson.Set(body, path+"destinationAddress.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"destinationAddress.optionType", "global")
-		body, _ = sjson.Set(body, path+"destinationAddress.value", data.DestinationAddress.ValueString())
+		body, _ = sjson.Set(body, path+"destinationAddress.value", data.NmeaDestinationAddress.ValueString())
 	}
 
-	if !data.DestinationPortVariable.IsNull() {
+	if !data.NmeaDestinationPortVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"destinationPort.optionType", "variable")
-		body, _ = sjson.Set(body, path+"destinationPort.value", data.DestinationPortVariable.ValueString())
-	} else if data.DestinationPort.IsNull() {
+		body, _ = sjson.Set(body, path+"destinationPort.value", data.NmeaDestinationPortVariable.ValueString())
+	} else if data.NmeaDestinationPort.IsNull() {
 		body, _ = sjson.Set(body, path+"destinationPort.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"destinationPort.optionType", "global")
-		body, _ = sjson.Set(body, path+"destinationPort.value", data.DestinationPort.ValueInt64())
+		body, _ = sjson.Set(body, path+"destinationPort.value", data.NmeaDestinationPort.ValueInt64())
 	}
 	return body
 }
@@ -153,64 +153,64 @@ func (data *TransportGPS) fromBody(ctx context.Context, res gjson.Result) {
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.Enable = types.BoolNull()
-	data.EnableVariable = types.StringNull()
+	data.GpsEnable = types.BoolNull()
+	data.GpsEnableVariable = types.StringNull()
 	if t := res.Get(path + "enable.optionType"); t.Exists() {
 		va := res.Get(path + "enable.value")
 		if t.String() == "variable" {
-			data.EnableVariable = types.StringValue(va.String())
+			data.GpsEnableVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Enable = types.BoolValue(va.Bool())
+			data.GpsEnable = types.BoolValue(va.Bool())
 		}
 	}
-	data.Mode = types.StringNull()
-	data.ModeVariable = types.StringNull()
+	data.GpsMode = types.StringNull()
+	data.GpsModeVariable = types.StringNull()
 	if t := res.Get(path + "mode.optionType"); t.Exists() {
 		va := res.Get(path + "mode.value")
 		if t.String() == "variable" {
-			data.ModeVariable = types.StringValue(va.String())
+			data.GpsModeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Mode = types.StringValue(va.String())
+			data.GpsMode = types.StringValue(va.String())
 		}
 	}
-	data.Nmea = types.BoolNull()
-	data.NmeaVariable = types.StringNull()
+	data.NmeaEnable = types.BoolNull()
+	data.NmeaEnableVariable = types.StringNull()
 	if t := res.Get(path + "nmea.optionType"); t.Exists() {
 		va := res.Get(path + "nmea.value")
 		if t.String() == "variable" {
-			data.NmeaVariable = types.StringValue(va.String())
+			data.NmeaEnableVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Nmea = types.BoolValue(va.Bool())
+			data.NmeaEnable = types.BoolValue(va.Bool())
 		}
 	}
-	data.SourceAddress = types.StringNull()
-	data.SourceAddressVariable = types.StringNull()
+	data.NmeaSourceAddress = types.StringNull()
+	data.NmeaSourceAddressVariable = types.StringNull()
 	if t := res.Get(path + "sourceAddress.optionType"); t.Exists() {
 		va := res.Get(path + "sourceAddress.value")
 		if t.String() == "variable" {
-			data.SourceAddressVariable = types.StringValue(va.String())
+			data.NmeaSourceAddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SourceAddress = types.StringValue(va.String())
+			data.NmeaSourceAddress = types.StringValue(va.String())
 		}
 	}
-	data.DestinationAddress = types.StringNull()
-	data.DestinationAddressVariable = types.StringNull()
+	data.NmeaDestinationAddress = types.StringNull()
+	data.NmeaDestinationAddressVariable = types.StringNull()
 	if t := res.Get(path + "destinationAddress.optionType"); t.Exists() {
 		va := res.Get(path + "destinationAddress.value")
 		if t.String() == "variable" {
-			data.DestinationAddressVariable = types.StringValue(va.String())
+			data.NmeaDestinationAddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DestinationAddress = types.StringValue(va.String())
+			data.NmeaDestinationAddress = types.StringValue(va.String())
 		}
 	}
-	data.DestinationPort = types.Int64Null()
-	data.DestinationPortVariable = types.StringNull()
+	data.NmeaDestinationPort = types.Int64Null()
+	data.NmeaDestinationPortVariable = types.StringNull()
 	if t := res.Get(path + "destinationPort.optionType"); t.Exists() {
 		va := res.Get(path + "destinationPort.value")
 		if t.String() == "variable" {
-			data.DestinationPortVariable = types.StringValue(va.String())
+			data.NmeaDestinationPortVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DestinationPort = types.Int64Value(va.Int())
+			data.NmeaDestinationPort = types.Int64Value(va.Int())
 		}
 	}
 }
@@ -226,64 +226,64 @@ func (data *TransportGPS) updateFromBody(ctx context.Context, res gjson.Result) 
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	data.Enable = types.BoolNull()
-	data.EnableVariable = types.StringNull()
+	data.GpsEnable = types.BoolNull()
+	data.GpsEnableVariable = types.StringNull()
 	if t := res.Get(path + "enable.optionType"); t.Exists() {
 		va := res.Get(path + "enable.value")
 		if t.String() == "variable" {
-			data.EnableVariable = types.StringValue(va.String())
+			data.GpsEnableVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Enable = types.BoolValue(va.Bool())
+			data.GpsEnable = types.BoolValue(va.Bool())
 		}
 	}
-	data.Mode = types.StringNull()
-	data.ModeVariable = types.StringNull()
+	data.GpsMode = types.StringNull()
+	data.GpsModeVariable = types.StringNull()
 	if t := res.Get(path + "mode.optionType"); t.Exists() {
 		va := res.Get(path + "mode.value")
 		if t.String() == "variable" {
-			data.ModeVariable = types.StringValue(va.String())
+			data.GpsModeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Mode = types.StringValue(va.String())
+			data.GpsMode = types.StringValue(va.String())
 		}
 	}
-	data.Nmea = types.BoolNull()
-	data.NmeaVariable = types.StringNull()
+	data.NmeaEnable = types.BoolNull()
+	data.NmeaEnableVariable = types.StringNull()
 	if t := res.Get(path + "nmea.optionType"); t.Exists() {
 		va := res.Get(path + "nmea.value")
 		if t.String() == "variable" {
-			data.NmeaVariable = types.StringValue(va.String())
+			data.NmeaEnableVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Nmea = types.BoolValue(va.Bool())
+			data.NmeaEnable = types.BoolValue(va.Bool())
 		}
 	}
-	data.SourceAddress = types.StringNull()
-	data.SourceAddressVariable = types.StringNull()
+	data.NmeaSourceAddress = types.StringNull()
+	data.NmeaSourceAddressVariable = types.StringNull()
 	if t := res.Get(path + "sourceAddress.optionType"); t.Exists() {
 		va := res.Get(path + "sourceAddress.value")
 		if t.String() == "variable" {
-			data.SourceAddressVariable = types.StringValue(va.String())
+			data.NmeaSourceAddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SourceAddress = types.StringValue(va.String())
+			data.NmeaSourceAddress = types.StringValue(va.String())
 		}
 	}
-	data.DestinationAddress = types.StringNull()
-	data.DestinationAddressVariable = types.StringNull()
+	data.NmeaDestinationAddress = types.StringNull()
+	data.NmeaDestinationAddressVariable = types.StringNull()
 	if t := res.Get(path + "destinationAddress.optionType"); t.Exists() {
 		va := res.Get(path + "destinationAddress.value")
 		if t.String() == "variable" {
-			data.DestinationAddressVariable = types.StringValue(va.String())
+			data.NmeaDestinationAddressVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DestinationAddress = types.StringValue(va.String())
+			data.NmeaDestinationAddress = types.StringValue(va.String())
 		}
 	}
-	data.DestinationPort = types.Int64Null()
-	data.DestinationPortVariable = types.StringNull()
+	data.NmeaDestinationPort = types.Int64Null()
+	data.NmeaDestinationPortVariable = types.StringNull()
 	if t := res.Get(path + "destinationPort.optionType"); t.Exists() {
 		va := res.Get(path + "destinationPort.value")
 		if t.String() == "variable" {
-			data.DestinationPortVariable = types.StringValue(va.String())
+			data.NmeaDestinationPortVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DestinationPort = types.Int64Value(va.Int())
+			data.NmeaDestinationPort = types.Int64Value(va.Int())
 		}
 	}
 }
@@ -295,40 +295,40 @@ func (data *TransportGPS) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
-	if !data.Enable.IsNull() {
+	if !data.GpsEnable.IsNull() {
 		return false
 	}
-	if !data.EnableVariable.IsNull() {
+	if !data.GpsEnableVariable.IsNull() {
 		return false
 	}
-	if !data.Mode.IsNull() {
+	if !data.GpsMode.IsNull() {
 		return false
 	}
-	if !data.ModeVariable.IsNull() {
+	if !data.GpsModeVariable.IsNull() {
 		return false
 	}
-	if !data.Nmea.IsNull() {
+	if !data.NmeaEnable.IsNull() {
 		return false
 	}
-	if !data.NmeaVariable.IsNull() {
+	if !data.NmeaEnableVariable.IsNull() {
 		return false
 	}
-	if !data.SourceAddress.IsNull() {
+	if !data.NmeaSourceAddress.IsNull() {
 		return false
 	}
-	if !data.SourceAddressVariable.IsNull() {
+	if !data.NmeaSourceAddressVariable.IsNull() {
 		return false
 	}
-	if !data.DestinationAddress.IsNull() {
+	if !data.NmeaDestinationAddress.IsNull() {
 		return false
 	}
-	if !data.DestinationAddressVariable.IsNull() {
+	if !data.NmeaDestinationAddressVariable.IsNull() {
 		return false
 	}
-	if !data.DestinationPort.IsNull() {
+	if !data.NmeaDestinationPort.IsNull() {
 		return false
 	}
-	if !data.DestinationPortVariable.IsNull() {
+	if !data.NmeaDestinationPortVariable.IsNull() {
 		return false
 	}
 	return true
