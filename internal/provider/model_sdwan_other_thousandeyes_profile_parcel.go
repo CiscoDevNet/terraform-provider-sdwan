@@ -86,103 +86,153 @@ func (data OtherThousandEyes) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.VirtualApplication {
-		itemBody := ""
+		for _, item := range data.VirtualApplication {
+			itemBody := ""
 
-		if !item.AccountGroupTokenVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "token.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "token.value", item.AccountGroupTokenVariable.ValueString())
-		} else if !item.AccountGroupToken.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "token.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "token.value", item.AccountGroupToken.ValueString())
+			if !item.AccountGroupTokenVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "token.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "token.value", item.AccountGroupTokenVariable.ValueString())
+				}
+			} else if !item.AccountGroupToken.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "token.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "token.value", item.AccountGroupToken.ValueString())
+				}
+			}
+
+			if !item.VpnVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
+				}
+			} else if item.Vpn.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
+				}
+			}
+
+			if !item.ManagementIpVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "teMgmtIp.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "teMgmtIp.value", item.ManagementIpVariable.ValueString())
+				}
+			} else if !item.ManagementIp.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "teMgmtIp.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "teMgmtIp.value", item.ManagementIp.ValueString())
+				}
+			}
+
+			if !item.ManagementSubnetMaskVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.value", item.ManagementSubnetMaskVariable.ValueString())
+				}
+			} else if !item.ManagementSubnetMask.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.value", item.ManagementSubnetMask.ValueString())
+				}
+			}
+
+			if !item.AgentDefaultGatewayVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "teVpgIp.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "teVpgIp.value", item.AgentDefaultGatewayVariable.ValueString())
+				}
+			} else if !item.AgentDefaultGateway.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "teVpgIp.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "teVpgIp.value", item.AgentDefaultGateway.ValueString())
+				}
+			}
+
+			if !item.NameServerIpVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nameServer.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "nameServer.value", item.NameServerIpVariable.ValueString())
+				}
+			} else if item.NameServerIp.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nameServer.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "nameServer.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "nameServer.value", item.NameServerIp.ValueString())
+				}
+			}
+
+			if !item.HostnameVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "hostname.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "hostname.value", item.HostnameVariable.ValueString())
+				}
+			} else if item.Hostname.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "hostname.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "hostname.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "hostname.value", item.Hostname.ValueString())
+				}
+			}
+			if !item.ProxyType.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyType.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyType.value", item.ProxyType.ValueString())
+				}
+			}
+
+			if !item.ProxyHostVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.value", item.ProxyHostVariable.ValueString())
+				}
+			} else if !item.ProxyHost.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.value", item.ProxyHost.ValueString())
+				}
+			}
+
+			if !item.ProxyPortVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.value", item.ProxyPortVariable.ValueString())
+				}
+			} else if !item.ProxyPort.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.value", item.ProxyPort.ValueInt64())
+				}
+			}
+
+			if !item.PacUrlVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.value", item.PacUrlVariable.ValueString())
+				}
+			} else if !item.PacUrl.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.value", item.PacUrl.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"virtualApplication.-1", itemBody)
 		}
-
-		if !item.VpnVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.VpnVariable.ValueString())
-		} else if item.Vpn.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "vpn.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "vpn.value", item.Vpn.ValueInt64())
-		}
-
-		if !item.ManagementIpVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "teMgmtIp.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "teMgmtIp.value", item.ManagementIpVariable.ValueString())
-		} else if !item.ManagementIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "teMgmtIp.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "teMgmtIp.value", item.ManagementIp.ValueString())
-		}
-
-		if !item.ManagementSubnetMaskVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.value", item.ManagementSubnetMaskVariable.ValueString())
-		} else if !item.ManagementSubnetMask.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "teMgmtSubnetMask.value", item.ManagementSubnetMask.ValueString())
-		}
-
-		if !item.AgentDefaultGatewayVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "teVpgIp.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "teVpgIp.value", item.AgentDefaultGatewayVariable.ValueString())
-		} else if !item.AgentDefaultGateway.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "teVpgIp.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "teVpgIp.value", item.AgentDefaultGateway.ValueString())
-		}
-
-		if !item.NameServerIpVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "nameServer.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "nameServer.value", item.NameServerIpVariable.ValueString())
-		} else if item.NameServerIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "nameServer.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "nameServer.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "nameServer.value", item.NameServerIp.ValueString())
-		}
-
-		if !item.HostnameVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "hostname.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "hostname.value", item.HostnameVariable.ValueString())
-		} else if item.Hostname.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "hostname.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "hostname.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "hostname.value", item.Hostname.ValueString())
-		}
-		if !item.ProxyType.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyType.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyType.value", item.ProxyType.ValueString())
-		}
-
-		if !item.ProxyHostVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.value", item.ProxyHostVariable.ValueString())
-		} else if !item.ProxyHost.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyHost.value", item.ProxyHost.ValueString())
-		}
-
-		if !item.ProxyPortVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.value", item.ProxyPortVariable.ValueString())
-		} else if !item.ProxyPort.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.proxyPort.value", item.ProxyPort.ValueInt64())
-		}
-
-		if !item.PacUrlVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.value", item.PacUrlVariable.ValueString())
-		} else if !item.PacUrl.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "proxyConfig.pacUrl.value", item.PacUrl.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, path+"virtualApplication.-1", itemBody)
 	}
 	return body
 }
