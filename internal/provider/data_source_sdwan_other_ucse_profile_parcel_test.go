@@ -35,8 +35,8 @@ func TestAccDataSourceSdwanOtherUCSEProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "bay", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "slot", "0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "dedicated", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "shared_type", "ge1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "access_port_dedicated", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "access_port_shared_type", "ge1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "ipv4_address", "2.2.2.2/24"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "default_gateway", "2.2.2.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_ucse_profile_parcel.test", "vlan_id", "3"))
@@ -76,8 +76,8 @@ func testAccDataSourceSdwanOtherUCSEProfileParcelConfig() string {
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	bay = 2` + "\n"
 	config += `	slot = 0` + "\n"
-	config += `	dedicated = true` + "\n"
-	config += `	shared_type = "ge1"` + "\n"
+	config += `	access_port_dedicated = true` + "\n"
+	config += `	access_port_shared_type = "ge1"` + "\n"
 	config += `	ipv4_address = "2.2.2.2/24"` + "\n"
 	config += `	default_gateway = "2.2.2.2"` + "\n"
 	config += `	vlan_id = 3` + "\n"

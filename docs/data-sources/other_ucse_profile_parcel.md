@@ -29,19 +29,19 @@ data "sdwan_other_ucse_profile_parcel" "example" {
 
 ### Read-Only
 
+- `access_port_dedicated` (Boolean) Dedicated
+- `access_port_shared_failover_type` (String)
+- `access_port_shared_type` (String)
 - `assign_priority` (Number) Assign priority
 - `assign_priority_variable` (String) Variable name
 - `bay` (Number) Bay
-- `dedicated` (Boolean) Dedicated
 - `default_gateway` (String) Assign default gateway
 - `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `failover_type` (String)
 - `interfaces` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interfaces))
 - `ipv4_address` (String) Assign IPv4 address
 - `ipv4_address_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
-- `shared_type` (String)
 - `slot` (Number) Slot
 - `version` (Number) The version of the profile parcel
 - `vlan_id` (Number) Assign Vlan Id

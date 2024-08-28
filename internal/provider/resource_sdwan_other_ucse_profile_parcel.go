@@ -97,18 +97,18 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("Slot").AddIntegerRangeDescription(0, 3).String,
 				Required:            true,
 			},
-			"dedicated": schema.BoolAttribute{
+			"access_port_dedicated": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Dedicated").AddDefaultValueDescription("true").String,
 				Optional:            true,
 			},
-			"shared_type": schema.StringAttribute{
+			"access_port_shared_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("ge1", "ge2", "ge3", "te2", "te3", "console", "failover").String,
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ge1", "ge2", "ge3", "te2", "te3", "console", "failover"),
 				},
 			},
-			"failover_type": schema.StringAttribute{
+			"access_port_shared_failover_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("ge2", "te2").String,
 				Required:            true,
 				Validators: []validator.String{

@@ -19,14 +19,15 @@ attributes:
     id: true
     example: 0
   - model_name: dedicated
+    tf_name: access_port_dedicated
     data_path: [imc, access-port]
     example: true
   - model_name: lomType
-    tf_name: shared_type
+    tf_name: access_port_shared_type
     data_path: [imc, access-port, sharedLom]
     example: ge1
   - model_name: failOverType
-    tf_name: failover_type
+    tf_name: access_port_shared_failover_type
     data_path: [imc, access-port, sharedLom]
     exclude_test: true
     example: ge2
@@ -53,7 +54,7 @@ attributes:
       tf_name: interface_name
       example: ucse2/0
     - model_name: l3
-      tf_name: layer
+      tf_name: layer_l3
       example: true
     - model_name: ucseInterfaceVpn
       example: 2

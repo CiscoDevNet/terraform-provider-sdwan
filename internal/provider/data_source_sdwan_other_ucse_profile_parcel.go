@@ -86,15 +86,15 @@ func (d *OtherUCSEProfileParcelDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "Slot",
 				Computed:            true,
 			},
-			"dedicated": schema.BoolAttribute{
+			"access_port_dedicated": schema.BoolAttribute{
 				MarkdownDescription: "Dedicated",
 				Computed:            true,
 			},
-			"shared_type": schema.StringAttribute{
+			"access_port_shared_type": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},
-			"failover_type": schema.StringAttribute{
+			"access_port_shared_failover_type": schema.StringAttribute{
 				MarkdownDescription: "",
 				Computed:            true,
 			},

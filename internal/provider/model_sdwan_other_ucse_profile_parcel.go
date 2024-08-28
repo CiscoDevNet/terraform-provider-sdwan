@@ -32,25 +32,25 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type OtherUCSE struct {
-	Id                     types.String          `tfsdk:"id"`
-	Version                types.Int64           `tfsdk:"version"`
-	Name                   types.String          `tfsdk:"name"`
-	Description            types.String          `tfsdk:"description"`
-	FeatureProfileId       types.String          `tfsdk:"feature_profile_id"`
-	Bay                    types.Int64           `tfsdk:"bay"`
-	Slot                   types.Int64           `tfsdk:"slot"`
-	Dedicated              types.Bool            `tfsdk:"dedicated"`
-	SharedType             types.String          `tfsdk:"shared_type"`
-	FailoverType           types.String          `tfsdk:"failover_type"`
-	Ipv4Address            types.String          `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable    types.String          `tfsdk:"ipv4_address_variable"`
-	DefaultGateway         types.String          `tfsdk:"default_gateway"`
-	DefaultGatewayVariable types.String          `tfsdk:"default_gateway_variable"`
-	VlanId                 types.Int64           `tfsdk:"vlan_id"`
-	VlanIdVariable         types.String          `tfsdk:"vlan_id_variable"`
-	AssignPriority         types.Int64           `tfsdk:"assign_priority"`
-	AssignPriorityVariable types.String          `tfsdk:"assign_priority_variable"`
-	Interfaces             []OtherUCSEInterfaces `tfsdk:"interfaces"`
+	Id                           types.String          `tfsdk:"id"`
+	Version                      types.Int64           `tfsdk:"version"`
+	Name                         types.String          `tfsdk:"name"`
+	Description                  types.String          `tfsdk:"description"`
+	FeatureProfileId             types.String          `tfsdk:"feature_profile_id"`
+	Bay                          types.Int64           `tfsdk:"bay"`
+	Slot                         types.Int64           `tfsdk:"slot"`
+	AccessPortDedicated          types.Bool            `tfsdk:"access_port_dedicated"`
+	AccessPortSharedType         types.String          `tfsdk:"access_port_shared_type"`
+	AccessPortSharedFailoverType types.String          `tfsdk:"access_port_shared_failover_type"`
+	Ipv4Address                  types.String          `tfsdk:"ipv4_address"`
+	Ipv4AddressVariable          types.String          `tfsdk:"ipv4_address_variable"`
+	DefaultGateway               types.String          `tfsdk:"default_gateway"`
+	DefaultGatewayVariable       types.String          `tfsdk:"default_gateway_variable"`
+	VlanId                       types.Int64           `tfsdk:"vlan_id"`
+	VlanIdVariable               types.String          `tfsdk:"vlan_id_variable"`
+	AssignPriority               types.Int64           `tfsdk:"assign_priority"`
+	AssignPriorityVariable       types.String          `tfsdk:"assign_priority_variable"`
+	Interfaces                   []OtherUCSEInterfaces `tfsdk:"interfaces"`
 }
 
 type OtherUCSEInterfaces struct {
@@ -92,20 +92,20 @@ func (data OtherUCSE) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"slot.optionType", "global")
 		body, _ = sjson.Set(body, path+"slot.value", data.Slot.ValueInt64())
 	}
-	if data.Dedicated.IsNull() {
+	if data.AccessPortDedicated.IsNull() {
 		body, _ = sjson.Set(body, path+"imc.access-port.dedicated.optionType", "default")
 		body, _ = sjson.Set(body, path+"imc.access-port.dedicated.value", true)
 	} else {
 		body, _ = sjson.Set(body, path+"imc.access-port.dedicated.optionType", "global")
-		body, _ = sjson.Set(body, path+"imc.access-port.dedicated.value", data.Dedicated.ValueBool())
+		body, _ = sjson.Set(body, path+"imc.access-port.dedicated.value", data.AccessPortDedicated.ValueBool())
 	}
-	if !data.SharedType.IsNull() {
+	if !data.AccessPortSharedType.IsNull() {
 		body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.lomType.optionType", "global")
-		body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.lomType.value", data.SharedType.ValueString())
+		body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.lomType.value", data.AccessPortSharedType.ValueString())
 	}
-	if !data.FailoverType.IsNull() {
+	if !data.AccessPortSharedFailoverType.IsNull() {
 		body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.failOverType.optionType", "global")
-		body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.failOverType.value", data.FailoverType.ValueString())
+		body, _ = sjson.Set(body, path+"imc.access-port.sharedLom.failOverType.value", data.AccessPortSharedFailoverType.ValueString())
 	}
 
 	if !data.Ipv4AddressVariable.IsNull() {
@@ -215,28 +215,28 @@ func (data *OtherUCSE) fromBody(ctx context.Context, res gjson.Result) {
 			data.Slot = types.Int64Value(va.Int())
 		}
 	}
-	data.Dedicated = types.BoolNull()
+	data.AccessPortDedicated = types.BoolNull()
 
 	if t := res.Get(path + "imc.access-port.dedicated.optionType"); t.Exists() {
 		va := res.Get(path + "imc.access-port.dedicated.value")
 		if t.String() == "global" {
-			data.Dedicated = types.BoolValue(va.Bool())
+			data.AccessPortDedicated = types.BoolValue(va.Bool())
 		}
 	}
-	data.SharedType = types.StringNull()
+	data.AccessPortSharedType = types.StringNull()
 
 	if t := res.Get(path + "imc.access-port.sharedLom.lomType.optionType"); t.Exists() {
 		va := res.Get(path + "imc.access-port.sharedLom.lomType.value")
 		if t.String() == "global" {
-			data.SharedType = types.StringValue(va.String())
+			data.AccessPortSharedType = types.StringValue(va.String())
 		}
 	}
-	data.FailoverType = types.StringNull()
+	data.AccessPortSharedFailoverType = types.StringNull()
 
 	if t := res.Get(path + "imc.access-port.sharedLom.failOverType.optionType"); t.Exists() {
 		va := res.Get(path + "imc.access-port.sharedLom.failOverType.value")
 		if t.String() == "global" {
-			data.FailoverType = types.StringValue(va.String())
+			data.AccessPortSharedFailoverType = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4Address = types.StringNull()
@@ -346,28 +346,28 @@ func (data *OtherUCSE) updateFromBody(ctx context.Context, res gjson.Result) {
 			data.Slot = types.Int64Value(va.Int())
 		}
 	}
-	data.Dedicated = types.BoolNull()
+	data.AccessPortDedicated = types.BoolNull()
 
 	if t := res.Get(path + "imc.access-port.dedicated.optionType"); t.Exists() {
 		va := res.Get(path + "imc.access-port.dedicated.value")
 		if t.String() == "global" {
-			data.Dedicated = types.BoolValue(va.Bool())
+			data.AccessPortDedicated = types.BoolValue(va.Bool())
 		}
 	}
-	data.SharedType = types.StringNull()
+	data.AccessPortSharedType = types.StringNull()
 
 	if t := res.Get(path + "imc.access-port.sharedLom.lomType.optionType"); t.Exists() {
 		va := res.Get(path + "imc.access-port.sharedLom.lomType.value")
 		if t.String() == "global" {
-			data.SharedType = types.StringValue(va.String())
+			data.AccessPortSharedType = types.StringValue(va.String())
 		}
 	}
-	data.FailoverType = types.StringNull()
+	data.AccessPortSharedFailoverType = types.StringNull()
 
 	if t := res.Get(path + "imc.access-port.sharedLom.failOverType.optionType"); t.Exists() {
 		va := res.Get(path + "imc.access-port.sharedLom.failOverType.value")
 		if t.String() == "global" {
-			data.FailoverType = types.StringValue(va.String())
+			data.AccessPortSharedFailoverType = types.StringValue(va.String())
 		}
 	}
 	data.Ipv4Address = types.StringNull()
@@ -482,13 +482,13 @@ func (data *OtherUCSE) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.Slot.IsNull() {
 		return false
 	}
-	if !data.Dedicated.IsNull() {
+	if !data.AccessPortDedicated.IsNull() {
 		return false
 	}
-	if !data.SharedType.IsNull() {
+	if !data.AccessPortSharedType.IsNull() {
 		return false
 	}
-	if !data.FailoverType.IsNull() {
+	if !data.AccessPortSharedFailoverType.IsNull() {
 		return false
 	}
 	if !data.Ipv4Address.IsNull() {
