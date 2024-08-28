@@ -109,256 +109,394 @@ func (data SystemGlobal) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.HttpServerVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.HttpServerVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.HttpServerVariable.ValueString())
+		}
 	} else if data.HttpServer.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.HttpServer.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpServer.value", data.HttpServer.ValueBool())
+		}
 	}
 
 	if !data.HttpsServerVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.HttpsServerVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.HttpsServerVariable.ValueString())
+		}
 	} else if data.HttpsServer.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.HttpsServer.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpHttpsServer.value", data.HttpsServer.ValueBool())
+		}
 	}
 
 	if !data.FtpPassiveVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.FtpPassiveVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.FtpPassiveVariable.ValueString())
+		}
 	} else if data.FtpPassive.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.FtpPassive.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpFtpPassive.value", data.FtpPassive.ValueBool())
+		}
 	}
 
 	if !data.DomainLookupVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.DomainLookupVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.DomainLookupVariable.ValueString())
+		}
 	} else if data.DomainLookup.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.DomainLookup.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpDomainLookup.value", data.DomainLookup.ValueBool())
+		}
 	}
 
 	if !data.ArpProxyVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ArpProxyVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ArpProxyVariable.ValueString())
+		}
 	} else if data.ArpProxy.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ArpProxy.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpArpProxy.value", data.ArpProxy.ValueBool())
+		}
 	}
 
 	if !data.RshRcpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.RshRcpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.RshRcpVariable.ValueString())
+		}
 	} else if data.RshRcp.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.RshRcp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpRcmd.value", data.RshRcp.ValueBool())
+		}
 	}
 
 	if !data.LineVtyVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.LineVtyVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.LineVtyVariable.ValueString())
+		}
 	} else if data.LineVty.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.LineVty.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLineVty.value", data.LineVty.ValueBool())
+		}
 	}
 
 	if !data.CdpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.CdpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.CdpVariable.ValueString())
+		}
 	} else if data.Cdp.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.Cdp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpCdp.value", data.Cdp.ValueBool())
+		}
 	}
 
 	if !data.LldpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.LldpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.LldpVariable.ValueString())
+		}
 	} else if data.Lldp.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.Lldp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpLldp.value", data.Lldp.ValueBool())
+		}
 	}
 
 	if !data.SourceInterfaceVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterfaceVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterfaceVariable.ValueString())
+		}
 	} else if data.SourceInterface.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterface.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.servicesGlobalServicesIpSourceIntrf.value", data.SourceInterface.ValueString())
+		}
 	}
 
 	if !data.TcpKeepalivesInVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.TcpKeepalivesInVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.TcpKeepalivesInVariable.ValueString())
+		}
 	} else if data.TcpKeepalivesIn.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.TcpKeepalivesIn.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesIn.value", data.TcpKeepalivesIn.ValueBool())
+		}
 	}
 
 	if !data.TcpKeepalivesOutVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.TcpKeepalivesOutVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.TcpKeepalivesOutVariable.ValueString())
+		}
 	} else if data.TcpKeepalivesOut.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.TcpKeepalivesOut.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpKeepalivesOut.value", data.TcpKeepalivesOut.ValueBool())
+		}
 	}
 
 	if !data.TcpSmallServersVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.TcpSmallServersVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.TcpSmallServersVariable.ValueString())
+		}
 	} else if data.TcpSmallServers.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.TcpSmallServers.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsTcpSmallServers.value", data.TcpSmallServers.ValueBool())
+		}
 	}
 
 	if !data.UdpSmallServersVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.UdpSmallServersVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.UdpSmallServersVariable.ValueString())
+		}
 	} else if data.UdpSmallServers.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.UdpSmallServers.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsUdpSmallServers.value", data.UdpSmallServers.ValueBool())
+		}
 	}
 
 	if !data.ConsoleLoggingVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.ConsoleLoggingVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.ConsoleLoggingVariable.ValueString())
+		}
 	} else if data.ConsoleLogging.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.ConsoleLogging.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsConsoleLogging.value", data.ConsoleLogging.ValueBool())
+		}
 	}
 
 	if !data.IpSourceRoutingVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.IpSourceRoutingVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.IpSourceRoutingVariable.ValueString())
+		}
 	} else if data.IpSourceRouting.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.IpSourceRouting.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIPSourceRoute.value", data.IpSourceRouting.ValueBool())
+		}
 	}
 
 	if !data.VtyLineLoggingVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.VtyLineLoggingVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.VtyLineLoggingVariable.ValueString())
+		}
 	} else if data.VtyLineLogging.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.VtyLineLogging.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsVtyLineLogging.value", data.VtyLineLogging.ValueBool())
+		}
 	}
 
 	if !data.SnmpIfindexPersistVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.SnmpIfindexPersistVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.SnmpIfindexPersistVariable.ValueString())
+		}
 	} else if data.SnmpIfindexPersist.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.SnmpIfindexPersist.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsSnmpIfindexPersist.value", data.SnmpIfindexPersist.ValueBool())
+		}
 	}
 
 	if !data.IgnoreBootpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.IgnoreBootpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.IgnoreBootpVariable.ValueString())
+		}
 	} else if data.IgnoreBootp.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", true)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", true)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.IgnoreBootp.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalOtherSettingsIgnoreBootp.value", data.IgnoreBootp.ValueBool())
+		}
 	}
 
 	if !data.Nat64UdpTimeoutVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.Nat64UdpTimeoutVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.Nat64UdpTimeoutVariable.ValueString())
+		}
 	} else if data.Nat64UdpTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", 300)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", 300)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.Nat64UdpTimeout.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64UdpTimeout.value", data.Nat64UdpTimeout.ValueInt64())
+		}
 	}
 
 	if !data.Nat64TcpTimeoutVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.Nat64TcpTimeoutVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.Nat64TcpTimeoutVariable.ValueString())
+		}
 	} else if data.Nat64TcpTimeout.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "default")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", 3600)
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "default")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", 3600)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.Nat64TcpTimeout.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsNat64TcpTimeout.value", data.Nat64TcpTimeout.ValueInt64())
+		}
 	}
 
 	if !data.HttpAuthenticationVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthenticationVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthenticationVariable.ValueString())
+		}
 	} else if data.HttpAuthentication.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthentication.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsHttpAuthentication.value", data.HttpAuthentication.ValueString())
+		}
 	}
 
 	if !data.SshVersionVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "variable")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersionVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "variable")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersionVariable.ValueString())
+		}
 	} else if data.SshVersion.IsNull() {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "global")
-		body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersion.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.optionType", "global")
+			body, _ = sjson.Set(body, path+"services_global.services_ip.globalSettingsSSHVersion.value", data.SshVersion.ValueString())
+		}
 	}
 	return body
 }

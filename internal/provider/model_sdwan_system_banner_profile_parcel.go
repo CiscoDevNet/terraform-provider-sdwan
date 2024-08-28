@@ -67,25 +67,37 @@ func (data SystemBanner) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.LoginVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"login.optionType", "variable")
-		body, _ = sjson.Set(body, path+"login.value", data.LoginVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"login.optionType", "variable")
+			body, _ = sjson.Set(body, path+"login.value", data.LoginVariable.ValueString())
+		}
 	} else if data.Login.IsNull() {
-		body, _ = sjson.Set(body, path+"login.optionType", "default")
-		body, _ = sjson.Set(body, path+"login.value", "")
+		if true {
+			body, _ = sjson.Set(body, path+"login.optionType", "default")
+			body, _ = sjson.Set(body, path+"login.value", "")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"login.optionType", "global")
-		body, _ = sjson.Set(body, path+"login.value", data.Login.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"login.optionType", "global")
+			body, _ = sjson.Set(body, path+"login.value", data.Login.ValueString())
+		}
 	}
 
 	if !data.MotdVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"motd.optionType", "variable")
-		body, _ = sjson.Set(body, path+"motd.value", data.MotdVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"motd.optionType", "variable")
+			body, _ = sjson.Set(body, path+"motd.value", data.MotdVariable.ValueString())
+		}
 	} else if data.Motd.IsNull() {
-		body, _ = sjson.Set(body, path+"motd.optionType", "default")
-		body, _ = sjson.Set(body, path+"motd.value", "")
+		if true {
+			body, _ = sjson.Set(body, path+"motd.optionType", "default")
+			body, _ = sjson.Set(body, path+"motd.value", "")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"motd.optionType", "global")
-		body, _ = sjson.Set(body, path+"motd.value", data.Motd.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"motd.optionType", "global")
+			body, _ = sjson.Set(body, path+"motd.value", data.Motd.ValueString())
+		}
 	}
 	return body
 }

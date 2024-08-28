@@ -85,106 +85,160 @@ func (data ServiceTracker) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.TrackerNameVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"trackerName.optionType", "variable")
-		body, _ = sjson.Set(body, path+"trackerName.value", data.TrackerNameVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackerName.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trackerName.value", data.TrackerNameVariable.ValueString())
+		}
 	} else if !data.TrackerName.IsNull() {
-		body, _ = sjson.Set(body, path+"trackerName.optionType", "global")
-		body, _ = sjson.Set(body, path+"trackerName.value", data.TrackerName.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackerName.optionType", "global")
+			body, _ = sjson.Set(body, path+"trackerName.value", data.TrackerName.ValueString())
+		}
 	}
 
 	if !data.EndpointApiUrlVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointApiUrl.optionType", "variable")
-		body, _ = sjson.Set(body, path+"endpointApiUrl.value", data.EndpointApiUrlVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointApiUrl.optionType", "variable")
+			body, _ = sjson.Set(body, path+"endpointApiUrl.value", data.EndpointApiUrlVariable.ValueString())
+		}
 	} else if !data.EndpointApiUrl.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointApiUrl.optionType", "global")
-		body, _ = sjson.Set(body, path+"endpointApiUrl.value", data.EndpointApiUrl.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointApiUrl.optionType", "global")
+			body, _ = sjson.Set(body, path+"endpointApiUrl.value", data.EndpointApiUrl.ValueString())
+		}
 	}
 
 	if !data.EndpointDnsNameVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointDnsName.optionType", "variable")
-		body, _ = sjson.Set(body, path+"endpointDnsName.value", data.EndpointDnsNameVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointDnsName.optionType", "variable")
+			body, _ = sjson.Set(body, path+"endpointDnsName.value", data.EndpointDnsNameVariable.ValueString())
+		}
 	} else if !data.EndpointDnsName.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointDnsName.optionType", "global")
-		body, _ = sjson.Set(body, path+"endpointDnsName.value", data.EndpointDnsName.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointDnsName.optionType", "global")
+			body, _ = sjson.Set(body, path+"endpointDnsName.value", data.EndpointDnsName.ValueString())
+		}
 	}
 
 	if !data.EndpointIpVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointIp.optionType", "variable")
-		body, _ = sjson.Set(body, path+"endpointIp.value", data.EndpointIpVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointIp.optionType", "variable")
+			body, _ = sjson.Set(body, path+"endpointIp.value", data.EndpointIpVariable.ValueString())
+		}
 	} else if !data.EndpointIp.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointIp.optionType", "global")
-		body, _ = sjson.Set(body, path+"endpointIp.value", data.EndpointIp.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointIp.optionType", "global")
+			body, _ = sjson.Set(body, path+"endpointIp.value", data.EndpointIp.ValueString())
+		}
 	}
 
 	if !data.ProtocolVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.optionType", "variable")
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.value", data.ProtocolVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.optionType", "variable")
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.value", data.ProtocolVariable.ValueString())
+		}
 	} else if !data.Protocol.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.optionType", "global")
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.value", data.Protocol.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.optionType", "global")
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.protocol.value", data.Protocol.ValueString())
+		}
 	}
 
 	if !data.PortVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.port.optionType", "variable")
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.port.value", data.PortVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.port.optionType", "variable")
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.port.value", data.PortVariable.ValueString())
+		}
 	} else if !data.Port.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.port.optionType", "global")
-		body, _ = sjson.Set(body, path+"endpointTcpUdp.port.value", data.Port.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.port.optionType", "global")
+			body, _ = sjson.Set(body, path+"endpointTcpUdp.port.value", data.Port.ValueInt64())
+		}
 	}
 
 	if !data.IntervalVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"interval.optionType", "variable")
-		body, _ = sjson.Set(body, path+"interval.value", data.IntervalVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"interval.optionType", "variable")
+			body, _ = sjson.Set(body, path+"interval.value", data.IntervalVariable.ValueString())
+		}
 	} else if data.Interval.IsNull() {
-		body, _ = sjson.Set(body, path+"interval.optionType", "default")
-		body, _ = sjson.Set(body, path+"interval.value", 60)
+		if true {
+			body, _ = sjson.Set(body, path+"interval.optionType", "default")
+			body, _ = sjson.Set(body, path+"interval.value", 60)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"interval.optionType", "global")
-		body, _ = sjson.Set(body, path+"interval.value", data.Interval.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"interval.optionType", "global")
+			body, _ = sjson.Set(body, path+"interval.value", data.Interval.ValueInt64())
+		}
 	}
 
 	if !data.MultiplierVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"multiplier.optionType", "variable")
-		body, _ = sjson.Set(body, path+"multiplier.value", data.MultiplierVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"multiplier.optionType", "variable")
+			body, _ = sjson.Set(body, path+"multiplier.value", data.MultiplierVariable.ValueString())
+		}
 	} else if data.Multiplier.IsNull() {
-		body, _ = sjson.Set(body, path+"multiplier.optionType", "default")
-		body, _ = sjson.Set(body, path+"multiplier.value", 3)
+		if true {
+			body, _ = sjson.Set(body, path+"multiplier.optionType", "default")
+			body, _ = sjson.Set(body, path+"multiplier.value", 3)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"multiplier.optionType", "global")
-		body, _ = sjson.Set(body, path+"multiplier.value", data.Multiplier.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"multiplier.optionType", "global")
+			body, _ = sjson.Set(body, path+"multiplier.value", data.Multiplier.ValueInt64())
+		}
 	}
 
 	if !data.ThresholdVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"threshold.optionType", "variable")
-		body, _ = sjson.Set(body, path+"threshold.value", data.ThresholdVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"threshold.optionType", "variable")
+			body, _ = sjson.Set(body, path+"threshold.value", data.ThresholdVariable.ValueString())
+		}
 	} else if data.Threshold.IsNull() {
-		body, _ = sjson.Set(body, path+"threshold.optionType", "default")
-		body, _ = sjson.Set(body, path+"threshold.value", 300)
+		if true {
+			body, _ = sjson.Set(body, path+"threshold.optionType", "default")
+			body, _ = sjson.Set(body, path+"threshold.value", 300)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"threshold.optionType", "global")
-		body, _ = sjson.Set(body, path+"threshold.value", data.Threshold.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"threshold.optionType", "global")
+			body, _ = sjson.Set(body, path+"threshold.value", data.Threshold.ValueInt64())
+		}
 	}
 
 	if !data.EndpointTrackerTypeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "variable")
-		body, _ = sjson.Set(body, path+"endpointTrackerType.value", data.EndpointTrackerTypeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "variable")
+			body, _ = sjson.Set(body, path+"endpointTrackerType.value", data.EndpointTrackerTypeVariable.ValueString())
+		}
 	} else if data.EndpointTrackerType.IsNull() {
-		body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "default")
-		body, _ = sjson.Set(body, path+"endpointTrackerType.value", "static-route")
+		if true {
+			body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "default")
+			body, _ = sjson.Set(body, path+"endpointTrackerType.value", "static-route")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "global")
-		body, _ = sjson.Set(body, path+"endpointTrackerType.value", data.EndpointTrackerType.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"endpointTrackerType.optionType", "global")
+			body, _ = sjson.Set(body, path+"endpointTrackerType.value", data.EndpointTrackerType.ValueString())
+		}
 	}
 
 	if !data.TrackerTypeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"trackerType.optionType", "variable")
-		body, _ = sjson.Set(body, path+"trackerType.value", data.TrackerTypeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackerType.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trackerType.value", data.TrackerTypeVariable.ValueString())
+		}
 	} else if data.TrackerType.IsNull() {
-		body, _ = sjson.Set(body, path+"trackerType.optionType", "default")
-		body, _ = sjson.Set(body, path+"trackerType.value", "endpoint")
+		if true {
+			body, _ = sjson.Set(body, path+"trackerType.optionType", "default")
+			body, _ = sjson.Set(body, path+"trackerType.value", "endpoint")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"trackerType.optionType", "global")
-		body, _ = sjson.Set(body, path+"trackerType.value", data.TrackerType.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackerType.optionType", "global")
+			body, _ = sjson.Set(body, path+"trackerType.value", data.TrackerType.ValueString())
+		}
 	}
 	return body
 }

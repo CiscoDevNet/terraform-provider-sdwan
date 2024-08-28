@@ -86,7 +86,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 			{{- range  .Attributes}}
 			{{- if not .Value}}
 			"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
+				MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 					{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 					.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 					{{- end -}}
@@ -152,7 +152,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 						{{- range  .Attributes}}
 						{{- if not .Value}}
 						"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
+							MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 								{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 								.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 								{{- end -}}
@@ -214,7 +214,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 									{{- range  .Attributes}}
 									{{- if not .Value}}
 									"{{.TfName}}": schema.{{if isNestedListSet .}}{{.Type}}Nested{{else if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
-										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
+										MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 											{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 											.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 											{{- end -}}
@@ -276,7 +276,7 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 												{{- range  .Attributes}}
 												{{- if not .Value}}
 												"{{.TfName}}": schema.{{if isList .}}List{{else if isSet .}}Set{{else}}{{.Type}}{{end}}Attribute{
-													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}")
+													MarkdownDescription: helpers.NewAttributeDescription("{{.Description}}{{if .ConditionalAttribute.Name}}, Attribute conditional on `{{.ConditionalAttribute.Name}}` being equal to `{{.ConditionalAttribute.Value}}`{{end}}")
 														{{- if and (len .EnumValues) (not .IgnoreEnum) -}}
 														.AddStringEnumDescription({{range .EnumValues}}"{{.}}", {{end}})
 														{{- end -}}
