@@ -25,6 +25,7 @@ no_data_source: bool(required=False) # Set to true if no data source should be c
 no_resource: bool(required=False) # Set to true if no resource should be created
 get_before_delete: bool(required=False) # This does a GET "all" before doing a DELETE, which is a workaround for an API issue with some endpoints where the reference count is not updated otherwise
 delete_mutex: bool(required=False) # Set to true if DELETE operation is mutually exclusive with other DELETE operations
+skip_minimum_test: bool(required=False) # Set to true to prevent "minimum" resource acceptance testing
 ---
 attribute:
   model_name: str(required=False) # Name of the attribute in the model (payload)
@@ -68,8 +69,10 @@ attribute:
   default_value_empty_string: bool(required=False) # Set to true if default value should be an empty string
   value: any(str(), int(), bool(), required=False) # Hardcoded value for the attribute
   test_value: str(required=False) # Value used for acceptance test
+  secondary_test_value: str(required=False) # Value used for acceptance test
   minimum_test_value: any(str(), int(), bool(), num(), required=False) # Value used for "minimum" resource acceptance test
   always_include: bool(required=False) # Include attribute always in payload
+  always_include_parent: bool(required=False) # Include attributes parent always in payload
   attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
   conditional_attribute: include('conditional_attribute', required=False) # Add attribute to payload only if condition is true
   conditional_list_length: str(required=False) # Add attribute to payload only if referenced list has a length greater than 0
@@ -80,4 +83,5 @@ attribute:
 
 conditional_attribute:
   name: str() # Reference to other attribute
-  value: str() # Attribute value
+  value: any(str(), bool()) # Attribute value
+  type: str(required=False) # Attribute value type (default is String but can be set to Bool)

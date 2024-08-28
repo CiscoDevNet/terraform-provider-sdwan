@@ -66,14 +66,18 @@ func (data PolicyObjectExtendedCommunityList) toBody(ctx context.Context) string
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	body, _ = sjson.Set(body, path+"entries", []interface{}{})
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.ExtendedCommunity.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "extCommunity.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "extCommunity.value", item.ExtendedCommunity.ValueString())
+	if true {
+		body, _ = sjson.Set(body, path+"entries", []interface{}{})
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.ExtendedCommunity.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "extCommunity.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "extCommunity.value", item.ExtendedCommunity.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }

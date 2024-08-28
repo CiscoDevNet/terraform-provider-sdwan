@@ -69,26 +69,36 @@ func (data PolicyObjectTLOCList) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.TlocIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "tloc.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "tloc.value", item.TlocIp.ValueString())
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.TlocIp.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "tloc.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "tloc.value", item.TlocIp.ValueString())
+				}
+			}
+			if !item.Color.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "color.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "color.value", item.Color.ValueString())
+				}
+			}
+			if !item.Encapsulation.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "encap.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "encap.value", item.Encapsulation.ValueString())
+				}
+			}
+			if !item.Preference.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "preference.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "preference.value", item.Preference.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		if !item.Color.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "color.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "color.value", item.Color.ValueString())
-		}
-		if !item.Encapsulation.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "encap.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "encap.value", item.Encapsulation.ValueString())
-		}
-		if !item.Preference.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "preference.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "preference.value", item.Preference.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }

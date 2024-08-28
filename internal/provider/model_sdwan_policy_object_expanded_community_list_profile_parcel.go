@@ -66,13 +66,17 @@ func (data PolicyObjectExpandedCommunityList) toBody(ctx context.Context) string
 	path := "data."
 
 	if !data.ExpandedCommunityListsVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"expandedCommunityList.optionType", "variable")
-		body, _ = sjson.Set(body, path+"expandedCommunityList.value", data.ExpandedCommunityListsVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"expandedCommunityList.optionType", "variable")
+			body, _ = sjson.Set(body, path+"expandedCommunityList.value", data.ExpandedCommunityListsVariable.ValueString())
+		}
 	} else if !data.ExpandedCommunityLists.IsNull() {
-		body, _ = sjson.Set(body, path+"expandedCommunityList.optionType", "global")
-		var values []string
-		data.ExpandedCommunityLists.ElementsAs(ctx, &values, false)
-		body, _ = sjson.Set(body, path+"expandedCommunityList.value", values)
+		if true {
+			body, _ = sjson.Set(body, path+"expandedCommunityList.optionType", "global")
+			var values []string
+			data.ExpandedCommunityLists.ElementsAs(ctx, &values, false)
+			body, _ = sjson.Set(body, path+"expandedCommunityList.value", values)
+		}
 	}
 	return body
 }

@@ -66,14 +66,18 @@ func (data PolicyObjectClassMap) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.Queue.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "queue.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "queue.value", item.Queue.ValueString())
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.Queue.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "queue.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "queue.value", item.Queue.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }

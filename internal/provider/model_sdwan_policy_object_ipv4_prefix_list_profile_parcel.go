@@ -70,26 +70,36 @@ func (data PolicyObjectIPv4PrefixList) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.Ipv4Address.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipv4Address.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipv4Address.value", item.Ipv4Address.ValueString())
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.Ipv4Address.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ipv4Address.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ipv4Address.value", item.Ipv4Address.ValueString())
+				}
+			}
+			if !item.Ipv4PrefixLength.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ipv4PrefixLength.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ipv4PrefixLength.value", item.Ipv4PrefixLength.ValueInt64())
+				}
+			}
+			if !item.Le.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "leRangePrefixLength.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "leRangePrefixLength.value", item.Le.ValueInt64())
+				}
+			}
+			if !item.Ge.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "geRangePrefixLength.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "geRangePrefixLength.value", item.Ge.ValueInt64())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		if !item.Ipv4PrefixLength.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipv4PrefixLength.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipv4PrefixLength.value", item.Ipv4PrefixLength.ValueInt64())
-		}
-		if !item.Le.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "leRangePrefixLength.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "leRangePrefixLength.value", item.Le.ValueInt64())
-		}
-		if !item.Ge.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "geRangePrefixLength.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "geRangePrefixLength.value", item.Ge.ValueInt64())
-		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }

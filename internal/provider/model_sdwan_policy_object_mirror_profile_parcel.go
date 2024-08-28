@@ -67,18 +67,24 @@ func (data PolicyObjectMirror) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.RemoteDestinationIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "remoteDestIp.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "remoteDestIp.value", item.RemoteDestinationIp.ValueString())
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.RemoteDestinationIp.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "remoteDestIp.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "remoteDestIp.value", item.RemoteDestinationIp.ValueString())
+				}
+			}
+			if !item.SourceIp.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sourceIp.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sourceIp.value", item.SourceIp.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		if !item.SourceIp.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sourceIp.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "sourceIp.value", item.SourceIp.ValueString())
-		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }

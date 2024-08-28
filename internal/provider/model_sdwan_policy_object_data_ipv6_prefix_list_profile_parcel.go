@@ -67,18 +67,24 @@ func (data PolicyObjectDataIPv6PrefixList) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.Ipv6Address.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipv6Address.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipv6Address.value", item.Ipv6Address.ValueString())
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.Ipv6Address.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ipv6Address.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ipv6Address.value", item.Ipv6Address.ValueString())
+				}
+			}
+			if !item.Ipv6PrefixLength.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ipv6PrefixLength.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ipv6PrefixLength.value", item.Ipv6PrefixLength.ValueInt64())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		if !item.Ipv6PrefixLength.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ipv6PrefixLength.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ipv6PrefixLength.value", item.Ipv6PrefixLength.ValueInt64())
-		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }

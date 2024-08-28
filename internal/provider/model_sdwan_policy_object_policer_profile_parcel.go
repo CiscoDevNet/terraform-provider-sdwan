@@ -69,22 +69,30 @@ func (data PolicyObjectPolicer) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.BurstBytes.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "burst.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "burst.value", item.BurstBytes.ValueInt64())
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.BurstBytes.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "burst.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "burst.value", item.BurstBytes.ValueInt64())
+				}
+			}
+			if !item.ExceedAction.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "exceed.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "exceed.value", item.ExceedAction.ValueString())
+				}
+			}
+			if !item.RateBps.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "rate.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "rate.value", item.RateBps.ValueInt64())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		if !item.ExceedAction.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "exceed.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "exceed.value", item.ExceedAction.ValueString())
-		}
-		if !item.RateBps.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "rate.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "rate.value", item.RateBps.ValueInt64())
-		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }

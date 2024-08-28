@@ -66,14 +66,18 @@ func (data PolicyObjectColorList) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.Entries {
-		itemBody := ""
-		if !item.Color.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "color.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "color.value", item.Color.ValueString())
+		for _, item := range data.Entries {
+			itemBody := ""
+			if !item.Color.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "color.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "color.value", item.Color.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"entries.-1", itemBody)
 	}
 	return body
 }
