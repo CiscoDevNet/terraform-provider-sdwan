@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_ipv6_prefix_list_profile_parcel.test", "entries.0.ipv6_address", "2001:db8:85a3::8a2e:370:7334"))
@@ -42,7 +42,7 @@ func TestAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcel(t *testing.T)
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelConfig(),
+				Config: testAccDataSourceSdwanPolicyObjectIPv6PrefixListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -52,6 +52,11 @@ func TestAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcel(t *testing.T)
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+const testAccDataSourceSdwanPolicyObjectIPv6PrefixListPrerequisitesProfileParcelConfig = `
+variable "policy_object_feature_template_id" {} 
+
+`
+
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
@@ -59,7 +64,7 @@ func testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelConfig() strin
 	config := `resource "sdwan_policy_object_ipv6_prefix_list_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"` + "\n"
+	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
 	config += `	  ipv6_prefix_length = 64` + "\n"
@@ -71,7 +76,7 @@ func testAccDataSourceSdwanPolicyObjectIPv6PrefixListProfileParcelConfig() strin
 	config += `
 		data "sdwan_policy_object_ipv6_prefix_list_profile_parcel" "test" {
 			id = sdwan_policy_object_ipv6_prefix_list_profile_parcel.test.id
-			feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+			feature_profile_id = var.policy_object_feature_template_id
 		}
 	`
 	return config

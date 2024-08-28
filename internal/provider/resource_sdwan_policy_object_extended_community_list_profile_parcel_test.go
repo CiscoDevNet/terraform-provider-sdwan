@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyObjectExtendedCommunityListProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_extended_community_list_profile_parcel.test", "entries.0.extended_community", "soo 10.0.0.1:30"))
@@ -39,10 +39,10 @@ func TestAccSdwanPolicyObjectExtendedCommunityListProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSdwanPolicyObjectExtendedCommunityListProfileParcelConfig_minimum(),
+				Config: testAccSdwanPolicyObjectExtendedCommunityListPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectExtendedCommunityListProfileParcelConfig_minimum(),
 			},
 			{
-				Config: testAccSdwanPolicyObjectExtendedCommunityListProfileParcelConfig_all(),
+				Config: testAccSdwanPolicyObjectExtendedCommunityListPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectExtendedCommunityListProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -52,6 +52,11 @@ func TestAccSdwanPolicyObjectExtendedCommunityListProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+const testAccSdwanPolicyObjectExtendedCommunityListPrerequisitesProfileParcelConfig = `
+variable "policy_object_feature_template_id" {} 
+
+`
+
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
@@ -59,7 +64,7 @@ func testAccSdwanPolicyObjectExtendedCommunityListProfileParcelConfig_minimum() 
 	config := `resource "sdwan_policy_object_extended_community_list_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"` + "\n"
+	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  extended_community = "soo 10.0.0.1:30"` + "\n"
 	config += `	}]` + "\n"
@@ -74,7 +79,7 @@ func testAccSdwanPolicyObjectExtendedCommunityListProfileParcelConfig_all() stri
 	config := `resource "sdwan_policy_object_extended_community_list_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"` + "\n"
+	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  extended_community = "soo 10.0.0.1:30"` + "\n"
 	config += `	}]` + "\n"

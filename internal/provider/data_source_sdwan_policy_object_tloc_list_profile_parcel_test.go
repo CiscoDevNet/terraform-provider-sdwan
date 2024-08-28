@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanPolicyObjectTLOCListProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012")
+	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_tloc_list_profile_parcel.test", "entries.0.tloc_ip", "10.0.0.0"))
@@ -42,7 +42,7 @@ func TestAccDataSourceSdwanPolicyObjectTLOCListProfileParcel(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig(),
+				Config: testAccDataSourceSdwanPolicyObjectTLOCListPrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -52,6 +52,11 @@ func TestAccDataSourceSdwanPolicyObjectTLOCListProfileParcel(t *testing.T) {
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
+const testAccDataSourceSdwanPolicyObjectTLOCListPrerequisitesProfileParcelConfig = `
+variable "policy_object_feature_template_id" {} 
+
+`
+
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
@@ -59,7 +64,7 @@ func testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_tloc_list_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"` + "\n"
+	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  tloc_ip = "10.0.0.0"` + "\n"
 	config += `	  color = "3g"` + "\n"
@@ -71,7 +76,7 @@ func testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_tloc_list_profile_parcel" "test" {
 			id = sdwan_policy_object_tloc_list_profile_parcel.test.id
-			feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+			feature_profile_id = var.policy_object_feature_template_id
 		}
 	`
 	return config
