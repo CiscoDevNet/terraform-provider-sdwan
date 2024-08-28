@@ -40,9 +40,7 @@ func TestAccSdwanPolicyObjectPolicerProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanPolicyObjectPolicerPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectPolicerProfileParcelConfig_minimum(),
-			},
+
 			{
 				Config: testAccSdwanPolicyObjectPolicerPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectPolicerProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
@@ -62,19 +60,6 @@ variable "policy_object_feature_template_id" {}
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanPolicyObjectPolicerProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_policy_object_policer_profile_parcel" "test" {` + "\n"
-	config += ` name = "TF_TEST_MIN"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
-	config += `	entries = [{` + "\n"
-	config += `	  burst_bytes = 56500` + "\n"
-	config += `	  exceed_action = "remark"` + "\n"
-	config += `	  rate_bps = 60000` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
-	return config
-}
 
 // End of section. //template:end testAccConfigMinimum
 

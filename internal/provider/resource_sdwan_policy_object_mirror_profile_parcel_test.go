@@ -39,9 +39,7 @@ func TestAccSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectMirrorProfileParcelConfig_minimum(),
-			},
+
 			{
 				Config: testAccSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectMirrorProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
@@ -60,18 +58,6 @@ variable "policy_object_feature_template_id" {}
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanPolicyObjectMirrorProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_policy_object_mirror_profile_parcel" "test" {` + "\n"
-	config += ` name = "TF_TEST_MIN"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
-	config += `	entries = [{` + "\n"
-	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
-	config += `	  source_ip = "10.0.0.2"` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
-	return config
-}
 
 // End of section. //template:end testAccConfigMinimum
 

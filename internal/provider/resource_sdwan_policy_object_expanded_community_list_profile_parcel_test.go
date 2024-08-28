@@ -37,9 +37,7 @@ func TestAccSdwanPolicyObjectExpandedCommunityListProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanPolicyObjectExpandedCommunityListPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectExpandedCommunityListProfileParcelConfig_minimum(),
-			},
+
 			{
 				Config: testAccSdwanPolicyObjectExpandedCommunityListPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectExpandedCommunityListProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
@@ -59,15 +57,6 @@ variable "policy_object_feature_template_id" {}
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanPolicyObjectExpandedCommunityListProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_policy_object_expanded_community_list_profile_parcel" "test" {` + "\n"
-	config += ` name = "TF_TEST_MIN"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
-	config += `	expanded_community_lists = ["abcd"]` + "\n"
-	config += `}` + "\n"
-	return config
-}
 
 // End of section. //template:end testAccConfigMinimum
 

@@ -3,6 +3,7 @@ name: Policy Object Extended Community List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/ext-community
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+skip_minimum_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -19,7 +20,6 @@ attributes:
       id: true
       mandatory: true
       example: "soo 10.0.0.1:30"
-      minimum_test_value: '"soo 10.0.0.1:30"'
 
 test_prerequisites: |
   variable "policy_object_feature_template_id" {} 

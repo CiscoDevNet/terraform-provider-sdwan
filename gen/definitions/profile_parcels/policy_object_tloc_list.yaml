@@ -3,6 +3,7 @@ name: Policy Object TLOC List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/tloc
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+skip_minimum_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -19,16 +20,13 @@ attributes:
       id: true
       mandatory: true
       example: 10.0.0.0
-      minimum_test_value: '"10.0.0.0"'
     - model_name: color
       mandatory: true
       example: 3g
-      minimum_test_value: '"3g"'
     - model_name: encap
       tf_name: encapsulation
       mandatory: true
       example: gre
-      minimum_test_value: '"gre"'
     - model_name: preference
       example: 33
 

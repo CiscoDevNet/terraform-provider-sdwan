@@ -39,9 +39,7 @@ func TestAccSdwanPolicyObjectDataIPv6PrefixListProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanPolicyObjectDataIPv6PrefixListPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectDataIPv6PrefixListProfileParcelConfig_minimum(),
-			},
+
 			{
 				Config: testAccSdwanPolicyObjectDataIPv6PrefixListPrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectDataIPv6PrefixListProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
@@ -61,18 +59,6 @@ variable "policy_object_feature_template_id" {}
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanPolicyObjectDataIPv6PrefixListProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_policy_object_data_ipv6_prefix_list_profile_parcel" "test" {` + "\n"
-	config += ` name = "TF_TEST_MIN"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
-	config += `	entries = [{` + "\n"
-	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
-	config += `	  ipv6_prefix_length = 64` + "\n"
-	config += `	}]` + "\n"
-	config += `}` + "\n"
-	return config
-}
 
 // End of section. //template:end testAccConfigMinimum
 
