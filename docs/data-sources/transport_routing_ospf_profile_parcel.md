@@ -29,26 +29,22 @@ data "sdwan_transport_routing_ospf_profile_parcel" "example" {
 
 ### Read-Only
 
-- `always` (Boolean) Always advertise default route
-- `always_variable` (String) Variable name
 - `areas` (Attributes List) Configure OSPF area (see [below for nested schema](#nestedatt--areas))
+- `default_information_originate` (Boolean) Distribute default external route into OSPF
+- `default_information_originate_always` (Boolean) Always advertise default route
+- `default_information_originate_always_variable` (String) Variable name
+- `default_information_originate_metric` (Number) Set metric used to generate default route <0..16777214>
+- `default_information_originate_metric_type` (String) Set default route type
+- `default_information_originate_metric_type_variable` (String) Variable name
+- `default_information_originate_metric_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `distance_for_external_routes` (Number) Set distance for external routes
-- `distance_for_external_routes_variable` (String) Variable name
-- `distance_for_inter_area_routes` (Number) Set distance for inter-area routes
-- `distance_for_inter_area_routes_variable` (String) Variable name
-- `distance_for_intra_area_routes` (Number) Set distance for intra-area routes
-- `distance_for_intra_area_routes_variable` (String) Variable name
-- `initial_hold_time` (Number) Set initial hold time between consecutive SPF calculations
-- `initial_hold_time_variable` (String) Variable name
-- `maximum_hold_time` (Number) Set maximum hold time between consecutive SPF calculations
-- `maximum_hold_time_variable` (String) Variable name
-- `metric` (Number) Set metric used to generate default route <0..16777214>
-- `metric_type` (String) Set default route type
-- `metric_type_variable` (String) Variable name
-- `metric_variable` (String) Variable name
+- `distance_external` (Number) Set distance for external routes
+- `distance_external_variable` (String) Variable name
+- `distance_inter_area` (Number) Set distance for inter-area routes
+- `distance_inter_area_variable` (String) Variable name
+- `distance_intra_area` (Number) Set distance for intra-area routes
+- `distance_intra_area_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
-- `originate` (Boolean) Distribute default external route into OSPF
 - `redistributes` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--redistributes))
 - `reference_bandwidth` (Number) Set reference bandwidth method to assign OSPF cost
 - `reference_bandwidth_variable` (String) Variable name
@@ -58,8 +54,12 @@ data "sdwan_transport_routing_ospf_profile_parcel" "example" {
 - `router_id` (String) Set OSPF router ID to override system IP address
 - `router_id_variable` (String) Variable name
 - `router_lsas` (Attributes List) Advertise own router LSA with infinite distance (see [below for nested schema](#nestedatt--router_lsas))
-- `spf_calculation_deplay` (Number) Set delay from first change received until performing SPF calculation
-- `spf_calculation_deplay_variable` (String) Variable name
+- `spf_calculation_delay` (Number) Set delay from first change received until performing SPF calculation
+- `spf_calculation_delay_variable` (String) Variable name
+- `spf_initial_hold_time` (Number) Set initial hold time between consecutive SPF calculations
+- `spf_initial_hold_time_variable` (String) Variable name
+- `spf_maximum_hold_time` (Number) Set maximum hold time between consecutive SPF calculations
+- `spf_maximum_hold_time_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
 
 <a id="nestedatt--areas"></a>
@@ -80,14 +80,16 @@ Read-Only:
 
 Read-Only:
 
+- `authentication_type` (String) Set OSPF interface authentication type
+- `authentication_type_variable` (String) Variable name
+- `cost` (Number) Set cost of OSPF interface
+- `cost_variable` (String) Variable name
 - `dead_interval` (Number) Set interval after which neighbor is declared to be down
 - `dead_interval_variable` (String) Variable name
 - `designated_router_priority` (Number) Set router’s priority to be elected as designated router
 - `designated_router_priority_variable` (String) Variable name
 - `hello_interval` (Number) Set interval between OSPF hello packets
 - `hello_interval_variable` (String) Variable name
-- `interface_cost` (Number) Set cost of OSPF interface
-- `interface_cost_variable` (String) Variable name
 - `lsa_retransmit_interval` (Number) Set time between retransmitting LSAs
 - `lsa_retransmit_interval_variable` (String) Variable name
 - `message_digest_key` (String) Set MD5 authentication key
@@ -96,12 +98,10 @@ Read-Only:
 - `message_digest_key_variable` (String) Variable name
 - `name` (String) Set interface name
 - `name_variable` (String) Variable name
-- `ospf_network_type` (String) Set the OSPF network type
-- `ospf_network_type_variable` (String) Variable name
+- `network_type` (String) Set the OSPF network type
+- `network_type_variable` (String) Variable name
 - `passive_interface` (Boolean) Set the interface to advertise its address, but not to actively run OSPF
 - `passive_interface_variable` (String) Variable name
-- `type` (String) Set OSPF interface authentication type
-- `type_variable` (String) Variable name
 
 
 <a id="nestedatt--areas--ranges"></a>
@@ -125,8 +125,8 @@ Read-Only:
 
 Read-Only:
 
-- `dia` (Boolean) Enable NAT DIA for redistributed routes
-- `dia_variable` (String) Variable name
+- `nat_dia` (Boolean) Enable NAT DIA for redistributed routes
+- `nat_dia_variable` (String) Variable name
 - `protocol` (String) Set the protocol
 - `protocol_variable` (String) Variable name
 - `route_policy_id` (String)
@@ -137,6 +137,6 @@ Read-Only:
 
 Read-Only:
 
-- `ad_type` (String) Set the router LSA advertisement type
 - `time` (Number) Set how long to advertise maximum metric after router starts up
 - `time_variable` (String) Variable name
+- `type` (String) Set the router LSA advertisement type

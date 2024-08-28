@@ -29,30 +29,26 @@ data "sdwan_transport_routing_ospfv3_ipv6_profile_parcel" "example" {
 
 ### Read-Only
 
-- `always` (Boolean) Always advertise default route
-- `always_variable` (String) Variable name
 - `areas` (Attributes List) Configure OSPFv3 IPv6 area (see [below for nested schema](#nestedatt--areas))
+- `default_information_originate` (Boolean) Distribute default external route into OSPF disabled
+- `default_information_originate_always` (Boolean) Always advertise default route
+- `default_information_originate_always_variable` (String) Variable name
+- `default_information_originate_metric` (Number) Set metric used to generate default route <0..16777214>
+- `default_information_originate_metric_type` (String) Set default route metric type
+- `default_information_originate_metric_type_variable` (String) Variable name
+- `default_information_originate_metric_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `distance` (Number) Distance
-- `distance_for_external_routes` (Number) Set distance for external routes
-- `distance_for_external_routes_variable` (String) Variable name
-- `distance_for_inter_area_routes` (Number) Set distance for inter-area routes
-- `distance_for_inter_area_routes_variable` (String) Variable name
-- `distance_for_intra_area_routes` (Number) Set distance for intra-area routes
-- `distance_for_intra_area_routes_variable` (String) Variable name
+- `distance_external` (Number) Set distance for external routes
+- `distance_external_variable` (String) Variable name
+- `distance_inter_area` (Number) Set distance for inter-area routes
+- `distance_inter_area_variable` (String) Variable name
+- `distance_intra_area` (Number) Set distance for intra-area routes
+- `distance_intra_area_variable` (String) Variable name
 - `distance_variable` (String) Variable name
 - `filter` (Boolean) Table map filtered or not
 - `filter_variable` (String) Variable name
-- `initial_hold_time` (Number) Set initial hold time between consecutive SPF calculations
-- `initial_hold_time_variable` (String) Variable name
-- `maximum_hold_time` (Number) Set maximum hold time between consecutive SPF calculations
-- `maximum_hold_time_variable` (String) Variable name
-- `metric` (Number) Set metric used to generate default route <0..16777214>
-- `metric_type` (String) Set default route metric type
-- `metric_type_variable` (String) Variable name
-- `metric_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
-- `originate` (Boolean) Distribute default external route into OSPF disabled
 - `redistributes` (Attributes List) Redistribute routes (see [below for nested schema](#nestedatt--redistributes))
 - `reference_bandwidth` (Number) Set reference bandwidth method to assign OSPF cost
 - `reference_bandwidth_variable` (String) Variable name
@@ -62,10 +58,14 @@ data "sdwan_transport_routing_ospfv3_ipv6_profile_parcel" "example" {
 - `router_id` (String) Set OSPF router ID to override system IP address
 - `router_id_variable` (String) Variable name
 - `router_lsa_action` (String) Not advertise maximum metric Router LSA policy by default
-- `router_lsa_on_startu_p_time` (Number) Set how long to advertise maximum metric after router boot up
-- `router_lsa_on_startu_p_time_variable` (String) Variable name
-- `spf_calculation_deplay` (Number) Set delay from first change received until performing SPF calculation
-- `spf_calculation_deplay_variable` (String) Variable name
+- `router_lsa_on_startup_time` (Number) Set how long to advertise maximum metric after router boot up
+- `router_lsa_on_startup_time_variable` (String) Variable name
+- `spf_calculation_delay` (Number) Set delay from first change received until performing SPF calculation
+- `spf_calculation_delay_variable` (String) Variable name
+- `spf_initial_hold_time` (Number) Set initial hold time between consecutive SPF calculations
+- `spf_initial_hold_time_variable` (String) Variable name
+- `spf_maximum_hold_time` (Number) Set maximum hold time between consecutive SPF calculations
+- `spf_maximum_hold_time_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
 
 <a id="nestedatt--areas"></a>
@@ -88,25 +88,25 @@ Read-Only:
 
 Read-Only:
 
-- `auth_key` (String) Set OSPF interface authentication IPSEC key
-- `auth_key_variable` (String) Variable name
-- `auth_type` (String) No Authentication by default
+- `authentication_key` (String) Set OSPF interface authentication IPSEC key
+- `authentication_key_variable` (String) Variable name
+- `authentication_spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
+- `authentication_spi_variable` (String) Variable name
+- `authentication_type` (String) No Authentication by default
+- `cost` (Number) Set cost of OSPF interface
+- `cost_variable` (String) Variable name
 - `dead_interval` (Number) Set interval after which neighbor is declared to be down
 - `dead_interval_variable` (String) Variable name
 - `hello_interval` (Number) Set interval between OSPF hello packets
 - `hello_interval_variable` (String) Variable name
-- `if_name` (String) Set interface name
-- `if_name_variable` (String) Variable name
-- `interface_cost` (Number) Set cost of OSPF interface
-- `interface_cost_variable` (String) Variable name
 - `lsa_retransmit_interval` (Number) Set time between retransmitting LSAs
 - `lsa_retransmit_interval_variable` (String) Variable name
-- `ospf_network_type` (String) Set the OSPF network type
-- `ospf_network_type_variable` (String) Variable name
+- `name` (String) Set interface name
+- `name_variable` (String) Variable name
+- `network_type` (String) Set the OSPF network type
+- `network_type_variable` (String) Variable name
 - `passive_interface` (Boolean) Set the interface to advertise its address, but not to actively run OSPF
 - `passive_interface_variable` (String) Variable name
-- `spi` (Number) Set OSPF interface authentication IPSec SPI, range 256..4294967295
-- `spi_variable` (String) Variable name
 
 
 <a id="nestedatt--areas--ranges"></a>
@@ -116,10 +116,10 @@ Read-Only:
 
 - `cost` (Number) Set cost for this range
 - `cost_variable` (String) Variable name
-- `network` (String) IPv6 prefix,for example 2001::/64
-- `network_variable` (String) Variable name
 - `no_advertise` (Boolean) Do not advertise this range
 - `no_advertise_variable` (String) Variable name
+- `prefix` (String) IPv6 prefix,for example 2001::/64
+- `prefix_variable` (String) Variable name
 
 
 

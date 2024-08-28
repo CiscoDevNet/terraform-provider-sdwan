@@ -36,19 +36,19 @@ func TestAccSdwanTransportRoutingOSPFProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "router_id", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "reference_bandwidth", "101"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "rfc_1583_compatible", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "originate", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "always", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "metric", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "metric_type", "type1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "distance_for_external_routes", "110"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "distance_for_inter_area_routes", "110"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "distance_for_intra_area_routes", "110"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "spf_calculation_deplay", "200"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "initial_hold_time", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "maximum_hold_time", "10000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "default_information_originate", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "default_information_originate_always", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "default_information_originate_metric", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "default_information_originate_metric_type", "type1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "distance_external", "110"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "distance_inter_area", "110"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "distance_intra_area", "110"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "spf_calculation_delay", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "spf_initial_hold_time", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "spf_maximum_hold_time", "10000"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "redistributes.0.protocol", "static"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "redistributes.0.dia", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "router_lsas.0.ad_type", "on-startup"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "redistributes.0.nat_dia", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "router_lsas.0.type", "on-startup"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "router_lsas.0.time", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.area_number", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.area_type", "stub"))
@@ -57,11 +57,11 @@ func TestAccSdwanTransportRoutingOSPFProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.hello_interval", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.dead_interval", "40"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.lsa_retransmit_interval", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.interface_cost", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.cost", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.designated_router_priority", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.ospf_network_type", "broadcast"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.network_type", "broadcast"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.passive_interface", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.type", "message-digest"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.authentication_type", "message-digest"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.interfaces.0.message_digest_key_id", "7"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.ranges.0.ip_address", "10.1.1.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_routing_ospf_profile_parcel.test", "areas.0.ranges.0.subnet_mask", "255.255.255.0"))
@@ -115,22 +115,22 @@ func testAccSdwanTransportRoutingOSPFProfileParcelConfig_all() string {
 	config += `	router_id = "1.2.3.4"` + "\n"
 	config += `	reference_bandwidth = 101` + "\n"
 	config += `	rfc_1583_compatible = true` + "\n"
-	config += `	originate = false` + "\n"
-	config += `	always = false` + "\n"
-	config += `	metric = 1` + "\n"
-	config += `	metric_type = "type1"` + "\n"
-	config += `	distance_for_external_routes = 110` + "\n"
-	config += `	distance_for_inter_area_routes = 110` + "\n"
-	config += `	distance_for_intra_area_routes = 110` + "\n"
-	config += `	spf_calculation_deplay = 200` + "\n"
-	config += `	initial_hold_time = 1000` + "\n"
-	config += `	maximum_hold_time = 10000` + "\n"
+	config += `	default_information_originate = false` + "\n"
+	config += `	default_information_originate_always = false` + "\n"
+	config += `	default_information_originate_metric = 1` + "\n"
+	config += `	default_information_originate_metric_type = "type1"` + "\n"
+	config += `	distance_external = 110` + "\n"
+	config += `	distance_inter_area = 110` + "\n"
+	config += `	distance_intra_area = 110` + "\n"
+	config += `	spf_calculation_delay = 200` + "\n"
+	config += `	spf_initial_hold_time = 1000` + "\n"
+	config += `	spf_maximum_hold_time = 10000` + "\n"
 	config += `	redistributes = [{` + "\n"
 	config += `	  protocol = "static"` + "\n"
-	config += `	  dia = true` + "\n"
+	config += `	  nat_dia = true` + "\n"
 	config += `	}]` + "\n"
 	config += `	router_lsas = [{` + "\n"
-	config += `	  ad_type = "on-startup"` + "\n"
+	config += `	  type = "on-startup"` + "\n"
 	config += `	  time = 5` + "\n"
 	config += `	}]` + "\n"
 	config += `	areas = [{` + "\n"
@@ -142,11 +142,11 @@ func testAccSdwanTransportRoutingOSPFProfileParcelConfig_all() string {
 	config += `		hello_interval = 10` + "\n"
 	config += `		dead_interval = 40` + "\n"
 	config += `		lsa_retransmit_interval = 5` + "\n"
-	config += `		interface_cost = 10` + "\n"
+	config += `		cost = 10` + "\n"
 	config += `		designated_router_priority = 1` + "\n"
-	config += `		ospf_network_type = "broadcast"` + "\n"
+	config += `		network_type = "broadcast"` + "\n"
 	config += `		passive_interface = false` + "\n"
-	config += `		type = "message-digest"` + "\n"
+	config += `		authentication_type = "message-digest"` + "\n"
 	config += `		message_digest_key_id = 7` + "\n"
 	config += `		message_digest_key = "sdjfhsghbjdjr"` + "\n"
 	config += `	}]` + "\n"

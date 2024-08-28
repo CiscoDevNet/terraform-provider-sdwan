@@ -108,36 +108,36 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"distance_for_external_routes": schema.Int64Attribute{
+			"distance_external": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set distance for external routes").AddIntegerRangeDescription(1, 254).AddDefaultValueDescription("110").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 254),
 				},
 			},
-			"distance_for_external_routes_variable": schema.StringAttribute{
+			"distance_external_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"distance_for_inter_area_routes": schema.Int64Attribute{
+			"distance_inter_area": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set distance for inter-area routes").AddIntegerRangeDescription(1, 254).AddDefaultValueDescription("110").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 254),
 				},
 			},
-			"distance_for_inter_area_routes_variable": schema.StringAttribute{
+			"distance_inter_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"distance_for_intra_area_routes": schema.Int64Attribute{
+			"distance_intra_area": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set distance for intra-area routes").AddIntegerRangeDescription(1, 254).AddDefaultValueDescription("110").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 254),
 				},
 			},
-			"distance_for_intra_area_routes_variable": schema.StringAttribute{
+			"distance_intra_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -160,67 +160,67 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"originate": schema.BoolAttribute{
+			"default_information_originate": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Distribute default external route into OSPF disabled").String,
 				Optional:            true,
 			},
-			"always": schema.BoolAttribute{
+			"default_information_originate_always": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Always advertise default route").String,
 				Optional:            true,
 			},
-			"always_variable": schema.StringAttribute{
+			"default_information_originate_always_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"metric": schema.Int64Attribute{
+			"default_information_originate_metric": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set metric used to generate default route <0..16777214>").AddIntegerRangeDescription(0, 16777214).String,
 				Optional:            true,
 			},
-			"metric_variable": schema.StringAttribute{
+			"default_information_originate_metric_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"metric_type": schema.StringAttribute{
+			"default_information_originate_metric_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set default route metric type").AddStringEnumDescription("type1", "type2").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("type1", "type2"),
 				},
 			},
-			"metric_type_variable": schema.StringAttribute{
+			"default_information_originate_metric_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"spf_calculation_deplay": schema.Int64Attribute{
+			"spf_calculation_delay": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set delay from first change received until performing SPF calculation").AddIntegerRangeDescription(1, 600000).AddDefaultValueDescription("200").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600000),
 				},
 			},
-			"spf_calculation_deplay_variable": schema.StringAttribute{
+			"spf_calculation_delay_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"initial_hold_time": schema.Int64Attribute{
+			"spf_initial_hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set initial hold time between consecutive SPF calculations").AddIntegerRangeDescription(1, 600000).AddDefaultValueDescription("1000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600000),
 				},
 			},
-			"initial_hold_time_variable": schema.StringAttribute{
+			"spf_initial_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"maximum_hold_time": schema.Int64Attribute{
+			"spf_maximum_hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set maximum hold time between consecutive SPF calculations").AddIntegerRangeDescription(1, 600000).AddDefaultValueDescription("10000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600000),
 				},
 			},
-			"maximum_hold_time_variable": schema.StringAttribute{
+			"spf_maximum_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -269,14 +269,14 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("Not advertise maximum metric Router LSA policy by default").String,
 				Optional:            true,
 			},
-			"router_lsa_on_startu_p_time": schema.Int64Attribute{
+			"router_lsa_on_startup_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set how long to advertise maximum metric after router boot up").AddIntegerRangeDescription(5, 86400).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(5, 86400),
 				},
 			},
-			"router_lsa_on_startu_p_time_variable": schema.StringAttribute{
+			"router_lsa_on_startup_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -324,7 +324,7 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"if_name": schema.StringAttribute{
+									"name": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set interface name").String,
 										Optional:            true,
 										Validators: []validator.String{
@@ -332,7 +332,7 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 											stringvalidator.RegexMatches(regexp.MustCompile(`(AppGigabitEthernet|BDI|BD-VIF|Virtual-Template|Dialer|Ethernet|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GigabitEthernet|HundredGigE|Loopback|Port-channel|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwoGigabitEthernet|TwoHundredGigE|Vlan|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
 										},
 									},
-									"if_name_variable": schema.StringAttribute{
+									"name_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
@@ -369,25 +369,25 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"interface_cost": schema.Int64Attribute{
+									"cost": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set cost of OSPF interface").AddIntegerRangeDescription(1, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65535),
 										},
 									},
-									"interface_cost_variable": schema.StringAttribute{
+									"cost_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"ospf_network_type": schema.StringAttribute{
+									"network_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the OSPF network type").AddStringEnumDescription("broadcast", "point-to-point", "non-broadcast", "point-to-multipoint").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("broadcast", "point-to-point", "non-broadcast", "point-to-multipoint"),
 										},
 									},
-									"ospf_network_type_variable": schema.StringAttribute{
+									"network_type_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
@@ -399,32 +399,32 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"auth_type": schema.StringAttribute{
+									"authentication_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("No Authentication by default").AddStringEnumDescription("no-auth").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("no-auth"),
 										},
 									},
-									"spi": schema.Int64Attribute{
+									"authentication_spi": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set OSPF interface authentication IPSec SPI, range 256..4294967295").AddIntegerRangeDescription(256, 4294967295).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(256, 4294967295),
 										},
 									},
-									"spi_variable": schema.StringAttribute{
+									"authentication_spi_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"auth_key": schema.StringAttribute{
+									"authentication_key": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set OSPF interface authentication IPSEC key").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9a-fA-F]{40}$`), ""),
 										},
 									},
-									"auth_key_variable": schema.StringAttribute{
+									"authentication_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
@@ -436,14 +436,14 @@ func (r *ServiceRoutingOSPFv3IPv6ProfileParcelResource) Schema(ctx context.Conte
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"network": schema.StringAttribute{
+									"prefix": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("IPv6 prefix,for example 2001::/64").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`((^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(/)(\b([0-9]{1,2}|1[01][0-9]|12[0-8])\b)$))`), ""),
 										},
 									},
-									"network_variable": schema.StringAttribute{
+									"prefix_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},

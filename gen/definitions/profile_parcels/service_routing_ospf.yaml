@@ -19,30 +19,34 @@ attributes:
     tf_name: rfc_1583_compatible
     example: true
   - model_name: originate
+    tf_name: default_information_originate
     example: false
   - model_name: always
+    tf_name: default_information_originate_always
     example: false
   - model_name: metric
+    tf_name: default_information_originate_metric
     example: 1
   - model_name: metricType
+    tf_name: default_information_originate_metric_type
     example: type1
   - model_name: external
-    tf_name: distance_for_external_routes
+    tf_name: distance_external
     example: 110
   - model_name: interArea
-    tf_name: distance_for_inter_area_routes
+    tf_name: distance_inter_area
     example: 110
   - model_name: intraArea
-    tf_name: distance_for_intra_area_routes
+    tf_name: distance_intra_area
     example: 110
   - model_name: delay
-    tf_name: spf_calculation_deplay
+    tf_name: spf_calculation_delay
     example: 200
   - model_name: initialHold
-    tf_name: initial_hold_time
+    tf_name: spf_initial_hold_time
     example: 1000
   - model_name: maxHold
-    tf_name: maximum_hold_time
+    tf_name: spf_maximum_hold_time
     example: 10000
   - model_name: redistribute
     tf_name: redistributes
@@ -51,6 +55,7 @@ attributes:
       id: true
       example: static
     - model_name: dia
+      tf_name: nat_dia
       example: true
     - model_name: refId
       tf_name: route_policy_id
@@ -61,6 +66,7 @@ attributes:
     tf_name: router_lsas
     attributes: 
     - model_name: adType
+      tf_name: type
       id: true
       example: on-startup
     - model_name: time
@@ -96,17 +102,17 @@ attributes:
         tf_name: lsa_retransmit_interval
         example: 5
       - model_name: cost
-        tf_name: interface_cost
         example: 10
       - model_name: priority
         tf_name: designated_router_priority
         example: 1
       - model_name: network
-        tf_name: ospf_network_type
+        tf_name: network_type
         example: broadcast
       - model_name: passiveInterface
         example: false
       - model_name: type
+        tf_name: authentication_type
         example: message-digest
       - model_name: messageDigestKey
         tf_name: message_digest_key_id

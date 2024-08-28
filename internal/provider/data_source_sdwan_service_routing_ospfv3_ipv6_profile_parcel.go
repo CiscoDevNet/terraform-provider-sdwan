@@ -94,27 +94,27 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_for_external_routes": schema.Int64Attribute{
+			"distance_external": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for external routes",
 				Computed:            true,
 			},
-			"distance_for_external_routes_variable": schema.StringAttribute{
+			"distance_external_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_for_inter_area_routes": schema.Int64Attribute{
+			"distance_inter_area": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for inter-area routes",
 				Computed:            true,
 			},
-			"distance_for_inter_area_routes_variable": schema.StringAttribute{
+			"distance_inter_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"distance_for_intra_area_routes": schema.Int64Attribute{
+			"distance_intra_area": schema.Int64Attribute{
 				MarkdownDescription: "Set distance for intra-area routes",
 				Computed:            true,
 			},
-			"distance_for_intra_area_routes_variable": schema.StringAttribute{
+			"distance_intra_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -134,55 +134,55 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"originate": schema.BoolAttribute{
+			"default_information_originate": schema.BoolAttribute{
 				MarkdownDescription: "Distribute default external route into OSPF disabled",
 				Computed:            true,
 			},
-			"always": schema.BoolAttribute{
+			"default_information_originate_always": schema.BoolAttribute{
 				MarkdownDescription: "Always advertise default route",
 				Computed:            true,
 			},
-			"always_variable": schema.StringAttribute{
+			"default_information_originate_always_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"metric": schema.Int64Attribute{
+			"default_information_originate_metric": schema.Int64Attribute{
 				MarkdownDescription: "Set metric used to generate default route <0..16777214>",
 				Computed:            true,
 			},
-			"metric_variable": schema.StringAttribute{
+			"default_information_originate_metric_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"metric_type": schema.StringAttribute{
+			"default_information_originate_metric_type": schema.StringAttribute{
 				MarkdownDescription: "Set default route metric type",
 				Computed:            true,
 			},
-			"metric_type_variable": schema.StringAttribute{
+			"default_information_originate_metric_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"spf_calculation_deplay": schema.Int64Attribute{
+			"spf_calculation_delay": schema.Int64Attribute{
 				MarkdownDescription: "Set delay from first change received until performing SPF calculation",
 				Computed:            true,
 			},
-			"spf_calculation_deplay_variable": schema.StringAttribute{
+			"spf_calculation_delay_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"initial_hold_time": schema.Int64Attribute{
+			"spf_initial_hold_time": schema.Int64Attribute{
 				MarkdownDescription: "Set initial hold time between consecutive SPF calculations",
 				Computed:            true,
 			},
-			"initial_hold_time_variable": schema.StringAttribute{
+			"spf_initial_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"maximum_hold_time": schema.Int64Attribute{
+			"spf_maximum_hold_time": schema.Int64Attribute{
 				MarkdownDescription: "Set maximum hold time between consecutive SPF calculations",
 				Computed:            true,
 			},
-			"maximum_hold_time_variable": schema.StringAttribute{
+			"spf_maximum_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -222,11 +222,11 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 				MarkdownDescription: "Not advertise maximum metric Router LSA policy by default",
 				Computed:            true,
 			},
-			"router_lsa_on_startu_p_time": schema.Int64Attribute{
+			"router_lsa_on_startup_time": schema.Int64Attribute{
 				MarkdownDescription: "Set how long to advertise maximum metric after router boot up",
 				Computed:            true,
 			},
-			"router_lsa_on_startu_p_time_variable": schema.StringAttribute{
+			"router_lsa_on_startup_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -268,11 +268,11 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"if_name": schema.StringAttribute{
+									"name": schema.StringAttribute{
 										MarkdownDescription: "Set interface name",
 										Computed:            true,
 									},
-									"if_name_variable": schema.StringAttribute{
+									"name_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
@@ -300,19 +300,19 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"interface_cost": schema.Int64Attribute{
+									"cost": schema.Int64Attribute{
 										MarkdownDescription: "Set cost of OSPF interface",
 										Computed:            true,
 									},
-									"interface_cost_variable": schema.StringAttribute{
+									"cost_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"ospf_network_type": schema.StringAttribute{
+									"network_type": schema.StringAttribute{
 										MarkdownDescription: "Set the OSPF network type",
 										Computed:            true,
 									},
-									"ospf_network_type_variable": schema.StringAttribute{
+									"network_type_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
@@ -324,23 +324,23 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"auth_type": schema.StringAttribute{
+									"authentication_type": schema.StringAttribute{
 										MarkdownDescription: "No Authentication by default",
 										Computed:            true,
 									},
-									"spi": schema.Int64Attribute{
+									"authentication_spi": schema.Int64Attribute{
 										MarkdownDescription: "Set OSPF interface authentication IPSec SPI, range 256..4294967295",
 										Computed:            true,
 									},
-									"spi_variable": schema.StringAttribute{
+									"authentication_spi_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"auth_key": schema.StringAttribute{
+									"authentication_key": schema.StringAttribute{
 										MarkdownDescription: "Set OSPF interface authentication IPSEC key",
 										Computed:            true,
 									},
-									"auth_key_variable": schema.StringAttribute{
+									"authentication_key_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
@@ -352,11 +352,11 @@ func (d *ServiceRoutingOSPFv3IPv6ProfileParcelDataSource) Schema(ctx context.Con
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"network": schema.StringAttribute{
+									"prefix": schema.StringAttribute{
 										MarkdownDescription: "IPv6 prefix,for example 2001::/64",
 										Computed:            true,
 									},
-									"network_variable": schema.StringAttribute{
+									"prefix_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},

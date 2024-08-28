@@ -33,52 +33,52 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceRoutingOSPF struct {
-	Id                                 types.String                      `tfsdk:"id"`
-	Version                            types.Int64                       `tfsdk:"version"`
-	Name                               types.String                      `tfsdk:"name"`
-	Description                        types.String                      `tfsdk:"description"`
-	FeatureProfileId                   types.String                      `tfsdk:"feature_profile_id"`
-	RouterId                           types.String                      `tfsdk:"router_id"`
-	RouterIdVariable                   types.String                      `tfsdk:"router_id_variable"`
-	ReferenceBandwidth                 types.Int64                       `tfsdk:"reference_bandwidth"`
-	ReferenceBandwidthVariable         types.String                      `tfsdk:"reference_bandwidth_variable"`
-	Rfc1583Compatible                  types.Bool                        `tfsdk:"rfc_1583_compatible"`
-	Rfc1583CompatibleVariable          types.String                      `tfsdk:"rfc_1583_compatible_variable"`
-	Originate                          types.Bool                        `tfsdk:"originate"`
-	Always                             types.Bool                        `tfsdk:"always"`
-	AlwaysVariable                     types.String                      `tfsdk:"always_variable"`
-	Metric                             types.Int64                       `tfsdk:"metric"`
-	MetricVariable                     types.String                      `tfsdk:"metric_variable"`
-	MetricType                         types.String                      `tfsdk:"metric_type"`
-	MetricTypeVariable                 types.String                      `tfsdk:"metric_type_variable"`
-	DistanceForExternalRoutes          types.Int64                       `tfsdk:"distance_for_external_routes"`
-	DistanceForExternalRoutesVariable  types.String                      `tfsdk:"distance_for_external_routes_variable"`
-	DistanceForInterAreaRoutes         types.Int64                       `tfsdk:"distance_for_inter_area_routes"`
-	DistanceForInterAreaRoutesVariable types.String                      `tfsdk:"distance_for_inter_area_routes_variable"`
-	DistanceForIntraAreaRoutes         types.Int64                       `tfsdk:"distance_for_intra_area_routes"`
-	DistanceForIntraAreaRoutesVariable types.String                      `tfsdk:"distance_for_intra_area_routes_variable"`
-	SpfCalculationDeplay               types.Int64                       `tfsdk:"spf_calculation_deplay"`
-	SpfCalculationDeplayVariable       types.String                      `tfsdk:"spf_calculation_deplay_variable"`
-	InitialHoldTime                    types.Int64                       `tfsdk:"initial_hold_time"`
-	InitialHoldTimeVariable            types.String                      `tfsdk:"initial_hold_time_variable"`
-	MaximumHoldTime                    types.Int64                       `tfsdk:"maximum_hold_time"`
-	MaximumHoldTimeVariable            types.String                      `tfsdk:"maximum_hold_time_variable"`
-	Redistributes                      []ServiceRoutingOSPFRedistributes `tfsdk:"redistributes"`
-	RouterLsas                         []ServiceRoutingOSPFRouterLsas    `tfsdk:"router_lsas"`
-	RoutePolicyId                      types.String                      `tfsdk:"route_policy_id"`
-	Areas                              []ServiceRoutingOSPFAreas         `tfsdk:"areas"`
+	Id                                            types.String                      `tfsdk:"id"`
+	Version                                       types.Int64                       `tfsdk:"version"`
+	Name                                          types.String                      `tfsdk:"name"`
+	Description                                   types.String                      `tfsdk:"description"`
+	FeatureProfileId                              types.String                      `tfsdk:"feature_profile_id"`
+	RouterId                                      types.String                      `tfsdk:"router_id"`
+	RouterIdVariable                              types.String                      `tfsdk:"router_id_variable"`
+	ReferenceBandwidth                            types.Int64                       `tfsdk:"reference_bandwidth"`
+	ReferenceBandwidthVariable                    types.String                      `tfsdk:"reference_bandwidth_variable"`
+	Rfc1583Compatible                             types.Bool                        `tfsdk:"rfc_1583_compatible"`
+	Rfc1583CompatibleVariable                     types.String                      `tfsdk:"rfc_1583_compatible_variable"`
+	DefaultInformationOriginate                   types.Bool                        `tfsdk:"default_information_originate"`
+	DefaultInformationOriginateAlways             types.Bool                        `tfsdk:"default_information_originate_always"`
+	DefaultInformationOriginateAlwaysVariable     types.String                      `tfsdk:"default_information_originate_always_variable"`
+	DefaultInformationOriginateMetric             types.Int64                       `tfsdk:"default_information_originate_metric"`
+	DefaultInformationOriginateMetricVariable     types.String                      `tfsdk:"default_information_originate_metric_variable"`
+	DefaultInformationOriginateMetricType         types.String                      `tfsdk:"default_information_originate_metric_type"`
+	DefaultInformationOriginateMetricTypeVariable types.String                      `tfsdk:"default_information_originate_metric_type_variable"`
+	DistanceExternal                              types.Int64                       `tfsdk:"distance_external"`
+	DistanceExternalVariable                      types.String                      `tfsdk:"distance_external_variable"`
+	DistanceInterArea                             types.Int64                       `tfsdk:"distance_inter_area"`
+	DistanceInterAreaVariable                     types.String                      `tfsdk:"distance_inter_area_variable"`
+	DistanceIntraArea                             types.Int64                       `tfsdk:"distance_intra_area"`
+	DistanceIntraAreaVariable                     types.String                      `tfsdk:"distance_intra_area_variable"`
+	SpfCalculationDelay                           types.Int64                       `tfsdk:"spf_calculation_delay"`
+	SpfCalculationDelayVariable                   types.String                      `tfsdk:"spf_calculation_delay_variable"`
+	SpfInitialHoldTime                            types.Int64                       `tfsdk:"spf_initial_hold_time"`
+	SpfInitialHoldTimeVariable                    types.String                      `tfsdk:"spf_initial_hold_time_variable"`
+	SpfMaximumHoldTime                            types.Int64                       `tfsdk:"spf_maximum_hold_time"`
+	SpfMaximumHoldTimeVariable                    types.String                      `tfsdk:"spf_maximum_hold_time_variable"`
+	Redistributes                                 []ServiceRoutingOSPFRedistributes `tfsdk:"redistributes"`
+	RouterLsas                                    []ServiceRoutingOSPFRouterLsas    `tfsdk:"router_lsas"`
+	RoutePolicyId                                 types.String                      `tfsdk:"route_policy_id"`
+	Areas                                         []ServiceRoutingOSPFAreas         `tfsdk:"areas"`
 }
 
 type ServiceRoutingOSPFRedistributes struct {
 	Protocol         types.String `tfsdk:"protocol"`
 	ProtocolVariable types.String `tfsdk:"protocol_variable"`
-	Dia              types.Bool   `tfsdk:"dia"`
-	DiaVariable      types.String `tfsdk:"dia_variable"`
+	NatDia           types.Bool   `tfsdk:"nat_dia"`
+	NatDiaVariable   types.String `tfsdk:"nat_dia_variable"`
 	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
 }
 
 type ServiceRoutingOSPFRouterLsas struct {
-	AdType       types.String `tfsdk:"ad_type"`
+	Type         types.String `tfsdk:"type"`
 	Time         types.Int64  `tfsdk:"time"`
 	TimeVariable types.String `tfsdk:"time_variable"`
 }
@@ -102,16 +102,16 @@ type ServiceRoutingOSPFAreasInterfaces struct {
 	DeadIntervalVariable             types.String `tfsdk:"dead_interval_variable"`
 	LsaRetransmitInterval            types.Int64  `tfsdk:"lsa_retransmit_interval"`
 	LsaRetransmitIntervalVariable    types.String `tfsdk:"lsa_retransmit_interval_variable"`
-	InterfaceCost                    types.Int64  `tfsdk:"interface_cost"`
-	InterfaceCostVariable            types.String `tfsdk:"interface_cost_variable"`
+	Cost                             types.Int64  `tfsdk:"cost"`
+	CostVariable                     types.String `tfsdk:"cost_variable"`
 	DesignatedRouterPriority         types.Int64  `tfsdk:"designated_router_priority"`
 	DesignatedRouterPriorityVariable types.String `tfsdk:"designated_router_priority_variable"`
-	OspfNetworkType                  types.String `tfsdk:"ospf_network_type"`
-	OspfNetworkTypeVariable          types.String `tfsdk:"ospf_network_type_variable"`
+	NetworkType                      types.String `tfsdk:"network_type"`
+	NetworkTypeVariable              types.String `tfsdk:"network_type_variable"`
 	PassiveInterface                 types.Bool   `tfsdk:"passive_interface"`
 	PassiveInterfaceVariable         types.String `tfsdk:"passive_interface_variable"`
-	Type                             types.String `tfsdk:"type"`
-	TypeVariable                     types.String `tfsdk:"type_variable"`
+	AuthenticationType               types.String `tfsdk:"authentication_type"`
+	AuthenticationTypeVariable       types.String `tfsdk:"authentication_type_variable"`
 	MessageDigestKeyId               types.Int64  `tfsdk:"message_digest_key_id"`
 	MessageDigestKeyIdVariable       types.String `tfsdk:"message_digest_key_id_variable"`
 	MessageDigestKey                 types.String `tfsdk:"message_digest_key"`
@@ -183,111 +183,111 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 		body, _ = sjson.Set(body, path+"rfc1583.optionType", "global")
 		body, _ = sjson.Set(body, path+"rfc1583.value", data.Rfc1583Compatible.ValueBool())
 	}
-	if data.Originate.IsNull() {
+	if data.DefaultInformationOriginate.IsNull() {
 		body, _ = sjson.Set(body, path+"originate.optionType", "default")
 		body, _ = sjson.Set(body, path+"originate.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"originate.optionType", "global")
-		body, _ = sjson.Set(body, path+"originate.value", data.Originate.ValueBool())
+		body, _ = sjson.Set(body, path+"originate.value", data.DefaultInformationOriginate.ValueBool())
 	}
 
-	if !data.AlwaysVariable.IsNull() {
+	if !data.DefaultInformationOriginateAlwaysVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"always.optionType", "variable")
-		body, _ = sjson.Set(body, path+"always.value", data.AlwaysVariable.ValueString())
-	} else if data.Always.IsNull() {
+		body, _ = sjson.Set(body, path+"always.value", data.DefaultInformationOriginateAlwaysVariable.ValueString())
+	} else if data.DefaultInformationOriginateAlways.IsNull() {
 		body, _ = sjson.Set(body, path+"always.optionType", "default")
 		body, _ = sjson.Set(body, path+"always.value", false)
 	} else {
 		body, _ = sjson.Set(body, path+"always.optionType", "global")
-		body, _ = sjson.Set(body, path+"always.value", data.Always.ValueBool())
+		body, _ = sjson.Set(body, path+"always.value", data.DefaultInformationOriginateAlways.ValueBool())
 	}
 
-	if !data.MetricVariable.IsNull() {
+	if !data.DefaultInformationOriginateMetricVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"metric.optionType", "variable")
-		body, _ = sjson.Set(body, path+"metric.value", data.MetricVariable.ValueString())
-	} else if data.Metric.IsNull() {
+		body, _ = sjson.Set(body, path+"metric.value", data.DefaultInformationOriginateMetricVariable.ValueString())
+	} else if data.DefaultInformationOriginateMetric.IsNull() {
 		body, _ = sjson.Set(body, path+"metric.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"metric.optionType", "global")
-		body, _ = sjson.Set(body, path+"metric.value", data.Metric.ValueInt64())
+		body, _ = sjson.Set(body, path+"metric.value", data.DefaultInformationOriginateMetric.ValueInt64())
 	}
 
-	if !data.MetricTypeVariable.IsNull() {
+	if !data.DefaultInformationOriginateMetricTypeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"metricType.optionType", "variable")
-		body, _ = sjson.Set(body, path+"metricType.value", data.MetricTypeVariable.ValueString())
-	} else if data.MetricType.IsNull() {
+		body, _ = sjson.Set(body, path+"metricType.value", data.DefaultInformationOriginateMetricTypeVariable.ValueString())
+	} else if data.DefaultInformationOriginateMetricType.IsNull() {
 		body, _ = sjson.Set(body, path+"metricType.optionType", "default")
 
 	} else {
 		body, _ = sjson.Set(body, path+"metricType.optionType", "global")
-		body, _ = sjson.Set(body, path+"metricType.value", data.MetricType.ValueString())
+		body, _ = sjson.Set(body, path+"metricType.value", data.DefaultInformationOriginateMetricType.ValueString())
 	}
 
-	if !data.DistanceForExternalRoutesVariable.IsNull() {
+	if !data.DistanceExternalVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"external.optionType", "variable")
-		body, _ = sjson.Set(body, path+"external.value", data.DistanceForExternalRoutesVariable.ValueString())
-	} else if data.DistanceForExternalRoutes.IsNull() {
+		body, _ = sjson.Set(body, path+"external.value", data.DistanceExternalVariable.ValueString())
+	} else if data.DistanceExternal.IsNull() {
 		body, _ = sjson.Set(body, path+"external.optionType", "default")
 		body, _ = sjson.Set(body, path+"external.value", 110)
 	} else {
 		body, _ = sjson.Set(body, path+"external.optionType", "global")
-		body, _ = sjson.Set(body, path+"external.value", data.DistanceForExternalRoutes.ValueInt64())
+		body, _ = sjson.Set(body, path+"external.value", data.DistanceExternal.ValueInt64())
 	}
 
-	if !data.DistanceForInterAreaRoutesVariable.IsNull() {
+	if !data.DistanceInterAreaVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"interArea.optionType", "variable")
-		body, _ = sjson.Set(body, path+"interArea.value", data.DistanceForInterAreaRoutesVariable.ValueString())
-	} else if data.DistanceForInterAreaRoutes.IsNull() {
+		body, _ = sjson.Set(body, path+"interArea.value", data.DistanceInterAreaVariable.ValueString())
+	} else if data.DistanceInterArea.IsNull() {
 		body, _ = sjson.Set(body, path+"interArea.optionType", "default")
 		body, _ = sjson.Set(body, path+"interArea.value", 110)
 	} else {
 		body, _ = sjson.Set(body, path+"interArea.optionType", "global")
-		body, _ = sjson.Set(body, path+"interArea.value", data.DistanceForInterAreaRoutes.ValueInt64())
+		body, _ = sjson.Set(body, path+"interArea.value", data.DistanceInterArea.ValueInt64())
 	}
 
-	if !data.DistanceForIntraAreaRoutesVariable.IsNull() {
+	if !data.DistanceIntraAreaVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"intraArea.optionType", "variable")
-		body, _ = sjson.Set(body, path+"intraArea.value", data.DistanceForIntraAreaRoutesVariable.ValueString())
-	} else if data.DistanceForIntraAreaRoutes.IsNull() {
+		body, _ = sjson.Set(body, path+"intraArea.value", data.DistanceIntraAreaVariable.ValueString())
+	} else if data.DistanceIntraArea.IsNull() {
 		body, _ = sjson.Set(body, path+"intraArea.optionType", "default")
 		body, _ = sjson.Set(body, path+"intraArea.value", 110)
 	} else {
 		body, _ = sjson.Set(body, path+"intraArea.optionType", "global")
-		body, _ = sjson.Set(body, path+"intraArea.value", data.DistanceForIntraAreaRoutes.ValueInt64())
+		body, _ = sjson.Set(body, path+"intraArea.value", data.DistanceIntraArea.ValueInt64())
 	}
 
-	if !data.SpfCalculationDeplayVariable.IsNull() {
+	if !data.SpfCalculationDelayVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"delay.optionType", "variable")
-		body, _ = sjson.Set(body, path+"delay.value", data.SpfCalculationDeplayVariable.ValueString())
-	} else if data.SpfCalculationDeplay.IsNull() {
+		body, _ = sjson.Set(body, path+"delay.value", data.SpfCalculationDelayVariable.ValueString())
+	} else if data.SpfCalculationDelay.IsNull() {
 		body, _ = sjson.Set(body, path+"delay.optionType", "default")
 		body, _ = sjson.Set(body, path+"delay.value", 200)
 	} else {
 		body, _ = sjson.Set(body, path+"delay.optionType", "global")
-		body, _ = sjson.Set(body, path+"delay.value", data.SpfCalculationDeplay.ValueInt64())
+		body, _ = sjson.Set(body, path+"delay.value", data.SpfCalculationDelay.ValueInt64())
 	}
 
-	if !data.InitialHoldTimeVariable.IsNull() {
+	if !data.SpfInitialHoldTimeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"initialHold.optionType", "variable")
-		body, _ = sjson.Set(body, path+"initialHold.value", data.InitialHoldTimeVariable.ValueString())
-	} else if data.InitialHoldTime.IsNull() {
+		body, _ = sjson.Set(body, path+"initialHold.value", data.SpfInitialHoldTimeVariable.ValueString())
+	} else if data.SpfInitialHoldTime.IsNull() {
 		body, _ = sjson.Set(body, path+"initialHold.optionType", "default")
 		body, _ = sjson.Set(body, path+"initialHold.value", 1000)
 	} else {
 		body, _ = sjson.Set(body, path+"initialHold.optionType", "global")
-		body, _ = sjson.Set(body, path+"initialHold.value", data.InitialHoldTime.ValueInt64())
+		body, _ = sjson.Set(body, path+"initialHold.value", data.SpfInitialHoldTime.ValueInt64())
 	}
 
-	if !data.MaximumHoldTimeVariable.IsNull() {
+	if !data.SpfMaximumHoldTimeVariable.IsNull() {
 		body, _ = sjson.Set(body, path+"maxHold.optionType", "variable")
-		body, _ = sjson.Set(body, path+"maxHold.value", data.MaximumHoldTimeVariable.ValueString())
-	} else if data.MaximumHoldTime.IsNull() {
+		body, _ = sjson.Set(body, path+"maxHold.value", data.SpfMaximumHoldTimeVariable.ValueString())
+	} else if data.SpfMaximumHoldTime.IsNull() {
 		body, _ = sjson.Set(body, path+"maxHold.optionType", "default")
 		body, _ = sjson.Set(body, path+"maxHold.value", 10000)
 	} else {
 		body, _ = sjson.Set(body, path+"maxHold.optionType", "global")
-		body, _ = sjson.Set(body, path+"maxHold.value", data.MaximumHoldTime.ValueInt64())
+		body, _ = sjson.Set(body, path+"maxHold.value", data.SpfMaximumHoldTime.ValueInt64())
 	}
 	body, _ = sjson.Set(body, path+"redistribute", []interface{}{})
 	for _, item := range data.Redistributes {
@@ -301,15 +301,15 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 			itemBody, _ = sjson.Set(itemBody, "protocol.value", item.Protocol.ValueString())
 		}
 
-		if !item.DiaVariable.IsNull() {
+		if !item.NatDiaVariable.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dia.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "dia.value", item.DiaVariable.ValueString())
-		} else if item.Dia.IsNull() {
+			itemBody, _ = sjson.Set(itemBody, "dia.value", item.NatDiaVariable.ValueString())
+		} else if item.NatDia.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "dia.optionType", "default")
 			itemBody, _ = sjson.Set(itemBody, "dia.value", true)
 		} else {
 			itemBody, _ = sjson.Set(itemBody, "dia.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "dia.value", item.Dia.ValueBool())
+			itemBody, _ = sjson.Set(itemBody, "dia.value", item.NatDia.ValueBool())
 		}
 		if !item.RoutePolicyId.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "routePolicy.refId.optionType", "global")
@@ -320,9 +320,9 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, path+"routerLsa", []interface{}{})
 	for _, item := range data.RouterLsas {
 		itemBody := ""
-		if !item.AdType.IsNull() {
+		if !item.Type.IsNull() {
 			itemBody, _ = sjson.Set(itemBody, "adType.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "adType.value", item.AdType.ValueString())
+			itemBody, _ = sjson.Set(itemBody, "adType.value", item.Type.ValueString())
 		}
 
 		if !item.TimeVariable.IsNull() {
@@ -412,15 +412,15 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "retransmitInterval.value", childItem.LsaRetransmitInterval.ValueInt64())
 			}
 
-			if !childItem.InterfaceCostVariable.IsNull() {
+			if !childItem.CostVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "cost.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "cost.value", childItem.InterfaceCostVariable.ValueString())
-			} else if childItem.InterfaceCost.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "cost.value", childItem.CostVariable.ValueString())
+			} else if childItem.Cost.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "cost.optionType", "default")
 
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "cost.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "cost.value", childItem.InterfaceCost.ValueInt64())
+				itemChildBody, _ = sjson.Set(itemChildBody, "cost.value", childItem.Cost.ValueInt64())
 			}
 
 			if !childItem.DesignatedRouterPriorityVariable.IsNull() {
@@ -434,15 +434,15 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "priority.value", childItem.DesignatedRouterPriority.ValueInt64())
 			}
 
-			if !childItem.OspfNetworkTypeVariable.IsNull() {
+			if !childItem.NetworkTypeVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "network.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "network.value", childItem.OspfNetworkTypeVariable.ValueString())
-			} else if childItem.OspfNetworkType.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "network.value", childItem.NetworkTypeVariable.ValueString())
+			} else if childItem.NetworkType.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "network.optionType", "default")
 				itemChildBody, _ = sjson.Set(itemChildBody, "network.value", "broadcast")
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "network.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "network.value", childItem.OspfNetworkType.ValueString())
+				itemChildBody, _ = sjson.Set(itemChildBody, "network.value", childItem.NetworkType.ValueString())
 			}
 
 			if !childItem.PassiveInterfaceVariable.IsNull() {
@@ -456,15 +456,15 @@ func (data ServiceRoutingOSPF) toBody(ctx context.Context) string {
 				itemChildBody, _ = sjson.Set(itemChildBody, "passiveInterface.value", childItem.PassiveInterface.ValueBool())
 			}
 
-			if !childItem.TypeVariable.IsNull() {
+			if !childItem.AuthenticationTypeVariable.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "type.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "type.value", childItem.TypeVariable.ValueString())
-			} else if childItem.Type.IsNull() {
+				itemChildBody, _ = sjson.Set(itemChildBody, "type.value", childItem.AuthenticationTypeVariable.ValueString())
+			} else if childItem.AuthenticationType.IsNull() {
 				itemChildBody, _ = sjson.Set(itemChildBody, "type.optionType", "default")
 
 			} else {
 				itemChildBody, _ = sjson.Set(itemChildBody, "type.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "type.value", childItem.Type.ValueString())
+				itemChildBody, _ = sjson.Set(itemChildBody, "type.value", childItem.AuthenticationType.ValueString())
 			}
 
 			if !childItem.MessageDigestKeyIdVariable.IsNull() {
@@ -579,102 +579,102 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 			data.Rfc1583Compatible = types.BoolValue(va.Bool())
 		}
 	}
-	data.Originate = types.BoolNull()
+	data.DefaultInformationOriginate = types.BoolNull()
 
 	if t := res.Get(path + "originate.optionType"); t.Exists() {
 		va := res.Get(path + "originate.value")
 		if t.String() == "global" {
-			data.Originate = types.BoolValue(va.Bool())
+			data.DefaultInformationOriginate = types.BoolValue(va.Bool())
 		}
 	}
-	data.Always = types.BoolNull()
-	data.AlwaysVariable = types.StringNull()
+	data.DefaultInformationOriginateAlways = types.BoolNull()
+	data.DefaultInformationOriginateAlwaysVariable = types.StringNull()
 	if t := res.Get(path + "always.optionType"); t.Exists() {
 		va := res.Get(path + "always.value")
 		if t.String() == "variable" {
-			data.AlwaysVariable = types.StringValue(va.String())
+			data.DefaultInformationOriginateAlwaysVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Always = types.BoolValue(va.Bool())
+			data.DefaultInformationOriginateAlways = types.BoolValue(va.Bool())
 		}
 	}
-	data.Metric = types.Int64Null()
-	data.MetricVariable = types.StringNull()
+	data.DefaultInformationOriginateMetric = types.Int64Null()
+	data.DefaultInformationOriginateMetricVariable = types.StringNull()
 	if t := res.Get(path + "metric.optionType"); t.Exists() {
 		va := res.Get(path + "metric.value")
 		if t.String() == "variable" {
-			data.MetricVariable = types.StringValue(va.String())
+			data.DefaultInformationOriginateMetricVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Metric = types.Int64Value(va.Int())
+			data.DefaultInformationOriginateMetric = types.Int64Value(va.Int())
 		}
 	}
-	data.MetricType = types.StringNull()
-	data.MetricTypeVariable = types.StringNull()
+	data.DefaultInformationOriginateMetricType = types.StringNull()
+	data.DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 	if t := res.Get(path + "metricType.optionType"); t.Exists() {
 		va := res.Get(path + "metricType.value")
 		if t.String() == "variable" {
-			data.MetricTypeVariable = types.StringValue(va.String())
+			data.DefaultInformationOriginateMetricTypeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.MetricType = types.StringValue(va.String())
+			data.DefaultInformationOriginateMetricType = types.StringValue(va.String())
 		}
 	}
-	data.DistanceForExternalRoutes = types.Int64Null()
-	data.DistanceForExternalRoutesVariable = types.StringNull()
+	data.DistanceExternal = types.Int64Null()
+	data.DistanceExternalVariable = types.StringNull()
 	if t := res.Get(path + "external.optionType"); t.Exists() {
 		va := res.Get(path + "external.value")
 		if t.String() == "variable" {
-			data.DistanceForExternalRoutesVariable = types.StringValue(va.String())
+			data.DistanceExternalVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DistanceForExternalRoutes = types.Int64Value(va.Int())
+			data.DistanceExternal = types.Int64Value(va.Int())
 		}
 	}
-	data.DistanceForInterAreaRoutes = types.Int64Null()
-	data.DistanceForInterAreaRoutesVariable = types.StringNull()
+	data.DistanceInterArea = types.Int64Null()
+	data.DistanceInterAreaVariable = types.StringNull()
 	if t := res.Get(path + "interArea.optionType"); t.Exists() {
 		va := res.Get(path + "interArea.value")
 		if t.String() == "variable" {
-			data.DistanceForInterAreaRoutesVariable = types.StringValue(va.String())
+			data.DistanceInterAreaVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DistanceForInterAreaRoutes = types.Int64Value(va.Int())
+			data.DistanceInterArea = types.Int64Value(va.Int())
 		}
 	}
-	data.DistanceForIntraAreaRoutes = types.Int64Null()
-	data.DistanceForIntraAreaRoutesVariable = types.StringNull()
+	data.DistanceIntraArea = types.Int64Null()
+	data.DistanceIntraAreaVariable = types.StringNull()
 	if t := res.Get(path + "intraArea.optionType"); t.Exists() {
 		va := res.Get(path + "intraArea.value")
 		if t.String() == "variable" {
-			data.DistanceForIntraAreaRoutesVariable = types.StringValue(va.String())
+			data.DistanceIntraAreaVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DistanceForIntraAreaRoutes = types.Int64Value(va.Int())
+			data.DistanceIntraArea = types.Int64Value(va.Int())
 		}
 	}
-	data.SpfCalculationDeplay = types.Int64Null()
-	data.SpfCalculationDeplayVariable = types.StringNull()
+	data.SpfCalculationDelay = types.Int64Null()
+	data.SpfCalculationDelayVariable = types.StringNull()
 	if t := res.Get(path + "delay.optionType"); t.Exists() {
 		va := res.Get(path + "delay.value")
 		if t.String() == "variable" {
-			data.SpfCalculationDeplayVariable = types.StringValue(va.String())
+			data.SpfCalculationDelayVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SpfCalculationDeplay = types.Int64Value(va.Int())
+			data.SpfCalculationDelay = types.Int64Value(va.Int())
 		}
 	}
-	data.InitialHoldTime = types.Int64Null()
-	data.InitialHoldTimeVariable = types.StringNull()
+	data.SpfInitialHoldTime = types.Int64Null()
+	data.SpfInitialHoldTimeVariable = types.StringNull()
 	if t := res.Get(path + "initialHold.optionType"); t.Exists() {
 		va := res.Get(path + "initialHold.value")
 		if t.String() == "variable" {
-			data.InitialHoldTimeVariable = types.StringValue(va.String())
+			data.SpfInitialHoldTimeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.InitialHoldTime = types.Int64Value(va.Int())
+			data.SpfInitialHoldTime = types.Int64Value(va.Int())
 		}
 	}
-	data.MaximumHoldTime = types.Int64Null()
-	data.MaximumHoldTimeVariable = types.StringNull()
+	data.SpfMaximumHoldTime = types.Int64Null()
+	data.SpfMaximumHoldTimeVariable = types.StringNull()
 	if t := res.Get(path + "maxHold.optionType"); t.Exists() {
 		va := res.Get(path + "maxHold.value")
 		if t.String() == "variable" {
-			data.MaximumHoldTimeVariable = types.StringValue(va.String())
+			data.SpfMaximumHoldTimeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.MaximumHoldTime = types.Int64Value(va.Int())
+			data.SpfMaximumHoldTime = types.Int64Value(va.Int())
 		}
 	}
 	if value := res.Get(path + "redistribute"); value.Exists() {
@@ -691,14 +691,14 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 					item.Protocol = types.StringValue(va.String())
 				}
 			}
-			item.Dia = types.BoolNull()
-			item.DiaVariable = types.StringNull()
+			item.NatDia = types.BoolNull()
+			item.NatDiaVariable = types.StringNull()
 			if t := v.Get("dia.optionType"); t.Exists() {
 				va := v.Get("dia.value")
 				if t.String() == "variable" {
-					item.DiaVariable = types.StringValue(va.String())
+					item.NatDiaVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.Dia = types.BoolValue(va.Bool())
+					item.NatDia = types.BoolValue(va.Bool())
 				}
 			}
 			item.RoutePolicyId = types.StringNull()
@@ -717,12 +717,12 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 		data.RouterLsas = make([]ServiceRoutingOSPFRouterLsas, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
 			item := ServiceRoutingOSPFRouterLsas{}
-			item.AdType = types.StringNull()
+			item.Type = types.StringNull()
 
 			if t := v.Get("adType.optionType"); t.Exists() {
 				va := v.Get("adType.value")
 				if t.String() == "global" {
-					item.AdType = types.StringValue(va.String())
+					item.Type = types.StringValue(va.String())
 				}
 			}
 			item.Time = types.Int64Null()
@@ -823,14 +823,14 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 							cItem.LsaRetransmitInterval = types.Int64Value(va.Int())
 						}
 					}
-					cItem.InterfaceCost = types.Int64Null()
-					cItem.InterfaceCostVariable = types.StringNull()
+					cItem.Cost = types.Int64Null()
+					cItem.CostVariable = types.StringNull()
 					if t := cv.Get("cost.optionType"); t.Exists() {
 						va := cv.Get("cost.value")
 						if t.String() == "variable" {
-							cItem.InterfaceCostVariable = types.StringValue(va.String())
+							cItem.CostVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.InterfaceCost = types.Int64Value(va.Int())
+							cItem.Cost = types.Int64Value(va.Int())
 						}
 					}
 					cItem.DesignatedRouterPriority = types.Int64Null()
@@ -843,14 +843,14 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 							cItem.DesignatedRouterPriority = types.Int64Value(va.Int())
 						}
 					}
-					cItem.OspfNetworkType = types.StringNull()
-					cItem.OspfNetworkTypeVariable = types.StringNull()
+					cItem.NetworkType = types.StringNull()
+					cItem.NetworkTypeVariable = types.StringNull()
 					if t := cv.Get("network.optionType"); t.Exists() {
 						va := cv.Get("network.value")
 						if t.String() == "variable" {
-							cItem.OspfNetworkTypeVariable = types.StringValue(va.String())
+							cItem.NetworkTypeVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.OspfNetworkType = types.StringValue(va.String())
+							cItem.NetworkType = types.StringValue(va.String())
 						}
 					}
 					cItem.PassiveInterface = types.BoolNull()
@@ -863,14 +863,14 @@ func (data *ServiceRoutingOSPF) fromBody(ctx context.Context, res gjson.Result) 
 							cItem.PassiveInterface = types.BoolValue(va.Bool())
 						}
 					}
-					cItem.Type = types.StringNull()
-					cItem.TypeVariable = types.StringNull()
+					cItem.AuthenticationType = types.StringNull()
+					cItem.AuthenticationTypeVariable = types.StringNull()
 					if t := cv.Get("type.optionType"); t.Exists() {
 						va := cv.Get("type.value")
 						if t.String() == "variable" {
-							cItem.TypeVariable = types.StringValue(va.String())
+							cItem.AuthenticationTypeVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.Type = types.StringValue(va.String())
+							cItem.AuthenticationType = types.StringValue(va.String())
 						}
 					}
 					cItem.MessageDigestKeyId = types.Int64Null()
@@ -982,102 +982,102 @@ func (data *ServiceRoutingOSPF) updateFromBody(ctx context.Context, res gjson.Re
 			data.Rfc1583Compatible = types.BoolValue(va.Bool())
 		}
 	}
-	data.Originate = types.BoolNull()
+	data.DefaultInformationOriginate = types.BoolNull()
 
 	if t := res.Get(path + "originate.optionType"); t.Exists() {
 		va := res.Get(path + "originate.value")
 		if t.String() == "global" {
-			data.Originate = types.BoolValue(va.Bool())
+			data.DefaultInformationOriginate = types.BoolValue(va.Bool())
 		}
 	}
-	data.Always = types.BoolNull()
-	data.AlwaysVariable = types.StringNull()
+	data.DefaultInformationOriginateAlways = types.BoolNull()
+	data.DefaultInformationOriginateAlwaysVariable = types.StringNull()
 	if t := res.Get(path + "always.optionType"); t.Exists() {
 		va := res.Get(path + "always.value")
 		if t.String() == "variable" {
-			data.AlwaysVariable = types.StringValue(va.String())
+			data.DefaultInformationOriginateAlwaysVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Always = types.BoolValue(va.Bool())
+			data.DefaultInformationOriginateAlways = types.BoolValue(va.Bool())
 		}
 	}
-	data.Metric = types.Int64Null()
-	data.MetricVariable = types.StringNull()
+	data.DefaultInformationOriginateMetric = types.Int64Null()
+	data.DefaultInformationOriginateMetricVariable = types.StringNull()
 	if t := res.Get(path + "metric.optionType"); t.Exists() {
 		va := res.Get(path + "metric.value")
 		if t.String() == "variable" {
-			data.MetricVariable = types.StringValue(va.String())
+			data.DefaultInformationOriginateMetricVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Metric = types.Int64Value(va.Int())
+			data.DefaultInformationOriginateMetric = types.Int64Value(va.Int())
 		}
 	}
-	data.MetricType = types.StringNull()
-	data.MetricTypeVariable = types.StringNull()
+	data.DefaultInformationOriginateMetricType = types.StringNull()
+	data.DefaultInformationOriginateMetricTypeVariable = types.StringNull()
 	if t := res.Get(path + "metricType.optionType"); t.Exists() {
 		va := res.Get(path + "metricType.value")
 		if t.String() == "variable" {
-			data.MetricTypeVariable = types.StringValue(va.String())
+			data.DefaultInformationOriginateMetricTypeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.MetricType = types.StringValue(va.String())
+			data.DefaultInformationOriginateMetricType = types.StringValue(va.String())
 		}
 	}
-	data.DistanceForExternalRoutes = types.Int64Null()
-	data.DistanceForExternalRoutesVariable = types.StringNull()
+	data.DistanceExternal = types.Int64Null()
+	data.DistanceExternalVariable = types.StringNull()
 	if t := res.Get(path + "external.optionType"); t.Exists() {
 		va := res.Get(path + "external.value")
 		if t.String() == "variable" {
-			data.DistanceForExternalRoutesVariable = types.StringValue(va.String())
+			data.DistanceExternalVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DistanceForExternalRoutes = types.Int64Value(va.Int())
+			data.DistanceExternal = types.Int64Value(va.Int())
 		}
 	}
-	data.DistanceForInterAreaRoutes = types.Int64Null()
-	data.DistanceForInterAreaRoutesVariable = types.StringNull()
+	data.DistanceInterArea = types.Int64Null()
+	data.DistanceInterAreaVariable = types.StringNull()
 	if t := res.Get(path + "interArea.optionType"); t.Exists() {
 		va := res.Get(path + "interArea.value")
 		if t.String() == "variable" {
-			data.DistanceForInterAreaRoutesVariable = types.StringValue(va.String())
+			data.DistanceInterAreaVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DistanceForInterAreaRoutes = types.Int64Value(va.Int())
+			data.DistanceInterArea = types.Int64Value(va.Int())
 		}
 	}
-	data.DistanceForIntraAreaRoutes = types.Int64Null()
-	data.DistanceForIntraAreaRoutesVariable = types.StringNull()
+	data.DistanceIntraArea = types.Int64Null()
+	data.DistanceIntraAreaVariable = types.StringNull()
 	if t := res.Get(path + "intraArea.optionType"); t.Exists() {
 		va := res.Get(path + "intraArea.value")
 		if t.String() == "variable" {
-			data.DistanceForIntraAreaRoutesVariable = types.StringValue(va.String())
+			data.DistanceIntraAreaVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DistanceForIntraAreaRoutes = types.Int64Value(va.Int())
+			data.DistanceIntraArea = types.Int64Value(va.Int())
 		}
 	}
-	data.SpfCalculationDeplay = types.Int64Null()
-	data.SpfCalculationDeplayVariable = types.StringNull()
+	data.SpfCalculationDelay = types.Int64Null()
+	data.SpfCalculationDelayVariable = types.StringNull()
 	if t := res.Get(path + "delay.optionType"); t.Exists() {
 		va := res.Get(path + "delay.value")
 		if t.String() == "variable" {
-			data.SpfCalculationDeplayVariable = types.StringValue(va.String())
+			data.SpfCalculationDelayVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SpfCalculationDeplay = types.Int64Value(va.Int())
+			data.SpfCalculationDelay = types.Int64Value(va.Int())
 		}
 	}
-	data.InitialHoldTime = types.Int64Null()
-	data.InitialHoldTimeVariable = types.StringNull()
+	data.SpfInitialHoldTime = types.Int64Null()
+	data.SpfInitialHoldTimeVariable = types.StringNull()
 	if t := res.Get(path + "initialHold.optionType"); t.Exists() {
 		va := res.Get(path + "initialHold.value")
 		if t.String() == "variable" {
-			data.InitialHoldTimeVariable = types.StringValue(va.String())
+			data.SpfInitialHoldTimeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.InitialHoldTime = types.Int64Value(va.Int())
+			data.SpfInitialHoldTime = types.Int64Value(va.Int())
 		}
 	}
-	data.MaximumHoldTime = types.Int64Null()
-	data.MaximumHoldTimeVariable = types.StringNull()
+	data.SpfMaximumHoldTime = types.Int64Null()
+	data.SpfMaximumHoldTimeVariable = types.StringNull()
 	if t := res.Get(path + "maxHold.optionType"); t.Exists() {
 		va := res.Get(path + "maxHold.value")
 		if t.String() == "variable" {
-			data.MaximumHoldTimeVariable = types.StringValue(va.String())
+			data.SpfMaximumHoldTimeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.MaximumHoldTime = types.Int64Value(va.Int())
+			data.SpfMaximumHoldTime = types.Int64Value(va.Int())
 		}
 	}
 	for i := range data.Redistributes {
@@ -1116,14 +1116,14 @@ func (data *ServiceRoutingOSPF) updateFromBody(ctx context.Context, res gjson.Re
 				data.Redistributes[i].Protocol = types.StringValue(va.String())
 			}
 		}
-		data.Redistributes[i].Dia = types.BoolNull()
-		data.Redistributes[i].DiaVariable = types.StringNull()
+		data.Redistributes[i].NatDia = types.BoolNull()
+		data.Redistributes[i].NatDiaVariable = types.StringNull()
 		if t := r.Get("dia.optionType"); t.Exists() {
 			va := r.Get("dia.value")
 			if t.String() == "variable" {
-				data.Redistributes[i].DiaVariable = types.StringValue(va.String())
+				data.Redistributes[i].NatDiaVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Redistributes[i].Dia = types.BoolValue(va.Bool())
+				data.Redistributes[i].NatDia = types.BoolValue(va.Bool())
 			}
 		}
 		data.Redistributes[i].RoutePolicyId = types.StringNull()
@@ -1137,7 +1137,7 @@ func (data *ServiceRoutingOSPF) updateFromBody(ctx context.Context, res gjson.Re
 	}
 	for i := range data.RouterLsas {
 		keys := [...]string{"adType"}
-		keyValues := [...]string{data.RouterLsas[i].AdType.ValueString()}
+		keyValues := [...]string{data.RouterLsas[i].Type.ValueString()}
 		keyValuesVariables := [...]string{""}
 
 		var r gjson.Result
@@ -1161,12 +1161,12 @@ func (data *ServiceRoutingOSPF) updateFromBody(ctx context.Context, res gjson.Re
 				return true
 			},
 		)
-		data.RouterLsas[i].AdType = types.StringNull()
+		data.RouterLsas[i].Type = types.StringNull()
 
 		if t := r.Get("adType.optionType"); t.Exists() {
 			va := r.Get("adType.value")
 			if t.String() == "global" {
-				data.RouterLsas[i].AdType = types.StringValue(va.String())
+				data.RouterLsas[i].Type = types.StringValue(va.String())
 			}
 		}
 		data.RouterLsas[i].Time = types.Int64Null()
@@ -1308,14 +1308,14 @@ func (data *ServiceRoutingOSPF) updateFromBody(ctx context.Context, res gjson.Re
 					data.Areas[i].Interfaces[ci].LsaRetransmitInterval = types.Int64Value(va.Int())
 				}
 			}
-			data.Areas[i].Interfaces[ci].InterfaceCost = types.Int64Null()
-			data.Areas[i].Interfaces[ci].InterfaceCostVariable = types.StringNull()
+			data.Areas[i].Interfaces[ci].Cost = types.Int64Null()
+			data.Areas[i].Interfaces[ci].CostVariable = types.StringNull()
 			if t := cr.Get("cost.optionType"); t.Exists() {
 				va := cr.Get("cost.value")
 				if t.String() == "variable" {
-					data.Areas[i].Interfaces[ci].InterfaceCostVariable = types.StringValue(va.String())
+					data.Areas[i].Interfaces[ci].CostVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Areas[i].Interfaces[ci].InterfaceCost = types.Int64Value(va.Int())
+					data.Areas[i].Interfaces[ci].Cost = types.Int64Value(va.Int())
 				}
 			}
 			data.Areas[i].Interfaces[ci].DesignatedRouterPriority = types.Int64Null()
@@ -1328,14 +1328,14 @@ func (data *ServiceRoutingOSPF) updateFromBody(ctx context.Context, res gjson.Re
 					data.Areas[i].Interfaces[ci].DesignatedRouterPriority = types.Int64Value(va.Int())
 				}
 			}
-			data.Areas[i].Interfaces[ci].OspfNetworkType = types.StringNull()
-			data.Areas[i].Interfaces[ci].OspfNetworkTypeVariable = types.StringNull()
+			data.Areas[i].Interfaces[ci].NetworkType = types.StringNull()
+			data.Areas[i].Interfaces[ci].NetworkTypeVariable = types.StringNull()
 			if t := cr.Get("network.optionType"); t.Exists() {
 				va := cr.Get("network.value")
 				if t.String() == "variable" {
-					data.Areas[i].Interfaces[ci].OspfNetworkTypeVariable = types.StringValue(va.String())
+					data.Areas[i].Interfaces[ci].NetworkTypeVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Areas[i].Interfaces[ci].OspfNetworkType = types.StringValue(va.String())
+					data.Areas[i].Interfaces[ci].NetworkType = types.StringValue(va.String())
 				}
 			}
 			data.Areas[i].Interfaces[ci].PassiveInterface = types.BoolNull()
@@ -1348,14 +1348,14 @@ func (data *ServiceRoutingOSPF) updateFromBody(ctx context.Context, res gjson.Re
 					data.Areas[i].Interfaces[ci].PassiveInterface = types.BoolValue(va.Bool())
 				}
 			}
-			data.Areas[i].Interfaces[ci].Type = types.StringNull()
-			data.Areas[i].Interfaces[ci].TypeVariable = types.StringNull()
+			data.Areas[i].Interfaces[ci].AuthenticationType = types.StringNull()
+			data.Areas[i].Interfaces[ci].AuthenticationTypeVariable = types.StringNull()
 			if t := cr.Get("type.optionType"); t.Exists() {
 				va := cr.Get("type.value")
 				if t.String() == "variable" {
-					data.Areas[i].Interfaces[ci].TypeVariable = types.StringValue(va.String())
+					data.Areas[i].Interfaces[ci].AuthenticationTypeVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Areas[i].Interfaces[ci].Type = types.StringValue(va.String())
+					data.Areas[i].Interfaces[ci].AuthenticationType = types.StringValue(va.String())
 				}
 			}
 			data.Areas[i].Interfaces[ci].MessageDigestKeyId = types.Int64Null()
@@ -1464,61 +1464,61 @@ func (data *ServiceRoutingOSPF) isNull(ctx context.Context, res gjson.Result) bo
 	if !data.Rfc1583CompatibleVariable.IsNull() {
 		return false
 	}
-	if !data.Originate.IsNull() {
+	if !data.DefaultInformationOriginate.IsNull() {
 		return false
 	}
-	if !data.Always.IsNull() {
+	if !data.DefaultInformationOriginateAlways.IsNull() {
 		return false
 	}
-	if !data.AlwaysVariable.IsNull() {
+	if !data.DefaultInformationOriginateAlwaysVariable.IsNull() {
 		return false
 	}
-	if !data.Metric.IsNull() {
+	if !data.DefaultInformationOriginateMetric.IsNull() {
 		return false
 	}
-	if !data.MetricVariable.IsNull() {
+	if !data.DefaultInformationOriginateMetricVariable.IsNull() {
 		return false
 	}
-	if !data.MetricType.IsNull() {
+	if !data.DefaultInformationOriginateMetricType.IsNull() {
 		return false
 	}
-	if !data.MetricTypeVariable.IsNull() {
+	if !data.DefaultInformationOriginateMetricTypeVariable.IsNull() {
 		return false
 	}
-	if !data.DistanceForExternalRoutes.IsNull() {
+	if !data.DistanceExternal.IsNull() {
 		return false
 	}
-	if !data.DistanceForExternalRoutesVariable.IsNull() {
+	if !data.DistanceExternalVariable.IsNull() {
 		return false
 	}
-	if !data.DistanceForInterAreaRoutes.IsNull() {
+	if !data.DistanceInterArea.IsNull() {
 		return false
 	}
-	if !data.DistanceForInterAreaRoutesVariable.IsNull() {
+	if !data.DistanceInterAreaVariable.IsNull() {
 		return false
 	}
-	if !data.DistanceForIntraAreaRoutes.IsNull() {
+	if !data.DistanceIntraArea.IsNull() {
 		return false
 	}
-	if !data.DistanceForIntraAreaRoutesVariable.IsNull() {
+	if !data.DistanceIntraAreaVariable.IsNull() {
 		return false
 	}
-	if !data.SpfCalculationDeplay.IsNull() {
+	if !data.SpfCalculationDelay.IsNull() {
 		return false
 	}
-	if !data.SpfCalculationDeplayVariable.IsNull() {
+	if !data.SpfCalculationDelayVariable.IsNull() {
 		return false
 	}
-	if !data.InitialHoldTime.IsNull() {
+	if !data.SpfInitialHoldTime.IsNull() {
 		return false
 	}
-	if !data.InitialHoldTimeVariable.IsNull() {
+	if !data.SpfInitialHoldTimeVariable.IsNull() {
 		return false
 	}
-	if !data.MaximumHoldTime.IsNull() {
+	if !data.SpfMaximumHoldTime.IsNull() {
 		return false
 	}
-	if !data.MaximumHoldTimeVariable.IsNull() {
+	if !data.SpfMaximumHoldTimeVariable.IsNull() {
 		return false
 	}
 	if len(data.Redistributes) > 0 {

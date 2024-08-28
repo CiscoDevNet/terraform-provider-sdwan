@@ -116,100 +116,100 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"originate": schema.BoolAttribute{
+			"default_information_originate": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Distribute default external route into OSPF").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"always": schema.BoolAttribute{
+			"default_information_originate_always": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Always advertise default route").AddDefaultValueDescription("false").String,
 				Optional:            true,
 			},
-			"always_variable": schema.StringAttribute{
+			"default_information_originate_always_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"metric": schema.Int64Attribute{
+			"default_information_originate_metric": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set metric used to generate default route <0..16777214>").AddIntegerRangeDescription(0, 16777214).String,
 				Optional:            true,
 			},
-			"metric_variable": schema.StringAttribute{
+			"default_information_originate_metric_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"metric_type": schema.StringAttribute{
+			"default_information_originate_metric_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set default route type").AddStringEnumDescription("type1", "type2").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("type1", "type2"),
 				},
 			},
-			"metric_type_variable": schema.StringAttribute{
+			"default_information_originate_metric_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"distance_for_external_routes": schema.Int64Attribute{
+			"distance_external": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set distance for external routes").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("110").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 255),
 				},
 			},
-			"distance_for_external_routes_variable": schema.StringAttribute{
+			"distance_external_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"distance_for_inter_area_routes": schema.Int64Attribute{
+			"distance_inter_area": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set distance for inter-area routes").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("110").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 255),
 				},
 			},
-			"distance_for_inter_area_routes_variable": schema.StringAttribute{
+			"distance_inter_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"distance_for_intra_area_routes": schema.Int64Attribute{
+			"distance_intra_area": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set distance for intra-area routes").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("110").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 255),
 				},
 			},
-			"distance_for_intra_area_routes_variable": schema.StringAttribute{
+			"distance_intra_area_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"spf_calculation_deplay": schema.Int64Attribute{
+			"spf_calculation_delay": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set delay from first change received until performing SPF calculation").AddIntegerRangeDescription(1, 600000).AddDefaultValueDescription("200").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600000),
 				},
 			},
-			"spf_calculation_deplay_variable": schema.StringAttribute{
+			"spf_calculation_delay_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"initial_hold_time": schema.Int64Attribute{
+			"spf_initial_hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set initial hold time between consecutive SPF calculations").AddIntegerRangeDescription(1, 600000).AddDefaultValueDescription("1000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600000),
 				},
 			},
-			"initial_hold_time_variable": schema.StringAttribute{
+			"spf_initial_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"maximum_hold_time": schema.Int64Attribute{
+			"spf_maximum_hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set maximum hold time between consecutive SPF calculations").AddIntegerRangeDescription(1, 600000).AddDefaultValueDescription("10000").String,
 				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 600000),
 				},
 			},
-			"maximum_hold_time_variable": schema.StringAttribute{
+			"spf_maximum_hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -229,11 +229,11 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"dia": schema.BoolAttribute{
+						"nat_dia": schema.BoolAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Enable NAT DIA for redistributed routes").AddDefaultValueDescription("true").String,
 							Optional:            true,
 						},
-						"dia_variable": schema.StringAttribute{
+						"nat_dia_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
@@ -252,7 +252,7 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"ad_type": schema.StringAttribute{
+						"type": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set the router LSA advertisement type").AddStringEnumDescription("administrative", "on-startup").String,
 							Optional:            true,
 							Validators: []validator.String{
@@ -361,14 +361,14 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"interface_cost": schema.Int64Attribute{
+									"cost": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set cost of OSPF interface").AddIntegerRangeDescription(1, 65535).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.Between(1, 65535),
 										},
 									},
-									"interface_cost_variable": schema.StringAttribute{
+									"cost_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
@@ -383,14 +383,14 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"ospf_network_type": schema.StringAttribute{
+									"network_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set the OSPF network type").AddStringEnumDescription("broadcast", "point-to-point", "non-broadcast", "point-to-multipoint").AddDefaultValueDescription("broadcast").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("broadcast", "point-to-point", "non-broadcast", "point-to-multipoint"),
 										},
 									},
-									"ospf_network_type_variable": schema.StringAttribute{
+									"network_type_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
@@ -402,14 +402,14 @@ func (r *ServiceRoutingOSPFProfileParcelResource) Schema(ctx context.Context, re
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"type": schema.StringAttribute{
+									"authentication_type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Set OSPF interface authentication type").AddStringEnumDescription("message-digest").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.OneOf("message-digest"),
 										},
 									},
-									"type_variable": schema.StringAttribute{
+									"authentication_type_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},

@@ -19,15 +19,15 @@ attributes:
     data_path: [basic]
     example: 110
   - model_name: externalDistance
-    tf_name: distance_for_external_routes
+    tf_name: distance_external
     data_path: [basic]
     example: 110
   - model_name: interAreaDistance
-    tf_name: distance_for_inter_area_routes
+    tf_name: distance_inter_area
     data_path: [basic]
     example: 110
   - model_name: intraAreaDistance
-    tf_name: distance_for_intra_area_routes
+    tf_name: distance_intra_area
     data_path: [basic]
     example: 110
   - model_name: referenceBandwidth
@@ -38,27 +38,31 @@ attributes:
     data_path: [advanced]
     example: true
   - model_name: originate
+    tf_name: default_information_originate
     data_path: [advanced, defaultOriginate]
     example: false
   - model_name: always
+    tf_name: default_information_originate_always
     data_path: [advanced, defaultOriginate]
     example: false
   - model_name: metric
+    tf_name: default_information_originate_metric
     data_path: [advanced, defaultOriginate]
     example: 1
   - model_name: metricType
+    tf_name: default_information_originate_metric_type
     data_path: [advanced, defaultOriginate]
     example: type1
   - model_name: delay
-    tf_name: spf_calculation_deplay
+    tf_name: spf_calculation_delay
     data_path: [advanced, spfTimers]
     example: 200
   - model_name: initialHold
-    tf_name: initial_hold_time
+    tf_name: spf_initial_hold_time
     data_path: [advanced, spfTimers]
     example: 1000
   - model_name: maxHold
-    tf_name: maximum_hold_time
+    tf_name: spf_maximum_hold_time
     data_path: [advanced, spfTimers]
     example: 10000
   - model_name: refId
@@ -76,7 +80,7 @@ attributes:
       id: true
       example: nat-route
     - model_name: natDia
-      tf_name: enable_nat_dia
+      tf_name: nat_dia
       example: true
     - model_name: refId
       tf_name: route_policy_id
@@ -88,7 +92,7 @@ attributes:
     data_path: [maxMetricRouterLsa]
     example: on-startup
   - model_name: onStartUpTime
-    tf_name: router_lsa_on_startu_p_time
+    tf_name: router_lsa_on_startup_time
     data_path: [maxMetricRouterLsa]
     example: 30
   - model_name: area
@@ -114,6 +118,7 @@ attributes:
     - model_name: interfaces
       attributes:
       - model_name: ifName
+        tf_name: name
         id: true
         example: GigabitEthernet2
       - model_name: helloInterval
@@ -124,31 +129,35 @@ attributes:
         tf_name: lsa_retransmit_interval
         example: 5
       - model_name: cost
-        tf_name: interface_cost
         example: 10
       - model_name: networkType
-        tf_name: ospf_network_type
+        tf_name: network_type
         example: broadcast
       - model_name: passiveInterface
         example: false
       - model_name: authType
+        tf_name: authentication_type
         data_path: [authenticationConfig]
         example: no-auth
       - model_name: spi
+        tf_name: authentication_spi
         data_path: [authenticationConfig]
         exclude_test: true
         example: 12345
       - model_name: authKey
+        tf_name: authentication_key
         data_path: [authenticationConfig]
         exclude_test: true
         example: 0123456789012345678901234567890123456789
     - model_name: ranges
       attributes: 
-      - model_name: address
+      - model_name: address 
+        tf_name: ip_address
         data_path: [network]
         id: true
         example: 10.1.1.0
       - model_name: mask
+        tf_name: subnet_mask
         data_path: [network]
         example: 255.255.255.0
       - model_name: cost
