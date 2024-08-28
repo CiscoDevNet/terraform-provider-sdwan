@@ -31,7 +31,7 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type ServiceBGPRouting struct {
+type ServiceRoutingBGP struct {
 	Id                             types.String                              `tfsdk:"id"`
 	Version                        types.Int64                               `tfsdk:"version"`
 	Name                           types.String                              `tfsdk:"name"`
@@ -65,10 +65,10 @@ type ServiceBGPRouting struct {
 	CompareRouterIdVariable        types.String                              `tfsdk:"compare_router_id_variable"`
 	MultipathRelax                 types.Bool                                `tfsdk:"multipath_relax"`
 	MultipathRelaxVariable         types.String                              `tfsdk:"multipath_relax_variable"`
-	Ipv4Neighbors                  []ServiceBGPRoutingIpv4Neighbors          `tfsdk:"ipv4_neighbors"`
-	Ipv6Neighbors                  []ServiceBGPRoutingIpv6Neighbors          `tfsdk:"ipv6_neighbors"`
-	Ipv4AggregateAddresses         []ServiceBGPRoutingIpv4AggregateAddresses `tfsdk:"ipv4_aggregate_addresses"`
-	Ipv4Networks                   []ServiceBGPRoutingIpv4Networks           `tfsdk:"ipv4_networks"`
+	Ipv4Neighbors                  []ServiceRoutingBGPIpv4Neighbors          `tfsdk:"ipv4_neighbors"`
+	Ipv6Neighbors                  []ServiceRoutingBGPIpv6Neighbors          `tfsdk:"ipv6_neighbors"`
+	Ipv4AggregateAddresses         []ServiceRoutingBGPIpv4AggregateAddresses `tfsdk:"ipv4_aggregate_addresses"`
+	Ipv4Networks                   []ServiceRoutingBGPIpv4Networks           `tfsdk:"ipv4_networks"`
 	Ipv4EibgpMaximumPaths          types.Int64                               `tfsdk:"ipv4_eibgp_maximum_paths"`
 	Ipv4EibgpMaximumPathsVariable  types.String                              `tfsdk:"ipv4_eibgp_maximum_paths_variable"`
 	Ipv4Originate                  types.Bool                                `tfsdk:"ipv4_originate"`
@@ -76,9 +76,9 @@ type ServiceBGPRouting struct {
 	Ipv4TableMapRoutePolicyId      types.String                              `tfsdk:"ipv4_table_map_route_policy_id"`
 	Ipv4TableMapFilter             types.Bool                                `tfsdk:"ipv4_table_map_filter"`
 	Ipv4TableMapFilterVariable     types.String                              `tfsdk:"ipv4_table_map_filter_variable"`
-	Ipv4Redistributes              []ServiceBGPRoutingIpv4Redistributes      `tfsdk:"ipv4_redistributes"`
-	Ipv6AggregateAddresses         []ServiceBGPRoutingIpv6AggregateAddresses `tfsdk:"ipv6_aggregate_addresses"`
-	Ipv6Networks                   []ServiceBGPRoutingIpv6Networks           `tfsdk:"ipv6_networks"`
+	Ipv4Redistributes              []ServiceRoutingBGPIpv4Redistributes      `tfsdk:"ipv4_redistributes"`
+	Ipv6AggregateAddresses         []ServiceRoutingBGPIpv6AggregateAddresses `tfsdk:"ipv6_aggregate_addresses"`
+	Ipv6Networks                   []ServiceRoutingBGPIpv6Networks           `tfsdk:"ipv6_networks"`
 	Ipv6EibgpMaximumPaths          types.Int64                               `tfsdk:"ipv6_eibgp_maximum_paths"`
 	Ipv6EibgpMaximumPathsVariable  types.String                              `tfsdk:"ipv6_eibgp_maximum_paths_variable"`
 	Ipv6Originate                  types.Bool                                `tfsdk:"ipv6_originate"`
@@ -86,10 +86,10 @@ type ServiceBGPRouting struct {
 	Ipv6TableMapRoutePolicyId      types.String                              `tfsdk:"ipv6_table_map_route_policy_id"`
 	Ipv6TableMapFilter             types.Bool                                `tfsdk:"ipv6_table_map_filter"`
 	Ipv6TableMapFilterVariable     types.String                              `tfsdk:"ipv6_table_map_filter_variable"`
-	Ipv6Redistributes              []ServiceBGPRoutingIpv6Redistributes      `tfsdk:"ipv6_redistributes"`
+	Ipv6Redistributes              []ServiceRoutingBGPIpv6Redistributes      `tfsdk:"ipv6_redistributes"`
 }
 
-type ServiceBGPRoutingIpv4Neighbors struct {
+type ServiceRoutingBGPIpv4Neighbors struct {
 	Address                       types.String                                    `tfsdk:"address"`
 	AddressVariable               types.String                                    `tfsdk:"address_variable"`
 	Description                   types.String                                    `tfsdk:"description"`
@@ -122,10 +122,10 @@ type ServiceBGPRoutingIpv4Neighbors struct {
 	AsOverrideVariable            types.String                                    `tfsdk:"as_override_variable"`
 	AllowasInNumber               types.Int64                                     `tfsdk:"allowas_in_number"`
 	AllowasInNumberVariable       types.String                                    `tfsdk:"allowas_in_number_variable"`
-	AddressFamilies               []ServiceBGPRoutingIpv4NeighborsAddressFamilies `tfsdk:"address_families"`
+	AddressFamilies               []ServiceRoutingBGPIpv4NeighborsAddressFamilies `tfsdk:"address_families"`
 }
 
-type ServiceBGPRoutingIpv6Neighbors struct {
+type ServiceRoutingBGPIpv6Neighbors struct {
 	Address                       types.String                                    `tfsdk:"address"`
 	AddressVariable               types.String                                    `tfsdk:"address_variable"`
 	Description                   types.String                                    `tfsdk:"description"`
@@ -156,10 +156,10 @@ type ServiceBGPRoutingIpv6Neighbors struct {
 	AsOverrideVariable            types.String                                    `tfsdk:"as_override_variable"`
 	AllowasInNumber               types.Int64                                     `tfsdk:"allowas_in_number"`
 	AllowasInNumberVariable       types.String                                    `tfsdk:"allowas_in_number_variable"`
-	AddressFamilies               []ServiceBGPRoutingIpv6NeighborsAddressFamilies `tfsdk:"address_families"`
+	AddressFamilies               []ServiceRoutingBGPIpv6NeighborsAddressFamilies `tfsdk:"address_families"`
 }
 
-type ServiceBGPRoutingIpv4AggregateAddresses struct {
+type ServiceRoutingBGPIpv4AggregateAddresses struct {
 	NetworkAddress         types.String `tfsdk:"network_address"`
 	NetworkAddressVariable types.String `tfsdk:"network_address_variable"`
 	SubnetMask             types.String `tfsdk:"subnet_mask"`
@@ -170,20 +170,20 @@ type ServiceBGPRoutingIpv4AggregateAddresses struct {
 	SummaryOnlyVariable    types.String `tfsdk:"summary_only_variable"`
 }
 
-type ServiceBGPRoutingIpv4Networks struct {
+type ServiceRoutingBGPIpv4Networks struct {
 	NetworkAddress         types.String `tfsdk:"network_address"`
 	NetworkAddressVariable types.String `tfsdk:"network_address_variable"`
 	SubnetMask             types.String `tfsdk:"subnet_mask"`
 	SubnetMaskVariable     types.String `tfsdk:"subnet_mask_variable"`
 }
 
-type ServiceBGPRoutingIpv4Redistributes struct {
+type ServiceRoutingBGPIpv4Redistributes struct {
 	Protocol         types.String `tfsdk:"protocol"`
 	ProtocolVariable types.String `tfsdk:"protocol_variable"`
 	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
 }
 
-type ServiceBGPRoutingIpv6AggregateAddresses struct {
+type ServiceRoutingBGPIpv6AggregateAddresses struct {
 	AggregatePrefix         types.String `tfsdk:"aggregate_prefix"`
 	AggregatePrefixVariable types.String `tfsdk:"aggregate_prefix_variable"`
 	AsSetPath               types.Bool   `tfsdk:"as_set_path"`
@@ -192,18 +192,18 @@ type ServiceBGPRoutingIpv6AggregateAddresses struct {
 	SummaryOnlyVariable     types.String `tfsdk:"summary_only_variable"`
 }
 
-type ServiceBGPRoutingIpv6Networks struct {
+type ServiceRoutingBGPIpv6Networks struct {
 	NetworkPrefix         types.String `tfsdk:"network_prefix"`
 	NetworkPrefixVariable types.String `tfsdk:"network_prefix_variable"`
 }
 
-type ServiceBGPRoutingIpv6Redistributes struct {
+type ServiceRoutingBGPIpv6Redistributes struct {
 	Protocol         types.String `tfsdk:"protocol"`
 	ProtocolVariable types.String `tfsdk:"protocol_variable"`
 	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
 }
 
-type ServiceBGPRoutingIpv4NeighborsAddressFamilies struct {
+type ServiceRoutingBGPIpv4NeighborsAddressFamilies struct {
 	FamilyType                  types.String `tfsdk:"family_type"`
 	MaxNumberOfPrefixes         types.Int64  `tfsdk:"max_number_of_prefixes"`
 	MaxNumberOfPrefixesVariable types.String `tfsdk:"max_number_of_prefixes_variable"`
@@ -216,7 +216,7 @@ type ServiceBGPRoutingIpv4NeighborsAddressFamilies struct {
 	OutRoutePolicyId            types.String `tfsdk:"out_route_policy_id"`
 }
 
-type ServiceBGPRoutingIpv6NeighborsAddressFamilies struct {
+type ServiceRoutingBGPIpv6NeighborsAddressFamilies struct {
 	FamilyType                  types.String `tfsdk:"family_type"`
 	MaxNumberOfPrefixes         types.Int64  `tfsdk:"max_number_of_prefixes"`
 	MaxNumberOfPrefixesVariable types.String `tfsdk:"max_number_of_prefixes_variable"`
@@ -232,21 +232,21 @@ type ServiceBGPRoutingIpv6NeighborsAddressFamilies struct {
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data ServiceBGPRouting) getModel() string {
-	return "service_bgp_routing"
+func (data ServiceRoutingBGP) getModel() string {
+	return "service_routing_bgp"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data ServiceBGPRouting) getPath() string {
+func (data ServiceRoutingBGP) getPath() string {
 	return fmt.Sprintf("/v1/feature-profile/sdwan/service/%v/routing/bgp", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data ServiceBGPRouting) toBody(ctx context.Context) string {
+func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -1067,7 +1067,7 @@ func (data ServiceBGPRouting) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -1216,9 +1216,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	if value := res.Get(path + "neighbor"); value.Exists() {
-		data.Ipv4Neighbors = make([]ServiceBGPRoutingIpv4Neighbors, 0)
+		data.Ipv4Neighbors = make([]ServiceRoutingBGPIpv4Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv4Neighbors{}
+			item := ServiceRoutingBGPIpv4Neighbors{}
 			item.Address = types.StringNull()
 			item.AddressVariable = types.StringNull()
 			if t := v.Get("address.optionType"); t.Exists() {
@@ -1370,9 +1370,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			if cValue := v.Get("addressFamily"); cValue.Exists() {
-				item.AddressFamilies = make([]ServiceBGPRoutingIpv4NeighborsAddressFamilies, 0)
+				item.AddressFamilies = make([]ServiceRoutingBGPIpv4NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ServiceBGPRoutingIpv4NeighborsAddressFamilies{}
+					cItem := ServiceRoutingBGPIpv4NeighborsAddressFamilies{}
 					cItem.FamilyType = types.StringNull()
 
 					if t := cv.Get("familyType.optionType"); t.Exists() {
@@ -1444,9 +1444,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		})
 	}
 	if value := res.Get(path + "ipv6Neighbor"); value.Exists() {
-		data.Ipv6Neighbors = make([]ServiceBGPRoutingIpv6Neighbors, 0)
+		data.Ipv6Neighbors = make([]ServiceRoutingBGPIpv6Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv6Neighbors{}
+			item := ServiceRoutingBGPIpv6Neighbors{}
 			item.Address = types.StringNull()
 			item.AddressVariable = types.StringNull()
 			if t := v.Get("address.optionType"); t.Exists() {
@@ -1588,9 +1588,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			if cValue := v.Get("addressFamily"); cValue.Exists() {
-				item.AddressFamilies = make([]ServiceBGPRoutingIpv6NeighborsAddressFamilies, 0)
+				item.AddressFamilies = make([]ServiceRoutingBGPIpv6NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ServiceBGPRoutingIpv6NeighborsAddressFamilies{}
+					cItem := ServiceRoutingBGPIpv6NeighborsAddressFamilies{}
 					cItem.FamilyType = types.StringNull()
 
 					if t := cv.Get("familyType.optionType"); t.Exists() {
@@ -1662,9 +1662,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		})
 	}
 	if value := res.Get(path + "addressFamily.aggregateAddress"); value.Exists() {
-		data.Ipv4AggregateAddresses = make([]ServiceBGPRoutingIpv4AggregateAddresses, 0)
+		data.Ipv4AggregateAddresses = make([]ServiceRoutingBGPIpv4AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv4AggregateAddresses{}
+			item := ServiceRoutingBGPIpv4AggregateAddresses{}
 			item.NetworkAddress = types.StringNull()
 			item.NetworkAddressVariable = types.StringNull()
 			if t := v.Get("prefix.address.optionType"); t.Exists() {
@@ -1710,9 +1710,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		})
 	}
 	if value := res.Get(path + "addressFamily.network"); value.Exists() {
-		data.Ipv4Networks = make([]ServiceBGPRoutingIpv4Networks, 0)
+		data.Ipv4Networks = make([]ServiceRoutingBGPIpv4Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv4Networks{}
+			item := ServiceRoutingBGPIpv4Networks{}
 			item.NetworkAddress = types.StringNull()
 			item.NetworkAddressVariable = types.StringNull()
 			if t := v.Get("prefix.address.optionType"); t.Exists() {
@@ -1776,9 +1776,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() {
-		data.Ipv4Redistributes = make([]ServiceBGPRoutingIpv4Redistributes, 0)
+		data.Ipv4Redistributes = make([]ServiceRoutingBGPIpv4Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv4Redistributes{}
+			item := ServiceRoutingBGPIpv4Redistributes{}
 			item.Protocol = types.StringNull()
 			item.ProtocolVariable = types.StringNull()
 			if t := v.Get("protocol.optionType"); t.Exists() {
@@ -1802,9 +1802,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		})
 	}
 	if value := res.Get(path + "ipv6AddressFamily.ipv6AggregateAddress"); value.Exists() {
-		data.Ipv6AggregateAddresses = make([]ServiceBGPRoutingIpv6AggregateAddresses, 0)
+		data.Ipv6AggregateAddresses = make([]ServiceRoutingBGPIpv6AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv6AggregateAddresses{}
+			item := ServiceRoutingBGPIpv6AggregateAddresses{}
 			item.AggregatePrefix = types.StringNull()
 			item.AggregatePrefixVariable = types.StringNull()
 			if t := v.Get("prefix.optionType"); t.Exists() {
@@ -1840,9 +1840,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		})
 	}
 	if value := res.Get(path + "ipv6AddressFamily.ipv6Network"); value.Exists() {
-		data.Ipv6Networks = make([]ServiceBGPRoutingIpv6Networks, 0)
+		data.Ipv6Networks = make([]ServiceRoutingBGPIpv6Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv6Networks{}
+			item := ServiceRoutingBGPIpv6Networks{}
 			item.NetworkPrefix = types.StringNull()
 			item.NetworkPrefixVariable = types.StringNull()
 			if t := v.Get("prefix.optionType"); t.Exists() {
@@ -1896,9 +1896,9 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	if value := res.Get(path + "ipv6AddressFamily.redistribute"); value.Exists() {
-		data.Ipv6Redistributes = make([]ServiceBGPRoutingIpv6Redistributes, 0)
+		data.Ipv6Redistributes = make([]ServiceRoutingBGPIpv6Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceBGPRoutingIpv6Redistributes{}
+			item := ServiceRoutingBGPIpv6Redistributes{}
 			item.Protocol = types.StringNull()
 			item.ProtocolVariable = types.StringNull()
 			if t := v.Get("protocol.optionType"); t.Exists() {
@@ -1926,7 +1926,7 @@ func (data *ServiceBGPRouting) fromBody(ctx context.Context, res gjson.Result) {
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *ServiceBGPRouting) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -2975,7 +2975,7 @@ func (data *ServiceBGPRouting) updateFromBody(ctx context.Context, res gjson.Res
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *ServiceBGPRouting) isNull(ctx context.Context, res gjson.Result) bool {
+func (data *ServiceRoutingBGP) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
