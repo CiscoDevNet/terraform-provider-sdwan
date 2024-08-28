@@ -35,8 +35,9 @@ func TestAccSdwanOtherUCSEProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "bay", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "slot", "0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "access_port_dedicated", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "access_port_dedicated", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "access_port_shared_type", "ge1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "access_port_shared_failover_type", "ge2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "ipv4_address", "2.2.2.2/24"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "default_gateway", "2.2.2.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "vlan_id", "3"))
@@ -82,6 +83,7 @@ func testAccSdwanOtherUCSEProfileParcelConfig_minimum() string {
 	config += `	access_port_shared_type = "ge1"` + "\n"
 	config += `	access_port_shared_failover_type = "ge2"` + "\n"
 	config += `	ipv4_address = "2.2.2.2/24"` + "\n"
+	config += `	default_gateway = "2.2.2.2"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -96,8 +98,9 @@ func testAccSdwanOtherUCSEProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
 	config += `	bay = 2` + "\n"
 	config += `	slot = 0` + "\n"
-	config += `	access_port_dedicated = true` + "\n"
+	config += `	access_port_dedicated = false` + "\n"
 	config += `	access_port_shared_type = "ge1"` + "\n"
+	config += `	access_port_shared_failover_type = "ge2"` + "\n"
 	config += `	ipv4_address = "2.2.2.2/24"` + "\n"
 	config += `	default_gateway = "2.2.2.2"` + "\n"
 	config += `	vlan_id = 3` + "\n"

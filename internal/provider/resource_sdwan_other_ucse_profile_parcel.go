@@ -128,7 +128,7 @@ func (r *OtherUCSEProfileParcelResource) Schema(ctx context.Context, req resourc
 			},
 			"default_gateway": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Assign default gateway").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"default_gateway_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -232,7 +232,7 @@ func (r *OtherUCSEProfileParcelResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	plan.Id = types.StringValue(res.Get("id").String())
+	plan.Id = types.StringValue(res.Get("parcelId").String())
 	plan.Version = types.Int64Value(0)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Create finished successfully", plan.Name.ValueString()))

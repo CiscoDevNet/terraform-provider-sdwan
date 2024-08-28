@@ -411,9 +411,9 @@ func (data *OtherUCSE) updateFromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	for i := range data.Interfaces {
-		keys := [...]string{}
-		keyValues := [...]string{}
-		keyValuesVariables := [...]string{}
+		keys := [...]string{"ifName"}
+		keyValues := [...]string{data.Interfaces[i].InterfaceName.ValueString()}
+		keyValuesVariables := [...]string{data.Interfaces[i].InterfaceNameVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "interface").ForEach(
