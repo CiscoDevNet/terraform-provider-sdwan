@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" && os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012 or POLICY_OBJECT_FEATURE_TEMPLATE_ID")
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_mirror_profile_parcel.test", "entries.0.remote_destination_ip", "10.0.0.1"))
@@ -60,7 +60,7 @@ func testAccSdwanPolicyObjectMirrorProfileParcelConfig_minimum() string {
 	config := `resource "sdwan_policy_object_mirror_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
+	config += `	feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
 	config += `	  source_ip = "10.0.0.2"` + "\n"
@@ -76,7 +76,7 @@ func testAccSdwanPolicyObjectMirrorProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_mirror_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = ` + "\"" + os.Getenv("POLICY_OBJECT_FEATURE_TEMPLATE_ID") + "\"" + `` + "\n"
+	config += `	feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
 	config += `	  source_ip = "10.0.0.2"` + "\n"
