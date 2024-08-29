@@ -75,69 +75,105 @@ func (data TransportGPS) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.GpsEnableVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"enable.optionType", "variable")
-		body, _ = sjson.Set(body, path+"enable.value", data.GpsEnableVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"enable.optionType", "variable")
+			body, _ = sjson.Set(body, path+"enable.value", data.GpsEnableVariable.ValueString())
+		}
 	} else if data.GpsEnable.IsNull() {
-		body, _ = sjson.Set(body, path+"enable.optionType", "default")
-		body, _ = sjson.Set(body, path+"enable.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"enable.optionType", "default")
+			body, _ = sjson.Set(body, path+"enable.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"enable.optionType", "global")
-		body, _ = sjson.Set(body, path+"enable.value", data.GpsEnable.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"enable.optionType", "global")
+			body, _ = sjson.Set(body, path+"enable.value", data.GpsEnable.ValueBool())
+		}
 	}
 
 	if !data.GpsModeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"mode.optionType", "variable")
-		body, _ = sjson.Set(body, path+"mode.value", data.GpsModeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"mode.optionType", "variable")
+			body, _ = sjson.Set(body, path+"mode.value", data.GpsModeVariable.ValueString())
+		}
 	} else if data.GpsMode.IsNull() {
-		body, _ = sjson.Set(body, path+"mode.optionType", "default")
-		body, _ = sjson.Set(body, path+"mode.value", "ms-based")
+		if true {
+			body, _ = sjson.Set(body, path+"mode.optionType", "default")
+			body, _ = sjson.Set(body, path+"mode.value", "ms-based")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"mode.optionType", "global")
-		body, _ = sjson.Set(body, path+"mode.value", data.GpsMode.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"mode.optionType", "global")
+			body, _ = sjson.Set(body, path+"mode.value", data.GpsMode.ValueString())
+		}
 	}
 
 	if !data.NmeaEnableVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"nmea.optionType", "variable")
-		body, _ = sjson.Set(body, path+"nmea.value", data.NmeaEnableVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"nmea.optionType", "variable")
+			body, _ = sjson.Set(body, path+"nmea.value", data.NmeaEnableVariable.ValueString())
+		}
 	} else if data.NmeaEnable.IsNull() {
-		body, _ = sjson.Set(body, path+"nmea.optionType", "default")
-		body, _ = sjson.Set(body, path+"nmea.value", false)
+		if true {
+			body, _ = sjson.Set(body, path+"nmea.optionType", "default")
+			body, _ = sjson.Set(body, path+"nmea.value", false)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"nmea.optionType", "global")
-		body, _ = sjson.Set(body, path+"nmea.value", data.NmeaEnable.ValueBool())
+		if true {
+			body, _ = sjson.Set(body, path+"nmea.optionType", "global")
+			body, _ = sjson.Set(body, path+"nmea.value", data.NmeaEnable.ValueBool())
+		}
 	}
 
 	if !data.NmeaSourceAddressVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"sourceAddress.optionType", "variable")
-		body, _ = sjson.Set(body, path+"sourceAddress.value", data.NmeaSourceAddressVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"sourceAddress.optionType", "variable")
+			body, _ = sjson.Set(body, path+"sourceAddress.value", data.NmeaSourceAddressVariable.ValueString())
+		}
 	} else if data.NmeaSourceAddress.IsNull() {
-		body, _ = sjson.Set(body, path+"sourceAddress.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"sourceAddress.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"sourceAddress.optionType", "global")
-		body, _ = sjson.Set(body, path+"sourceAddress.value", data.NmeaSourceAddress.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"sourceAddress.optionType", "global")
+			body, _ = sjson.Set(body, path+"sourceAddress.value", data.NmeaSourceAddress.ValueString())
+		}
 	}
 
 	if !data.NmeaDestinationAddressVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"destinationAddress.optionType", "variable")
-		body, _ = sjson.Set(body, path+"destinationAddress.value", data.NmeaDestinationAddressVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"destinationAddress.optionType", "variable")
+			body, _ = sjson.Set(body, path+"destinationAddress.value", data.NmeaDestinationAddressVariable.ValueString())
+		}
 	} else if data.NmeaDestinationAddress.IsNull() {
-		body, _ = sjson.Set(body, path+"destinationAddress.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"destinationAddress.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"destinationAddress.optionType", "global")
-		body, _ = sjson.Set(body, path+"destinationAddress.value", data.NmeaDestinationAddress.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"destinationAddress.optionType", "global")
+			body, _ = sjson.Set(body, path+"destinationAddress.value", data.NmeaDestinationAddress.ValueString())
+		}
 	}
 
 	if !data.NmeaDestinationPortVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"destinationPort.optionType", "variable")
-		body, _ = sjson.Set(body, path+"destinationPort.value", data.NmeaDestinationPortVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"destinationPort.optionType", "variable")
+			body, _ = sjson.Set(body, path+"destinationPort.value", data.NmeaDestinationPortVariable.ValueString())
+		}
 	} else if data.NmeaDestinationPort.IsNull() {
-		body, _ = sjson.Set(body, path+"destinationPort.optionType", "default")
+		if true {
+			body, _ = sjson.Set(body, path+"destinationPort.optionType", "default")
 
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"destinationPort.optionType", "global")
-		body, _ = sjson.Set(body, path+"destinationPort.value", data.NmeaDestinationPort.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"destinationPort.optionType", "global")
+			body, _ = sjson.Set(body, path+"destinationPort.value", data.NmeaDestinationPort.ValueInt64())
+		}
 	}
 	return body
 }
