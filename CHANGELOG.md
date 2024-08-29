@@ -40,6 +40,7 @@
 - Add `sdwan_policy_object_security_data_ip_prefix_profile_parcel` resource and data source
 - Add `sdwan_policy_object_security_fqdn_profile_parcel` resource and data source
 - Add `sdwan_policy_object_security_geolocation_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_ips_signature_profile_parcel` resource and data source
 
 ## 0.3.13
 
