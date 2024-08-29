@@ -37,6 +37,12 @@ description: |-
 - Add `sdwan_other_ucse_profile_parcel` resource and data source
 - Add `sdwan_other_thousandeyes_profile_parcel` resource and data source
 - Add `sdwan_transport_gps_profile_parcel` resource and data source
+- Add `sdwan_transport_routing_ospf_profile_parcel` resource and data source
+- Add `sdwan_transport_routing_ospfv3_ipv4_profile_parcel` resource and data source
+- Add `sdwan_transport_routing_ospfv3_ipv6_profile_parcel` resource and data source
+- Add `sdwan_service_routing_ospf_profile_parcel` resource and data source
+- Add `sdwan_service_routing_ospfv3_ipv4_profile_parcel` resource and data source
+- Add `sdwan_service_routing_ospfv3_ipv6_profile_parcel` resource and data source
 
 ## 0.3.13
 

@@ -1,0 +1,143 @@
+---
+name: Service Routing OSPF
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/routing/ospf
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: routerId
+    example: 1.2.3.4
+  - model_name: referenceBandwidth
+    example: 101
+  - model_name: rfc1583
+    tf_name: rfc_1583_compatible
+    example: true
+  - model_name: originate
+    tf_name: default_information_originate
+    example: false
+  - model_name: always
+    tf_name: default_information_originate_always
+    example: false
+  - model_name: metric
+    tf_name: default_information_originate_metric
+    example: 1
+  - model_name: metricType
+    tf_name: default_information_originate_metric_type
+    example: type1
+  - model_name: external
+    tf_name: distance_external
+    example: 110
+  - model_name: interArea
+    tf_name: distance_inter_area
+    example: 110
+  - model_name: intraArea
+    tf_name: distance_intra_area
+    example: 110
+  - model_name: delay
+    tf_name: spf_calculation_delay
+    example: 200
+  - model_name: initialHold
+    tf_name: spf_initial_hold_time
+    example: 1000
+  - model_name: maxHold
+    tf_name: spf_maximum_hold_time
+    example: 10000
+  - model_name: redistribute
+    tf_name: redistributes
+    attributes: 
+    - model_name: protocol
+      id: true
+      example: static
+    - model_name: dia
+      tf_name: nat_dia
+      example: true
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      exclude_test: true
+      example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+  - model_name: routerLsa
+    tf_name: router_lsas
+    attributes: 
+    - model_name: adType
+      tf_name: type
+      id: true
+      example: on-startup
+    - model_name: time
+      example: 5
+  - model_name: refId
+    tf_name: route_policy_id
+    data_path: [routePolicy]
+    exclude_test: true
+    example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+  - model_name: area
+    tf_name: areas
+    attributes: 
+    - model_name: aNum
+      tf_name: area_number
+      id: true
+      example: 1
+    - model_name: aType
+      tf_name: area_type
+      example: stub
+    - model_name: noSummary
+      example: false
+    - model_name: interface
+      tf_name: interfaces
+      attributes:
+      - model_name: name
+        id: true
+        example: GigabitEthernet2
+      - model_name: helloInterval
+        example: 10
+      - model_name: deadInterval
+        example: 40
+      - model_name: retransmitInterval  
+        tf_name: lsa_retransmit_interval
+        example: 5
+      - model_name: cost
+        example: 10
+      - model_name: priority
+        tf_name: designated_router_priority
+        example: 1
+      - model_name: network
+        tf_name: network_type
+        example: broadcast
+      - model_name: passiveInterface
+        example: false
+      - model_name: type
+        tf_name: authentication_type
+        example: message-digest
+      - model_name: messageDigestKey
+        tf_name: message_digest_key_id
+        example: 7
+      - model_name: md5
+        tf_name: message_digest_key
+        write_only: true
+        example: sdjfhsghbjdjr
+    - model_name: range
+      tf_name: ranges
+      attributes: 
+      - model_name: ipAddress
+        data_path: [address]
+        id: true
+        example: 10.1.1.0
+      - model_name: subnetMask
+        data_path: [address]
+        example: 255.255.255.0
+      - model_name: cost
+        example: 1
+      - model_name: noAdvertise
+        example: false
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

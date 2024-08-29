@@ -1,0 +1,164 @@
+---
+name: Transport Routing OSPFv3 IPv6
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/routing/ospfv3/ipv6
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+skip_minimum_test: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: routerId
+    data_path: [basic]
+    example: 1.2.3.4
+  - model_name: distance
+    data_path: [basic]
+    example: 110
+  - model_name: externalDistance
+    tf_name: distance_external
+    data_path: [basic]
+    example: 110
+  - model_name: interAreaDistance
+    tf_name: distance_inter_area
+    data_path: [basic]
+    example: 110
+  - model_name: intraAreaDistance
+    tf_name: distance_intra_area
+    data_path: [basic]
+    example: 110
+  - model_name: referenceBandwidth
+    data_path: [advanced]
+    example: 101
+  - model_name: compatibleRfc1583
+    tf_name: rfc_1583_compatible
+    data_path: [advanced]
+    example: true
+  - model_name: originate
+    tf_name: default_information_originate
+    data_path: [advanced, defaultOriginate]
+    example: false
+  - model_name: always
+    tf_name: default_information_originate_always
+    data_path: [advanced, defaultOriginate]
+    example: false
+  - model_name: metric
+    tf_name: default_information_originate_metric
+    data_path: [advanced, defaultOriginate]
+    example: 1
+  - model_name: metricType
+    tf_name: default_information_originate_metric_type
+    data_path: [advanced, defaultOriginate]
+    example: type1
+  - model_name: delay
+    tf_name: spf_calculation_delay
+    data_path: [advanced, spfTimers]
+    example: 200
+  - model_name: initialHold
+    tf_name: spf_initial_hold_time
+    data_path: [advanced, spfTimers]
+    example: 1000
+  - model_name: maxHold
+    tf_name: spf_maximum_hold_time
+    data_path: [advanced, spfTimers]
+    example: 10000
+  - model_name: refId
+    tf_name: route_policy_id
+    data_path: [advanced, policyName]
+    exclude_test: true
+    example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+  - model_name: filter
+    data_path: [advanced]
+    example: false
+  - model_name: redistribute
+    tf_name: redistributes
+    attributes: 
+    - model_name: protocol
+      id: true
+      example: static
+    - model_name: refId
+      tf_name: route_policy_id
+      data_path: [routePolicy]
+      exclude_test: true
+      example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
+  - model_name: action
+    tf_name: router_lsa_action
+    data_path: [maxMetricRouterLsa]
+    example: on-startup
+  - model_name: onStartUpTime
+    tf_name: router_lsa_on_startup_time
+    data_path: [maxMetricRouterLsa]
+    example: 30
+  - model_name: area
+    tf_name: areas
+    attributes: 
+    - model_name: areaNum
+      tf_name: area_number
+      id: true
+      mandatory: true
+      example: 1
+    - model_name: areaType
+      tf_name: area_type
+      data_path: [areaTypeConfig]
+      example: stub
+    - model_name: noSummary
+      data_path: [areaTypeConfig]
+      exclude_test: true
+      example: false
+    - model_name: alwaysTranslate
+      data_path: [areaTypeConfig]
+      exclude_test: true
+      example: false
+    - model_name: interfaces
+      attributes:
+      - model_name: ifName
+        tf_name: name
+        id: true
+        example: GigabitEthernet2
+      - model_name: helloInterval
+        example: 10
+      - model_name: deadInterval
+        example: 40
+      - model_name: retransmitInterval  
+        tf_name: lsa_retransmit_interval
+        example: 5
+      - model_name: cost
+        example: 10
+      - model_name: networkType
+        tf_name: network_type
+        example: broadcast
+      - model_name: passiveInterface
+        example: false
+      - model_name: authType
+        tf_name: authentication_type
+        data_path: [authenticationConfig]
+        example: no-auth
+      - model_name: spi
+        tf_name: authentication_spi
+        data_path: [authenticationConfig]
+        exclude_test: true
+        example: 12345
+      - model_name: authKey
+        tf_name: authentication_key
+        data_path: [authenticationConfig]
+        exclude_test: true
+        example: 0123456789012345678901234567890123456789
+    - model_name: ranges
+      attributes: 
+      - model_name: network
+        tf_name: prefix
+        id: true
+        example: 3002::/96
+      - model_name: cost
+        example: 1
+      - model_name: noAdvertise
+        example: false
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
