@@ -119,271 +119,413 @@ func (data ServiceSwitchport) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
-	body, _ = sjson.Set(body, path+"interface", []interface{}{})
-	for _, item := range data.Interfaces {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"interface", []interface{}{})
+		for _, item := range data.Interfaces {
+			itemBody := ""
 
-		if !item.InterfaceNameVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceNameVariable.ValueString())
-		} else if !item.InterfaceName.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceName.ValueString())
+			if !item.InterfaceNameVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceNameVariable.ValueString())
+				}
+			} else if !item.InterfaceName.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceName.ValueString())
+				}
+			}
+			if !item.Mode.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "mode.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "mode.value", item.Mode.ValueString())
+				}
+			}
+
+			if !item.ShutdownVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "shutdown.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "shutdown.value", item.ShutdownVariable.ValueString())
+				}
+			} else if item.Shutdown.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "shutdown.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "shutdown.value", true)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "shutdown.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "shutdown.value", item.Shutdown.ValueBool())
+				}
+			}
+
+			if !item.SpeedVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "speed.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "speed.value", item.SpeedVariable.ValueString())
+				}
+			} else if item.Speed.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "speed.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "speed.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "speed.value", item.Speed.ValueString())
+				}
+			}
+
+			if !item.DuplexVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "duplex.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "duplex.value", item.DuplexVariable.ValueString())
+				}
+			} else if item.Duplex.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "duplex.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "duplex.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "duplex.value", item.Duplex.ValueString())
+				}
+			}
+
+			if !item.SwitchportAccessVlanVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.value", item.SwitchportAccessVlanVariable.ValueString())
+				}
+			} else if item.SwitchportAccessVlan.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.value", item.SwitchportAccessVlan.ValueInt64())
+				}
+			}
+
+			if !item.SwitchportTrunkAllowedVlansVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.value", item.SwitchportTrunkAllowedVlansVariable.ValueString())
+				}
+			} else if item.SwitchportTrunkAllowedVlans.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.value", item.SwitchportTrunkAllowedVlans.ValueString())
+				}
+			}
+
+			if !item.SwitchportTrunkNativeVlanVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.value", item.SwitchportTrunkNativeVlanVariable.ValueString())
+				}
+			} else if item.SwitchportTrunkNativeVlan.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.value", item.SwitchportTrunkNativeVlan.ValueInt64())
+				}
+			}
+
+			if !item.PortControlVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "portControl.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "portControl.value", item.PortControlVariable.ValueString())
+				}
+			} else if item.PortControl.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "portControl.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "portControl.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "portControl.value", item.PortControl.ValueString())
+				}
+			}
+
+			if !item.VoiceVlanVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "voiceVlan.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "voiceVlan.value", item.VoiceVlanVariable.ValueString())
+				}
+			} else if item.VoiceVlan.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "voiceVlan.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "voiceVlan.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "voiceVlan.value", item.VoiceVlan.ValueInt64())
+				}
+			}
+
+			if !item.PaeEnableVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "paeEnable.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "paeEnable.value", item.PaeEnableVariable.ValueString())
+				}
+			} else if item.PaeEnable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "paeEnable.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "paeEnable.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "paeEnable.value", item.PaeEnable.ValueBool())
+				}
+			}
+
+			if !item.MacAuthenticationBypassVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.value", item.MacAuthenticationBypassVariable.ValueString())
+				}
+			} else if item.MacAuthenticationBypass.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.value", item.MacAuthenticationBypass.ValueBool())
+				}
+			}
+
+			if !item.HostModeVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "hostMode.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "hostMode.value", item.HostModeVariable.ValueString())
+				}
+			} else if item.HostMode.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "hostMode.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "hostMode.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "hostMode.value", item.HostMode.ValueString())
+				}
+			}
+
+			if !item.EnablePeriodicReauthVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.value", item.EnablePeriodicReauthVariable.ValueString())
+				}
+			} else if item.EnablePeriodicReauth.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.value", item.EnablePeriodicReauth.ValueBool())
+				}
+			}
+
+			if !item.InactivityVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "inactivity.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "inactivity.value", item.InactivityVariable.ValueString())
+				}
+			} else if item.Inactivity.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "inactivity.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "inactivity.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "inactivity.value", item.Inactivity.ValueInt64())
+				}
+			}
+
+			if !item.ReauthenticationVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "reauthentication.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "reauthentication.value", item.ReauthenticationVariable.ValueString())
+				}
+			} else if item.Reauthentication.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "reauthentication.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "reauthentication.value", 3600)
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "reauthentication.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "reauthentication.value", item.Reauthentication.ValueInt64())
+				}
+			}
+
+			if !item.ControlDirectionVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "controlDirection.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "controlDirection.value", item.ControlDirectionVariable.ValueString())
+				}
+			} else if item.ControlDirection.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "controlDirection.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "controlDirection.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "controlDirection.value", item.ControlDirection.ValueString())
+				}
+			}
+
+			if !item.RestrictedVlanVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "restrictedVlan.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "restrictedVlan.value", item.RestrictedVlanVariable.ValueString())
+				}
+			} else if item.RestrictedVlan.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "restrictedVlan.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "restrictedVlan.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "restrictedVlan.value", item.RestrictedVlan.ValueInt64())
+				}
+			}
+
+			if !item.GuestVlanVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "guestVlan.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "guestVlan.value", item.GuestVlanVariable.ValueString())
+				}
+			} else if item.GuestVlan.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "guestVlan.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "guestVlan.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "guestVlan.value", item.GuestVlan.ValueInt64())
+				}
+			}
+
+			if !item.CriticalVlanVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "criticalVlan.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "criticalVlan.value", item.CriticalVlanVariable.ValueString())
+				}
+			} else if item.CriticalVlan.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "criticalVlan.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "criticalVlan.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "criticalVlan.value", item.CriticalVlan.ValueInt64())
+				}
+			}
+
+			if !item.EnableVoiceVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enableVoice.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "enableVoice.value", item.EnableVoiceVariable.ValueString())
+				}
+			} else if item.EnableVoice.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enableVoice.optionType", "default")
+
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "enableVoice.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "enableVoice.value", item.EnableVoice.ValueBool())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"interface.-1", itemBody)
 		}
-		if !item.Mode.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "mode.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "mode.value", item.Mode.ValueString())
-		}
-
-		if !item.ShutdownVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "shutdown.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "shutdown.value", item.ShutdownVariable.ValueString())
-		} else if item.Shutdown.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "shutdown.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "shutdown.value", true)
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "shutdown.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "shutdown.value", item.Shutdown.ValueBool())
-		}
-
-		if !item.SpeedVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "speed.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "speed.value", item.SpeedVariable.ValueString())
-		} else if item.Speed.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "speed.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "speed.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "speed.value", item.Speed.ValueString())
-		}
-
-		if !item.DuplexVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "duplex.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "duplex.value", item.DuplexVariable.ValueString())
-		} else if item.Duplex.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "duplex.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "duplex.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "duplex.value", item.Duplex.ValueString())
-		}
-
-		if !item.SwitchportAccessVlanVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.value", item.SwitchportAccessVlanVariable.ValueString())
-		} else if item.SwitchportAccessVlan.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "switchportAccessVlan.value", item.SwitchportAccessVlan.ValueInt64())
-		}
-
-		if !item.SwitchportTrunkAllowedVlansVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.value", item.SwitchportTrunkAllowedVlansVariable.ValueString())
-		} else if item.SwitchportTrunkAllowedVlans.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkAllowedVlans.value", item.SwitchportTrunkAllowedVlans.ValueString())
-		}
-
-		if !item.SwitchportTrunkNativeVlanVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.value", item.SwitchportTrunkNativeVlanVariable.ValueString())
-		} else if item.SwitchportTrunkNativeVlan.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "switchportTrunkNativeVlan.value", item.SwitchportTrunkNativeVlan.ValueInt64())
-		}
-
-		if !item.PortControlVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "portControl.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "portControl.value", item.PortControlVariable.ValueString())
-		} else if item.PortControl.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "portControl.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "portControl.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "portControl.value", item.PortControl.ValueString())
-		}
-
-		if !item.VoiceVlanVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "voiceVlan.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "voiceVlan.value", item.VoiceVlanVariable.ValueString())
-		} else if item.VoiceVlan.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "voiceVlan.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "voiceVlan.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "voiceVlan.value", item.VoiceVlan.ValueInt64())
-		}
-
-		if !item.PaeEnableVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "paeEnable.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "paeEnable.value", item.PaeEnableVariable.ValueString())
-		} else if item.PaeEnable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "paeEnable.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "paeEnable.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "paeEnable.value", item.PaeEnable.ValueBool())
-		}
-
-		if !item.MacAuthenticationBypassVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.value", item.MacAuthenticationBypassVariable.ValueString())
-		} else if item.MacAuthenticationBypass.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "macAuthenticationBypass.value", item.MacAuthenticationBypass.ValueBool())
-		}
-
-		if !item.HostModeVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "hostMode.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "hostMode.value", item.HostModeVariable.ValueString())
-		} else if item.HostMode.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "hostMode.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "hostMode.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "hostMode.value", item.HostMode.ValueString())
-		}
-
-		if !item.EnablePeriodicReauthVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.value", item.EnablePeriodicReauthVariable.ValueString())
-		} else if item.EnablePeriodicReauth.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "enablePeriodicReauth.value", item.EnablePeriodicReauth.ValueBool())
-		}
-
-		if !item.InactivityVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "inactivity.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "inactivity.value", item.InactivityVariable.ValueString())
-		} else if item.Inactivity.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "inactivity.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "inactivity.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "inactivity.value", item.Inactivity.ValueInt64())
-		}
-
-		if !item.ReauthenticationVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "reauthentication.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "reauthentication.value", item.ReauthenticationVariable.ValueString())
-		} else if item.Reauthentication.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "reauthentication.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "reauthentication.value", 3600)
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "reauthentication.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "reauthentication.value", item.Reauthentication.ValueInt64())
-		}
-
-		if !item.ControlDirectionVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "controlDirection.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "controlDirection.value", item.ControlDirectionVariable.ValueString())
-		} else if item.ControlDirection.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "controlDirection.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "controlDirection.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "controlDirection.value", item.ControlDirection.ValueString())
-		}
-
-		if !item.RestrictedVlanVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "restrictedVlan.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "restrictedVlan.value", item.RestrictedVlanVariable.ValueString())
-		} else if item.RestrictedVlan.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "restrictedVlan.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "restrictedVlan.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "restrictedVlan.value", item.RestrictedVlan.ValueInt64())
-		}
-
-		if !item.GuestVlanVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "guestVlan.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "guestVlan.value", item.GuestVlanVariable.ValueString())
-		} else if item.GuestVlan.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "guestVlan.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "guestVlan.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "guestVlan.value", item.GuestVlan.ValueInt64())
-		}
-
-		if !item.CriticalVlanVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "criticalVlan.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "criticalVlan.value", item.CriticalVlanVariable.ValueString())
-		} else if item.CriticalVlan.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "criticalVlan.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "criticalVlan.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "criticalVlan.value", item.CriticalVlan.ValueInt64())
-		}
-
-		if !item.EnableVoiceVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "enableVoice.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "enableVoice.value", item.EnableVoiceVariable.ValueString())
-		} else if item.EnableVoice.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "enableVoice.optionType", "default")
-
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "enableVoice.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "enableVoice.value", item.EnableVoice.ValueBool())
-		}
-		body, _ = sjson.SetRaw(body, path+"interface.-1", itemBody)
 	}
 
 	if !data.AgeOutTimeVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"ageTime.optionType", "variable")
-		body, _ = sjson.Set(body, path+"ageTime.value", data.AgeOutTimeVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"ageTime.optionType", "variable")
+			body, _ = sjson.Set(body, path+"ageTime.value", data.AgeOutTimeVariable.ValueString())
+		}
 	} else if data.AgeOutTime.IsNull() {
-		body, _ = sjson.Set(body, path+"ageTime.optionType", "default")
-		body, _ = sjson.Set(body, path+"ageTime.value", 300)
+		if true {
+			body, _ = sjson.Set(body, path+"ageTime.optionType", "default")
+			body, _ = sjson.Set(body, path+"ageTime.value", 300)
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"ageTime.optionType", "global")
-		body, _ = sjson.Set(body, path+"ageTime.value", data.AgeOutTime.ValueInt64())
+		if true {
+			body, _ = sjson.Set(body, path+"ageTime.optionType", "global")
+			body, _ = sjson.Set(body, path+"ageTime.value", data.AgeOutTime.ValueInt64())
+		}
 	}
-	body, _ = sjson.Set(body, path+"staticMacAddress", []interface{}{})
-	for _, item := range data.StaticMacAddresses {
-		itemBody := ""
+	if true {
+		body, _ = sjson.Set(body, path+"staticMacAddress", []interface{}{})
+		for _, item := range data.StaticMacAddresses {
+			itemBody := ""
 
-		if !item.MacAddressVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "macaddr.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "macaddr.value", item.MacAddressVariable.ValueString())
-		} else if !item.MacAddress.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "macaddr.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "macaddr.value", item.MacAddress.ValueString())
-		}
+			if !item.MacAddressVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "macaddr.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "macaddr.value", item.MacAddressVariable.ValueString())
+				}
+			} else if !item.MacAddress.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "macaddr.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "macaddr.value", item.MacAddress.ValueString())
+				}
+			}
 
-		if !item.VlanIdVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vlan.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "vlan.value", item.VlanIdVariable.ValueString())
-		} else if !item.VlanId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "vlan.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "vlan.value", item.VlanId.ValueInt64())
-		}
+			if !item.VlanIdVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vlan.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "vlan.value", item.VlanIdVariable.ValueString())
+				}
+			} else if !item.VlanId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "vlan.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "vlan.value", item.VlanId.ValueInt64())
+				}
+			}
 
-		if !item.InterfaceNameVariable.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
-			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceNameVariable.ValueString())
-		} else if !item.InterfaceName.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceName.ValueString())
+			if !item.InterfaceNameVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceNameVariable.ValueString())
+				}
+			} else if !item.InterfaceName.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceName.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"staticMacAddress.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"staticMacAddress.-1", itemBody)
 	}
 	return body
 }

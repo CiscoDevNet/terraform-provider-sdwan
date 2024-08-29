@@ -72,31 +72,45 @@ func (data ServiceObjectTrackerGroup) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.ObjectTrackerIdVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"objectId.optionType", "variable")
-		body, _ = sjson.Set(body, path+"objectId.value", data.ObjectTrackerIdVariable.ValueString())
-	} else if !data.ObjectTrackerId.IsNull() {
-		body, _ = sjson.Set(body, path+"objectId.optionType", "global")
-		body, _ = sjson.Set(body, path+"objectId.value", data.ObjectTrackerId.ValueInt64())
-	}
-
-	for _, item := range data.TrackerElements {
-		itemBody := ""
-		if !item.ObjectTrackerId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.value", item.ObjectTrackerId.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"objectId.optionType", "variable")
+			body, _ = sjson.Set(body, path+"objectId.value", data.ObjectTrackerIdVariable.ValueString())
 		}
-		body, _ = sjson.SetRaw(body, path+"trackerRefs.-1", itemBody)
+	} else if !data.ObjectTrackerId.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"objectId.optionType", "global")
+			body, _ = sjson.Set(body, path+"objectId.value", data.ObjectTrackerId.ValueInt64())
+		}
+	}
+	if true {
+
+		for _, item := range data.TrackerElements {
+			itemBody := ""
+			if !item.ObjectTrackerId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.value", item.ObjectTrackerId.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"trackerRefs.-1", itemBody)
+		}
 	}
 
 	if !data.ReachableVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"criteria.optionType", "variable")
-		body, _ = sjson.Set(body, path+"criteria.value", data.ReachableVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"criteria.optionType", "variable")
+			body, _ = sjson.Set(body, path+"criteria.value", data.ReachableVariable.ValueString())
+		}
 	} else if data.Reachable.IsNull() {
-		body, _ = sjson.Set(body, path+"criteria.optionType", "default")
-		body, _ = sjson.Set(body, path+"criteria.value", "or")
+		if true {
+			body, _ = sjson.Set(body, path+"criteria.optionType", "default")
+			body, _ = sjson.Set(body, path+"criteria.value", "or")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"criteria.optionType", "global")
-		body, _ = sjson.Set(body, path+"criteria.value", data.Reachable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"criteria.optionType", "global")
+			body, _ = sjson.Set(body, path+"criteria.value", data.Reachable.ValueString())
+		}
 	}
 	return body
 }

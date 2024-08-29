@@ -72,31 +72,45 @@ func (data TransportIPv6TrackerGroup) toBody(ctx context.Context) string {
 	path := "data."
 
 	if !data.TrackerNameVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"trackerGroupName.optionType", "variable")
-		body, _ = sjson.Set(body, path+"trackerGroupName.value", data.TrackerNameVariable.ValueString())
-	} else if !data.TrackerName.IsNull() {
-		body, _ = sjson.Set(body, path+"trackerGroupName.optionType", "global")
-		body, _ = sjson.Set(body, path+"trackerGroupName.value", data.TrackerName.ValueString())
-	}
-
-	for _, item := range data.TrackerElements {
-		itemBody := ""
-		if !item.TrackerId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.value", item.TrackerId.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"trackerGroupName.optionType", "variable")
+			body, _ = sjson.Set(body, path+"trackerGroupName.value", data.TrackerNameVariable.ValueString())
 		}
-		body, _ = sjson.SetRaw(body, path+"trackerRefs.-1", itemBody)
+	} else if !data.TrackerName.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"trackerGroupName.optionType", "global")
+			body, _ = sjson.Set(body, path+"trackerGroupName.value", data.TrackerName.ValueString())
+		}
+	}
+	if true {
+
+		for _, item := range data.TrackerElements {
+			itemBody := ""
+			if !item.TrackerId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.value", item.TrackerId.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"trackerRefs.-1", itemBody)
+		}
 	}
 
 	if !data.TrackerBooleanVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"combineBoolean.optionType", "variable")
-		body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBooleanVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"combineBoolean.optionType", "variable")
+			body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBooleanVariable.ValueString())
+		}
 	} else if data.TrackerBoolean.IsNull() {
-		body, _ = sjson.Set(body, path+"combineBoolean.optionType", "default")
-		body, _ = sjson.Set(body, path+"combineBoolean.value", "or")
+		if true {
+			body, _ = sjson.Set(body, path+"combineBoolean.optionType", "default")
+			body, _ = sjson.Set(body, path+"combineBoolean.value", "or")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"combineBoolean.optionType", "global")
-		body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBoolean.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"combineBoolean.optionType", "global")
+			body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBoolean.ValueString())
+		}
 	}
 	return body
 }
