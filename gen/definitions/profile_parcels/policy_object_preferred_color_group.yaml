@@ -1,0 +1,47 @@
+---
+name: Policy Object Preferred Color Group
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/preferred-color-group
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+skip_minimum_test: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: var.policy_object_feature_template_id
+  - model_name: entries
+    mandatory: true
+    attributes:
+    - model_name: colorPreference
+      tf_name: primary_color_preference
+      data_path: [primaryPreference]
+      id: true
+      mandatory: true
+      example: default
+    - model_name: pathPreference
+      tf_name: primary_path_preference
+      data_path: [primaryPreference]
+      mandatory: true
+      example: direct-path
+    - model_name: colorPreference
+      tf_name: secondary_color_preference
+      data_path: [secondaryPreference]
+      example: bronze
+    - model_name: pathPreference
+      tf_name: secondary_path_preference
+      data_path: [secondaryPreference]
+      example: all-paths
+    - model_name: colorPreference
+      tf_name: tertiary_color_preference
+      data_path: [tertiaryPreference]
+      example: blue
+    - model_name: pathPreference
+      tf_name: tertiary_path_preference
+      data_path: [tertiaryPreference]
+      example: all-paths
+
+test_prerequisites: |
+  variable "policy_object_feature_template_id" {} 

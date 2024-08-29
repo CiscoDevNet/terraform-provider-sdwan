@@ -54,6 +54,7 @@ description: |-
 - Add `sdwan_policy_object_security_port_profile_parcel` resource and data source
 - Add `sdwan_policy_object_security_scalable_group_tag_profile_parcel` resource and data source
 - Add `sdwan_policy_object_security_urllist_profile_parcel` resource and data source
+- Add `sdwan_policy_object_preferred_color_group_profile_parcel` resource and data source
 
 ## 0.3.13
 
