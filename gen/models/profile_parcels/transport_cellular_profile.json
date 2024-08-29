@@ -1,0 +1,561 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/transport/cellular-profile/post/request_schema.json",
+      "title": "WAN VPN Schema",
+      "description": "CellularProfile profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "description": "Set the parcel name",
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 128
+          },
+          "description": {
+              "description": "Set the parcel description",
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "oneOf": [
+                  {
+                      "type": "object",
+                      "description": "Regular Cellular profile (non-eSim) config",
+                      "properties": {
+                          "configType": {
+                              "type": "object",
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "enum": [
+                                          "non-eSim"
+                                      ]
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          "profileConfig": {
+                              "type": "object",
+                              "properties": {
+                                  "id": {
+                                      "description": "Set Profile ID",
+                                      "type": "object",
+                                      "oneOf": [
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "global"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "minimum": 1,
+                                                      "maximum": 16,
+                                                      "type": "integer"
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "variable"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "string",
+                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                      "minLength": 1,
+                                                      "maxLength": 64
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          }
+                                      ]
+                                  },
+                                  "profileInfo": {
+                                      "type": "object",
+                                      "properties": {
+                                          "apn": {
+                                              "description": "Set access point name",
+                                              "type": "object",
+                                              "oneOf": [
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "global"
+                                                              ]
+                                                          },
+                                                          "value": {
+                                                              "type": "string"
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType",
+                                                          "value"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  },
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "variable"
+                                                              ]
+                                                          },
+                                                          "value": {
+                                                              "type": "string",
+                                                              "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                              "minLength": 1,
+                                                              "maxLength": 64
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType",
+                                                          "value"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  }
+                                              ]
+                                          },
+                                          "authentication": {
+                                              "oneOf": [
+                                                  {
+                                                      "type": "object",
+                                                      "properties": {
+                                                          "noAuthentication": {
+                                                              "type": "object",
+                                                              "description": "No Authentication",
+                                                              "properties": {
+                                                                  "optionType": {
+                                                                      "type": "string",
+                                                                      "enum": [
+                                                                          "default"
+                                                                      ]
+                                                                  },
+                                                                  "value": {
+                                                                      "type": "string",
+                                                                      "enum": [
+                                                                          "none"
+                                                                      ]
+                                                                  }
+                                                              },
+                                                              "required": [
+                                                                  "optionType",
+                                                                  "value"
+                                                              ],
+                                                              "additionalProperties": false
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "noAuthentication"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  },
+                                                  {
+                                                      "type": "object",
+                                                      "properties": {
+                                                          "needAuthentication": {
+                                                              "type": "object",
+                                                              "properties": {
+                                                                  "type": {
+                                                                      "description": "Set authentication type",
+                                                                      "type": "object",
+                                                                      "oneOf": [
+                                                                          {
+                                                                              "properties": {
+                                                                                  "optionType": {
+                                                                                      "type": "string",
+                                                                                      "enum": [
+                                                                                          "global"
+                                                                                      ]
+                                                                                  },
+                                                                                  "value": {
+                                                                                      "enum": [
+                                                                                          "pap",
+                                                                                          "chap",
+                                                                                          "pap_chap"
+                                                                                      ],
+                                                                                      "type": "string"
+                                                                                  }
+                                                                              },
+                                                                              "required": [
+                                                                                  "optionType",
+                                                                                  "value"
+                                                                              ],
+                                                                              "additionalProperties": false
+                                                                          },
+                                                                          {
+                                                                              "properties": {
+                                                                                  "optionType": {
+                                                                                      "type": "string",
+                                                                                      "enum": [
+                                                                                          "variable"
+                                                                                      ]
+                                                                                  },
+                                                                                  "value": {
+                                                                                      "type": "string",
+                                                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                      "minLength": 1,
+                                                                                      "maxLength": 64
+                                                                                  }
+                                                                              },
+                                                                              "required": [
+                                                                                  "optionType",
+                                                                                  "value"
+                                                                              ],
+                                                                              "additionalProperties": false
+                                                                          }
+                                                                      ]
+                                                                  },
+                                                                  "username": {
+                                                                      "description": "Set the profile username",
+                                                                      "type": "object",
+                                                                      "oneOf": [
+                                                                          {
+                                                                              "properties": {
+                                                                                  "optionType": {
+                                                                                      "type": "string",
+                                                                                      "enum": [
+                                                                                          "global"
+                                                                                      ]
+                                                                                  },
+                                                                                  "value": {
+                                                                                      "type": "string"
+                                                                                  }
+                                                                              },
+                                                                              "required": [
+                                                                                  "optionType",
+                                                                                  "value"
+                                                                              ],
+                                                                              "additionalProperties": false
+                                                                          },
+                                                                          {
+                                                                              "properties": {
+                                                                                  "optionType": {
+                                                                                      "type": "string",
+                                                                                      "enum": [
+                                                                                          "variable"
+                                                                                      ]
+                                                                                  },
+                                                                                  "value": {
+                                                                                      "type": "string",
+                                                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                      "minLength": 1,
+                                                                                      "maxLength": 64
+                                                                                  }
+                                                                              },
+                                                                              "required": [
+                                                                                  "optionType",
+                                                                                  "value"
+                                                                              ],
+                                                                              "additionalProperties": false
+                                                                          }
+                                                                      ]
+                                                                  },
+                                                                  "password": {
+                                                                      "description": "Set the profile password",
+                                                                      "type": "object",
+                                                                      "oneOf": [
+                                                                          {
+                                                                              "properties": {
+                                                                                  "optionType": {
+                                                                                      "type": "string",
+                                                                                      "enum": [
+                                                                                          "global"
+                                                                                      ]
+                                                                                  },
+                                                                                  "value": {
+                                                                                      "type": "string"
+                                                                                  }
+                                                                              },
+                                                                              "required": [
+                                                                                  "optionType",
+                                                                                  "value"
+                                                                              ],
+                                                                              "additionalProperties": false
+                                                                          },
+                                                                          {
+                                                                              "properties": {
+                                                                                  "optionType": {
+                                                                                      "type": "string",
+                                                                                      "enum": [
+                                                                                          "variable"
+                                                                                      ]
+                                                                                  },
+                                                                                  "value": {
+                                                                                      "type": "string",
+                                                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                      "minLength": 1,
+                                                                                      "maxLength": 64
+                                                                                  }
+                                                                              },
+                                                                              "required": [
+                                                                                  "optionType",
+                                                                                  "value"
+                                                                              ],
+                                                                              "additionalProperties": false
+                                                                          }
+                                                                      ]
+                                                                  }
+                                                              },
+                                                              "required": [
+                                                                  "type",
+                                                                  "username",
+                                                                  "password"
+                                                              ],
+                                                              "additionalProperties": false
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "needAuthentication"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  }
+                                              ]
+                                          },
+                                          "pdnType": {
+                                              "description": "Set packet data network type",
+                                              "type": "object",
+                                              "oneOf": [
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "global"
+                                                              ]
+                                                          },
+                                                          "value": {
+                                                              "default": "ipv4",
+                                                              "enum": [
+                                                                  "ipv4",
+                                                                  "ipv4v6",
+                                                                  "ipv6"
+                                                              ],
+                                                              "type": "string"
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType",
+                                                          "value"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  },
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "variable"
+                                                              ]
+                                                          },
+                                                          "value": {
+                                                              "type": "string",
+                                                              "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                              "minLength": 1,
+                                                              "maxLength": 64
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType",
+                                                          "value"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  },
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "default"
+                                                              ]
+                                                          },
+                                                          "value": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "ipv4"
+                                                              ]
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType",
+                                                          "value"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  }
+                                              ]
+                                          },
+                                          "noOverwrite": {
+                                              "description": "No Overwrite",
+                                              "type": "object",
+                                              "oneOf": [
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "global"
+                                                              ]
+                                                          },
+                                                          "value": {
+                                                              "type": "boolean"
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType",
+                                                          "value"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  },
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "variable"
+                                                              ]
+                                                          },
+                                                          "value": {
+                                                              "type": "string",
+                                                              "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                              "minLength": 1,
+                                                              "maxLength": 64
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType",
+                                                          "value"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  },
+                                                  {
+                                                      "properties": {
+                                                          "optionType": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                  "default"
+                                                              ]
+                                                          }
+                                                      },
+                                                      "required": [
+                                                          "optionType"
+                                                      ],
+                                                      "additionalProperties": false
+                                                  }
+                                              ]
+                                          }
+                                      },
+                                      "required": [
+                                          "apn"
+                                      ],
+                                      "additionalProperties": false
+                                  }
+                              },
+                              "required": [
+                                  "id",
+                                  "profileInfo"
+                              ],
+                              "additionalProperties": false
+                          }
+                      },
+                      "required": [
+                          "configType",
+                          "profileConfig"
+                      ],
+                      "additionalProperties": false
+                  }
+              ]
+          },
+          "metadata": {
+              "supportedDeviceTypes": [
+                  "c1100_lte",
+                  "c8000be",
+                  "ir8100",
+                  "ir8340",
+                  "isr",
+                  "ISRv",
+                  "ir1101"
+              ]
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for Transport WAN VPN profile parcel",
+              "examples": [
+                  {
+                      "data": {
+                          "configType": {
+                              "optionType": "default",
+                              "value": "non-eSim"
+                          },
+                          "profileConfig": {
+                              "id": {
+                                  "optionType": "global",
+                                  "value": 1
+                              },
+                              "profileInfo": {
+                                  "apn": {
+                                      "optionType": "global",
+                                      "value": "apn1"
+                                  },
+                                  "authentication": {
+                                      "noAuthentication": {
+                                          "optionType": "default",
+                                          "value": "none"
+                                      }
+                                  },
+                                  "pdnType": {
+                                      "optionType": "default",
+                                      "value": "ipv4"
+                                  },
+                                  "noOverwrite": {
+                                      "optionType": "global",
+                                      "value": false
+                                  }
+                              }
+                          }
+                      },
+                      "description": "Cedge Transport CellularProfile Parcel config",
+                      "name": "Cedge_CG1_Transport_CellularProfile_parcel1"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "name",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "metadata",
+              "documentation"
+          ]
+      },
+      "additionalProperties": false
+  }
+}
