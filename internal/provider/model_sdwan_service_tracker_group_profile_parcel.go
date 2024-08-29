@@ -68,25 +68,35 @@ func (data ServiceTrackerGroup) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
+	if true {
 
-	for _, item := range data.TrackerElements {
-		itemBody := ""
-		if !item.TrackerId.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.value", item.TrackerId.ValueString())
+		for _, item := range data.TrackerElements {
+			itemBody := ""
+			if !item.TrackerId.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "trackerRef.refId.value", item.TrackerId.ValueString())
+				}
+			}
+			body, _ = sjson.SetRaw(body, path+"trackerRefs.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"trackerRefs.-1", itemBody)
 	}
 
 	if !data.TrackerBooleanVariable.IsNull() {
-		body, _ = sjson.Set(body, path+"combineBoolean.optionType", "variable")
-		body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBooleanVariable.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"combineBoolean.optionType", "variable")
+			body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBooleanVariable.ValueString())
+		}
 	} else if data.TrackerBoolean.IsNull() {
-		body, _ = sjson.Set(body, path+"combineBoolean.optionType", "default")
-		body, _ = sjson.Set(body, path+"combineBoolean.value", "or")
+		if true {
+			body, _ = sjson.Set(body, path+"combineBoolean.optionType", "default")
+			body, _ = sjson.Set(body, path+"combineBoolean.value", "or")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"combineBoolean.optionType", "global")
-		body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBoolean.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"combineBoolean.optionType", "global")
+			body, _ = sjson.Set(body, path+"combineBoolean.value", data.TrackerBoolean.ValueString())
+		}
 	}
 	return body
 }

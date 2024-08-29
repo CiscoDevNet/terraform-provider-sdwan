@@ -1,0 +1,268 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-protocolname/post/request_schema.json",
+      "title": "security-protocolname Parcel Schema",
+      "description": "security-protocolname profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 32
+          },
+          "description": {
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "properties": {
+                  "entries": {
+                      "type": "array",
+                      "maxItems": 64,
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                          "type": "object",
+                          "properties": {
+                              "protocolName": {
+                                  "type": "object",
+                                  "oneOf": [
+                                      {
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "enum": [
+                                                      "snmp",
+                                                      "icmp",
+                                                      "tcp",
+                                                      "udp",
+                                                      "echo",
+                                                      "telnet",
+                                                      "wins",
+                                                      "n2h2server",
+                                                      "nntp",
+                                                      "pptp",
+                                                      "rtsp",
+                                                      "bootpc",
+                                                      "gdoi",
+                                                      "tacacs",
+                                                      "gopher",
+                                                      "icabrowser",
+                                                      "skinny",
+                                                      "sunrpc",
+                                                      "biff",
+                                                      "router",
+                                                      "ircs",
+                                                      "orasrv",
+                                                      "ms-cluster-net",
+                                                      "kermit",
+                                                      "isakmp",
+                                                      "sshell",
+                                                      "realsecure",
+                                                      "ircu",
+                                                      "appleqtc",
+                                                      "pwdgen",
+                                                      "rdb-dbs-disp",
+                                                      "creativepartnr",
+                                                      "finger",
+                                                      "ftps",
+                                                      "giop",
+                                                      "rsvd",
+                                                      "hp-alarm-mgr",
+                                                      "uucp",
+                                                      "kerberos",
+                                                      "imap",
+                                                      "time",
+                                                      "bootps",
+                                                      "tftp",
+                                                      "oracle",
+                                                      "snmptrap",
+                                                      "http",
+                                                      "qmtp",
+                                                      "radius",
+                                                      "oracle-em-vp",
+                                                      "tarantella",
+                                                      "pcanywheredata",
+                                                      "ldap",
+                                                      "mgcp",
+                                                      "sqlsrv",
+                                                      "hsrp",
+                                                      "cisco-net-mgmt",
+                                                      "smtp",
+                                                      "pcanywherestat",
+                                                      "exec",
+                                                      "send",
+                                                      "stun",
+                                                      "syslog",
+                                                      "ms-sql-m",
+                                                      "citrix",
+                                                      "creativeserver",
+                                                      "cifs",
+                                                      "cisco-sys",
+                                                      "cisco-tna",
+                                                      "ms-dotnetster",
+                                                      "gtpv1",
+                                                      "gtpv0",
+                                                      "imap3",
+                                                      "fcip-port",
+                                                      "netbios-dgm",
+                                                      "sip-tls",
+                                                      "pop3s",
+                                                      "cisco-fna",
+                                                      "802-11-iapp",
+                                                      "oem-agent",
+                                                      "cisco-tdp",
+                                                      "tr-rsrb",
+                                                      "r-winsock",
+                                                      "sql-net",
+                                                      "syslog-conn",
+                                                      "tacacs-ds",
+                                                      "h225ras",
+                                                      "ace-svr",
+                                                      "dhcp-failover",
+                                                      "igmpv3lite",
+                                                      "irc-serv",
+                                                      "entrust-svcs",
+                                                      "dbcontrol_agent",
+                                                      "cisco-svcs",
+                                                      "ipsec-msft",
+                                                      "microsoft-ds",
+                                                      "ms-sna",
+                                                      "rsvp_tunnel",
+                                                      "rsvp-encap",
+                                                      "hp-collector",
+                                                      "netbios-ns",
+                                                      "msexch-routing",
+                                                      "h323",
+                                                      "l2tp",
+                                                      "ldap-admin",
+                                                      "pop3",
+                                                      "h323callsigalt",
+                                                      "ms-sql",
+                                                      "iscsi-target",
+                                                      "webster",
+                                                      "lotusnote",
+                                                      "ipx",
+                                                      "entrust-svc-hand",
+                                                      "citriximaclient",
+                                                      "rtc-pm-port",
+                                                      "ftp",
+                                                      "aol",
+                                                      "xdmcp",
+                                                      "oraclenames",
+                                                      "login",
+                                                      "iscsi",
+                                                      "ttc",
+                                                      "imaps",
+                                                      "socks",
+                                                      "ssh",
+                                                      "dnsix",
+                                                      "daytime",
+                                                      "sip",
+                                                      "discard",
+                                                      "ntp",
+                                                      "ldaps",
+                                                      "https",
+                                                      "vdolive",
+                                                      "ica",
+                                                      "net8-cman",
+                                                      "cuseeme",
+                                                      "netstat",
+                                                      "sms",
+                                                      "streamworks",
+                                                      "rtelnet",
+                                                      "who",
+                                                      "kazaa",
+                                                      "ssp",
+                                                      "dbase",
+                                                      "timed",
+                                                      "cddbp",
+                                                      "telnets",
+                                                      "ymsgr",
+                                                      "ident",
+                                                      "bgp",
+                                                      "ddns-v3",
+                                                      "vqp",
+                                                      "irc",
+                                                      "ipass",
+                                                      "x11",
+                                                      "dns",
+                                                      "lotusmtap",
+                                                      "mysql",
+                                                      "nfs",
+                                                      "msnmsgr",
+                                                      "netshow",
+                                                      "sqlserv",
+                                                      "hp-managed-node",
+                                                      "ncp",
+                                                      "shell",
+                                                      "realmedia",
+                                                      "msrpc",
+                                                      "clp"
+                                                  ],
+                                                  "type": "string"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  ]
+                              }
+                          },
+                          "required": [
+                              "protocolName"
+                          ],
+                          "additionalProperties": false
+                      }
+                  }
+              },
+              "required": [
+                  "entries"
+              ],
+              "additionalProperties": false
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for security-protocolname profile parcel",
+              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+              "details-2": "variable name should not be present if optionType value is NOT variable",
+              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+              "examples": [
+                  {
+                      "data": {
+                          "entries": [
+                              {
+                                  "protocolName": {
+                                      "optionType": "global",
+                                      "value": "aol"
+                                  }
+                              }
+                          ]
+                      },
+                      "name": "security-protocolnameParcelGlobalDefault"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "data",
+          "name"
+      ],
+      "not": {
+          "required": [
+              "documentation"
+          ]
+      },
+      "additionalProperties": false
+  }
+}

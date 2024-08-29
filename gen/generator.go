@@ -272,6 +272,7 @@ type YamlConfigAttribute struct {
 type YamlConfigConditionalAttribute struct {
 	Name  string `yaml:"name"`
 	Value string `yaml:"value"`
+	Type  string `yaml:"type"`
 }
 
 // Templating helper function to convert TF name to GO name
@@ -679,6 +680,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	if attr.ModelName == "" {
 		return
 	}
+
 	path := ""
 	for i, e := range attr.DataPath {
 		// Check if the next element is a oneOf
@@ -721,6 +723,10 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	attr.Description = r.Get("description").String()
 	if attr.TfName == "" {
 		attr.TfName = SnakeCase(attr.ModelName)
+	}
+
+	if attr.ConditionalAttribute.Name != "" {
+		attr.ConditionalAttribute.Name = SnakeCase(attr.ConditionalAttribute.Name)
 	}
 
 	if r.Get("type").String() == "object" || !r.Get("type").Exists() {

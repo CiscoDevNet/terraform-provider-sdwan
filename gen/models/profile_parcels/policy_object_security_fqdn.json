@@ -1,0 +1,103 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-fqdn/post/request_schema.json",
+        "title": "security-fqdn Parcel Schema",
+        "description": "security-data-fqdn-prefix profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 32
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "entries": {
+                        "type": "array",
+                        "maxItems": 64,
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "pattern": {
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "description": "Must be valid FQDN",
+                                                    "pattern": "^([*][.])?(([a-zA-Z0-9-]+.)+)?([a-zA-Z0-9-])+$",
+                                                    "minLength": 1,
+                                                    "maxLength": 120
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "pattern"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "entries"
+                ],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for security-data-fqdn-prefix profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "entries": [
+                                {
+                                    "pattern": {
+                                        "optionType": "global",
+                                        "value": "cisco.com"
+                                    }
+                                }
+                            ]
+                        },
+                        "name": "security-data-fqdn-prefixParcelGlobalDefault"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "data",
+            "name"
+        ],
+        "not": {
+            "required": [
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

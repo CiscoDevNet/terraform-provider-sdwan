@@ -1,0 +1,118 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-port/post/request_schema.json",
+      "title": "Port Parcel Schema",
+      "description": "Port profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 32
+          },
+          "description": {
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "properties": {
+                  "entries": {
+                      "description": "Port List",
+                      "type": "array",
+                      "maxItems": 64,
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                          "type": "object",
+                          "properties": {
+                              "port": {
+                                  "description": "can be single port or port range",
+                                  "type": "object",
+                                  "properties": {
+                                      "optionType": {
+                                          "type": "string",
+                                          "enum": [
+                                              "global"
+                                          ]
+                                      },
+                                      "value": {
+                                          "oneOf": [
+                                              {
+                                                  "type": "string",
+                                                  "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                              },
+                                              {
+                                                  "type": "string",
+                                                  "pattern": "^(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])\\-(0|[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                                              }
+                                          ]
+                                      }
+                                  },
+                                  "required": [
+                                      "optionType",
+                                      "value"
+                                  ],
+                                  "additionalProperties": false
+                              }
+                          },
+                          "required": [
+                              "port"
+                          ],
+                          "additionalProperties": false
+                      }
+                  }
+              },
+              "required": [
+                  "entries"
+              ],
+              "additionalProperties": false
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for Port profile parcel",
+              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+              "details-2": "variable name should not be present if optionType value is NOT variable",
+              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+              "examples": [
+                  {
+                      "data": {
+                          "entries": [
+                              {
+                                  "port": {
+                                      "optionType": "global",
+                                      "value": "100"
+                                  }
+                              },
+                              {
+                                  "port": {
+                                      "optionType": "global",
+                                      "value": "200"
+                                  }
+                              },
+                              {
+                                  "port": {
+                                      "optionType": "global",
+                                      "value": "300-400"
+                                  }
+                              }
+                          ]
+                      },
+                      "name": "PortList"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "name",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "documentation"
+          ]
+      },
+      "additionalProperties": false
+  }
+}

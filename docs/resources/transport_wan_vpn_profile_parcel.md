@@ -112,7 +112,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "example" {
 
 Optional:
 
-- `administrative_distance` (Number) Administrative distance
+- `administrative_distance` (Number) Administrative distance, Attribute conditional on `gateway` being equal to `null0`
   - Range: `1`-`255`
   - Default value: `1`
 - `administrative_distance_variable` (String) Variable name
@@ -121,7 +121,7 @@ Optional:
   - Default value: `nextHop`
 - `network_address` (String) IP Address
 - `network_address_variable` (String) Variable name
-- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
+- `next_hops` (Attributes List) IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop` (see [below for nested schema](#nestedatt--ipv4_static_routes--next_hops))
 - `subnet_mask` (String) Subnet Mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `subnet_mask_variable` (String) Variable name

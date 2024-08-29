@@ -1,0 +1,107 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/class/common/request_schema.json",
+      "title": "Class Map Parcel Schema",
+      "description": "class profile parcel schema",
+      "type": "object",
+      "properties": {
+          "name": {
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 128
+          },
+          "description": {
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "properties": {
+                  "entries": {
+                      "description": "class map List",
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                          "type": "object",
+                          "properties": {
+                              "queue": {
+                                  "description": "select a queue",
+                                  "type": "object",
+                                  "properties": {
+                                      "optionType": {
+                                          "type": "string",
+                                          "enum": [
+                                              "global"
+                                          ]
+                                      },
+                                      "value": {
+                                          "enum": [
+                                              "0",
+                                              "1",
+                                              "2",
+                                              "3",
+                                              "4",
+                                              "5",
+                                              "6",
+                                              "7"
+                                          ],
+                                          "type": "string"
+                                      }
+                                  },
+                                  "required": [
+                                      "optionType",
+                                      "value"
+                                  ],
+                                  "additionalProperties": false
+                              }
+                          },
+                          "required": [
+                              "queue"
+                          ],
+                          "additionalProperties": false
+                      }
+                  }
+              },
+              "required": [
+                  "entries"
+              ],
+              "additionalProperties": false
+          },
+          "documentation": {
+              "description": "This is the documentation for class profile parcel",
+              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+              "details-2": "variable name should not be present if optionType value is NOT variable",
+              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+              "examples": [
+                  {
+                      "data": {
+                          "entries": [
+                              {
+                                  "queue": {
+                                      "optionType": "global",
+                                      "value": "1"
+                                  }
+                              }
+                          ]
+                      },
+                      "name": "classMapList1"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "name",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "documentation"
+          ]
+      },
+      "additionalProperties": false
+  }
+}
