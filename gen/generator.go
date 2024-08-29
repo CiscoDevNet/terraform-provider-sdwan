@@ -680,6 +680,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	if attr.ModelName == "" {
 		return
 	}
+
 	path := ""
 	for i, e := range attr.DataPath {
 		// Check if the next element is a oneOf
