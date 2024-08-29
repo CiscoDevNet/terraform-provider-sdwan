@@ -43,6 +43,8 @@ description: |-
 - Add `sdwan_service_routing_ospf_profile_parcel` resource and data source
 - Add `sdwan_service_routing_ospfv3_ipv4_profile_parcel` resource and data source
 - Add `sdwan_service_routing_ospfv3_ipv6_profile_parcel` resource and data source
+- Add `sdwan_service_routing_bgp_profile_parcel` resource and data source
+- Add `sdwan_service_switchport_profile_parcel` resource and data source
 
 ## 0.3.13
 

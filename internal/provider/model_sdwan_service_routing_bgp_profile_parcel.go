@@ -31,137 +31,135 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type TransportRoutingBGP struct {
-	Id                             types.String                                `tfsdk:"id"`
-	Version                        types.Int64                                 `tfsdk:"version"`
-	Name                           types.String                                `tfsdk:"name"`
-	Description                    types.String                                `tfsdk:"description"`
-	FeatureProfileId               types.String                                `tfsdk:"feature_profile_id"`
-	AsNumber                       types.Int64                                 `tfsdk:"as_number"`
-	AsNumberVariable               types.String                                `tfsdk:"as_number_variable"`
-	RouterId                       types.String                                `tfsdk:"router_id"`
-	RouterIdVariable               types.String                                `tfsdk:"router_id_variable"`
-	PropagateAsPath                types.Bool                                  `tfsdk:"propagate_as_path"`
-	PropagateAsPathVariable        types.String                                `tfsdk:"propagate_as_path_variable"`
-	PropagateCommunity             types.Bool                                  `tfsdk:"propagate_community"`
-	PropagateCommunityVariable     types.String                                `tfsdk:"propagate_community_variable"`
-	ExternalRoutesDistance         types.Int64                                 `tfsdk:"external_routes_distance"`
-	ExternalRoutesDistanceVariable types.String                                `tfsdk:"external_routes_distance_variable"`
-	InternalRoutesDistance         types.Int64                                 `tfsdk:"internal_routes_distance"`
-	InternalRoutesDistanceVariable types.String                                `tfsdk:"internal_routes_distance_variable"`
-	LocalRoutesDistance            types.Int64                                 `tfsdk:"local_routes_distance"`
-	LocalRoutesDistanceVariable    types.String                                `tfsdk:"local_routes_distance_variable"`
-	KeepaliveTime                  types.Int64                                 `tfsdk:"keepalive_time"`
-	KeepaliveTimeVariable          types.String                                `tfsdk:"keepalive_time_variable"`
-	HoldTime                       types.Int64                                 `tfsdk:"hold_time"`
-	HoldTimeVariable               types.String                                `tfsdk:"hold_time_variable"`
-	AlwaysCompareMed               types.Bool                                  `tfsdk:"always_compare_med"`
-	AlwaysCompareMedVariable       types.String                                `tfsdk:"always_compare_med_variable"`
-	DeterministicMed               types.Bool                                  `tfsdk:"deterministic_med"`
-	DeterministicMedVariable       types.String                                `tfsdk:"deterministic_med_variable"`
-	MissingMedAsWorst              types.Bool                                  `tfsdk:"missing_med_as_worst"`
-	MissingMedAsWorstVariable      types.String                                `tfsdk:"missing_med_as_worst_variable"`
-	CompareRouterId                types.Bool                                  `tfsdk:"compare_router_id"`
-	CompareRouterIdVariable        types.String                                `tfsdk:"compare_router_id_variable"`
-	MultipathRelax                 types.Bool                                  `tfsdk:"multipath_relax"`
-	MultipathRelaxVariable         types.String                                `tfsdk:"multipath_relax_variable"`
-	Ipv4Neighbors                  []TransportRoutingBGPIpv4Neighbors          `tfsdk:"ipv4_neighbors"`
-	Ipv6Neighbors                  []TransportRoutingBGPIpv6Neighbors          `tfsdk:"ipv6_neighbors"`
-	Ipv4AggregateAddresses         []TransportRoutingBGPIpv4AggregateAddresses `tfsdk:"ipv4_aggregate_addresses"`
-	Ipv4Networks                   []TransportRoutingBGPIpv4Networks           `tfsdk:"ipv4_networks"`
-	Ipv4EibgpMaximumPaths          types.Int64                                 `tfsdk:"ipv4_eibgp_maximum_paths"`
-	Ipv4EibgpMaximumPathsVariable  types.String                                `tfsdk:"ipv4_eibgp_maximum_paths_variable"`
-	Ipv4Originate                  types.Bool                                  `tfsdk:"ipv4_originate"`
-	Ipv4OriginateVariable          types.String                                `tfsdk:"ipv4_originate_variable"`
-	Ipv4TableMapRoutePolicyId      types.String                                `tfsdk:"ipv4_table_map_route_policy_id"`
-	Ipv4TableMapFilter             types.Bool                                  `tfsdk:"ipv4_table_map_filter"`
-	Ipv4TableMapFilterVariable     types.String                                `tfsdk:"ipv4_table_map_filter_variable"`
-	Ipv4Redistributes              []TransportRoutingBGPIpv4Redistributes      `tfsdk:"ipv4_redistributes"`
-	Ipv6AggregateAddresses         []TransportRoutingBGPIpv6AggregateAddresses `tfsdk:"ipv6_aggregate_addresses"`
-	Ipv6Networks                   []TransportRoutingBGPIpv6Networks           `tfsdk:"ipv6_networks"`
-	Ipv6EibgpMaximumPaths          types.Int64                                 `tfsdk:"ipv6_eibgp_maximum_paths"`
-	Ipv6EibgpMaximumPathsVariable  types.String                                `tfsdk:"ipv6_eibgp_maximum_paths_variable"`
-	Ipv6Originate                  types.Bool                                  `tfsdk:"ipv6_originate"`
-	Ipv6OriginateVariable          types.String                                `tfsdk:"ipv6_originate_variable"`
-	Ipv6TableMapRoutePolicyId      types.String                                `tfsdk:"ipv6_table_map_route_policy_id"`
-	Ipv6TableMapFilter             types.Bool                                  `tfsdk:"ipv6_table_map_filter"`
-	Ipv6TableMapFilterVariable     types.String                                `tfsdk:"ipv6_table_map_filter_variable"`
-	Ipv6Redistributes              []TransportRoutingBGPIpv6Redistributes      `tfsdk:"ipv6_redistributes"`
-	MplsInterfaces                 []TransportRoutingBGPMplsInterfaces         `tfsdk:"mpls_interfaces"`
+type ServiceRoutingBGP struct {
+	Id                             types.String                              `tfsdk:"id"`
+	Version                        types.Int64                               `tfsdk:"version"`
+	Name                           types.String                              `tfsdk:"name"`
+	Description                    types.String                              `tfsdk:"description"`
+	FeatureProfileId               types.String                              `tfsdk:"feature_profile_id"`
+	AsNumber                       types.Int64                               `tfsdk:"as_number"`
+	AsNumberVariable               types.String                              `tfsdk:"as_number_variable"`
+	RouterId                       types.String                              `tfsdk:"router_id"`
+	RouterIdVariable               types.String                              `tfsdk:"router_id_variable"`
+	PropagateAsPath                types.Bool                                `tfsdk:"propagate_as_path"`
+	PropagateAsPathVariable        types.String                              `tfsdk:"propagate_as_path_variable"`
+	PropagateCommunity             types.Bool                                `tfsdk:"propagate_community"`
+	PropagateCommunityVariable     types.String                              `tfsdk:"propagate_community_variable"`
+	ExternalRoutesDistance         types.Int64                               `tfsdk:"external_routes_distance"`
+	ExternalRoutesDistanceVariable types.String                              `tfsdk:"external_routes_distance_variable"`
+	InternalRoutesDistance         types.Int64                               `tfsdk:"internal_routes_distance"`
+	InternalRoutesDistanceVariable types.String                              `tfsdk:"internal_routes_distance_variable"`
+	LocalRoutesDistance            types.Int64                               `tfsdk:"local_routes_distance"`
+	LocalRoutesDistanceVariable    types.String                              `tfsdk:"local_routes_distance_variable"`
+	KeepaliveTime                  types.Int64                               `tfsdk:"keepalive_time"`
+	KeepaliveTimeVariable          types.String                              `tfsdk:"keepalive_time_variable"`
+	HoldTime                       types.Int64                               `tfsdk:"hold_time"`
+	HoldTimeVariable               types.String                              `tfsdk:"hold_time_variable"`
+	AlwaysCompareMed               types.Bool                                `tfsdk:"always_compare_med"`
+	AlwaysCompareMedVariable       types.String                              `tfsdk:"always_compare_med_variable"`
+	DeterministicMed               types.Bool                                `tfsdk:"deterministic_med"`
+	DeterministicMedVariable       types.String                              `tfsdk:"deterministic_med_variable"`
+	MissingMedAsWorst              types.Bool                                `tfsdk:"missing_med_as_worst"`
+	MissingMedAsWorstVariable      types.String                              `tfsdk:"missing_med_as_worst_variable"`
+	CompareRouterId                types.Bool                                `tfsdk:"compare_router_id"`
+	CompareRouterIdVariable        types.String                              `tfsdk:"compare_router_id_variable"`
+	MultipathRelax                 types.Bool                                `tfsdk:"multipath_relax"`
+	MultipathRelaxVariable         types.String                              `tfsdk:"multipath_relax_variable"`
+	Ipv4Neighbors                  []ServiceRoutingBGPIpv4Neighbors          `tfsdk:"ipv4_neighbors"`
+	Ipv6Neighbors                  []ServiceRoutingBGPIpv6Neighbors          `tfsdk:"ipv6_neighbors"`
+	Ipv4AggregateAddresses         []ServiceRoutingBGPIpv4AggregateAddresses `tfsdk:"ipv4_aggregate_addresses"`
+	Ipv4Networks                   []ServiceRoutingBGPIpv4Networks           `tfsdk:"ipv4_networks"`
+	Ipv4EibgpMaximumPaths          types.Int64                               `tfsdk:"ipv4_eibgp_maximum_paths"`
+	Ipv4EibgpMaximumPathsVariable  types.String                              `tfsdk:"ipv4_eibgp_maximum_paths_variable"`
+	Ipv4Originate                  types.Bool                                `tfsdk:"ipv4_originate"`
+	Ipv4OriginateVariable          types.String                              `tfsdk:"ipv4_originate_variable"`
+	Ipv4TableMapRoutePolicyId      types.String                              `tfsdk:"ipv4_table_map_route_policy_id"`
+	Ipv4TableMapFilter             types.Bool                                `tfsdk:"ipv4_table_map_filter"`
+	Ipv4TableMapFilterVariable     types.String                              `tfsdk:"ipv4_table_map_filter_variable"`
+	Ipv4Redistributes              []ServiceRoutingBGPIpv4Redistributes      `tfsdk:"ipv4_redistributes"`
+	Ipv6AggregateAddresses         []ServiceRoutingBGPIpv6AggregateAddresses `tfsdk:"ipv6_aggregate_addresses"`
+	Ipv6Networks                   []ServiceRoutingBGPIpv6Networks           `tfsdk:"ipv6_networks"`
+	Ipv6EibgpMaximumPaths          types.Int64                               `tfsdk:"ipv6_eibgp_maximum_paths"`
+	Ipv6EibgpMaximumPathsVariable  types.String                              `tfsdk:"ipv6_eibgp_maximum_paths_variable"`
+	Ipv6Originate                  types.Bool                                `tfsdk:"ipv6_originate"`
+	Ipv6OriginateVariable          types.String                              `tfsdk:"ipv6_originate_variable"`
+	Ipv6TableMapRoutePolicyId      types.String                              `tfsdk:"ipv6_table_map_route_policy_id"`
+	Ipv6TableMapFilter             types.Bool                                `tfsdk:"ipv6_table_map_filter"`
+	Ipv6TableMapFilterVariable     types.String                              `tfsdk:"ipv6_table_map_filter_variable"`
+	Ipv6Redistributes              []ServiceRoutingBGPIpv6Redistributes      `tfsdk:"ipv6_redistributes"`
 }
 
-type TransportRoutingBGPIpv4Neighbors struct {
-	Address                       types.String                                      `tfsdk:"address"`
-	AddressVariable               types.String                                      `tfsdk:"address_variable"`
-	Description                   types.String                                      `tfsdk:"description"`
-	DescriptionVariable           types.String                                      `tfsdk:"description_variable"`
-	Shutdown                      types.Bool                                        `tfsdk:"shutdown"`
-	ShutdownVariable              types.String                                      `tfsdk:"shutdown_variable"`
-	RemoteAs                      types.Int64                                       `tfsdk:"remote_as"`
-	RemoteAsVariable              types.String                                      `tfsdk:"remote_as_variable"`
-	LocalAs                       types.Int64                                       `tfsdk:"local_as"`
-	LocalAsVariable               types.String                                      `tfsdk:"local_as_variable"`
-	KeepaliveTime                 types.Int64                                       `tfsdk:"keepalive_time"`
-	KeepaliveTimeVariable         types.String                                      `tfsdk:"keepalive_time_variable"`
-	HoldTime                      types.Int64                                       `tfsdk:"hold_time"`
-	HoldTimeVariable              types.String                                      `tfsdk:"hold_time_variable"`
-	UpdateSourceInterface         types.String                                      `tfsdk:"update_source_interface"`
-	UpdateSourceInterfaceVariable types.String                                      `tfsdk:"update_source_interface_variable"`
-	NextHopSelf                   types.Bool                                        `tfsdk:"next_hop_self"`
-	NextHopSelfVariable           types.String                                      `tfsdk:"next_hop_self_variable"`
-	SendCommunity                 types.Bool                                        `tfsdk:"send_community"`
-	SendCommunityVariable         types.String                                      `tfsdk:"send_community_variable"`
-	SendExtendedCommunity         types.Bool                                        `tfsdk:"send_extended_community"`
-	SendExtendedCommunityVariable types.String                                      `tfsdk:"send_extended_community_variable"`
-	EbgpMultihop                  types.Int64                                       `tfsdk:"ebgp_multihop"`
-	EbgpMultihopVariable          types.String                                      `tfsdk:"ebgp_multihop_variable"`
-	Password                      types.String                                      `tfsdk:"password"`
-	PasswordVariable              types.String                                      `tfsdk:"password_variable"`
-	SendLabel                     types.Bool                                        `tfsdk:"send_label"`
-	ExplicitNull                  types.Bool                                        `tfsdk:"explicit_null"`
-	ExplicitNullVariable          types.String                                      `tfsdk:"explicit_null_variable"`
-	AsOverride                    types.Bool                                        `tfsdk:"as_override"`
-	AsOverrideVariable            types.String                                      `tfsdk:"as_override_variable"`
-	AllowasInNumber               types.Int64                                       `tfsdk:"allowas_in_number"`
-	AllowasInNumberVariable       types.String                                      `tfsdk:"allowas_in_number_variable"`
-	AddressFamilies               []TransportRoutingBGPIpv4NeighborsAddressFamilies `tfsdk:"address_families"`
+type ServiceRoutingBGPIpv4Neighbors struct {
+	Address                       types.String                                    `tfsdk:"address"`
+	AddressVariable               types.String                                    `tfsdk:"address_variable"`
+	Description                   types.String                                    `tfsdk:"description"`
+	DescriptionVariable           types.String                                    `tfsdk:"description_variable"`
+	Shutdown                      types.Bool                                      `tfsdk:"shutdown"`
+	ShutdownVariable              types.String                                    `tfsdk:"shutdown_variable"`
+	RemoteAs                      types.Int64                                     `tfsdk:"remote_as"`
+	RemoteAsVariable              types.String                                    `tfsdk:"remote_as_variable"`
+	LocalAs                       types.Int64                                     `tfsdk:"local_as"`
+	LocalAsVariable               types.String                                    `tfsdk:"local_as_variable"`
+	KeepaliveTime                 types.Int64                                     `tfsdk:"keepalive_time"`
+	KeepaliveTimeVariable         types.String                                    `tfsdk:"keepalive_time_variable"`
+	HoldTime                      types.Int64                                     `tfsdk:"hold_time"`
+	HoldTimeVariable              types.String                                    `tfsdk:"hold_time_variable"`
+	UpdateSourceInterface         types.String                                    `tfsdk:"update_source_interface"`
+	UpdateSourceInterfaceVariable types.String                                    `tfsdk:"update_source_interface_variable"`
+	NextHopSelf                   types.Bool                                      `tfsdk:"next_hop_self"`
+	NextHopSelfVariable           types.String                                    `tfsdk:"next_hop_self_variable"`
+	SendCommunity                 types.Bool                                      `tfsdk:"send_community"`
+	SendCommunityVariable         types.String                                    `tfsdk:"send_community_variable"`
+	SendExtendedCommunity         types.Bool                                      `tfsdk:"send_extended_community"`
+	SendExtendedCommunityVariable types.String                                    `tfsdk:"send_extended_community_variable"`
+	EbgpMultihop                  types.Int64                                     `tfsdk:"ebgp_multihop"`
+	EbgpMultihopVariable          types.String                                    `tfsdk:"ebgp_multihop_variable"`
+	Password                      types.String                                    `tfsdk:"password"`
+	PasswordVariable              types.String                                    `tfsdk:"password_variable"`
+	SendLabel                     types.Bool                                      `tfsdk:"send_label"`
+	SendLabelVariable             types.String                                    `tfsdk:"send_label_variable"`
+	AsOverride                    types.Bool                                      `tfsdk:"as_override"`
+	AsOverrideVariable            types.String                                    `tfsdk:"as_override_variable"`
+	AllowasInNumber               types.Int64                                     `tfsdk:"allowas_in_number"`
+	AllowasInNumberVariable       types.String                                    `tfsdk:"allowas_in_number_variable"`
+	AddressFamilies               []ServiceRoutingBGPIpv4NeighborsAddressFamilies `tfsdk:"address_families"`
 }
 
-type TransportRoutingBGPIpv6Neighbors struct {
-	Address                       types.String                                      `tfsdk:"address"`
-	AddressVariable               types.String                                      `tfsdk:"address_variable"`
-	Description                   types.String                                      `tfsdk:"description"`
-	DescriptionVariable           types.String                                      `tfsdk:"description_variable"`
-	Shutdown                      types.Bool                                        `tfsdk:"shutdown"`
-	ShutdownVariable              types.String                                      `tfsdk:"shutdown_variable"`
-	RemoteAs                      types.Int64                                       `tfsdk:"remote_as"`
-	RemoteAsVariable              types.String                                      `tfsdk:"remote_as_variable"`
-	LocalAs                       types.Int64                                       `tfsdk:"local_as"`
-	LocalAsVariable               types.String                                      `tfsdk:"local_as_variable"`
-	KeepaliveTime                 types.Int64                                       `tfsdk:"keepalive_time"`
-	KeepaliveTimeVariable         types.String                                      `tfsdk:"keepalive_time_variable"`
-	HoldTime                      types.Int64                                       `tfsdk:"hold_time"`
-	HoldTimeVariable              types.String                                      `tfsdk:"hold_time_variable"`
-	UpdateSourceInterface         types.String                                      `tfsdk:"update_source_interface"`
-	UpdateSourceInterfaceVariable types.String                                      `tfsdk:"update_source_interface_variable"`
-	NextHopSelf                   types.Bool                                        `tfsdk:"next_hop_self"`
-	NextHopSelfVariable           types.String                                      `tfsdk:"next_hop_self_variable"`
-	SendCommunity                 types.Bool                                        `tfsdk:"send_community"`
-	SendCommunityVariable         types.String                                      `tfsdk:"send_community_variable"`
-	SendExtendedCommunity         types.Bool                                        `tfsdk:"send_extended_community"`
-	SendExtendedCommunityVariable types.String                                      `tfsdk:"send_extended_community_variable"`
-	EbgpMultihop                  types.Int64                                       `tfsdk:"ebgp_multihop"`
-	EbgpMultihopVariable          types.String                                      `tfsdk:"ebgp_multihop_variable"`
-	Password                      types.String                                      `tfsdk:"password"`
-	PasswordVariable              types.String                                      `tfsdk:"password_variable"`
-	AsOverride                    types.Bool                                        `tfsdk:"as_override"`
-	AsOverrideVariable            types.String                                      `tfsdk:"as_override_variable"`
-	AllowasInNumber               types.Int64                                       `tfsdk:"allowas_in_number"`
-	AllowasInNumberVariable       types.String                                      `tfsdk:"allowas_in_number_variable"`
-	AddressFamilies               []TransportRoutingBGPIpv6NeighborsAddressFamilies `tfsdk:"address_families"`
+type ServiceRoutingBGPIpv6Neighbors struct {
+	Address                       types.String                                    `tfsdk:"address"`
+	AddressVariable               types.String                                    `tfsdk:"address_variable"`
+	Description                   types.String                                    `tfsdk:"description"`
+	DescriptionVariable           types.String                                    `tfsdk:"description_variable"`
+	Shutdown                      types.Bool                                      `tfsdk:"shutdown"`
+	ShutdownVariable              types.String                                    `tfsdk:"shutdown_variable"`
+	RemoteAs                      types.Int64                                     `tfsdk:"remote_as"`
+	RemoteAsVariable              types.String                                    `tfsdk:"remote_as_variable"`
+	LocalAs                       types.Int64                                     `tfsdk:"local_as"`
+	LocalAsVariable               types.String                                    `tfsdk:"local_as_variable"`
+	KeepaliveTime                 types.Int64                                     `tfsdk:"keepalive_time"`
+	KeepaliveTimeVariable         types.String                                    `tfsdk:"keepalive_time_variable"`
+	HoldTime                      types.Int64                                     `tfsdk:"hold_time"`
+	HoldTimeVariable              types.String                                    `tfsdk:"hold_time_variable"`
+	UpdateSourceInterface         types.String                                    `tfsdk:"update_source_interface"`
+	UpdateSourceInterfaceVariable types.String                                    `tfsdk:"update_source_interface_variable"`
+	NextHopSelf                   types.Bool                                      `tfsdk:"next_hop_self"`
+	NextHopSelfVariable           types.String                                    `tfsdk:"next_hop_self_variable"`
+	SendCommunity                 types.Bool                                      `tfsdk:"send_community"`
+	SendCommunityVariable         types.String                                    `tfsdk:"send_community_variable"`
+	SendExtendedCommunity         types.Bool                                      `tfsdk:"send_extended_community"`
+	SendExtendedCommunityVariable types.String                                    `tfsdk:"send_extended_community_variable"`
+	EbgpMultihop                  types.Int64                                     `tfsdk:"ebgp_multihop"`
+	EbgpMultihopVariable          types.String                                    `tfsdk:"ebgp_multihop_variable"`
+	Password                      types.String                                    `tfsdk:"password"`
+	PasswordVariable              types.String                                    `tfsdk:"password_variable"`
+	AsOverride                    types.Bool                                      `tfsdk:"as_override"`
+	AsOverrideVariable            types.String                                    `tfsdk:"as_override_variable"`
+	AllowasInNumber               types.Int64                                     `tfsdk:"allowas_in_number"`
+	AllowasInNumberVariable       types.String                                    `tfsdk:"allowas_in_number_variable"`
+	AddressFamilies               []ServiceRoutingBGPIpv6NeighborsAddressFamilies `tfsdk:"address_families"`
 }
 
-type TransportRoutingBGPIpv4AggregateAddresses struct {
+type ServiceRoutingBGPIpv4AggregateAddresses struct {
 	NetworkAddress         types.String `tfsdk:"network_address"`
 	NetworkAddressVariable types.String `tfsdk:"network_address_variable"`
 	SubnetMask             types.String `tfsdk:"subnet_mask"`
@@ -172,20 +170,20 @@ type TransportRoutingBGPIpv4AggregateAddresses struct {
 	SummaryOnlyVariable    types.String `tfsdk:"summary_only_variable"`
 }
 
-type TransportRoutingBGPIpv4Networks struct {
+type ServiceRoutingBGPIpv4Networks struct {
 	NetworkAddress         types.String `tfsdk:"network_address"`
 	NetworkAddressVariable types.String `tfsdk:"network_address_variable"`
 	SubnetMask             types.String `tfsdk:"subnet_mask"`
 	SubnetMaskVariable     types.String `tfsdk:"subnet_mask_variable"`
 }
 
-type TransportRoutingBGPIpv4Redistributes struct {
+type ServiceRoutingBGPIpv4Redistributes struct {
 	Protocol         types.String `tfsdk:"protocol"`
 	ProtocolVariable types.String `tfsdk:"protocol_variable"`
 	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
 }
 
-type TransportRoutingBGPIpv6AggregateAddresses struct {
+type ServiceRoutingBGPIpv6AggregateAddresses struct {
 	AggregatePrefix         types.String `tfsdk:"aggregate_prefix"`
 	AggregatePrefixVariable types.String `tfsdk:"aggregate_prefix_variable"`
 	AsSetPath               types.Bool   `tfsdk:"as_set_path"`
@@ -194,23 +192,18 @@ type TransportRoutingBGPIpv6AggregateAddresses struct {
 	SummaryOnlyVariable     types.String `tfsdk:"summary_only_variable"`
 }
 
-type TransportRoutingBGPIpv6Networks struct {
+type ServiceRoutingBGPIpv6Networks struct {
 	NetworkPrefix         types.String `tfsdk:"network_prefix"`
 	NetworkPrefixVariable types.String `tfsdk:"network_prefix_variable"`
 }
 
-type TransportRoutingBGPIpv6Redistributes struct {
+type ServiceRoutingBGPIpv6Redistributes struct {
 	Protocol         types.String `tfsdk:"protocol"`
 	ProtocolVariable types.String `tfsdk:"protocol_variable"`
 	RoutePolicyId    types.String `tfsdk:"route_policy_id"`
 }
 
-type TransportRoutingBGPMplsInterfaces struct {
-	InterfaceName         types.String `tfsdk:"interface_name"`
-	InterfaceNameVariable types.String `tfsdk:"interface_name_variable"`
-}
-
-type TransportRoutingBGPIpv4NeighborsAddressFamilies struct {
+type ServiceRoutingBGPIpv4NeighborsAddressFamilies struct {
 	FamilyType                  types.String `tfsdk:"family_type"`
 	MaxNumberOfPrefixes         types.Int64  `tfsdk:"max_number_of_prefixes"`
 	MaxNumberOfPrefixesVariable types.String `tfsdk:"max_number_of_prefixes_variable"`
@@ -223,7 +216,7 @@ type TransportRoutingBGPIpv4NeighborsAddressFamilies struct {
 	OutRoutePolicyId            types.String `tfsdk:"out_route_policy_id"`
 }
 
-type TransportRoutingBGPIpv6NeighborsAddressFamilies struct {
+type ServiceRoutingBGPIpv6NeighborsAddressFamilies struct {
 	FamilyType                  types.String `tfsdk:"family_type"`
 	MaxNumberOfPrefixes         types.Int64  `tfsdk:"max_number_of_prefixes"`
 	MaxNumberOfPrefixesVariable types.String `tfsdk:"max_number_of_prefixes_variable"`
@@ -239,21 +232,21 @@ type TransportRoutingBGPIpv6NeighborsAddressFamilies struct {
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data TransportRoutingBGP) getModel() string {
-	return "transport_routing_bgp"
+func (data ServiceRoutingBGP) getModel() string {
+	return "service_routing_bgp"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data TransportRoutingBGP) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/routing/bgp", url.QueryEscape(data.FeatureProfileId.ValueString()))
+func (data ServiceRoutingBGP) getPath() string {
+	return fmt.Sprintf("/v1/feature-profile/sdwan/service/%v/routing/bgp", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportRoutingBGP) toBody(ctx context.Context) string {
+func (data ServiceRoutingBGP) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -706,7 +699,13 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 					itemBody, _ = sjson.Set(itemBody, "password.value", item.Password.ValueString())
 				}
 			}
-			if item.SendLabel.IsNull() {
+
+			if !item.SendLabelVariable.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sendLabel.optionType", "variable")
+					itemBody, _ = sjson.Set(itemBody, "sendLabel.value", item.SendLabelVariable.ValueString())
+				}
+			} else if item.SendLabel.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sendLabel.optionType", "default")
 					itemBody, _ = sjson.Set(itemBody, "sendLabel.value", false)
@@ -715,23 +714,6 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sendLabel.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "sendLabel.value", item.SendLabel.ValueBool())
-				}
-			}
-
-			if !item.ExplicitNullVariable.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "sendLabelExplicit.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "sendLabelExplicit.value", item.ExplicitNullVariable.ValueString())
-				}
-			} else if item.ExplicitNull.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "sendLabelExplicit.optionType", "default")
-					itemBody, _ = sjson.Set(itemBody, "sendLabelExplicit.value", false)
-				}
-			} else {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "sendLabelExplicit.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "sendLabelExplicit.value", item.ExplicitNull.ValueBool())
 				}
 			}
 
@@ -1503,32 +1485,13 @@ func (data TransportRoutingBGP) toBody(ctx context.Context) string {
 			body, _ = sjson.SetRaw(body, path+"ipv6AddressFamily.redistribute.-1", itemBody)
 		}
 	}
-	if true {
-		body, _ = sjson.Set(body, path+"mplsInterface", []interface{}{})
-		for _, item := range data.MplsInterfaces {
-			itemBody := ""
-
-			if !item.InterfaceNameVariable.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceNameVariable.ValueString())
-				}
-			} else if !item.InterfaceName.IsNull() {
-				if true {
-					itemBody, _ = sjson.Set(itemBody, "ifName.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "ifName.value", item.InterfaceName.ValueString())
-				}
-			}
-			body, _ = sjson.SetRaw(body, path+"mplsInterface.-1", itemBody)
-		}
-	}
 	return body
 }
 
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceRoutingBGP) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -1677,9 +1640,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	if value := res.Get(path + "neighbor"); value.Exists() {
-		data.Ipv4Neighbors = make([]TransportRoutingBGPIpv4Neighbors, 0)
+		data.Ipv4Neighbors = make([]ServiceRoutingBGPIpv4Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv4Neighbors{}
+			item := ServiceRoutingBGPIpv4Neighbors{}
 			item.Address = types.StringNull()
 			item.AddressVariable = types.StringNull()
 			if t := v.Get("address.optionType"); t.Exists() {
@@ -1801,21 +1764,13 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 				}
 			}
 			item.SendLabel = types.BoolNull()
-
+			item.SendLabelVariable = types.StringNull()
 			if t := v.Get("sendLabel.optionType"); t.Exists() {
 				va := v.Get("sendLabel.value")
-				if t.String() == "global" {
-					item.SendLabel = types.BoolValue(va.Bool())
-				}
-			}
-			item.ExplicitNull = types.BoolNull()
-			item.ExplicitNullVariable = types.StringNull()
-			if t := v.Get("sendLabelExplicit.optionType"); t.Exists() {
-				va := v.Get("sendLabelExplicit.value")
 				if t.String() == "variable" {
-					item.ExplicitNullVariable = types.StringValue(va.String())
+					item.SendLabelVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					item.ExplicitNull = types.BoolValue(va.Bool())
+					item.SendLabel = types.BoolValue(va.Bool())
 				}
 			}
 			item.AsOverride = types.BoolNull()
@@ -1839,9 +1794,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 				}
 			}
 			if cValue := v.Get("addressFamily"); cValue.Exists() {
-				item.AddressFamilies = make([]TransportRoutingBGPIpv4NeighborsAddressFamilies, 0)
+				item.AddressFamilies = make([]ServiceRoutingBGPIpv4NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := TransportRoutingBGPIpv4NeighborsAddressFamilies{}
+					cItem := ServiceRoutingBGPIpv4NeighborsAddressFamilies{}
 					cItem.FamilyType = types.StringNull()
 
 					if t := cv.Get("familyType.optionType"); t.Exists() {
@@ -1913,9 +1868,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		})
 	}
 	if value := res.Get(path + "ipv6Neighbor"); value.Exists() {
-		data.Ipv6Neighbors = make([]TransportRoutingBGPIpv6Neighbors, 0)
+		data.Ipv6Neighbors = make([]ServiceRoutingBGPIpv6Neighbors, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv6Neighbors{}
+			item := ServiceRoutingBGPIpv6Neighbors{}
 			item.Address = types.StringNull()
 			item.AddressVariable = types.StringNull()
 			if t := v.Get("address.optionType"); t.Exists() {
@@ -2057,9 +2012,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 				}
 			}
 			if cValue := v.Get("addressFamily"); cValue.Exists() {
-				item.AddressFamilies = make([]TransportRoutingBGPIpv6NeighborsAddressFamilies, 0)
+				item.AddressFamilies = make([]ServiceRoutingBGPIpv6NeighborsAddressFamilies, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := TransportRoutingBGPIpv6NeighborsAddressFamilies{}
+					cItem := ServiceRoutingBGPIpv6NeighborsAddressFamilies{}
 					cItem.FamilyType = types.StringNull()
 
 					if t := cv.Get("familyType.optionType"); t.Exists() {
@@ -2131,9 +2086,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		})
 	}
 	if value := res.Get(path + "addressFamily.aggregateAddress"); value.Exists() {
-		data.Ipv4AggregateAddresses = make([]TransportRoutingBGPIpv4AggregateAddresses, 0)
+		data.Ipv4AggregateAddresses = make([]ServiceRoutingBGPIpv4AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv4AggregateAddresses{}
+			item := ServiceRoutingBGPIpv4AggregateAddresses{}
 			item.NetworkAddress = types.StringNull()
 			item.NetworkAddressVariable = types.StringNull()
 			if t := v.Get("prefix.address.optionType"); t.Exists() {
@@ -2179,9 +2134,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		})
 	}
 	if value := res.Get(path + "addressFamily.network"); value.Exists() {
-		data.Ipv4Networks = make([]TransportRoutingBGPIpv4Networks, 0)
+		data.Ipv4Networks = make([]ServiceRoutingBGPIpv4Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv4Networks{}
+			item := ServiceRoutingBGPIpv4Networks{}
 			item.NetworkAddress = types.StringNull()
 			item.NetworkAddressVariable = types.StringNull()
 			if t := v.Get("prefix.address.optionType"); t.Exists() {
@@ -2245,9 +2200,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	if value := res.Get(path + "addressFamily.redistribute"); value.Exists() {
-		data.Ipv4Redistributes = make([]TransportRoutingBGPIpv4Redistributes, 0)
+		data.Ipv4Redistributes = make([]ServiceRoutingBGPIpv4Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv4Redistributes{}
+			item := ServiceRoutingBGPIpv4Redistributes{}
 			item.Protocol = types.StringNull()
 			item.ProtocolVariable = types.StringNull()
 			if t := v.Get("protocol.optionType"); t.Exists() {
@@ -2271,9 +2226,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		})
 	}
 	if value := res.Get(path + "ipv6AddressFamily.ipv6AggregateAddress"); value.Exists() {
-		data.Ipv6AggregateAddresses = make([]TransportRoutingBGPIpv6AggregateAddresses, 0)
+		data.Ipv6AggregateAddresses = make([]ServiceRoutingBGPIpv6AggregateAddresses, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv6AggregateAddresses{}
+			item := ServiceRoutingBGPIpv6AggregateAddresses{}
 			item.AggregatePrefix = types.StringNull()
 			item.AggregatePrefixVariable = types.StringNull()
 			if t := v.Get("prefix.optionType"); t.Exists() {
@@ -2309,9 +2264,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		})
 	}
 	if value := res.Get(path + "ipv6AddressFamily.ipv6Network"); value.Exists() {
-		data.Ipv6Networks = make([]TransportRoutingBGPIpv6Networks, 0)
+		data.Ipv6Networks = make([]ServiceRoutingBGPIpv6Networks, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv6Networks{}
+			item := ServiceRoutingBGPIpv6Networks{}
 			item.NetworkPrefix = types.StringNull()
 			item.NetworkPrefixVariable = types.StringNull()
 			if t := v.Get("prefix.optionType"); t.Exists() {
@@ -2365,9 +2320,9 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 		}
 	}
 	if value := res.Get(path + "ipv6AddressFamily.redistribute"); value.Exists() {
-		data.Ipv6Redistributes = make([]TransportRoutingBGPIpv6Redistributes, 0)
+		data.Ipv6Redistributes = make([]ServiceRoutingBGPIpv6Redistributes, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPIpv6Redistributes{}
+			item := ServiceRoutingBGPIpv6Redistributes{}
 			item.Protocol = types.StringNull()
 			item.ProtocolVariable = types.StringNull()
 			if t := v.Get("protocol.optionType"); t.Exists() {
@@ -2390,30 +2345,12 @@ func (data *TransportRoutingBGP) fromBody(ctx context.Context, res gjson.Result)
 			return true
 		})
 	}
-	if value := res.Get(path + "mplsInterface"); value.Exists() {
-		data.MplsInterfaces = make([]TransportRoutingBGPMplsInterfaces, 0)
-		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportRoutingBGPMplsInterfaces{}
-			item.InterfaceName = types.StringNull()
-			item.InterfaceNameVariable = types.StringNull()
-			if t := v.Get("ifName.optionType"); t.Exists() {
-				va := v.Get("ifName.value")
-				if t.String() == "variable" {
-					item.InterfaceNameVariable = types.StringValue(va.String())
-				} else if t.String() == "global" {
-					item.InterfaceName = types.StringValue(va.String())
-				}
-			}
-			data.MplsInterfaces = append(data.MplsInterfaces, item)
-			return true
-		})
-	}
 }
 
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -2708,21 +2645,13 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			}
 		}
 		data.Ipv4Neighbors[i].SendLabel = types.BoolNull()
-
+		data.Ipv4Neighbors[i].SendLabelVariable = types.StringNull()
 		if t := r.Get("sendLabel.optionType"); t.Exists() {
 			va := r.Get("sendLabel.value")
-			if t.String() == "global" {
-				data.Ipv4Neighbors[i].SendLabel = types.BoolValue(va.Bool())
-			}
-		}
-		data.Ipv4Neighbors[i].ExplicitNull = types.BoolNull()
-		data.Ipv4Neighbors[i].ExplicitNullVariable = types.StringNull()
-		if t := r.Get("sendLabelExplicit.optionType"); t.Exists() {
-			va := r.Get("sendLabelExplicit.value")
 			if t.String() == "variable" {
-				data.Ipv4Neighbors[i].ExplicitNullVariable = types.StringValue(va.String())
+				data.Ipv4Neighbors[i].SendLabelVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Ipv4Neighbors[i].ExplicitNull = types.BoolValue(va.Bool())
+				data.Ipv4Neighbors[i].SendLabel = types.BoolValue(va.Bool())
 			}
 		}
 		data.Ipv4Neighbors[i].AsOverride = types.BoolNull()
@@ -3465,49 +3394,12 @@ func (data *TransportRoutingBGP) updateFromBody(ctx context.Context, res gjson.R
 			}
 		}
 	}
-	for i := range data.MplsInterfaces {
-		keys := [...]string{"ifName"}
-		keyValues := [...]string{data.MplsInterfaces[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.MplsInterfaces[i].InterfaceNameVariable.ValueString()}
-
-		var r gjson.Result
-		res.Get(path + "mplsInterface").ForEach(
-			func(_, v gjson.Result) bool {
-				found := false
-				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
-					}
-					found = false
-					break
-				}
-				if found {
-					r = v
-					return false
-				}
-				return true
-			},
-		)
-		data.MplsInterfaces[i].InterfaceName = types.StringNull()
-		data.MplsInterfaces[i].InterfaceNameVariable = types.StringNull()
-		if t := r.Get("ifName.optionType"); t.Exists() {
-			va := r.Get("ifName.value")
-			if t.String() == "variable" {
-				data.MplsInterfaces[i].InterfaceNameVariable = types.StringValue(va.String())
-			} else if t.String() == "global" {
-				data.MplsInterfaces[i].InterfaceName = types.StringValue(va.String())
-			}
-		}
-	}
 }
 
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *TransportRoutingBGP) isNull(ctx context.Context, res gjson.Result) bool {
+func (data *ServiceRoutingBGP) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
@@ -3659,9 +3551,6 @@ func (data *TransportRoutingBGP) isNull(ctx context.Context, res gjson.Result) b
 		return false
 	}
 	if len(data.Ipv6Redistributes) > 0 {
-		return false
-	}
-	if len(data.MplsInterfaces) > 0 {
 		return false
 	}
 	return true
