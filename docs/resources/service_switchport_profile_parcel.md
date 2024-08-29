@@ -19,7 +19,7 @@ resource "sdwan_service_switchport_profile_parcel" "example" {
   name               = "Example"
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  interface = [
+  interfaces = [
     {
       interface_name                 = "GigabitEthernet"
       mode                           = "access"
@@ -70,7 +70,7 @@ resource "sdwan_service_switchport_profile_parcel" "example" {
   - Default value: `300`
 - `age_out_time_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `interface` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interface))
+- `interfaces` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interfaces))
 - `static_mac_addresses` (Attributes List) Add static MAC address entries for interface (see [below for nested schema](#nestedatt--static_mac_addresses))
 
 ### Read-Only
@@ -78,8 +78,8 @@ resource "sdwan_service_switchport_profile_parcel" "example" {
 - `id` (String) The id of the profile parcel
 - `version` (Number) The version of the profile parcel
 
-<a id="nestedatt--interface"></a>
-### Nested Schema for `interface`
+<a id="nestedatt--interfaces"></a>
+### Nested Schema for `interfaces`
 
 Optional:
 

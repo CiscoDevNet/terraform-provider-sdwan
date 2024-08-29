@@ -32,13 +32,13 @@ data "sdwan_service_switchport_profile_parcel" "example" {
 - `age_out_time` (Number) Set when a MAC table entry ages out (0 to disable, 10-1000000 otherwise)
 - `age_out_time_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
-- `interface` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interface))
+- `interfaces` (Attributes List) Interface name: GigabitEthernet0/<>/<> when present (see [below for nested schema](#nestedatt--interfaces))
 - `name` (String) The name of the profile parcel
 - `static_mac_addresses` (Attributes List) Add static MAC address entries for interface (see [below for nested schema](#nestedatt--static_mac_addresses))
 - `version` (Number) The version of the profile parcel
 
-<a id="nestedatt--interface"></a>
-### Nested Schema for `interface`
+<a id="nestedatt--interfaces"></a>
+### Nested Schema for `interfaces`
 
 Read-Only:
 

@@ -78,7 +78,7 @@ func (d *ServiceSwitchportProfileParcelDataSource) Schema(ctx context.Context, r
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"interface": schema.ListNestedAttribute{
+			"interfaces": schema.ListNestedAttribute{
 				MarkdownDescription: "Interface name: GigabitEthernet0/<>/<> when present",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

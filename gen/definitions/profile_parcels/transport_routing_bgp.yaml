@@ -54,9 +54,9 @@ attributes:
     tf_name: ipv4_neighbors
     attributes:
     - model_name: address
+      id: true
       example: 1.2.3.4
     - model_name: description
-      id: true
       example: neighbor1
     - model_name: shutdown
       example: false
@@ -135,9 +135,9 @@ attributes:
     tf_name: ipv6_neighbors
     attributes:
     - model_name: address
+      id: true
       example: "2001::1"
     - model_name: description
-      id: true
       example: neighbor2
     - model_name: shutdown
       example: false

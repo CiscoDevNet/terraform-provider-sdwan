@@ -38,13 +38,13 @@ type ServiceSwitchport struct {
 	Name               types.String                          `tfsdk:"name"`
 	Description        types.String                          `tfsdk:"description"`
 	FeatureProfileId   types.String                          `tfsdk:"feature_profile_id"`
-	Interface          []ServiceSwitchportInterface          `tfsdk:"interface"`
+	Interfaces         []ServiceSwitchportInterfaces         `tfsdk:"interfaces"`
 	AgeOutTime         types.Int64                           `tfsdk:"age_out_time"`
 	AgeOutTimeVariable types.String                          `tfsdk:"age_out_time_variable"`
 	StaticMacAddresses []ServiceSwitchportStaticMacAddresses `tfsdk:"static_mac_addresses"`
 }
 
-type ServiceSwitchportInterface struct {
+type ServiceSwitchportInterfaces struct {
 	InterfaceName                       types.String `tfsdk:"interface_name"`
 	InterfaceNameVariable               types.String `tfsdk:"interface_name_variable"`
 	Mode                                types.String `tfsdk:"mode"`
@@ -120,7 +120,7 @@ func (data ServiceSwitchport) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 	body, _ = sjson.Set(body, path+"interface", []interface{}{})
-	for _, item := range data.Interface {
+	for _, item := range data.Interfaces {
 		itemBody := ""
 
 		if !item.InterfaceNameVariable.IsNull() {
@@ -400,9 +400,9 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 	}
 	path := "payload.data."
 	if value := res.Get(path + "interface"); value.Exists() {
-		data.Interface = make([]ServiceSwitchportInterface, 0)
+		data.Interfaces = make([]ServiceSwitchportInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceSwitchportInterface{}
+			item := ServiceSwitchportInterfaces{}
 			item.InterfaceName = types.StringNull()
 			item.InterfaceNameVariable = types.StringNull()
 			if t := v.Get("ifName.optionType"); t.Exists() {
@@ -611,7 +611,7 @@ func (data *ServiceSwitchport) fromBody(ctx context.Context, res gjson.Result) {
 					item.EnableVoice = types.BoolValue(va.Bool())
 				}
 			}
-			data.Interface = append(data.Interface, item)
+			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
 	}
@@ -676,10 +676,10 @@ func (data *ServiceSwitchport) updateFromBody(ctx context.Context, res gjson.Res
 		data.Description = types.StringNull()
 	}
 	path := "payload.data."
-	for i := range data.Interface {
+	for i := range data.Interfaces {
 		keys := [...]string{"ifName"}
-		keyValues := [...]string{data.Interface[i].InterfaceName.ValueString()}
-		keyValuesVariables := [...]string{data.Interface[i].InterfaceNameVariable.ValueString()}
+		keyValues := [...]string{data.Interfaces[i].InterfaceName.ValueString()}
+		keyValuesVariables := [...]string{data.Interfaces[i].InterfaceNameVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "interface").ForEach(
@@ -702,212 +702,212 @@ func (data *ServiceSwitchport) updateFromBody(ctx context.Context, res gjson.Res
 				return true
 			},
 		)
-		data.Interface[i].InterfaceName = types.StringNull()
-		data.Interface[i].InterfaceNameVariable = types.StringNull()
+		data.Interfaces[i].InterfaceName = types.StringNull()
+		data.Interfaces[i].InterfaceNameVariable = types.StringNull()
 		if t := r.Get("ifName.optionType"); t.Exists() {
 			va := r.Get("ifName.value")
 			if t.String() == "variable" {
-				data.Interface[i].InterfaceNameVariable = types.StringValue(va.String())
+				data.Interfaces[i].InterfaceNameVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].InterfaceName = types.StringValue(va.String())
+				data.Interfaces[i].InterfaceName = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].Mode = types.StringNull()
+		data.Interfaces[i].Mode = types.StringNull()
 
 		if t := r.Get("mode.optionType"); t.Exists() {
 			va := r.Get("mode.value")
 			if t.String() == "global" {
-				data.Interface[i].Mode = types.StringValue(va.String())
+				data.Interfaces[i].Mode = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].Shutdown = types.BoolNull()
-		data.Interface[i].ShutdownVariable = types.StringNull()
+		data.Interfaces[i].Shutdown = types.BoolNull()
+		data.Interfaces[i].ShutdownVariable = types.StringNull()
 		if t := r.Get("shutdown.optionType"); t.Exists() {
 			va := r.Get("shutdown.value")
 			if t.String() == "variable" {
-				data.Interface[i].ShutdownVariable = types.StringValue(va.String())
+				data.Interfaces[i].ShutdownVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].Shutdown = types.BoolValue(va.Bool())
+				data.Interfaces[i].Shutdown = types.BoolValue(va.Bool())
 			}
 		}
-		data.Interface[i].Speed = types.StringNull()
-		data.Interface[i].SpeedVariable = types.StringNull()
+		data.Interfaces[i].Speed = types.StringNull()
+		data.Interfaces[i].SpeedVariable = types.StringNull()
 		if t := r.Get("speed.optionType"); t.Exists() {
 			va := r.Get("speed.value")
 			if t.String() == "variable" {
-				data.Interface[i].SpeedVariable = types.StringValue(va.String())
+				data.Interfaces[i].SpeedVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].Speed = types.StringValue(va.String())
+				data.Interfaces[i].Speed = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].Duplex = types.StringNull()
-		data.Interface[i].DuplexVariable = types.StringNull()
+		data.Interfaces[i].Duplex = types.StringNull()
+		data.Interfaces[i].DuplexVariable = types.StringNull()
 		if t := r.Get("duplex.optionType"); t.Exists() {
 			va := r.Get("duplex.value")
 			if t.String() == "variable" {
-				data.Interface[i].DuplexVariable = types.StringValue(va.String())
+				data.Interfaces[i].DuplexVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].Duplex = types.StringValue(va.String())
+				data.Interfaces[i].Duplex = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].SwitchportAccessVlan = types.Int64Null()
-		data.Interface[i].SwitchportAccessVlanVariable = types.StringNull()
+		data.Interfaces[i].SwitchportAccessVlan = types.Int64Null()
+		data.Interfaces[i].SwitchportAccessVlanVariable = types.StringNull()
 		if t := r.Get("switchportAccessVlan.optionType"); t.Exists() {
 			va := r.Get("switchportAccessVlan.value")
 			if t.String() == "variable" {
-				data.Interface[i].SwitchportAccessVlanVariable = types.StringValue(va.String())
+				data.Interfaces[i].SwitchportAccessVlanVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].SwitchportAccessVlan = types.Int64Value(va.Int())
+				data.Interfaces[i].SwitchportAccessVlan = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].SwitchportTrunkAllowedVlans = types.StringNull()
-		data.Interface[i].SwitchportTrunkAllowedVlansVariable = types.StringNull()
+		data.Interfaces[i].SwitchportTrunkAllowedVlans = types.StringNull()
+		data.Interfaces[i].SwitchportTrunkAllowedVlansVariable = types.StringNull()
 		if t := r.Get("switchportTrunkAllowedVlans.optionType"); t.Exists() {
 			va := r.Get("switchportTrunkAllowedVlans.value")
 			if t.String() == "variable" {
-				data.Interface[i].SwitchportTrunkAllowedVlansVariable = types.StringValue(va.String())
+				data.Interfaces[i].SwitchportTrunkAllowedVlansVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].SwitchportTrunkAllowedVlans = types.StringValue(va.String())
+				data.Interfaces[i].SwitchportTrunkAllowedVlans = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].SwitchportTrunkNativeVlan = types.Int64Null()
-		data.Interface[i].SwitchportTrunkNativeVlanVariable = types.StringNull()
+		data.Interfaces[i].SwitchportTrunkNativeVlan = types.Int64Null()
+		data.Interfaces[i].SwitchportTrunkNativeVlanVariable = types.StringNull()
 		if t := r.Get("switchportTrunkNativeVlan.optionType"); t.Exists() {
 			va := r.Get("switchportTrunkNativeVlan.value")
 			if t.String() == "variable" {
-				data.Interface[i].SwitchportTrunkNativeVlanVariable = types.StringValue(va.String())
+				data.Interfaces[i].SwitchportTrunkNativeVlanVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].SwitchportTrunkNativeVlan = types.Int64Value(va.Int())
+				data.Interfaces[i].SwitchportTrunkNativeVlan = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].PortControl = types.StringNull()
-		data.Interface[i].PortControlVariable = types.StringNull()
+		data.Interfaces[i].PortControl = types.StringNull()
+		data.Interfaces[i].PortControlVariable = types.StringNull()
 		if t := r.Get("portControl.optionType"); t.Exists() {
 			va := r.Get("portControl.value")
 			if t.String() == "variable" {
-				data.Interface[i].PortControlVariable = types.StringValue(va.String())
+				data.Interfaces[i].PortControlVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].PortControl = types.StringValue(va.String())
+				data.Interfaces[i].PortControl = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].VoiceVlan = types.Int64Null()
-		data.Interface[i].VoiceVlanVariable = types.StringNull()
+		data.Interfaces[i].VoiceVlan = types.Int64Null()
+		data.Interfaces[i].VoiceVlanVariable = types.StringNull()
 		if t := r.Get("voiceVlan.optionType"); t.Exists() {
 			va := r.Get("voiceVlan.value")
 			if t.String() == "variable" {
-				data.Interface[i].VoiceVlanVariable = types.StringValue(va.String())
+				data.Interfaces[i].VoiceVlanVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].VoiceVlan = types.Int64Value(va.Int())
+				data.Interfaces[i].VoiceVlan = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].PaeEnable = types.BoolNull()
-		data.Interface[i].PaeEnableVariable = types.StringNull()
+		data.Interfaces[i].PaeEnable = types.BoolNull()
+		data.Interfaces[i].PaeEnableVariable = types.StringNull()
 		if t := r.Get("paeEnable.optionType"); t.Exists() {
 			va := r.Get("paeEnable.value")
 			if t.String() == "variable" {
-				data.Interface[i].PaeEnableVariable = types.StringValue(va.String())
+				data.Interfaces[i].PaeEnableVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].PaeEnable = types.BoolValue(va.Bool())
+				data.Interfaces[i].PaeEnable = types.BoolValue(va.Bool())
 			}
 		}
-		data.Interface[i].MacAuthenticationBypass = types.BoolNull()
-		data.Interface[i].MacAuthenticationBypassVariable = types.StringNull()
+		data.Interfaces[i].MacAuthenticationBypass = types.BoolNull()
+		data.Interfaces[i].MacAuthenticationBypassVariable = types.StringNull()
 		if t := r.Get("macAuthenticationBypass.optionType"); t.Exists() {
 			va := r.Get("macAuthenticationBypass.value")
 			if t.String() == "variable" {
-				data.Interface[i].MacAuthenticationBypassVariable = types.StringValue(va.String())
+				data.Interfaces[i].MacAuthenticationBypassVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].MacAuthenticationBypass = types.BoolValue(va.Bool())
+				data.Interfaces[i].MacAuthenticationBypass = types.BoolValue(va.Bool())
 			}
 		}
-		data.Interface[i].HostMode = types.StringNull()
-		data.Interface[i].HostModeVariable = types.StringNull()
+		data.Interfaces[i].HostMode = types.StringNull()
+		data.Interfaces[i].HostModeVariable = types.StringNull()
 		if t := r.Get("hostMode.optionType"); t.Exists() {
 			va := r.Get("hostMode.value")
 			if t.String() == "variable" {
-				data.Interface[i].HostModeVariable = types.StringValue(va.String())
+				data.Interfaces[i].HostModeVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].HostMode = types.StringValue(va.String())
+				data.Interfaces[i].HostMode = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].EnablePeriodicReauth = types.BoolNull()
-		data.Interface[i].EnablePeriodicReauthVariable = types.StringNull()
+		data.Interfaces[i].EnablePeriodicReauth = types.BoolNull()
+		data.Interfaces[i].EnablePeriodicReauthVariable = types.StringNull()
 		if t := r.Get("enablePeriodicReauth.optionType"); t.Exists() {
 			va := r.Get("enablePeriodicReauth.value")
 			if t.String() == "variable" {
-				data.Interface[i].EnablePeriodicReauthVariable = types.StringValue(va.String())
+				data.Interfaces[i].EnablePeriodicReauthVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].EnablePeriodicReauth = types.BoolValue(va.Bool())
+				data.Interfaces[i].EnablePeriodicReauth = types.BoolValue(va.Bool())
 			}
 		}
-		data.Interface[i].Inactivity = types.Int64Null()
-		data.Interface[i].InactivityVariable = types.StringNull()
+		data.Interfaces[i].Inactivity = types.Int64Null()
+		data.Interfaces[i].InactivityVariable = types.StringNull()
 		if t := r.Get("inactivity.optionType"); t.Exists() {
 			va := r.Get("inactivity.value")
 			if t.String() == "variable" {
-				data.Interface[i].InactivityVariable = types.StringValue(va.String())
+				data.Interfaces[i].InactivityVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].Inactivity = types.Int64Value(va.Int())
+				data.Interfaces[i].Inactivity = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].Reauthentication = types.Int64Null()
-		data.Interface[i].ReauthenticationVariable = types.StringNull()
+		data.Interfaces[i].Reauthentication = types.Int64Null()
+		data.Interfaces[i].ReauthenticationVariable = types.StringNull()
 		if t := r.Get("reauthentication.optionType"); t.Exists() {
 			va := r.Get("reauthentication.value")
 			if t.String() == "variable" {
-				data.Interface[i].ReauthenticationVariable = types.StringValue(va.String())
+				data.Interfaces[i].ReauthenticationVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].Reauthentication = types.Int64Value(va.Int())
+				data.Interfaces[i].Reauthentication = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].ControlDirection = types.StringNull()
-		data.Interface[i].ControlDirectionVariable = types.StringNull()
+		data.Interfaces[i].ControlDirection = types.StringNull()
+		data.Interfaces[i].ControlDirectionVariable = types.StringNull()
 		if t := r.Get("controlDirection.optionType"); t.Exists() {
 			va := r.Get("controlDirection.value")
 			if t.String() == "variable" {
-				data.Interface[i].ControlDirectionVariable = types.StringValue(va.String())
+				data.Interfaces[i].ControlDirectionVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].ControlDirection = types.StringValue(va.String())
+				data.Interfaces[i].ControlDirection = types.StringValue(va.String())
 			}
 		}
-		data.Interface[i].RestrictedVlan = types.Int64Null()
-		data.Interface[i].RestrictedVlanVariable = types.StringNull()
+		data.Interfaces[i].RestrictedVlan = types.Int64Null()
+		data.Interfaces[i].RestrictedVlanVariable = types.StringNull()
 		if t := r.Get("restrictedVlan.optionType"); t.Exists() {
 			va := r.Get("restrictedVlan.value")
 			if t.String() == "variable" {
-				data.Interface[i].RestrictedVlanVariable = types.StringValue(va.String())
+				data.Interfaces[i].RestrictedVlanVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].RestrictedVlan = types.Int64Value(va.Int())
+				data.Interfaces[i].RestrictedVlan = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].GuestVlan = types.Int64Null()
-		data.Interface[i].GuestVlanVariable = types.StringNull()
+		data.Interfaces[i].GuestVlan = types.Int64Null()
+		data.Interfaces[i].GuestVlanVariable = types.StringNull()
 		if t := r.Get("guestVlan.optionType"); t.Exists() {
 			va := r.Get("guestVlan.value")
 			if t.String() == "variable" {
-				data.Interface[i].GuestVlanVariable = types.StringValue(va.String())
+				data.Interfaces[i].GuestVlanVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].GuestVlan = types.Int64Value(va.Int())
+				data.Interfaces[i].GuestVlan = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].CriticalVlan = types.Int64Null()
-		data.Interface[i].CriticalVlanVariable = types.StringNull()
+		data.Interfaces[i].CriticalVlan = types.Int64Null()
+		data.Interfaces[i].CriticalVlanVariable = types.StringNull()
 		if t := r.Get("criticalVlan.optionType"); t.Exists() {
 			va := r.Get("criticalVlan.value")
 			if t.String() == "variable" {
-				data.Interface[i].CriticalVlanVariable = types.StringValue(va.String())
+				data.Interfaces[i].CriticalVlanVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].CriticalVlan = types.Int64Value(va.Int())
+				data.Interfaces[i].CriticalVlan = types.Int64Value(va.Int())
 			}
 		}
-		data.Interface[i].EnableVoice = types.BoolNull()
-		data.Interface[i].EnableVoiceVariable = types.StringNull()
+		data.Interfaces[i].EnableVoice = types.BoolNull()
+		data.Interfaces[i].EnableVoiceVariable = types.StringNull()
 		if t := r.Get("enableVoice.optionType"); t.Exists() {
 			va := r.Get("enableVoice.value")
 			if t.String() == "variable" {
-				data.Interface[i].EnableVoiceVariable = types.StringValue(va.String())
+				data.Interfaces[i].EnableVoiceVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.Interface[i].EnableVoice = types.BoolValue(va.Bool())
+				data.Interfaces[i].EnableVoice = types.BoolValue(va.Bool())
 			}
 		}
 	}
@@ -987,7 +987,7 @@ func (data *ServiceSwitchport) isNull(ctx context.Context, res gjson.Result) boo
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
-	if len(data.Interface) > 0 {
+	if len(data.Interfaces) > 0 {
 		return false
 	}
 	if !data.AgeOutTime.IsNull() {

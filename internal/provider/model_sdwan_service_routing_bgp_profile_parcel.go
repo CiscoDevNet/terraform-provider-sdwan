@@ -2075,9 +2075,9 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv4Neighbors {
-		keys := [...]string{"description"}
-		keyValues := [...]string{data.Ipv4Neighbors[i].Description.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv4Neighbors[i].DescriptionVariable.ValueString()}
+		keys := [...]string{"address"}
+		keyValues := [...]string{data.Ipv4Neighbors[i].Address.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv4Neighbors[i].AddressVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "neighbor").ForEach(
@@ -2341,9 +2341,9 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv6Neighbors {
-		keys := [...]string{"description"}
-		keyValues := [...]string{data.Ipv6Neighbors[i].Description.ValueString()}
-		keyValuesVariables := [...]string{data.Ipv6Neighbors[i].DescriptionVariable.ValueString()}
+		keys := [...]string{"address"}
+		keyValues := [...]string{data.Ipv6Neighbors[i].Address.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6Neighbors[i].AddressVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "ipv6Neighbor").ForEach(

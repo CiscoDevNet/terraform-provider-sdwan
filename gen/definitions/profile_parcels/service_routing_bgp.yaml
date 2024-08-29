@@ -55,8 +55,8 @@ attributes:
     attributes:
     - model_name: address
       example: 1.2.3.4
-    - model_name: description
       id: true
+    - model_name: description
       example: neighbor1
     - model_name: shutdown
       example: false
@@ -133,8 +133,8 @@ attributes:
     attributes:
     - model_name: address
       example: "2001::1"
-    - model_name: description
       id: true
+    - model_name: description
       example: neighbor2
     - model_name: shutdown
       example: false
