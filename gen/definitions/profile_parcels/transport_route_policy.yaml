@@ -92,93 +92,54 @@ attributes:
       attributes:
       - model_name: enableAcceptAction
         data_path: [accept]
-        conditional_attribute:
-          name: reject
-          value: false
         example: true
       - model_name: prepend
         tf_name: as_path_prend
         data_path: [accept, setAsPath]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: 65521
       - model_name: additive
         tf_name: community_additive
         data_path: [accept, setCommunity]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: false
       - model_name: community
         tf_name: community
         data_path: [accept, setCommunity]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: internet
       - model_name: setLocalPreference
         tf_name: local_preference
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: 100
       - model_name: setMetric
         tf_name: metric
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: 20
       - model_name: setMetricType
         tf_name: metric_type
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: type1
       - model_name: setOmpTag
         tf_name: omp_tag
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: 200
       - model_name: setOrigin
         tf_name: origin
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: EGP
       - model_name: setOspfTag
         tf_name: ospf_tag
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: 1200
       - model_name: setWeight
         tf_name: weight
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: 2200
       - model_name: setIpv4NextHop
         tf_name: ipv4_next_hop
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         example: 10.0.0.1
       - model_name: setIpv6NextHop
         tf_name: ipv6_next_hop
         data_path: [accept]
-        conditional_attribute:
-          name: enableAcceptAction
-          value: true
         exclude_test: true
         example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
 

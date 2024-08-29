@@ -110,166 +110,246 @@ func (data TransportRoutePolicy) toBody(ctx context.Context) string {
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	path := "data."
 	if data.DefaultAction.IsNull() {
-		body, _ = sjson.Set(body, path+"defaultAction.optionType", "default")
-		body, _ = sjson.Set(body, path+"defaultAction.value", "reject")
+		if true {
+			body, _ = sjson.Set(body, path+"defaultAction.optionType", "default")
+			body, _ = sjson.Set(body, path+"defaultAction.value", "reject")
+		}
 	} else {
-		body, _ = sjson.Set(body, path+"defaultAction.optionType", "global")
-		body, _ = sjson.Set(body, path+"defaultAction.value", data.DefaultAction.ValueString())
+		if true {
+			body, _ = sjson.Set(body, path+"defaultAction.optionType", "global")
+			body, _ = sjson.Set(body, path+"defaultAction.value", data.DefaultAction.ValueString())
+		}
 	}
-	body, _ = sjson.Set(body, path+"sequences", []interface{}{})
-	for _, item := range data.Sequences {
-		itemBody := ""
-		if !item.Id.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sequenceId.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "sequenceId.value", item.Id.ValueInt64())
-		}
-		if !item.Name.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "sequenceName.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.Name.ValueString())
-		}
-		if item.BaseAction.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "baseAction.value", "reject")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
-		}
-		if item.Protocol.IsNull() {
-			itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "default")
-			itemBody, _ = sjson.Set(itemBody, "protocol.value", "IPV4")
-		} else {
-			itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "global")
-			itemBody, _ = sjson.Set(itemBody, "protocol.value", item.Protocol.ValueString())
-		}
-
-		for _, childItem := range item.MatchEntries {
-			itemChildBody := ""
-			if !childItem.AsPathListId.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "asPathList.refId.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "asPathList.refId.value", childItem.AsPathListId.ValueString())
-			}
-			if !childItem.StandardCommunityListCriteria.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "communityList.criteria.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "communityList.criteria.value", childItem.StandardCommunityListCriteria.ValueString())
-			}
-
-			for _, childChildItem := range childItem.StandardCommunityLists {
-				itemChildChildBody := ""
-				if !childChildItem.Id.IsNull() {
-					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "refId.optionType", "global")
-					itemChildChildBody, _ = sjson.Set(itemChildChildBody, "refId.value", childChildItem.Id.ValueString())
+	if true {
+		body, _ = sjson.Set(body, path+"sequences", []interface{}{})
+		for _, item := range data.Sequences {
+			itemBody := ""
+			if !item.Id.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sequenceId.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sequenceId.value", item.Id.ValueInt64())
 				}
-				itemChildBody, _ = sjson.SetRaw(itemChildBody, "communityList.standardCommunityList.-1", itemChildChildBody)
 			}
-			if !childItem.ExpandedCommunityListId.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "communityList.expandedCommunityList.refId.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "communityList.expandedCommunityList.refId.value", childItem.ExpandedCommunityListId.ValueString())
+			if !item.Name.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "sequenceName.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.Name.ValueString())
+				}
 			}
-			if !childItem.ExtendedCommunityListId.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "extCommunityList.refId.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "extCommunityList.refId.value", childItem.ExtendedCommunityListId.ValueString())
-			}
-			if !childItem.BgpLocalPreference.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "bgpLocalPreference.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "bgpLocalPreference.value", childItem.BgpLocalPreference.ValueInt64())
-			}
-			if !childItem.Metric.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "metric.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "metric.value", childItem.Metric.ValueInt64())
-			}
-			if !childItem.OmpTag.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "ompTag.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "ompTag.value", childItem.OmpTag.ValueInt64())
-			}
-			if !childItem.OspfTag.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "ospfTag.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "ospfTag.value", childItem.OspfTag.ValueInt64())
-			}
-			if !childItem.Ipv4AddressId.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv4Address.refId.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv4Address.refId.value", childItem.Ipv4AddressId.ValueString())
-			}
-			if !childItem.Ipv4NextHopId.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv4NextHop.refId.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv4NextHop.refId.value", childItem.Ipv4NextHopId.ValueString())
-			}
-			if !childItem.Ipv6AddressId.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv6Address.refId.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv6Address.refId.value", childItem.Ipv6AddressId.ValueString())
-			}
-			if !childItem.Ipv6NextHopId.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv6NextHop.refId.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "ipv6NextHop.refId.value", childItem.Ipv6NextHopId.ValueString())
-			}
-			itemBody, _ = sjson.SetRaw(itemBody, "matchEntries.-1", itemChildBody)
-		}
-
-		for _, childItem := range item.Actions {
-			itemChildBody := ""
-			itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.optionType", "default")
-			itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.value", true)
-			if !childItem.AsPathPrend.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.optionType", "global")
-				var values []int64
-				childItem.AsPathPrend.ElementsAs(ctx, &values, false)
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.value", values)
-			}
-			if childItem.CommunityAdditive.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.optionType", "default")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.value", false)
+			if item.BaseAction.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "baseAction.value", "reject")
+				}
 			} else {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.value", childItem.CommunityAdditive.ValueBool())
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
+				}
 			}
+			if item.Protocol.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "default")
+					itemBody, _ = sjson.Set(itemBody, "protocol.value", "IPV4")
+				}
+			} else {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "protocol.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "protocol.value", item.Protocol.ValueString())
+				}
+			}
+			if true {
 
-			if !childItem.CommunityVariable.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.optionType", "variable")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.value", childItem.CommunityVariable.ValueString())
-			} else if !childItem.Community.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.optionType", "global")
-				var values []string
-				childItem.Community.ElementsAs(ctx, &values, false)
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.value", values)
+				for _, childItem := range item.MatchEntries {
+					itemChildBody := ""
+					if !childItem.AsPathListId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "asPathList.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "asPathList.refId.value", childItem.AsPathListId.ValueString())
+						}
+					}
+					if !childItem.StandardCommunityListCriteria.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "communityList.criteria.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "communityList.criteria.value", childItem.StandardCommunityListCriteria.ValueString())
+						}
+					}
+					if true {
+
+						for _, childChildItem := range childItem.StandardCommunityLists {
+							itemChildChildBody := ""
+							if !childChildItem.Id.IsNull() {
+								if true {
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "refId.optionType", "global")
+									itemChildChildBody, _ = sjson.Set(itemChildChildBody, "refId.value", childChildItem.Id.ValueString())
+								}
+							}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "communityList.standardCommunityList.-1", itemChildChildBody)
+						}
+					}
+					if !childItem.ExpandedCommunityListId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "communityList.expandedCommunityList.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "communityList.expandedCommunityList.refId.value", childItem.ExpandedCommunityListId.ValueString())
+						}
+					}
+					if !childItem.ExtendedCommunityListId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "extCommunityList.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "extCommunityList.refId.value", childItem.ExtendedCommunityListId.ValueString())
+						}
+					}
+					if !childItem.BgpLocalPreference.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "bgpLocalPreference.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "bgpLocalPreference.value", childItem.BgpLocalPreference.ValueInt64())
+						}
+					}
+					if !childItem.Metric.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "metric.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "metric.value", childItem.Metric.ValueInt64())
+						}
+					}
+					if !childItem.OmpTag.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ompTag.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "ompTag.value", childItem.OmpTag.ValueInt64())
+						}
+					}
+					if !childItem.OspfTag.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ospfTag.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "ospfTag.value", childItem.OspfTag.ValueInt64())
+						}
+					}
+					if !childItem.Ipv4AddressId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4Address.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4Address.refId.value", childItem.Ipv4AddressId.ValueString())
+						}
+					}
+					if !childItem.Ipv4NextHopId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4NextHop.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4NextHop.refId.value", childItem.Ipv4NextHopId.ValueString())
+						}
+					}
+					if !childItem.Ipv6AddressId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6Address.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6Address.refId.value", childItem.Ipv6AddressId.ValueString())
+						}
+					}
+					if !childItem.Ipv6NextHopId.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6NextHop.refId.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6NextHop.refId.value", childItem.Ipv6NextHopId.ValueString())
+						}
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "matchEntries.-1", itemChildBody)
+				}
 			}
-			if !childItem.LocalPreference.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setLocalPreference.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setLocalPreference.value", childItem.LocalPreference.ValueInt64())
+			if true {
+
+				for _, childItem := range item.Actions {
+					itemChildBody := ""
+					if true {
+						itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.optionType", "default")
+						itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.value", true)
+					}
+					if !childItem.AsPathPrend.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.optionType", "global")
+							var values []int64
+							childItem.AsPathPrend.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.value", values)
+						}
+					}
+					if childItem.CommunityAdditive.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.optionType", "default")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.value", false)
+						}
+					} else {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.additive.value", childItem.CommunityAdditive.ValueBool())
+						}
+					}
+
+					if !childItem.CommunityVariable.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.optionType", "variable")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.value", childItem.CommunityVariable.ValueString())
+						}
+					} else if !childItem.Community.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.optionType", "global")
+							var values []string
+							childItem.Community.ElementsAs(ctx, &values, false)
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setCommunity.community.value", values)
+						}
+					}
+					if !childItem.LocalPreference.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setLocalPreference.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setLocalPreference.value", childItem.LocalPreference.ValueInt64())
+						}
+					}
+					if !childItem.Metric.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetric.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetric.value", childItem.Metric.ValueInt64())
+						}
+					}
+					if !childItem.MetricType.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetricType.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetricType.value", childItem.MetricType.ValueString())
+						}
+					}
+					if !childItem.OmpTag.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOmpTag.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOmpTag.value", childItem.OmpTag.ValueInt64())
+						}
+					}
+					if !childItem.Origin.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOrigin.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOrigin.value", childItem.Origin.ValueString())
+						}
+					}
+					if !childItem.OspfTag.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOspfTag.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOspfTag.value", childItem.OspfTag.ValueInt64())
+						}
+					}
+					if !childItem.Weight.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setWeight.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setWeight.value", childItem.Weight.ValueInt64())
+						}
+					}
+					if !childItem.Ipv4NextHop.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv4NextHop.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv4NextHop.value", childItem.Ipv4NextHop.ValueString())
+						}
+					}
+					if !childItem.Ipv6NextHop.IsNull() {
+						if true {
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv6NextHop.optionType", "global")
+							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv6NextHop.value", childItem.Ipv6NextHop.ValueString())
+						}
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
+				}
 			}
-			if !childItem.Metric.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetric.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetric.value", childItem.Metric.ValueInt64())
-			}
-			if !childItem.MetricType.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetricType.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setMetricType.value", childItem.MetricType.ValueString())
-			}
-			if !childItem.OmpTag.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOmpTag.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOmpTag.value", childItem.OmpTag.ValueInt64())
-			}
-			if !childItem.Origin.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOrigin.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOrigin.value", childItem.Origin.ValueString())
-			}
-			if !childItem.OspfTag.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOspfTag.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setOspfTag.value", childItem.OspfTag.ValueInt64())
-			}
-			if !childItem.Weight.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setWeight.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setWeight.value", childItem.Weight.ValueInt64())
-			}
-			if !childItem.Ipv4NextHop.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv4NextHop.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv4NextHop.value", childItem.Ipv4NextHop.ValueString())
-			}
-			if !childItem.Ipv6NextHop.IsNull() {
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv6NextHop.optionType", "global")
-				itemChildBody, _ = sjson.Set(itemChildBody, "accept.setIpv6NextHop.value", childItem.Ipv6NextHop.ValueString())
-			}
-			itemBody, _ = sjson.SetRaw(itemBody, "actions.-1", itemChildBody)
+			body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
 		}
-		body, _ = sjson.SetRaw(body, path+"sequences.-1", itemBody)
 	}
 	return body
 }
