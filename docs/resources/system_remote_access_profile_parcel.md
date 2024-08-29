@@ -16,29 +16,27 @@ This resource can manage a System Remote Access profile parcel.
 
 ```terraform
 resource "sdwan_system_remote_access_profile_parcel" "example" {
-  name                                    = "Example"
-  description                             = "My Example"
-  feature_profile_id                      = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  connection_type_ssl                     = false
-  any_connect_eap_authentication_type     = "user"
-  any_connect_eap_profile_download_status = "INITIALIZED"
-  any_connect_eap_profile_file_name       = "<form-data>"
-  ipv4_pool_size                          = 50
-  ipv6_pool_size                          = 1024
-  enable_crl_check                        = false
-  psk_authentication_type                 = "aaa"
-  psk_authentication_pre_shared_key       = "Cisco123"
-  radius_group_name                       = "radius-1"
-  aaa_derive_name_identity                = "MyPassword"
-  aaa_enable_accounting                   = false
-  ikev2_local_ike_identity_type           = "EMAIL"
-  ikev2_local_ike_identity_value          = "abc@xyz.com"
-  ikev2_security_association_lifetime     = 86400
-  ikev2_anti_dos_threshold                = 99
-  ipsec_enable_anti_replay                = false
-  ipsec_anti_replay_window_size           = 64
-  ipsec_security_association_lifetime     = 3600
-  ipsec_enable_perfect_foward_secrecy     = false
+  name                                = "Example"
+  description                         = "My Example"
+  feature_profile_id                  = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  connection_type_ssl                 = false
+  any_connect_eap_authentication_type = "user"
+  ipv4_pool_size                      = 50
+  ipv6_pool_size                      = 1024
+  enable_certificate_list_check       = false
+  psk_authentication_type             = "aaa"
+  psk_authentication_pre_shared_key   = "Cisco123"
+  radius_group_name                   = "radius-1"
+  aaa_derive_name_from_peer_identity  = "MyPassword"
+  aaa_enable_accounting               = false
+  ikev2_local_ike_identity_type       = "EMAIL"
+  ikev2_local_ike_identity_value      = "abc@xyz.com"
+  ikev2_security_association_lifetime = 86400
+  ikev2_anti_dos_threshold            = 99
+  ipsec_enable_anti_replay            = false
+  ipsec_anti_replay_window_size       = 64
+  ipsec_security_association_lifetime = 3600
+  ipsec_enable_perfect_foward_secrecy = false
 }
 ```
 
@@ -47,16 +45,17 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
 
 ### Required
 
-- `any_connect_eap_authentication_type` (String) - Choices: `user`, `device`
+- `any_connect_eap_authentication_type` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
+  - Choices: `user`, `device`
 - `name` (String) The name of the profile parcel
 - `radius_group_name` (String)
 
 ### Optional
 
-- `aaa_derive_name_domain` (String)
-- `aaa_derive_name_domain_variable` (String) Variable name
-- `aaa_derive_name_identity` (String)
-- `aaa_derive_name_identity_variable` (String) Variable name
+- `aaa_derive_name_from_peer_domain` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
+- `aaa_derive_name_from_peer_domain_variable` (String) Variable name
+- `aaa_derive_name_from_peer_identity` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
+- `aaa_derive_name_from_peer_identity_variable` (String) Variable name
 - `aaa_enable_accounting` (Boolean) Enable Accounting
   - Default value: `true`
 - `aaa_enable_accounting_variable` (String) Variable name
@@ -64,39 +63,35 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
 - `aaa_specify_name_policy_name_variable` (String) Variable name
 - `aaa_specify_name_policy_password` (String)
 - `aaa_specify_name_policy_password_variable` (String) Variable name
-- `any_connect_eap_profile_download_status` (String) - Choices: `NONE`, `INITIALIZED`, `INITIALIZED_ERROR`, `COMPLETE`, `COMPLETE_ERROR`
-  - Default value: `NONE`
-- `any_connect_eap_profile_download_status_variable` (String) Variable name
-- `any_connect_eap_profile_file_name` (String)
-- `any_connect_eap_profile_file_name_variable` (String) Variable name
 - `connection_type_ssl` (Boolean) Enabled SSL VPN
   - Default value: `false`
 - `description` (String) The description of the profile parcel
-- `enable_crl_check` (Boolean) - Default value: `false`
-- `enable_crl_check_variable` (String) Variable name
+- `enable_certificate_list_check` (Boolean) - Default value: `false`
+- `enable_certificate_list_check_variable` (String) Variable name
 - `feature_profile_id` (String) Feature Profile ID
-- `ikev2_anti_dos_threshold` (Number) Anti-DOS Threshold
+- `ikev2_anti_dos_threshold` (Number) Anti-DOS Threshold, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Range: `10`-`1000`
   - Default value: `100`
 - `ikev2_anti_dos_threshold_variable` (String) Variable name
-- `ikev2_local_ike_identity_type` (String) - Choices: `EMAIL`, `FQDN`, `KEYID`, `IPv4 ADDRESS`, `IPv6 ADDRESS`
+- `ikev2_local_ike_identity_type` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
+  - Choices: `EMAIL`, `FQDN`, `KEYID`, `IPv4 ADDRESS`, `IPv6 ADDRESS`
 - `ikev2_local_ike_identity_type_variable` (String) Variable name
-- `ikev2_local_ike_identity_value` (String)
+- `ikev2_local_ike_identity_value` (String) , Attribute conditional on `connection_type_ssl` being equal to `false`
 - `ikev2_local_ike_identity_value_variable` (String) Variable name
-- `ikev2_security_association_lifetime` (Number) Security Association Lifetime in Seconds
+- `ikev2_security_association_lifetime` (Number) Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Range: `3600`-`86400`
   - Default value: `86400`
 - `ikev2_security_association_lifetime_variable` (String) Variable name
-- `ipsec_anti_replay_window_size` (Number) security Association Lifetime
+- `ipsec_anti_replay_window_size` (Number) security Association Lifetime, Attribute conditional on `ipsec_enable_anti_replay` being equal to `true`
   - Default value: `64`
 - `ipsec_anti_replay_window_size_variable` (String) Variable name
-- `ipsec_enable_anti_replay` (Boolean) Enable Anti-Replay
+- `ipsec_enable_anti_replay` (Boolean) Enable Anti-Replay, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Default value: `true`
 - `ipsec_enable_anti_replay_variable` (String) Variable name
-- `ipsec_enable_perfect_foward_secrecy` (Boolean) security Association Lifetime
+- `ipsec_enable_perfect_foward_secrecy` (Boolean) security Association Lifetime, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Default value: `false`
 - `ipsec_enable_perfect_foward_secrecy_variable` (String) Variable name
-- `ipsec_security_association_lifetime` (Number) Security Association Lifetime in Seconds
+- `ipsec_security_association_lifetime` (Number) Security Association Lifetime in Seconds, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Range: `3600`-`86400`
   - Default value: `3600`
 - `ipsec_security_association_lifetime_variable` (String) Variable name
@@ -106,9 +101,9 @@ resource "sdwan_system_remote_access_profile_parcel" "example" {
 - `ipv6_pool_size` (Number) IPv6 Pool Size
   - Default value: `1024`
 - `ipv6_pool_size_variable` (String) Variable name
-- `psk_authentication_pre_shared_key` (String) PSK Pre Shared Key
+- `psk_authentication_pre_shared_key` (String) PSK Pre Shared Key, Attribute conditional on `psk_authentication_type` being equal to `group`
 - `psk_authentication_pre_shared_key_variable` (String) Variable name
-- `psk_authentication_type` (String) PSK Selection
+- `psk_authentication_type` (String) PSK Selection, Attribute conditional on `connection_type_ssl` being equal to `false`
   - Choices: `aaa`, `group`
 - `psk_authentication_type_variable` (String) Variable name
 - `radius_group_name_variable` (String) Variable name

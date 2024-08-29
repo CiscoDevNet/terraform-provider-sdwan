@@ -193,7 +193,7 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 							},
 						},
 						"next_hops": schema.ListNestedAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop").String,
+							MarkdownDescription: helpers.NewAttributeDescription("IPv4 Route Gateway Next Hop, Attribute conditional on `gateway` being equal to `nextHop`").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
@@ -220,7 +220,7 @@ func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req r
 							},
 						},
 						"administrative_distance": schema.Int64Attribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Administrative distance").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Administrative distance, Attribute conditional on `gateway` being equal to `null0`").AddIntegerRangeDescription(1, 255).AddDefaultValueDescription("1").String,
 							Optional:            true,
 							Validators: []validator.Int64{
 								int64validator.Between(1, 255),

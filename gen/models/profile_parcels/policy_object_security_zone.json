@@ -1,0 +1,145 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/security-zone/post/request_schema.json",
+      "title": "security-zone Parcel Schema",
+      "description": "security-zone profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "pattern": "(?i)^(?:(?!\\b(untrusted|self|default|service)\\b).)*$"
+          },
+          "description": {
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "properties": {
+                  "entries": {
+                      "minItems": 1,
+                      "oneOf": [
+                          {
+                              "type": "array",
+                              "minItems": 1,
+                              "uniqueItems": true,
+                              "items": {
+                                  "type": "object",
+                                  "properties": {
+                                      "vpn": {
+                                          "type": "object",
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "type": "string"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  },
+                                  "required": [
+                                      "vpn"
+                                  ],
+                                  "additionalProperties": false
+                              }
+                          },
+                          {
+                              "type": "array",
+                              "minItems": 1,
+                              "uniqueItems": true,
+                              "items": {
+                                  "type": "object",
+                                  "properties": {
+                                      "interface": {
+                                          "type": "object",
+                                          "properties": {
+                                              "optionType": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              },
+                                              "value": {
+                                                  "type": "string"
+                                              }
+                                          },
+                                          "required": [
+                                              "optionType",
+                                              "value"
+                                          ],
+                                          "additionalProperties": false
+                                      }
+                                  },
+                                  "required": [
+                                      "interface"
+                                  ],
+                                  "additionalProperties": false
+                              }
+                          }
+                      ]
+                  }
+              },
+              "required": [
+                  "entries"
+              ],
+              "additionalProperties": false
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for security-zone profile parcel",
+              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+              "details-2": "variable name should not be present if optionType value is NOT variable",
+              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+              "examples": [
+                  {
+                      "data": {
+                          "entries": [
+                              {
+                                  "vpn": {
+                                      "optionType": "global",
+                                      "value": "Guest"
+                                  }
+                              }
+                          ]
+                      },
+                      "name": "zoneList1"
+                  },
+                  {
+                      "data": {
+                          "entries": [
+                              {
+                                  "interface": {
+                                      "optionType": "global",
+                                      "value": "GigabitEthernet1"
+                                  }
+                              }
+                          ]
+                      },
+                      "name": "zoneList2"
+                  }
+              ]
+          }
+      },
+      "required": [
+          "data",
+          "name"
+      ],
+      "not": {
+          "required": [
+              "documentation"
+          ]
+      },
+      "additionalProperties": false
+  }
+}

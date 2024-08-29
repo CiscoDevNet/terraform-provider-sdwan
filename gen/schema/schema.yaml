@@ -83,4 +83,5 @@ attribute:
 
 conditional_attribute:
   name: str() # Reference to other attribute
-  value: str() # Attribute value
+  value: any(str(), bool()) # Attribute value
+  type: str(required=False) # Attribute value type (default is String but can be set to Bool)

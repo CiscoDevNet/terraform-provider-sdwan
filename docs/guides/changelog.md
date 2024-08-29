@@ -16,6 +16,26 @@ description: |-
 - Add `sdwan_transport_ipv6_tracker_group_profile_parcel` resource and data source
 - Add `sdwan_service_object_tracker_profile_parcel` resource and data source
 - Add `sdwan_service_object_tracker_group_profile_parcel` resource and data source
+- BREAKING CHANGE: Rename `enable_crl_check` attribute of `sdwan_system_remote_access_profile_parcel,` resource to `enable_certificate_list_check`
+- BREAKING CHANGE: Rename `psk_selection` attribute of `sdwan_system_remote_access_profile_parcel` resource to `psk_authentication_type`
+- BREAKING CHANGE: Rename `aaa_derive_name_identity` attribute of `sdwan_system_remote_access_profile_parcel` resource to `aaa_derive_name_from_peer_identity`
+- BREAKING CHANGE: Rename `aaa_derive_name_domain` attribute of `sdwan_system_remote_access_profile_parcel` resource to `aaa_derive_name_from_peer_domain`
+- BREAKING CHANGE: Removes `any_connect_eap_profile_download_status` and `any_connect_eap_profile_file_name` attributes of `sdwan_system_remote_access_profile_parcel
+- Add `sdwan_policy_object_feature_profile` resource and data source
+- Add `sdwan_policy_object_class_map_profile_parcel` resource and data source
+- Add `sdwan_policy_object_color_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_data_ipv6_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_data_ipv4_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_tloc_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_expanded_community_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_extended_community_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_mirror_profile_parcel` resource and data source
+- Add `sdwan_policy_object_policer_profile_parcel` resource and data source
+- Add `sdwan_policy_object_ipv4_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_ipv6_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_other_feature_profile` resource and data source
+- Add `sdwan_other_ucse_profile_parcel` resource and data source
+- Add `sdwan_other_thousandeyes_profile_parcel` resource and data source
 - Add `sdwan_transport_gps_profile_parcel` resource and data source
 
 ## 0.3.13
