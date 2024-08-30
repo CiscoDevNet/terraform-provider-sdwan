@@ -3191,9 +3191,9 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv4Redistributes {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"protocol", "routePolicy.refId"}
+		keyValues := [...]string{data.Ipv4Redistributes[i].Protocol.ValueString(), data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv4Redistributes[i].ProtocolVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "addressFamily.redistribute").ForEach(
@@ -3377,9 +3377,9 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv6Redistributes {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"protocol", "routePolicy.refId"}
+		keyValues := [...]string{data.Ipv6Redistributes[i].Protocol.ValueString(), data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6Redistributes[i].ProtocolVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "ipv6AddressFamily.redistribute").ForEach(
