@@ -1,0 +1,82 @@
+---
+name: Service Switchport
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/switchport
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: interface
+    tf_name: interfaces
+    attributes: 
+    - model_name: ifName
+      tf_name: interface_name
+      id: true
+      example: GigabitEthernet
+    - model_name: mode
+      example: access
+    - model_name: shutdown
+      example: true
+    - model_name: speed
+      example: 10
+    - model_name: duplex
+      example: full
+    - model_name: switchportAccessVlan
+      example: 1
+    - model_name: switchportTrunkAllowedVlans
+      example: 1
+    - model_name: switchportTrunkNativeVlan
+      example: 1
+    - model_name: portControl
+      example: auto
+    - model_name: voiceVlan
+      example: 1
+    - model_name: paeEnable
+      example: true
+    - model_name: macAuthenticationBypass
+      example: false
+    - model_name: hostMode
+      example: single-host
+    - model_name: enablePeriodicReauth
+      example: false
+    - model_name: inactivity
+      example: 60
+    - model_name: reauthentication
+      example: 1
+    - model_name: controlDirection
+      example: both
+    - model_name: restrictedVlan
+      example: 1
+    - model_name: guestVlan
+      example: 1
+    - model_name: criticalVlan
+      example: 1
+    - model_name: enableVoice
+      example: false
+  - model_name: ageTime
+    tf_name: age_out_time
+    example: 300
+  - model_name: staticMacAddress
+    tf_name: static_mac_addresses
+    attributes:
+    - model_name: macaddr
+      tf_name: mac_address
+      example: 01:02:03:04:05:06
+    - model_name: vlan
+      tf_name: vlan_id
+      id: true
+      example: 1
+    - model_name: ifName
+      tf_name: interface_name
+      example: GigabitEthernet0/0/0
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
