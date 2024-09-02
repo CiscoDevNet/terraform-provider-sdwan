@@ -2802,14 +2802,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -2849,14 +2852,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -2893,14 +2899,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -2959,14 +2968,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3013,14 +3025,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -3059,14 +3074,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3105,14 +3123,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -3143,23 +3164,26 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			}
 		}
 		for ci := range data.Ipv4StaticRoutes[i].NextHopWithTrackers {
-			keys := [...]string{}
-			keyValues := [...]string{}
-			keyValuesVariables := [...]string{}
+			keys := [...]string{"address", "distance", "tracker.refId"}
+			keyValues := [...]string{data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].Address.ValueString(), strconv.FormatInt(data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].AdministrativeDistance.ValueInt64(), 10), data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].TrackerId.ValueString()}
+			keyValuesVariables := [...]string{data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].AddressVariable.ValueString(), data.Ipv4StaticRoutes[i].NextHopWithTrackers[ci].AdministrativeDistanceVariable.ValueString(), ""}
 
 			var cr gjson.Result
 			r.Get("oneOfIpRoute.nextHopContainer.nextHopWithTracker").ForEach(
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -3232,14 +3256,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3268,14 +3295,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -3334,14 +3364,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3391,14 +3424,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3456,14 +3492,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3521,14 +3560,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3578,14 +3620,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3673,14 +3718,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3760,14 +3808,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3835,14 +3886,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3902,14 +3956,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3946,14 +4003,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -3992,14 +4052,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -4036,14 +4099,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -4082,14 +4148,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -4136,14 +4205,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -4182,14 +4254,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -4219,14 +4294,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -4256,14 +4334,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -4293,14 +4374,17 @@ func (data *ServiceLANVPN) updateFromBody(ctx context.Context, res gjson.Result)
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v

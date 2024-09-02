@@ -34,6 +34,10 @@
 - Add `sdwan_service_routing_ospf_profile_parcel` resource and data source
 - Add `sdwan_service_routing_ospfv3_ipv4_profile_parcel` resource and data source
 - Add `sdwan_service_routing_ospfv3_ipv6_profile_parcel` resource and data source
+- Add `sdwan_service_routing_bgp_profile_parcel` resource and data source
+- Add `sdwan_service_switchport_profile_parcel` resource and data source
+- Add `sdwan_transport_route_policy_profile_parcel` resource and data source
+- Add `sdwan_service_route_policy_profile_parcel` resource and data source
 - Add `sdwan_policy_object_app_probe_profile_parcel` resource and data source
 - Add `sdwan_policy_object_as_path_profile_parcel` resource and data source
 - Add `sdwan_policy_object_vpn_group_profile_parcel` resource and data source

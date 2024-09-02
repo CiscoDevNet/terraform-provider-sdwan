@@ -812,14 +812,17 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -846,14 +849,17 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -894,14 +900,17 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -949,14 +958,17 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -1002,14 +1014,17 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -1087,14 +1102,17 @@ func (data *SystemSNMP) updateFromBody(ctx context.Context, res gjson.Result) {
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
