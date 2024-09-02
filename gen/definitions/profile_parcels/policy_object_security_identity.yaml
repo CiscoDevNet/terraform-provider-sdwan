@@ -15,10 +15,8 @@ attributes:
   - model_name: entries
     attributes:
     - model_name: user
-      id: true
       example: administrator
     - model_name: userGroup
-      id: true
       exclude_test: true
       example: "SDWAN-IDENTITY.CISCO.COM/Users/Domain"
 

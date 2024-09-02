@@ -15,10 +15,8 @@ attributes:
   - model_name: entries
     attributes:
     - model_name: app
-      id: true
       example: audible-com
     - model_name: appFamily
-      id: true
       example: web
       exclude_test: true
 

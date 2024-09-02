@@ -18,7 +18,6 @@ attributes:
     - model_name: colorPreference
       tf_name: primary_color_preference
       data_path: [primaryPreference]
-      id: true
       mandatory: true
       example: default
     - model_name: pathPreference

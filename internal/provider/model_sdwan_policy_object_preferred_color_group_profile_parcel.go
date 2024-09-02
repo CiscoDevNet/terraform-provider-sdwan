@@ -205,23 +205,26 @@ func (data *PolicyObjectPreferredColorGroup) updateFromBody(ctx context.Context,
 	}
 	path := "payload.data."
 	for i := range data.Entries {
-		keys := [...]string{}
-		keyValues := [...]string{}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"primaryPreference.pathPreference", "secondaryPreference.pathPreference", "tertiaryPreference.pathPreference"}
+		keyValues := [...]string{data.Entries[i].PrimaryPathPreference.ValueString(), data.Entries[i].SecondaryPathPreference.ValueString(), data.Entries[i].TertiaryPathPreference.ValueString()}
+		keyValuesVariables := [...]string{"", "", "", "", "", ""}
 
 		var r gjson.Result
 		res.Get(path + "entries").ForEach(
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v

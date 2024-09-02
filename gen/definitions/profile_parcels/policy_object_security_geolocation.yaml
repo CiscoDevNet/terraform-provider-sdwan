@@ -16,10 +16,8 @@ attributes:
     mandatory: true
     attributes:
     - model_name: country
-      id: true
       example: DZA
     - model_name: continent
-      id: true
       example: AF
       exclude_test: true
 
