@@ -101,7 +101,7 @@ func (r *CustomControlTopologyPolicyDefinitionResource) Schema(ctx context.Conte
 			},
 			"sequences": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("List of sequences").String,
-				Required:            true,
+				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"id": schema.Int64Attribute{
