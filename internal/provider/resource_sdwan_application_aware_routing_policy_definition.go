@@ -118,10 +118,10 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("appList", "dnsAppList", "dns", "dscp", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "trafficTo").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("appList", "dnsAppList", "dns", "dscp", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "trafficTo", "icmpMessage").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("appList", "dnsAppList", "dns", "dscp", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "trafficTo"),
+											stringvalidator.OneOf("appList", "dnsAppList", "dns", "dscp", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "trafficTo", "icmpMessage"),
 										},
 									},
 									"application_list_id": schema.StringAttribute{
@@ -138,6 +138,10 @@ func (r *ApplicationAwareRoutingPolicyDefinitionResource) Schema(ctx context.Con
 									},
 									"dns_application_list_version": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("DNS Application list version").String,
+										Optional:            true,
+									},
+									"icmp_message": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message").String,
 										Optional:            true,
 									},
 									"dns": schema.StringAttribute{

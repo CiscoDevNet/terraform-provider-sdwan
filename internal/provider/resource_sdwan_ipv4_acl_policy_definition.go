@@ -128,10 +128,10 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("dscp", "sourceIp", "destinationIp", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataPrefixList", "destinationDataPrefixList", "protocol", "tcp").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("dscp", "sourceIp", "destinationIp", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataPrefixList", "destinationDataPrefixList", "protocol", "tcp", "icmpMessage").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("dscp", "sourceIp", "destinationIp", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataPrefixList", "destinationDataPrefixList", "protocol", "tcp"),
+											stringvalidator.OneOf("dscp", "sourceIp", "destinationIp", "class", "packetLength", "plp", "sourcePort", "destinationPort", "sourceDataPrefixList", "destinationDataPrefixList", "protocol", "tcp", "icmpMessage"),
 										},
 									},
 									"dscp": schema.Int64Attribute{
@@ -143,6 +143,10 @@ func (r *IPv4ACLPolicyDefinitionResource) Schema(ctx context.Context, req resour
 									},
 									"source_ip": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source IP prefix").String,
+										Optional:            true,
+									},
+									"icmp_message": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message").String,
 										Optional:            true,
 									},
 									"destination_ip": schema.StringAttribute{

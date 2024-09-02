@@ -86,6 +86,7 @@ Read-Only:
 - `dns_application_list_id` (String) DNS Application list ID
 - `dns_application_list_version` (Number) DNS Application list version
 - `dscp` (Number) DSCP value
+- `icmp_message` (String) ICMP Message
 - `plp` (String) PLP
 - `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)
 - `source_data_prefix_list_id` (String) Source Data Prefix list ID

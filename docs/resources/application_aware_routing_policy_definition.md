@@ -108,7 +108,7 @@ Optional:
 Required:
 
 - `type` (String) Type of match entry
-  - Choices: `appList`, `dnsAppList`, `dns`, `dscp`, `plp`, `protocol`, `sourceDataPrefixList`, `sourceIp`, `sourcePort`, `destinationDataPrefixList`, `destinationIp`, `destinationRegion`, `destinationPort`, `trafficTo`
+  - Choices: `appList`, `dnsAppList`, `dns`, `dscp`, `plp`, `protocol`, `sourceDataPrefixList`, `sourceIp`, `sourcePort`, `destinationDataPrefixList`, `destinationIp`, `destinationRegion`, `destinationPort`, `trafficTo`, `icmpMessage`
 
 Optional:
 
@@ -126,6 +126,7 @@ Optional:
 - `dns_application_list_version` (Number) DNS Application list version
 - `dscp` (Number) DSCP value
   - Range: `0`-`63`
+- `icmp_message` (String) ICMP Message
 - `plp` (String) PLP
   - Choices: `low`, `high`
 - `protocol` (String) IP Protocol, 0-255 (Single value or multiple values separated by spaces)
