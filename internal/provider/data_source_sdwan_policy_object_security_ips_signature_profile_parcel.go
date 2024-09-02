@@ -35,26 +35,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &PolicyObjectSecurityIPsSignatureProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure = &PolicyObjectSecurityIPsSignatureProfileParcelDataSource{}
+	_ datasource.DataSource              = &PolicyObjectSecurityIPSSignatureProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure = &PolicyObjectSecurityIPSSignatureProfileParcelDataSource{}
 )
 
-func NewPolicyObjectSecurityIPsSignatureProfileParcelDataSource() datasource.DataSource {
-	return &PolicyObjectSecurityIPsSignatureProfileParcelDataSource{}
+func NewPolicyObjectSecurityIPSSignatureProfileParcelDataSource() datasource.DataSource {
+	return &PolicyObjectSecurityIPSSignatureProfileParcelDataSource{}
 }
 
-type PolicyObjectSecurityIPsSignatureProfileParcelDataSource struct {
+type PolicyObjectSecurityIPSSignatureProfileParcelDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *PolicyObjectSecurityIPsSignatureProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (d *PolicyObjectSecurityIPSSignatureProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_policy_object_security_ips_signature_profile_parcel"
 }
 
-func (d *PolicyObjectSecurityIPsSignatureProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *PolicyObjectSecurityIPSSignatureProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Policy Object Security IPs Signature profile parcel.",
+		MarkdownDescription: "This data source can read the Policy Object Security IPS Signature profile parcel.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -97,7 +97,7 @@ func (d *PolicyObjectSecurityIPsSignatureProfileParcelDataSource) Schema(ctx con
 	}
 }
 
-func (d *PolicyObjectSecurityIPsSignatureProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *PolicyObjectSecurityIPSSignatureProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -108,8 +108,8 @@ func (d *PolicyObjectSecurityIPsSignatureProfileParcelDataSource) Configure(_ co
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *PolicyObjectSecurityIPsSignatureProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config PolicyObjectSecurityIPsSignature
+func (d *PolicyObjectSecurityIPSSignatureProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config PolicyObjectSecurityIPSSignature
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)

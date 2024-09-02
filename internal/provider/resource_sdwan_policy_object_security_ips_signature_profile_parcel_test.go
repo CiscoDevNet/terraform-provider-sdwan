@@ -28,7 +28,7 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanPolicyObjectSecurityIPsSignatureProfileParcel(t *testing.T) {
+func TestAccSdwanPolicyObjectSecurityIPSSignatureProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
@@ -41,7 +41,7 @@ func TestAccSdwanPolicyObjectSecurityIPsSignatureProfileParcel(t *testing.T) {
 		Steps: []resource.TestStep{
 
 			{
-				Config: testAccSdwanPolicyObjectSecurityIPsSignaturePrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectSecurityIPsSignatureProfileParcelConfig_all(),
+				Config: testAccSdwanPolicyObjectSecurityIPSSignaturePrerequisitesProfileParcelConfig + testAccSdwanPolicyObjectSecurityIPSSignatureProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -51,7 +51,7 @@ func TestAccSdwanPolicyObjectSecurityIPsSignatureProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanPolicyObjectSecurityIPsSignaturePrerequisitesProfileParcelConfig = `
+const testAccSdwanPolicyObjectSecurityIPSSignaturePrerequisitesProfileParcelConfig = `
 variable "policy_object_feature_template_id" {} 
 `
 
@@ -62,7 +62,7 @@ variable "policy_object_feature_template_id" {}
 // End of section. //template:end testAccConfigMinimum
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
-func testAccSdwanPolicyObjectSecurityIPsSignatureProfileParcelConfig_all() string {
+func testAccSdwanPolicyObjectSecurityIPSSignatureProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_security_ips_signature_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"

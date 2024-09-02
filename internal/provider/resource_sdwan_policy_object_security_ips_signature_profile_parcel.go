@@ -43,26 +43,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &PolicyObjectSecurityIPsSignatureProfileParcelResource{}
-var _ resource.ResourceWithImportState = &PolicyObjectSecurityIPsSignatureProfileParcelResource{}
+var _ resource.Resource = &PolicyObjectSecurityIPSSignatureProfileParcelResource{}
+var _ resource.ResourceWithImportState = &PolicyObjectSecurityIPSSignatureProfileParcelResource{}
 
-func NewPolicyObjectSecurityIPsSignatureProfileParcelResource() resource.Resource {
-	return &PolicyObjectSecurityIPsSignatureProfileParcelResource{}
+func NewPolicyObjectSecurityIPSSignatureProfileParcelResource() resource.Resource {
+	return &PolicyObjectSecurityIPSSignatureProfileParcelResource{}
 }
 
-type PolicyObjectSecurityIPsSignatureProfileParcelResource struct {
+type PolicyObjectSecurityIPSSignatureProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_policy_object_security_ips_signature_profile_parcel"
 }
 
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Policy Object Security IPs Signature profile parcel.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Policy Object Security IPS Signature profile parcel.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -114,7 +114,7 @@ func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Schema(ctx conte
 	}
 }
 
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -126,8 +126,8 @@ func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Configure(_ cont
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan PolicyObjectSecurityIPsSignature
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan PolicyObjectSecurityIPSSignature
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -159,8 +159,8 @@ func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Create(ctx conte
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state PolicyObjectSecurityIPsSignature
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state PolicyObjectSecurityIPSSignature
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -196,8 +196,8 @@ func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Read(ctx context
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state PolicyObjectSecurityIPsSignature
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state PolicyObjectSecurityIPSSignature
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -232,8 +232,8 @@ func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Update(ctx conte
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state PolicyObjectSecurityIPsSignature
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state PolicyObjectSecurityIPSSignature
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -258,7 +258,7 @@ func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) Delete(ctx conte
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *PolicyObjectSecurityIPsSignatureProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *PolicyObjectSecurityIPSSignatureProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 

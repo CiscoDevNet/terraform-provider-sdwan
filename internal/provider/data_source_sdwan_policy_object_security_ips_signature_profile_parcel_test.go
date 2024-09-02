@@ -28,7 +28,7 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
-func TestAccDataSourceSdwanPolicyObjectSecurityIPsSignatureProfileParcel(t *testing.T) {
+func TestAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
@@ -40,7 +40,7 @@ func TestAccDataSourceSdwanPolicyObjectSecurityIPsSignatureProfileParcel(t *test
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceSdwanPolicyObjectSecurityIPsSignaturePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityIPsSignatureProfileParcelConfig(),
+				Config: testAccDataSourceSdwanPolicyObjectSecurityIPSSignaturePrerequisitesProfileParcelConfig + testAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -50,14 +50,14 @@ func TestAccDataSourceSdwanPolicyObjectSecurityIPsSignatureProfileParcel(t *test
 // End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccDataSourceSdwanPolicyObjectSecurityIPsSignaturePrerequisitesProfileParcelConfig = `
+const testAccDataSourceSdwanPolicyObjectSecurityIPSSignaturePrerequisitesProfileParcelConfig = `
 variable "policy_object_feature_template_id" {} 
 `
 
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
-func testAccDataSourceSdwanPolicyObjectSecurityIPsSignatureProfileParcelConfig() string {
+func testAccDataSourceSdwanPolicyObjectSecurityIPSSignatureProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_security_ips_signature_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"

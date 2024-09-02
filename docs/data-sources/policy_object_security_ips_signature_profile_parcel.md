@@ -3,12 +3,12 @@
 page_title: "sdwan_policy_object_security_ips_signature_profile_parcel Data Source - terraform-provider-sdwan"
 subcategory: "Profile Parcels"
 description: |-
-  This data source can read the Policy Object Security IPs Signature profile parcel.
+  This data source can read the Policy Object Security IPS Signature profile parcel.
 ---
 
 # sdwan_policy_object_security_ips_signature_profile_parcel (Data Source)
 
-This data source can read the Policy Object Security IPs Signature profile parcel.
+This data source can read the Policy Object Security IPS Signature profile parcel.
 
 ## Example Usage
 

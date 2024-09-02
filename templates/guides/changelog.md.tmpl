@@ -47,21 +47,21 @@ description: |-
 - Add `sdwan_service_switchport_profile_parcel` resource and data source
 - Add `sdwan_transport_route_policy_profile_parcel` resource and data source
 - Add `sdwan_service_route_policy_profile_parcel` resource and data source
-- Add `sdwan_policy_object_app_probe_profile_parcel` resource and data source
-- Add `sdwan_policy_object_as_path_profile_parcel` resource and data source
+- Add `sdwan_policy_object_app_probe_class_profile_parcel` resource and data source
+- Add `sdwan_policy_object_as_path_list_profile_parcel` resource and data source
 - Add `sdwan_policy_object_vpn_group_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_data_ip_prefix_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_fqdn_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_geolocation_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_data_ipv4_prefix_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_fqdn_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_geolocation_list_profile_parcel` resource and data source
 - Add `sdwan_policy_object_security_ips_signature_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_localdomain_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_port_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_scalable_group_tag_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_urllist_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_local_domain_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_port_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_scalable_group_tag_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_url_list_profile_parcel` resource and data source
 - Add `sdwan_policy_object_preferred_color_group_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_identity_profile_parcel` resource and data source
-- Add `sdwan_policy_object_security_localapp_profile_parcel` resource and data source
-- Add `sdwan_policy_object_standard_community_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_identity_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_security_local_application_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_standard_community_list_profile_parcel` resource and data source
 
 ## 0.3.13
 

@@ -31,16 +31,16 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type PolicyObjectSecurityIPsSignature struct {
+type PolicyObjectSecurityIPSSignature struct {
 	Id               types.String                              `tfsdk:"id"`
 	Version          types.Int64                               `tfsdk:"version"`
 	Name             types.String                              `tfsdk:"name"`
 	Description      types.String                              `tfsdk:"description"`
 	FeatureProfileId types.String                              `tfsdk:"feature_profile_id"`
-	Entries          []PolicyObjectSecurityIPsSignatureEntries `tfsdk:"entries"`
+	Entries          []PolicyObjectSecurityIPSSignatureEntries `tfsdk:"entries"`
 }
 
-type PolicyObjectSecurityIPsSignatureEntries struct {
+type PolicyObjectSecurityIPSSignatureEntries struct {
 	GeneratorId types.String `tfsdk:"generator_id"`
 	SignatureId types.String `tfsdk:"signature_id"`
 }
@@ -48,21 +48,21 @@ type PolicyObjectSecurityIPsSignatureEntries struct {
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data PolicyObjectSecurityIPsSignature) getModel() string {
+func (data PolicyObjectSecurityIPSSignature) getModel() string {
 	return "policy_object_security_ips_signature"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data PolicyObjectSecurityIPsSignature) getPath() string {
+func (data PolicyObjectSecurityIPSSignature) getPath() string {
 	return fmt.Sprintf("/v1/feature-profile/sdwan/policy-object/%v/security-ipssignature", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data PolicyObjectSecurityIPsSignature) toBody(ctx context.Context) string {
+func (data PolicyObjectSecurityIPSSignature) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -92,7 +92,7 @@ func (data PolicyObjectSecurityIPsSignature) toBody(ctx context.Context) string 
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *PolicyObjectSecurityIPsSignature) fromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectSecurityIPSSignature) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -101,9 +101,9 @@ func (data *PolicyObjectSecurityIPsSignature) fromBody(ctx context.Context, res 
 	}
 	path := "payload.data."
 	if value := res.Get(path + "entries"); value.Exists() {
-		data.Entries = make([]PolicyObjectSecurityIPsSignatureEntries, 0)
+		data.Entries = make([]PolicyObjectSecurityIPSSignatureEntries, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := PolicyObjectSecurityIPsSignatureEntries{}
+			item := PolicyObjectSecurityIPSSignatureEntries{}
 			item.GeneratorId = types.StringNull()
 
 			if t := v.Get("generatorId.optionType"); t.Exists() {
@@ -129,7 +129,7 @@ func (data *PolicyObjectSecurityIPsSignature) fromBody(ctx context.Context, res 
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *PolicyObjectSecurityIPsSignature) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *PolicyObjectSecurityIPSSignature) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -188,7 +188,7 @@ func (data *PolicyObjectSecurityIPsSignature) updateFromBody(ctx context.Context
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *PolicyObjectSecurityIPsSignature) isNull(ctx context.Context, res gjson.Result) bool {
+func (data *PolicyObjectSecurityIPSSignature) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}

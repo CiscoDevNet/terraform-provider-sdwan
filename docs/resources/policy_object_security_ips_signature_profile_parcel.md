@@ -3,13 +3,13 @@
 page_title: "sdwan_policy_object_security_ips_signature_profile_parcel Resource - terraform-provider-sdwan"
 subcategory: "Profile Parcels"
 description: |-
-  This resource can manage a Policy Object Security IPs Signature profile parcel.
+  This resource can manage a Policy Object Security IPS Signature profile parcel.
   Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_policy_object_security_ips_signature_profile_parcel (Resource)
 
-This resource can manage a Policy Object Security IPs Signature profile parcel.
+This resource can manage a Policy Object Security IPS Signature profile parcel.
   - Minimum SD-WAN Manager version: `20.12.0`
 
 ## Example Usage
