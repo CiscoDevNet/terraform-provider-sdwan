@@ -1,0 +1,1397 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/common/route-policy/common/request_schema.json",
+        "title": "Route Policy Parcel Schema",
+        "description": "Route policy profile parcel schema",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "defaultAction": {
+                        "description": "Default Action",
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "default": "reject",
+                                        "enum": [
+                                            "reject",
+                                            "accept"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "enum": [
+                                            "reject"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        ]
+                    },
+                    "sequences": {
+                        "description": "Route Policy List",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "sequenceId": {
+                                    "description": "Sequence Id",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "minimum": 1,
+                                                    "maximum": 65536,
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "sequenceName": {
+                                    "description": "Sequence Name",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "minLength": 1,
+                                                    "maxLength": 19
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "baseAction": {
+                                    "description": "Base Action",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "default": "reject",
+                                                    "enum": [
+                                                        "reject",
+                                                        "accept"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "reject"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "protocol": {
+                                    "description": "protocol such as IPV4, IPV6, or BOTH",
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "global"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "default": "IPV4",
+                                                    "enum": [
+                                                        "IPV4",
+                                                        "IPV6",
+                                                        "BOTH"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        {
+                                            "properties": {
+                                                "optionType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "default"
+                                                    ]
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "IPV4"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "optionType",
+                                                "value"
+                                            ],
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                },
+                                "matchEntries": {
+                                    "description": "Define match conditions",
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "maxItems": 1,
+                                    "uniqueItems": true,
+                                    "items": {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                            "asPathList": {
+                                                "description": "As Path List",
+                                                "type": "object",
+                                                "properties": {
+                                                    "refId": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "refId"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            "communityList": {
+                                                "description": "Community List",
+                                                "type": "object",
+                                                "oneOf": [
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "criteria": {
+                                                                "description": "Select a condition such as OR, AND or EXACT",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "default": "OR",
+                                                                                "enum": [
+                                                                                    "OR",
+                                                                                    "AND",
+                                                                                    "EXACT"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    },
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "default"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "OR"
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "standardCommunityList": {
+                                                                "description": "Select a standard community list",
+                                                                "type": "array",
+                                                                "uniqueItems": true,
+                                                                "minItems": 1,
+                                                                "items": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "refId": {
+                                                                            "properties": {
+                                                                                "optionType": {
+                                                                                    "type": "string",
+                                                                                    "enum": [
+                                                                                        "global"
+                                                                                    ]
+                                                                                },
+                                                                                "value": {
+                                                                                    "type": "string",
+                                                                                    "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                                                }
+                                                                            },
+                                                                            "required": [
+                                                                                "optionType",
+                                                                                "value"
+                                                                            ],
+                                                                            "additionalProperties": false
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "refId"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "criteria",
+                                                            "standardCommunityList"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "expandedCommunityList": {
+                                                                "description": "Select a expanded community list",
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "refId": {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "string",
+                                                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "refId"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "expandedCommunityList"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                ]
+                                            },
+                                            "extCommunityList": {
+                                                "description": "Extended Community List",
+                                                "type": "object",
+                                                "properties": {
+                                                    "refId": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "refId"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            "bgpLocalPreference": {
+                                                "description": "BGP Local Preference",
+                                                "type": "object",
+                                                "oneOf": [
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "minimum": 0,
+                                                                "maximum": 4294967295,
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                ]
+                                            },
+                                            "metric": {
+                                                "description": "Select Metric",
+                                                "type": "object",
+                                                "oneOf": [
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "minimum": 0,
+                                                                "maximum": 4294967295,
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                ]
+                                            },
+                                            "ompTag": {
+                                                "description": "Select OMP Tag",
+                                                "type": "object",
+                                                "oneOf": [
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "minimum": 0,
+                                                                "maximum": 4294967295,
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                ]
+                                            },
+                                            "ospfTag": {
+                                                "description": "Select OSPF Tag",
+                                                "type": "object",
+                                                "oneOf": [
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "minimum": 0,
+                                                                "maximum": 4294967295,
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                ]
+                                            },
+                                            "ipv4Address": {
+                                                "description": "Ipv4 Address",
+                                                "type": "object",
+                                                "properties": {
+                                                    "refId": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "refId"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            "ipv4NextHop": {
+                                                "description": "Ipv4 Next Hop",
+                                                "type": "object",
+                                                "properties": {
+                                                    "refId": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "refId"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            "ipv6Address": {
+                                                "description": "Ipv6 Address",
+                                                "type": "object",
+                                                "properties": {
+                                                    "refId": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "refId"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            "ipv6NextHop": {
+                                                "description": "Ipv6 Next Hop",
+                                                "type": "object",
+                                                "properties": {
+                                                    "refId": {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "global"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "string",
+                                                                "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "refId"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        },
+                                        "required": [],
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "actions": {
+                                    "description": "Define list of actions",
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "maxItems": 1,
+                                    "uniqueItems": true,
+                                    "items": {
+                                        "type": "object",
+                                        "oneOf": [
+                                            {
+                                                "properties": {
+                                                    "accept": {
+                                                        "description": "Accept Action",
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "enableAcceptAction": {
+                                                                "description": "Enable Accept Action",
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "optionType": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "default"
+                                                                        ]
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "boolean",
+                                                                        "enum": [
+                                                                            true
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "optionType",
+                                                                    "value"
+                                                                ],
+                                                                "additionalProperties": false
+                                                            },
+                                                            "setAsPath": {
+                                                                "description": "Set AS Path",
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "prepend": {
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "global"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "items": {
+                                                                                            "type": "integer",
+                                                                                            "minimum": 1,
+                                                                                            "maximum": 4294967295
+                                                                                        },
+                                                                                        "additionalProperties": false,
+                                                                                        "uniqueItems": false,
+                                                                                        "type": "array",
+                                                                                        "minItems": 1
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            },
+                                                            "setCommunity": {
+                                                                "description": "Set Community",
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "additive": {
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "global"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "boolean"
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            },
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "default"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "boolean",
+                                                                                        "enum": [
+                                                                                            false
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    "community": {
+                                                                        "oneOf": [
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "global"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "array",
+                                                                                        "items": {
+                                                                                            "uniqueItems": true,
+                                                                                            "type": "string",
+                                                                                            "oneOf": [
+                                                                                                {
+                                                                                                    "enum": [
+                                                                                                        "internet",
+                                                                                                        "local-AS",
+                                                                                                        "no-advertise",
+                                                                                                        "no-export"
+                                                                                                    ],
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "pattern": "^(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5]):(0|[1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$"
+                                                                                                }
+                                                                                            ]
+                                                                                        },
+                                                                                        "additionalProperties": false
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            },
+                                                                            {
+                                                                                "properties": {
+                                                                                    "optionType": {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "variable"
+                                                                                        ]
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                                                        "minLength": 1,
+                                                                                        "maxLength": 64
+                                                                                    }
+                                                                                },
+                                                                                "required": [
+                                                                                    "optionType",
+                                                                                    "value"
+                                                                                ],
+                                                                                "additionalProperties": false
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            },
+                                                            "setLocalPreference": {
+                                                                "description": "Set Local Preference",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "minimum": 0,
+                                                                                "maximum": 4294967295,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setMetric": {
+                                                                "description": "Set Metric",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "minimum": 0,
+                                                                                "maximum": 4294967295,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setMetricType": {
+                                                                "description": "Set Metric Type",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "enum": [
+                                                                                    "type1",
+                                                                                    "type2"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setOmpTag": {
+                                                                "description": "Set OMP Tag",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "minimum": 0,
+                                                                                "maximum": 4294967295,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setOrigin": {
+                                                                "description": "Set Origin",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "enum": [
+                                                                                    "EGP",
+                                                                                    "IGP",
+                                                                                    "Incomplete"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setOspfTag": {
+                                                                "description": "Set OSPF Tag",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "minimum": 0,
+                                                                                "maximum": 4294967295,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setWeight": {
+                                                                "description": "Set Weight",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "minimum": 0,
+                                                                                "maximum": 65535,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setIpv4NextHop": {
+                                                                "description": "Set Ipv4 Next Hop",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "string",
+                                                                                "format": "ipv4"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "setIpv6NextHop": {
+                                                                "description": "Set Ipv6 Next Hop",
+                                                                "type": "object",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "properties": {
+                                                                            "optionType": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "global"
+                                                                                ]
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "string",
+                                                                                "format": "ipv6"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "optionType",
+                                                                            "value"
+                                                                        ],
+                                                                        "additionalProperties": false
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "enableAcceptAction"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "accept"
+                                                ],
+                                                "additionalProperties": false
+                                            },
+                                            {
+                                                "properties": {
+                                                    "reject": {
+                                                        "description": "Reject Action",
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "default"
+                                                                ]
+                                                            },
+                                                            "value": {
+                                                                "type": "boolean",
+                                                                "enum": [
+                                                                    true
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType",
+                                                            "value"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "reject"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "sequenceId",
+                                "sequenceName",
+                                "baseAction",
+                                "protocol"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "defaultAction"
+                ],
+                "additionalProperties": false
+            },
+            "metadata": {
+                "supportedDeviceTypes": [
+                    "asr",
+                    "c1100",
+                    "c8000be",
+                    "csr1000v",
+                    "ir8100",
+                    "ir8340",
+                    "isr",
+                    "ISRv",
+                    "ir1101"
+                ]
+            },
+            "documentation": {
+                "description": "This is the documentation for route policy profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "defaultAction": {
+                                "optionType": "default",
+                                "value": "reject"
+                            },
+                            "sequences": [
+                                {
+                                    "sequenceId": {
+                                        "optionType": "global",
+                                        "value": 1
+                                    },
+                                    "sequenceName": {
+                                        "optionType": "global",
+                                        "value": "Route1"
+                                    },
+                                    "baseAction": {
+                                        "optionType": "default",
+                                        "value": "reject"
+                                    },
+                                    "protocol": {
+                                        "optionType": "default",
+                                        "value": "IPV4"
+                                    },
+                                    "matchEntries": [
+                                        {
+                                            "ipv4Address": {
+                                                "refId": {
+                                                    "optionType": "global",
+                                                    "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                }
+                                            },
+                                            "asPathList": {
+                                                "refId": {
+                                                    "optionType": "global",
+                                                    "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                }
+                                            },
+                                            "communityList": {
+                                                "criteria": {
+                                                    "optionType": "default",
+                                                    "value": "OR"
+                                                },
+                                                "standardCommunityList": [
+                                                    {
+                                                        "refId": {
+                                                            "optionType": "global",
+                                                            "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                        }
+                                                    },
+                                                    {
+                                                        "refId": {
+                                                            "optionType": "global",
+                                                            "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D52C"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            "extCommunityList": {
+                                                "refId": {
+                                                    "optionType": "global",
+                                                    "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                }
+                                            },
+                                            "bgpLocalPreference": {
+                                                "optionType": "global",
+                                                "value": 100
+                                            },
+                                            "metric": {
+                                                "optionType": "global",
+                                                "value": 1000
+                                            },
+                                            "ipv4NextHop": {
+                                                "refId": {
+                                                    "optionType": "global",
+                                                    "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                }
+                                            },
+                                            "ompTag": {
+                                                "optionType": "global",
+                                                "value": 10000
+                                            },
+                                            "ospfTag": {
+                                                "optionType": "global",
+                                                "value": 20000
+                                            }
+                                        }
+                                    ],
+                                    "actions": [
+                                        {
+                                            "accept": {
+                                                "enableAcceptAction": {
+                                                    "optionType": "default",
+                                                    "value": true
+                                                },
+                                                "setAsPath": {
+                                                    "prepend": {
+                                                        "optionType": "global",
+                                                        "value": [
+                                                            65521,
+                                                            65521
+                                                        ]
+                                                    }
+                                                },
+                                                "setCommunity": {
+                                                    "community": {
+                                                        "optionType": "global",
+                                                        "value": "internet"
+                                                    },
+                                                    "additive": {
+                                                        "optionType": "global",
+                                                        "value": true
+                                                    }
+                                                },
+                                                "setLocalPreference": {
+                                                    "optionType": "global",
+                                                    "value": 100
+                                                },
+                                                "setMetric": {
+                                                    "optionType": "global",
+                                                    "value": 20
+                                                },
+                                                "setMetricType": {
+                                                    "optionType": "global",
+                                                    "value": "type1"
+                                                },
+                                                "setIpv4NextHop": {
+                                                    "optionType": "global",
+                                                    "value": "10.0.0.1"
+                                                },
+                                                "setOmpTag": {
+                                                    "optionType": "global",
+                                                    "value": 200
+                                                },
+                                                "setOrigin": {
+                                                    "optionType": "global",
+                                                    "value": "EGP"
+                                                },
+                                                "setOspfTag": {
+                                                    "optionType": "global",
+                                                    "value": 1200
+                                                },
+                                                "setWeight": {
+                                                    "optionType": "global",
+                                                    "value": 2200
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "name": "route1"
+                    },
+                    {
+                        "data": {
+                            "defaultAction": {
+                                "optionType": "default",
+                                "value": "reject"
+                            },
+                            "sequences": [
+                                {
+                                    "sequenceId": {
+                                        "optionType": "global",
+                                        "value": 11
+                                    },
+                                    "sequenceName": {
+                                        "optionType": "global",
+                                        "value": "Route2"
+                                    },
+                                    "baseAction": {
+                                        "optionType": "global",
+                                        "value": "reject"
+                                    },
+                                    "protocol": {
+                                        "optionType": "default",
+                                        "value": "IPV6"
+                                    },
+                                    "matchEntries": [
+                                        {
+                                            "ipv6Address": {
+                                                "refId": {
+                                                    "optionType": "global",
+                                                    "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                }
+                                            },
+                                            "communityList": {
+                                                "expandedCommunityList": {
+                                                    "refId": {
+                                                        "optionType": "global",
+                                                        "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                    }
+                                                }
+                                            },
+                                            "ipv6NextHop": {
+                                                "refId": {
+                                                    "optionType": "global",
+                                                    "value": "28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "actions": [
+                                        {
+                                            "reject": {
+                                                "optionType": "default",
+                                                "value": true
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "name": "route2"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "name",
+            "data"
+        ],
+        "not": {
+            "required": [
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

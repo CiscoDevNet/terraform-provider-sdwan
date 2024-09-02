@@ -2508,14 +2508,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -2684,14 +2687,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -2774,14 +2780,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -2940,14 +2949,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 				func(_, v gjson.Result) bool {
 					found := false
 					for ik := range keys {
-						tt := v.Get(keys[ik] + ".optionType").String()
-						vv := v.Get(keys[ik] + ".value").String()
-						if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-							found = true
-							continue
+						tt := v.Get(keys[ik] + ".optionType")
+						vv := v.Get(keys[ik] + ".value")
+						if tt.Exists() && vv.Exists() {
+							if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+								found = true
+								continue
+							}
+							found = false
+							break
 						}
-						found = false
-						break
+						continue
 					}
 					if found {
 						cr = v
@@ -3030,14 +3042,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3097,14 +3112,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3173,23 +3191,26 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv4Redistributes {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"protocol", "routePolicy.refId"}
+		keyValues := [...]string{data.Ipv4Redistributes[i].Protocol.ValueString(), data.Ipv4Redistributes[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv4Redistributes[i].ProtocolVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "addressFamily.redistribute").ForEach(
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3227,14 +3248,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3284,14 +3308,17 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v
@@ -3350,23 +3377,26 @@ func (data *ServiceRoutingBGP) updateFromBody(ctx context.Context, res gjson.Res
 		}
 	}
 	for i := range data.Ipv6Redistributes {
-		keys := [...]string{"routePolicy.refId"}
-		keyValues := [...]string{data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
-		keyValuesVariables := [...]string{""}
+		keys := [...]string{"protocol", "routePolicy.refId"}
+		keyValues := [...]string{data.Ipv6Redistributes[i].Protocol.ValueString(), data.Ipv6Redistributes[i].RoutePolicyId.ValueString()}
+		keyValuesVariables := [...]string{data.Ipv6Redistributes[i].ProtocolVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "ipv6AddressFamily.redistribute").ForEach(
 			func(_, v gjson.Result) bool {
 				found := false
 				for ik := range keys {
-					tt := v.Get(keys[ik] + ".optionType").String()
-					vv := v.Get(keys[ik] + ".value").String()
-					if (tt == "variable" && vv == keyValuesVariables[ik]) || (tt == "global" && vv == keyValues[ik]) {
-						found = true
-						continue
+					tt := v.Get(keys[ik] + ".optionType")
+					vv := v.Get(keys[ik] + ".value")
+					if tt.Exists() && vv.Exists() {
+						if (tt.String() == "variable" && vv.String() == keyValuesVariables[ik]) || (tt.String() == "global" && vv.String() == keyValues[ik]) {
+							found = true
+							continue
+						}
+						found = false
+						break
 					}
-					found = false
-					break
+					continue
 				}
 				if found {
 					r = v

@@ -332,6 +332,16 @@ func BuildPath(s []string) string {
 	return strings.Join(s, ".")
 }
 
+// Templating helper function to return true if id included in attributes
+func HasId(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Id {
+			return true
+		}
+	}
+	return false
+}
+
 // Templating helper function to determine if attributes list contains one or more version attributes
 func HasVersionAttribute(attributes []YamlConfigAttribute) bool {
 	for _, attr := range attributes {
@@ -487,6 +497,7 @@ var functions = template.FuncMap{
 	"sprintf":              fmt.Sprintf,
 	"toLower":              strings.ToLower,
 	"path":                 BuildPath,
+	"hasId":                HasId,
 	"hasVersionAttribute":  HasVersionAttribute,
 	"getResponseModelPath": GetResponseModelPath,
 	"hasReference":         HasReference,
@@ -682,18 +693,31 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	}
 
 	path := ""
+	prefix := "properties."
 	for i, e := range attr.DataPath {
-		// Check if the next element is a oneOf
-		if model.Get("properties." + path + e + ".oneOf").Exists() {
-			// We need to find the right element in oneOf which has the next element
 
-			next := ""
-			if i+1 < len(attr.DataPath) {
-				next = attr.DataPath[i+1]
-			} else {
-				next = attr.ModelName
-			}
+		next := ""
+		if i+1 < len(attr.DataPath) {
+			next = attr.DataPath[i+1]
+		} else {
+			next = attr.ModelName
+		}
 
+		if model.Get("oneOf").Exists() {
+			prefix = "oneOf."
+		}
+
+		if path == "" && prefix == "oneOf." {
+			index := 0
+			model.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+				if v.Get(fmt.Sprintf("properties.%v.properties.%v", e, next)).Exists() {
+					path += fmt.Sprintf("%v.properties.%v.properties.", index, e)
+					return false // stop iterating
+				}
+				index += 1
+				return true // keep iterating
+			})
+		} else if model.Get(prefix + path + e + ".oneOf").Exists() {
 			index := 0
 			model.Get("properties." + path + e + ".oneOf").ForEach(func(k, v gjson.Result) bool {
 				if v.Get("properties." + next).Exists() {
@@ -705,16 +729,17 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				return true // keep iterating
 			})
 
-		} else if model.Get("properties." + path + e + ".items").Exists() {
+		} else if model.Get(prefix + path + e + ".items").Exists() {
 			path += fmt.Sprintf("%s.items.properties.", e)
 
 		} else {
 			path += e + ".properties."
 		}
 	}
+
 	path += attr.ModelName
 
-	r := model.Get("properties." + path)
+	r := model.Get(prefix + path)
 
 	if !r.Exists() {
 		panic(fmt.Sprintf("Could not find element in schema: %v\n%v\n\n", attr.ModelName, model))
