@@ -52,7 +52,7 @@ Read-Only:
 
 Read-Only:
 
-- `as_path_prend` (Set of Number)
+- `as_path_prepend` (Set of Number)
 - `community` (Set of String)
 - `community_additive` (Boolean)
 - `community_variable` (String) Variable name
@@ -76,10 +76,10 @@ Read-Only:
 - `bgp_local_preference` (Number) BGP Local Preference
 - `expanded_community_list_id` (String)
 - `extended_community_list_id` (String)
-- `ipv4_address_id` (String)
-- `ipv4_next_hop_id` (String)
-- `ipv6_address_id` (String)
-- `ipv6_next_hop_id` (String)
+- `ipv4_address_prefix_list_id` (String)
+- `ipv4_next_hop_prefix_list_id` (String)
+- `ipv6_address_prefix_list_id` (String)
+- `ipv6_next_hop_prefix_list_id` (String)
 - `metric` (Number) Select Metric
 - `omp_tag` (Number) Select OMP Tag
 - `ospf_tag` (Number) Select OSPF Tag

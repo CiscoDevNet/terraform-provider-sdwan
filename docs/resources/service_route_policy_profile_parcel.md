@@ -28,7 +28,7 @@ resource "sdwan_service_route_policy_profile_parcel" "example" {
       protocol    = "IPV4"
       actions = [
         {
-          as_path_prend      = [65521]
+          as_path_prepend    = [65521]
           community_additive = false
           community          = ["internet"]
           local_preference   = 100
@@ -89,7 +89,7 @@ Optional:
 
 Optional:
 
-- `as_path_prend` (Set of Number)
+- `as_path_prepend` (Set of Number)
 - `community` (Set of String)
 - `community_additive` (Boolean) - Default value: `false`
 - `community_variable` (String) Variable name
@@ -121,10 +121,10 @@ Optional:
   - Range: `0`-`4294967295`
 - `expanded_community_list_id` (String)
 - `extended_community_list_id` (String)
-- `ipv4_address_id` (String)
-- `ipv4_next_hop_id` (String)
-- `ipv6_address_id` (String)
-- `ipv6_next_hop_id` (String)
+- `ipv4_address_prefix_list_id` (String)
+- `ipv4_next_hop_prefix_list_id` (String)
+- `ipv6_address_prefix_list_id` (String)
+- `ipv6_next_hop_prefix_list_id` (String)
 - `metric` (Number) Select Metric
   - Range: `0`-`4294967295`
 - `omp_tag` (Number) Select OMP Tag

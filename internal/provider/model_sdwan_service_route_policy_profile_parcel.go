@@ -62,13 +62,13 @@ type ServiceRoutePolicySequencesMatchEntries struct {
 	Metric                        types.Int64                                                     `tfsdk:"metric"`
 	OmpTag                        types.Int64                                                     `tfsdk:"omp_tag"`
 	OspfTag                       types.Int64                                                     `tfsdk:"ospf_tag"`
-	Ipv4AddressId                 types.String                                                    `tfsdk:"ipv4_address_id"`
-	Ipv4NextHopId                 types.String                                                    `tfsdk:"ipv4_next_hop_id"`
-	Ipv6AddressId                 types.String                                                    `tfsdk:"ipv6_address_id"`
-	Ipv6NextHopId                 types.String                                                    `tfsdk:"ipv6_next_hop_id"`
+	Ipv4AddressPrefixListId       types.String                                                    `tfsdk:"ipv4_address_prefix_list_id"`
+	Ipv4NextHopPrefixListId       types.String                                                    `tfsdk:"ipv4_next_hop_prefix_list_id"`
+	Ipv6AddressPrefixListId       types.String                                                    `tfsdk:"ipv6_address_prefix_list_id"`
+	Ipv6NextHopPrefixListId       types.String                                                    `tfsdk:"ipv6_next_hop_prefix_list_id"`
 }
 type ServiceRoutePolicySequencesActions struct {
-	AsPathPrend       types.Set    `tfsdk:"as_path_prend"`
+	AsPathPrepend     types.Set    `tfsdk:"as_path_prepend"`
 	CommunityAdditive types.Bool   `tfsdk:"community_additive"`
 	Community         types.Set    `tfsdk:"community"`
 	CommunityVariable types.String `tfsdk:"community_variable"`
@@ -223,28 +223,28 @@ func (data ServiceRoutePolicy) toBody(ctx context.Context) string {
 							itemChildBody, _ = sjson.Set(itemChildBody, "ospfTag.value", childItem.OspfTag.ValueInt64())
 						}
 					}
-					if !childItem.Ipv4AddressId.IsNull() {
+					if !childItem.Ipv4AddressPrefixListId.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4Address.refId.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4Address.refId.value", childItem.Ipv4AddressId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4Address.refId.value", childItem.Ipv4AddressPrefixListId.ValueString())
 						}
 					}
-					if !childItem.Ipv4NextHopId.IsNull() {
+					if !childItem.Ipv4NextHopPrefixListId.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4NextHop.refId.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4NextHop.refId.value", childItem.Ipv4NextHopId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv4NextHop.refId.value", childItem.Ipv4NextHopPrefixListId.ValueString())
 						}
 					}
-					if !childItem.Ipv6AddressId.IsNull() {
+					if !childItem.Ipv6AddressPrefixListId.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6Address.refId.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6Address.refId.value", childItem.Ipv6AddressId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6Address.refId.value", childItem.Ipv6AddressPrefixListId.ValueString())
 						}
 					}
-					if !childItem.Ipv6NextHopId.IsNull() {
+					if !childItem.Ipv6NextHopPrefixListId.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6NextHop.refId.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6NextHop.refId.value", childItem.Ipv6NextHopId.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "ipv6NextHop.refId.value", childItem.Ipv6NextHopPrefixListId.ValueString())
 						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "matchEntries.-1", itemChildBody)
@@ -258,11 +258,11 @@ func (data ServiceRoutePolicy) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.optionType", "default")
 						itemChildBody, _ = sjson.Set(itemChildBody, "accept.enableAcceptAction.value", true)
 					}
-					if !childItem.AsPathPrend.IsNull() {
+					if !childItem.AsPathPrepend.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.optionType", "global")
 							var values []int64
-							childItem.AsPathPrend.ElementsAs(ctx, &values, false)
+							childItem.AsPathPrepend.ElementsAs(ctx, &values, false)
 							itemChildBody, _ = sjson.Set(itemChildBody, "accept.setAsPath.prepend.value", values)
 						}
 					}
@@ -493,36 +493,36 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 							cItem.OspfTag = types.Int64Value(va.Int())
 						}
 					}
-					cItem.Ipv4AddressId = types.StringNull()
+					cItem.Ipv4AddressPrefixListId = types.StringNull()
 
 					if t := cv.Get("ipv4Address.refId.optionType"); t.Exists() {
 						va := cv.Get("ipv4Address.refId.value")
 						if t.String() == "global" {
-							cItem.Ipv4AddressId = types.StringValue(va.String())
+							cItem.Ipv4AddressPrefixListId = types.StringValue(va.String())
 						}
 					}
-					cItem.Ipv4NextHopId = types.StringNull()
+					cItem.Ipv4NextHopPrefixListId = types.StringNull()
 
 					if t := cv.Get("ipv4NextHop.refId.optionType"); t.Exists() {
 						va := cv.Get("ipv4NextHop.refId.value")
 						if t.String() == "global" {
-							cItem.Ipv4NextHopId = types.StringValue(va.String())
+							cItem.Ipv4NextHopPrefixListId = types.StringValue(va.String())
 						}
 					}
-					cItem.Ipv6AddressId = types.StringNull()
+					cItem.Ipv6AddressPrefixListId = types.StringNull()
 
 					if t := cv.Get("ipv6Address.refId.optionType"); t.Exists() {
 						va := cv.Get("ipv6Address.refId.value")
 						if t.String() == "global" {
-							cItem.Ipv6AddressId = types.StringValue(va.String())
+							cItem.Ipv6AddressPrefixListId = types.StringValue(va.String())
 						}
 					}
-					cItem.Ipv6NextHopId = types.StringNull()
+					cItem.Ipv6NextHopPrefixListId = types.StringNull()
 
 					if t := cv.Get("ipv6NextHop.refId.optionType"); t.Exists() {
 						va := cv.Get("ipv6NextHop.refId.value")
 						if t.String() == "global" {
-							cItem.Ipv6NextHopId = types.StringValue(va.String())
+							cItem.Ipv6NextHopPrefixListId = types.StringValue(va.String())
 						}
 					}
 					item.MatchEntries = append(item.MatchEntries, cItem)
@@ -533,12 +533,12 @@ func (data *ServiceRoutePolicy) fromBody(ctx context.Context, res gjson.Result) 
 				item.Actions = make([]ServiceRoutePolicySequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
 					cItem := ServiceRoutePolicySequencesActions{}
-					cItem.AsPathPrend = types.SetNull(types.Int64Type)
+					cItem.AsPathPrepend = types.SetNull(types.Int64Type)
 
 					if t := cv.Get("accept.setAsPath.prepend.optionType"); t.Exists() {
 						va := cv.Get("accept.setAsPath.prepend.value")
 						if t.String() == "global" {
-							cItem.AsPathPrend = helpers.GetInt64Set(va.Array())
+							cItem.AsPathPrepend = helpers.GetInt64Set(va.Array())
 						}
 					}
 					cItem.CommunityAdditive = types.BoolNull()
@@ -723,7 +723,7 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 		}
 		for ci := range data.Sequences[i].MatchEntries {
 			keys := [...]string{"asPathList.refId", "communityList.criteria", "communityList.expandedCommunityList.refId", "extCommunityList.refId", "bgpLocalPreference", "metric", "ompTag", "ospfTag", "ipv4Address.refId", "ipv4NextHop.refId", "ipv6Address.refId", "ipv6NextHop.refId"}
-			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].AsPathListId.ValueString(), data.Sequences[i].MatchEntries[ci].StandardCommunityListCriteria.ValueString(), data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId.ValueString(), data.Sequences[i].MatchEntries[ci].ExtendedCommunityListId.ValueString(), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].BgpLocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].Metric.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OmpTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OspfTag.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].Ipv4AddressId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv4NextHopId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6AddressId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6NextHopId.ValueString()}
+			keyValues := [...]string{data.Sequences[i].MatchEntries[ci].AsPathListId.ValueString(), data.Sequences[i].MatchEntries[ci].StandardCommunityListCriteria.ValueString(), data.Sequences[i].MatchEntries[ci].ExpandedCommunityListId.ValueString(), data.Sequences[i].MatchEntries[ci].ExtendedCommunityListId.ValueString(), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].BgpLocalPreference.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].Metric.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OmpTag.ValueInt64(), 10), strconv.FormatInt(data.Sequences[i].MatchEntries[ci].OspfTag.ValueInt64(), 10), data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId.ValueString(), data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId.ValueString()}
 			keyValuesVariables := [...]string{"", "", "", "", "", "", "", "", "", "", "", "", ""}
 
 			var cr gjson.Result
@@ -852,36 +852,36 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 					data.Sequences[i].MatchEntries[ci].OspfTag = types.Int64Value(va.Int())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].Ipv4AddressId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId = types.StringNull()
 
 			if t := cr.Get("ipv4Address.refId.optionType"); t.Exists() {
 				va := cr.Get("ipv4Address.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv4AddressId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].Ipv4AddressPrefixListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].Ipv4NextHopId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId = types.StringNull()
 
 			if t := cr.Get("ipv4NextHop.refId.optionType"); t.Exists() {
 				va := cr.Get("ipv4NextHop.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv4NextHopId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].Ipv4NextHopPrefixListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].Ipv6AddressId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId = types.StringNull()
 
 			if t := cr.Get("ipv6Address.refId.optionType"); t.Exists() {
 				va := cr.Get("ipv6Address.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv6AddressId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].Ipv6AddressPrefixListId = types.StringValue(va.String())
 				}
 			}
-			data.Sequences[i].MatchEntries[ci].Ipv6NextHopId = types.StringNull()
+			data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId = types.StringNull()
 
 			if t := cr.Get("ipv6NextHop.refId.optionType"); t.Exists() {
 				va := cr.Get("ipv6NextHop.refId.value")
 				if t.String() == "global" {
-					data.Sequences[i].MatchEntries[ci].Ipv6NextHopId = types.StringValue(va.String())
+					data.Sequences[i].MatchEntries[ci].Ipv6NextHopPrefixListId = types.StringValue(va.String())
 				}
 			}
 		}
@@ -914,12 +914,12 @@ func (data *ServiceRoutePolicy) updateFromBody(ctx context.Context, res gjson.Re
 					return true
 				},
 			)
-			data.Sequences[i].Actions[ci].AsPathPrend = types.SetNull(types.Int64Type)
+			data.Sequences[i].Actions[ci].AsPathPrepend = types.SetNull(types.Int64Type)
 
 			if t := cr.Get("accept.setAsPath.prepend.optionType"); t.Exists() {
 				va := cr.Get("accept.setAsPath.prepend.value")
 				if t.String() == "global" {
-					data.Sequences[i].Actions[ci].AsPathPrend = helpers.GetInt64Set(va.Array())
+					data.Sequences[i].Actions[ci].AsPathPrepend = helpers.GetInt64Set(va.Array())
 				}
 			}
 			data.Sequences[i].Actions[ci].CommunityAdditive = types.BoolNull()

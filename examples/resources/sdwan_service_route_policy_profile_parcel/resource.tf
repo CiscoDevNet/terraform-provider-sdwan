@@ -11,7 +11,7 @@ resource "sdwan_service_route_policy_profile_parcel" "example" {
       protocol    = "IPV4"
       actions = [
         {
-          as_path_prend      = [65521]
+          as_path_prepend    = [65521]
           community_additive = false
           community          = ["internet"]
           local_preference   = 100

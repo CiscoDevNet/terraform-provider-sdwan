@@ -153,19 +153,19 @@ func (d *TransportRoutePolicyProfileParcelDataSource) Schema(ctx context.Context
 										MarkdownDescription: "Select OSPF Tag",
 										Computed:            true,
 									},
-									"ipv4_address_id": schema.StringAttribute{
+									"ipv4_address_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
-									"ipv4_next_hop_id": schema.StringAttribute{
+									"ipv4_next_hop_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
-									"ipv6_address_id": schema.StringAttribute{
+									"ipv6_address_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
-									"ipv6_next_hop_id": schema.StringAttribute{
+									"ipv6_next_hop_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
@@ -177,7 +177,7 @@ func (d *TransportRoutePolicyProfileParcelDataSource) Schema(ctx context.Context
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"as_path_prend": schema.SetAttribute{
+									"as_path_prepend": schema.SetAttribute{
 										MarkdownDescription: "",
 										ElementType:         types.Int64Type,
 										Computed:            true,

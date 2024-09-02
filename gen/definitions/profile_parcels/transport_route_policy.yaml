@@ -69,22 +69,22 @@ attributes:
       - model_name: ospfTag
         example: 20000
       - model_name: refId
-        tf_name: ipv4_address_id
+        tf_name: ipv4_address_prefix_list_id
         data_path: [ipv4Address]
         exclude_test: true
         example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
       - model_name: refId
-        tf_name: ipv4_next_hop_id
+        tf_name: ipv4_next_hop_prefix_list_id
         data_path: [ipv4NextHop]
         exclude_test: true
         example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
       - model_name: refId
-        tf_name: ipv6_address_id
+        tf_name: ipv6_address_prefix_list_id
         data_path: [ipv6Address]
         exclude_test: true
         example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
       - model_name: refId
-        tf_name: ipv6_next_hop_id
+        tf_name: ipv6_next_hop_prefix_list_id
         data_path: [ipv6NextHop]
         exclude_test: true
         example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
@@ -94,7 +94,7 @@ attributes:
         data_path: [accept]
         example: true
       - model_name: prepend
-        tf_name: as_path_prend
+        tf_name: as_path_prepend
         data_path: [accept, setAsPath]
         example: 65521
       - model_name: additive

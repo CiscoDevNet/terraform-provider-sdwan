@@ -205,28 +205,28 @@ func (r *ServiceRoutePolicyProfileParcelResource) Schema(ctx context.Context, re
 											int64validator.AtMost(4294967295),
 										},
 									},
-									"ipv4_address_id": schema.StringAttribute{
+									"ipv4_address_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
-									"ipv4_next_hop_id": schema.StringAttribute{
+									"ipv4_next_hop_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
-									"ipv6_address_id": schema.StringAttribute{
+									"ipv6_address_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
-									"ipv6_next_hop_id": schema.StringAttribute{
+									"ipv6_next_hop_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										Validators: []validator.String{
@@ -241,7 +241,7 @@ func (r *ServiceRoutePolicyProfileParcelResource) Schema(ctx context.Context, re
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"as_path_prend": schema.SetAttribute{
+									"as_path_prepend": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										ElementType:         types.Int64Type,
 										Optional:            true,
