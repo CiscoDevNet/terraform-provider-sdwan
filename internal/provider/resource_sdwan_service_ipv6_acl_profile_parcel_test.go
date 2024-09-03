@@ -28,29 +28,29 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanTransportIPv6ACLProfileParcel(t *testing.T) {
+func TestAccSdwanServiceIPv6ACLProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "default_action", "drop"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.sequence_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.sequence_name", "AccessControlList1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.next_header", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.packet_length", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.source_ports.0.port", "8000"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.tcp_state", "syn"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_counter_name", "COUNTER_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_log", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_next_hop", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_traffic_class", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "default_action", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.sequence_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.sequence_name", "AccessControlList1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.next_header", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.packet_length", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.source_ports.0.port", "8000"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.conditions.0.tcp_state", "syn"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_counter_name", "COUNTER_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_log", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_next_hop", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_ipv6_acl_profile_parcel.test", "sequences.0.actions.0.accept_traffic_class", "10"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 
 			{
-				Config: testAccSdwanTransportIPv6ACLPrerequisitesProfileParcelConfig + testAccSdwanTransportIPv6ACLProfileParcelConfig_all(),
+				Config: testAccSdwanServiceIPv6ACLPrerequisitesProfileParcelConfig + testAccSdwanServiceIPv6ACLProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
@@ -60,8 +60,8 @@ func TestAccSdwanTransportIPv6ACLProfileParcel(t *testing.T) {
 // End of section. //template:end testAcc
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanTransportIPv6ACLPrerequisitesProfileParcelConfig = `
-resource "sdwan_transport_feature_profile" "test" {
+const testAccSdwanServiceIPv6ACLPrerequisitesProfileParcelConfig = `
+resource "sdwan_service_feature_profile" "test" {
   name = "TF_TEST"
   description = "Terraform test"
 }
@@ -75,11 +75,11 @@ resource "sdwan_transport_feature_profile" "test" {
 // End of section. //template:end testAccConfigMinimum
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
-func testAccSdwanTransportIPv6ACLProfileParcelConfig_all() string {
-	config := `resource "sdwan_transport_ipv6_acl_profile_parcel" "test" {` + "\n"
+func testAccSdwanServiceIPv6ACLProfileParcelConfig_all() string {
+	config := `resource "sdwan_service_ipv6_acl_profile_parcel" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
 	config += `	default_action = "drop"` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  sequence_id = 1` + "\n"

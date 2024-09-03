@@ -44,26 +44,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &TransportIPv6ACLProfileParcelResource{}
-var _ resource.ResourceWithImportState = &TransportIPv6ACLProfileParcelResource{}
+var _ resource.Resource = &ServiceIPv6ACLProfileParcelResource{}
+var _ resource.ResourceWithImportState = &ServiceIPv6ACLProfileParcelResource{}
 
-func NewTransportIPv6ACLProfileParcelResource() resource.Resource {
-	return &TransportIPv6ACLProfileParcelResource{}
+func NewServiceIPv6ACLProfileParcelResource() resource.Resource {
+	return &ServiceIPv6ACLProfileParcelResource{}
 }
 
-type TransportIPv6ACLProfileParcelResource struct {
+type ServiceIPv6ACLProfileParcelResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *TransportIPv6ACLProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_transport_ipv6_acl_profile_parcel"
+func (r *ServiceIPv6ACLProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_service_ipv6_acl_profile_parcel"
 }
 
-func (r *TransportIPv6ACLProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *ServiceIPv6ACLProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport IPv6 ACL profile parcel.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service IPv6 ACL profile parcel.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -265,7 +265,7 @@ func (r *TransportIPv6ACLProfileParcelResource) Schema(ctx context.Context, req 
 	}
 }
 
-func (r *TransportIPv6ACLProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *ServiceIPv6ACLProfileParcelResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -277,8 +277,8 @@ func (r *TransportIPv6ACLProfileParcelResource) Configure(_ context.Context, req
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *TransportIPv6ACLProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan TransportIPv6ACL
+func (r *ServiceIPv6ACLProfileParcelResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan ServiceIPv6ACL
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -310,8 +310,8 @@ func (r *TransportIPv6ACLProfileParcelResource) Create(ctx context.Context, req 
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *TransportIPv6ACLProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state TransportIPv6ACL
+func (r *ServiceIPv6ACLProfileParcelResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state ServiceIPv6ACL
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -347,8 +347,8 @@ func (r *TransportIPv6ACLProfileParcelResource) Read(ctx context.Context, req re
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *TransportIPv6ACLProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state TransportIPv6ACL
+func (r *ServiceIPv6ACLProfileParcelResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state ServiceIPv6ACL
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -383,8 +383,8 @@ func (r *TransportIPv6ACLProfileParcelResource) Update(ctx context.Context, req 
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *TransportIPv6ACLProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state TransportIPv6ACL
+func (r *ServiceIPv6ACLProfileParcelResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state ServiceIPv6ACL
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -409,7 +409,7 @@ func (r *TransportIPv6ACLProfileParcelResource) Delete(ctx context.Context, req 
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *TransportIPv6ACLProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *ServiceIPv6ACLProfileParcelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 

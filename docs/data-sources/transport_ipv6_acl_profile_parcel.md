@@ -55,9 +55,9 @@ Read-Only:
 - `accept_mirror_list_id` (String)
 - `accept_next_hop` (String) Set Next Hop (IPV6 address)
 - `accept_policer_id` (String)
+- `accept_traffic_class` (Number) set traffic class number
 - `drop_counter_name` (String) Counter Name
 - `drop_log` (Boolean) Enable Log
-- `traffic_class` (Number) set traffic class number
 
 
 <a id="nestedatt--sequences--conditions"></a>

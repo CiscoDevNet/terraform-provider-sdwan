@@ -33,37 +33,37 @@ import (
 // End of section. //template:end imports
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
-type TransportIPv6ACL struct {
-	Id               types.String                `tfsdk:"id"`
-	Version          types.Int64                 `tfsdk:"version"`
-	Name             types.String                `tfsdk:"name"`
-	Description      types.String                `tfsdk:"description"`
-	FeatureProfileId types.String                `tfsdk:"feature_profile_id"`
-	DefaultAction    types.String                `tfsdk:"default_action"`
-	Sequences        []TransportIPv6ACLSequences `tfsdk:"sequences"`
+type ServiceIPv6ACL struct {
+	Id               types.String              `tfsdk:"id"`
+	Version          types.Int64               `tfsdk:"version"`
+	Name             types.String              `tfsdk:"name"`
+	Description      types.String              `tfsdk:"description"`
+	FeatureProfileId types.String              `tfsdk:"feature_profile_id"`
+	DefaultAction    types.String              `tfsdk:"default_action"`
+	Sequences        []ServiceIPv6ACLSequences `tfsdk:"sequences"`
 }
 
-type TransportIPv6ACLSequences struct {
-	SequenceId   types.Int64                           `tfsdk:"sequence_id"`
-	SequenceName types.String                          `tfsdk:"sequence_name"`
-	Conditions   []TransportIPv6ACLSequencesConditions `tfsdk:"conditions"`
-	Actions      []TransportIPv6ACLSequencesActions    `tfsdk:"actions"`
+type ServiceIPv6ACLSequences struct {
+	SequenceId   types.Int64                         `tfsdk:"sequence_id"`
+	SequenceName types.String                        `tfsdk:"sequence_name"`
+	Conditions   []ServiceIPv6ACLSequencesConditions `tfsdk:"conditions"`
+	Actions      []ServiceIPv6ACLSequencesActions    `tfsdk:"actions"`
 }
 
-type TransportIPv6ACLSequencesConditions struct {
-	NextHeader                  types.Int64                                           `tfsdk:"next_header"`
-	PacketLength                types.Int64                                           `tfsdk:"packet_length"`
-	SourceDataPrefixListId      types.String                                          `tfsdk:"source_data_prefix_list_id"`
-	SourceDataPrefix            types.String                                          `tfsdk:"source_data_prefix"`
-	SourcePorts                 []TransportIPv6ACLSequencesConditionsSourcePorts      `tfsdk:"source_ports"`
-	DestinationDataPrefixListId types.String                                          `tfsdk:"destination_data_prefix_list_id"`
-	DestinationDataPrefix       types.String                                          `tfsdk:"destination_data_prefix"`
-	DestinationPorts            []TransportIPv6ACLSequencesConditionsDestinationPorts `tfsdk:"destination_ports"`
-	TcpState                    types.String                                          `tfsdk:"tcp_state"`
-	TrafficClass                types.Set                                             `tfsdk:"traffic_class"`
-	IcmpMessages                types.Set                                             `tfsdk:"icmp_messages"`
+type ServiceIPv6ACLSequencesConditions struct {
+	NextHeader                  types.Int64                                         `tfsdk:"next_header"`
+	PacketLength                types.Int64                                         `tfsdk:"packet_length"`
+	SourceDataPrefixListId      types.String                                        `tfsdk:"source_data_prefix_list_id"`
+	SourceDataPrefix            types.String                                        `tfsdk:"source_data_prefix"`
+	SourcePorts                 []ServiceIPv6ACLSequencesConditionsSourcePorts      `tfsdk:"source_ports"`
+	DestinationDataPrefixListId types.String                                        `tfsdk:"destination_data_prefix_list_id"`
+	DestinationDataPrefix       types.String                                        `tfsdk:"destination_data_prefix"`
+	DestinationPorts            []ServiceIPv6ACLSequencesConditionsDestinationPorts `tfsdk:"destination_ports"`
+	TcpState                    types.String                                        `tfsdk:"tcp_state"`
+	TrafficClass                types.Set                                           `tfsdk:"traffic_class"`
+	IcmpMessages                types.Set                                           `tfsdk:"icmp_messages"`
 }
-type TransportIPv6ACLSequencesActions struct {
+type ServiceIPv6ACLSequencesActions struct {
 	AcceptCounterName  types.String `tfsdk:"accept_counter_name"`
 	AcceptLog          types.Bool   `tfsdk:"accept_log"`
 	AcceptNextHop      types.String `tfsdk:"accept_next_hop"`
@@ -74,31 +74,31 @@ type TransportIPv6ACLSequencesActions struct {
 	DropLog            types.Bool   `tfsdk:"drop_log"`
 }
 
-type TransportIPv6ACLSequencesConditionsSourcePorts struct {
+type ServiceIPv6ACLSequencesConditionsSourcePorts struct {
 	Port types.Int64 `tfsdk:"port"`
 }
-type TransportIPv6ACLSequencesConditionsDestinationPorts struct {
+type ServiceIPv6ACLSequencesConditionsDestinationPorts struct {
 	Port types.Int64 `tfsdk:"port"`
 }
 
 // End of section. //template:end types
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getModel
-func (data TransportIPv6ACL) getModel() string {
-	return "transport_ipv6_acl"
+func (data ServiceIPv6ACL) getModel() string {
+	return "service_ipv6_acl"
 }
 
 // End of section. //template:end getModel
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
-func (data TransportIPv6ACL) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/ipv6-acl", url.QueryEscape(data.FeatureProfileId.ValueString()))
+func (data ServiceIPv6ACL) getPath() string {
+	return fmt.Sprintf("/v1/feature-profile/sdwan/service/%v/ipv6-acl", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
 
 // Section below is generated&owned by "gen/generator.go". //template:begin toBody
-func (data TransportIPv6ACL) toBody(ctx context.Context) string {
+func (data ServiceIPv6ACL) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
@@ -285,7 +285,7 @@ func (data TransportIPv6ACL) toBody(ctx context.Context) string {
 // End of section. //template:end toBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin fromBody
-func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -302,9 +302,9 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 		}
 	}
 	if value := res.Get(path + "sequences"); value.Exists() {
-		data.Sequences = make([]TransportIPv6ACLSequences, 0)
+		data.Sequences = make([]ServiceIPv6ACLSequences, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := TransportIPv6ACLSequences{}
+			item := ServiceIPv6ACLSequences{}
 			item.SequenceId = types.Int64Null()
 
 			if t := v.Get("sequenceId.optionType"); t.Exists() {
@@ -322,9 +322,9 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 				}
 			}
 			if cValue := v.Get("matchEntries"); cValue.Exists() {
-				item.Conditions = make([]TransportIPv6ACLSequencesConditions, 0)
+				item.Conditions = make([]ServiceIPv6ACLSequencesConditions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := TransportIPv6ACLSequencesConditions{}
+					cItem := ServiceIPv6ACLSequencesConditions{}
 					cItem.NextHeader = types.Int64Null()
 
 					if t := cv.Get("nextHeader.optionType"); t.Exists() {
@@ -358,9 +358,9 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 						}
 					}
 					if ccValue := cv.Get("sourcePorts"); ccValue.Exists() {
-						cItem.SourcePorts = make([]TransportIPv6ACLSequencesConditionsSourcePorts, 0)
+						cItem.SourcePorts = make([]ServiceIPv6ACLSequencesConditionsSourcePorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := TransportIPv6ACLSequencesConditionsSourcePorts{}
+							ccItem := ServiceIPv6ACLSequencesConditionsSourcePorts{}
 							ccItem.Port = types.Int64Null()
 
 							if t := ccv.Get("sourcePort.optionType"); t.Exists() {
@@ -390,9 +390,9 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 						}
 					}
 					if ccValue := cv.Get("destinationPorts"); ccValue.Exists() {
-						cItem.DestinationPorts = make([]TransportIPv6ACLSequencesConditionsDestinationPorts, 0)
+						cItem.DestinationPorts = make([]ServiceIPv6ACLSequencesConditionsDestinationPorts, 0)
 						ccValue.ForEach(func(cck, ccv gjson.Result) bool {
-							ccItem := TransportIPv6ACLSequencesConditionsDestinationPorts{}
+							ccItem := ServiceIPv6ACLSequencesConditionsDestinationPorts{}
 							ccItem.Port = types.Int64Null()
 
 							if t := ccv.Get("destinationPort.optionType"); t.Exists() {
@@ -434,9 +434,9 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 				})
 			}
 			if cValue := v.Get("actions"); cValue.Exists() {
-				item.Actions = make([]TransportIPv6ACLSequencesActions, 0)
+				item.Actions = make([]ServiceIPv6ACLSequencesActions, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := TransportIPv6ACLSequencesActions{}
+					cItem := ServiceIPv6ACLSequencesActions{}
 					cItem.AcceptCounterName = types.StringNull()
 
 					if t := cv.Get("accept.counterName.optionType"); t.Exists() {
@@ -514,7 +514,7 @@ func (data *TransportIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 // End of section. //template:end fromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateFromBody
-func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result) {
+func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result) {
 	data.Name = types.StringValue(res.Get("payload.name").String())
 	if value := res.Get("payload.description"); value.Exists() && value.String() != "" {
 		data.Description = types.StringValue(value.String())
@@ -853,7 +853,7 @@ func (data *TransportIPv6ACL) updateFromBody(ctx context.Context, res gjson.Resu
 // End of section. //template:end updateFromBody
 
 // Section below is generated&owned by "gen/generator.go". //template:begin isNull
-func (data *TransportIPv6ACL) isNull(ctx context.Context, res gjson.Result) bool {
+func (data *ServiceIPv6ACL) isNull(ctx context.Context, res gjson.Result) bool {
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}

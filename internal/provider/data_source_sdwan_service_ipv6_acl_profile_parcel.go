@@ -36,26 +36,26 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &TransportIPv6ACLProfileParcelDataSource{}
-	_ datasource.DataSourceWithConfigure = &TransportIPv6ACLProfileParcelDataSource{}
+	_ datasource.DataSource              = &ServiceIPv6ACLProfileParcelDataSource{}
+	_ datasource.DataSourceWithConfigure = &ServiceIPv6ACLProfileParcelDataSource{}
 )
 
-func NewTransportIPv6ACLProfileParcelDataSource() datasource.DataSource {
-	return &TransportIPv6ACLProfileParcelDataSource{}
+func NewServiceIPv6ACLProfileParcelDataSource() datasource.DataSource {
+	return &ServiceIPv6ACLProfileParcelDataSource{}
 }
 
-type TransportIPv6ACLProfileParcelDataSource struct {
+type ServiceIPv6ACLProfileParcelDataSource struct {
 	client *sdwan.Client
 }
 
-func (d *TransportIPv6ACLProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_transport_ipv6_acl_profile_parcel"
+func (d *ServiceIPv6ACLProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_service_ipv6_acl_profile_parcel"
 }
 
-func (d *TransportIPv6ACLProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *ServiceIPv6ACLProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Transport IPv6 ACL profile parcel.",
+		MarkdownDescription: "This data source can read the Service IPv6 ACL profile parcel.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -212,7 +212,7 @@ func (d *TransportIPv6ACLProfileParcelDataSource) Schema(ctx context.Context, re
 	}
 }
 
-func (d *TransportIPv6ACLProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
+func (d *ServiceIPv6ACLProfileParcelDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, _ *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -223,8 +223,8 @@ func (d *TransportIPv6ACLProfileParcelDataSource) Configure(_ context.Context, r
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (d *TransportIPv6ACLProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var config TransportIPv6ACL
+func (d *ServiceIPv6ACLProfileParcelDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var config ServiceIPv6ACL
 
 	// Read config
 	diags := req.Config.Get(ctx, &config)
