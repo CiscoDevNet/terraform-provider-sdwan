@@ -47,6 +47,7 @@ description: |-
 - Add `sdwan_service_switchport_profile_parcel` resource and data source
 - Add `sdwan_transport_route_policy_profile_parcel` resource and data source
 - Add `sdwan_service_route_policy_profile_parcel` resource and data source
+- Add `sdwan_service_multicast_profile_parcel` resource and data source
 
 ## 0.3.13
 
