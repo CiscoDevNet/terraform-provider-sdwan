@@ -48,6 +48,7 @@ description: |-
 - Add `sdwan_transport_route_policy_profile_parcel` resource and data source
 - Add `sdwan_service_route_policy_profile_parcel` resource and data source
 - Add `sdwan_transport_ipv4_acl_profile_parcel` resource and data source
+- Add `sdwan_service_ipv4_acl_profile_parcel` resource and data source
 
 ## 0.3.13
 
