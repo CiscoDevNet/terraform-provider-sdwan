@@ -1,0 +1,108 @@
+---
+name: Service Wireless LAN
+rest_endpoint: /v1/feature-profile/sdwan/service/%v/wirelesslan
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_service_feature_profile.test.id
+  - model_name: enable24G
+    tf_name: enable_24g
+    example: true
+  - model_name: enable5G
+    tf_name: enable_5g
+    example: true
+  - model_name: ssid
+    tf_name: ssids
+    mandatory: true
+    attributes:
+    - model_name: name
+      tf_name: ssid_name
+      id: true
+      mandatory: true
+      minimum_test_value: '"SSID_1"'
+      example: SSID_1
+    - model_name: adminState
+      mandatory: true
+      minimum_test_value: 'true'
+      example: true
+    - model_name: broadcastSsid
+      mandatory: true
+      minimum_test_value: 'true'
+      example: true
+    - model_name: vlanId
+      mandatory: true
+      example: 1
+    - model_name: radioType
+      example: all
+    - model_name: securityType
+      data_path: [securityConfig]
+      mandatory: true
+      example: personal
+    - model_name: radiusServerIp
+      data_path: [securityConfig]
+      conditional_attribute:
+        name: securityType
+        value: enterprise
+      exclude_test: true
+      example: 1.2.3.4
+    - model_name: radiusServerPort
+      data_path: [securityConfig]
+      conditional_attribute:
+        name: securityType
+        value: enterprise
+      exclude_test: true
+      example: 1234
+    - model_name: radiusServerSecret
+      data_path: [securityConfig]
+      conditional_attribute:
+        name: securityType
+        value: enterprise
+      exclude_test: true
+      example: MyPassword123
+    - model_name: passphrase
+      data_path: [securityConfig]
+      conditional_attribute:
+        name: securityType
+        value: personal
+      example: MyPassword123
+      minimum_test_value: '"MyPassword123"'
+    - model_name: qosProfile
+      example: silver
+  - model_name: country
+    mandatory: true
+    example: GB
+  - model_name: username
+    mandatory: true
+    example: user1
+  - model_name: password
+    mandatory: true
+    example: Test@316s13
+  - model_name: meDynamicIpEnabled
+    data_path: [meIpConfig]
+    mandatory: true
+    example: true
+  - model_name: meIpv4Address
+    data_path: [meIpConfig, meStaticIpCfg]
+    example: 1.2.3.4
+    exclude_test: true
+  - model_name: netmask
+    tf_name: subnet_mask
+    data_path: [meIpConfig, meStaticIpCfg]
+    example: 0.0.0.0
+    exclude_test: true
+  - model_name: defaultGateway
+    data_path: [meIpConfig, meStaticIpCfg]
+    example: 1.2.3.4
+    exclude_test: true
+
+test_prerequisites: |
+  resource "sdwan_service_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }
