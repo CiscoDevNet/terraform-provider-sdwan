@@ -1,0 +1,49 @@
+---
+name: Policy Object SLA Class List
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/sla-class
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+skip_minimum_test: true
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: var.policy_object_feature_template_id
+  - model_name: entries
+    mandatory: true
+    attributes:
+    - model_name: latency
+      example: 2
+    - model_name: loss
+      example: 1
+    - model_name: jitter
+      example: 1
+    - model_name: refId
+      tf_name: app_probe_class_list_id
+      data_path: [appProbeClass]
+      exclude_test: true
+      example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    - model_name: criteria
+      tf_name: fallback_best_tunnel_criteria
+      data_path: [fallbackBestTunnel]
+      example: loss
+    - model_name: lossVariance
+      tf_name: fallback_best_tunnel_loss_variance
+      data_path: [fallbackBestTunnel]
+      example: 5
+    - model_name: latencyVariance
+      tf_name: fallback_best_tunnel_latency_variance
+      data_path: [fallbackBestTunnel]
+      exclude_test: true
+      example: 4
+    - model_name: jitterVariance
+      tf_name: fallback_best_tunnel_jitter_variance
+      data_path: [fallbackBestTunnel]
+      exclude_test: true
+      example: 5
+
+test_prerequisites: |
+  variable "policy_object_feature_template_id" {} 
