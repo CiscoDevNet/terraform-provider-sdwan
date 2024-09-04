@@ -9,16 +9,16 @@ resource "sdwan_service_routing_eigrp_profile_parcel" "example" {
       mask       = "255.255.255.0"
     }
   ]
-  hello_interval = 5
-  hold_time      = 15
-  type           = "md5"
+  hello_interval      = 5
+  hold_time           = 15
+  authentication_type = "md5"
   md5_keys = [
     {
-      key_id             = 2
-      authentication_key = "password123"
+      key_id     = 2
+      key_string = "password123"
     }
   ]
-  af_interfaces = [
+  interfaces = [
     {
       name     = "GigabitEthernet3"
       shutdown = false

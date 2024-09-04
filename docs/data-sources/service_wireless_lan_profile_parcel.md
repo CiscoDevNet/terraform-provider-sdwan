@@ -31,22 +31,22 @@ data "sdwan_service_wireless_lan_profile_parcel" "example" {
 
 - `country` (String) Select country
 - `country_variable` (String) Variable name
-- `default_gateway` (String) Set mobile express default gateway
-- `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `enable_24g` (Boolean) 2.4GHz Enabled
 - `enable_24g_variable` (String) Variable name
 - `enable_5g` (Boolean) 5GHz Enabled
 - `enable_5g_variable` (String) Variable name
+- `me_default_gateway` (String) Set mobile express default gateway
+- `me_default_gateway_variable` (String) Variable name
 - `me_dynamic_ip_enabled` (Boolean) ME management IP dynamic allocated by DHCP
 - `me_ipv4_address` (String) Set mobile express controller address
 - `me_ipv4_address_variable` (String) Variable name
+- `me_subnet_mask` (String) Set mobile express controller subnet mask
+- `me_subnet_mask_variable` (String) Variable name
 - `name` (String) The name of the profile parcel
 - `password` (String) Set management password,the password must contains characters from all of the following classes,lowercase letters,uppercase letters,digits,and special characters. No character in the password can be repeated more than three times consecutively. The password must not be the same as the associated username or the username reversed. The password must not be cisco,ocsic,or any variant obtained by changing the capitalization of the letters in word cisco. In addition,you can't substitute 1,l,or ! for i,0 for o,$ for s.
 - `password_variable` (String) Variable name
 - `ssids` (Attributes List) Configure Wi-Fi SSID profile (see [below for nested schema](#nestedatt--ssids))
-- `subnet_mask` (String) Set mobile express controller subnet mask
-- `subnet_mask_variable` (String) Variable name
 - `username` (String) Set management username
 - `username_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel

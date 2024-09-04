@@ -218,19 +218,19 @@ func (d *ServiceWirelessLANProfileParcelDataSource) Schema(ctx context.Context, 
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"subnet_mask": schema.StringAttribute{
+			"me_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: "Set mobile express controller subnet mask",
 				Computed:            true,
 			},
-			"subnet_mask_variable": schema.StringAttribute{
+			"me_subnet_mask_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"default_gateway": schema.StringAttribute{
+			"me_default_gateway": schema.StringAttribute{
 				MarkdownDescription: "Set mobile express default gateway",
 				Computed:            true,
 			},
-			"default_gateway_variable": schema.StringAttribute{
+			"me_default_gateway_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},

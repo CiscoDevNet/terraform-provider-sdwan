@@ -26,16 +26,16 @@ resource "sdwan_service_routing_eigrp_profile_parcel" "example" {
       mask       = "255.255.255.0"
     }
   ]
-  hello_interval = 5
-  hold_time      = 15
-  type           = "md5"
+  hello_interval      = 5
+  hold_time           = 15
+  authentication_type = "md5"
   md5_keys = [
     {
-      key_id             = 2
-      authentication_key = "password123"
+      key_id     = 2
+      key_string = "password123"
     }
   ]
-  af_interfaces = [
+  interfaces = [
     {
       name     = "GigabitEthernet3"
       shutdown = false
@@ -56,6 +56,8 @@ resource "sdwan_service_routing_eigrp_profile_parcel" "example" {
 
 ### Required
 
+- `authentication_type` (String) Set EIGRP router authentication type
+  - Choices: `md5`, `hmac-sha-256`
 - `autonomous_system_id` (Number) Set autonomous system ID <1..65535>
   - Range: `1`-`65535`
 - `feature_profile_id` (String) Feature Profile ID
@@ -67,25 +69,23 @@ resource "sdwan_service_routing_eigrp_profile_parcel" "example" {
   - Default value: `15`
 - `name` (String) The name of the profile parcel
 - `networks` (Attributes List) Configure the networks for EIGRP to advertise (see [below for nested schema](#nestedatt--networks))
-- `type` (String) Set EIGRP router authentication type
-  - Choices: `md5`, `hmac-sha-256`
 
 ### Optional
 
-- `af_interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--af_interfaces))
+- `authentication_type_variable` (String) Variable name
 - `autonomous_system_id_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `filter` (Boolean) Selective route download
   - Default value: `false`
 - `filter_variable` (String) Variable name
 - `hello_interval_variable` (String) Variable name
-- `hmac_authentication_key` (String) Set hmac-sha-256 authentication key, Attribute conditional on `type` being equal to `hmac-sha-256`
+- `hmac_authentication_key` (String) Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`
 - `hmac_authentication_key_variable` (String) Variable name
 - `hold_time_variable` (String) Variable name
-- `md5_keys` (Attributes List) Set keychain details, Attribute conditional on `type` being equal to `md5` (see [below for nested schema](#nestedatt--md5_keys))
+- `interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--interfaces))
+- `md5_keys` (Attributes List) Set keychain details, Attribute conditional on `authentication_type` being equal to `md5` (see [below for nested schema](#nestedatt--md5_keys))
 - `redistributes` (Attributes List) Redistribute routes into EIGRP (see [below for nested schema](#nestedatt--redistributes))
 - `route_policy_id` (String)
-- `type_variable` (String) Variable name
 
 ### Read-Only
 
@@ -103,8 +103,8 @@ Optional:
 - `mask_variable` (String) Variable name
 
 
-<a id="nestedatt--af_interfaces"></a>
-### Nested Schema for `af_interfaces`
+<a id="nestedatt--interfaces"></a>
+### Nested Schema for `interfaces`
 
 Optional:
 
@@ -113,10 +113,10 @@ Optional:
 - `shutdown` (Boolean) Enable/disable EIGRP
   - Default value: `false`
 - `shutdown_variable` (String) Variable name
-- `summary_addresses` (Attributes List) Set summary addresses (see [below for nested schema](#nestedatt--af_interfaces--summary_addresses))
+- `summary_addresses` (Attributes List) Set summary addresses (see [below for nested schema](#nestedatt--interfaces--summary_addresses))
 
-<a id="nestedatt--af_interfaces--summary_addresses"></a>
-### Nested Schema for `af_interfaces.summary_addresses`
+<a id="nestedatt--interfaces--summary_addresses"></a>
+### Nested Schema for `interfaces.summary_addresses`
 
 Optional:
 
@@ -132,11 +132,11 @@ Optional:
 
 Optional:
 
-- `authentication_key` (String) Set MD5 key
-- `authentication_key_variable` (String) Variable name
 - `key_id` (Number) Set MD5 key ID
   - Range: `1`-`255`
 - `key_id_variable` (String) Variable name
+- `key_string` (String) Set MD5 key
+- `key_string_variable` (String) Variable name
 
 
 <a id="nestedatt--redistributes"></a>

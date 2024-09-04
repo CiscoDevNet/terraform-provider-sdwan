@@ -1,10 +1,10 @@
 resource "sdwan_service_multicast_profile_parcel" "example" {
-  name               = "Example"
-  description        = "My Example"
-  feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  spt_only           = false
-  local_replicator   = false
-  threshold          = 10
+  name                       = "Example"
+  description                = "My Example"
+  feature_profile_id         = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  spt_only                   = false
+  local_replicator           = false
+  local_replicator_threshold = 10
   igmp_interfaces = [
     {
       interface_name = "GigabitEthernet1"
@@ -17,8 +17,9 @@ resource "sdwan_service_multicast_profile_parcel" "example" {
       ]
     }
   ]
-  pim_enable_source_specific_multicast = true
-  pim_spt_threshold                    = "1"
+  pim_source_specific_multicast_enable      = true
+  pim_source_specific_multicast_access_list = "1"
+  pim_spt_threshold                         = "0"
   pim_interfaces = [
     {
       interface_name      = "GigabitEthernet1"

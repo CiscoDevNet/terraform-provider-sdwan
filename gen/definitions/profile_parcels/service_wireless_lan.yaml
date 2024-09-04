@@ -92,11 +92,12 @@ attributes:
     example: 1.2.3.4
     exclude_test: true
   - model_name: netmask
-    tf_name: subnet_mask
+    tf_name: me_subnet_mask
     data_path: [meIpConfig, meStaticIpCfg]
     example: 0.0.0.0
     exclude_test: true
   - model_name: defaultGateway
+    tf_name: me_default_gateway
     data_path: [meIpConfig, meStaticIpCfg]
     example: 1.2.3.4
     exclude_test: true

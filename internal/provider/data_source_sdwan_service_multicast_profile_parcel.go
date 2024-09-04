@@ -94,11 +94,11 @@ func (d *ServiceMulticastProfileParcelDataSource) Schema(ctx context.Context, re
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"threshold": schema.Int64Attribute{
+			"local_replicator_threshold": schema.Int64Attribute{
 				MarkdownDescription: "Set number of joins per group the router supports",
 				Computed:            true,
 			},
-			"threshold_variable": schema.StringAttribute{
+			"local_replicator_threshold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -146,12 +146,20 @@ func (d *ServiceMulticastProfileParcelDataSource) Schema(ctx context.Context, re
 					},
 				},
 			},
-			"pim_enable_source_specific_multicast": schema.BoolAttribute{
+			"pim_source_specific_multicast_enable": schema.BoolAttribute{
 				MarkdownDescription: "turn SSM on/off",
 				Computed:            true,
 			},
-			"pim_spt_threshold": schema.StringAttribute{
+			"pim_source_specific_multicast_access_list": schema.StringAttribute{
 				MarkdownDescription: "Set Access List for PIM SSM",
+				Computed:            true,
+			},
+			"pim_source_specific_multicast_access_list_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"pim_spt_threshold": schema.StringAttribute{
+				MarkdownDescription: "Set when PIM router joins the SPT (kbps)",
 				Computed:            true,
 			},
 			"pim_spt_threshold_variable": schema.StringAttribute{

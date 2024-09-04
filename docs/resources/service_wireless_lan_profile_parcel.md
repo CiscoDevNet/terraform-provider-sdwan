@@ -57,8 +57,6 @@ resource "sdwan_service_wireless_lan_profile_parcel" "example" {
 ### Optional
 
 - `country_variable` (String) Variable name
-- `default_gateway` (String) Set mobile express default gateway
-- `default_gateway_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
 - `enable_24g` (Boolean) 2.4GHz Enabled
   - Default value: `true`
@@ -66,12 +64,14 @@ resource "sdwan_service_wireless_lan_profile_parcel" "example" {
 - `enable_5g` (Boolean) 5GHz Enabled
   - Default value: `true`
 - `enable_5g_variable` (String) Variable name
+- `me_default_gateway` (String) Set mobile express default gateway
+- `me_default_gateway_variable` (String) Variable name
 - `me_ipv4_address` (String) Set mobile express controller address
 - `me_ipv4_address_variable` (String) Variable name
-- `password_variable` (String) Variable name
-- `subnet_mask` (String) Set mobile express controller subnet mask
+- `me_subnet_mask` (String) Set mobile express controller subnet mask
   - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `subnet_mask_variable` (String) Variable name
+- `me_subnet_mask_variable` (String) Variable name
+- `password_variable` (String) Variable name
 - `username_variable` (String) Variable name
 
 ### Read-Only

@@ -146,11 +146,11 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
-			"type": schema.StringAttribute{
+			"authentication_type": schema.StringAttribute{
 				MarkdownDescription: "Set EIGRP router authentication type",
 				Computed:            true,
 			},
-			"type_variable": schema.StringAttribute{
+			"authentication_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
@@ -175,18 +175,18 @@ func (d *ServiceRoutingEIGRPProfileParcelDataSource) Schema(ctx context.Context,
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"authentication_key": schema.StringAttribute{
+						"key_string": schema.StringAttribute{
 							MarkdownDescription: "Set MD5 key",
 							Computed:            true,
 						},
-						"authentication_key_variable": schema.StringAttribute{
+						"key_string_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
 					},
 				},
 			},
-			"af_interfaces": schema.ListNestedAttribute{
+			"interfaces": schema.ListNestedAttribute{
 				MarkdownDescription: "Configure IPv4 Static Routes",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{

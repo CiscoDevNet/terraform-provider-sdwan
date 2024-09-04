@@ -12,14 +12,13 @@ attributes:
     test_value: sdwan_service_feature_profile.test.id
   - model_name: sptOnly
     data_path: [basic]
-    mandatory: true
     example: false
   - model_name: local
     tf_name: local_replicator
     data_path: [basic, localConfig]
-    mandatory: true
     example: false
   - model_name: threshold
+    tf_name: local_replicator_threshold
     data_path: [basic, localConfig]
     example: 10
   - model_name: interface
@@ -29,6 +28,7 @@ attributes:
     attributes:
     - model_name: interfaceName
       example: GigabitEthernet1
+      id: true
     - model_name: version
       example: 2
     - model_name: joinGroup
@@ -39,14 +39,18 @@ attributes:
       - model_name: sourceAddress
         example: 1.2.3.4
   - model_name: enableSSMFlag
-    tf_name: pim_enable_source_specific_multicast
+    tf_name: pim_source_specific_multicast_enable
     data_path: [pim, ssm, ssmRangeConfig]
     mandatory: true
     example: true
   - model_name: range
-    tf_name: pim_spt_threshold
+    tf_name: pim_source_specific_multicast_access_list
     data_path: [pim, ssm, ssmRangeConfig]
     example: 1
+  - model_name: sptThreshold  
+    tf_name: pim_spt_threshold
+    data_path: [pim, ssm]
+    example: 0
   - model_name: interface
     tf_name: pim_interfaces
     data_path: [pim]

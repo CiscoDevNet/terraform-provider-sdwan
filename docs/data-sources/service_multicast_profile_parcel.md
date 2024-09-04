@@ -36,6 +36,8 @@ data "sdwan_service_multicast_profile_parcel" "example" {
 - `enable_auto_rp_variable` (String) Variable name
 - `igmp_interfaces` (Attributes List) Set IGMP interface parameters (see [below for nested schema](#nestedatt--igmp_interfaces))
 - `local_replicator` (Boolean) Replicator is local to this device
+- `local_replicator_threshold` (Number) Set number of joins per group the router supports
+- `local_replicator_threshold_variable` (String) Variable name
 - `local_replicator_variable` (String) Variable name
 - `msdp_connection_retry_interval` (Number) Set MSDP refresh timer
 - `msdp_connection_retry_interval_variable` (String) Variable name
@@ -45,15 +47,15 @@ data "sdwan_service_multicast_profile_parcel" "example" {
 - `name` (String) The name of the profile parcel
 - `pim_bsr_candidates` (Attributes List) bsr candidate Attributes (see [below for nested schema](#nestedatt--pim_bsr_candidates))
 - `pim_bsr_rp_candidates` (Attributes List) Set RP Discovery Scope (see [below for nested schema](#nestedatt--pim_bsr_rp_candidates))
-- `pim_enable_source_specific_multicast` (Boolean) turn SSM on/off
 - `pim_interfaces` (Attributes List) Set PIM interface parameters (see [below for nested schema](#nestedatt--pim_interfaces))
-- `pim_spt_threshold` (String) Set Access List for PIM SSM
+- `pim_source_specific_multicast_access_list` (String) Set Access List for PIM SSM
+- `pim_source_specific_multicast_access_list_variable` (String) Variable name
+- `pim_source_specific_multicast_enable` (Boolean) turn SSM on/off
+- `pim_spt_threshold` (String) Set when PIM router joins the SPT (kbps)
 - `pim_spt_threshold_variable` (String) Variable name
 - `spt_only` (Boolean) Shortest Path Tree (SPT) Only Mode
 - `spt_only_variable` (String) Variable name
 - `static_rp_addresses` (Attributes List) Set Static RP Address(es) (see [below for nested schema](#nestedatt--static_rp_addresses))
-- `threshold` (Number) Set number of joins per group the router supports
-- `threshold_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
 
 <a id="nestedatt--auto_rp_announces"></a>

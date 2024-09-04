@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
@@ -33,34 +32,36 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceMulticast struct {
-	Id                                  types.String                         `tfsdk:"id"`
-	Version                             types.Int64                          `tfsdk:"version"`
-	Name                                types.String                         `tfsdk:"name"`
-	Description                         types.String                         `tfsdk:"description"`
-	FeatureProfileId                    types.String                         `tfsdk:"feature_profile_id"`
-	SptOnly                             types.Bool                           `tfsdk:"spt_only"`
-	SptOnlyVariable                     types.String                         `tfsdk:"spt_only_variable"`
-	LocalReplicator                     types.Bool                           `tfsdk:"local_replicator"`
-	LocalReplicatorVariable             types.String                         `tfsdk:"local_replicator_variable"`
-	Threshold                           types.Int64                          `tfsdk:"threshold"`
-	ThresholdVariable                   types.String                         `tfsdk:"threshold_variable"`
-	IgmpInterfaces                      []ServiceMulticastIgmpInterfaces     `tfsdk:"igmp_interfaces"`
-	PimEnableSourceSpecificMulticast    types.Bool                           `tfsdk:"pim_enable_source_specific_multicast"`
-	PimSptThreshold                     types.String                         `tfsdk:"pim_spt_threshold"`
-	PimSptThresholdVariable             types.String                         `tfsdk:"pim_spt_threshold_variable"`
-	PimInterfaces                       []ServiceMulticastPimInterfaces      `tfsdk:"pim_interfaces"`
-	StaticRpAddresses                   []ServiceMulticastStaticRpAddresses  `tfsdk:"static_rp_addresses"`
-	EnableAutoRp                        types.Bool                           `tfsdk:"enable_auto_rp"`
-	EnableAutoRpVariable                types.String                         `tfsdk:"enable_auto_rp_variable"`
-	AutoRpAnnounces                     []ServiceMulticastAutoRpAnnounces    `tfsdk:"auto_rp_announces"`
-	AutoRpDiscoveries                   []ServiceMulticastAutoRpDiscoveries  `tfsdk:"auto_rp_discoveries"`
-	PimBsrRpCandidates                  []ServiceMulticastPimBsrRpCandidates `tfsdk:"pim_bsr_rp_candidates"`
-	PimBsrCandidates                    []ServiceMulticastPimBsrCandidates   `tfsdk:"pim_bsr_candidates"`
-	MsdpGroups                          []ServiceMulticastMsdpGroups         `tfsdk:"msdp_groups"`
-	MsdpOriginatorId                    types.String                         `tfsdk:"msdp_originator_id"`
-	MsdpOriginatorIdVariable            types.String                         `tfsdk:"msdp_originator_id_variable"`
-	MsdpConnectionRetryInterval         types.Int64                          `tfsdk:"msdp_connection_retry_interval"`
-	MsdpConnectionRetryIntervalVariable types.String                         `tfsdk:"msdp_connection_retry_interval_variable"`
+	Id                                           types.String                         `tfsdk:"id"`
+	Version                                      types.Int64                          `tfsdk:"version"`
+	Name                                         types.String                         `tfsdk:"name"`
+	Description                                  types.String                         `tfsdk:"description"`
+	FeatureProfileId                             types.String                         `tfsdk:"feature_profile_id"`
+	SptOnly                                      types.Bool                           `tfsdk:"spt_only"`
+	SptOnlyVariable                              types.String                         `tfsdk:"spt_only_variable"`
+	LocalReplicator                              types.Bool                           `tfsdk:"local_replicator"`
+	LocalReplicatorVariable                      types.String                         `tfsdk:"local_replicator_variable"`
+	LocalReplicatorThreshold                     types.Int64                          `tfsdk:"local_replicator_threshold"`
+	LocalReplicatorThresholdVariable             types.String                         `tfsdk:"local_replicator_threshold_variable"`
+	IgmpInterfaces                               []ServiceMulticastIgmpInterfaces     `tfsdk:"igmp_interfaces"`
+	PimSourceSpecificMulticastEnable             types.Bool                           `tfsdk:"pim_source_specific_multicast_enable"`
+	PimSourceSpecificMulticastAccessList         types.String                         `tfsdk:"pim_source_specific_multicast_access_list"`
+	PimSourceSpecificMulticastAccessListVariable types.String                         `tfsdk:"pim_source_specific_multicast_access_list_variable"`
+	PimSptThreshold                              types.String                         `tfsdk:"pim_spt_threshold"`
+	PimSptThresholdVariable                      types.String                         `tfsdk:"pim_spt_threshold_variable"`
+	PimInterfaces                                []ServiceMulticastPimInterfaces      `tfsdk:"pim_interfaces"`
+	StaticRpAddresses                            []ServiceMulticastStaticRpAddresses  `tfsdk:"static_rp_addresses"`
+	EnableAutoRp                                 types.Bool                           `tfsdk:"enable_auto_rp"`
+	EnableAutoRpVariable                         types.String                         `tfsdk:"enable_auto_rp_variable"`
+	AutoRpAnnounces                              []ServiceMulticastAutoRpAnnounces    `tfsdk:"auto_rp_announces"`
+	AutoRpDiscoveries                            []ServiceMulticastAutoRpDiscoveries  `tfsdk:"auto_rp_discoveries"`
+	PimBsrRpCandidates                           []ServiceMulticastPimBsrRpCandidates `tfsdk:"pim_bsr_rp_candidates"`
+	PimBsrCandidates                             []ServiceMulticastPimBsrCandidates   `tfsdk:"pim_bsr_candidates"`
+	MsdpGroups                                   []ServiceMulticastMsdpGroups         `tfsdk:"msdp_groups"`
+	MsdpOriginatorId                             types.String                         `tfsdk:"msdp_originator_id"`
+	MsdpOriginatorIdVariable                     types.String                         `tfsdk:"msdp_originator_id_variable"`
+	MsdpConnectionRetryInterval                  types.Int64                          `tfsdk:"msdp_connection_retry_interval"`
+	MsdpConnectionRetryIntervalVariable          types.String                         `tfsdk:"msdp_connection_retry_interval_variable"`
 }
 
 type ServiceMulticastIgmpInterfaces struct {
@@ -213,12 +214,12 @@ func (data ServiceMulticast) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.ThresholdVariable.IsNull() {
+	if !data.LocalReplicatorThresholdVariable.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"basic.localConfig.threshold.optionType", "variable")
-			body, _ = sjson.Set(body, path+"basic.localConfig.threshold.value", data.ThresholdVariable.ValueString())
+			body, _ = sjson.Set(body, path+"basic.localConfig.threshold.value", data.LocalReplicatorThresholdVariable.ValueString())
 		}
-	} else if data.Threshold.IsNull() {
+	} else if data.LocalReplicatorThreshold.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"basic.localConfig.threshold.optionType", "default")
 
@@ -226,7 +227,7 @@ func (data ServiceMulticast) toBody(ctx context.Context) string {
 	} else {
 		if true {
 			body, _ = sjson.Set(body, path+"basic.localConfig.threshold.optionType", "global")
-			body, _ = sjson.Set(body, path+"basic.localConfig.threshold.value", data.Threshold.ValueInt64())
+			body, _ = sjson.Set(body, path+"basic.localConfig.threshold.value", data.LocalReplicatorThreshold.ValueInt64())
 		}
 	}
 	if true {
@@ -295,22 +296,39 @@ func (data ServiceMulticast) toBody(ctx context.Context) string {
 			body, _ = sjson.SetRaw(body, path+"igmp.interface.-1", itemBody)
 		}
 	}
-	if !data.PimEnableSourceSpecificMulticast.IsNull() {
+	if !data.PimSourceSpecificMulticastEnable.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.enableSSMFlag.optionType", "global")
-			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.enableSSMFlag.value", data.PimEnableSourceSpecificMulticast.ValueBool())
+			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.enableSSMFlag.value", data.PimSourceSpecificMulticastEnable.ValueBool())
+		}
+	}
+
+	if !data.PimSourceSpecificMulticastAccessListVariable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.optionType", "variable")
+			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.value", data.PimSourceSpecificMulticastAccessListVariable.ValueString())
+		}
+	} else if !data.PimSourceSpecificMulticastAccessList.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.optionType", "global")
+			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.value", data.PimSourceSpecificMulticastAccessList.ValueString())
 		}
 	}
 
 	if !data.PimSptThresholdVariable.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.optionType", "variable")
-			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.value", data.PimSptThresholdVariable.ValueString())
+			body, _ = sjson.Set(body, path+"pim.ssm.sptThreshold.optionType", "variable")
+			body, _ = sjson.Set(body, path+"pim.ssm.sptThreshold.value", data.PimSptThresholdVariable.ValueString())
 		}
-	} else if !data.PimSptThreshold.IsNull() {
+	} else if data.PimSptThreshold.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.optionType", "global")
-			body, _ = sjson.Set(body, path+"pim.ssm.ssmRangeConfig.range.value", data.PimSptThreshold.ValueString())
+			body, _ = sjson.Set(body, path+"pim.ssm.sptThreshold.optionType", "default")
+			body, _ = sjson.Set(body, path+"pim.ssm.sptThreshold.value", "0")
+		}
+	} else {
+		if true {
+			body, _ = sjson.Set(body, path+"pim.ssm.sptThreshold.optionType", "global")
+			body, _ = sjson.Set(body, path+"pim.ssm.sptThreshold.value", data.PimSptThreshold.ValueString())
 		}
 	}
 	if true {
@@ -858,14 +876,14 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			data.LocalReplicator = types.BoolValue(va.Bool())
 		}
 	}
-	data.Threshold = types.Int64Null()
-	data.ThresholdVariable = types.StringNull()
+	data.LocalReplicatorThreshold = types.Int64Null()
+	data.LocalReplicatorThresholdVariable = types.StringNull()
 	if t := res.Get(path + "basic.localConfig.threshold.optionType"); t.Exists() {
 		va := res.Get(path + "basic.localConfig.threshold.value")
 		if t.String() == "variable" {
-			data.ThresholdVariable = types.StringValue(va.String())
+			data.LocalReplicatorThresholdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Threshold = types.Int64Value(va.Int())
+			data.LocalReplicatorThreshold = types.Int64Value(va.Int())
 		}
 	}
 	if value := res.Get(path + "igmp.interface"); value.Exists() {
@@ -922,18 +940,28 @@ func (data *ServiceMulticast) fromBody(ctx context.Context, res gjson.Result) {
 			return true
 		})
 	}
-	data.PimEnableSourceSpecificMulticast = types.BoolNull()
+	data.PimSourceSpecificMulticastEnable = types.BoolNull()
 
 	if t := res.Get(path + "pim.ssm.ssmRangeConfig.enableSSMFlag.optionType"); t.Exists() {
 		va := res.Get(path + "pim.ssm.ssmRangeConfig.enableSSMFlag.value")
 		if t.String() == "global" {
-			data.PimEnableSourceSpecificMulticast = types.BoolValue(va.Bool())
+			data.PimSourceSpecificMulticastEnable = types.BoolValue(va.Bool())
+		}
+	}
+	data.PimSourceSpecificMulticastAccessList = types.StringNull()
+	data.PimSourceSpecificMulticastAccessListVariable = types.StringNull()
+	if t := res.Get(path + "pim.ssm.ssmRangeConfig.range.optionType"); t.Exists() {
+		va := res.Get(path + "pim.ssm.ssmRangeConfig.range.value")
+		if t.String() == "variable" {
+			data.PimSourceSpecificMulticastAccessListVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PimSourceSpecificMulticastAccessList = types.StringValue(va.String())
 		}
 	}
 	data.PimSptThreshold = types.StringNull()
 	data.PimSptThresholdVariable = types.StringNull()
-	if t := res.Get(path + "pim.ssm.ssmRangeConfig.range.optionType"); t.Exists() {
-		va := res.Get(path + "pim.ssm.ssmRangeConfig.range.value")
+	if t := res.Get(path + "pim.ssm.sptThreshold.optionType"); t.Exists() {
+		va := res.Get(path + "pim.ssm.sptThreshold.value")
 		if t.String() == "variable" {
 			data.PimSptThresholdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -1333,20 +1361,20 @@ func (data *ServiceMulticast) updateFromBody(ctx context.Context, res gjson.Resu
 			data.LocalReplicator = types.BoolValue(va.Bool())
 		}
 	}
-	data.Threshold = types.Int64Null()
-	data.ThresholdVariable = types.StringNull()
+	data.LocalReplicatorThreshold = types.Int64Null()
+	data.LocalReplicatorThresholdVariable = types.StringNull()
 	if t := res.Get(path + "basic.localConfig.threshold.optionType"); t.Exists() {
 		va := res.Get(path + "basic.localConfig.threshold.value")
 		if t.String() == "variable" {
-			data.ThresholdVariable = types.StringValue(va.String())
+			data.LocalReplicatorThresholdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Threshold = types.Int64Value(va.Int())
+			data.LocalReplicatorThreshold = types.Int64Value(va.Int())
 		}
 	}
 	for i := range data.IgmpInterfaces {
-		keys := [...]string{"interfaceName", "version"}
-		keyValues := [...]string{data.IgmpInterfaces[i].InterfaceName.ValueString(), strconv.FormatInt(data.IgmpInterfaces[i].Version.ValueInt64(), 10)}
-		keyValuesVariables := [...]string{data.IgmpInterfaces[i].InterfaceNameVariable.ValueString(), "", ""}
+		keys := [...]string{"interfaceName"}
+		keyValues := [...]string{data.IgmpInterfaces[i].InterfaceName.ValueString()}
+		keyValuesVariables := [...]string{data.IgmpInterfaces[i].InterfaceNameVariable.ValueString()}
 
 		var r gjson.Result
 		res.Get(path + "igmp.interface").ForEach(
@@ -1441,18 +1469,28 @@ func (data *ServiceMulticast) updateFromBody(ctx context.Context, res gjson.Resu
 			}
 		}
 	}
-	data.PimEnableSourceSpecificMulticast = types.BoolNull()
+	data.PimSourceSpecificMulticastEnable = types.BoolNull()
 
 	if t := res.Get(path + "pim.ssm.ssmRangeConfig.enableSSMFlag.optionType"); t.Exists() {
 		va := res.Get(path + "pim.ssm.ssmRangeConfig.enableSSMFlag.value")
 		if t.String() == "global" {
-			data.PimEnableSourceSpecificMulticast = types.BoolValue(va.Bool())
+			data.PimSourceSpecificMulticastEnable = types.BoolValue(va.Bool())
+		}
+	}
+	data.PimSourceSpecificMulticastAccessList = types.StringNull()
+	data.PimSourceSpecificMulticastAccessListVariable = types.StringNull()
+	if t := res.Get(path + "pim.ssm.ssmRangeConfig.range.optionType"); t.Exists() {
+		va := res.Get(path + "pim.ssm.ssmRangeConfig.range.value")
+		if t.String() == "variable" {
+			data.PimSourceSpecificMulticastAccessListVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.PimSourceSpecificMulticastAccessList = types.StringValue(va.String())
 		}
 	}
 	data.PimSptThreshold = types.StringNull()
 	data.PimSptThresholdVariable = types.StringNull()
-	if t := res.Get(path + "pim.ssm.ssmRangeConfig.range.optionType"); t.Exists() {
-		va := res.Get(path + "pim.ssm.ssmRangeConfig.range.value")
+	if t := res.Get(path + "pim.ssm.sptThreshold.optionType"); t.Exists() {
+		va := res.Get(path + "pim.ssm.sptThreshold.value")
 		if t.String() == "variable" {
 			data.PimSptThresholdVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
@@ -2016,16 +2054,22 @@ func (data *ServiceMulticast) isNull(ctx context.Context, res gjson.Result) bool
 	if !data.LocalReplicatorVariable.IsNull() {
 		return false
 	}
-	if !data.Threshold.IsNull() {
+	if !data.LocalReplicatorThreshold.IsNull() {
 		return false
 	}
-	if !data.ThresholdVariable.IsNull() {
+	if !data.LocalReplicatorThresholdVariable.IsNull() {
 		return false
 	}
 	if len(data.IgmpInterfaces) > 0 {
 		return false
 	}
-	if !data.PimEnableSourceSpecificMulticast.IsNull() {
+	if !data.PimSourceSpecificMulticastEnable.IsNull() {
+		return false
+	}
+	if !data.PimSourceSpecificMulticastAccessList.IsNull() {
+		return false
+	}
+	if !data.PimSourceSpecificMulticastAccessListVariable.IsNull() {
 		return false
 	}
 	if !data.PimSptThreshold.IsNull() {

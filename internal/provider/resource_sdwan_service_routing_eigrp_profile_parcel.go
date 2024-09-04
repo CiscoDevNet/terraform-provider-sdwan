@@ -169,19 +169,19 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"type": schema.StringAttribute{
+			"authentication_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP router authentication type").AddStringEnumDescription("md5", "hmac-sha-256").String,
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("md5", "hmac-sha-256"),
 				},
 			},
-			"type_variable": schema.StringAttribute{
+			"authentication_type_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
 			"hmac_authentication_key": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `type` being equal to `hmac-sha-256`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set hmac-sha-256 authentication key, Attribute conditional on `authentication_type` being equal to `hmac-sha-256`").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 31),
@@ -193,7 +193,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 				Optional:            true,
 			},
 			"md5_keys": schema.ListNestedAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Set keychain details, Attribute conditional on `type` being equal to `md5`").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Set keychain details, Attribute conditional on `authentication_type` being equal to `md5`").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
@@ -208,21 +208,21 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"authentication_key": schema.StringAttribute{
+						"key_string": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Set MD5 key").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.LengthBetween(1, 31),
 							},
 						},
-						"authentication_key_variable": schema.StringAttribute{
+						"key_string_variable": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
 					},
 				},
 			},
-			"af_interfaces": schema.ListNestedAttribute{
+			"interfaces": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Configure IPv4 Static Routes").String,
 				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{

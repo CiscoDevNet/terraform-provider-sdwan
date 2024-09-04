@@ -48,6 +48,7 @@ attributes:
     mandatory: true
     example: 15
   - model_name: type
+    tf_name: authentication_type
     data_path: [authentication]
     mandatory: true
     example: md5
@@ -55,7 +56,7 @@ attributes:
     tf_name: hmac_authentication_key
     data_path: [authentication]
     conditional_attribute:
-      name: type
+      name: authentication_type
       value: hmac-sha-256
     exclude_test: true
     write_only: true
@@ -64,7 +65,7 @@ attributes:
     tf_name: md5_keys
     data_path: [authentication]
     conditional_attribute:
-      name: type
+      name: authentication_type
       value: md5
     attributes:
     - model_name: keyId
@@ -72,11 +73,11 @@ attributes:
       id: true
       example: 2
     - model_name: keystring
-      tf_name: authentication_key
+      tf_name: key_string
       write_only: true
       example: password123
   - model_name: afInterface
-    tf_name: af_interfaces
+    tf_name: interfaces
     attributes:
     - model_name: name
       example: GigabitEthernet3

@@ -38,12 +38,12 @@ func TestAccSdwanServiceRoutingEIGRPProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "networks.0.mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "hello_interval", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "hold_time", "15"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "type", "md5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "authentication_type", "md5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "md5_keys.0.key_id", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "af_interfaces.0.name", "GigabitEthernet3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "af_interfaces.0.shutdown", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "af_interfaces.0.summary_addresses.0.address", "10.0.0.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "af_interfaces.0.summary_addresses.0.mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "interfaces.0.name", "GigabitEthernet3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "interfaces.0.shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "interfaces.0.summary_addresses.0.address", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "interfaces.0.summary_addresses.0.mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_routing_eigrp_profile_parcel.test", "filter", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
@@ -86,7 +86,7 @@ func testAccSdwanServiceRoutingEIGRPProfileParcelConfig_minimum() string {
 	config += `	}]` + "\n"
 	config += `	hello_interval = 5` + "\n"
 	config += `	hold_time = 15` + "\n"
-	config += `	type = "md5"` + "\n"
+	config += `	authentication_type = "md5"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -106,12 +106,12 @@ func testAccSdwanServiceRoutingEIGRPProfileParcelConfig_all() string {
 	config += `	}]` + "\n"
 	config += `	hello_interval = 5` + "\n"
 	config += `	hold_time = 15` + "\n"
-	config += `	type = "md5"` + "\n"
+	config += `	authentication_type = "md5"` + "\n"
 	config += `	md5_keys = [{` + "\n"
 	config += `	  key_id = 2` + "\n"
-	config += `	  authentication_key = "password123"` + "\n"
+	config += `	  key_string = "password123"` + "\n"
 	config += `	}]` + "\n"
-	config += `	af_interfaces = [{` + "\n"
+	config += `	interfaces = [{` + "\n"
 	config += `	  name = "GigabitEthernet3"` + "\n"
 	config += `	  shutdown = false` + "\n"
 	config += `	  summary_addresses = [{` + "\n"

@@ -46,12 +46,12 @@ type ServiceRoutingEIGRP struct {
 	HelloIntervalVariable         types.String                       `tfsdk:"hello_interval_variable"`
 	HoldTime                      types.Int64                        `tfsdk:"hold_time"`
 	HoldTimeVariable              types.String                       `tfsdk:"hold_time_variable"`
-	Type                          types.String                       `tfsdk:"type"`
-	TypeVariable                  types.String                       `tfsdk:"type_variable"`
+	AuthenticationType            types.String                       `tfsdk:"authentication_type"`
+	AuthenticationTypeVariable    types.String                       `tfsdk:"authentication_type_variable"`
 	HmacAuthenticationKey         types.String                       `tfsdk:"hmac_authentication_key"`
 	HmacAuthenticationKeyVariable types.String                       `tfsdk:"hmac_authentication_key_variable"`
 	Md5Keys                       []ServiceRoutingEIGRPMd5Keys       `tfsdk:"md5_keys"`
-	AfInterfaces                  []ServiceRoutingEIGRPAfInterfaces  `tfsdk:"af_interfaces"`
+	Interfaces                    []ServiceRoutingEIGRPInterfaces    `tfsdk:"interfaces"`
 	RoutePolicyId                 types.String                       `tfsdk:"route_policy_id"`
 	Filter                        types.Bool                         `tfsdk:"filter"`
 	FilterVariable                types.String                       `tfsdk:"filter_variable"`
@@ -71,21 +71,21 @@ type ServiceRoutingEIGRPNetworks struct {
 }
 
 type ServiceRoutingEIGRPMd5Keys struct {
-	KeyId                     types.Int64  `tfsdk:"key_id"`
-	KeyIdVariable             types.String `tfsdk:"key_id_variable"`
-	AuthenticationKey         types.String `tfsdk:"authentication_key"`
-	AuthenticationKeyVariable types.String `tfsdk:"authentication_key_variable"`
+	KeyId             types.Int64  `tfsdk:"key_id"`
+	KeyIdVariable     types.String `tfsdk:"key_id_variable"`
+	KeyString         types.String `tfsdk:"key_string"`
+	KeyStringVariable types.String `tfsdk:"key_string_variable"`
 }
 
-type ServiceRoutingEIGRPAfInterfaces struct {
-	Name             types.String                                      `tfsdk:"name"`
-	NameVariable     types.String                                      `tfsdk:"name_variable"`
-	Shutdown         types.Bool                                        `tfsdk:"shutdown"`
-	ShutdownVariable types.String                                      `tfsdk:"shutdown_variable"`
-	SummaryAddresses []ServiceRoutingEIGRPAfInterfacesSummaryAddresses `tfsdk:"summary_addresses"`
+type ServiceRoutingEIGRPInterfaces struct {
+	Name             types.String                                    `tfsdk:"name"`
+	NameVariable     types.String                                    `tfsdk:"name_variable"`
+	Shutdown         types.Bool                                      `tfsdk:"shutdown"`
+	ShutdownVariable types.String                                    `tfsdk:"shutdown_variable"`
+	SummaryAddresses []ServiceRoutingEIGRPInterfacesSummaryAddresses `tfsdk:"summary_addresses"`
 }
 
-type ServiceRoutingEIGRPAfInterfacesSummaryAddresses struct {
+type ServiceRoutingEIGRPInterfacesSummaryAddresses struct {
 	Address         types.String `tfsdk:"address"`
 	AddressVariable types.String `tfsdk:"address_variable"`
 	Mask            types.String `tfsdk:"mask"`
@@ -219,12 +219,12 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.TypeVariable.IsNull() {
+	if !data.AuthenticationTypeVariable.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"authentication.type.optionType", "variable")
-			body, _ = sjson.Set(body, path+"authentication.type.value", data.TypeVariable.ValueString())
+			body, _ = sjson.Set(body, path+"authentication.type.value", data.AuthenticationTypeVariable.ValueString())
 		}
-	} else if data.Type.IsNull() {
+	} else if data.AuthenticationType.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"authentication.type.optionType", "default")
 
@@ -232,27 +232,27 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 	} else {
 		if true {
 			body, _ = sjson.Set(body, path+"authentication.type.optionType", "global")
-			body, _ = sjson.Set(body, path+"authentication.type.value", data.Type.ValueString())
+			body, _ = sjson.Set(body, path+"authentication.type.value", data.AuthenticationType.ValueString())
 		}
 	}
 
 	if !data.HmacAuthenticationKeyVariable.IsNull() {
-		if true && data.Type.ValueString() == "hmac-sha-256" {
+		if true && data.AuthenticationType.ValueString() == "hmac-sha-256" {
 			body, _ = sjson.Set(body, path+"authentication.authKey.optionType", "variable")
 			body, _ = sjson.Set(body, path+"authentication.authKey.value", data.HmacAuthenticationKeyVariable.ValueString())
 		}
 	} else if data.HmacAuthenticationKey.IsNull() {
-		if true && data.Type.ValueString() == "hmac-sha-256" {
+		if true && data.AuthenticationType.ValueString() == "hmac-sha-256" {
 			body, _ = sjson.Set(body, path+"authentication.authKey.optionType", "default")
 
 		}
 	} else {
-		if true && data.Type.ValueString() == "hmac-sha-256" {
+		if true && data.AuthenticationType.ValueString() == "hmac-sha-256" {
 			body, _ = sjson.Set(body, path+"authentication.authKey.optionType", "global")
 			body, _ = sjson.Set(body, path+"authentication.authKey.value", data.HmacAuthenticationKey.ValueString())
 		}
 	}
-	if true && data.Type.ValueString() == "md5" {
+	if true && data.AuthenticationType.ValueString() == "md5" {
 		body, _ = sjson.Set(body, path+"authentication.key", []interface{}{})
 		for _, item := range data.Md5Keys {
 			itemBody := ""
@@ -274,12 +274,12 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 				}
 			}
 
-			if !item.AuthenticationKeyVariable.IsNull() {
+			if !item.KeyStringVariable.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "variable")
-					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.AuthenticationKeyVariable.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.KeyStringVariable.ValueString())
 				}
-			} else if item.AuthenticationKey.IsNull() {
+			} else if item.KeyString.IsNull() {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "default")
 
@@ -287,7 +287,7 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 			} else {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "keystring.optionType", "global")
-					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.AuthenticationKey.ValueString())
+					itemBody, _ = sjson.Set(itemBody, "keystring.value", item.KeyString.ValueString())
 				}
 			}
 			body, _ = sjson.SetRaw(body, path+"authentication.key.-1", itemBody)
@@ -295,7 +295,7 @@ func (data ServiceRoutingEIGRP) toBody(ctx context.Context) string {
 	}
 	if true {
 		body, _ = sjson.Set(body, path+"afInterface", []interface{}{})
-		for _, item := range data.AfInterfaces {
+		for _, item := range data.Interfaces {
 			itemBody := ""
 
 			if !item.NameVariable.IsNull() {
@@ -483,14 +483,14 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 			data.HoldTime = types.Int64Value(va.Int())
 		}
 	}
-	data.Type = types.StringNull()
-	data.TypeVariable = types.StringNull()
+	data.AuthenticationType = types.StringNull()
+	data.AuthenticationTypeVariable = types.StringNull()
 	if t := res.Get(path + "authentication.type.optionType"); t.Exists() {
 		va := res.Get(path + "authentication.type.value")
 		if t.String() == "variable" {
-			data.TypeVariable = types.StringValue(va.String())
+			data.AuthenticationTypeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Type = types.StringValue(va.String())
+			data.AuthenticationType = types.StringValue(va.String())
 		}
 	}
 	if value := res.Get(path + "authentication.key"); value.Exists() {
@@ -512,9 +512,9 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 		})
 	}
 	if value := res.Get(path + "afInterface"); value.Exists() {
-		data.AfInterfaces = make([]ServiceRoutingEIGRPAfInterfaces, 0)
+		data.Interfaces = make([]ServiceRoutingEIGRPInterfaces, 0)
 		value.ForEach(func(k, v gjson.Result) bool {
-			item := ServiceRoutingEIGRPAfInterfaces{}
+			item := ServiceRoutingEIGRPInterfaces{}
 			item.Name = types.StringNull()
 			item.NameVariable = types.StringNull()
 			if t := v.Get("name.optionType"); t.Exists() {
@@ -536,9 +536,9 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 				}
 			}
 			if cValue := v.Get("summaryAddress"); cValue.Exists() {
-				item.SummaryAddresses = make([]ServiceRoutingEIGRPAfInterfacesSummaryAddresses, 0)
+				item.SummaryAddresses = make([]ServiceRoutingEIGRPInterfacesSummaryAddresses, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := ServiceRoutingEIGRPAfInterfacesSummaryAddresses{}
+					cItem := ServiceRoutingEIGRPInterfacesSummaryAddresses{}
 					cItem.Address = types.StringNull()
 					cItem.AddressVariable = types.StringNull()
 					if t := cv.Get("prefix.address.optionType"); t.Exists() {
@@ -563,7 +563,7 @@ func (data *ServiceRoutingEIGRP) fromBody(ctx context.Context, res gjson.Result)
 					return true
 				})
 			}
-			data.AfInterfaces = append(data.AfInterfaces, item)
+			data.Interfaces = append(data.Interfaces, item)
 			return true
 		})
 	}
@@ -726,14 +726,14 @@ func (data *ServiceRoutingEIGRP) updateFromBody(ctx context.Context, res gjson.R
 			data.HoldTime = types.Int64Value(va.Int())
 		}
 	}
-	data.Type = types.StringNull()
-	data.TypeVariable = types.StringNull()
+	data.AuthenticationType = types.StringNull()
+	data.AuthenticationTypeVariable = types.StringNull()
 	if t := res.Get(path + "authentication.type.optionType"); t.Exists() {
 		va := res.Get(path + "authentication.type.value")
 		if t.String() == "variable" {
-			data.TypeVariable = types.StringValue(va.String())
+			data.AuthenticationTypeVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.Type = types.StringValue(va.String())
+			data.AuthenticationType = types.StringValue(va.String())
 		}
 	}
 	for i := range data.Md5Keys {
@@ -776,10 +776,10 @@ func (data *ServiceRoutingEIGRP) updateFromBody(ctx context.Context, res gjson.R
 			}
 		}
 	}
-	for i := range data.AfInterfaces {
+	for i := range data.Interfaces {
 		keys := [...]string{"name", "shutdown"}
-		keyValues := [...]string{data.AfInterfaces[i].Name.ValueString(), strconv.FormatBool(data.AfInterfaces[i].Shutdown.ValueBool())}
-		keyValuesVariables := [...]string{data.AfInterfaces[i].NameVariable.ValueString(), data.AfInterfaces[i].ShutdownVariable.ValueString(), ""}
+		keyValues := [...]string{data.Interfaces[i].Name.ValueString(), strconv.FormatBool(data.Interfaces[i].Shutdown.ValueBool())}
+		keyValuesVariables := [...]string{data.Interfaces[i].NameVariable.ValueString(), data.Interfaces[i].ShutdownVariable.ValueString(), ""}
 
 		var r gjson.Result
 		res.Get(path + "afInterface").ForEach(
@@ -805,30 +805,30 @@ func (data *ServiceRoutingEIGRP) updateFromBody(ctx context.Context, res gjson.R
 				return true
 			},
 		)
-		data.AfInterfaces[i].Name = types.StringNull()
-		data.AfInterfaces[i].NameVariable = types.StringNull()
+		data.Interfaces[i].Name = types.StringNull()
+		data.Interfaces[i].NameVariable = types.StringNull()
 		if t := r.Get("name.optionType"); t.Exists() {
 			va := r.Get("name.value")
 			if t.String() == "variable" {
-				data.AfInterfaces[i].NameVariable = types.StringValue(va.String())
+				data.Interfaces[i].NameVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.AfInterfaces[i].Name = types.StringValue(va.String())
+				data.Interfaces[i].Name = types.StringValue(va.String())
 			}
 		}
-		data.AfInterfaces[i].Shutdown = types.BoolNull()
-		data.AfInterfaces[i].ShutdownVariable = types.StringNull()
+		data.Interfaces[i].Shutdown = types.BoolNull()
+		data.Interfaces[i].ShutdownVariable = types.StringNull()
 		if t := r.Get("shutdown.optionType"); t.Exists() {
 			va := r.Get("shutdown.value")
 			if t.String() == "variable" {
-				data.AfInterfaces[i].ShutdownVariable = types.StringValue(va.String())
+				data.Interfaces[i].ShutdownVariable = types.StringValue(va.String())
 			} else if t.String() == "global" {
-				data.AfInterfaces[i].Shutdown = types.BoolValue(va.Bool())
+				data.Interfaces[i].Shutdown = types.BoolValue(va.Bool())
 			}
 		}
-		for ci := range data.AfInterfaces[i].SummaryAddresses {
+		for ci := range data.Interfaces[i].SummaryAddresses {
 			keys := [...]string{"prefix.address", "prefix.mask"}
-			keyValues := [...]string{data.AfInterfaces[i].SummaryAddresses[ci].Address.ValueString(), data.AfInterfaces[i].SummaryAddresses[ci].Mask.ValueString()}
-			keyValuesVariables := [...]string{data.AfInterfaces[i].SummaryAddresses[ci].AddressVariable.ValueString(), data.AfInterfaces[i].SummaryAddresses[ci].MaskVariable.ValueString()}
+			keyValues := [...]string{data.Interfaces[i].SummaryAddresses[ci].Address.ValueString(), data.Interfaces[i].SummaryAddresses[ci].Mask.ValueString()}
+			keyValuesVariables := [...]string{data.Interfaces[i].SummaryAddresses[ci].AddressVariable.ValueString(), data.Interfaces[i].SummaryAddresses[ci].MaskVariable.ValueString()}
 
 			var cr gjson.Result
 			r.Get("summaryAddress").ForEach(
@@ -854,24 +854,24 @@ func (data *ServiceRoutingEIGRP) updateFromBody(ctx context.Context, res gjson.R
 					return true
 				},
 			)
-			data.AfInterfaces[i].SummaryAddresses[ci].Address = types.StringNull()
-			data.AfInterfaces[i].SummaryAddresses[ci].AddressVariable = types.StringNull()
+			data.Interfaces[i].SummaryAddresses[ci].Address = types.StringNull()
+			data.Interfaces[i].SummaryAddresses[ci].AddressVariable = types.StringNull()
 			if t := cr.Get("prefix.address.optionType"); t.Exists() {
 				va := cr.Get("prefix.address.value")
 				if t.String() == "variable" {
-					data.AfInterfaces[i].SummaryAddresses[ci].AddressVariable = types.StringValue(va.String())
+					data.Interfaces[i].SummaryAddresses[ci].AddressVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.AfInterfaces[i].SummaryAddresses[ci].Address = types.StringValue(va.String())
+					data.Interfaces[i].SummaryAddresses[ci].Address = types.StringValue(va.String())
 				}
 			}
-			data.AfInterfaces[i].SummaryAddresses[ci].Mask = types.StringNull()
-			data.AfInterfaces[i].SummaryAddresses[ci].MaskVariable = types.StringNull()
+			data.Interfaces[i].SummaryAddresses[ci].Mask = types.StringNull()
+			data.Interfaces[i].SummaryAddresses[ci].MaskVariable = types.StringNull()
 			if t := cr.Get("prefix.mask.optionType"); t.Exists() {
 				va := cr.Get("prefix.mask.value")
 				if t.String() == "variable" {
-					data.AfInterfaces[i].SummaryAddresses[ci].MaskVariable = types.StringValue(va.String())
+					data.Interfaces[i].SummaryAddresses[ci].MaskVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.AfInterfaces[i].SummaryAddresses[ci].Mask = types.StringValue(va.String())
+					data.Interfaces[i].SummaryAddresses[ci].Mask = types.StringValue(va.String())
 				}
 			}
 		}
@@ -927,10 +927,10 @@ func (data *ServiceRoutingEIGRP) isNull(ctx context.Context, res gjson.Result) b
 	if !data.HoldTimeVariable.IsNull() {
 		return false
 	}
-	if !data.Type.IsNull() {
+	if !data.AuthenticationType.IsNull() {
 		return false
 	}
-	if !data.TypeVariable.IsNull() {
+	if !data.AuthenticationTypeVariable.IsNull() {
 		return false
 	}
 	if !data.HmacAuthenticationKey.IsNull() {
@@ -942,7 +942,7 @@ func (data *ServiceRoutingEIGRP) isNull(ctx context.Context, res gjson.Result) b
 	if len(data.Md5Keys) > 0 {
 		return false
 	}
-	if len(data.AfInterfaces) > 0 {
+	if len(data.Interfaces) > 0 {
 		return false
 	}
 	if !data.RoutePolicyId.IsNull() {

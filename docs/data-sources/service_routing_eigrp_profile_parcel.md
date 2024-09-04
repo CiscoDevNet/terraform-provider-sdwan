@@ -29,7 +29,8 @@ data "sdwan_service_routing_eigrp_profile_parcel" "example" {
 
 ### Read-Only
 
-- `af_interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--af_interfaces))
+- `authentication_type` (String) Set EIGRP router authentication type
+- `authentication_type_variable` (String) Variable name
 - `autonomous_system_id` (Number) Set autonomous system ID <1..65535>
 - `autonomous_system_id_variable` (String) Variable name
 - `description` (String) The description of the profile parcel
@@ -41,17 +42,16 @@ data "sdwan_service_routing_eigrp_profile_parcel" "example" {
 - `hmac_authentication_key_variable` (String) Variable name
 - `hold_time` (Number) Set EIGRP hold time
 - `hold_time_variable` (String) Variable name
+- `interfaces` (Attributes List) Configure IPv4 Static Routes (see [below for nested schema](#nestedatt--interfaces))
 - `md5_keys` (Attributes List) Set keychain details (see [below for nested schema](#nestedatt--md5_keys))
 - `name` (String) The name of the profile parcel
 - `networks` (Attributes List) Configure the networks for EIGRP to advertise (see [below for nested schema](#nestedatt--networks))
 - `redistributes` (Attributes List) Redistribute routes into EIGRP (see [below for nested schema](#nestedatt--redistributes))
 - `route_policy_id` (String)
-- `type` (String) Set EIGRP router authentication type
-- `type_variable` (String) Variable name
 - `version` (Number) The version of the profile parcel
 
-<a id="nestedatt--af_interfaces"></a>
-### Nested Schema for `af_interfaces`
+<a id="nestedatt--interfaces"></a>
+### Nested Schema for `interfaces`
 
 Read-Only:
 
@@ -59,10 +59,10 @@ Read-Only:
 - `name_variable` (String) Variable name
 - `shutdown` (Boolean) Enable/disable EIGRP
 - `shutdown_variable` (String) Variable name
-- `summary_addresses` (Attributes List) Set summary addresses (see [below for nested schema](#nestedatt--af_interfaces--summary_addresses))
+- `summary_addresses` (Attributes List) Set summary addresses (see [below for nested schema](#nestedatt--interfaces--summary_addresses))
 
-<a id="nestedatt--af_interfaces--summary_addresses"></a>
-### Nested Schema for `af_interfaces.summary_addresses`
+<a id="nestedatt--interfaces--summary_addresses"></a>
+### Nested Schema for `interfaces.summary_addresses`
 
 Read-Only:
 
@@ -78,10 +78,10 @@ Read-Only:
 
 Read-Only:
 
-- `authentication_key` (String) Set MD5 key
-- `authentication_key_variable` (String) Variable name
 - `key_id` (Number) Set MD5 key ID
 - `key_id_variable` (String) Variable name
+- `key_string` (String) Set MD5 key
+- `key_string_variable` (String) Variable name
 
 
 <a id="nestedatt--networks"></a>

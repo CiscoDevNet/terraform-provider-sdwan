@@ -16,12 +16,12 @@ This resource can manage a Service Multicast profile parcel.
 
 ```terraform
 resource "sdwan_service_multicast_profile_parcel" "example" {
-  name               = "Example"
-  description        = "My Example"
-  feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  spt_only           = false
-  local_replicator   = false
-  threshold          = 10
+  name                       = "Example"
+  description                = "My Example"
+  feature_profile_id         = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
+  spt_only                   = false
+  local_replicator           = false
+  local_replicator_threshold = 10
   igmp_interfaces = [
     {
       interface_name = "GigabitEthernet1"
@@ -34,8 +34,9 @@ resource "sdwan_service_multicast_profile_parcel" "example" {
       ]
     }
   ]
-  pim_enable_source_specific_multicast = true
-  pim_spt_threshold                    = "1"
+  pim_source_specific_multicast_enable      = true
+  pim_source_specific_multicast_access_list = "1"
+  pim_spt_threshold                         = "0"
   pim_interfaces = [
     {
       interface_name      = "GigabitEthernet1"
@@ -94,12 +95,8 @@ resource "sdwan_service_multicast_profile_parcel" "example" {
 
 ### Required
 
-- `local_replicator` (Boolean) Replicator is local to this device
-  - Default value: `false`
 - `name` (String) The name of the profile parcel
-- `pim_enable_source_specific_multicast` (Boolean) turn SSM on/off
-- `spt_only` (Boolean) Shortest Path Tree (SPT) Only Mode
-  - Default value: `false`
+- `pim_source_specific_multicast_enable` (Boolean) turn SSM on/off
 
 ### Optional
 
@@ -111,6 +108,11 @@ resource "sdwan_service_multicast_profile_parcel" "example" {
 - `enable_auto_rp_variable` (String) Variable name
 - `feature_profile_id` (String) Feature Profile ID
 - `igmp_interfaces` (Attributes List) Set IGMP interface parameters (see [below for nested schema](#nestedatt--igmp_interfaces))
+- `local_replicator` (Boolean) Replicator is local to this device
+  - Default value: `false`
+- `local_replicator_threshold` (Number) Set number of joins per group the router supports
+  - Range: `0`-`131072`
+- `local_replicator_threshold_variable` (String) Variable name
 - `local_replicator_variable` (String) Variable name
 - `msdp_connection_retry_interval` (Number) Set MSDP refresh timer
   - Range: `1`-`60`
@@ -121,13 +123,16 @@ resource "sdwan_service_multicast_profile_parcel" "example" {
 - `pim_bsr_candidates` (Attributes List) bsr candidate Attributes (see [below for nested schema](#nestedatt--pim_bsr_candidates))
 - `pim_bsr_rp_candidates` (Attributes List) Set RP Discovery Scope (see [below for nested schema](#nestedatt--pim_bsr_rp_candidates))
 - `pim_interfaces` (Attributes List) Set PIM interface parameters (see [below for nested schema](#nestedatt--pim_interfaces))
-- `pim_spt_threshold` (String) Set Access List for PIM SSM
+- `pim_source_specific_multicast_access_list` (String) Set Access List for PIM SSM
+- `pim_source_specific_multicast_access_list_variable` (String) Variable name
+- `pim_spt_threshold` (String) Set when PIM router joins the SPT (kbps)
+  - Choices: `0`, `infinity`
+  - Default value: `0`
 - `pim_spt_threshold_variable` (String) Variable name
+- `spt_only` (Boolean) Shortest Path Tree (SPT) Only Mode
+  - Default value: `false`
 - `spt_only_variable` (String) Variable name
 - `static_rp_addresses` (Attributes List) Set Static RP Address(es) (see [below for nested schema](#nestedatt--static_rp_addresses))
-- `threshold` (Number) Set number of joins per group the router supports
-  - Range: `0`-`131072`
-- `threshold_variable` (String) Variable name
 
 ### Read-Only
 

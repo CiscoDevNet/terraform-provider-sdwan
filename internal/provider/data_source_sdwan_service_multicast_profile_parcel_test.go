@@ -35,13 +35,14 @@ func TestAccDataSourceSdwanServiceMulticastProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "spt_only", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "local_replicator", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "threshold", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "local_replicator_threshold", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "igmp_interfaces.0.interface_name", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "igmp_interfaces.0.version", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "igmp_interfaces.0.join_groups.0.group_address", "224.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "igmp_interfaces.0.join_groups.0.source_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_enable_source_specific_multicast", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_spt_threshold", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_source_specific_multicast_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_source_specific_multicast_access_list", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_spt_threshold", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_interfaces.0.interface_name", "GigabitEthernet1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_interfaces.0.query_interval", "30"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_multicast_profile_parcel.test", "pim_interfaces.0.join_prune_interval", "60"))
@@ -99,7 +100,7 @@ func testAccDataSourceSdwanServiceMulticastProfileParcelConfig() string {
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
 	config += `	spt_only = false` + "\n"
 	config += `	local_replicator = false` + "\n"
-	config += `	threshold = 10` + "\n"
+	config += `	local_replicator_threshold = 10` + "\n"
 	config += `	igmp_interfaces = [{` + "\n"
 	config += `	  interface_name = "GigabitEthernet1"` + "\n"
 	config += `	  version = 2` + "\n"
@@ -108,8 +109,9 @@ func testAccDataSourceSdwanServiceMulticastProfileParcelConfig() string {
 	config += `		source_address = "1.2.3.4"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
-	config += `	pim_enable_source_specific_multicast = true` + "\n"
-	config += `	pim_spt_threshold = "1"` + "\n"
+	config += `	pim_source_specific_multicast_enable = true` + "\n"
+	config += `	pim_source_specific_multicast_access_list = "1"` + "\n"
+	config += `	pim_spt_threshold = "0"` + "\n"
 	config += `	pim_interfaces = [{` + "\n"
 	config += `	  interface_name = "GigabitEthernet1"` + "\n"
 	config += `	  query_interval = 30` + "\n"

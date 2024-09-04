@@ -32,29 +32,29 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type ServiceWirelessLAN struct {
-	Id                     types.String              `tfsdk:"id"`
-	Version                types.Int64               `tfsdk:"version"`
-	Name                   types.String              `tfsdk:"name"`
-	Description            types.String              `tfsdk:"description"`
-	FeatureProfileId       types.String              `tfsdk:"feature_profile_id"`
-	Enable24g              types.Bool                `tfsdk:"enable_24g"`
-	Enable24gVariable      types.String              `tfsdk:"enable_24g_variable"`
-	Enable5g               types.Bool                `tfsdk:"enable_5g"`
-	Enable5gVariable       types.String              `tfsdk:"enable_5g_variable"`
-	Ssids                  []ServiceWirelessLANSsids `tfsdk:"ssids"`
-	Country                types.String              `tfsdk:"country"`
-	CountryVariable        types.String              `tfsdk:"country_variable"`
-	Username               types.String              `tfsdk:"username"`
-	UsernameVariable       types.String              `tfsdk:"username_variable"`
-	Password               types.String              `tfsdk:"password"`
-	PasswordVariable       types.String              `tfsdk:"password_variable"`
-	MeDynamicIpEnabled     types.Bool                `tfsdk:"me_dynamic_ip_enabled"`
-	MeIpv4Address          types.String              `tfsdk:"me_ipv4_address"`
-	MeIpv4AddressVariable  types.String              `tfsdk:"me_ipv4_address_variable"`
-	SubnetMask             types.String              `tfsdk:"subnet_mask"`
-	SubnetMaskVariable     types.String              `tfsdk:"subnet_mask_variable"`
-	DefaultGateway         types.String              `tfsdk:"default_gateway"`
-	DefaultGatewayVariable types.String              `tfsdk:"default_gateway_variable"`
+	Id                       types.String              `tfsdk:"id"`
+	Version                  types.Int64               `tfsdk:"version"`
+	Name                     types.String              `tfsdk:"name"`
+	Description              types.String              `tfsdk:"description"`
+	FeatureProfileId         types.String              `tfsdk:"feature_profile_id"`
+	Enable24g                types.Bool                `tfsdk:"enable_24g"`
+	Enable24gVariable        types.String              `tfsdk:"enable_24g_variable"`
+	Enable5g                 types.Bool                `tfsdk:"enable_5g"`
+	Enable5gVariable         types.String              `tfsdk:"enable_5g_variable"`
+	Ssids                    []ServiceWirelessLANSsids `tfsdk:"ssids"`
+	Country                  types.String              `tfsdk:"country"`
+	CountryVariable          types.String              `tfsdk:"country_variable"`
+	Username                 types.String              `tfsdk:"username"`
+	UsernameVariable         types.String              `tfsdk:"username_variable"`
+	Password                 types.String              `tfsdk:"password"`
+	PasswordVariable         types.String              `tfsdk:"password_variable"`
+	MeDynamicIpEnabled       types.Bool                `tfsdk:"me_dynamic_ip_enabled"`
+	MeIpv4Address            types.String              `tfsdk:"me_ipv4_address"`
+	MeIpv4AddressVariable    types.String              `tfsdk:"me_ipv4_address_variable"`
+	MeSubnetMask             types.String              `tfsdk:"me_subnet_mask"`
+	MeSubnetMaskVariable     types.String              `tfsdk:"me_subnet_mask_variable"`
+	MeDefaultGateway         types.String              `tfsdk:"me_default_gateway"`
+	MeDefaultGatewayVariable types.String              `tfsdk:"me_default_gateway_variable"`
 }
 
 type ServiceWirelessLANSsids struct {
@@ -343,27 +343,27 @@ func (data ServiceWirelessLAN) toBody(ctx context.Context) string {
 		}
 	}
 
-	if !data.SubnetMaskVariable.IsNull() {
+	if !data.MeSubnetMaskVariable.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.netmask.optionType", "variable")
-			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.netmask.value", data.SubnetMaskVariable.ValueString())
+			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.netmask.value", data.MeSubnetMaskVariable.ValueString())
 		}
-	} else if !data.SubnetMask.IsNull() {
+	} else if !data.MeSubnetMask.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.netmask.optionType", "global")
-			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.netmask.value", data.SubnetMask.ValueString())
+			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.netmask.value", data.MeSubnetMask.ValueString())
 		}
 	}
 
-	if !data.DefaultGatewayVariable.IsNull() {
+	if !data.MeDefaultGatewayVariable.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.defaultGateway.optionType", "variable")
-			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.defaultGateway.value", data.DefaultGatewayVariable.ValueString())
+			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.defaultGateway.value", data.MeDefaultGatewayVariable.ValueString())
 		}
-	} else if !data.DefaultGateway.IsNull() {
+	} else if !data.MeDefaultGateway.IsNull() {
 		if true {
 			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.defaultGateway.optionType", "global")
-			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.defaultGateway.value", data.DefaultGateway.ValueString())
+			body, _ = sjson.Set(body, path+"meIpConfig.meStaticIpCfg.defaultGateway.value", data.MeDefaultGateway.ValueString())
 		}
 	}
 	return body
@@ -562,24 +562,24 @@ func (data *ServiceWirelessLAN) fromBody(ctx context.Context, res gjson.Result) 
 			data.MeIpv4Address = types.StringValue(va.String())
 		}
 	}
-	data.SubnetMask = types.StringNull()
-	data.SubnetMaskVariable = types.StringNull()
+	data.MeSubnetMask = types.StringNull()
+	data.MeSubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "meIpConfig.meStaticIpCfg.netmask.optionType"); t.Exists() {
 		va := res.Get(path + "meIpConfig.meStaticIpCfg.netmask.value")
 		if t.String() == "variable" {
-			data.SubnetMaskVariable = types.StringValue(va.String())
+			data.MeSubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SubnetMask = types.StringValue(va.String())
+			data.MeSubnetMask = types.StringValue(va.String())
 		}
 	}
-	data.DefaultGateway = types.StringNull()
-	data.DefaultGatewayVariable = types.StringNull()
+	data.MeDefaultGateway = types.StringNull()
+	data.MeDefaultGatewayVariable = types.StringNull()
 	if t := res.Get(path + "meIpConfig.meStaticIpCfg.defaultGateway.optionType"); t.Exists() {
 		va := res.Get(path + "meIpConfig.meStaticIpCfg.defaultGateway.value")
 		if t.String() == "variable" {
-			data.DefaultGatewayVariable = types.StringValue(va.String())
+			data.MeDefaultGatewayVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DefaultGateway = types.StringValue(va.String())
+			data.MeDefaultGateway = types.StringValue(va.String())
 		}
 	}
 }
@@ -799,24 +799,24 @@ func (data *ServiceWirelessLAN) updateFromBody(ctx context.Context, res gjson.Re
 			data.MeIpv4Address = types.StringValue(va.String())
 		}
 	}
-	data.SubnetMask = types.StringNull()
-	data.SubnetMaskVariable = types.StringNull()
+	data.MeSubnetMask = types.StringNull()
+	data.MeSubnetMaskVariable = types.StringNull()
 	if t := res.Get(path + "meIpConfig.meStaticIpCfg.netmask.optionType"); t.Exists() {
 		va := res.Get(path + "meIpConfig.meStaticIpCfg.netmask.value")
 		if t.String() == "variable" {
-			data.SubnetMaskVariable = types.StringValue(va.String())
+			data.MeSubnetMaskVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.SubnetMask = types.StringValue(va.String())
+			data.MeSubnetMask = types.StringValue(va.String())
 		}
 	}
-	data.DefaultGateway = types.StringNull()
-	data.DefaultGatewayVariable = types.StringNull()
+	data.MeDefaultGateway = types.StringNull()
+	data.MeDefaultGatewayVariable = types.StringNull()
 	if t := res.Get(path + "meIpConfig.meStaticIpCfg.defaultGateway.optionType"); t.Exists() {
 		va := res.Get(path + "meIpConfig.meStaticIpCfg.defaultGateway.value")
 		if t.String() == "variable" {
-			data.DefaultGatewayVariable = types.StringValue(va.String())
+			data.MeDefaultGatewayVariable = types.StringValue(va.String())
 		} else if t.String() == "global" {
-			data.DefaultGateway = types.StringValue(va.String())
+			data.MeDefaultGateway = types.StringValue(va.String())
 		}
 	}
 }
@@ -870,16 +870,16 @@ func (data *ServiceWirelessLAN) isNull(ctx context.Context, res gjson.Result) bo
 	if !data.MeIpv4AddressVariable.IsNull() {
 		return false
 	}
-	if !data.SubnetMask.IsNull() {
+	if !data.MeSubnetMask.IsNull() {
 		return false
 	}
-	if !data.SubnetMaskVariable.IsNull() {
+	if !data.MeSubnetMaskVariable.IsNull() {
 		return false
 	}
-	if !data.DefaultGateway.IsNull() {
+	if !data.MeDefaultGateway.IsNull() {
 		return false
 	}
-	if !data.DefaultGatewayVariable.IsNull() {
+	if !data.MeDefaultGatewayVariable.IsNull() {
 		return false
 	}
 	return true

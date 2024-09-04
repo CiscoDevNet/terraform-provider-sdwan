@@ -91,7 +91,7 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 			},
 			"spt_only": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Shortest Path Tree (SPT) Only Mode").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"spt_only_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -99,17 +99,17 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 			},
 			"local_replicator": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Replicator is local to this device").AddDefaultValueDescription("false").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"local_replicator_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
-			"threshold": schema.Int64Attribute{
+			"local_replicator_threshold": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set number of joins per group the router supports").AddIntegerRangeDescription(0, 131072).String,
 				Optional:            true,
 			},
-			"threshold_variable": schema.StringAttribute{
+			"local_replicator_threshold_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
@@ -167,15 +167,26 @@ func (r *ServiceMulticastProfileParcelResource) Schema(ctx context.Context, req 
 					},
 				},
 			},
-			"pim_enable_source_specific_multicast": schema.BoolAttribute{
+			"pim_source_specific_multicast_enable": schema.BoolAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("turn SSM on/off").String,
 				Required:            true,
 			},
-			"pim_spt_threshold": schema.StringAttribute{
+			"pim_source_specific_multicast_access_list": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set Access List for PIM SSM").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 32),
+				},
+			},
+			"pim_source_specific_multicast_access_list_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"pim_spt_threshold": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set when PIM router joins the SPT (kbps)").AddStringEnumDescription("0", "infinity").AddDefaultValueDescription("0").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("0", "infinity"),
 				},
 			},
 			"pim_spt_threshold_variable": schema.StringAttribute{
