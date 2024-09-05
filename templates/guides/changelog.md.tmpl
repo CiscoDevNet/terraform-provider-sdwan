@@ -49,6 +49,7 @@ description: |-
 - Add `sdwan_service_route_policy_feature` resource and data source
 - BREAKING CHANGE: Rename all profile parcel resources and data sources being used in configuration groups to "Features" with a `_feature` suffix
 - BREAKING CHANGE: Rename `sdwan_application_priority_qos_policy_profile_parcel` resource and data source to `sdwan_application_priority_qos_policy`
+- Fix issue when reading deleted `sdwan_configuration_group` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/297)
 
 ## 0.3.13
 
