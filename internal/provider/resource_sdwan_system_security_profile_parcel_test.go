@@ -33,25 +33,25 @@ func TestAccSdwanSystemSecurityProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "rekey", "86400"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "anti_replay_window", "512"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "extended_anti_replay_window", "256"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "ipsec_pairwise_keying", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keychains.0.key_chain_name", "aaa"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keychains.0.key_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.id", "0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.name", "aaa"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.send_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.receiver_id", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.include_tcp_options", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.accept_ao_mismatch", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.crypto_algorithm", "aes-128-cmac"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.send_life_time_local", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.send_life_time_start_epoch", "1659284400"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.send_life_time_infinite", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.accept_life_time_local", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.accept_life_time_start_epoch", "1659284400"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_profile_parcel.test", "keys.0.accept_life_time_infinite", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "rekey", "86400"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "anti_replay_window", "512"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "extended_anti_replay_window", "256"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "ipsec_pairwise_keying", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keychains.0.key_chain_name", "aaa"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keychains.0.key_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.id", "0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.name", "aaa"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.send_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.receiver_id", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.include_tcp_options", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.accept_ao_mismatch", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.crypto_algorithm", "aes-128-cmac"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.send_life_time_local", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.send_life_time_start_epoch", "1659284400"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.send_life_time_infinite", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.accept_life_time_local", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.accept_life_time_start_epoch", "1659284400"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_security_feature.test", "keys.0.accept_life_time_infinite", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -81,7 +81,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanSystemSecurityProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_system_security_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_security_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -93,7 +93,7 @@ func testAccSdwanSystemSecurityProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanSystemSecurityProfileParcelConfig_all() string {
-	config := `resource "sdwan_system_security_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_security_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"

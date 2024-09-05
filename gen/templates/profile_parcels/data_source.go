@@ -53,7 +53,7 @@ type {{camelCase .Name}}ProfileParcelDataSource struct {
 }
 
 func (d *{{camelCase .Name}}ProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_{{snakeCase .Name}}_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_{{getProfileParcelName .}}"
 }
 
 func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
@@ -63,19 +63,19 @@ func (d *{{camelCase .Name}}ProfileParcelDataSource) Schema(ctx context.Context,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the {{camelCase .ParcelType}}",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the {{camelCase .ParcelType}}",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the {{camelCase .ParcelType}}",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the {{camelCase .ParcelType}}",
 				Computed:            true,
 			},
 			{{- range  .Attributes}}

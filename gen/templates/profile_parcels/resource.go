@@ -55,7 +55,7 @@ type {{camelCase .Name}}ProfileParcelResource struct {
 }
 
 func (r *{{camelCase .Name}}ProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_{{snakeCase .Name}}_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_{{getProfileParcelName .}}"
 }
 
 func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -65,22 +65,22 @@ func (r *{{camelCase .Name}}ProfileParcelResource) Schema(ctx context.Context, r
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the {{camelCase .ParcelType}}",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the {{camelCase .ParcelType}}",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the {{camelCase .ParcelType}}",
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the {{camelCase .ParcelType}}",
 				Optional:            true,
 			},
 			{{- range  .Attributes}}

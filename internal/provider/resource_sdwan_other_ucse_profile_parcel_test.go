@@ -33,18 +33,18 @@ func TestAccSdwanOtherUCSEProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "bay", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "slot", "0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "access_port_dedicated", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "access_port_shared_type", "ge1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "access_port_shared_failover_type", "ge2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "ipv4_address", "2.2.2.2/24"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "default_gateway", "2.2.2.2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "vlan_id", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "assign_priority", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "interfaces.0.interface_name", "ucse2/0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "interfaces.0.ucse_interface_vpn", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_profile_parcel.test", "interfaces.0.ipv4_address", "10.1.15.15/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "bay", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "slot", "0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "access_port_dedicated", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "access_port_shared_type", "ge1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "access_port_shared_failover_type", "ge2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "ipv4_address", "2.2.2.2/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "default_gateway", "2.2.2.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "vlan_id", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "assign_priority", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "interfaces.0.interface_name", "ucse2/0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "interfaces.0.ucse_interface_vpn", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "interfaces.0.ipv4_address", "10.1.15.15/24"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -74,7 +74,7 @@ resource "sdwan_other_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanOtherUCSEProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_other_ucse_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_other_ucse_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
@@ -92,7 +92,7 @@ func testAccSdwanOtherUCSEProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanOtherUCSEProfileParcelConfig_all() string {
-	config := `resource "sdwan_other_ucse_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_other_ucse_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"

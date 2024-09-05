@@ -50,29 +50,29 @@ type SystemOMPProfileParcelDataSource struct {
 }
 
 func (d *SystemOMPProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_system_omp_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_system_omp_feature"
 }
 
 func (d *SystemOMPProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the System OMP profile parcel.",
+		MarkdownDescription: "This data source can read the System OMP Feature.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the Feature",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the Feature",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the Feature",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the Feature",
 				Computed:            true,
 			},
 			"feature_profile_id": schema.StringAttribute{

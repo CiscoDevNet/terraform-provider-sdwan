@@ -3,7 +3,7 @@ name: Region List Policy Object
 rest_endpoint: /template/policy/list/region/
 has_version: true
 id_attribute: listId
-doc_category: Policy Objects
+doc_category: Policy Objects (Classic)
 attributes:
   - model_name: type
     type: String

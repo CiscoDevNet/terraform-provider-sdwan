@@ -212,6 +212,7 @@ type YamlConfig struct {
 	NoDataSource             bool                  `yaml:"no_data_source"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
+	ParcelType               string                `yaml:"parcel_type"`
 }
 
 type YamlConfigAttribute struct {
@@ -480,6 +481,17 @@ func GetParentModelName(attribute YamlConfigAttribute) string {
 	}
 }
 
+// Templating helper function to return the snake case profile parcel name
+func GetProfileParcelName(config YamlConfig) string {
+	if config.ParcelType == "feature" {
+		return SnakeCase(config.Name) + "_feature"
+	} else if config.ParcelType == "policy" {
+		return SnakeCase(config.Name) + "_policy"
+	} else {
+		return SnakeCase(config.Name)
+	}
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -512,6 +524,7 @@ var functions = template.FuncMap{
 	"isNestedList":         IsNestedList,
 	"isNestedSet":          IsNestedSet,
 	"getParentModelName":   GetParentModelName,
+	"getProfileParcelName": GetProfileParcelName,
 	"contains":             contains,
 }
 
@@ -907,10 +920,10 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 	}
 
 	if config.DsDescription == "" {
-		config.DsDescription = fmt.Sprintf("This data source can read the %s profile parcel.", config.Name)
+		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
 	if config.ResDescription == "" {
-		config.ResDescription = fmt.Sprintf("This resource can manage a %s profile parcel.", config.Name)
+		config.ResDescription = fmt.Sprintf("This resource can manage a %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
 }
 

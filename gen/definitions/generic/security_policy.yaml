@@ -6,7 +6,7 @@ has_version: true
 id_from_query_path: data
 id_from_query_path_attribute: policyId
 delete_mutex: true
-doc_category: Security Policies
+doc_category: Security Policies (Classic)
 attributes:
   - model_name: policyType
     type: String

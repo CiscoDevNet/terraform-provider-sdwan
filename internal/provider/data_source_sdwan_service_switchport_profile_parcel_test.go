@@ -33,31 +33,31 @@ func TestAccDataSourceSdwanServiceSwitchportProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.interface_name", "GigabitEthernet"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.mode", "access"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.shutdown", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.speed", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.duplex", "full"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.switchport_access_vlan", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.switchport_trunk_allowed_vlans", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.switchport_trunk_native_vlan", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.port_control", "auto"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.voice_vlan", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.pae_enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.mac_authentication_bypass", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.host_mode", "single-host"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.enable_periodic_reauth", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.inactivity", "60"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.reauthentication", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.control_direction", "both"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.restricted_vlan", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.guest_vlan", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.critical_vlan", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "interfaces.0.enable_voice", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "age_out_time", "300"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "static_mac_addresses.0.mac_address", "01:02:03:04:05:06"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "static_mac_addresses.0.vlan_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_profile_parcel.test", "static_mac_addresses.0.interface_name", "GigabitEthernet0/0/0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.interface_name", "GigabitEthernet"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.mode", "access"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.speed", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.duplex", "full"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.switchport_access_vlan", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.switchport_trunk_allowed_vlans", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.switchport_trunk_native_vlan", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.port_control", "auto"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.voice_vlan", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.pae_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.mac_authentication_bypass", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.host_mode", "single-host"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.enable_periodic_reauth", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.inactivity", "60"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.reauthentication", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.control_direction", "both"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.restricted_vlan", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.guest_vlan", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.critical_vlan", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "interfaces.0.enable_voice", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "age_out_time", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "static_mac_addresses.0.mac_address", "01:02:03:04:05:06"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "static_mac_addresses.0.vlan_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_switchport_feature.test", "static_mac_addresses.0.interface_name", "GigabitEthernet0/0/0"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -84,7 +84,7 @@ resource "sdwan_service_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanServiceSwitchportProfileParcelConfig() string {
-	config := `resource "sdwan_service_switchport_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_switchport_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
@@ -120,8 +120,8 @@ func testAccDataSourceSdwanServiceSwitchportProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_service_switchport_profile_parcel" "test" {
-			id = sdwan_service_switchport_profile_parcel.test.id
+		data "sdwan_service_switchport_feature" "test" {
+			id = sdwan_service_switchport_feature.test.id
 			feature_profile_id = sdwan_service_feature_profile.test.id
 		}
 	`

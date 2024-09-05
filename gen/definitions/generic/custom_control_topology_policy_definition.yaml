@@ -4,7 +4,7 @@ rest_endpoint: /template/policy/definition/control/
 has_version: true
 id_attribute: definitionId
 type_value: control
-doc_category: Centralized Policies
+doc_category: Centralized Policies (Classic)
 attributes:
   - model_name: type
     type: String

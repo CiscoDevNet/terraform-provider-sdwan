@@ -33,37 +33,37 @@ func TestAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcel(t *testing.T)
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "router_id", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "distance", "110"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "distance_external", "110"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "distance_inter_area", "110"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "distance_intra_area", "110"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "reference_bandwidth", "101"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "rfc_1583_compatible", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "default_information_originate", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "default_information_originate_always", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "default_information_originate_metric", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "default_information_originate_metric_type", "type1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "spf_calculation_delay", "200"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "spf_initial_hold_time", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "spf_maximum_hold_time", "10000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "filter", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "redistributes.0.protocol", "static"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "router_lsa_action", "on-startup"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "router_lsa_on_startup_time", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.area_number", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.area_type", "stub"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.name", "GigabitEthernet2"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.hello_interval", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.dead_interval", "40"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.lsa_retransmit_interval", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.cost", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.network_type", "broadcast"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.passive_interface", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.interfaces.0.authentication_type", "no-auth"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.ranges.0.prefix", "3002::/96"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.ranges.0.cost", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test", "areas.0.ranges.0.no_advertise", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_id", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "distance", "110"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "distance_external", "110"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "distance_inter_area", "110"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "distance_intra_area", "110"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "reference_bandwidth", "101"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "rfc_1583_compatible", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "default_information_originate", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "default_information_originate_always", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "default_information_originate_metric", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "default_information_originate_metric_type", "type1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "spf_calculation_delay", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "spf_initial_hold_time", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "spf_maximum_hold_time", "10000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "filter", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "redistributes.0.protocol", "static"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_lsa_action", "on-startup"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "router_lsa_on_startup_time", "30"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.area_number", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.area_type", "stub"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.name", "GigabitEthernet2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.hello_interval", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.dead_interval", "40"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.lsa_retransmit_interval", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.cost", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.network_type", "broadcast"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.passive_interface", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.interfaces.0.authentication_type", "no-auth"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.ranges.0.prefix", "3002::/96"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.ranges.0.cost", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_routing_ospfv3_ipv6_feature.test", "areas.0.ranges.0.no_advertise", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -90,7 +90,7 @@ resource "sdwan_transport_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcelConfig() string {
-	config := `resource "sdwan_transport_routing_ospfv3_ipv6_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_routing_ospfv3_ipv6_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -136,8 +136,8 @@ func testAccDataSourceSdwanTransportRoutingOSPFv3IPv6ProfileParcelConfig() strin
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_transport_routing_ospfv3_ipv6_profile_parcel" "test" {
-			id = sdwan_transport_routing_ospfv3_ipv6_profile_parcel.test.id
+		data "sdwan_transport_routing_ospfv3_ipv6_feature" "test" {
+			id = sdwan_transport_routing_ospfv3_ipv6_feature.test.id
 			feature_profile_id = sdwan_transport_feature_profile.test.id
 		}
 	`

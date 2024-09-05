@@ -33,15 +33,15 @@ func TestAccSdwanTransportIPv6TrackerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "tracker_name", "TRACKER_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "endpoint_api_url", "google.com"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "endpoint_dns_name", "google.com"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "endpoint_ip", "2001:0:0:1::0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "interval", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "multiplier", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "threshold", "300"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "endpoint_tracker_type", "ipv6-interface"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_profile_parcel.test", "tracker_type", "endpoint"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "tracker_name", "TRACKER_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "endpoint_api_url", "google.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "endpoint_dns_name", "google.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "endpoint_ip", "2001:0:0:1::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "interval", "30"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "threshold", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "endpoint_tracker_type", "ipv6-interface"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_ipv6_tracker_feature.test", "tracker_type", "endpoint"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -71,7 +71,7 @@ resource "sdwan_transport_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanTransportIPv6TrackerProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_transport_ipv6_tracker_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_ipv6_tracker_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -84,7 +84,7 @@ func testAccSdwanTransportIPv6TrackerProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanTransportIPv6TrackerProfileParcelConfig_all() string {
-	config := `resource "sdwan_transport_ipv6_tracker_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_ipv6_tracker_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"

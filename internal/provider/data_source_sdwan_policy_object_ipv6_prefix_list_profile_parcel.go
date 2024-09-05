@@ -48,29 +48,29 @@ type PolicyObjectIPv6PrefixListProfileParcelDataSource struct {
 }
 
 func (d *PolicyObjectIPv6PrefixListProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_policy_object_ipv6_prefix_list_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_policy_object_ipv6_prefix_list"
 }
 
 func (d *PolicyObjectIPv6PrefixListProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Policy Object IPv6 Prefix List profile parcel.",
+		MarkdownDescription: "This data source can read the Policy Object IPv6 Prefix List Policy_object.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the Policy_object",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the Policy_object",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the Policy_object",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the Policy_object",
 				Computed:            true,
 			},
 			"feature_profile_id": schema.StringAttribute{
