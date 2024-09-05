@@ -46,6 +46,7 @@ type ServiceIPv6ACL struct {
 type ServiceIPv6ACLSequences struct {
 	SequenceId   types.Int64                         `tfsdk:"sequence_id"`
 	SequenceName types.String                        `tfsdk:"sequence_name"`
+	BaseAction   types.String                        `tfsdk:"base_action"`
 	Conditions   []ServiceIPv6ACLSequencesConditions `tfsdk:"conditions"`
 	Actions      []ServiceIPv6ACLSequencesActions    `tfsdk:"actions"`
 }
@@ -128,6 +129,12 @@ func (data ServiceIPv6ACL) toBody(ctx context.Context) string {
 				if true {
 					itemBody, _ = sjson.Set(itemBody, "sequenceName.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "sequenceName.value", item.SequenceName.ValueString())
+				}
+			}
+			if !item.BaseAction.IsNull() {
+				if true {
+					itemBody, _ = sjson.Set(itemBody, "baseAction.optionType", "global")
+					itemBody, _ = sjson.Set(itemBody, "baseAction.value", item.BaseAction.ValueString())
 				}
 			}
 			if true {
@@ -319,6 +326,14 @@ func (data *ServiceIPv6ACL) fromBody(ctx context.Context, res gjson.Result) {
 				va := v.Get("sequenceName.value")
 				if t.String() == "global" {
 					item.SequenceName = types.StringValue(va.String())
+				}
+			}
+			item.BaseAction = types.StringNull()
+
+			if t := v.Get("baseAction.optionType"); t.Exists() {
+				va := v.Get("baseAction.value")
+				if t.String() == "global" {
+					item.BaseAction = types.StringValue(va.String())
 				}
 			}
 			if cValue := v.Get("matchEntries"); cValue.Exists() {
@@ -573,6 +588,14 @@ func (data *ServiceIPv6ACL) updateFromBody(ctx context.Context, res gjson.Result
 			va := r.Get("sequenceName.value")
 			if t.String() == "global" {
 				data.Sequences[i].SequenceName = types.StringValue(va.String())
+			}
+		}
+		data.Sequences[i].BaseAction = types.StringNull()
+
+		if t := r.Get("baseAction.optionType"); t.Exists() {
+			va := r.Get("baseAction.value")
+			if t.String() == "global" {
+				data.Sequences[i].BaseAction = types.StringValue(va.String())
 			}
 		}
 		for ci := range data.Sequences[i].Conditions {

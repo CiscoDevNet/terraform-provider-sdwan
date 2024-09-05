@@ -95,6 +95,10 @@ func (d *ServiceIPv6ACLProfileParcelDataSource) Schema(ctx context.Context, req 
 							MarkdownDescription: "Sequence Name",
 							Computed:            true,
 						},
+						"base_action": schema.StringAttribute{
+							MarkdownDescription: "Base Action",
+							Computed:            true,
+						},
 						"conditions": schema.ListNestedAttribute{
 							MarkdownDescription: "Define match conditions",
 							Computed:            true,

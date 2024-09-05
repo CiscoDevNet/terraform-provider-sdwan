@@ -77,6 +77,9 @@ resource "sdwan_service_ipv4_acl_profile_parcel" "example" {
 Optional:
 
 - `actions` (Attributes List) Define list of actions (see [below for nested schema](#nestedatt--sequences--actions))
+- `base_action` (String) Base Action
+  - Choices: `drop`, `accept`
+  - Default value: `accept`
 - `conditions` (Attributes List) Define match conditions (see [below for nested schema](#nestedatt--sequences--conditions))
 - `sequence_id` (Number) Sequence Id
   - Range: `1`-`65536`

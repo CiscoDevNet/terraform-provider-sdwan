@@ -41,6 +41,7 @@ data "sdwan_service_ipv6_acl_profile_parcel" "example" {
 Read-Only:
 
 - `actions` (Attributes List) Define list of actions (see [below for nested schema](#nestedatt--sequences--actions))
+- `base_action` (String) Base Action
 - `conditions` (Attributes List) Define match conditions (see [below for nested schema](#nestedatt--sequences--conditions))
 - `sequence_id` (Number) Sequence Id
 - `sequence_name` (String) Sequence Name

@@ -20,9 +20,10 @@ attributes:
       example: 1
     - model_name: sequenceName
       example: AccessControlList1
-    # === Not supported in 20.12.0 ===
-    # - model_name: baseAction
-    #   example: accept
+    - model_name: baseAction
+      exclude_test: true
+      exclude_null: true
+      example: drop
     - model_name: matchEntries
       tf_name: conditions
       attributes: 

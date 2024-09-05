@@ -115,6 +115,13 @@ func (r *ServiceIPv4ACLProfileParcelResource) Schema(ctx context.Context, req re
 								stringvalidator.LengthBetween(1, 19),
 							},
 						},
+						"base_action": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Base Action").AddStringEnumDescription("drop", "accept").AddDefaultValueDescription("accept").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("drop", "accept"),
+							},
+						},
 						"conditions": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Define match conditions").String,
 							Optional:            true,
