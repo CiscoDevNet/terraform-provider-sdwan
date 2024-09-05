@@ -157,6 +157,18 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
+									"service_area": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("M365 Service Area").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
+									"traffic_category": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("M365 Traffic Category").AddStringEnumDescription("optimize-allow", "optimize", "all").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("optimize-allow", "optimize", "all"),
+										},
+									},
 									"dns_application_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
@@ -192,6 +204,11 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
+									"icmp6_message": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("ICMP6 Message").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
 									"source_data_ipv4_prefx_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
@@ -206,6 +223,19 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
+									"source_ipv4": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source Data IP Prefix").String,
+										Optional:            true,
+									},
+									"source_ipv6": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source Data IP Prefix").String,
+										Optional:            true,
+									},
+									"source_port": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Source Port (0-65535) range or individual number separated by space").String,
+										ElementType:         types.StringType,
+										Optional:            true,
+									},
 									"destination_data_ipv4_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
@@ -219,6 +249,19 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										Validators: []validator.String{
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
+									},
+									"destination_ipv4": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Data IP Prefix").String,
+										Optional:            true,
+									},
+									"destination_ipv6": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Data IP Prefix").String,
+										Optional:            true,
+									},
+									"destination_port": schema.SetAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Destination Port (0-65535) range or individual number separated by space").String,
+										ElementType:         types.StringType,
+										Optional:            true,
 									},
 									"tcp": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("TCP States").AddStringEnumDescription("syn").String,
@@ -525,6 +568,14 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										},
 									},
 									"log": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"cloud_saas": schema.BoolAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+									},
+									"cloud_probe": schema.BoolAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 									},

@@ -88,6 +88,8 @@ Optional:
 Optional:
 
 - `backup_sla_preferred_color` (Set of String) Backup SLA perferred color
+- `cloud_probe` (Boolean)
+- `cloud_saas` (Boolean)
 - `count` (String)
 - `fallback_to_routing` (Boolean)
 - `log` (Boolean)
@@ -166,6 +168,9 @@ Optional:
 - `application_list_id` (String)
 - `destination_data_ipv4_prefix_list_id` (String)
 - `destination_data_ipv6_prefix_list_id` (String)
+- `destination_ipv4` (String) Destination Data IP Prefix
+- `destination_ipv6` (String) Destination Data IP Prefix
+- `destination_port` (Set of String) Destination Port (0-65535) range or individual number separated by space
 - `destination_region` (String) Destination Region
   - Choices: `primary-region`, `secondary-region`, `other-region`
 - `dns` (String) Dns
@@ -173,14 +178,21 @@ Optional:
 - `dns_application_list_id` (String)
 - `dscp` (Number) DSCP number
   - Range: `0`-`63`
+- `icmp6_message` (Set of String) ICMP6 Message
 - `icmp_message` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length
 - `protocol` (Set of String) protocol (0-255) range or individual number separated by space
 - `saas_application_list_id` (String)
+- `service_area` (Set of String) M365 Service Area
 - `source_data_ipv4_prefx_list_id` (String)
 - `source_data_ipv6_prefx_list_id` (String)
+- `source_ipv4` (String) Source Data IP Prefix
+- `source_ipv6` (String) Source Data IP Prefix
+- `source_port` (Set of String) Source Port (0-65535) range or individual number separated by space
 - `tcp` (String) TCP States
   - Choices: `syn`
+- `traffic_category` (String) M365 Traffic Category
+  - Choices: `optimize-allow`, `optimize`, `all`
 - `traffic_class` (String) Traffic Class
   - Choices: `gold-voip-telephony`, `gold-broadcast-video`, `gold-real-time-interactive`, `gold-multimedia-conferencing`, `gold-multimedia-streaming`, `gold-network-control`, `gold-signaling`, `gold-ops-admin-mgmt`, `gold-transactional-data`, `gold-bulk-data`, `silver`, `bronze`
 - `traffic_to` (String) Traffic to

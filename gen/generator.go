@@ -800,7 +800,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 						attr.MaxInt = value.Int()
 					}
 				}
-			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" {
+			} else if t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.type").String() == "string" || t.Get("properties.value.type").String() == "array" && t.Get("properties.value.items.oneOf.0.type").String() == "string" {
 				attr.Type = "Set"
 				attr.ElementType = "String"
 				// if value := t.Get("properties.value.items.minItems"); value.Exists() {

@@ -125,6 +125,15 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "",
 										Computed:            true,
 									},
+									"service_area": schema.SetAttribute{
+										MarkdownDescription: "M365 Service Area",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
+									"traffic_category": schema.StringAttribute{
+										MarkdownDescription: "M365 Traffic Category",
+										Computed:            true,
+									},
 									"dns_application_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
@@ -151,6 +160,11 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										ElementType:         types.StringType,
 										Computed:            true,
 									},
+									"icmp6_message": schema.SetAttribute{
+										MarkdownDescription: "ICMP6 Message",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"source_data_ipv4_prefx_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
@@ -159,12 +173,38 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										MarkdownDescription: "",
 										Computed:            true,
 									},
+									"source_ipv4": schema.StringAttribute{
+										MarkdownDescription: "Source Data IP Prefix",
+										Computed:            true,
+									},
+									"source_ipv6": schema.StringAttribute{
+										MarkdownDescription: "Source Data IP Prefix",
+										Computed:            true,
+									},
+									"source_port": schema.SetAttribute{
+										MarkdownDescription: "Source Port (0-65535) range or individual number separated by space",
+										ElementType:         types.StringType,
+										Computed:            true,
+									},
 									"destination_data_ipv4_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},
 									"destination_data_ipv6_prefix_list_id": schema.StringAttribute{
 										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"destination_ipv4": schema.StringAttribute{
+										MarkdownDescription: "Destination Data IP Prefix",
+										Computed:            true,
+									},
+									"destination_ipv6": schema.StringAttribute{
+										MarkdownDescription: "Destination Data IP Prefix",
+										Computed:            true,
+									},
+									"destination_port": schema.SetAttribute{
+										MarkdownDescription: "Destination Port (0-65535) range or individual number separated by space",
+										ElementType:         types.StringType,
 										Computed:            true,
 									},
 									"tcp": schema.StringAttribute{
@@ -392,6 +432,14 @@ func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx con
 										Computed:            true,
 									},
 									"log": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"cloud_saas": schema.BoolAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"cloud_probe": schema.BoolAttribute{
 										MarkdownDescription: "",
 										Computed:            true,
 									},

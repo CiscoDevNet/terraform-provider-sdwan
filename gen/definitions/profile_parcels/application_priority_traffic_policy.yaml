@@ -65,15 +65,12 @@ attributes:
         exclude_test: true
         example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
 
-      # # ==== Unable to find in UI ====
-      # - model_name: serviceArea
-      #   exclude_test: true
-      #   example: common
-
-      # # ==== Unable to find in UI ====
-      # - model_name: trafficCategory
-      #   exclude_test: true
-      #   example: optimize-allow
+      - model_name: serviceArea
+        exclude_test: true
+        example: common
+      - model_name: trafficCategory
+        exclude_test: true
+        example: optimize-allow
 
       - model_name: refId
         tf_name: dns_application_list_id
@@ -96,12 +93,9 @@ attributes:
       - model_name: icmpMessage
         exclude_test: true
         example: echo
-
-      # # ==== Unable to find in UI ====
-      # - model_name: icmp6Message
-      #   exclude_test: true
-      #   example:
-
+      - model_name: icmp6Message
+        exclude_test: true
+        example:
       - model_name: refId
         tf_name: source_data_ipv4_prefx_list_id
         data_path: [sourceDataPrefixList]
@@ -114,22 +108,17 @@ attributes:
         exclude_test: true
         example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
 
-      # # ==== Unable to find in UI ====
-      # - model_name: sourceIp
-        # tf_name: source_ipv4
-        # exclude_test: true
-        # example: 1.2.3.4
-
-      # # ==== Unable to find in UI ====
-      # - model_name: sourceIpv6
-        # tf_name: source_ipv6
-        # exclude_test: true
-        # example: 2001:0:0:1::/64
-
-      # # ==== Unsupported type: array ====
-      # - model_name: sourcePort
-        # exclude_test: true
-        # example: 1234
+      - model_name: sourceIp
+        tf_name: source_ipv4
+        exclude_test: true
+        example: 1.2.3.4
+      - model_name: sourceIpv6
+        tf_name: source_ipv6
+        exclude_test: true
+        example: 2001:0:0:1::/64
+      - model_name: sourcePort
+        exclude_test: true
+        example: 1234
 
       - model_name: refId
         tf_name: destination_data_ipv4_prefix_list_id
@@ -142,23 +131,17 @@ attributes:
         data_path: [destinationDataIpv6PrefixList]
         exclude_test: true
         example: b1b45f19-69f4-44c5-8e0a-15a14b77a435
-
-      # # ==== Unable to find in UI ====
-      # - model_name: destinationIp
-      #   tf_name: destination_ipv4
-      #   exclude_test: true
-      #   example: 2.3.4.5
-
-      # # ==== Unable to find in UI ====
-      # - model_name: destinationIpv6
-      #   tf_name: destination_ipv6
-      #   exclude_test: true
-      #   example: 2001:0:0:2::/64
-
-      # # ==== Unsupported type: array ====
-      # - model_name: destinationPort
-      #   exclude_test: true
-      #   example: 2345
+      - model_name: destinationIp
+        tf_name: destination_ipv4
+        exclude_test: true
+        example: 2.3.4.5
+      - model_name: destinationIpv6
+        tf_name: destination_ipv6
+        exclude_test: true
+        example: 2001:0:0:2::/64
+      - model_name: destinationPort
+        exclude_test: true
+        example: 2345
 
       - model_name: tcp
         exclude_test: true
@@ -392,16 +375,21 @@ attributes:
         exclude_test: true
         example: umbrella
 
+      # # === Not Support in 20.12 (Supported in 20.15) ===
       # - model_name: tcpOptimization
       #   tf_name: appqoe_tcp_optimization
       #   data_path: [appqoeOptimization]
       #   exclude_test: true
       #   example: true
+
+      # # === Not Support in 20.12 (Supported in 20.15) ===
       # - model_name: dreOptimization
       #   tf_name: appqoe_dre_optimization
       #   data_path: [appqoeOptimization]
       #   exclude_test: true
       #   example: true
+
+      # # === Not Support in 20.12 (Supported in 20.15) ===
       # - model_name: serviceNodeGroup
       #   tf_name: appqoe_service_node_group
       #   data_path: [appqoeOptimization]
@@ -426,17 +414,14 @@ attributes:
         exclude_test: true
         example: false
 
-      # # ==== Unable to find in UI ====
-      # - model_name: cloudSaas
-      #   exclude_test: true
-      #   example: false
-
-      # # ==== Unable to find in UI ====
-      # - model_name: cloudProbe
-      #   exclude_test: true
-      #   example: false
+      - model_name: cloudSaas
+        exclude_test: true
+        example: false
+      - model_name: cloudProbe
+        exclude_test: true
+        example: false
       
-      # # ==== Unable to find in UI ====
+      # # === Not Support in 20.12 (Supported in 20.15) ===
       # - model_name: cflowd
       #   exclude_test: true
       #   example: false
@@ -444,7 +429,6 @@ attributes:
       - model_name: natPool
         exclude_test: true
         example: 2
-
       - model_name: useVpn
         tf_name: nat_vpn
         data_path: [nat]
@@ -479,13 +463,13 @@ attributes:
         exclude_test: true
         example: true
 
-      # # ==== Unable to find in UI ====
+      # # === Not Support in 20.12 (Supported in 20.15) ===
       # - model_name: secureServiceEdge
       #   data_path: [sse]
       #   exclude_test: true
       #   example: true
 
-      # # ==== Unable to find in UI ====
+      # # === Not Support in 20.12 (Supported in 20.15) ===
       # - model_name: secureServiceEdgeInstance
       #   data_path: [sse]
       #   exclude_test: true
