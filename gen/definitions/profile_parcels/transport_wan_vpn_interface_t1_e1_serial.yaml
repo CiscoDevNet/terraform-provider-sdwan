@@ -3,6 +3,7 @@ name: Transport WAN VPN Interface T1 E1 Serial
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/serial
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true

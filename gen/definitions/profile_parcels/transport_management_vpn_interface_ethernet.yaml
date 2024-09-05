@@ -3,6 +3,7 @@ name: Transport Management VPN Interface Ethernet
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn/%s/interface/ethernet
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true

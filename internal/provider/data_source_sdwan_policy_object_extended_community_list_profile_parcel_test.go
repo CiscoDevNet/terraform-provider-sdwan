@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcel(t *tes
 		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_extended_community_list_profile_parcel.test", "entries.0.extended_community", "soo 10.0.0.1:30"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_extended_community_list.test", "entries.0.extended_community", "soo 10.0.0.1:30"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -58,7 +58,7 @@ variable "policy_object_feature_template_id" {}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelConfig() string {
-	config := `resource "sdwan_policy_object_extended_community_list_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_policy_object_extended_community_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
@@ -68,8 +68,8 @@ func testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelConfig(
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_policy_object_extended_community_list_profile_parcel" "test" {
-			id = sdwan_policy_object_extended_community_list_profile_parcel.test.id
+		data "sdwan_policy_object_extended_community_list" "test" {
+			id = sdwan_policy_object_extended_community_list.test.id
 			feature_profile_id = var.policy_object_feature_template_id
 		}
 	`

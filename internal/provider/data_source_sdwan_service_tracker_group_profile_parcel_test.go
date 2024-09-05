@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanServiceTrackerGroupProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_tracker_group_profile_parcel.test", "tracker_boolean", "or"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_tracker_group_feature.test", "tracker_boolean", "or"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -94,7 +94,7 @@ resource "sdwan_service_tracker_profile_parcel" "test-2" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanServiceTrackerGroupProfileParcelConfig() string {
-	config := `resource "sdwan_service_tracker_group_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_tracker_group_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
@@ -107,8 +107,8 @@ func testAccDataSourceSdwanServiceTrackerGroupProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_service_tracker_group_profile_parcel" "test" {
-			id = sdwan_service_tracker_group_profile_parcel.test.id
+		data "sdwan_service_tracker_group_feature" "test" {
+			id = sdwan_service_tracker_group_feature.test.id
 			feature_profile_id = sdwan_service_feature_profile.test.id
 		}
 	`

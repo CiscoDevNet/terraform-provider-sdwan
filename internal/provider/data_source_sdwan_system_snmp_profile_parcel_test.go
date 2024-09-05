@@ -33,30 +33,30 @@ func TestAccDataSourceSdwanSystemSNMPProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "shutdown", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "contact_person", "wixie.cisco"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "location_of_device", "SHANGHAI"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "views.0.name", "VIEW1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "views.0.oids.0.id", "1.3.6.1.4.1.9.9.394"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "views.0.oids.0.exclude", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "communities.0.user_label", "COMMUNITY1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "communities.0.view", "VIEW1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "communities.0.authorization", "read-only"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "groups.0.name", "GROUP1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "groups.0.security_level", "auth-priv"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "groups.0.view", "VIEW1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "users.0.name", "USER1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "users.0.authentication_protocol", "sha"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "users.0.authentication_password", "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "users.0.privacy_protocol", "aes-256-cfb-128"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "users.0.privacy_password", "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "users.0.group", "GROUP1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.vpn_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.ip", "10.75.221.156"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.port", "161"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.user_label", "TARGET1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.user", "USER1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_profile_parcel.test", "trap_target_servers.0.source_interface", "GigabitEthernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "contact_person", "wixie.cisco"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "location_of_device", "SHANGHAI"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "views.0.name", "VIEW1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "views.0.oids.0.id", "1.3.6.1.4.1.9.9.394"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "views.0.oids.0.exclude", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "communities.0.user_label", "COMMUNITY1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "communities.0.view", "VIEW1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "communities.0.authorization", "read-only"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "groups.0.name", "GROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "groups.0.security_level", "auth-priv"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "groups.0.view", "VIEW1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.name", "USER1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.authentication_protocol", "sha"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.authentication_password", "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.privacy_protocol", "aes-256-cfb-128"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.privacy_password", "$CRYPT_CLUSTER$su56l1Z0Tk4Qc9N7+T/uOg==$sD6b0HLqEdI+RNwsEOoLcQ=="))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "users.0.group", "GROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.vpn_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.ip", "10.75.221.156"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.port", "161"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.user_label", "TARGET1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.user", "USER1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_snmp_feature.test", "trap_target_servers.0.source_interface", "GigabitEthernet1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -83,7 +83,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanSystemSNMPProfileParcelConfig() string {
-	config := `resource "sdwan_system_snmp_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_snmp_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -127,8 +127,8 @@ func testAccDataSourceSdwanSystemSNMPProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_system_snmp_profile_parcel" "test" {
-			id = sdwan_system_snmp_profile_parcel.test.id
+		data "sdwan_system_snmp_feature" "test" {
+			id = sdwan_system_snmp_feature.test.id
 			feature_profile_id = sdwan_system_feature_profile.test.id
 		}
 	`

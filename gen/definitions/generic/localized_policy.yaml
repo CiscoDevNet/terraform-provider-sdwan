@@ -6,7 +6,7 @@ get_before_delete: true
 has_version: true
 id_attribute: policyId
 delete_mutex: true
-doc_category: Localized Policies
+doc_category: Localized Policies (Classic)
 attributes:
   - model_name: policyType
     type: String

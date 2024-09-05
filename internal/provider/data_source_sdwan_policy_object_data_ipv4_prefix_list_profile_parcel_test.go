@@ -33,8 +33,8 @@ func TestAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcel(t *testin
 		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_data_ipv4_prefix_list_profile_parcel.test", "entries.0.ipv4_address", "10.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_data_ipv4_prefix_list_profile_parcel.test", "entries.0.ipv4_prefix_length", "8"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_data_ipv4_prefix_list.test", "entries.0.ipv4_address", "10.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_data_ipv4_prefix_list.test", "entries.0.ipv4_prefix_length", "8"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -58,7 +58,7 @@ variable "policy_object_feature_template_id" {}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcelConfig() string {
-	config := `resource "sdwan_policy_object_data_ipv4_prefix_list_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_policy_object_data_ipv4_prefix_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
@@ -69,8 +69,8 @@ func testAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcelConfig() s
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_policy_object_data_ipv4_prefix_list_profile_parcel" "test" {
-			id = sdwan_policy_object_data_ipv4_prefix_list_profile_parcel.test.id
+		data "sdwan_policy_object_data_ipv4_prefix_list" "test" {
+			id = sdwan_policy_object_data_ipv4_prefix_list.test.id
 			feature_profile_id = var.policy_object_feature_template_id
 		}
 	`

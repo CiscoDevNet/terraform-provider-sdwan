@@ -57,7 +57,7 @@ variable "policy_object_feature_template_id" {}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanPolicyObjectExpandedCommunityListProfileParcelConfig() string {
-	config := `resource "sdwan_policy_object_expanded_community_list_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_policy_object_expanded_community_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
@@ -65,8 +65,8 @@ func testAccDataSourceSdwanPolicyObjectExpandedCommunityListProfileParcelConfig(
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_policy_object_expanded_community_list_profile_parcel" "test" {
-			id = sdwan_policy_object_expanded_community_list_profile_parcel.test.id
+		data "sdwan_policy_object_expanded_community_list" "test" {
+			id = sdwan_policy_object_expanded_community_list.test.id
 			feature_profile_id = var.policy_object_feature_template_id
 		}
 	`

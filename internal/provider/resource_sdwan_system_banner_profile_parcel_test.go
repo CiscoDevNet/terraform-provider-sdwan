@@ -33,8 +33,8 @@ func TestAccSdwanSystemBannerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_banner_profile_parcel.test", "login", "My login banner"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_banner_profile_parcel.test", "motd", "My motd banner"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_banner_feature.test", "login", "My login banner"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_banner_feature.test", "motd", "My motd banner"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -64,7 +64,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanSystemBannerProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_system_banner_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_banner_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -76,7 +76,7 @@ func testAccSdwanSystemBannerProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanSystemBannerProfileParcelConfig_all() string {
-	config := `resource "sdwan_system_banner_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_banner_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"

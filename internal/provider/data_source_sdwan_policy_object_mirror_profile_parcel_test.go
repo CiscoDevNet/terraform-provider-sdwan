@@ -33,8 +33,8 @@ func TestAccDataSourceSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_mirror_profile_parcel.test", "entries.0.remote_destination_ip", "10.0.0.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_mirror_profile_parcel.test", "entries.0.source_ip", "10.0.0.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_mirror.test", "entries.0.remote_destination_ip", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_mirror.test", "entries.0.source_ip", "10.0.0.2"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -58,7 +58,7 @@ variable "policy_object_feature_template_id" {}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig() string {
-	config := `resource "sdwan_policy_object_mirror_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_policy_object_mirror" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
@@ -69,8 +69,8 @@ func testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_policy_object_mirror_profile_parcel" "test" {
-			id = sdwan_policy_object_mirror_profile_parcel.test.id
+		data "sdwan_policy_object_mirror" "test" {
+			id = sdwan_policy_object_mirror.test.id
 			feature_profile_id = var.policy_object_feature_template_id
 		}
 	`

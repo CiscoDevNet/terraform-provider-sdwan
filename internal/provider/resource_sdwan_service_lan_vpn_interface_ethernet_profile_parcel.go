@@ -57,32 +57,32 @@ type ServiceLANVPNInterfaceEthernetProfileParcelResource struct {
 }
 
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_service_lan_vpn_interface_ethernet_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_service_lan_vpn_interface_ethernet_feature"
 }
 
 func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Interface Ethernet profile parcel.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service LAN VPN Interface Ethernet Feature.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the Feature",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the Feature",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the Feature",
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the Feature",
 				Optional:            true,
 			},
 			"feature_profile_id": schema.StringAttribute{
