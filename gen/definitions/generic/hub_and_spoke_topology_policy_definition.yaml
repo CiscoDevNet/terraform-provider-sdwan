@@ -5,7 +5,7 @@ has_version: true
 id_attribute: definitionId
 root_element: definition
 type_value: hubAndSpoke
-doc_category: Centralized Policies
+doc_category: Centralized Policies (Classic)
 attributes:
   - model_name: type
     type: String

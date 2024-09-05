@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_flexible_port_speed_profile_parcel.test", "port_type", "12 ports of 1/10GE + 3 ports 40GE"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_flexible_port_speed_feature.test", "port_type", "12 ports of 1/10GE + 3 ports 40GE"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -60,7 +60,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcelConfig() string {
-	config := `resource "sdwan_system_flexible_port_speed_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_flexible_port_speed_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -68,8 +68,8 @@ func testAccDataSourceSdwanSystemFlexiblePortSpeedProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_system_flexible_port_speed_profile_parcel" "test" {
-			id = sdwan_system_flexible_port_speed_profile_parcel.test.id
+		data "sdwan_system_flexible_port_speed_feature" "test" {
+			id = sdwan_system_flexible_port_speed_feature.test.id
 			feature_profile_id = sdwan_system_feature_profile.test.id
 		}
 	`

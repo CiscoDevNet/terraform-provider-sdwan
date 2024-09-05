@@ -33,11 +33,11 @@ func TestAccSdwanSystemIPv4DeviceAccessProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "default_action", "drop"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.name", "SEQ_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.base_action", "accept"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_profile_parcel.test", "sequences.0.device_access_port", "161"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_feature.test", "default_action", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_feature.test", "sequences.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_feature.test", "sequences.0.name", "SEQ_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_feature.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ipv4_device_access_feature.test", "sequences.0.device_access_port", "161"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -68,7 +68,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanSystemIPv4DeviceAccessProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_system_ipv4_device_access_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_ipv4_device_access_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -80,7 +80,7 @@ func testAccSdwanSystemIPv4DeviceAccessProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanSystemIPv4DeviceAccessProfileParcelConfig_all() string {
-	config := `resource "sdwan_system_ipv4_device_access_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_ipv4_device_access_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"

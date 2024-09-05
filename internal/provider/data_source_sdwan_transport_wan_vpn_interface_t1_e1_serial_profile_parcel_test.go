@@ -33,57 +33,57 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *te
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "shutdown", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "interface_name", "Serial0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ipv4_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ipv4_subnet_mask", "0.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ipv6_address", "2001:0:0:1::/64"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "bandwidth", "123456"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "bandwidth_downstream", "123456"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "clock_rate", "1200"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "encapsulation", "ppp"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "per_tunnel_qos", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "per_tunnel_qos_aggregator", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_qos_mode", "hub"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_color", "mpls"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_restrict", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_groups", "42949672"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_border", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_max_control_connections", "62"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_vbond_as_stun_server", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_vmanage_connection_preference", "8"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_port_hop", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_low_bandwidth_link", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_tunnel_tcp_mss", "1460"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_clear_dont_fragment", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_clear_network_broadcast", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_carrier", "default"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_bind_loopback_tunnel", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_last_resort_circuit", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_nat_refresh_interval", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_hello_interval", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_hello_tolerance", "12"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_all", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_bgp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_dhcp", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_dns", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_icmp", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_netconf", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_ntp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_ospf", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_ssh", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_stun", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_https", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_snmp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_allow_bfd", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_encapsulations.0.encapsulation", "gre"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_encapsulations.0.preference", "4294967"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tunnel_interface_encapsulations.0.weight", "250"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tcp_mss", "1460"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test", "tloc_extension", "tloc"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "interface_name", "Serial0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "ipv4_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "ipv6_address", "2001:0:0:1::/64"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "bandwidth", "123456"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "bandwidth_downstream", "123456"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "clock_rate", "1200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "encapsulation", "ppp"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "per_tunnel_qos", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "per_tunnel_qos_aggregator", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_qos_mode", "hub"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_color", "mpls"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_restrict", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_groups", "42949672"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_border", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_max_control_connections", "62"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_vbond_as_stun_server", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_vmanage_connection_preference", "8"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_port_hop", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_low_bandwidth_link", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_tunnel_tcp_mss", "1460"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_clear_dont_fragment", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_clear_network_broadcast", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_carrier", "default"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_bind_loopback_tunnel", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_last_resort_circuit", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_nat_refresh_interval", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_hello_interval", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_hello_tolerance", "12"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_all", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_bgp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_dhcp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_dns", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_icmp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_netconf", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_ntp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_ospf", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_ssh", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_stun", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_https", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_snmp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_allow_bfd", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_encapsulations.0.encapsulation", "gre"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_encapsulations.0.preference", "4294967"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tunnel_interface_encapsulations.0.weight", "250"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tcp_mss", "1460"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "tloc_extension", "tloc"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -167,7 +167,7 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig() string {
-	config := `resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -229,8 +229,8 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel" "test" {
-			id = sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel.test.id
+		data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "test" {
+			id = sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test.id
 			feature_profile_id = sdwan_transport_feature_profile.test.id
 			transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id
 		}

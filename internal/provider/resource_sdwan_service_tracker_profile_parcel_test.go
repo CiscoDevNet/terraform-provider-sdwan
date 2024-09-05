@@ -33,17 +33,17 @@ func TestAccSdwanServiceTrackerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "tracker_name", "TRACKER_2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "endpoint_api_url", "google.com"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "endpoint_dns_name", "google.com"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "endpoint_ip", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "protocol", "tcp"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "port", "123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "interval", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "multiplier", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "threshold", "300"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "endpoint_tracker_type", "static-route"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_profile_parcel.test", "tracker_type", "endpoint"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "tracker_name", "TRACKER_2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "endpoint_api_url", "google.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "endpoint_dns_name", "google.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "endpoint_ip", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "protocol", "tcp"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "port", "123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "interval", "30"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "threshold", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "endpoint_tracker_type", "static-route"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_tracker_feature.test", "tracker_type", "endpoint"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -73,7 +73,7 @@ resource "sdwan_service_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanServiceTrackerProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_service_tracker_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_tracker_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
@@ -86,7 +86,7 @@ func testAccSdwanServiceTrackerProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanServiceTrackerProfileParcelConfig_all() string {
-	config := `resource "sdwan_service_tracker_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_tracker_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"

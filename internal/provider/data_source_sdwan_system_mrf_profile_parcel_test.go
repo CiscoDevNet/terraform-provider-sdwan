@@ -33,11 +33,11 @@ func TestAccDataSourceSdwanSystemMRFProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_profile_parcel.test", "region_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_profile_parcel.test", "secondary_region_id", "2"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_profile_parcel.test", "role", "edge-router"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_profile_parcel.test", "enable_migration_to_mrf", "enabled"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_profile_parcel.test", "migration_bgp_community", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "region_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "secondary_region_id", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "role", "edge-router"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "enable_migration_to_mrf", "enabled"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_mrf_feature.test", "migration_bgp_community", "100"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -64,7 +64,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanSystemMRFProfileParcelConfig() string {
-	config := `resource "sdwan_system_mrf_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_mrf_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -76,8 +76,8 @@ func testAccDataSourceSdwanSystemMRFProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_system_mrf_profile_parcel" "test" {
-			id = sdwan_system_mrf_profile_parcel.test.id
+		data "sdwan_system_mrf_feature" "test" {
+			id = sdwan_system_mrf_feature.test.id
 			feature_profile_id = sdwan_system_feature_profile.test.id
 		}
 	`

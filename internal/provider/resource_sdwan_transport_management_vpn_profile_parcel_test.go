@@ -33,21 +33,21 @@ func TestAccSdwanTransportManagementVPNProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "vpn_description", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "primary_dns_address_ipv4", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "secondary_dns_address_ipv4", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "primary_dns_address_ipv6", "2001:0:0:1::0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "secondary_dns_address_ipv6", "2001:0:0:2::0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "new_host_mappings.0.host_name", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv4_static_routes.0.network_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv4_static_routes.0.subnet_mask", "0.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv4_static_routes.0.gateway", "nextHop"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv4_static_routes.0.next_hops.0.address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv4_static_routes.0.next_hops.0.administrative_distance", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv4_static_routes.0.administrative_distance", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv6_static_routes.0.prefix", "2002::/16"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv6_static_routes.0.next_hops.0.address", "2001:0:0:1::1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_profile_parcel.test", "ipv6_static_routes.0.next_hops.0.administrative_distance", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "vpn_description", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "primary_dns_address_ipv4", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "secondary_dns_address_ipv4", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "primary_dns_address_ipv6", "2001:0:0:1::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "secondary_dns_address_ipv6", "2001:0:0:2::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "new_host_mappings.0.host_name", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.network_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.gateway", "nextHop"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.next_hops.0.address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.next_hops.0.administrative_distance", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.administrative_distance", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv6_static_routes.0.prefix", "2002::/16"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv6_static_routes.0.next_hops.0.address", "2001:0:0:1::1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv6_static_routes.0.next_hops.0.administrative_distance", "1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -78,7 +78,7 @@ resource "sdwan_transport_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanTransportManagementVPNProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_transport_management_vpn_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_management_vpn_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -90,7 +90,7 @@ func testAccSdwanTransportManagementVPNProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanTransportManagementVPNProfileParcelConfig_all() string {
-	config := `resource "sdwan_transport_management_vpn_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_management_vpn_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"

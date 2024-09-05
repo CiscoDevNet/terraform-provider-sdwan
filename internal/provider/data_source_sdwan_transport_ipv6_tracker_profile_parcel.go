@@ -49,29 +49,29 @@ type TransportIPv6TrackerProfileParcelDataSource struct {
 }
 
 func (d *TransportIPv6TrackerProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_transport_ipv6_tracker_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_transport_ipv6_tracker_feature"
 }
 
 func (d *TransportIPv6TrackerProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Transport IPv6 Tracker profile parcel.",
+		MarkdownDescription: "This data source can read the Transport IPv6 Tracker Feature.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the Feature",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the Feature",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the Feature",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the Feature",
 				Computed:            true,
 			},
 			"feature_profile_id": schema.StringAttribute{

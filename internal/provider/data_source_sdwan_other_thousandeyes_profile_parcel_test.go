@@ -33,16 +33,16 @@ func TestAccDataSourceSdwanOtherThousandEyesProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.account_group_token", "qwer"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.vpn", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.management_ip", "10.0.0.2"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.management_subnet_mask", "255.255.255.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.agent_default_gateway", "10.0.0.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.name_server_ip", "77.77.77.71"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.hostname", "thousandeyesHost"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.proxy_type", "static"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.proxy_host", "proxy.thousandeyes.com"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_profile_parcel.test", "virtual_application.0.proxy_port", "3128"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.account_group_token", "qwer"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.vpn", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.management_ip", "10.0.0.2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.management_subnet_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.agent_default_gateway", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.name_server_ip", "77.77.77.71"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.hostname", "thousandeyesHost"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.proxy_type", "static"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.proxy_host", "proxy.thousandeyes.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_other_thousandeyes_feature.test", "virtual_application.0.proxy_port", "3128"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -69,7 +69,7 @@ resource "sdwan_other_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanOtherThousandEyesProfileParcelConfig() string {
-	config := `resource "sdwan_other_thousandeyes_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_other_thousandeyes_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_other_feature_profile.test.id` + "\n"
@@ -88,8 +88,8 @@ func testAccDataSourceSdwanOtherThousandEyesProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_other_thousandeyes_profile_parcel" "test" {
-			id = sdwan_other_thousandeyes_profile_parcel.test.id
+		data "sdwan_other_thousandeyes_feature" "test" {
+			id = sdwan_other_thousandeyes_feature.test.id
 			feature_profile_id = sdwan_other_feature_profile.test.id
 		}
 	`

@@ -33,8 +33,8 @@ func TestAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcel(t *testing.T) 
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_profile_parcel.test", "tracker_name", "TRACKER_GROUP_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_profile_parcel.test", "tracker_boolean", "or"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_feature.test", "tracker_name", "TRACKER_GROUP_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_ipv6_tracker_group_feature.test", "tracker_boolean", "or"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -91,7 +91,7 @@ resource "sdwan_transport_ipv6_tracker_profile_parcel" "test-2" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelConfig() string {
-	config := `resource "sdwan_transport_ipv6_tracker_group_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_ipv6_tracker_group_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -105,8 +105,8 @@ func testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelConfig() string
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_transport_ipv6_tracker_group_profile_parcel" "test" {
-			id = sdwan_transport_ipv6_tracker_group_profile_parcel.test.id
+		data "sdwan_transport_ipv6_tracker_group_feature" "test" {
+			id = sdwan_transport_ipv6_tracker_group_feature.test.id
 			feature_profile_id = sdwan_transport_feature_profile.test.id
 		}
 	`

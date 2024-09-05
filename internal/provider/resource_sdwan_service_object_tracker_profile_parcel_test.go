@@ -33,8 +33,8 @@ func TestAccSdwanServiceObjectTrackerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_object_tracker_profile_parcel.test", "object_tracker_type", "Interface"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_object_tracker_profile_parcel.test", "interface", "GigabitEthernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_object_tracker_feature.test", "object_tracker_type", "Interface"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_object_tracker_feature.test", "interface", "GigabitEthernet1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -65,7 +65,7 @@ resource "sdwan_service_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanServiceObjectTrackerProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_service_object_tracker_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_object_tracker_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
@@ -80,7 +80,7 @@ func testAccSdwanServiceObjectTrackerProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanServiceObjectTrackerProfileParcelConfig_all() string {
-	config := `resource "sdwan_service_object_tracker_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_object_tracker_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"

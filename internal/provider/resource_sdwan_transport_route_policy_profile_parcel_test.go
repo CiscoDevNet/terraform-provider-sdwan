@@ -33,20 +33,20 @@ func TestAccSdwanTransportRoutePolicyProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "default_action", "accept"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.name", "SEQ_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.base_action", "reject"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.protocol", "IPV4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.community_additive", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.local_preference", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.metric", "20"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.metric_type", "type1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.omp_tag", "200"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.origin", "EGP"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.ospf_tag", "1200"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.weight", "2200"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_profile_parcel.test", "sequences.0.actions.0.ipv4_next_hop", "10.0.0.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "default_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.name", "SEQ_1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.base_action", "reject"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.protocol", "IPV4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.community_additive", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.local_preference", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.metric", "20"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.metric_type", "type1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.omp_tag", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.origin", "EGP"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.ospf_tag", "1200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.weight", "2200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_route_policy_feature.test", "sequences.0.actions.0.ipv4_next_hop", "10.0.0.1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -76,7 +76,7 @@ resource "sdwan_transport_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanTransportRoutePolicyProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_transport_route_policy_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_route_policy_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -88,7 +88,7 @@ func testAccSdwanTransportRoutePolicyProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanTransportRoutePolicyProfileParcelConfig_all() string {
-	config := `resource "sdwan_transport_route_policy_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_route_policy_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"

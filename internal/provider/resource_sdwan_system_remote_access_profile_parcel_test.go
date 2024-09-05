@@ -33,24 +33,24 @@ func TestAccSdwanSystemRemoteAccessProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "connection_type_ssl", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "any_connect_eap_authentication_type", "user"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipv4_pool_size", "50"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipv6_pool_size", "1024"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "enable_certificate_list_check", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "psk_authentication_type", "aaa"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "psk_authentication_pre_shared_key", "Cisco123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "radius_group_name", "radius-1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "aaa_derive_name_from_peer_identity", "MyPassword"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "aaa_enable_accounting", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ikev2_local_ike_identity_type", "EMAIL"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ikev2_local_ike_identity_value", "abc@xyz.com"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ikev2_security_association_lifetime", "86400"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ikev2_anti_dos_threshold", "99"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipsec_enable_anti_replay", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipsec_anti_replay_window_size", "64"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipsec_security_association_lifetime", "3600"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_profile_parcel.test", "ipsec_enable_perfect_foward_secrecy", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "connection_type_ssl", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "any_connect_eap_authentication_type", "user"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ipv4_pool_size", "50"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ipv6_pool_size", "1024"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "enable_certificate_list_check", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "psk_authentication_type", "aaa"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "psk_authentication_pre_shared_key", "Cisco123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "radius_group_name", "radius-1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "aaa_derive_name_from_peer_identity", "MyPassword"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "aaa_enable_accounting", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ikev2_local_ike_identity_type", "EMAIL"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ikev2_local_ike_identity_value", "abc@xyz.com"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ikev2_security_association_lifetime", "86400"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ikev2_anti_dos_threshold", "99"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ipsec_enable_anti_replay", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ipsec_anti_replay_window_size", "64"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ipsec_security_association_lifetime", "3600"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_remote_access_feature.test", "ipsec_enable_perfect_foward_secrecy", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -80,7 +80,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanSystemRemoteAccessProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_system_remote_access_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_remote_access_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -94,7 +94,7 @@ func testAccSdwanSystemRemoteAccessProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanSystemRemoteAccessProfileParcelConfig_all() string {
-	config := `resource "sdwan_system_remote_access_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_remote_access_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"

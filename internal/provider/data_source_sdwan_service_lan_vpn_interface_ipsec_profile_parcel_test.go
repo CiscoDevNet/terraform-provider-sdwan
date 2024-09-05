@@ -33,35 +33,35 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcel(t *testing.T
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "interface_name", "ipsec987"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "shutdown", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "interface_description", "ipsec987"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ipv4_address", "9.7.5.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ipv4_subnet_mask", "255.255.255.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_ipv4_address", "1.3.5.88"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_ipv4_subnet_mask", "255.255.255.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "tunnel_source_interface", "GigabitEthernet8"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "tunnel_destination_ipv4_address", "2.55.67.99"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "tunnel_destination_ipv4_subnet_mask", "255.255.255.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "application_tunnel_type", "none"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "tcp_mss", "1460"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "clear_dont_fragment", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "dpd_interval", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "dpd_retries", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_preshared_key", "123"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_version", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_integrity_protocol", "main"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_rekey_interval", "14400"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_ciphersuite", "aes256-cbc-sha1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_diffie_hellman_group", "16"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_id_local_end_point", "xxx"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ike_id_remote_end_point", "xxx"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ipsec_rekey_interval", "3600"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ipsec_replay_window", "512"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "ipsec_ciphersuite", "aes256-gcm"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "perfect_forward_secrecy", "group-16"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test", "tunnel_route_via", "2222"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "interface_name", "ipsec987"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "interface_description", "ipsec987"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipv4_address", "9.7.5.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_source_ipv4_address", "1.3.5.88"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_source_ipv4_subnet_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_source_interface", "GigabitEthernet8"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_destination_ipv4_address", "2.55.67.99"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_destination_ipv4_subnet_mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "application_tunnel_type", "none"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tcp_mss", "1460"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "clear_dont_fragment", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "dpd_interval", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "dpd_retries", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_preshared_key", "123"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_version", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_integrity_protocol", "main"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_rekey_interval", "14400"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_ciphersuite", "aes256-cbc-sha1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_diffie_hellman_group", "16"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_id_local_end_point", "xxx"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ike_id_remote_end_point", "xxx"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipsec_rekey_interval", "3600"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipsec_replay_window", "512"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "ipsec_ciphersuite", "aes256-gcm"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "perfect_forward_secrecy", "group-16"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_ipsec_feature.test", "tunnel_route_via", "2222"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -93,7 +93,7 @@ resource "sdwan_service_lan_vpn_profile_parcel" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcelConfig() string {
-	config := `resource "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_lan_vpn_interface_ipsec_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
@@ -130,8 +130,8 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceIPSecProfileParcelConfig() stri
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_service_lan_vpn_interface_ipsec_profile_parcel" "test" {
-			id = sdwan_service_lan_vpn_interface_ipsec_profile_parcel.test.id
+		data "sdwan_service_lan_vpn_interface_ipsec_feature" "test" {
+			id = sdwan_service_lan_vpn_interface_ipsec_feature.test.id
 			feature_profile_id = sdwan_service_feature_profile.test.id
 			service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id
 		}
