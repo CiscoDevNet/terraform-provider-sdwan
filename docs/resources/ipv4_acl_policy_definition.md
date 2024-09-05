@@ -122,7 +122,7 @@ Optional:
 Required:
 
 - `type` (String) Type of match entry
-  - Choices: `dscp`, `sourceIp`, `destinationIp`, `class`, `packetLength`, `plp`, `sourcePort`, `destinationPort`, `sourceDataPrefixList`, `destinationDataPrefixList`, `protocol`, `tcp`
+  - Choices: `dscp`, `sourceIp`, `destinationIp`, `class`, `packetLength`, `plp`, `sourcePort`, `destinationPort`, `sourceDataPrefixList`, `destinationDataPrefixList`, `protocol`, `tcp`, `icmpMessage`
 
 Optional:
 
@@ -134,6 +134,7 @@ Optional:
 - `destination_ports` (String) Destination ports. Single value (0-65535) or ranges separated by spaces.
 - `dscp` (Number) DSCP value
   - Range: `0`-`63`
+- `icmp_message` (String) ICMP Message
 - `packet_length` (Number) Packet length
   - Range: `0`-`65535`
 - `priority` (String) PLP - priority

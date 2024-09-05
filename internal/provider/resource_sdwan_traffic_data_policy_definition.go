@@ -139,10 +139,10 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"type": schema.StringAttribute{
-										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("appList", "dnsAppList", "dns", "dscp", "packetLength", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "tcp", "trafficTo").String,
+										MarkdownDescription: helpers.NewAttributeDescription("Type of match entry").AddStringEnumDescription("appList", "dnsAppList", "dns", "dscp", "packetLength", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "tcp", "trafficTo", "icmpMessage").String,
 										Required:            true,
 										Validators: []validator.String{
-											stringvalidator.OneOf("appList", "dnsAppList", "dns", "dscp", "packetLength", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "tcp", "trafficTo"),
+											stringvalidator.OneOf("appList", "dnsAppList", "dns", "dscp", "packetLength", "plp", "protocol", "sourceDataPrefixList", "sourceIp", "sourcePort", "destinationDataPrefixList", "destinationIp", "destinationRegion", "destinationPort", "tcp", "trafficTo", "icmpMessage"),
 										},
 									},
 									"application_list_id": schema.StringAttribute{
@@ -159,6 +159,10 @@ func (r *TrafficDataPolicyDefinitionResource) Schema(ctx context.Context, req re
 									},
 									"dns_application_list_version": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("DNS Application list version").String,
+										Optional:            true,
+									},
+									"icmp_message": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("ICMP Message").String,
 										Optional:            true,
 									},
 									"dns": schema.StringAttribute{
