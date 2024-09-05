@@ -1,11 +1,11 @@
 ---
-name: CLI Config Profile Parcel
+name: CLI Config Feature
 rest_endpoint: /v1/feature-profile/sdwan/cli/%v/config/
 minimum_version: 20.12.0
 has_version: true
 id_attribute: parcelId
 test_tags: [SDWAN_2012]
-doc_category: Profile Parcels
+doc_category: Features
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -18,7 +18,7 @@ attributes:
     response_data_path: [payload]
     type: String
     mandatory: true
-    description: The name of the profile parcel
+    description: The name of the Feature
     string_min_length: 1
     string_max_length: 128
     example: Example
@@ -26,7 +26,7 @@ attributes:
     response_data_path: [payload]
     type: String
     mandatory: true
-    description: The description of the profile parcel
+    description: The description of the Feature
     example: My Example
   - model_name: config
     tf_name: cli_configuration

@@ -33,25 +33,25 @@ func TestAccSdwanSystemLoggingProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "disk_enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "disk_file_size", "9"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "disk_file_rotate", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "tls_profiles.0.profile", "test"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "tls_profiles.0.tls_version", "TLSv1.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv4_servers.0.hostname_ip", "1.1.1.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv4_servers.0.vpn", "512"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv4_servers.0.source_interface", "GigabitEthernet1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv4_servers.0.priority", "informational"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv4_servers.0.tls_enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv4_servers.0.tls_properties_custom_profile", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv4_servers.0.tls_properties_profile", "test"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv6_servers.0.hostname_ip", "1.1.1.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv6_servers.0.vpn", "512"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv6_servers.0.source_interface", "GigabitEthernet1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv6_servers.0.priority", "informational"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv6_servers.0.tls_enable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv6_servers.0.tls_properties_custom_profile", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_profile_parcel.test", "ipv6_servers.0.tls_properties_profile", "test"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "disk_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "disk_file_size", "9"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "disk_file_rotate", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "tls_profiles.0.profile", "test"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "tls_profiles.0.tls_version", "TLSv1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv4_servers.0.hostname_ip", "1.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv4_servers.0.vpn", "512"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv4_servers.0.source_interface", "GigabitEthernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv4_servers.0.priority", "informational"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv4_servers.0.tls_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv4_servers.0.tls_properties_custom_profile", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv4_servers.0.tls_properties_profile", "test"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv6_servers.0.hostname_ip", "1.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv6_servers.0.vpn", "512"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv6_servers.0.source_interface", "GigabitEthernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv6_servers.0.priority", "informational"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv6_servers.0.tls_enable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv6_servers.0.tls_properties_custom_profile", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_logging_feature.test", "ipv6_servers.0.tls_properties_profile", "test"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -82,7 +82,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanSystemLoggingProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_system_logging_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_logging_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -94,7 +94,7 @@ func testAccSdwanSystemLoggingProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanSystemLoggingProfileParcelConfig_all() string {
-	config := `resource "sdwan_system_logging_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_logging_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"

@@ -57,32 +57,32 @@ type TransportWANVPNProfileParcelResource struct {
 }
 
 func (r *TransportWANVPNProfileParcelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_transport_wan_vpn_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_transport_wan_vpn_feature"
 }
 
 func (r *TransportWANVPNProfileParcelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN profile parcel.").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Transport WAN VPN Feature.").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the Feature",
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the Feature",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the Feature",
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the Feature",
 				Optional:            true,
 			},
 			"feature_profile_id": schema.StringAttribute{

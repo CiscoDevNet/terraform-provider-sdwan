@@ -33,29 +33,29 @@ func TestAccDataSourceSdwanSystemGlobalProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "http_server", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "https_server", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "ftp_passive", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "domain_lookup", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "arp_proxy", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "rsh_rcp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "line_vty", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "cdp", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "lldp", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "source_interface", "GigabitEthernet0/0/1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "tcp_keepalives_in", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "tcp_keepalives_out", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "tcp_small_servers", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "udp_small_servers", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "console_logging", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "ip_source_routing", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "vty_line_logging", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "snmp_ifindex_persist", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "ignore_bootp", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "nat64_udp_timeout", "300"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "nat64_tcp_timeout", "3600"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "http_authentication", "aaa"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_profile_parcel.test", "ssh_version", "2"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "http_server", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "https_server", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "ftp_passive", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "domain_lookup", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "arp_proxy", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "rsh_rcp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "line_vty", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "cdp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "lldp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "source_interface", "GigabitEthernet0/0/1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "tcp_keepalives_in", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "tcp_keepalives_out", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "tcp_small_servers", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "udp_small_servers", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "console_logging", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "ip_source_routing", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "vty_line_logging", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "snmp_ifindex_persist", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "ignore_bootp", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "nat64_udp_timeout", "300"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "nat64_tcp_timeout", "3600"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "http_authentication", "aaa"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_global_feature.test", "ssh_version", "2"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -82,7 +82,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanSystemGlobalProfileParcelConfig() string {
-	config := `resource "sdwan_system_global_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_global_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -112,8 +112,8 @@ func testAccDataSourceSdwanSystemGlobalProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_system_global_profile_parcel" "test" {
-			id = sdwan_system_global_profile_parcel.test.id
+		data "sdwan_system_global_feature" "test" {
+			id = sdwan_system_global_feature.test.id
 			feature_profile_id = sdwan_system_feature_profile.test.id
 		}
 	`

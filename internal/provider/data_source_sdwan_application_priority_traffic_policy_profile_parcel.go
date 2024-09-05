@@ -49,29 +49,29 @@ type ApplicationPriorityTrafficPolicyProfileParcelDataSource struct {
 }
 
 func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_application_priority_traffic_policy_profile_parcel"
+	resp.TypeName = req.ProviderTypeName + "_application_priority_traffic_policy_policy"
 }
 
 func (d *ApplicationPriorityTrafficPolicyProfileParcelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "This data source can read the Application Priority Traffic Policy profile parcel.",
+		MarkdownDescription: "This data source can read the Application Priority Traffic Policy Policy.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				MarkdownDescription: "The id of the profile parcel",
+				MarkdownDescription: "The id of the Policy",
 				Required:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: "The version of the profile parcel",
+				MarkdownDescription: "The version of the Policy",
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the profile parcel",
+				MarkdownDescription: "The name of the Policy",
 				Computed:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: "The description of the profile parcel",
+				MarkdownDescription: "The description of the Policy",
 				Computed:            true,
 			},
 			"feature_profile_id": schema.StringAttribute{

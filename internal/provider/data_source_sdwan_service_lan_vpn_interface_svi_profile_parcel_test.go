@@ -33,43 +33,43 @@ func TestAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) 
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "shutdown", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "interface_name", "Vlan1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "interface_description", "SVI"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "interface_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_subnet_mask", "0.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_secondary_addresses.0.address", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_secondary_addresses.0.ipv4_subnet_mask", "0.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_address", "2001:0:0:1::0/32"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_secondary_addresses.0.address", "::2/32"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_dhcp_helpers.0.address", "2001:0:0:1::0"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_dhcp_helpers.0.vpn", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "arps.0.ip_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.group_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.priority", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.timer", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.track_omp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.prefix_list", "prefix"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.secondary_addresses.0.address", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.tloc_prefix_change", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv4_vrrps.0.tloc_prefix_change_value", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.group_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.priority", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.timer", "1000"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.track_omp", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.track_prefix_list", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.addresses.0.link_local_address", "1::1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.addresses.0.global_address", "1::1/24"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ipv6_vrrps.0.secondary_addresses.0.prefix", "::20/32"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "enable_dhcpv6", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "tcp_mss", "1024"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "arp_timeout", "1200"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "ip_directed_broadcast", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_profile_parcel.test", "icmp_redirect_disable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "shutdown", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "interface_name", "Vlan1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "interface_description", "SVI"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "interface_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_secondary_addresses.0.address", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_secondary_addresses.0.ipv4_subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_address", "2001:0:0:1::0/32"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_secondary_addresses.0.address", "::2/32"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_dhcp_helpers.0.address", "2001:0:0:1::0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_dhcp_helpers.0.vpn", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "arps.0.ip_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "arps.0.mac_address", "00-B0-D0-63-C2-26"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.group_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.priority", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.timer", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.track_omp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.prefix_list", "prefix"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.secondary_addresses.0.address", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.tloc_prefix_change", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_vrrps.0.tloc_prefix_change_value", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.group_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.priority", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.timer", "1000"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.track_omp", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.track_prefix_list", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.addresses.0.link_local_address", "1::1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.addresses.0.global_address", "1::1/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_vrrps.0.secondary_addresses.0.prefix", "::20/32"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "enable_dhcpv6", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "tcp_mss", "1024"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "arp_timeout", "1200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "ip_directed_broadcast", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_lan_vpn_interface_svi_feature.test", "icmp_redirect_disable", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -101,7 +101,7 @@ resource "sdwan_service_lan_vpn_profile_parcel" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelConfig() string {
-	config := `resource "sdwan_service_lan_vpn_interface_svi_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_service_lan_vpn_interface_svi_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
@@ -165,8 +165,8 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceSVIProfileParcelConfig() string
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_service_lan_vpn_interface_svi_profile_parcel" "test" {
-			id = sdwan_service_lan_vpn_interface_svi_profile_parcel.test.id
+		data "sdwan_service_lan_vpn_interface_svi_feature" "test" {
+			id = sdwan_service_lan_vpn_interface_svi_feature.test.id
 			feature_profile_id = sdwan_service_feature_profile.test.id
 			service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id
 		}

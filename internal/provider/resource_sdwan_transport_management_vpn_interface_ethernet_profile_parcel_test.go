@@ -33,30 +33,30 @@ func TestAccSdwanTransportManagementVPNInterfaceEthernetProfileParcel(t *testing
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "shutdown", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "interface_name", "GigabitEthernet1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "interface_description", "Transport Management VPN Interface Ethernet"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_subnet_mask", "0.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_secondary_addresses.0.address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_secondary_addresses.0.subnet_mask", "0.0.0.0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_iperf_server", "example"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv4_auto_detect_bandwidth", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ipv6_address", "2001:0:0:1::/64"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "arp_entries.0.ip_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "arp_entries.0.mac_address", "00-B0-D0-63-C2-26"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "duplex", "full"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "mac_address", "00-B0-D0-63-C2-26"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "interface_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "tcp_mss", "505"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "speed", "2500"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "arp_timeout", "1200"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "autonegotiate", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "media_type", "rj45"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "load_interval", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "icmp_redirect_disable", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_profile_parcel.test", "ip_directed_broadcast", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "shutdown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "interface_name", "GigabitEthernet1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "interface_description", "Transport Management VPN Interface Ethernet"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_secondary_addresses.0.subnet_mask", "0.0.0.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_iperf_server", "example"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv4_auto_detect_bandwidth", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ipv6_address", "2001:0:0:1::/64"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "arp_entries.0.ip_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "arp_entries.0.mac_address", "00-B0-D0-63-C2-26"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "duplex", "full"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "mac_address", "00-B0-D0-63-C2-26"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ip_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "interface_mtu", "1500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "tcp_mss", "505"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "speed", "2500"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "arp_timeout", "1200"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "autonegotiate", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "media_type", "rj45"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "load_interval", "30"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "icmp_redirect_disable", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_interface_ethernet_feature.test", "ip_directed_broadcast", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -91,7 +91,7 @@ resource "sdwan_transport_management_vpn_profile_parcel" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_management_vpn_interface_ethernet_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -107,7 +107,7 @@ func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_mini
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanTransportManagementVPNInterfaceEthernetProfileParcelConfig_all() string {
-	config := `resource "sdwan_transport_management_vpn_interface_ethernet_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_management_vpn_interface_ethernet_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"

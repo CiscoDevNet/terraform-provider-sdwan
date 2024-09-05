@@ -1,4 +1,4 @@
-resource "sdwan_{{snakeCase .Name}}_profile_parcel" "example" {
+resource "sdwan_{{getProfileParcelName .}}" "example" {
 	name = "Example"
 	description = "My Example"
 {{- range  .Attributes}}

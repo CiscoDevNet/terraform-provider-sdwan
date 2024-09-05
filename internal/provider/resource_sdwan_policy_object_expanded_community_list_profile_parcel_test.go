@@ -62,7 +62,7 @@ variable "policy_object_feature_template_id" {}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanPolicyObjectExpandedCommunityListProfileParcelConfig_all() string {
-	config := `resource "sdwan_policy_object_expanded_community_list_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_policy_object_expanded_community_list" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"

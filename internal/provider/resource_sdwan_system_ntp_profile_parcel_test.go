@@ -33,17 +33,17 @@ func TestAccSdwanSystemNTPProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "servers.0.hostname_ip_address", "1.1.1.1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "servers.0.authentication_key", "41673"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "servers.0.vpn", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "servers.0.ntp_version", "4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "servers.0.source_interface", "Ethernet"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "servers.0.prefer_this_ntp_server", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "authentication_keys.0.key_id", "49737"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "authentication_keys.0.md5_value", "$CRYPT_CLUSTER"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "authoritative_ntp_server", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "stratum", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_profile_parcel.test", "source_interface", "ATM"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.hostname_ip_address", "1.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.authentication_key", "41673"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.vpn", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.ntp_version", "4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.source_interface", "Ethernet"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "servers.0.prefer_this_ntp_server", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "authentication_keys.0.key_id", "49737"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "authentication_keys.0.md5_value", "$CRYPT_CLUSTER"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "authoritative_ntp_server", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "stratum", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_ntp_feature.test", "source_interface", "ATM"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -73,7 +73,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanSystemNTPProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_system_ntp_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_ntp_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -85,7 +85,7 @@ func testAccSdwanSystemNTPProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanSystemNTPProfileParcelConfig_all() string {
-	config := `resource "sdwan_system_ntp_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_ntp_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"

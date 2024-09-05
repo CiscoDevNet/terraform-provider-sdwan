@@ -4,7 +4,7 @@ rest_endpoint: /template/policy/definition/approute/
 has_version: true
 id_attribute: definitionId
 type_value: appRoute
-doc_category: Centralized Policies
+doc_category: Centralized Policies (Classic)
 attributes:
   - model_name: type
     type: String

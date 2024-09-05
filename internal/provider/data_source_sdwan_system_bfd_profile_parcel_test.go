@@ -33,14 +33,14 @@ func TestAccDataSourceSdwanSystemBFDProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "multiplier", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "poll_interval", "100"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "default_dscp", "8"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.color", "3g"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.hello_interval", "200"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.multiplier", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.pmtu_discovery", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_profile_parcel.test", "colors.0.dscp", "16"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "poll_interval", "100"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "default_dscp", "8"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "colors.0.color", "3g"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "colors.0.hello_interval", "200"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "colors.0.multiplier", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "colors.0.pmtu_discovery", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_bfd_feature.test", "colors.0.dscp", "16"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -67,7 +67,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanSystemBFDProfileParcelConfig() string {
-	config := `resource "sdwan_system_bfd_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_bfd_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -84,8 +84,8 @@ func testAccDataSourceSdwanSystemBFDProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_system_bfd_profile_parcel" "test" {
-			id = sdwan_system_bfd_profile_parcel.test.id
+		data "sdwan_system_bfd_feature" "test" {
+			id = sdwan_system_bfd_feature.test.id
 			feature_profile_id = sdwan_system_feature_profile.test.id
 		}
 	`

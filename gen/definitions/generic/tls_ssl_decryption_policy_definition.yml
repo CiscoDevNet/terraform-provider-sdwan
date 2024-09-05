@@ -2,7 +2,7 @@ name: TLS SSL Decryption Policy Definition
 rest_endpoint: /template/policy/definition/ssldecryption/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies
+doc_category: Security Policies (Classic)
 attributes:
   - model_name: type
     type: String

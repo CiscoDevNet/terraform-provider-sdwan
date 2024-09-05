@@ -33,12 +33,12 @@ func TestAccSdwanTransportGPSProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_profile_parcel.test", "gps_enable", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_profile_parcel.test", "gps_mode", "ms-based"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_profile_parcel.test", "nmea_enable", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_profile_parcel.test", "nmea_source_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_profile_parcel.test", "nmea_destination_address", "2.3.4.5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_profile_parcel.test", "nmea_destination_port", "22"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_feature.test", "gps_enable", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_feature.test", "gps_mode", "ms-based"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_feature.test", "nmea_enable", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_feature.test", "nmea_source_address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_feature.test", "nmea_destination_address", "2.3.4.5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_gps_feature.test", "nmea_destination_port", "22"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -68,7 +68,7 @@ resource "sdwan_transport_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanTransportGPSProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_transport_gps_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_gps_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
@@ -80,7 +80,7 @@ func testAccSdwanTransportGPSProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanTransportGPSProfileParcelConfig_all() string {
-	config := `resource "sdwan_transport_gps_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_transport_gps_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"

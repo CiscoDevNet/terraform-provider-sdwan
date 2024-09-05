@@ -33,41 +33,41 @@ func TestAccSdwanSystemAAAProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authentication_group", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_group", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.name", "User1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.privilege", "15"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.public_keys.0.key_string", "AAAAB3NzaC1yc2"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "users.0.public_keys.0.key_type", "ssh-rsa"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.group_name", "RGROUP1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.vpn", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.source_interface", "GigabitEthernet0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.auth_port", "1812"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.acct_port", "1813"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.timeout", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.retransmit", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.secret_key", "cisco123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.key_enum", "7"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "radius_groups.0.servers.0.key_type", "key"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.group_name", "TGROUP1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.vpn", "10"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.source_interface", "GigabitEthernet0"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.port", "49"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.timeout", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.secret_key", "cisco123"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "tacacs_groups.0.servers.0.key_enum", "7"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.rule_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.method", "commands"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.level", "15"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "accounting_rules.0.start_stop", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_console", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_config_commands", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.rule_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.method", "commands"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.level", "15"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_profile_parcel.test", "authorization_rules.0.if_authenticated", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authentication_group", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "accounting_group", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "users.0.name", "User1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "users.0.privilege", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "users.0.public_keys.0.key_string", "AAAAB3NzaC1yc2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "users.0.public_keys.0.key_type", "ssh-rsa"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.group_name", "RGROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.vpn", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.source_interface", "GigabitEthernet0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.auth_port", "1812"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.acct_port", "1813"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.timeout", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.retransmit", "3"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.secret_key", "cisco123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_enum", "7"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "radius_groups.0.servers.0.key_type", "key"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.group_name", "TGROUP1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.vpn", "10"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.source_interface", "GigabitEthernet0"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.address", "1.2.3.4"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.port", "49"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.timeout", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.secret_key", "cisco123"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "tacacs_groups.0.servers.0.key_enum", "7"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "accounting_rules.0.rule_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "accounting_rules.0.method", "commands"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "accounting_rules.0.level", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "accounting_rules.0.start_stop", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authorization_console", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authorization_config_commands", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authorization_rules.0.rule_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authorization_rules.0.method", "commands"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authorization_rules.0.level", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_system_aaa_feature.test", "authorization_rules.0.if_authenticated", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -97,7 +97,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
 func testAccSdwanSystemAAAProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_system_aaa_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_aaa_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -110,7 +110,7 @@ func testAccSdwanSystemAAAProfileParcelConfig_minimum() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwanSystemAAAProfileParcelConfig_all() string {
-	config := `resource "sdwan_system_aaa_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_aaa_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"

@@ -33,10 +33,10 @@ func TestAccDataSourceSdwanSystemPerformanceMonitoringProfileParcel(t *testing.T
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_profile_parcel.test", "app_perf_monitor_enabled", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_profile_parcel.test", "monitoring_config_enabled", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_profile_parcel.test", "monitoring_config_interval", "30"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_profile_parcel.test", "event_driven_config_enabled", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_feature.test", "app_perf_monitor_enabled", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_feature.test", "monitoring_config_enabled", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_feature.test", "monitoring_config_interval", "30"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_performance_monitoring_feature.test", "event_driven_config_enabled", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -63,7 +63,7 @@ resource "sdwan_system_feature_profile" "test" {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanSystemPerformanceMonitoringProfileParcelConfig() string {
-	config := `resource "sdwan_system_performance_monitoring_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_system_performance_monitoring_feature" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_system_feature_profile.test.id` + "\n"
@@ -76,8 +76,8 @@ func testAccDataSourceSdwanSystemPerformanceMonitoringProfileParcelConfig() stri
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_system_performance_monitoring_profile_parcel" "test" {
-			id = sdwan_system_performance_monitoring_profile_parcel.test.id
+		data "sdwan_system_performance_monitoring_feature" "test" {
+			id = sdwan_system_performance_monitoring_feature.test.id
 			feature_profile_id = sdwan_system_feature_profile.test.id
 		}
 	`
