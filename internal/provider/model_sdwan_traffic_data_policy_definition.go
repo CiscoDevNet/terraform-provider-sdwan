@@ -56,6 +56,7 @@ type TrafficDataPolicyDefinitionSequencesMatchEntries struct {
 	ApplicationListVersion           types.Int64  `tfsdk:"application_list_version"`
 	DnsApplicationListId             types.String `tfsdk:"dns_application_list_id"`
 	DnsApplicationListVersion        types.Int64  `tfsdk:"dns_application_list_version"`
+	IcmpMessage                      types.String `tfsdk:"icmp_message"`
 	Dns                              types.String `tfsdk:"dns"`
 	Dscp                             types.Int64  `tfsdk:"dscp"`
 	PacketLength                     types.Int64  `tfsdk:"packet_length"`
@@ -186,6 +187,9 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					}
 					if !childItem.DnsApplicationListId.IsNull() && childItem.Type.ValueString() == "dnsAppList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DnsApplicationListId.ValueString())
+					}
+					if !childItem.IcmpMessage.IsNull() && childItem.Type.ValueString() == "icmpMessage" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.IcmpMessage.ValueString())
 					}
 					if !childItem.Dns.IsNull() && childItem.Type.ValueString() == "dns" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Dns.ValueString())
@@ -484,6 +488,11 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.DnsApplicationListId = types.StringValue(ccValue.String())
 					} else {
 						cItem.DnsApplicationListId = types.StringNull()
+					}
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "icmpMessage" {
+						cItem.IcmpMessage = types.StringValue(ccValue.String())
+					} else {
+						cItem.IcmpMessage = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dns" {
 						cItem.Dns = types.StringValue(ccValue.String())
@@ -900,6 +909,9 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].DnsApplicationListId.Equal(state.Sequences[i].MatchEntries[ii].DnsApplicationListId) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].IcmpMessage.Equal(state.Sequences[i].MatchEntries[ii].IcmpMessage) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].Dns.Equal(state.Sequences[i].MatchEntries[ii].Dns) {

@@ -2,7 +2,7 @@
 name: Policy Object Class Map
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/class
 minimum_version: 20.12.0
-test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+test_tags: [SDWAN_2012]
 skip_minimum_test: true
 parcel_type: policy_object
 attributes:
@@ -12,14 +12,14 @@ attributes:
     mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: var.policy_object_feature_template_id
+    test_value: data.sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
     attributes:
-    - model_name: queue
-      id: true
-      mandatory: true
-      example: 0
+      - model_name: queue
+        id: true
+        mandatory: true
+        example: 0
 
 test_prerequisites: |
-  variable "policy_object_feature_template_id" {} 
+  data "sdwan_policy_object_feature_profile" "test" {}

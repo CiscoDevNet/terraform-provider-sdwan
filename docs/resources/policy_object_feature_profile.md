@@ -3,12 +3,12 @@
 page_title: "sdwan_policy_object_feature_profile Resource - terraform-provider-sdwan"
 subcategory: "Feature Profiles"
 description: |-
-  This resource can manage a Policy Object Feature Profile .
+  SD-WAN manager supports only a single policy object feature profile to be configured. This resource will therefore either create a new one if none exists or update the existing one.
 ---
 
 # sdwan_policy_object_feature_profile (Resource)
 
-This resource can manage a Policy Object Feature Profile .
+SD-WAN manager supports only a single policy object feature profile to be configured. This resource will therefore either create a new one if none exists or update the existing one.
 
 ## Example Usage
 

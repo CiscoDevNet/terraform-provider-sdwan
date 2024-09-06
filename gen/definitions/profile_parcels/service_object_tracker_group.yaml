@@ -14,9 +14,9 @@ attributes:
     test_value: sdwan_service_feature_profile.test.id
   - model_name: objectId
     tf_name: object_tracker_id
-    mandatory: true
     example: 10
     test_value: '10'
+    minimum_test_value: '10'
   - model_name: trackerRefs
     tf_name: tracker_elements
     attributes:
@@ -26,8 +26,8 @@ attributes:
       id: true
       mandatory: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
-      test_value: sdwan_service_object_tracker_profile_parcel.test-1.id
-      secondary_test_value: sdwan_service_object_tracker_profile_parcel.test-2.id
+      test_value: sdwan_service_object_tracker_feature.test-1.id
+      secondary_test_value: sdwan_service_object_tracker_feature.test-2.id
   - model_name: criteria
     tf_name: reachable
     example: or
@@ -38,20 +38,20 @@ test_prerequisites: |
     description = "Terraform test"
   }
 
-  resource "sdwan_service_object_tracker_profile_parcel" "test-1" {
-    name               = "TF_TEST_1"
-    description        = "My Example"
-    feature_profile_id = sdwan_service_feature_profile.test.id
-    object_tracker_id  = 11
-    tracker_type       = "Interface"
-    interface          = "GigabitEthernet1"
+  resource "sdwan_service_object_tracker_feature" "test-1" {
+    name                  = "TF_TEST_1"
+    description           = "My Example"
+    feature_profile_id    = sdwan_service_feature_profile.test.id
+    object_tracker_id     = 11
+    object_tracker_type   = "Interface"
+    interface             = "GigabitEthernet1"
   }
 
-  resource "sdwan_service_object_tracker_profile_parcel" "test-2" {
-    name               = "TF_TEST_2"
-    description        = "My Example"
-    feature_profile_id = sdwan_service_feature_profile.test.id
-    object_tracker_id  = 12
-    tracker_type       = "Interface"
-    interface          = "GigabitEthernet1"
+  resource "sdwan_service_object_tracker_feature" "test-2" {
+    name                  = "TF_TEST_2"
+    description           = "My Example"
+    feature_profile_id    = sdwan_service_feature_profile.test.id
+    object_tracker_id     = 12
+    object_tracker_type   = "Interface"
+    interface             = "GigabitEthernet1"
   }
