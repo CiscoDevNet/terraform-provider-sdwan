@@ -55,7 +55,7 @@ resource "sdwan_service_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_service_tracker_profile_parcel" "test-1" {
+resource "sdwan_service_tracker_feature" "test-1" {
   name                  = "TF_TEST_1"
   description           = "Terraform test"
   feature_profile_id    = sdwan_service_feature_profile.test.id
@@ -72,7 +72,7 @@ resource "sdwan_service_tracker_profile_parcel" "test-1" {
   tracker_type          = "endpoint"
 }
 
-resource "sdwan_service_tracker_profile_parcel" "test-2" {
+resource "sdwan_service_tracker_feature" "test-2" {
   name                  = "TF_TEST_2"
   description           = "Terraform test"
   feature_profile_id    = sdwan_service_feature_profile.test.id
@@ -99,9 +99,9 @@ func testAccDataSourceSdwanServiceTrackerGroupProfileParcelConfig() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
 	config += `	tracker_elements = [{` + "\n"
-	config += `	  tracker_id = sdwan_service_tracker_profile_parcel.test-1.id` + "\n"
+	config += `	  tracker_id = sdwan_service_tracker_feature.test-1.id` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  tracker_id = sdwan_service_tracker_profile_parcel.test-2.id` + "\n"
+	config += `	  tracker_id = sdwan_service_tracker_feature.test-2.id` + "\n"
 	config += `	}]` + "\n"
 	config += `	tracker_boolean = "or"` + "\n"
 	config += `}` + "\n"

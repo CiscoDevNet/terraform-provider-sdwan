@@ -65,7 +65,7 @@ This resource can manage a Service LAN VPN Interface SVI Feature.
 - `ipv6_dhcp_helpers` (Attributes List) DHCPv6 Helper (see [below for nested schema](#nestedatt--ipv6_dhcp_helpers))
 - `ipv6_secondary_addresses` (Attributes List) Assign secondary IPv6 addresses (see [below for nested schema](#nestedatt--ipv6_secondary_addresses))
 - `ipv6_vrrps` (Attributes List) Enable ipv6 VRRP (see [below for nested schema](#nestedatt--ipv6_vrrps))
-- `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Profile ID
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name

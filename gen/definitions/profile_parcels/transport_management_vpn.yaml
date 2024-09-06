@@ -68,6 +68,7 @@ attributes:
         example: 1
     - model_name: distance
       tf_name: administrative_distance
+      exclude_test: true
       conditional_attribute:
         name: gateway
         value: null0

@@ -19,7 +19,7 @@ This data source can read the Service LAN VPN Interface IPSec Feature.
 
 - `feature_profile_id` (String) Feature Profile ID
 - `id` (String) The id of the Feature
-- `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Parcel ID
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 
 ### Read-Only
 

@@ -56,7 +56,7 @@ resource "sdwan_transport_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_transport_ipv6_tracker_profile_parcel" "test-1" {
+resource "sdwan_transport_ipv6_tracker_feature" "test-1" {
   name                  = "TF_TEST_1"
   description           = "Terraform Test"
   feature_profile_id    = sdwan_transport_feature_profile.test.id
@@ -71,7 +71,7 @@ resource "sdwan_transport_ipv6_tracker_profile_parcel" "test-1" {
   tracker_type          = "endpoint"
 }
 
-resource "sdwan_transport_ipv6_tracker_profile_parcel" "test-2" {
+resource "sdwan_transport_ipv6_tracker_feature" "test-2" {
   name                  = "TF_TEST_2"
   description           = "Terraform Test"
   feature_profile_id    = sdwan_transport_feature_profile.test.id
@@ -97,9 +97,9 @@ func testAccDataSourceSdwanTransportIPv6TrackerGroupProfileParcelConfig() string
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	tracker_name = "TRACKER_GROUP_1"` + "\n"
 	config += `	tracker_elements = [{` + "\n"
-	config += `	  tracker_id = sdwan_transport_ipv6_tracker_profile_parcel.test-1.id` + "\n"
+	config += `	  tracker_id = sdwan_transport_ipv6_tracker_feature.test-1.id` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  tracker_id = sdwan_transport_ipv6_tracker_profile_parcel.test-2.id` + "\n"
+	config += `	  tracker_id = sdwan_transport_ipv6_tracker_feature.test-2.id` + "\n"
 	config += `	}]` + "\n"
 	config += `	tracker_boolean = "or"` + "\n"
 	config += `}` + "\n"

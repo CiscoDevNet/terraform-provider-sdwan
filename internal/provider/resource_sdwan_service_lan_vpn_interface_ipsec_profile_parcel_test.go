@@ -86,7 +86,7 @@ resource "sdwan_service_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_service_lan_vpn_profile_parcel" "test" {
+resource "sdwan_service_lan_vpn_feature" "test" {
   name = "TF_TEST_SLAN"
   feature_profile_id = sdwan_service_feature_profile.test.id
 }
@@ -100,7 +100,7 @@ func testAccSdwanServiceLANVPNInterfaceIPSecProfileParcelConfig_minimum() string
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id` + "\n"
+	config += `	service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id` + "\n"
 	config += `	interface_name = "ipsec987"` + "\n"
 	config += `	ipv4_address = "9.7.5.4"` + "\n"
 	config += `	ipv4_subnet_mask = "255.255.255.0"` + "\n"
@@ -123,7 +123,7 @@ func testAccSdwanServiceLANVPNInterfaceIPSecProfileParcelConfig_all() string {
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id` + "\n"
+	config += `	service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id` + "\n"
 	config += `	interface_name = "ipsec987"` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_description = "ipsec987"` + "\n"

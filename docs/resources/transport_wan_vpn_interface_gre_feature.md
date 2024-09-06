@@ -50,7 +50,7 @@ This resource can manage a Transport WAN VPN Interface GRE Feature.
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name
-- `transport_wan_vpn_profile_parcel_id` (String) Transport WAN VPN Profile Parcel ID
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
 - `tunnel_route_via_loopback` (String) <1..32 characters> Interface name, can't be Loopback interface
 - `tunnel_route_via_loopback_variable` (String) Variable name

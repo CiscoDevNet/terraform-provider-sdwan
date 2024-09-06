@@ -78,8 +78,8 @@ func (d *ServiceLANVPNInterfaceGREProfileParcelDataSource) Schema(ctx context.Co
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"service_lan_vpn_profile_parcel_id": schema.StringAttribute{
-				MarkdownDescription: "Service LAN VPN Profile Parcel ID",
+			"service_lan_vpn_feature_id": schema.StringAttribute{
+				MarkdownDescription: "Service LAN VPN Feature ID",
 				Required:            true,
 			},
 			"interface_name": schema.StringAttribute{

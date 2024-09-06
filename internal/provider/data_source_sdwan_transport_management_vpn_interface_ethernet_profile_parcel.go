@@ -79,8 +79,8 @@ func (d *TransportManagementVPNInterfaceEthernetProfileParcelDataSource) Schema(
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"transport_management_vpn_profile_parcel_id": schema.StringAttribute{
-				MarkdownDescription: "Transport Management VPN Profile Parcel ID",
+			"transport_management_vpn_feature_id": schema.StringAttribute{
+				MarkdownDescription: "Transport Management VPN Feature ID",
 				Required:            true,
 			},
 			"shutdown": schema.BoolAttribute{

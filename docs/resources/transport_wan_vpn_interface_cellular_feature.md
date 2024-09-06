@@ -105,7 +105,7 @@ This resource can manage a Transport WAN VPN Interface Cellular Feature.
 - `tloc_extension_variable` (String) Variable name
 - `tracker` (String) Enable tracker for this interface
 - `tracker_variable` (String) Variable name
-- `transport_wan_vpn_profile_parcel_id` (String) Transport WAN VPN Profile Parcel ID
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_bandwidth_percent` (Number) Tunnels Bandwidth Percent
   - Range: `1`-`100`
   - Default value: `50`

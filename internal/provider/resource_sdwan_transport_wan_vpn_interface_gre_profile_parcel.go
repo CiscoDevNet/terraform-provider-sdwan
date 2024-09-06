@@ -89,8 +89,8 @@ func (r *TransportWANVPNInterfaceGREProfileParcelResource) Schema(ctx context.Co
 				MarkdownDescription: helpers.NewAttributeDescription("Feature Profile ID").String,
 				Required:            true,
 			},
-			"transport_wan_vpn_profile_parcel_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Transport WAN VPN Profile Parcel ID").String,
+			"transport_wan_vpn_feature_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Transport WAN VPN Feature ID").String,
 				Optional:            true,
 			},
 			"interface_name": schema.StringAttribute{

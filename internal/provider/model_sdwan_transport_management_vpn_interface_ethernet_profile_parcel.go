@@ -33,59 +33,59 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin types
 type TransportManagementVPNInterfaceEthernet struct {
-	Id                                    types.String                                                    `tfsdk:"id"`
-	Version                               types.Int64                                                     `tfsdk:"version"`
-	Name                                  types.String                                                    `tfsdk:"name"`
-	Description                           types.String                                                    `tfsdk:"description"`
-	FeatureProfileId                      types.String                                                    `tfsdk:"feature_profile_id"`
-	TransportManagementVpnProfileParcelId types.String                                                    `tfsdk:"transport_management_vpn_profile_parcel_id"`
-	Shutdown                              types.Bool                                                      `tfsdk:"shutdown"`
-	ShutdownVariable                      types.String                                                    `tfsdk:"shutdown_variable"`
-	InterfaceName                         types.String                                                    `tfsdk:"interface_name"`
-	InterfaceNameVariable                 types.String                                                    `tfsdk:"interface_name_variable"`
-	InterfaceDescription                  types.String                                                    `tfsdk:"interface_description"`
-	InterfaceDescriptionVariable          types.String                                                    `tfsdk:"interface_description_variable"`
-	Ipv4DhcpDistance                      types.Int64                                                     `tfsdk:"ipv4_dhcp_distance"`
-	Ipv4DhcpDistanceVariable              types.String                                                    `tfsdk:"ipv4_dhcp_distance_variable"`
-	Ipv4Address                           types.String                                                    `tfsdk:"ipv4_address"`
-	Ipv4AddressVariable                   types.String                                                    `tfsdk:"ipv4_address_variable"`
-	Ipv4SubnetMask                        types.String                                                    `tfsdk:"ipv4_subnet_mask"`
-	Ipv4SubnetMaskVariable                types.String                                                    `tfsdk:"ipv4_subnet_mask_variable"`
-	Ipv4SecondaryAddresses                []TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses `tfsdk:"ipv4_secondary_addresses"`
-	Ipv4DhcpHelper                        types.Set                                                       `tfsdk:"ipv4_dhcp_helper"`
-	Ipv4DhcpHelperVariable                types.String                                                    `tfsdk:"ipv4_dhcp_helper_variable"`
-	Ipv4IperfServer                       types.String                                                    `tfsdk:"ipv4_iperf_server"`
-	Ipv4IperfServerVariable               types.String                                                    `tfsdk:"ipv4_iperf_server_variable"`
-	Ipv4AutoDetectBandwidth               types.Bool                                                      `tfsdk:"ipv4_auto_detect_bandwidth"`
-	Ipv4AutoDetectBandwidthVariable       types.String                                                    `tfsdk:"ipv4_auto_detect_bandwidth_variable"`
-	EnableDhcpv6                          types.Bool                                                      `tfsdk:"enable_dhcpv6"`
-	Ipv6Address                           types.String                                                    `tfsdk:"ipv6_address"`
-	Ipv6AddressVariable                   types.String                                                    `tfsdk:"ipv6_address_variable"`
-	ArpEntries                            []TransportManagementVPNInterfaceEthernetArpEntries             `tfsdk:"arp_entries"`
-	Duplex                                types.String                                                    `tfsdk:"duplex"`
-	DuplexVariable                        types.String                                                    `tfsdk:"duplex_variable"`
-	MacAddress                            types.String                                                    `tfsdk:"mac_address"`
-	MacAddressVariable                    types.String                                                    `tfsdk:"mac_address_variable"`
-	IpMtu                                 types.Int64                                                     `tfsdk:"ip_mtu"`
-	IpMtuVariable                         types.String                                                    `tfsdk:"ip_mtu_variable"`
-	InterfaceMtu                          types.Int64                                                     `tfsdk:"interface_mtu"`
-	InterfaceMtuVariable                  types.String                                                    `tfsdk:"interface_mtu_variable"`
-	TcpMss                                types.Int64                                                     `tfsdk:"tcp_mss"`
-	TcpMssVariable                        types.String                                                    `tfsdk:"tcp_mss_variable"`
-	Speed                                 types.String                                                    `tfsdk:"speed"`
-	SpeedVariable                         types.String                                                    `tfsdk:"speed_variable"`
-	ArpTimeout                            types.Int64                                                     `tfsdk:"arp_timeout"`
-	ArpTimeoutVariable                    types.String                                                    `tfsdk:"arp_timeout_variable"`
-	Autonegotiate                         types.Bool                                                      `tfsdk:"autonegotiate"`
-	AutonegotiateVariable                 types.String                                                    `tfsdk:"autonegotiate_variable"`
-	MediaType                             types.String                                                    `tfsdk:"media_type"`
-	MediaTypeVariable                     types.String                                                    `tfsdk:"media_type_variable"`
-	LoadInterval                          types.Int64                                                     `tfsdk:"load_interval"`
-	LoadIntervalVariable                  types.String                                                    `tfsdk:"load_interval_variable"`
-	IcmpRedirectDisable                   types.Bool                                                      `tfsdk:"icmp_redirect_disable"`
-	IcmpRedirectDisableVariable           types.String                                                    `tfsdk:"icmp_redirect_disable_variable"`
-	IpDirectedBroadcast                   types.Bool                                                      `tfsdk:"ip_directed_broadcast"`
-	IpDirectedBroadcastVariable           types.String                                                    `tfsdk:"ip_directed_broadcast_variable"`
+	Id                              types.String                                                    `tfsdk:"id"`
+	Version                         types.Int64                                                     `tfsdk:"version"`
+	Name                            types.String                                                    `tfsdk:"name"`
+	Description                     types.String                                                    `tfsdk:"description"`
+	FeatureProfileId                types.String                                                    `tfsdk:"feature_profile_id"`
+	TransportManagementVpnFeatureId types.String                                                    `tfsdk:"transport_management_vpn_feature_id"`
+	Shutdown                        types.Bool                                                      `tfsdk:"shutdown"`
+	ShutdownVariable                types.String                                                    `tfsdk:"shutdown_variable"`
+	InterfaceName                   types.String                                                    `tfsdk:"interface_name"`
+	InterfaceNameVariable           types.String                                                    `tfsdk:"interface_name_variable"`
+	InterfaceDescription            types.String                                                    `tfsdk:"interface_description"`
+	InterfaceDescriptionVariable    types.String                                                    `tfsdk:"interface_description_variable"`
+	Ipv4DhcpDistance                types.Int64                                                     `tfsdk:"ipv4_dhcp_distance"`
+	Ipv4DhcpDistanceVariable        types.String                                                    `tfsdk:"ipv4_dhcp_distance_variable"`
+	Ipv4Address                     types.String                                                    `tfsdk:"ipv4_address"`
+	Ipv4AddressVariable             types.String                                                    `tfsdk:"ipv4_address_variable"`
+	Ipv4SubnetMask                  types.String                                                    `tfsdk:"ipv4_subnet_mask"`
+	Ipv4SubnetMaskVariable          types.String                                                    `tfsdk:"ipv4_subnet_mask_variable"`
+	Ipv4SecondaryAddresses          []TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses `tfsdk:"ipv4_secondary_addresses"`
+	Ipv4DhcpHelper                  types.Set                                                       `tfsdk:"ipv4_dhcp_helper"`
+	Ipv4DhcpHelperVariable          types.String                                                    `tfsdk:"ipv4_dhcp_helper_variable"`
+	Ipv4IperfServer                 types.String                                                    `tfsdk:"ipv4_iperf_server"`
+	Ipv4IperfServerVariable         types.String                                                    `tfsdk:"ipv4_iperf_server_variable"`
+	Ipv4AutoDetectBandwidth         types.Bool                                                      `tfsdk:"ipv4_auto_detect_bandwidth"`
+	Ipv4AutoDetectBandwidthVariable types.String                                                    `tfsdk:"ipv4_auto_detect_bandwidth_variable"`
+	EnableDhcpv6                    types.Bool                                                      `tfsdk:"enable_dhcpv6"`
+	Ipv6Address                     types.String                                                    `tfsdk:"ipv6_address"`
+	Ipv6AddressVariable             types.String                                                    `tfsdk:"ipv6_address_variable"`
+	ArpEntries                      []TransportManagementVPNInterfaceEthernetArpEntries             `tfsdk:"arp_entries"`
+	Duplex                          types.String                                                    `tfsdk:"duplex"`
+	DuplexVariable                  types.String                                                    `tfsdk:"duplex_variable"`
+	MacAddress                      types.String                                                    `tfsdk:"mac_address"`
+	MacAddressVariable              types.String                                                    `tfsdk:"mac_address_variable"`
+	IpMtu                           types.Int64                                                     `tfsdk:"ip_mtu"`
+	IpMtuVariable                   types.String                                                    `tfsdk:"ip_mtu_variable"`
+	InterfaceMtu                    types.Int64                                                     `tfsdk:"interface_mtu"`
+	InterfaceMtuVariable            types.String                                                    `tfsdk:"interface_mtu_variable"`
+	TcpMss                          types.Int64                                                     `tfsdk:"tcp_mss"`
+	TcpMssVariable                  types.String                                                    `tfsdk:"tcp_mss_variable"`
+	Speed                           types.String                                                    `tfsdk:"speed"`
+	SpeedVariable                   types.String                                                    `tfsdk:"speed_variable"`
+	ArpTimeout                      types.Int64                                                     `tfsdk:"arp_timeout"`
+	ArpTimeoutVariable              types.String                                                    `tfsdk:"arp_timeout_variable"`
+	Autonegotiate                   types.Bool                                                      `tfsdk:"autonegotiate"`
+	AutonegotiateVariable           types.String                                                    `tfsdk:"autonegotiate_variable"`
+	MediaType                       types.String                                                    `tfsdk:"media_type"`
+	MediaTypeVariable               types.String                                                    `tfsdk:"media_type_variable"`
+	LoadInterval                    types.Int64                                                     `tfsdk:"load_interval"`
+	LoadIntervalVariable            types.String                                                    `tfsdk:"load_interval_variable"`
+	IcmpRedirectDisable             types.Bool                                                      `tfsdk:"icmp_redirect_disable"`
+	IcmpRedirectDisableVariable     types.String                                                    `tfsdk:"icmp_redirect_disable_variable"`
+	IpDirectedBroadcast             types.Bool                                                      `tfsdk:"ip_directed_broadcast"`
+	IpDirectedBroadcastVariable     types.String                                                    `tfsdk:"ip_directed_broadcast_variable"`
 }
 
 type TransportManagementVPNInterfaceEthernetIpv4SecondaryAddresses struct {
@@ -113,7 +113,7 @@ func (data TransportManagementVPNInterfaceEthernet) getModel() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data TransportManagementVPNInterfaceEthernet) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/management/vpn/%s/interface/ethernet", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportManagementVpnProfileParcelId.ValueString()))
+	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/management/vpn/%s/interface/ethernet", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportManagementVpnFeatureId.ValueString()))
 }
 
 // End of section. //template:end getPath
@@ -1191,7 +1191,7 @@ func (data *TransportManagementVPNInterfaceEthernet) isNull(ctx context.Context,
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
-	if !data.TransportManagementVpnProfileParcelId.IsNull() {
+	if !data.TransportManagementVpnFeatureId.IsNull() {
 		return false
 	}
 	if !data.Shutdown.IsNull() {

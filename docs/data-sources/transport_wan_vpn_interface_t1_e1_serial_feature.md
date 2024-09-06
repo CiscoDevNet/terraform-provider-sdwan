@@ -19,7 +19,7 @@ This data source can read the Transport WAN VPN Interface T1 E1 Serial Feature.
 
 - `feature_profile_id` (String) Feature Profile ID
 - `id` (String) The id of the Feature
-- `transport_wan_vpn_profile_parcel_id` (String) Transport WAN VPN Profile Parcel ID
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 
 ### Read-Only
 

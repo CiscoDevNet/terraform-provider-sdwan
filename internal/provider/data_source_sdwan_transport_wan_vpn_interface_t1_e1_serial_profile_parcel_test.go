@@ -105,7 +105,7 @@ resource "sdwan_transport_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_transport_wan_vpn_profile_parcel" "test" {
+resource "sdwan_transport_wan_vpn_feature" "test" {
   name                       = "TF_TEST_WAN"
   description                = "Terraform test"
   feature_profile_id         = sdwan_transport_feature_profile.test.id
@@ -132,7 +132,6 @@ resource "sdwan_transport_wan_vpn_profile_parcel" "test" {
           administrative_distance = 1
         }
       ]
-      administrative_distance = 1
     }
   ]
   ipv6_static_routes = [
@@ -171,7 +170,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id` + "\n"
+	config += `	transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "Serial0"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
@@ -232,7 +231,7 @@ func testAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcelConfig
 		data "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "test" {
 			id = sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test.id
 			feature_profile_id = sdwan_transport_feature_profile.test.id
-			transport_wan_vpn_profile_parcel_id = sdwan_transport_wan_vpn_profile_parcel.test.id
+			transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
 		}
 	`
 	return config

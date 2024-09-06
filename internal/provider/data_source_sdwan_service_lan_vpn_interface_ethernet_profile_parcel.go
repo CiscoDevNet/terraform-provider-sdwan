@@ -79,8 +79,8 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"service_lan_vpn_profile_parcel_id": schema.StringAttribute{
-				MarkdownDescription: "Service LAN VPN Profile Profile ID",
+			"service_lan_vpn_feature_id": schema.StringAttribute{
+				MarkdownDescription: "Service LAN VPN Feature ID",
 				Required:            true,
 			},
 			"shutdown": schema.BoolAttribute{

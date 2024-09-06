@@ -115,7 +115,7 @@ resource "sdwan_service_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_service_lan_vpn_profile_parcel" "test" {
+resource "sdwan_service_lan_vpn_feature" "test" {
   name = "TF_TEST_SLAN"
   feature_profile_id = sdwan_service_feature_profile.test.id
 }
@@ -129,7 +129,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig() s
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id` + "\n"
+	config += `	service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id` + "\n"
 	config += `	shutdown = false` + "\n"
 	config += `	interface_name = "GigabitEthernet3"` + "\n"
 	config += `	interface_description = "LAN"` + "\n"
@@ -214,7 +214,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceEthernetProfileParcelConfig() s
 		data "sdwan_service_lan_vpn_interface_ethernet_feature" "test" {
 			id = sdwan_service_lan_vpn_interface_ethernet_feature.test.id
 			feature_profile_id = sdwan_service_feature_profile.test.id
-			service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id
+			service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id
 		}
 	`
 	return config

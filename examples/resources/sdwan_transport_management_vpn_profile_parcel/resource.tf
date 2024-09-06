@@ -24,7 +24,6 @@ resource "sdwan_transport_management_vpn_feature" "example" {
           administrative_distance = 1
         }
       ]
-      administrative_distance = 1
     }
   ]
   ipv6_static_routes = [

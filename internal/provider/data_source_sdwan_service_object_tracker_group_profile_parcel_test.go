@@ -55,22 +55,22 @@ resource "sdwan_service_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_service_object_tracker_profile_parcel" "test-1" {
-  name               = "TF_TEST_1"
-  description        = "My Example"
-  feature_profile_id = sdwan_service_feature_profile.test.id
-  object_tracker_id  = 11
-  tracker_type       = "Interface"
-  interface          = "GigabitEthernet1"
+resource "sdwan_service_object_tracker_feature" "test-1" {
+  name                  = "TF_TEST_1"
+  description           = "My Example"
+  feature_profile_id    = sdwan_service_feature_profile.test.id
+  object_tracker_id     = 11
+  object_tracker_type   = "Interface"
+  interface             = "GigabitEthernet1"
 }
 
-resource "sdwan_service_object_tracker_profile_parcel" "test-2" {
-  name               = "TF_TEST_2"
-  description        = "My Example"
-  feature_profile_id = sdwan_service_feature_profile.test.id
-  object_tracker_id  = 12
-  tracker_type       = "Interface"
-  interface          = "GigabitEthernet1"
+resource "sdwan_service_object_tracker_feature" "test-2" {
+  name                  = "TF_TEST_2"
+  description           = "My Example"
+  feature_profile_id    = sdwan_service_feature_profile.test.id
+  object_tracker_id     = 12
+  object_tracker_type   = "Interface"
+  interface             = "GigabitEthernet1"
 }
 `
 
@@ -84,9 +84,9 @@ func testAccDataSourceSdwanServiceObjectTrackerGroupProfileParcelConfig() string
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
 	config += `	object_tracker_id = 10` + "\n"
 	config += `	tracker_elements = [{` + "\n"
-	config += `	  object_tracker_id = sdwan_service_object_tracker_profile_parcel.test-1.id` + "\n"
+	config += `	  object_tracker_id = sdwan_service_object_tracker_feature.test-1.id` + "\n"
 	config += `	}, {` + "\n"
-	config += `	  object_tracker_id = sdwan_service_object_tracker_profile_parcel.test-2.id` + "\n"
+	config += `	  object_tracker_id = sdwan_service_object_tracker_feature.test-2.id` + "\n"
 	config += `	}]` + "\n"
 	config += `	reachable = "or"` + "\n"
 	config += `}` + "\n"
