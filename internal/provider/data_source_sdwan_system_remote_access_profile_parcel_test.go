@@ -39,7 +39,6 @@ func TestAccDataSourceSdwanSystemRemoteAccessProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "ipv6_pool_size", "1024"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "enable_certificate_list_check", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "psk_authentication_type", "aaa"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "psk_authentication_pre_shared_key", "Cisco123"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "radius_group_name", "radius-1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "aaa_derive_name_from_peer_identity", "MyPassword"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "aaa_enable_accounting", "false"))
@@ -48,7 +47,6 @@ func TestAccDataSourceSdwanSystemRemoteAccessProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "ikev2_security_association_lifetime", "86400"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "ikev2_anti_dos_threshold", "99"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "ipsec_enable_anti_replay", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "ipsec_anti_replay_window_size", "64"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "ipsec_security_association_lifetime", "3600"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_system_remote_access_feature.test", "ipsec_enable_perfect_foward_secrecy", "false"))
 	resource.Test(t, resource.TestCase{
@@ -87,7 +85,6 @@ func testAccDataSourceSdwanSystemRemoteAccessProfileParcelConfig() string {
 	config += `	ipv6_pool_size = 1024` + "\n"
 	config += `	enable_certificate_list_check = false` + "\n"
 	config += `	psk_authentication_type = "aaa"` + "\n"
-	config += `	psk_authentication_pre_shared_key = "Cisco123"` + "\n"
 	config += `	radius_group_name = "radius-1"` + "\n"
 	config += `	aaa_derive_name_from_peer_identity = "MyPassword"` + "\n"
 	config += `	aaa_enable_accounting = false` + "\n"
@@ -96,7 +93,6 @@ func testAccDataSourceSdwanSystemRemoteAccessProfileParcelConfig() string {
 	config += `	ikev2_security_association_lifetime = 86400` + "\n"
 	config += `	ikev2_anti_dos_threshold = 99` + "\n"
 	config += `	ipsec_enable_anti_replay = false` + "\n"
-	config += `	ipsec_anti_replay_window_size = 64` + "\n"
 	config += `	ipsec_security_association_lifetime = 3600` + "\n"
 	config += `	ipsec_enable_perfect_foward_secrecy = false` + "\n"
 	config += `}` + "\n"

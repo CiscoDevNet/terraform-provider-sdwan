@@ -44,7 +44,6 @@ func TestAccSdwanTransportManagementVPNProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.gateway", "nextHop"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.next_hops.0.address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.next_hops.0.administrative_distance", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv4_static_routes.0.administrative_distance", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv6_static_routes.0.prefix", "2002::/16"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv6_static_routes.0.next_hops.0.address", "2001:0:0:1::1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_management_vpn_feature.test", "ipv6_static_routes.0.next_hops.0.administrative_distance", "1"))
@@ -111,7 +110,6 @@ func testAccSdwanTransportManagementVPNProfileParcelConfig_all() string {
 	config += `		address = "1.2.3.4"` + "\n"
 	config += `		administrative_distance = 1` + "\n"
 	config += `	}]` + "\n"
-	config += `	  administrative_distance = 1` + "\n"
 	config += `	}]` + "\n"
 	config += `	ipv6_static_routes = [{` + "\n"
 	config += `	  prefix = "2002::/16"` + "\n"

@@ -57,21 +57,21 @@ resource "sdwan_service_feature_profile" "test" {
 }
 
 resource "sdwan_service_object_tracker_feature" "test-1" {
-  name               = "TF_TEST_1"
-  description        = "My Example"
-  feature_profile_id = sdwan_service_feature_profile.test.id
-  object_tracker_id  = 11
-  tracker_type       = "Interface"
-  interface          = "GigabitEthernet1"
+  name                  = "TF_TEST_1"
+  description           = "My Example"
+  feature_profile_id    = sdwan_service_feature_profile.test.id
+  object_tracker_id     = 11
+  object_tracker_type   = "Interface"
+  interface             = "GigabitEthernet1"
 }
 
 resource "sdwan_service_object_tracker_feature" "test-2" {
-  name               = "TF_TEST_2"
-  description        = "My Example"
-  feature_profile_id = sdwan_service_feature_profile.test.id
-  object_tracker_id  = 12
-  tracker_type       = "Interface"
-  interface          = "GigabitEthernet1"
+  name                  = "TF_TEST_2"
+  description           = "My Example"
+  feature_profile_id    = sdwan_service_feature_profile.test.id
+  object_tracker_id     = 12
+  object_tracker_type   = "Interface"
+  interface             = "GigabitEthernet1"
 }
 `
 
