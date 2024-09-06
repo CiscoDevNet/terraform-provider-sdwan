@@ -68,7 +68,7 @@ resource "sdwan_transport_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_transport_wan_vpn_profile_parcel" "test" {
+resource "sdwan_transport_wan_vpn_feature" "test" {
   name                       = "TF_TEST_WAN"
   description                = "Terraform test"
   feature_profile_id         = sdwan_transport_feature_profile.test.id

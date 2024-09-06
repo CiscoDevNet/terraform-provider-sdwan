@@ -118,7 +118,7 @@ resource "sdwan_service_feature_profile" "test" {
   description = "Terraform test"
 }
 
-resource "sdwan_service_lan_vpn_profile_parcel" "test" {
+resource "sdwan_service_lan_vpn_feature" "test" {
   name = "TF_TEST_SLAN"
   feature_profile_id = sdwan_service_feature_profile.test.id
 }
