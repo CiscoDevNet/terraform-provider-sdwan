@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_data_ipv4_prefix_list.test", "entries.0.ipv4_address", "10.0.0.0"))
@@ -51,7 +51,8 @@ func TestAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcel(t *testin
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanPolicyObjectDataIPv4PrefixListPrerequisitesProfileParcelConfig = `
-variable "policy_object_feature_template_id" {} 
+data "sdwan_policy_object_feature_profile" "test" {}
+
 `
 
 // End of section. //template:end testPrerequisites
@@ -61,7 +62,7 @@ func testAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcelConfig() s
 	config := `resource "sdwan_policy_object_data_ipv4_prefix_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
+	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  ipv4_address = "10.0.0.0"` + "\n"
 	config += `	  ipv4_prefix_length = 8` + "\n"
@@ -71,7 +72,7 @@ func testAccDataSourceSdwanPolicyObjectDataIPv4PrefixListProfileParcelConfig() s
 	config += `
 		data "sdwan_policy_object_data_ipv4_prefix_list" "test" {
 			id = sdwan_policy_object_data_ipv4_prefix_list.test.id
-			feature_profile_id = var.policy_object_feature_template_id
+			feature_profile_id = data.sdwan_policy_object_feature_profile.test.id
 		}
 	`
 	return config

@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
 func TestAccDataSourceSdwanPolicyObjectClassMapProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_policy_object_class_map.test", "entries.0.queue", "0"))
@@ -50,7 +50,8 @@ func TestAccDataSourceSdwanPolicyObjectClassMapProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanPolicyObjectClassMapPrerequisitesProfileParcelConfig = `
-variable "policy_object_feature_template_id" {} 
+data "sdwan_policy_object_feature_profile" "test" {}
+
 `
 
 // End of section. //template:end testPrerequisites
@@ -60,7 +61,7 @@ func testAccDataSourceSdwanPolicyObjectClassMapProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_class_map" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
+	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  queue = "0"` + "\n"
 	config += `	}]` + "\n"
@@ -69,7 +70,7 @@ func testAccDataSourceSdwanPolicyObjectClassMapProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_class_map" "test" {
 			id = sdwan_policy_object_class_map.test.id
-			feature_profile_id = var.policy_object_feature_template_id
+			feature_profile_id = data.sdwan_policy_object_feature_profile.test.id
 		}
 	`
 	return config

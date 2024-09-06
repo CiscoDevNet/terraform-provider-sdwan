@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_mirror.test", "entries.0.remote_destination_ip", "10.0.0.1"))
@@ -52,7 +52,8 @@ func TestAccSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig = `
-variable "policy_object_feature_template_id" {} 
+data "sdwan_policy_object_feature_profile" "test" {}
+
 `
 
 // End of section. //template:end testPrerequisites
@@ -66,7 +67,7 @@ func testAccSdwanPolicyObjectMirrorProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_mirror" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
+	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
 	config += `	  source_ip = "10.0.0.2"` + "\n"
