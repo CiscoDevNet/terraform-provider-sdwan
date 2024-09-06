@@ -79,7 +79,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceGREProfileParcelConfig() string
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id` + "\n"
+	config += `	service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_feature.test.id` + "\n"
 	config += `	interface_name = "gre1"` + "\n"
 	config += `	interface_description = "gre1"` + "\n"
 	config += `	ipv4_address = "70.1.1.1"` + "\n"
@@ -97,7 +97,7 @@ func testAccDataSourceSdwanServiceLANVPNInterfaceGREProfileParcelConfig() string
 		data "sdwan_service_lan_vpn_interface_gre_feature" "test" {
 			id = sdwan_service_lan_vpn_interface_gre_feature.test.id
 			feature_profile_id = sdwan_service_feature_profile.test.id
-			service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_profile_parcel.test.id
+			service_lan_vpn_profile_parcel_id = sdwan_service_lan_vpn_feature.test.id
 		}
 	`
 	return config
