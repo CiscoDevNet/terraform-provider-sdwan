@@ -1,7 +1,7 @@
 resource "sdwan_traffic_data_policy_definition" "example" {
   name           = "Example"
   description    = "My description"
-  default_action = "drop"
+  default_action = "accept"
   sequences = [
     {
       id          = 1

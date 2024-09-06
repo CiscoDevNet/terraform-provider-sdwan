@@ -31,7 +31,7 @@ func TestAccDataSourceSdwanTrafficDataPolicyDefinition(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "name", "Example"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "description", "My description"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "default_action", "drop"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "default_action", "accept"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.name", "Seq1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_traffic_data_policy_definition.test", "sequences.0.type", "applicationFirewall"))
@@ -75,7 +75,7 @@ func testAccDataSourceSdwanTrafficDataPolicyDefinitionConfig() string {
 	config += `resource "sdwan_traffic_data_policy_definition" "test" {` + "\n"
 	config += `	name = "Example"` + "\n"
 	config += `	description = "My description"` + "\n"
-	config += `	default_action = "drop"` + "\n"
+	config += `	default_action = "accept"` + "\n"
 	config += `	sequences = [{` + "\n"
 	config += `	  id = 1` + "\n"
 	config += `	  name = "Seq1"` + "\n"
