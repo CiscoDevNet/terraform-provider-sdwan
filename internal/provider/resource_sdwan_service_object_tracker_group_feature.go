@@ -91,7 +91,7 @@ func (r *ServiceObjectTrackerGroupProfileParcelResource) Schema(ctx context.Cont
 			},
 			"object_tracker_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Object ID").AddIntegerRangeDescription(1, 1000).String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 1000),
 				},

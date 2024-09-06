@@ -36,12 +36,12 @@ resource "sdwan_service_object_tracker_group_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
-- `object_tracker_id` (Number) Object ID
-  - Range: `1`-`1000`
 
 ### Optional
 
 - `description` (String) The description of the Feature
+- `object_tracker_id` (Number) Object ID
+  - Range: `1`-`1000`
 - `object_tracker_id_variable` (String) Variable name
 - `reachable` (String) tracker ref list criteria boolean and or
   - Choices: `and`, `or`
