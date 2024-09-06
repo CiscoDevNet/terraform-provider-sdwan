@@ -53,7 +53,10 @@ func TestAccDataSourceSdwanPolicyObjectTLOCListProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanPolicyObjectTLOCListPrerequisitesProfileParcelConfig = `
-data "sdwan_policy_object_feature_profile" "test" {}
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "POLICY_OBJECT_FP_1"
+  description = "My policy object feature profile 1"
+}
 
 `
 
@@ -64,7 +67,7 @@ func testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_tloc_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  tloc_ip = "10.0.0.0"` + "\n"
 	config += `	  color = "3g"` + "\n"
@@ -76,7 +79,7 @@ func testAccDataSourceSdwanPolicyObjectTLOCListProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_tloc_list" "test" {
 			id = sdwan_policy_object_tloc_list.test.id
-			feature_profile_id = data.sdwan_policy_object_feature_profile.test.id
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
 		}
 	`
 	return config

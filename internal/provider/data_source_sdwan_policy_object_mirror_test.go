@@ -51,7 +51,10 @@ func TestAccDataSourceSdwanPolicyObjectMirrorProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanPolicyObjectMirrorPrerequisitesProfileParcelConfig = `
-data "sdwan_policy_object_feature_profile" "test" {}
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "POLICY_OBJECT_FP_1"
+  description = "My policy object feature profile 1"
+}
 
 `
 
@@ -62,7 +65,7 @@ func testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig() string {
 	config := `resource "sdwan_policy_object_mirror" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  remote_destination_ip = "10.0.0.1"` + "\n"
 	config += `	  source_ip = "10.0.0.2"` + "\n"
@@ -72,7 +75,7 @@ func testAccDataSourceSdwanPolicyObjectMirrorProfileParcelConfig() string {
 	config += `
 		data "sdwan_policy_object_mirror" "test" {
 			id = sdwan_policy_object_mirror.test.id
-			feature_profile_id = data.sdwan_policy_object_feature_profile.test.id
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
 		}
 	`
 	return config
