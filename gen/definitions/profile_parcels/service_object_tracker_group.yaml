@@ -14,9 +14,9 @@ attributes:
     test_value: sdwan_service_feature_profile.test.id
   - model_name: objectId
     tf_name: object_tracker_id
-    mandatory: true
     example: 10
     test_value: '10'
+    minimum_test_value: '10'
   - model_name: trackerRefs
     tf_name: tracker_elements
     attributes:

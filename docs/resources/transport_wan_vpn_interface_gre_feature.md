@@ -40,11 +40,7 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `interface_name` (String) Interface name (1..255)
-- `ipv4_address` (String)
-- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `name` (String) The name of the Feature
-- `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address
 
 ### Optional
 
@@ -57,12 +53,15 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
 - `description` (String) The description of the Feature
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
+- `interface_name` (String) Interface name (1..255)
 - `interface_name_variable` (String) Variable name
 - `ip_mtu` (Number) Interface MTU <576..9976>, in bytes
   - Range: `576`-`9976`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
+- `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
+- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`
@@ -71,6 +70,7 @@ resource "sdwan_transport_wan_vpn_interface_gre_feature" "example" {
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name
 - `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
+- `tunnel_destination_ipv4_address` (String) Tunnel destination IP Address
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
 - `tunnel_route_via_loopback` (String) <1..32 characters> Interface name, can't be Loopback interface
 - `tunnel_route_via_loopback_variable` (String) Variable name

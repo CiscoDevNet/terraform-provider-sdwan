@@ -85,7 +85,6 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `interface_name` (String) Serial Interface Name - slot/subslot/port:channel-group for T1/E1, slot/subslot/port for NIM-1T
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -103,6 +102,7 @@ resource "sdwan_transport_wan_vpn_interface_t1_e1_serial_feature" "example" {
 - `encapsulation` (String) Configure Encapsulation for interface
   - Choices: `hdlc`, `ppp`, `frame-relay`
 - `encapsulation_variable` (String) Variable name
+- `interface_name` (String) Serial Interface Name - slot/subslot/port:channel-group for T1/E1, slot/subslot/port for NIM-1T
 - `interface_name_variable` (String) Variable name
 - `ip_mtu` (Number) Set ip mtu
   - Range: `576`-`9216`

@@ -103,7 +103,7 @@ func (r *TransportWANVPNInterfaceT1E1SerialProfileParcelResource) Schema(ctx con
 			},
 			"interface_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Serial Interface Name - slot/subslot/port:channel-group for T1/E1, slot/subslot/port for NIM-1T").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(7, 255),
 					stringvalidator.RegexMatches(regexp.MustCompile(`^(Serial)([0-9]{1,}(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),

@@ -32,8 +32,6 @@ resource "sdwan_service_object_tracker_feature" "example" {
 
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
-- `object_tracker_id` (Number) Object tracker ID
-  - Range: `1`-`1000`
 - `object_tracker_type` (String) objectTrackerType:Interface SIG Route
   - Choices: `Interface`, `SIG`, `Route`
 
@@ -42,6 +40,8 @@ resource "sdwan_service_object_tracker_feature" "example" {
 - `description` (String) The description of the Feature
 - `interface` (String) interface name
 - `interface_variable` (String) Variable name
+- `object_tracker_id` (Number) Object tracker ID
+  - Range: `1`-`1000`
 - `object_tracker_id_variable` (String) Variable name
 - `route_ip` (String) IP address
 - `route_ip_variable` (String) Variable name
