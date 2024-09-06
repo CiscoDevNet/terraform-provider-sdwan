@@ -12,10 +12,10 @@ attributes:
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_feature_profile.test.id
-  - tf_name: transport_wan_vpn_profile_parcel_id
+  - tf_name: transport_wan_vpn_feature_id
     reference: true
     type: String
-    description: Transport WAN VPN Profile Parcel ID
+    description: Transport WAN VPN Feature ID
     example: 140331f6-5418-4755-a059-13c77eb96037
     test_value: sdwan_transport_wan_vpn_feature.test.id
   - model_name: ifName

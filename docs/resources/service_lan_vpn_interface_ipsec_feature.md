@@ -97,7 +97,7 @@ This resource can manage a Service LAN VPN Interface IPSec Feature.
   - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
   - Default value: `group-16`
 - `perfect_forward_secrecy_variable` (String) Variable name
-- `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Parcel ID
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) Administrative state
   - Default value: `true`
 - `shutdown_variable` (String) Variable name

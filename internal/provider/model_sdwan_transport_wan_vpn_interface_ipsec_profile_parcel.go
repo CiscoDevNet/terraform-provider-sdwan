@@ -37,7 +37,7 @@ type TransportWANVPNInterfaceIPSEC struct {
 	Name                                    types.String `tfsdk:"name"`
 	Description                             types.String `tfsdk:"description"`
 	FeatureProfileId                        types.String `tfsdk:"feature_profile_id"`
-	TransportWanVpnProfileParcelId          types.String `tfsdk:"transport_wan_vpn_profile_parcel_id"`
+	TransportWanVpnFeatureId                types.String `tfsdk:"transport_wan_vpn_feature_id"`
 	InterfaceName                           types.String `tfsdk:"interface_name"`
 	InterfaceNameVariable                   types.String `tfsdk:"interface_name_variable"`
 	Shutdown                                types.Bool   `tfsdk:"shutdown"`
@@ -110,7 +110,7 @@ func (data TransportWANVPNInterfaceIPSEC) getModel() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data TransportWANVPNInterfaceIPSEC) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ipsec", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportWanVpnProfileParcelId.ValueString()))
+	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/wan/vpn/%s/interface/ipsec", url.QueryEscape(data.FeatureProfileId.ValueString()), url.QueryEscape(data.TransportWanVpnFeatureId.ValueString()))
 }
 
 // End of section. //template:end getPath
@@ -1207,7 +1207,7 @@ func (data *TransportWANVPNInterfaceIPSEC) isNull(ctx context.Context, res gjson
 	if !data.FeatureProfileId.IsNull() {
 		return false
 	}
-	if !data.TransportWanVpnProfileParcelId.IsNull() {
+	if !data.TransportWanVpnFeatureId.IsNull() {
 		return false
 	}
 	if !data.InterfaceName.IsNull() {

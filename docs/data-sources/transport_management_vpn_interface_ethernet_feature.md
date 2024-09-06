@@ -19,7 +19,7 @@ This data source can read the Transport Management VPN Interface Ethernet Featur
 
 - `feature_profile_id` (String) Feature Profile ID
 - `id` (String) The id of the Feature
-- `transport_management_vpn_profile_parcel_id` (String) Transport Management VPN Profile Parcel ID
+- `transport_management_vpn_feature_id` (String) Transport Management VPN Feature ID
 
 ### Read-Only
 

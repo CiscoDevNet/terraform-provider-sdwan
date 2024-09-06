@@ -79,8 +79,8 @@ func (d *TransportWANVPNInterfaceT1E1SerialProfileParcelDataSource) Schema(ctx c
 				MarkdownDescription: "Feature Profile ID",
 				Required:            true,
 			},
-			"transport_wan_vpn_profile_parcel_id": schema.StringAttribute{
-				MarkdownDescription: "Transport WAN VPN Profile Parcel ID",
+			"transport_wan_vpn_feature_id": schema.StringAttribute{
+				MarkdownDescription: "Transport WAN VPN Feature ID",
 				Required:            true,
 			},
 			"shutdown": schema.BoolAttribute{

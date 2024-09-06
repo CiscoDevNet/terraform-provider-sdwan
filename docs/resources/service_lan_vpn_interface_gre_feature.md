@@ -44,7 +44,7 @@ This resource can manage a Service LAN VPN Interface GRE Feature.
 - `ip_mtu_variable` (String) Variable name
 - `ipv4_address_variable` (String) Variable name
 - `ipv4_subnet_mask_variable` (String) Variable name
-- `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Parcel ID
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) Administrative state
   - Default value: `false`
 - `shutdown_variable` (String) Variable name

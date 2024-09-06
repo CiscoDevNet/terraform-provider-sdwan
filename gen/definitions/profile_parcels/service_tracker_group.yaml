@@ -22,8 +22,8 @@ attributes:
       id: true
       mandatory: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
-      test_value: sdwan_service_tracker_profile_parcel.test-1.id
-      secondary_test_value: sdwan_service_tracker_profile_parcel.test-2.id
+      test_value: sdwan_service_tracker_feature.test-1.id
+      secondary_test_value: sdwan_service_tracker_feature.test-2.id
   - model_name: combineBoolean
     tf_name: tracker_boolean
     example: or

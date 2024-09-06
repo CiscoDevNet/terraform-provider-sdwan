@@ -117,7 +117,7 @@ This resource can manage a Service LAN VPN Interface Ethernet Feature.
 - `media_type_variable` (String) Variable name
 - `nat64` (Boolean) NAT64 on this interface
   - Default value: `false`
-- `service_lan_vpn_profile_parcel_id` (String) Service LAN VPN Profile Profile ID
+- `service_lan_vpn_feature_id` (String) Service LAN VPN Feature ID
 - `shutdown` (Boolean) - Default value: `true`
 - `shutdown_variable` (String) Variable name
 - `speed` (String) Set interface speed

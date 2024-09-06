@@ -89,7 +89,7 @@ This resource can manage a Transport Management VPN Interface Ethernet Feature.
 - `tcp_mss` (Number) TCP MSS on SYN packets, in bytes
   - Range: `500`-`1460`
 - `tcp_mss_variable` (String) Variable name
-- `transport_management_vpn_profile_parcel_id` (String) Transport Management VPN Profile Parcel ID
+- `transport_management_vpn_feature_id` (String) Transport Management VPN Feature ID
 
 ### Read-Only
 

@@ -105,7 +105,7 @@ This resource can manage a Transport WAN VPN Interface IPSEC Feature.
 - `tcp_mss_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name
-- `transport_wan_vpn_profile_parcel_id` (String) Transport WAN VPN Profile Parcel ID
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
 - `tunnel_destination_ipv4_subnet_mask_variable` (String) Variable name
 - `tunnel_route_via` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid

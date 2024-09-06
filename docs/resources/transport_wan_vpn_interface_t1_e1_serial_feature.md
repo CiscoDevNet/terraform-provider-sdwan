@@ -70,7 +70,7 @@ This resource can manage a Transport WAN VPN Interface T1 E1 Serial Feature.
 - `tcp_mss_variable` (String) Variable name
 - `tloc_extension` (String) Extends a local TLOC to a remote node only for vpn 0
 - `tloc_extension_variable` (String) Variable name
-- `transport_wan_vpn_profile_parcel_id` (String) Transport WAN VPN Profile Parcel ID
+- `transport_wan_vpn_feature_id` (String) Transport WAN VPN Feature ID
 - `tunnel_interface` (Boolean) Tunnel Interface
   - Default value: `false`
 - `tunnel_interface_allow_all` (Boolean) Allow all traffic. Overrides all other allow-service options if allow-service all is set

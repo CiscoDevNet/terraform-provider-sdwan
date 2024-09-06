@@ -92,7 +92,7 @@ func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelC
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	transport_management_vpn_profile_parcel_id = sdwan_transport_management_vpn_feature.test.id` + "\n"
+	config += `	transport_management_vpn_feature_id = sdwan_transport_management_vpn_feature.test.id` + "\n"
 	config += `	shutdown = true` + "\n"
 	config += `	interface_name = "GigabitEthernet1"` + "\n"
 	config += `	interface_description = "Transport Management VPN Interface Ethernet"` + "\n"
@@ -128,7 +128,7 @@ func testAccDataSourceSdwanTransportManagementVPNInterfaceEthernetProfileParcelC
 		data "sdwan_transport_management_vpn_interface_ethernet_feature" "test" {
 			id = sdwan_transport_management_vpn_interface_ethernet_feature.test.id
 			feature_profile_id = sdwan_transport_feature_profile.test.id
-			transport_management_vpn_profile_parcel_id = sdwan_transport_management_vpn_feature.test.id
+			transport_management_vpn_feature_id = sdwan_transport_management_vpn_feature.test.id
 		}
 	`
 	return config
