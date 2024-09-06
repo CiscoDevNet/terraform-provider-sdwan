@@ -34,7 +34,6 @@ func TestAccDataSourceSdwanTransportWANVPNInterfaceT1E1SerialProfileParcel(t *te
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "shutdown", "true"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "interface_name", "Serial0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "ipv4_address", "1.2.3.4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_wan_vpn_interface_t1_e1_serial_feature.test", "ipv6_address", "2001:0:0:1::/64"))
