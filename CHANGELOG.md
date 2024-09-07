@@ -1,3 +1,8 @@
+## 0.4.2 (unreleased)
+
+- Add `sdwan_policy_object_application_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_sla_class_list_profile_parcel` resource and data source
+
 ## 0.4.1
 
 - Update documentation categories
