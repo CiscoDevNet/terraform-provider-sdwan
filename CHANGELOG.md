@@ -1,4 +1,13 @@
-## 0.4.0 (unreleased)
+## 0.4.2 (unreleased)
+
+- Add `sdwan_policy_object_application_list_profile_parcel` resource and data source
+- Add `sdwan_policy_object_sla_class_list_profile_parcel` resource and data source
+
+## 0.4.1
+
+- Update documentation categories
+
+## 0.4.0
 
 - Fix issue when reading deleted `sdwan_cli_config_profile_parcel` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)
 - Add `sdwan_transport_tracker_group_feature` resource and data source
@@ -40,8 +49,10 @@
 - Add `sdwan_service_route_policy_feature` resource and data source
 - BREAKING CHANGE: Rename all profile parcel resources and data sources being used in configuration groups to "Features" with a `_feature` suffix
 - BREAKING CHANGE: Rename `sdwan_application_priority_qos_policy_profile_parcel` resource and data source to `sdwan_application_priority_qos_policy`
-- Add `sdwan_policy_object_application_list_profile_parcel` resource and data source
-- Add `sdwan_policy_object_sla_class_list_profile_parcel` resource and data source
+- Fix issue when reading deleted `sdwan_configuration_group` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/297)
+- BREAKING CHANGE: Rename `service_lan_vpn_profile_parcel_id` attribute of `sdwan_service_lan_vpn_interface_ethernet_feature`, `sdwan_service_lan_vpn_interface_gre_feature`, `sdwan_service_lan_vpn_interface_ipsec_feature` and `sdwan_service_lan_vpn_interface_svi_feature` resource to `service_lan_vpn_feature_id`
+- BREAKING CHANGE: Rename `transport_management_vpn_profile_parcel_id` attribute of `sdwan_transport_management_vpn_interface_ethernet_feature` resource to `transport_management_vpn_feature_id`
+- BREAKING CHANGE: Rename `transport_wan_vpn_profile_parcel_id` attribute of `sdwan_transport_wan_vpn_interface_cellular_feature`, `sdwan_transport_wan_vpn_interface_ethernet_feature`, `sdwan_transport_wan_vpn_interface_gre_feature`, `sdwan_transport_wan_vpn_interface_ipsec_feature` and `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` resource to `transport_wan_vpn_feature_id`
 
 ## 0.3.13
 

@@ -21,17 +21,15 @@ package provider
 import (
 	"context"
 	"fmt"
-	"net/url"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
 
 // End of section. //template:end imports
-
-// Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
@@ -59,7 +57,7 @@ func (d *PolicyObjectFeatureProfileDataSource) Schema(ctx context.Context, req d
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The id of the object",
-				Required:            true,
+				Computed:            true,
 			},
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name of the policy object feature profile",
@@ -81,9 +79,6 @@ func (d *PolicyObjectFeatureProfileDataSource) Configure(_ context.Context, req 
 	d.client = req.ProviderData.(*SdwanProviderData).Client
 }
 
-// End of section. //template:end model
-
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *PolicyObjectFeatureProfileDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config PolicyObjectFeatureProfile
 
@@ -94,20 +89,21 @@ func (d *PolicyObjectFeatureProfileDataSource) Read(ctx context.Context, req dat
 		return
 	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", "Policy object feature profile"))
 
-	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
+	res, err := d.client.Get(config.getPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
 
-	config.fromBody(ctx, res)
+	if len(res.Array()) > 0 {
+		config.fromBody(ctx, res.Array()[0])
+		config.Id = types.StringValue(res.Array()[0].Get("profileId").String())
+	}
 
-	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
+	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", "Policy object feature profile"))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end read

@@ -5,7 +5,7 @@ has_version: true
 id_attribute: definitionId
 get_before_delete: true
 type_value: acl
-doc_category: Localized Policies (Classic)
+doc_category: (Classic) Localized Policies
 attributes:
   - model_name: type
     type: String
@@ -84,6 +84,7 @@ attributes:
                 destinationDataPrefixList,
                 protocol,
                 tcp,
+                icmpMessage,
               ]
             description: Type of match entry
             example: dscp
@@ -107,6 +108,15 @@ attributes:
             description: Source IP prefix
             exclude_test: true
             example: 10.0.0.0/8
+          - model_name: value
+            tf_name: icmp_message
+            conditional_attribute:
+              name: type
+              value: icmpMessage
+            type: String
+            description: ICMP Message
+            exclude_test: true
+            example: "echo echo-reply"
           - model_name: value
             tf_name: destination_ip
             conditional_attribute:

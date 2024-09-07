@@ -2,6 +2,7 @@
 name: Policy Object Feature Profile
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/
 id_attribute: id
+res_description: SD-WAN manager supports only a single policy object feature profile to be configured. This resource will therefore either create a new one if none exists or update the existing one.
 doc_category: Feature Profiles
 test_tags: [SDWAN_2012]
 attributes:
