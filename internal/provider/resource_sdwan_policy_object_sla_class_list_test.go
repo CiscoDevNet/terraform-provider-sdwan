@@ -29,8 +29,8 @@ import (
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAcc
 func TestAccSdwanPolicyObjectSLAClassListProfileParcel(t *testing.T) {
-	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
-		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
+	if os.Getenv("SDWAN_2012") == "" {
+		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_policy_object_sla_class_list.test", "entries.0.latency", "2"))
@@ -55,7 +55,11 @@ func TestAccSdwanPolicyObjectSLAClassListProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanPolicyObjectSLAClassListPrerequisitesProfileParcelConfig = `
-variable "policy_object_feature_template_id" {} 
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "POLICY_OBJECT_FP_1"
+  description = "My policy object feature profile 1"
+}
+
 `
 
 // End of section. //template:end testPrerequisites
@@ -69,7 +73,7 @@ func testAccSdwanPolicyObjectSLAClassListProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_sla_class_list" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = var.policy_object_feature_template_id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  latency = 2` + "\n"
 	config += `	  loss = 1` + "\n"
