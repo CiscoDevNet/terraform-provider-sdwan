@@ -4,7 +4,7 @@ rest_endpoint: /template/policy/vsmart/
 get_rest_endpoint: /template/policy/vsmart/definition/
 has_version: true
 id_attribute: policyId
-doc_category: Centralized Policies (Classic)
+doc_category: (Classic) Centralized Policies
 attributes:
   - model_name: policyType
     type: String

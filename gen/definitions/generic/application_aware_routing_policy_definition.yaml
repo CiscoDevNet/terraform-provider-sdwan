@@ -4,7 +4,7 @@ rest_endpoint: /template/policy/definition/approute/
 has_version: true
 id_attribute: definitionId
 type_value: appRoute
-doc_category: Centralized Policies (Classic)
+doc_category: (Classic) Centralized Policies
 attributes:
   - model_name: type
     type: String
@@ -77,7 +77,7 @@ attributes:
                 destinationRegion,
                 destinationPort,
                 trafficTo,
-                icmpMessage
+                icmpMessage,
               ]
             description: Type of match entry
             example: appList
@@ -308,7 +308,14 @@ attributes:
                 type: String
                 id: true
                 mandatory: true
-                enum_values: [name, preferredColor, preferredColorGroup, strict, fallbackToBestPath]
+                enum_values:
+                  [
+                    name,
+                    preferredColor,
+                    preferredColorGroup,
+                    strict,
+                    fallbackToBestPath,
+                  ]
                 description: Type of SLA class parameter
                 example: name
               - model_name: ref

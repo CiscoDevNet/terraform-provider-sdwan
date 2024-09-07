@@ -5,7 +5,7 @@ has_version: true
 id_attribute: definitionId
 get_before_delete: true
 type_value: acl
-doc_category: Localized Policies (Classic)
+doc_category: (Classic) Localized Policies
 attributes:
   - model_name: type
     type: String
@@ -84,7 +84,7 @@ attributes:
                 destinationDataPrefixList,
                 protocol,
                 tcp,
-                icmpMessage
+                icmpMessage,
               ]
             description: Type of match entry
             example: dscp

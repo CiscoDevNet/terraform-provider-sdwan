@@ -43,8 +43,8 @@ type YamlConfig struct {
 var docPaths = []string{"./docs/data-sources/", "./docs/resources/"}
 
 var extraDocs = map[string]string{
-	"attach_feature_device_template": "Device Templates (Classic)",
-	"activate_centralized_policy":    "Centralized Policies (Classic)",
+	"attach_feature_device_template": "(Classic) Device Templates",
+	"activate_centralized_policy":    "(Classic) Centralized Policies",
 }
 
 func SnakeCase(s string) string {
@@ -91,7 +91,7 @@ func main() {
 			}
 
 			s := string(content)
-			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "Feature Templates (Classic)"`)
+			s = strings.ReplaceAll(s, `subcategory: ""`, `subcategory: "(Classic) Feature Templates"`)
 
 			os.WriteFile(filename, []byte(s), 0644)
 		}
@@ -119,10 +119,10 @@ func main() {
 			category := ""
 			if profileParcelConfigs[i].ParcelType == "feature" {
 				extension = "_feature.md"
-				category = "Feature"
+				category = "Features"
 			} else if profileParcelConfigs[i].ParcelType == "policy" {
 				extension = "_policy.md"
-				category = "Policy"
+				category = "Policies"
 			} else if profileParcelConfigs[i].ParcelType == "policy_object" {
 				extension = ".md"
 				category = "Policy Objects"

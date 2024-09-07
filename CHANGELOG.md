@@ -1,3 +1,7 @@
+## 0.4.1 (unreleased)
+
+- Update documentation categories
+
 ## 0.4.0
 
 - Fix issue when reading deleted `sdwan_cli_config_profile_parcel` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)

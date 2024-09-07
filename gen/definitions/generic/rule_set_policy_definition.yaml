@@ -3,7 +3,7 @@ name: Rule Set Policy Definition
 rest_endpoint: /template/policy/definition/ruleset/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies (Classic)
+doc_category: (Classic) Security Policies
 attributes:
   - model_name: type
     type: String

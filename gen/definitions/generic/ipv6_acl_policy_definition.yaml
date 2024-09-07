@@ -5,7 +5,7 @@ has_version: true
 id_attribute: definitionId
 get_before_delete: true
 type_value: aclv6
-doc_category: Localized Policies (Classic)
+doc_category: (Classic) Localized Policies
 attributes:
   - model_name: type
     type: String
