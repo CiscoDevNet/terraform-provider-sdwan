@@ -53,7 +53,10 @@ func TestAccSdwanPolicyObjectPolicerProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanPolicyObjectPolicerPrerequisitesProfileParcelConfig = `
-data "sdwan_policy_object_feature_profile" "test" {}
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "POLICY_OBJECT_FP_1"
+  description = "My policy object feature profile 1"
+}
 
 `
 
@@ -68,7 +71,7 @@ func testAccSdwanPolicyObjectPolicerProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_policer" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  burst_bytes = 56500` + "\n"
 	config += `	  exceed_action = "remark"` + "\n"

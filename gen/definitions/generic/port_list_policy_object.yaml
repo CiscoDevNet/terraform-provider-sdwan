@@ -3,7 +3,7 @@ name: Port List Policy Object
 rest_endpoint: /template/policy/list/port/
 has_version: true
 id_attribute: listId
-doc_category: Policy Objects (Classic)
+doc_category: (Classic) Policy Objects
 attributes:
   - model_name: type
     type: String

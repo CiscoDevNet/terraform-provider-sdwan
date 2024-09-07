@@ -12,7 +12,7 @@ attributes:
     mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: data.sdwan_policy_object_feature_profile.test.id
+    test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
     attributes:
@@ -32,4 +32,7 @@ attributes:
         example: 33
 
 test_prerequisites: |
-  data "sdwan_policy_object_feature_profile" "test" {}
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }

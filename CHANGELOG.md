@@ -1,4 +1,8 @@
-## 0.4.0 (unreleased)
+## 0.4.1
+
+- Update documentation categories
+
+## 0.4.0
 
 - Fix issue when reading deleted `sdwan_cli_config_profile_parcel` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)
 - Add `sdwan_transport_tracker_group_feature` resource and data source

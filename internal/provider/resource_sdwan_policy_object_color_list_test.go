@@ -51,7 +51,10 @@ func TestAccSdwanPolicyObjectColorListProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanPolicyObjectColorListPrerequisitesProfileParcelConfig = `
-data "sdwan_policy_object_feature_profile" "test" {}
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "POLICY_OBJECT_FP_1"
+  description = "My policy object feature profile 1"
+}
 
 `
 
@@ -66,7 +69,7 @@ func testAccSdwanPolicyObjectColorListProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_color_list" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  color = "blue"` + "\n"
 	config += `	}]` + "\n"

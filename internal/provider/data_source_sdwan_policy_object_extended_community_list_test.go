@@ -50,7 +50,10 @@ func TestAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcel(t *tes
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccDataSourceSdwanPolicyObjectExtendedCommunityListPrerequisitesProfileParcelConfig = `
-data "sdwan_policy_object_feature_profile" "test" {}
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "POLICY_OBJECT_FP_1"
+  description = "My policy object feature profile 1"
+}
 
 `
 
@@ -61,7 +64,7 @@ func testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelConfig(
 	config := `resource "sdwan_policy_object_extended_community_list" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  extended_community = "soo 10.0.0.1:30"` + "\n"
 	config += `	}]` + "\n"
@@ -70,7 +73,7 @@ func testAccDataSourceSdwanPolicyObjectExtendedCommunityListProfileParcelConfig(
 	config += `
 		data "sdwan_policy_object_extended_community_list" "test" {
 			id = sdwan_policy_object_extended_community_list.test.id
-			feature_profile_id = data.sdwan_policy_object_feature_profile.test.id
+			feature_profile_id = sdwan_policy_object_feature_profile.test.id
 		}
 	`
 	return config

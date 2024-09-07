@@ -56,7 +56,10 @@ func TestAccSdwanPolicyObjectIPv6PrefixListProfileParcel(t *testing.T) {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 const testAccSdwanPolicyObjectIPv6PrefixListPrerequisitesProfileParcelConfig = `
-data "sdwan_policy_object_feature_profile" "test" {}
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "POLICY_OBJECT_FP_1"
+  description = "My policy object feature profile 1"
+}
 
 `
 
@@ -67,7 +70,7 @@ func testAccSdwanPolicyObjectIPv6PrefixListProfileParcelConfig_minimum() string 
 	config := `resource "sdwan_policy_object_ipv6_prefix_list" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
 	config += `	  ipv6_prefix_length = 64` + "\n"
@@ -85,7 +88,7 @@ func testAccSdwanPolicyObjectIPv6PrefixListProfileParcelConfig_all() string {
 	config := `resource "sdwan_policy_object_ipv6_prefix_list" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = data.sdwan_policy_object_feature_profile.test.id` + "\n"
+	config += `	feature_profile_id = sdwan_policy_object_feature_profile.test.id` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  ipv6_address = "2001:db8:85a3::8a2e:370:7334"` + "\n"
 	config += `	  ipv6_prefix_length = 64` + "\n"

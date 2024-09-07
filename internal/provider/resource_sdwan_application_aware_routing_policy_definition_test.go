@@ -61,6 +61,7 @@ resource "sdwan_application_list_policy_object" "test" {
     }
   ]
 }
+
 `
 
 // End of section. //template:end testPrerequisites
