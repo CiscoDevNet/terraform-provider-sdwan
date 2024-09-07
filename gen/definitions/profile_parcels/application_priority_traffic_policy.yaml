@@ -477,17 +477,20 @@ attributes:
       #   example: zScaler
 
 test_prerequisites: |
-  variable "policy_object_feature_template_id" {} 
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "TF_TEST_POLICY_OBJECT"
+    description = "My policy object feature profile 1"
+  }
 
   resource "sdwan_application_priority_feature_profile" "test" {
     name        = "TF_TEST"
     description = "Terraform test"
   }
 
-  resource "sdwan_policy_object_policer_profile_parcel" "test" {
+  resource "sdwan_policy_object_policer" "test" {
     name               = "TF_TEST_POLICER"
     description        = "My Example"
-    feature_profile_id = var.policy_object_feature_template_id
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
     entries = [
       {
         burst_bytes   = 56500

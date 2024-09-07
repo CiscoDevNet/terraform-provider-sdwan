@@ -27,7 +27,7 @@ attributes:
     type: String
     enum_values: [accept, drop]
     description: Default action, either `accept` or `drop`
-    example: accept
+    example: drop
   - model_name: sequences
     tf_name: sequences
     type: List

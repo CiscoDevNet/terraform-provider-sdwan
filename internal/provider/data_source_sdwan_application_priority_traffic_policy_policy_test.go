@@ -27,47 +27,49 @@ import (
 
 // End of section. //template:end imports
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAcc
-func TestAccSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSource
+func TestAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcel(t *testing.T) {
 	if os.Getenv("SDWAN_2012") == "" && os.Getenv("TF_VAR_policy_object_feature_template_id") == "" {
 		t.Skip("skipping test, set environment variable SDWAN_2012 or TF_VAR_policy_object_feature_template_id")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "default_action", "accept"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "direction", "all"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.sequence_id", "1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.sequence_name", "traffic"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.base_action", "accept"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.protocol", "ipv4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_application_priority_traffic_policy_policy.test", "sequences.0.matches.0.dscp", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "default_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "direction", "all"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.sequence_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.sequence_name", "traffic"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.base_action", "accept"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.protocol", "ipv4"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_application_priority_traffic_policy_policy.test", "sequences.0.matches.0.dscp", "1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-
 			{
-				Config: testAccSdwanApplicationPriorityTrafficPolicyPrerequisitesProfileParcelConfig + testAccSdwanApplicationPriorityTrafficPolicyProfileParcelConfig_all(),
+				Config: testAccDataSourceSdwanApplicationPriorityTrafficPolicyPrerequisitesProfileParcelConfig + testAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcelConfig(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
 			},
 		},
 	})
 }
 
-// End of section. //template:end testAcc
+// End of section. //template:end testAccDataSource
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
-const testAccSdwanApplicationPriorityTrafficPolicyPrerequisitesProfileParcelConfig = `
-variable "policy_object_feature_template_id" {} 
+const testAccDataSourceSdwanApplicationPriorityTrafficPolicyPrerequisitesProfileParcelConfig = `
+resource "sdwan_policy_object_feature_profile" "test" {
+  name = "TF_TEST_POLICY_OBJECT"
+  description = "My policy object feature profile 1"
+}
 
 resource "sdwan_application_priority_feature_profile" "test" {
   name        = "TF_TEST"
   description = "Terraform test"
 }
 
-resource "sdwan_policy_object_policer_profile_parcel" "test" {
+resource "sdwan_policy_object_policer" "test" {
   name               = "TF_TEST_POLICER"
   description        = "My Example"
-  feature_profile_id = var.policy_object_feature_template_id
+  feature_profile_id = sdwan_policy_object_feature_profile.test.id
   entries = [
     {
       burst_bytes   = 56500
@@ -80,14 +82,10 @@ resource "sdwan_policy_object_policer_profile_parcel" "test" {
 
 // End of section. //template:end testPrerequisites
 
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-
-// End of section. //template:end testAccConfigMinimum
-
-// Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
-func testAccSdwanApplicationPriorityTrafficPolicyProfileParcelConfig_all() string {
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
+func testAccDataSourceSdwanApplicationPriorityTrafficPolicyProfileParcelConfig() string {
 	config := `resource "sdwan_application_priority_traffic_policy_policy" "test" {` + "\n"
-	config += ` name = "TF_TEST_ALL"` + "\n"
+	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_application_priority_feature_profile.test.id` + "\n"
 	config += `	default_action = "accept"` + "\n"
@@ -107,7 +105,14 @@ func testAccSdwanApplicationPriorityTrafficPolicyProfileParcelConfig_all() strin
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
+
+	config += `
+		data "sdwan_application_priority_traffic_policy_policy" "test" {
+			id = sdwan_application_priority_traffic_policy_policy.test.id
+			feature_profile_id = sdwan_application_priority_feature_profile.test.id
+		}
+	`
 	return config
 }
 
-// End of section. //template:end testAccConfigAll
+// End of section. //template:end testAccDataSourceConfig
