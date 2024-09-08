@@ -33,18 +33,18 @@ description: |-
 
 ## 0.4.0
 
-- Fix issue when reading deleted `sdwan_cli_config` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)
+- Fix issue when reading deleted `sdwan_cli_config_profile_parcel` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/291)
 - Add `sdwan_transport_tracker_group_feature` resource and data source
 - Add `sdwan_transport_tracker_feature` resource and data source
 - Add `sdwan_service_tracker_group_feature` resource and data source
 - Add `sdwan_transport_ipv6_tracker_group_feature` resource and data source
 - Add `sdwan_service_object_tracker_feature` resource and data source
 - Add `sdwan_service_object_tracker_group_feature` resource and data source
-- BREAKING CHANGE: Rename `enable_crl_check` attribute of `sdwan_system_remote_access` resource to `enable_certificate_list_check`
-- BREAKING CHANGE: Rename `psk_selection` attribute of `sdwan_system_remote_access` resource to `psk_authentication_type`
-- BREAKING CHANGE: Rename `aaa_derive_name_identity` attribute of `sdwan_system_remote_access` resource to `aaa_derive_name_from_peer_identity`
-- BREAKING CHANGE: Rename `aaa_derive_name_domain` attribute of `sdwan_system_remote_access` resource to `aaa_derive_name_from_peer_domain`
-- BREAKING CHANGE: Removes `any_connect_eap_profile_download_status` and `any_connect_eap_profile_file_name` attributes of `sdwan_system_remote_access`
+- BREAKING CHANGE: Rename `enable_crl_check` attribute of `sdwan_system_remote_access_profile_parcel` resource to `enable_certificate_list_check`
+- BREAKING CHANGE: Rename `psk_selection` attribute of `sdwan_system_remote_access_profile_parcel` resource to `psk_authentication_type`
+- BREAKING CHANGE: Rename `aaa_derive_name_identity` attribute of `sdwan_system_remote_access_profile_parcel` resource to `aaa_derive_name_from_peer_identity`
+- BREAKING CHANGE: Rename `aaa_derive_name_domain` attribute of `sdwan_system_remote_access_profile_parcel` resource to `aaa_derive_name_from_peer_domain`
+- BREAKING CHANGE: Removes `any_connect_eap_profile_download_status` and `any_connect_eap_profile_file_name` attributes of `sdwan_system_remote_access_profile_parcel`
 - Add `sdwan_policy_object_feature_profile` resource and data source
 - Add `sdwan_policy_object_class_map` resource and data source
 - Add `sdwan_policy_object_color_list` resource and data source
@@ -72,11 +72,11 @@ description: |-
 - Add `sdwan_transport_route_policy_feature` resource and data source
 - Add `sdwan_service_route_policy_feature` resource and data source
 - BREAKING CHANGE: Rename all profile parcel resources and data sources being used in configuration groups to "Features" with a `_feature` suffix
-- BREAKING CHANGE: Rename `sdwan_application_priority_qos_policy` resource and data source to `sdwan_application_priority_qos_policy`
+- BREAKING CHANGE: Rename `sdwan_application_priority_qos_policy_profile_parcel` resource and data source to `sdwan_application_priority_qos_policy`
 - Fix issue when reading deleted `sdwan_configuration_group` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/297)
-- BREAKING CHANGE: Rename `service_lan_vpn_id` attribute of `sdwan_service_lan_vpn_interface_ethernet_feature`, `sdwan_service_lan_vpn_interface_gre_feature`, `sdwan_service_lan_vpn_interface_ipsec_feature` and `sdwan_service_lan_vpn_interface_svi_feature` resource to `service_lan_vpn_feature_id`
-- BREAKING CHANGE: Rename `transport_management_vpn_id` attribute of `sdwan_transport_management_vpn_interface_ethernet_feature` resource to `transport_management_vpn_feature_id`
-- BREAKING CHANGE: Rename `transport_wan_vpn_id` attribute of `sdwan_transport_wan_vpn_interface_cellular_feature`, `sdwan_transport_wan_vpn_interface_ethernet_feature`, `sdwan_transport_wan_vpn_interface_gre_feature`, `sdwan_transport_wan_vpn_interface_ipsec_feature` and `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` resource to `transport_wan_vpn_feature_id`
+- BREAKING CHANGE: Rename `service_lan_vpn_profile_parcel_id` attribute of `sdwan_service_lan_vpn_interface_ethernet_feature`, `sdwan_service_lan_vpn_interface_gre_feature`, `sdwan_service_lan_vpn_interface_ipsec_feature` and `sdwan_service_lan_vpn_interface_svi_feature` resource to `service_lan_vpn_feature_id`
+- BREAKING CHANGE: Rename `transport_management_vpn_profile_parcel_id` attribute of `sdwan_transport_management_vpn_interface_ethernet_feature` resource to `transport_management_vpn_feature_id`
+- BREAKING CHANGE: Rename `transport_wan_vpn_profile_parcel_id` attribute of `sdwan_transport_wan_vpn_interface_cellular_feature`, `sdwan_transport_wan_vpn_interface_ethernet_feature`, `sdwan_transport_wan_vpn_interface_gre_feature`, `sdwan_transport_wan_vpn_interface_ipsec_feature` and `sdwan_transport_wan_vpn_interface_t1_e1_serial_feature` resource to `transport_wan_vpn_feature_id`
 
 ## 0.3.13
 
@@ -94,58 +94,58 @@ description: |-
 
 ## 0.3.10
 
-- Add `sdwan_transport_management_vpn_interface_ethernet` resource and data source
-- Add `sdwan_service_lan_vpn_interface_ethernet` resource and data source
+- Add `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ethernet_profile_parcel` resource and data source
 - Fix type of `controller_group_list` attribute of `sdwan_cisco_system_feature_template` resource and data source, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/243)
 - Add `sdwan_application_priority_feature_profile` resource and data source
-- Add `sdwan_application_priority_qos_policy` resource and data source
-- Add `sdwan_transport_wan_vpn_interface_ethernet` resource and data source
+- Add `sdwan_application_priority_qos_policy_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ethernet_profile_parcel` resource and data source
 - Add support for `bfd_metrics_exporting` and `exporting_interval` in `sdwan_cflowd_policy_definition` resource and data source, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/122)
 - Add `sdwan_zone_based_firewall_policy_definition` resource and data source, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/246)
-- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_interface_ethernet` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
-- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn` resource to `vpn_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
-- BREAKING CHANGE: Rename `ipv4_route_gateway_next_ho` attribute of `sdwan_transport_management_vpn` resource to `next_hops`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/266)
+- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_interface_ethernet_profile_parcel` resource to `interface_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
+- BREAKING CHANGE: Rename `basic_configuration_description` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `vpn_description`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/270)
+- BREAKING CHANGE: Rename `ipv4_route_gateway_next_ho` attribute of `sdwan_transport_management_vpn_profile_parcel` resource to `next_hops`, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/266)
 - Add workaround for issue when deleting localized policy objects where the reference count is not updated
-- Add `sdwan_service_lan_vpn_interface_ipsec` resource and data source
-- Add `sdwan_service_lan_vpn_interface_gre` resource and data source
-- Add `sdwan_service_lan_vpn_interface_svi` resource and data source
-- Add `sdwan_transport_wan_vpn_interface_gre` resource and data source
-- Add `sdwan_transport_wan_vpn_interface_ipsec` resource and data source
-- Add `sdwan_transport_wan_vpn_interface_t1_e1_serial` resource and data source
-- Add `sdwan_transport_wan_vpn_interface_cellular` resource and data source
-- Add `sdwan_system_ipv4_device_access` resource and data source
-- Add `sdwan_system_ipv6_device_access` resource and data source
+- Add `sdwan_service_lan_vpn_interface_ipsec_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_interface_gre_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_interface_svi_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_gre_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_ipsec_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_t1_e1_serial_profile_parcel` resource and data source
+- Add `sdwan_transport_wan_vpn_interface_cellular_profile_parcel` resource and data source
+- Add `sdwan_system_ipv4_device_access_profile_parcel` resource and data source
+- Add `sdwan_system_ipv6_device_access_profile_parcel` resource and data source
 
 ## 0.3.9
 
 - Fix issue with rendering feature template payloads
-- Add `sdwan_transport_routing_bgp` resource and data source
-- Add `sdwan_service_lan_vpn` resource and data source
-- Add `sdwan_system_ntp` resource and data source
-- Add `sdwan_system_performance_monitoring` resource and data source
+- Add `sdwan_transport_routing_bgp_profile_parcel` resource and data source
+- Add `sdwan_service_lan_vpn_profile_parcel` resource and data source
+- Add `sdwan_system_ntp_profile_parcel` resource and data source
+- Add `sdwan_system_performance_monitoring_profile_parcel` resource and data source
 - Handle 429 responses with retry logic
-- Add `sdwan_system_remote_access` resource and data source
-- Add `sdwan_transport_ipv6_tracker` resource and data source
-- Add `sdwan_service_tracker` resource and data source
+- Add `sdwan_system_remote_access_profile_parcel` resource and data source
+- Add `sdwan_transport_ipv6_tracker_profile_parcel` resource and data source
+- Add `sdwan_service_tracker_profile_parcel` resource and data source
 - Use existing variable values if none are provided with `sdwan_attach_feature_device_template` resource
-- Add `sdwan_cli_config` resource and data source
-- Add `sdwan_system_logging` resource and data source
-- Add `sdwan_transport_management_vpn` resource and data source
+- Add `sdwan_cli_config_profile_parcel` resource and data source
+- Add `sdwan_system_logging_profile_parcel` resource and data source
+- Add `sdwan_transport_management_vpn_profile_parcel` resource and data source
 - Fix issue when updating certain policy definitions, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/230)
 
 ## 0.3.8
 
-- Add `sdwan_system_flexible_port_speed` resource and data source
-- Add `sdwan_system_mrf` resource and data source
-- Add `sdwan_system_snmp` resource and data source
-- Add `sdwan_system_basic` resource and data source
+- Add `sdwan_system_flexible_port_speed_profile_parcel` resource and data source
+- Add `sdwan_system_mrf_profile_parcel` resource and data source
+- Add `sdwan_system_snmp_profile_parcel` resource and data source
+- Add `sdwan_system_basic_profile_parcel` resource and data source
 - Fix issue with deleted feature profile resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
-- Add `sdwan_transport_wan_vpn` resource and data source
+- Add `sdwan_transport_wan_vpn_profile_parcel` resource and data source
 - Add `advertise_hub_tlocs`, `all_hubs_are_equal`, `tloc_list_id`, `ipv4_prefix_list_ids`, `ipv6_prefix_list_ids` and `preference` to `sdwan_hub_and_spoke_topology_policy_definition` resource and data source
 - Fix issue with deleted profile parcel resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/204)
 - Fix issue with incorrect feature template payloads, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/213)
 - Add warning and continue if there are no changes to deploy with `sdwan_attach_feature_device_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/220)
-- Add `sdwan_system_security` resource and data source
+- Add `sdwan_system_security_profile_parcel` resource and data source
 - Fix issue with `dot1x_enable` attribute of `sdwan_switchport_feature_template` resource, [link](https://github.com/CiscoDevNet/terraform-provider-sdwan/issues/219)
 - Add possible types to `sdwan_localized_policy` and `sdwan_feature_device_template` resource
 - Add `type` read-only attribute to localized policy definitions
@@ -207,7 +207,7 @@ description: |-
 
 - Fix import operation of profile parcel resources
 - BREAKING CHANGE: Convert `protocol`, `source_port`, `destination_port` attribute of `sdwan_application_aware_routing_definition` to strings to support multiple values
-- Add `sdwan_system_omp` resource and data source
+- Add `sdwan_system_omp_profile_parcel` resource and data source
 - Add `sdwan_security_policy` resource and data source
 - BREAKING CHANGE: Rename `von_configurations` attribute of `sdwan_cedge_aaa_feature_template` resource and data source to `vpn_configurations`
 - Add `strict` and `fallbackToBestPath` options to SLA class action parameters of `sdwan_application_aware_routing_policy_definition` resource and data source
@@ -248,15 +248,15 @@ description: |-
 - Add `sdwan_service_feature_profile` resource and data source
 - Add `sdwan_transport_feature_profile` resource and data source
 - Add `sdwan_cli_feature_profile` resource and data source
-- Add `sdwan_system_aaa` resource and data source
-- Add `sdwan_system_banner` resource and data source
-- Add `sdwan_system_bfd` resource and data source
+- Add `sdwan_system_aaa_profile_parcel` resource and data source
+- Add `sdwan_system_banner_profile_parcel` resource and data source
+- Add `sdwan_system_bfd_profile_parcel` resource and data source
 - Fix issue with `sdwan_centralized_policy` not accepting all valid parameters
 - Fix issue with `sdwan_custom_control_topology_policy_definition` not accepting all possible values
 - BREAKING CHANGE: Convert `protocol`, `source_port`, `destination_port` attributes of `sdwan_traffic_data_policy_definition` to strings to support multiple values
 - Fix issue with `sdwan_traffic_data_policy_definition` not supporting local and restrict options
 - Add `sdwan_dns_security_policy_definition` resource and data source
-- Add `sdwan_system_global` resource and data source
+- Add `sdwan_system_global_profile_parcel` resource and data source
 - BREAKING CHANGE: Rename `sdwan_acl_policy_definition` resource and data source to `sdwan_ipv4_acl_policy_definition` and update attributes
 - BREAKING CHANGE: Rename `sdwan_device_acl_policy_definition` resource and data source to `sdwan_ipv4_device_acl_policy_definition` and update attributes
 - Add `sdwan_ipv6_acl_policy_definition` resource and data source
@@ -361,4 +361,3 @@ description: |-
 ## 0.1.0 (July 23, 2021)
 
 - Initial Release
-
