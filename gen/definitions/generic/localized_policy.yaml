@@ -6,7 +6,7 @@ get_before_delete: true
 has_version: true
 id_attribute: policyId
 delete_mutex: true
-doc_category: Localized Policies
+doc_category: (Classic) Localized Policies
 attributes:
   - model_name: policyType
     type: String
@@ -119,7 +119,16 @@ attributes:
         tf_name: type
         type: String
         mandatory: true
-        enum_values: [qosMap, rewriteRule, vedgeRoute, acl, aclv6, deviceAccessPolicy, deviceAccessPolicyv6]
+        enum_values:
+          [
+            qosMap,
+            rewriteRule,
+            vedgeRoute,
+            acl,
+            aclv6,
+            deviceAccessPolicy,
+            deviceAccessPolicyv6,
+          ]
         description: Policy definition type
         example: acl
 

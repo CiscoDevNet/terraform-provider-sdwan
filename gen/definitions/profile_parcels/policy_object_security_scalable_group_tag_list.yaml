@@ -2,15 +2,16 @@
 name: Policy Object Security Scalable Group Tag List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/security-scalablegrouptag
 minimum_version: 20.12.0
-test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+test_tags: [SDWAN_2012]
 skip_minimum_test: true
+parcel_type: policy_object
 attributes:
   - tf_name: feature_profile_id
     reference: true
     type: String
     mandatory: true
     description: Feature Profile ID
-    test_value: var.policy_object_feature_template_id
+    test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: entries
     mandatory: true
     attributes:
@@ -24,4 +25,7 @@ attributes:
       example: 65535
 
 test_prerequisites: |
-  variable "policy_object_feature_template_id" {} 
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }

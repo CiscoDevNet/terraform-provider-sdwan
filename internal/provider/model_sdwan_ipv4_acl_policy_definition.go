@@ -52,6 +52,7 @@ type IPv4ACLPolicyDefinitionSequencesMatchEntries struct {
 	Type                                 types.String `tfsdk:"type"`
 	Dscp                                 types.Int64  `tfsdk:"dscp"`
 	SourceIp                             types.String `tfsdk:"source_ip"`
+	IcmpMessage                          types.String `tfsdk:"icmp_message"`
 	DestinationIp                        types.String `tfsdk:"destination_ip"`
 	ClassMapId                           types.String `tfsdk:"class_map_id"`
 	ClassMapVersion                      types.Int64  `tfsdk:"class_map_version"`
@@ -137,6 +138,9 @@ func (data IPv4ACLPolicyDefinition) toBody(ctx context.Context) string {
 					}
 					if !childItem.SourceIp.IsNull() && childItem.Type.ValueString() == "sourceIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.SourceIp.ValueString())
+					}
+					if !childItem.IcmpMessage.IsNull() && childItem.Type.ValueString() == "icmpMessage" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.IcmpMessage.ValueString())
 					}
 					if !childItem.DestinationIp.IsNull() && childItem.Type.ValueString() == "destinationIp" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.DestinationIp.ValueString())
@@ -277,6 +281,11 @@ func (data *IPv4ACLPolicyDefinition) fromBody(ctx context.Context, res gjson.Res
 						cItem.SourceIp = types.StringValue(ccValue.String())
 					} else {
 						cItem.SourceIp = types.StringNull()
+					}
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "icmpMessage" {
+						cItem.IcmpMessage = types.StringValue(ccValue.String())
+					} else {
+						cItem.IcmpMessage = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "destinationIp" {
 						cItem.DestinationIp = types.StringValue(ccValue.String())
@@ -456,6 +465,9 @@ func (data *IPv4ACLPolicyDefinition) hasChanges(ctx context.Context, state *IPv4
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].SourceIp.Equal(state.Sequences[i].MatchEntries[ii].SourceIp) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].IcmpMessage.Equal(state.Sequences[i].MatchEntries[ii].IcmpMessage) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].DestinationIp.Equal(state.Sequences[i].MatchEntries[ii].DestinationIp) {

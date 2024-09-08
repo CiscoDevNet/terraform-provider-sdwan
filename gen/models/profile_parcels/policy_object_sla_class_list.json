@@ -1,0 +1,291 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/post/request_schema.json",
+    "title": "Sla class Parcel Schema",
+    "description": "Sla class profile parcel schema for POST request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 32
+      },
+      "description": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "description": "Sla class List",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "latency": {
+                  "description": "",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minimum": 1,
+                          "maximum": 1000,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "loss": {
+                  "description": "",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minimum": 0,
+                          "maximum": 100,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "jitter": {
+                  "description": "",
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "minimum": 1,
+                          "maximum": 1000,
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "appProbeClass": {
+                  "description": "App Probe Class Ref",
+                  "type": "object",
+                  "properties": {
+                    "refId": {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": ["refId"],
+                  "additionalProperties": false
+                },
+                "fallbackBestTunnel": {
+                  "description": "Object with a criteria and variance",
+                  "type": "object",
+                  "properties": {
+                    "criteria": {
+                      "description": "",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "default": "low",
+                              "enum": [
+                                "jitter",
+                                "latency",
+                                "loss",
+                                "loss-latency",
+                                "loss-jitter",
+                                "latency-loss",
+                                "latency-jitter",
+                                "jitter-latency",
+                                "jitter-loss",
+                                "loss-latency-jitter",
+                                "loss-jitter-latency",
+                                "latency-loss-jitter",
+                                "latency-jitter-loss",
+                                "jitter-latency-loss",
+                                "jitter-loss-latency"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "lossVariance": {
+                      "description": "",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "minimum": 0,
+                              "maximum": 100,
+                              "type": "integer"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "latencyVariance": {
+                      "description": "",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "minimum": 1,
+                              "maximum": 1000,
+                              "type": "integer"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "jitterVariance": {
+                      "description": "",
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "optionType": {
+                              "type": "string",
+                              "enum": ["global"]
+                            },
+                            "value": {
+                              "minimum": 1,
+                              "maximum": 1000,
+                              "type": "integer"
+                            }
+                          },
+                          "required": ["optionType", "value"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "anyOf": [
+                {
+                  "required": ["latency"]
+                },
+                {
+                  "required": ["loss"]
+                },
+                {
+                  "required": ["jitter"]
+                }
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["entries"],
+        "additionalProperties": false
+      }
+    },
+    "required": ["data", "name"],
+    "additionalProperties": false,
+    "propertyNames": {
+      "description": "This is the documentation for POST request schema for Sla class profile parcel",
+      "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+      "details-2": "variable name should not be present if optionType value is NOT variable",
+      "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+      "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+      "examples": {
+        "centralized-slaclassParcelGlobalDefault": {
+          "value": {
+            "data": {
+              "entries": [
+                {
+                  "latency": {
+                    "optionType": "global",
+                    "value": 2
+                  },
+                  "loss": {
+                    "optionType": "global",
+                    "value": 1
+                  },
+                  "jitter": {
+                    "optionType": "global",
+                    "value": 3
+                  },
+                  "appProbeClass": {
+                    "refId": {
+                      "optionType": "global",
+                      "value": "b61d994e-7f6d-4ba0-a061-3a87cd32219a"
+                    }
+                  },
+                  "fallbackBestTunnel": {
+                    "criteria": {
+                      "optionType": "global",
+                      "value": "loss"
+                    },
+                    "lossVariance": {
+                      "optionType": "global",
+                      "value": 5
+                    }
+                  }
+                }
+              ]
+            },
+            "name": "centralized-slaclassParcelGlobalDefault"
+          }
+        }
+      }
+    }
+  }
+}

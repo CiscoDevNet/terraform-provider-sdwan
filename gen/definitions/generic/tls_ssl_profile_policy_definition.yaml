@@ -3,7 +3,7 @@ name: TLS SSL Profile Policy Definition
 rest_endpoint: /template/policy/definition/sslutdprofile/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies
+doc_category: (Classic) Security Policies
 attributes:
   - model_name: type
     type: String
@@ -24,7 +24,7 @@ attributes:
     tf_name: mode
     type: String
     enum_values: [security, unified]
-    default_value: 
+    default_value:
     description: The policy mode
     example: security
   - model_name: decryptCategories
@@ -72,7 +72,7 @@ attributes:
     tf_only: true
     type: Version
     description: Allow URL list version
-    exclude_test: true 
+    exclude_test: true
   - model_name: ref
     data_path: [definition, filteredUrlBlackList]
     tf_name: block_url_list_id
@@ -84,7 +84,7 @@ attributes:
     tf_only: true
     type: Version
     description: Block URL list version
-    exclude_test: true 
+    exclude_test: true
   - model_name: failDecrypt
     data_path: [definition]
     tf_name: fail_decrypt

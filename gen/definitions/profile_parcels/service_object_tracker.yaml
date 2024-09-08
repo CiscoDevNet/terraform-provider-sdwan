@@ -3,6 +3,7 @@ name: Service Object Tracker
 rest_endpoint: /v1/feature-profile/sdwan/service/%v/objecttracker
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -13,9 +14,9 @@ attributes:
     test_value: sdwan_service_feature_profile.test.id
   - model_name: objectId
     tf_name: object_tracker_id
-    mandatory: true
     example: 10
     test_value: '10'
+    minimum_test_value: '10'
   - model_name: objectTrackerType
     mandatory: true
     example: Interface
