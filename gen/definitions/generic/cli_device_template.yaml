@@ -5,7 +5,7 @@ get_rest_endpoint: /template/device/object/
 post_rest_endpoint: /template/device/cli/
 has_version: true
 id_attribute: templateId
-doc_category: Device Templates
+doc_category: (Classic) Device Templates
 attributes:
   - model_name: configType
     type: String

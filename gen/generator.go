@@ -102,42 +102,42 @@ var profileParcelTemplates = []t{
 	{
 		path:   "./gen/templates/profile_parcels/model.go",
 		prefix: "./internal/provider/model_sdwan_",
-		suffix: "_profile_parcel.go",
+		suffix: "%s.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/data_source.go",
 		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_profile_parcel.go",
+		suffix: "%s.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/data_source_test.go",
 		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_profile_parcel_test.go",
+		suffix: "%s_test.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/resource.go",
 		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_profile_parcel.go",
+		suffix: "%s.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/resource_test.go",
 		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_profile_parcel_test.go",
+		suffix: "%s_test.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/data-source.tf",
 		prefix: "./examples/data-sources/sdwan_",
-		suffix: "_profile_parcel/data-source.tf",
+		suffix: "%s/data-source.tf",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/resource.tf",
 		prefix: "./examples/resources/sdwan_",
-		suffix: "_profile_parcel/resource.tf",
+		suffix: "%s/resource.tf",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/import.sh",
 		prefix: "./examples/resources/sdwan_",
-		suffix: "_profile_parcel/import.sh",
+		suffix: "%s/import.sh",
 	},
 }
 
@@ -212,6 +212,7 @@ type YamlConfig struct {
 	NoDataSource             bool                  `yaml:"no_data_source"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
+	ParcelType               string                `yaml:"parcel_type"`
 }
 
 type YamlConfigAttribute struct {
@@ -480,6 +481,22 @@ func GetParentModelName(attribute YamlConfigAttribute) string {
 	}
 }
 
+// Templating helper function to return the snake case profile parcel suffix
+func GetProfileParcelSuffix(config YamlConfig) string {
+	if config.ParcelType == "feature" {
+		return "_feature"
+	} else if config.ParcelType == "policy" {
+		return "_policy"
+	} else {
+		return ""
+	}
+}
+
+// Templating helper function to return the snake case profile parcel name
+func GetProfileParcelName(config YamlConfig) string {
+	return SnakeCase(config.Name) + GetProfileParcelSuffix(config)
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -491,28 +508,30 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":             ToGoName,
-	"camelCase":            CamelCase,
-	"snakeCase":            SnakeCase,
-	"sprintf":              fmt.Sprintf,
-	"toLower":              strings.ToLower,
-	"path":                 BuildPath,
-	"hasId":                HasId,
-	"hasVersionAttribute":  HasVersionAttribute,
-	"getResponseModelPath": GetResponseModelPath,
-	"hasReference":         HasReference,
-	"getGjsonType":         GetGjsonType,
-	"getId":                GetId,
-	"isListSet":            IsListSet,
-	"isList":               IsList,
-	"isSet":                IsSet,
-	"isStringListSet":      IsStringListSet,
-	"isInt64ListSet":       IsInt64ListSet,
-	"isNestedListSet":      IsNestedListSet,
-	"isNestedList":         IsNestedList,
-	"isNestedSet":          IsNestedSet,
-	"getParentModelName":   GetParentModelName,
-	"contains":             contains,
+	"toGoName":               ToGoName,
+	"camelCase":              CamelCase,
+	"snakeCase":              SnakeCase,
+	"sprintf":                fmt.Sprintf,
+	"toLower":                strings.ToLower,
+	"path":                   BuildPath,
+	"hasId":                  HasId,
+	"hasVersionAttribute":    HasVersionAttribute,
+	"getResponseModelPath":   GetResponseModelPath,
+	"hasReference":           HasReference,
+	"getGjsonType":           GetGjsonType,
+	"getId":                  GetId,
+	"isListSet":              IsListSet,
+	"isList":                 IsList,
+	"isSet":                  IsSet,
+	"isStringListSet":        IsStringListSet,
+	"isInt64ListSet":         IsInt64ListSet,
+	"isNestedListSet":        IsNestedListSet,
+	"isNestedList":           IsNestedList,
+	"isNestedSet":            IsNestedSet,
+	"getParentModelName":     GetParentModelName,
+	"getProfileParcelSuffix": GetProfileParcelSuffix,
+	"getProfileParcelName":   GetProfileParcelName,
+	"contains":               contains,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -907,10 +926,10 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 	}
 
 	if config.DsDescription == "" {
-		config.DsDescription = fmt.Sprintf("This data source can read the %s profile parcel.", config.Name)
+		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
 	if config.ResDescription == "" {
-		config.ResDescription = fmt.Sprintf("This resource can manage a %s profile parcel.", config.Name)
+		config.ResDescription = fmt.Sprintf("This resource can manage a %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
 }
 
@@ -1091,7 +1110,9 @@ func main() {
 
 		// Iterate over templates and render files
 		for _, t := range profileParcelTemplates {
-			renderTemplate(t.path, t.prefix+SnakeCase(profileParcelConfigs[i].Name)+t.suffix, profileParcelConfigs[i])
+			parcelSuffix := GetProfileParcelSuffix(profileParcelConfigs[i])
+			suffix := fmt.Sprintf(t.suffix, parcelSuffix)
+			renderTemplate(t.path, t.prefix+SnakeCase(profileParcelConfigs[i].Name)+suffix, profileParcelConfigs[i])
 		}
 	}
 	configs["ProfileParcels"] = profileParcelConfigs

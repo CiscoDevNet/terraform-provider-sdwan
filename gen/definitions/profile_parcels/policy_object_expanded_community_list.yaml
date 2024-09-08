@@ -2,8 +2,9 @@
 name: Policy Object Expanded Community List
 rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/expanded-community
 minimum_version: 20.12.0
-test_tags: [SDWAN_2012, TF_VAR_policy_object_feature_template_id]
+test_tags: [SDWAN_2012]
 skip_minimum_test: true
+parcel_type: policy_object
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -11,7 +12,7 @@ attributes:
     mandatory: true
     description: Feature Profile ID
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
-    test_value: var.policy_object_feature_template_id
+    test_value: sdwan_policy_object_feature_profile.test.id
   - model_name: expandedCommunityList
     tf_name: expanded_community_lists
     id: true
@@ -19,4 +20,7 @@ attributes:
     example: abcd
 
 test_prerequisites: |
-  variable "policy_object_feature_template_id" {} 
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }

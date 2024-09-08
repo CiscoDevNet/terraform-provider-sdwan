@@ -4,6 +4,7 @@ rest_endpoint: /v1/feature-profile/sdwan/service/%v/trackergroup
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 skip_minimum_test: true
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -21,8 +22,8 @@ attributes:
       id: true
       mandatory: true
       example: 615d948f-34ee-4a2e-810e-a9bd8d3d48ec
-      test_value: sdwan_service_tracker_profile_parcel.test-1.id
-      secondary_test_value: sdwan_service_tracker_profile_parcel.test-2.id
+      test_value: sdwan_service_tracker_feature.test-1.id
+      secondary_test_value: sdwan_service_tracker_feature.test-2.id
   - model_name: combineBoolean
     tf_name: tracker_boolean
     example: or
@@ -33,7 +34,7 @@ test_prerequisites: |
     description = "Terraform test"
   }
 
-  resource "sdwan_service_tracker_profile_parcel" "test-1" {
+  resource "sdwan_service_tracker_feature" "test-1" {
     name                  = "TF_TEST_1"
     description           = "Terraform test"
     feature_profile_id    = sdwan_service_feature_profile.test.id
@@ -50,7 +51,7 @@ test_prerequisites: |
     tracker_type          = "endpoint"
   }
 
-  resource "sdwan_service_tracker_profile_parcel" "test-2" {
+  resource "sdwan_service_tracker_feature" "test-2" {
     name                  = "TF_TEST_2"
     description           = "Terraform test"
     feature_profile_id    = sdwan_service_feature_profile.test.id

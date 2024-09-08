@@ -3,6 +3,7 @@ name: Transport Management VPN
 rest_endpoint: /v1/feature-profile/sdwan/transport/%v/management/vpn
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -67,6 +68,7 @@ attributes:
         example: 1
     - model_name: distance
       tf_name: administrative_distance
+      exclude_test: true
       conditional_attribute:
         name: gateway
         value: null0

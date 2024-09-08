@@ -6,7 +6,7 @@ has_version: true
 id_from_query_path: data
 id_from_query_path_attribute: policyId
 delete_mutex: true
-doc_category: Security Policies
+doc_category: (Classic) Security Policies
 attributes:
   - model_name: policyType
     type: String
@@ -35,11 +35,19 @@ attributes:
     tf_name: use_case
     type: String
     default_value: custom
-    enum_values: [custom, compliance, guestAccess, directCloudAccess, directInternetAccess, directCloudAccess]
+    enum_values:
+      [
+        custom,
+        compliance,
+        guestAccess,
+        directCloudAccess,
+        directInternetAccess,
+        directCloudAccess,
+      ]
     description: The use case of the security policy
     example: custom
   - model_name: assembly
-    data_path: [policyDefinition] 
+    data_path: [policyDefinition]
     tf_name: definitions
     type: List
     mandatory: true
@@ -58,7 +66,15 @@ attributes:
         tf_name: type
         type: String
         mandatory: true
-        enum_values: [urlFiltering, zoneBasedFW, intrusionPrevention, sslDecryption, advancedMalwareProtection, dnsSecurity]
+        enum_values:
+          [
+            urlFiltering,
+            zoneBasedFW,
+            intrusionPrevention,
+            sslDecryption,
+            advancedMalwareProtection,
+            dnsSecurity,
+          ]
         description: Policy definition type
         example: urlFiltering
   - model_name: zoneToNozoneInternet
