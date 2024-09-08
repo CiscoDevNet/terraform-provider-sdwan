@@ -3,6 +3,7 @@
 - Add `sdwan_policy_object_application_list` resource and data source
 - Add `sdwan_policy_object_sla_class_list` resource and data source
 - Add `sdwan_dns_security_feature_profile` resource and data source
+- Add `sdwan_sig_security_feature_profile` resource and data source
 
 ## 0.4.1
 
