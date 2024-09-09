@@ -11,6 +11,7 @@ description: |-
 
 - Add `sdwan_policy_object_application_list` resource and data source
 - Add `sdwan_policy_object_sla_class_list` resource and data source
+- Add `sdwan_policy_object_unified_advanced_malware_protection` resource and data source
 
 ## 0.4.1
 
