@@ -41,26 +41,26 @@ import (
 // Section below is generated&owned by "gen/generator.go". //template:begin model
 
 // Ensure provider defined types fully satisfy framework interfaces
-var _ resource.Resource = &ServiceFeatureProfileResource{}
-var _ resource.ResourceWithImportState = &ServiceFeatureProfileResource{}
+var _ resource.Resource = &EmbeddedSecurityFeatureProfileResource{}
+var _ resource.ResourceWithImportState = &EmbeddedSecurityFeatureProfileResource{}
 
-func NewServiceFeatureProfileResource() resource.Resource {
-	return &ServiceFeatureProfileResource{}
+func NewEmbeddedSecurityFeatureProfileResource() resource.Resource {
+	return &EmbeddedSecurityFeatureProfileResource{}
 }
 
-type ServiceFeatureProfileResource struct {
+type EmbeddedSecurityFeatureProfileResource struct {
 	client      *sdwan.Client
 	updateMutex *sync.Mutex
 }
 
-func (r *ServiceFeatureProfileResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_service_feature_profile"
+func (r *EmbeddedSecurityFeatureProfileResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_embedded_security_feature_profile"
 }
 
-func (r *ServiceFeatureProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *EmbeddedSecurityFeatureProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Service Feature Profile .").AddMinimumVersionDescription("20.12.0").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This resource can manage a Embedded Security Feature Profile .").AddMinimumVersionDescription("20.12.0").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -71,7 +71,7 @@ func (r *ServiceFeatureProfileResource) Schema(ctx context.Context, req resource
 				},
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("The name of the service feature profile").String,
+				MarkdownDescription: helpers.NewAttributeDescription("The name of the embedded security feature profile").String,
 				Required:            true,
 			},
 			"description": schema.StringAttribute{
@@ -82,7 +82,7 @@ func (r *ServiceFeatureProfileResource) Schema(ctx context.Context, req resource
 	}
 }
 
-func (r *ServiceFeatureProfileResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+func (r *EmbeddedSecurityFeatureProfileResource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -94,8 +94,8 @@ func (r *ServiceFeatureProfileResource) Configure(_ context.Context, req resourc
 // End of section. //template:end model
 
 // Section below is generated&owned by "gen/generator.go". //template:begin create
-func (r *ServiceFeatureProfileResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan ServiceFeatureProfile
+func (r *EmbeddedSecurityFeatureProfileResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan EmbeddedSecurityFeatureProfile
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -125,8 +125,8 @@ func (r *ServiceFeatureProfileResource) Create(ctx context.Context, req resource
 // End of section. //template:end create
 
 // Section below is generated&owned by "gen/generator.go". //template:begin read
-func (r *ServiceFeatureProfileResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state ServiceFeatureProfile
+func (r *EmbeddedSecurityFeatureProfileResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state EmbeddedSecurityFeatureProfile
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -157,8 +157,8 @@ func (r *ServiceFeatureProfileResource) Read(ctx context.Context, req resource.R
 // End of section. //template:end read
 
 // Section below is generated&owned by "gen/generator.go". //template:begin update
-func (r *ServiceFeatureProfileResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan, state ServiceFeatureProfile
+func (r *EmbeddedSecurityFeatureProfileResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, state EmbeddedSecurityFeatureProfile
 
 	// Read plan
 	diags := req.Plan.Get(ctx, &plan)
@@ -203,8 +203,8 @@ func (r *ServiceFeatureProfileResource) Update(ctx context.Context, req resource
 // End of section. //template:end update
 
 // Section below is generated&owned by "gen/generator.go". //template:begin delete
-func (r *ServiceFeatureProfileResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state ServiceFeatureProfile
+func (r *EmbeddedSecurityFeatureProfileResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state EmbeddedSecurityFeatureProfile
 
 	// Read state
 	diags := req.State.Get(ctx, &state)
@@ -229,7 +229,7 @@ func (r *ServiceFeatureProfileResource) Delete(ctx context.Context, req resource
 // End of section. //template:end delete
 
 // Section below is generated&owned by "gen/generator.go". //template:begin import
-func (r *ServiceFeatureProfileResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *EmbeddedSecurityFeatureProfileResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 

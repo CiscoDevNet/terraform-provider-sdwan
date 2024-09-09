@@ -1,6 +1,6 @@
 ---
-name: CLI Feature Profile
-rest_endpoint: /v1/feature-profile/sdwan/cli/
+name: Embedded Security Feature Profile
+rest_endpoint: /v1/feature-profile/sdwan/embedded-security/
 minimum_version: 20.12.0
 id_attribute: id
 doc_category: Feature Profiles
@@ -10,10 +10,10 @@ attributes:
     response_model_name: profileName
     type: String
     mandatory: true
-    description: The name of the cli feature profile
-    example: CLI_FP_1
+    description: The name of the embedded security feature profile
+    example: EMBEDDED_SECURITY_FP_1
   - model_name: description
     type: String
     mandatory: true
     description: Description
-    example: My cli feature profile 1
+    example: My embedded security feature profile 1

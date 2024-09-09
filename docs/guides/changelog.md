@@ -26,6 +26,9 @@ description: |-
 - Add `sdwan_policy_object_security_identity_list` resource and data source
 - Add `sdwan_policy_object_security_local_application_list` resource and data source
 - Add `sdwan_policy_object_standard_community_list` resource and data source
+- Add `sdwan_dns_security_feature_profile` resource and data source
+- Add `sdwan_sig_security_feature_profile` resource and data source
+- Add `sdwan_embedded_security_feature_profile` resource and data source
 
 ## 0.4.1
 
