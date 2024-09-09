@@ -1,6 +1,7 @@
 ---
 name: System Feature Profile
 rest_endpoint: /v1/feature-profile/sdwan/system/
+minimum_version: 20.12.0
 id_attribute: id
 doc_category: Feature Profiles
 test_tags: [SDWAN_2012]

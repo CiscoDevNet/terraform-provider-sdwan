@@ -4,11 +4,13 @@ page_title: "sdwan_embedded_security_feature_profile Resource - terraform-provid
 subcategory: "Feature Profiles"
 description: |-
   This resource can manage a Embedded Security Feature Profile .
+  Minimum SD-WAN Manager version: 20.12.0
 ---
 
 # sdwan_embedded_security_feature_profile (Resource)
 
 This resource can manage a Embedded Security Feature Profile .
+  - Minimum SD-WAN Manager version: `20.12.0`
 
 ## Example Usage
 
