@@ -3,6 +3,7 @@ name: System Remote Access
 rest_endpoint: /v1/feature-profile/sdwan/system/%v/remote-access
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
+parcel_type: feature
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -51,6 +52,7 @@ attributes:
   - model_name: preSharedKey
     tf_name: psk_authentication_pre_shared_key
     data_path: [pskAuth]
+    exclude_test: true
     conditional_attribute:
       name: psk_authentication_type
       value: group
@@ -125,6 +127,7 @@ attributes:
     example: false
   - model_name: antiReplayWindowSize
     tf_name: ipsec_anti_replay_window_size
+    exclude_test: true
     conditional_attribute:
       name: ipsec_enable_anti_replay
       value: true

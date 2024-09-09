@@ -34,36 +34,36 @@ func TestAccDataSourceSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 	}
 	{{- end}}
 	var checks []resource.TestCheckFunc
-	{{- $name := .Name }}
+	{{- $config := . }}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue)}}
 	{{- if isNestedListSet .}}
 	{{- $list := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue)}}
 	{{- if isNestedListSet .}}
 	{{- $clist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue)}}
 	{{- if isNestedListSet .}}
 	{{- $cclist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not (isListSet .))}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue) (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
 	}
 	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
 	{{- end}}
 	{{- end}}
 	{{- end}}
@@ -73,24 +73,10 @@ func TestAccDataSourceSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 	{{- else if (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
 	}
 	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
-	{{- end}}
-	{{- end}}
-	{{- end}}
-	{{- end}}
-	{{- if len .TestTags}}
-	}
-	{{- end}}
-	{{- else if (not (isListSet .))}}
-	{{- if len .TestTags}}
-	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
-	}
-	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
 	{{- end}}
 	{{- end}}
 	{{- end}}
@@ -101,10 +87,24 @@ func TestAccDataSourceSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 	{{- else if (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{.TfName}}", "{{.Example}}"))
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
 	}
 	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{snakeCase $name}}_profile_parcel.test", "{{.TfName}}", "{{.Example}}"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
+	{{- end}}
+	{{- end}}
+	{{- end}}
+	{{- end}}
+	{{- if len .TestTags}}
+	}
+	{{- end}}
+	{{- else if (not (isListSet .))}}
+	{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+		checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{.TfName}}", "{{.Example}}"))
+	}
+	{{- else}}
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_{{getProfileParcelName $config}}.test", "{{.TfName}}", "{{.Example}}"))
 	{{- end}}
 	{{- end}}
 	{{- end}}
@@ -132,7 +132,7 @@ const testAccDataSourceSdwan{{camelCase .Name}}PrerequisitesProfileParcelConfig 
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelConfig() string {
-	config := `resource "sdwan_{{snakeCase $name}}_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_{{getProfileParcelName $config}}" "test" {` + "\n"
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	{{- range  .Attributes}}
@@ -161,9 +161,17 @@ func testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelConfig() string {
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+		{{- if .SecondaryTestValue}}
+		config += `		}, {` + "\n"
+		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 				{{- else}}
 	config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	{{- if .SecondaryTestValue}}
+	config += `		}, {` + "\n"
+	config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 				{{- end}}
 				{{- end}}
 				{{- end}}
@@ -175,9 +183,17 @@ func testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelConfig() string {
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+		{{- if .SecondaryTestValue}}
+		config += `	}, {` + "\n"
+		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 			{{- else}}
 	config += `		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `		{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 			{{- end}}
 			{{- end}}
 			{{- end}}
@@ -190,9 +206,17 @@ func testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelConfig() string {
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `	  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+		{{- if .SecondaryTestValue}}
+		config += `	}, {` + "\n"
+		config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 			{{- else}}
 	config += `	  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 		{{- end}}
 		{{- end}}
 		{{- end}}
@@ -215,8 +239,8 @@ func testAccDataSourceSdwan{{camelCase .Name}}ProfileParcelConfig() string {
 	config += `}` + "\n"
 
 	config += `
-		data "sdwan_{{snakeCase .Name}}_profile_parcel" "test" {
-			id = sdwan_{{snakeCase $name}}_profile_parcel.test.id
+		data "sdwan_{{getProfileParcelName $config}}" "test" {
+			id = sdwan_{{getProfileParcelName $config}}.test.id
 			{{- range  .Attributes}}
 			{{- if .Reference}}
 			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}

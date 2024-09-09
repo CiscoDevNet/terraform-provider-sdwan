@@ -5,7 +5,7 @@ post_rest_endpoint: /template/device/feature/
 get_rest_endpoint: /template/device/object/
 has_version: true
 id_attribute: templateId
-doc_category: Device Templates
+doc_category: (Classic) Device Templates
 attributes:
   - model_name: configType
     type: String
@@ -87,7 +87,24 @@ attributes:
         tf_name: type
         type: String
         mandatory: true
-        enum_values: [cisco_system, cisco_logging, cedge_aaa, cisco_bfd, cisco_omp, cisco_security, cisco_banner, cisco_snmp, cedge_global, cli-template, cisco_sig_credentials, switchport, cisco_thousandeyes, cisco_vpn]
+        enum_values:
+          [
+            cisco_system,
+            cisco_logging,
+            cedge_aaa,
+            cisco_bfd,
+            cisco_omp,
+            cisco_security,
+            cisco_banner,
+            cisco_snmp,
+            cedge_global,
+            cli-template,
+            cisco_sig_credentials,
+            switchport,
+            cisco_thousandeyes,
+            cisco_vpn,
+            virtual-application-utd,
+          ]
         ignore_enum: true
         description: Feature template type
         example: cisco_system
@@ -113,7 +130,17 @@ attributes:
             tf_name: type
             type: String
             mandatory: true
-            enum_values: [cisco_logging, cisco_ntp, cisco_ospf, cisco_bgp, cisco_vpn_interface, cisco_vpn_interface_ipsec, vpn-interface-svi, cisco_secure_internet_gateway]
+            enum_values:
+              [
+                cisco_logging,
+                cisco_ntp,
+                cisco_ospf,
+                cisco_bgp,
+                cisco_vpn_interface,
+                cisco_vpn_interface_ipsec,
+                vpn-interface-svi,
+                cisco_secure_internet_gateway,
+              ]
             ignore_enum: true
             description: Feature template type
             example: cisco_vpn_interface

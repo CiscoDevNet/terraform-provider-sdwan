@@ -125,7 +125,7 @@ func (r *FeatureDeviceTemplateResource) Schema(ctx context.Context, req resource
 							Optional:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Feature template type").AddStringEnumDescription("cisco_system", "cisco_logging", "cedge_aaa", "cisco_bfd", "cisco_omp", "cisco_security", "cisco_banner", "cisco_snmp", "cedge_global", "cli-template", "cisco_sig_credentials", "switchport", "cisco_thousandeyes", "cisco_vpn", "virtual-application-utd").String,
 							Required:            true,
 						},
 						"sub_templates": schema.SetNestedAttribute{
@@ -232,7 +232,7 @@ func (r *FeatureDeviceTemplateResource) Read(ctx context.Context, req resource.R
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", state.Name.String()))
 
 	res, err := r.client.Get("/template/device/object/" + url.QueryEscape(state.Id.ValueString()))
-	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") {
+	if strings.Contains(res.Get("error.message").String(), "Failed to find specified resource") || strings.Contains(res.Get("error.message").String(), "Invalid template type") || strings.Contains(res.Get("error.message").String(), "Template definition not found") || strings.Contains(res.Get("error.message").String(), "Invalid Profile Id") || strings.Contains(res.Get("error.message").String(), "Invalid feature Id") || strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {

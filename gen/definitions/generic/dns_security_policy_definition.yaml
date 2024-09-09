@@ -3,7 +3,7 @@ name: DNS Security Policy Definition
 rest_endpoint: /template/policy/definition/dnssecurity/
 has_version: true
 id_attribute: definitionId
-doc_category: Security Policies
+doc_category: (Classic) Security Policies
 test_tags: [SDWAN_209]
 attributes:
   - model_name: type
@@ -33,7 +33,7 @@ attributes:
     tf_only: true
     type: Version
     description: Local domain bypass list version
-    exclude_test: true 
+    exclude_test: true
   - model_name: localDomainBypassEnabled
     data_path: [definition]
     tf_name: local_domain_bypass_enabled
@@ -51,7 +51,7 @@ attributes:
     data_path: [definition]
     tf_name: target_vpns
     type: List
-    description: Only relevant when `match_all_vpn` is `false` 
+    description: Only relevant when `match_all_vpn` is `false`
     example: 1
     exclude_test: true
     attributes:
@@ -59,7 +59,7 @@ attributes:
         tf_name: vpn_ids
         type: Set
         element_type: String
-        description: VPN ID's separated by Comma 
+        description: VPN ID's separated by Comma
         example: 1
       - model_name: umbrellaDefault
         tf_name: umbrella_dns_default

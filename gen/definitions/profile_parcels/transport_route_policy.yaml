@@ -1,0 +1,151 @@
+---
+name: Transport Route Policy
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/route-policy
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: defaultAction
+    example: accept
+  - model_name: sequences
+    tf_name:
+    attributes:
+    - model_name: sequenceId
+      tf_name: id
+      id: true
+      example: 1
+    - model_name: sequenceName
+      tf_name: name
+      example: SEQ_1
+    - model_name: baseAction
+      example: reject
+    - model_name: protocol
+      example: IPV4
+    - model_name: matchEntries
+      exclude_test: true
+      tf_name: match_entries
+      attributes:
+      - model_name: refId
+        tf_name: as_path_list_id
+        data_path: [asPathList]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+      - model_name: criteria
+        tf_name: standard_community_list_criteria
+        exclude_test: true
+        data_path: [communityList]
+        example: OR
+      - model_name: standardCommunityList
+        tf_name: standard_community_lists
+        data_path: [communityList]
+        exclude_test: true
+        attributes:
+        - model_name: refId
+          tf_name: id
+          exclude_test: true
+          example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+      - model_name: refId
+        tf_name: expanded_community_list_id
+        data_path: [communityList, expandedCommunityList]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+      - model_name: refId
+        tf_name: extended_community_list_id
+        data_path: [extCommunityList]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+      - model_name: bgpLocalPreference
+        example: 100
+      - model_name: metric
+        example: 1000
+      - model_name: ompTag
+        example: 10000
+      - model_name: ospfTag
+        example: 20000
+      - model_name: refId
+        tf_name: ipv4_address_prefix_list_id
+        data_path: [ipv4Address]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+      - model_name: refId
+        tf_name: ipv4_next_hop_prefix_list_id
+        data_path: [ipv4NextHop]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+      - model_name: refId
+        tf_name: ipv6_address_prefix_list_id
+        data_path: [ipv6Address]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+      - model_name: refId
+        tf_name: ipv6_next_hop_prefix_list_id
+        data_path: [ipv6NextHop]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+    - model_name: actions
+      attributes:
+      - model_name: enableAcceptAction
+        data_path: [accept]
+        example: true
+      - model_name: prepend
+        tf_name: as_path_prepend
+        data_path: [accept, setAsPath]
+        example: 65521
+      - model_name: additive
+        tf_name: community_additive
+        data_path: [accept, setCommunity]
+        example: false
+      - model_name: community
+        tf_name: community
+        data_path: [accept, setCommunity]
+        example: internet
+      - model_name: setLocalPreference
+        tf_name: local_preference
+        data_path: [accept]
+        example: 100
+      - model_name: setMetric
+        tf_name: metric
+        data_path: [accept]
+        example: 20
+      - model_name: setMetricType
+        tf_name: metric_type
+        data_path: [accept]
+        example: type1
+      - model_name: setOmpTag
+        tf_name: omp_tag
+        data_path: [accept]
+        example: 200
+      - model_name: setOrigin
+        tf_name: origin
+        data_path: [accept]
+        example: EGP
+      - model_name: setOspfTag
+        tf_name: ospf_tag
+        data_path: [accept]
+        example: 1200
+      - model_name: setWeight
+        tf_name: weight
+        data_path: [accept]
+        example: 2200
+      - model_name: setIpv4NextHop
+        tf_name: ipv4_next_hop
+        data_path: [accept]
+        example: 10.0.0.1
+      - model_name: setIpv6NextHop
+        tf_name: ipv6_next_hop
+        data_path: [accept]
+        exclude_test: true
+        example: 28C3EF06-c09a-DeFa-Ab26-a1cc4Ef0D51C
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

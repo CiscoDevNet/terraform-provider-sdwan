@@ -5,7 +5,7 @@ has_version: true
 id_attribute: definitionId
 root_element: definition
 type_value: hubAndSpoke
-doc_category: Centralized Policies
+doc_category: (Classic) Centralized Policies
 attributes:
   - model_name: type
     type: String
@@ -107,7 +107,7 @@ attributes:
                 description: Preference, multiple of 10 (for example 70, 80, 90, 100). The higher the value the higher the priority of the associated hub (required when `all_hubs_are_equal` is 'false')
                 example: 30
               - model_name: prefixLists
-                tf_name:  ipv4_prefix_list_ids
+                tf_name: ipv4_prefix_list_ids
                 type: Set
                 element_type: String
                 description: List of IPv4 prefix list IDs

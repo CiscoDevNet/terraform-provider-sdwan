@@ -56,6 +56,7 @@ type TrafficDataPolicyDefinitionSequencesMatchEntries struct {
 	ApplicationListVersion           types.Int64  `tfsdk:"application_list_version"`
 	DnsApplicationListId             types.String `tfsdk:"dns_application_list_id"`
 	DnsApplicationListVersion        types.Int64  `tfsdk:"dns_application_list_version"`
+	IcmpMessage                      types.String `tfsdk:"icmp_message"`
 	Dns                              types.String `tfsdk:"dns"`
 	Dscp                             types.Int64  `tfsdk:"dscp"`
 	PacketLength                     types.Int64  `tfsdk:"packet_length"`
@@ -83,7 +84,7 @@ type TrafficDataPolicyDefinitionSequencesActionEntries struct {
 	LossCorrection                  types.String                                                     `tfsdk:"loss_correction"`
 	LossCorrectionFec               types.String                                                     `tfsdk:"loss_correction_fec"`
 	LossCorrectionPacketDuplication types.String                                                     `tfsdk:"loss_correction_packet_duplication"`
-	LossCorrectionFecThreshold      types.Int64                                                      `tfsdk:"loss_correction_fec_threshold"`
+	LossCorrectionFecThreshold      types.String                                                     `tfsdk:"loss_correction_fec_threshold"`
 	NatPool                         types.String                                                     `tfsdk:"nat_pool"`
 	NatPoolId                       types.Int64                                                      `tfsdk:"nat_pool_id"`
 	RedirectDns                     types.String                                                     `tfsdk:"redirect_dns"`
@@ -187,6 +188,9 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 					if !childItem.DnsApplicationListId.IsNull() && childItem.Type.ValueString() == "dnsAppList" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "ref", childItem.DnsApplicationListId.ValueString())
 					}
+					if !childItem.IcmpMessage.IsNull() && childItem.Type.ValueString() == "icmpMessage" {
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.IcmpMessage.ValueString())
+					}
 					if !childItem.Dns.IsNull() && childItem.Type.ValueString() == "dns" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.Dns.ValueString())
 					}
@@ -272,7 +276,7 @@ func (data TrafficDataPolicyDefinition) toBody(ctx context.Context) string {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter", childItem.LossCorrectionPacketDuplication.ValueString())
 					}
 					if !childItem.LossCorrectionFecThreshold.IsNull() && childItem.Type.ValueString() == "lossProtectFec" {
-						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.LossCorrectionFecThreshold.ValueInt64())
+						itemChildBody, _ = sjson.Set(itemChildBody, "value", childItem.LossCorrectionFecThreshold.ValueString())
 					}
 					if !childItem.NatPool.IsNull() && childItem.Type.ValueString() == "nat" {
 						itemChildBody, _ = sjson.Set(itemChildBody, "parameter.field", childItem.NatPool.ValueString())
@@ -485,6 +489,11 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 					} else {
 						cItem.DnsApplicationListId = types.StringNull()
 					}
+					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "icmpMessage" {
+						cItem.IcmpMessage = types.StringValue(ccValue.String())
+					} else {
+						cItem.IcmpMessage = types.StringNull()
+					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "dns" {
 						cItem.Dns = types.StringValue(ccValue.String())
 					} else {
@@ -621,9 +630,9 @@ func (data *TrafficDataPolicyDefinition) fromBody(ctx context.Context, res gjson
 						cItem.LossCorrectionPacketDuplication = types.StringNull()
 					}
 					if ccValue := cv.Get("value"); ccValue.Exists() && cItem.Type.ValueString() == "lossProtectFec" {
-						cItem.LossCorrectionFecThreshold = types.Int64Value(ccValue.Int())
+						cItem.LossCorrectionFecThreshold = types.StringValue(ccValue.String())
 					} else {
-						cItem.LossCorrectionFecThreshold = types.Int64Null()
+						cItem.LossCorrectionFecThreshold = types.StringNull()
 					}
 					if ccValue := cv.Get("parameter.field"); ccValue.Exists() && cItem.Type.ValueString() == "nat" {
 						cItem.NatPool = types.StringValue(ccValue.String())
@@ -900,6 +909,9 @@ func (data *TrafficDataPolicyDefinition) hasChanges(ctx context.Context, state *
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].DnsApplicationListId.Equal(state.Sequences[i].MatchEntries[ii].DnsApplicationListId) {
+						hasChanges = true
+					}
+					if !data.Sequences[i].MatchEntries[ii].IcmpMessage.Equal(state.Sequences[i].MatchEntries[ii].IcmpMessage) {
 						hasChanges = true
 					}
 					if !data.Sequences[i].MatchEntries[ii].Dns.Equal(state.Sequences[i].MatchEntries[ii].Dns) {

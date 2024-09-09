@@ -34,36 +34,36 @@ func TestAccSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 	}
 	{{- end}}
 	var checks []resource.TestCheckFunc
-	{{- $name := .Name }}
+	{{- $config := . }}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue)}}
 	{{- if isNestedListSet .}}
 	{{- $list := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue)}}
 	{{- if isNestedListSet .}}
 	{{- $clist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value)}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue)}}
 	{{- if isNestedListSet .}}
 	{{- $cclist := .TfName }}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 	{{- end}}
 	{{- range  .Attributes}}
-	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not (isListSet .))}}
+	{{- if and (not .WriteOnly) (not .ExcludeTest) (not .Reference) (not .Value) (not .TestValue) (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
 	}
 	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{$cclist}}.0.{{.TfName}}", "{{.Example}}"))
 	{{- end}}
 	{{- end}}
 	{{- end}}
@@ -73,24 +73,10 @@ func TestAccSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 	{{- else if (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
 	}
 	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
-	{{- end}}
-	{{- end}}
-	{{- end}}
-	{{- end}}
-	{{- if len .TestTags}}
-	}
-	{{- end}}
-	{{- else if (not (isListSet .))}}
-	{{- if len .TestTags}}
-	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
-	}
-	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{$clist}}.0.{{.TfName}}", "{{.Example}}"))
 	{{- end}}
 	{{- end}}
 	{{- end}}
@@ -101,10 +87,24 @@ func TestAccSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 	{{- else if (not (isListSet .))}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
-		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{.TfName}}", "{{.Example}}"))
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
 	}
 	{{- else}}
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{snakeCase $name}}_profile_parcel.test", "{{.TfName}}", "{{.Example}}"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{$list}}.0.{{.TfName}}", "{{.Example}}"))
+	{{- end}}
+	{{- end}}
+	{{- end}}
+	{{- end}}
+	{{- if len .TestTags}}
+	}
+	{{- end}}
+	{{- else if (not (isListSet .))}}
+	{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+		checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{.TfName}}", "{{.Example}}"))
+	}
+	{{- else}}
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_{{getProfileParcelName $config}}.test", "{{.TfName}}", "{{.Example}}"))
 	{{- end}}
 	{{- end}}
 	{{- end}}
@@ -113,9 +113,9 @@ func TestAccSdwan{{camelCase .Name}}ProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
+			{{if not .SkipMinimumTest}}{
 				Config: {{if .TestPrerequisites}}testAccSdwan{{camelCase .Name}}PrerequisitesProfileParcelConfig+{{end}}testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum(),
-			},
+			},{{end}}
 			{
 				Config: {{if .TestPrerequisites}}testAccSdwan{{camelCase .Name}}PrerequisitesProfileParcelConfig+{{end}}testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all(),
 				Check: resource.ComposeTestCheckFunc(checks...),
@@ -134,12 +134,77 @@ const testAccSdwan{{camelCase .Name}}PrerequisitesProfileParcelConfig = `
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_{{snakeCase $name}}_profile_parcel" "test" {` + "\n"
+{{if not .SkipMinimumTest}}func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum() string {
+	config := `resource "sdwan_{{getProfileParcelName $config}}" "test" {` + "\n"
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	{{- range  .Attributes}}
 	{{- if and (or .Reference .Mandatory .MinimumTestValue) (not .Optional)}}
+	{{- if isNestedListSet .}}
+	{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+	{{- end}}
+	config += `	{{.TfName}} = [{` + "\n"
+		{{- range  .Attributes}}
+		{{- if and (or .Reference .Mandatory .MinimumTestValue) (not .Optional)}}
+		{{- if isNestedListSet .}}
+		{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+		{{- end}}
+	config += `	  {{.TfName}} = [{` + "\n"
+			{{- range  .Attributes}}
+			{{- if and (or .Reference .Mandatory .MinimumTestValue) (not .Optional)}}
+			{{- if isNestedListSet .}}
+			{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+			{{- end}}
+	config += `      {{.TfName}} = [{` + "\n"
+				{{- range  .Attributes}}
+				{{- if and (or .Reference .Mandatory .MinimumTestValue) (not .Optional)}}
+				{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+		config += `			{{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	}
+				{{- else}}
+	config += `			{{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+				{{- end}}
+				{{- end}}
+				{{- end}}
+	config += `		}]` + "\n"
+			{{- if len .TestTags}}
+	}
+			{{- end}}
+			{{- else}}
+			{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+		config += `		{{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	}
+			{{- else}}
+	config += `		{{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+			{{- end}}
+			{{- end}}
+			{{- end}}
+			{{- end}}
+	config += `	}]` + "\n"
+		{{- if len .TestTags}}
+	}
+		{{- end}}
+		{{- else}}
+		{{- if len .TestTags}}
+	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
+		config += `	  {{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	}
+			{{- else}}
+	config += `	  {{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+		{{- end}}
+		{{- end}}
+		{{- end}}
+		{{- end}}
+	config += `	}]` + "\n"
+		{{- if len .TestTags}}
+	}
+		{{- end}}
+	{{- else}}
 	{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `	{{.TfName}} = {{if .MinimumTestValue}}{{.MinimumTestValue}}{{else if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
@@ -149,14 +214,15 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_minimum() string {
 	{{- end}}
 	{{- end}}
 	{{- end}}
+	{{- end}}
 	config += `}` + "\n"
 	return config
-}
+}{{end}}
 // End of section. //template:end testAccConfigMinimum
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigAll
 func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
-	config := `resource "sdwan_{{snakeCase $name}}_profile_parcel" "test" {` + "\n"
+	config := `resource "sdwan_{{getProfileParcelName $config}}" "test" {` + "\n"
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	{{- range  .Attributes}}
@@ -185,9 +251,17 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
 				{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+		{{- if .SecondaryTestValue}}
+		config += `		}, {` + "\n"
+		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 				{{- else}}
 	config += `			{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `		{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 				{{- end}}
 				{{- end}}
 				{{- end}}
@@ -199,9 +273,17 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
 			{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+		{{- if .SecondaryTestValue}}
+		config += `	}, {` + "\n"
+		config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 			{{- else}}
 	config += `		{{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `			{{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 			{{- end}}
 			{{- end}}
 			{{- end}}
@@ -214,9 +296,17 @@ func testAccSdwan{{camelCase .Name}}ProfileParcelConfig_all() string {
 		{{- if len .TestTags}}
 	if {{range $i, $e := .TestTags}}{{if $i}} || {{end}}os.Getenv("{{$e}}") != ""{{end}} {
 		config += `	  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+		{{- if .SecondaryTestValue}}
+		config += `	}, {` + "\n"
+		config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+		{{- end}}
 	}
 			{{- else}}
 	config += `	  {{.TfName}} = {{if .TestValue}}{{.TestValue}}{{else}}{{if eq .Type "String"}}"{{.Example}}"{{else if isStringListSet .}}["{{.Example}}"]{{else if isInt64ListSet .}}[{{.Example}}]{{else}}{{.Example}}{{end}}{{end}}` + "\n"
+	{{- if .SecondaryTestValue}}
+	config += `	}, {` + "\n"
+	config += `	  {{.TfName}} = {{if .SecondaryTestValue}}{{.SecondaryTestValue}}{{end}}` + "\n"
+	{{- end}}
 		{{- end}}
 		{{- end}}
 		{{- end}}

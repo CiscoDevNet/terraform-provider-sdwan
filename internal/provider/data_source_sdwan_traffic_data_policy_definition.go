@@ -132,6 +132,10 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "DNS Application list version",
 										Computed:            true,
 									},
+									"icmp_message": schema.StringAttribute{
+										MarkdownDescription: "ICMP Message",
+										Computed:            true,
+									},
 									"dns": schema.StringAttribute{
 										MarkdownDescription: "DNS request or response",
 										Computed:            true,
@@ -240,7 +244,7 @@ func (d *TrafficDataPolicyDefinitionDataSource) Schema(ctx context.Context, req 
 										MarkdownDescription: "Loss correction packet duplication",
 										Computed:            true,
 									},
-									"loss_correction_fec_threshold": schema.Int64Attribute{
+									"loss_correction_fec_threshold": schema.StringAttribute{
 										MarkdownDescription: "Loss correction FEC threshold",
 										Computed:            true,
 									},

@@ -102,42 +102,42 @@ var profileParcelTemplates = []t{
 	{
 		path:   "./gen/templates/profile_parcels/model.go",
 		prefix: "./internal/provider/model_sdwan_",
-		suffix: "_profile_parcel.go",
+		suffix: "%s.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/data_source.go",
 		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_profile_parcel.go",
+		suffix: "%s.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/data_source_test.go",
 		prefix: "./internal/provider/data_source_sdwan_",
-		suffix: "_profile_parcel_test.go",
+		suffix: "%s_test.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/resource.go",
 		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_profile_parcel.go",
+		suffix: "%s.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/resource_test.go",
 		prefix: "./internal/provider/resource_sdwan_",
-		suffix: "_profile_parcel_test.go",
+		suffix: "%s_test.go",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/data-source.tf",
 		prefix: "./examples/data-sources/sdwan_",
-		suffix: "_profile_parcel/data-source.tf",
+		suffix: "%s/data-source.tf",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/resource.tf",
 		prefix: "./examples/resources/sdwan_",
-		suffix: "_profile_parcel/resource.tf",
+		suffix: "%s/resource.tf",
 	},
 	{
 		path:   "./gen/templates/profile_parcels/import.sh",
 		prefix: "./examples/resources/sdwan_",
-		suffix: "_profile_parcel/import.sh",
+		suffix: "%s/import.sh",
 	},
 }
 
@@ -203,6 +203,7 @@ type YamlConfig struct {
 	SkipTemplates            []string              `yaml:"skip_templates"`
 	Attributes               []YamlConfigAttribute `yaml:"attributes"`
 	TestTags                 []string              `yaml:"test_tags"`
+	SkipMinimumTest          bool                  `yaml:"skip_minimum_test"`
 	TestPrerequisites        string                `yaml:"test_prerequisites"`
 	RemoveId                 bool                  `yaml:"remove_id"`
 	TypeValue                string                `yaml:"type_value"`
@@ -211,6 +212,7 @@ type YamlConfig struct {
 	NoDataSource             bool                  `yaml:"no_data_source"`
 	GetBeforeDelete          bool                  `yaml:"get_before_delete"`
 	DeleteMutex              bool                  `yaml:"delete_mutex"`
+	ParcelType               string                `yaml:"parcel_type"`
 }
 
 type YamlConfigAttribute struct {
@@ -255,8 +257,10 @@ type YamlConfigAttribute struct {
 	DefaultValueEmptyString bool                           `yaml:"default_value_empty_string"`
 	Value                   string                         `yaml:"value"`
 	TestValue               string                         `yaml:"test_value"`
+	SecondaryTestValue      string                         `yaml:"secondary_test_value"`
 	MinimumTestValue        string                         `yaml:"minimum_test_value"`
 	AlwaysInclude           bool                           `yaml:"always_include"`
+	AlwaysIncludeParent     bool                           `yaml:"always_include_parent"`
 	Attributes              []YamlConfigAttribute          `yaml:"attributes"`
 	ConditionalAttribute    YamlConfigConditionalAttribute `yaml:"conditional_attribute"`
 	ConditionalListLength   string                         `yaml:"conditional_list_length"`
@@ -327,6 +331,16 @@ func SnakeCase(s string) string {
 // Templating helper function to build a SJSON path
 func BuildPath(s []string) string {
 	return strings.Join(s, ".")
+}
+
+// Templating helper function to return true if id included in attributes
+func HasId(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Id {
+			return true
+		}
+	}
+	return false
 }
 
 // Templating helper function to determine if attributes list contains one or more version attributes
@@ -467,6 +481,22 @@ func GetParentModelName(attribute YamlConfigAttribute) string {
 	}
 }
 
+// Templating helper function to return the snake case profile parcel suffix
+func GetProfileParcelSuffix(config YamlConfig) string {
+	if config.ParcelType == "feature" {
+		return "_feature"
+	} else if config.ParcelType == "policy" {
+		return "_policy"
+	} else {
+		return ""
+	}
+}
+
+// Templating helper function to return the snake case profile parcel name
+func GetProfileParcelName(config YamlConfig) string {
+	return SnakeCase(config.Name) + GetProfileParcelSuffix(config)
+}
+
 func contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
@@ -478,27 +508,30 @@ func contains(s []string, str string) bool {
 
 // Map of templating functions
 var functions = template.FuncMap{
-	"toGoName":             ToGoName,
-	"camelCase":            CamelCase,
-	"snakeCase":            SnakeCase,
-	"sprintf":              fmt.Sprintf,
-	"toLower":              strings.ToLower,
-	"path":                 BuildPath,
-	"hasVersionAttribute":  HasVersionAttribute,
-	"getResponseModelPath": GetResponseModelPath,
-	"hasReference":         HasReference,
-	"getGjsonType":         GetGjsonType,
-	"getId":                GetId,
-	"isListSet":            IsListSet,
-	"isList":               IsList,
-	"isSet":                IsSet,
-	"isStringListSet":      IsStringListSet,
-	"isInt64ListSet":       IsInt64ListSet,
-	"isNestedListSet":      IsNestedListSet,
-	"isNestedList":         IsNestedList,
-	"isNestedSet":          IsNestedSet,
-	"getParentModelName":   GetParentModelName,
-	"contains":             contains,
+	"toGoName":               ToGoName,
+	"camelCase":              CamelCase,
+	"snakeCase":              SnakeCase,
+	"sprintf":                fmt.Sprintf,
+	"toLower":                strings.ToLower,
+	"path":                   BuildPath,
+	"hasId":                  HasId,
+	"hasVersionAttribute":    HasVersionAttribute,
+	"getResponseModelPath":   GetResponseModelPath,
+	"hasReference":           HasReference,
+	"getGjsonType":           GetGjsonType,
+	"getId":                  GetId,
+	"isListSet":              IsListSet,
+	"isList":                 IsList,
+	"isSet":                  IsSet,
+	"isStringListSet":        IsStringListSet,
+	"isInt64ListSet":         IsInt64ListSet,
+	"isNestedListSet":        IsNestedListSet,
+	"isNestedList":           IsNestedList,
+	"isNestedSet":            IsNestedSet,
+	"getParentModelName":     GetParentModelName,
+	"getProfileParcelSuffix": GetProfileParcelSuffix,
+	"getProfileParcelName":   GetProfileParcelName,
+	"contains":               contains,
 }
 
 func parseFeatureTemplateAttribute(attr *YamlConfigAttribute, model gjson.Result) {
@@ -677,19 +710,33 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 	if attr.ModelName == "" {
 		return
 	}
+
 	path := ""
+	prefix := "properties."
 	for i, e := range attr.DataPath {
-		// Check if the next element is a oneOf
-		if model.Get("properties." + path + e + ".oneOf").Exists() {
-			// We need to find the right element in oneOf which has the next element
 
-			next := ""
-			if i+1 < len(attr.DataPath) {
-				next = attr.DataPath[i+1]
-			} else {
-				next = attr.ModelName
-			}
+		next := ""
+		if i+1 < len(attr.DataPath) {
+			next = attr.DataPath[i+1]
+		} else {
+			next = attr.ModelName
+		}
 
+		if model.Get("oneOf").Exists() {
+			prefix = "oneOf."
+		}
+
+		if path == "" && prefix == "oneOf." {
+			index := 0
+			model.Get("oneOf").ForEach(func(k, v gjson.Result) bool {
+				if v.Get(fmt.Sprintf("properties.%v.properties.%v", e, next)).Exists() {
+					path += fmt.Sprintf("%v.properties.%v.properties.", index, e)
+					return false // stop iterating
+				}
+				index += 1
+				return true // keep iterating
+			})
+		} else if model.Get(prefix + path + e + ".oneOf").Exists() {
 			index := 0
 			model.Get("properties." + path + e + ".oneOf").ForEach(func(k, v gjson.Result) bool {
 				if v.Get("properties." + next).Exists() {
@@ -701,16 +748,17 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				return true // keep iterating
 			})
 
-		} else if model.Get("properties." + path + e + ".items").Exists() {
+		} else if model.Get(prefix + path + e + ".items").Exists() {
 			path += fmt.Sprintf("%s.items.properties.", e)
 
 		} else {
 			path += e + ".properties."
 		}
 	}
+
 	path += attr.ModelName
 
-	r := model.Get("properties." + path)
+	r := model.Get(prefix + path)
 
 	if !r.Exists() {
 		panic(fmt.Sprintf("Could not find element in schema: %v\n%v\n\n", attr.ModelName, model))
@@ -791,7 +839,7 @@ func parseProfileParcelAttribute(attr *YamlConfigAttribute, model gjson.Result, 
 				// }
 			} else if t.Get("properties.value.const").String() == "true" || t.Get("properties.value.const").String() == "false" {
 				attr.Type = "Bool"
-			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" {
+			} else if t.Get("properties.value.const").String() == "off" || t.Get("properties.value.const").String() == "on" || t.Get("properties.value.const").Exists() {
 				attr.Type = "String"
 			} else {
 				fmt.Printf("WARNING: Unsupported type: %s\n", t.Get("properties.value.type").String())
@@ -878,10 +926,10 @@ func augmentProfileParcelConfig(config *YamlConfig) {
 	}
 
 	if config.DsDescription == "" {
-		config.DsDescription = fmt.Sprintf("This data source can read the %s profile parcel.", config.Name)
+		config.DsDescription = fmt.Sprintf("This data source can read the %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
 	if config.ResDescription == "" {
-		config.ResDescription = fmt.Sprintf("This resource can manage a %s profile parcel.", config.Name)
+		config.ResDescription = fmt.Sprintf("This resource can manage a %s %s.", config.Name, CamelCase(config.ParcelType))
 	}
 }
 
@@ -1062,7 +1110,9 @@ func main() {
 
 		// Iterate over templates and render files
 		for _, t := range profileParcelTemplates {
-			renderTemplate(t.path, t.prefix+SnakeCase(profileParcelConfigs[i].Name)+t.suffix, profileParcelConfigs[i])
+			parcelSuffix := GetProfileParcelSuffix(profileParcelConfigs[i])
+			suffix := fmt.Sprintf(t.suffix, parcelSuffix)
+			renderTemplate(t.path, t.prefix+SnakeCase(profileParcelConfigs[i].Name)+suffix, profileParcelConfigs[i])
 		}
 	}
 	configs["ProfileParcels"] = profileParcelConfigs

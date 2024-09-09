@@ -4,7 +4,7 @@ rest_endpoint: /template/policy/definition/data/
 has_version: true
 id_attribute: definitionId
 type_value: data
-doc_category: Centralized Policies
+doc_category: (Classic) Centralized Policies
 attributes:
   - model_name: type
     type: String
@@ -97,6 +97,7 @@ attributes:
                 destinationPort,
                 tcp,
                 trafficTo,
+                icmpMessage,
               ]
             description: Type of match entry
             example: appList
@@ -128,6 +129,15 @@ attributes:
             type: Version
             description: DNS Application list version
             exclude_test: true
+          - model_name: value
+            tf_name: icmp_message
+            conditional_attribute:
+              name: type
+              value: icmpMessage
+            type: String
+            description: ICMP Message
+            exclude_test: true
+            example: "echo echo-reply"
           - model_name: value
             tf_name: dns
             conditional_attribute:
@@ -387,10 +397,8 @@ attributes:
             conditional_attribute:
               name: type
               value: lossProtectFec
-            type: Int64
+            type: String
             description: Loss correction FEC threshold
-            min_int: 1
-            max_int: 5
             example: 2
             exclude_test: true
           - model_name: field

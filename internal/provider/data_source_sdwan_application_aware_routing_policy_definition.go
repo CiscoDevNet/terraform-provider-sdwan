@@ -120,6 +120,10 @@ func (d *ApplicationAwareRoutingPolicyDefinitionDataSource) Schema(ctx context.C
 										MarkdownDescription: "DNS Application list version",
 										Computed:            true,
 									},
+									"icmp_message": schema.StringAttribute{
+										MarkdownDescription: "ICMP Message",
+										Computed:            true,
+									},
 									"dns": schema.StringAttribute{
 										MarkdownDescription: "DNS request or response",
 										Computed:            true,

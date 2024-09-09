@@ -5,7 +5,7 @@ has_version: true
 id_attribute: definitionId
 get_before_delete: true
 type_value: deviceAccessPolicy
-doc_category: Localized Policies
+doc_category: (Classic) Localized Policies
 attributes:
   - model_name: type
     type: String

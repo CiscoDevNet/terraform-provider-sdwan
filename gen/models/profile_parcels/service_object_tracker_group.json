@@ -1,0 +1,221 @@
+{
+  "request": {
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "$id": "https://cisco.com/schema/profileparcel/sdwan/common/objecttrackergroup/common/request_schema.json",
+    "title": "common object tracker group Schema",
+    "description": "common Object TrackerGroup profile feature schema for common request",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Set the feature name",
+        "type": "string",
+        "pattern": "^[^&<>! \"]+$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "description": {
+        "description": "Set the parcel description",
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "objectId": {
+            "description": "Object ID",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "trackerRefs": {
+            "description": "Group Tracks ID Refs",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "trackerRef": {
+                  "properties": {
+                    "refId": {
+                      "properties": {
+                        "optionType": {
+                          "type": "string",
+                          "enum": ["global"]
+                        },
+                        "value": {
+                          "type": "string",
+                          "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                        }
+                      },
+                      "required": ["optionType", "value"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": ["refId"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["trackerRef"],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "uniqueItems": true
+          },
+          "criteria": {
+            "description": "tracker ref list criteria boolean and or",
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["variable"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^\\{\\{[.\\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "default": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "description": {
+                    "minLength": 1,
+                    "type": "string",
+                    "maxLength": 128
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["global"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": ["and", "or"]
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "optionType": {
+                    "type": "string",
+                    "enum": ["default"]
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": ["or"]
+                  }
+                },
+                "required": ["optionType", "value"],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "required": ["objectId", "trackerRefs", "criteria"],
+        "additionalProperties": false
+      },
+      "metadata": {
+        "parcelRefDefinition": [
+          {
+            "refIdPath": "data.trackerRefs[*].trackerRef",
+            "parcelType": ["objecttracker"]
+          }
+        ],
+        "minVManageVersion": "20.15.1"
+      },
+      "documentation": {
+        "description": "This is the documentation for common request schema for common LAN VPN profile feature",
+        "examples": [
+          {
+            "data": {
+              "objectId": {
+                "optionType": "global",
+                "value": 12
+              },
+              "trackerRefs": [
+                {
+                  "trackerRef": {
+                    "refId": {
+                      "optionType": "global",
+                      "value": "615d948f-34ee-4a2e-810e-a9bd8d3d48ec"
+                    }
+                  }
+                },
+                {
+                  "trackerRef": {
+                    "refId": {
+                      "optionType": "global",
+                      "value": "615d948f-34ee-4a2e-810e-a9bd8d3d48ec12"
+                    }
+                  }
+                }
+              ],
+              "combineBoolean": {
+                "optionType": "global",
+                "value": "and"
+              }
+            },
+            "description": "common_object_track_group_cedge_parcel_1",
+            "name": "common_object_track_group_cedge_parcel_1"
+          }
+        ]
+      }
+    },
+    "required": ["name", "data"],
+    "not": {
+      "required": ["metadata", "documentation"]
+    },
+    "additionalProperties": false
+  }
+}

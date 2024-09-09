@@ -1,0 +1,20 @@
+---
+name: Policy Object Feature Profile
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/
+minimum_version: 20.12.0
+id_attribute: id
+res_description: SD-WAN manager supports only a single policy object feature profile to be configured. This resource will therefore either create a new one if none exists or update the existing one.
+doc_category: Feature Profiles
+test_tags: [SDWAN_2012]
+attributes:
+  - model_name: name
+    response_model_name: profileName
+    type: String
+    mandatory: true
+    description: The name of the policy object feature profile
+    example: POLICY_OBJECT_FP_1
+  - model_name: description
+    type: String
+    mandatory: true
+    description: Description
+    example: My policy object feature profile 1

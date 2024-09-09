@@ -1,0 +1,71 @@
+---
+name: Other UCSE
+rest_endpoint: /v1/feature-profile/sdwan/other/%v/ucse
+minimum_version: 20.12.0
+id_attribute: parcelId
+test_tags: [SDWAN_2012]
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_other_feature_profile.test.id
+  - model_name: bay
+    mandatory: true
+    id: true
+    example: 2
+  - model_name: slot
+    mandatory: true
+    example: 0
+  - model_name: dedicated
+    tf_name: access_port_dedicated
+    data_path: [imc, access-port]
+    example: false
+  - model_name: lomType
+    tf_name: access_port_shared_type
+    data_path: [imc, access-port, sharedLom]
+    example: ge1
+  - model_name: failOverType
+    tf_name: access_port_shared_failover_type
+    data_path: [imc, access-port, sharedLom]
+    example: ge2
+  - model_name: address
+    tf_name: ipv4_address
+    data_path: [imc, ip]
+    mandatory: true
+    example: 2.2.2.2/24
+  - model_name: defaultGateway
+    data_path: [imc, ip]
+    mandatory: true
+    example: 2.2.2.2
+  - model_name: vlanId
+    data_path: [imc, vlan]
+    example: 3
+  - model_name: priority
+    tf_name: assign_priority
+    data_path: [imc, vlan]
+    example: 3
+  - model_name: interface
+    tf_name: interfaces
+    attributes: 
+    - model_name: ifName
+      tf_name: interface_name
+      id: true
+      example: ucse2/0
+    - model_name: l3
+      tf_name: layer_l3
+      example: true
+    - model_name: ucseInterfaceVpn
+      example: 2
+    - model_name: address
+      tf_name: ipv4_address
+      example: 10.1.15.15/24
+
+test_prerequisites: |
+  resource "sdwan_other_feature_profile" "test" {
+    name        = "TF_TEST"
+    description = "Terraform test"
+  }
