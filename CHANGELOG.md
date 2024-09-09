@@ -2,6 +2,21 @@
 
 - Add `sdwan_policy_object_application_list` resource and data source
 - Add `sdwan_policy_object_sla_class_list` resource and data source
+- Add `sdwan_policy_object_app_probe_class` resource and data source
+- Add `sdwan_policy_object_as_path_list` resource and data source
+- Add `sdwan_policy_object_vpn_group` resource and data source
+- Add `sdwan_policy_object_security_data_ipv4_prefix_list` resource and data source
+- Add `sdwan_policy_object_security_fqdn_list` resource and data source
+- Add `sdwan_policy_object_security_geolocation_list` resource and data source
+- Add `sdwan_policy_object_security_ips_signature` resource and data source
+- Add `sdwan_policy_object_security_local_domain_list` resource and data source
+- Add `sdwan_policy_object_security_port_list` resource and data source
+- Add `sdwan_policy_object_security_scalable_group_tag_list` resource and data source
+- Add `sdwan_policy_object_security_url_list` resource and data source
+- Add `sdwan_policy_object_preferred_color_group` resource and data source
+- Add `sdwan_policy_object_security_identity_list` resource and data source
+- Add `sdwan_policy_object_security_local_application_list` resource and data source
+- Add `sdwan_policy_object_standard_community_list` resource and data source
 
 ## 0.4.1
 
