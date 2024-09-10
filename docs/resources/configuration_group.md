@@ -24,6 +24,17 @@ resource "sdwan_configuration_group" "example" {
       id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
     }
   ]
+  devices = [
+    {
+      id = "C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B"
+      variables = [
+        {
+          name  = "host_name"
+          value = "edge1"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -39,7 +50,9 @@ resource "sdwan_configuration_group" "example" {
 
 ### Optional
 
+- `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
 - `feature_profiles` (Attributes Set) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
+- `feature_versions` (List of String) List of all associated feature versions
 - `topology_devices` (Attributes List) List of topology device types (see [below for nested schema](#nestedatt--topology_devices))
 - `topology_site_devices` (Number) Number of devices per site
   - Range: `1`-`20`
@@ -47,6 +60,29 @@ resource "sdwan_configuration_group" "example" {
 ### Read-Only
 
 - `id` (String) The id of the object
+
+<a id="nestedatt--devices"></a>
+### Nested Schema for `devices`
+
+Optional:
+
+- `deploy` (Boolean) Deploy to device if enabled.
+  - Default value: `false`
+- `id` (String) Device ID
+- `variables` (Attributes Set) List of variables (see [below for nested schema](#nestedatt--devices--variables))
+
+<a id="nestedatt--devices--variables"></a>
+### Nested Schema for `devices.variables`
+
+Required:
+
+- `value` (String) Variable value
+
+Optional:
+
+- `name` (String) Variable name
+
+
 
 <a id="nestedatt--feature_profiles"></a>
 ### Nested Schema for `feature_profiles`
