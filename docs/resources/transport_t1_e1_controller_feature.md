@@ -31,10 +31,10 @@ resource "sdwan_transport_t1_e1_controller_feature" "example" {
       clock_source   = "line"
       line_mode      = "primary"
       description    = "desc"
-      channel_group = [
+      channel_groups = [
         {
-          number    = 12
-          timeslots = "timeslots 15"
+          channel_group = 12
+          time_slot     = "timeslots 15"
         }
       ]
     }
@@ -70,7 +70,7 @@ resource "sdwan_transport_t1_e1_controller_feature" "example" {
 Optional:
 
 - `cable_length` (String) Cable Config
-- `channel_group` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--entries--channel_group))
+- `channel_groups` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--entries--channel_groups))
 - `clock_source` (String) Clock Source
   - Choices: `line`, `internal`, `loop-timed`, `network`
 - `description` (String) Description
@@ -101,16 +101,16 @@ Optional:
   - Choices: `ami`, `b8zs`
 - `t1_linecode_variable` (String) Variable name
 
-<a id="nestedatt--entries--channel_group"></a>
-### Nested Schema for `entries.channel_group`
+<a id="nestedatt--entries--channel_groups"></a>
+### Nested Schema for `entries.channel_groups`
 
 Optional:
 
-- `number` (Number) Number
+- `channel_group` (Number) Number
   - Range: `0`-`23`
-- `number_variable` (String) Variable name
-- `timeslots` (String) Time slots
-- `timeslots_variable` (String) Variable name
+- `channel_group_variable` (String) Variable name
+- `time_slot` (String) Time slots
+- `time_slot_variable` (String) Variable name
 
 ## Import
 

@@ -43,7 +43,7 @@ data "sdwan_transport_t1_e1_controller_feature" "example" {
 Read-Only:
 
 - `cable_length` (String) Cable Config
-- `channel_group` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--entries--channel_group))
+- `channel_groups` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--entries--channel_groups))
 - `clock_source` (String) Clock Source
 - `description` (String) Description
 - `description_variable` (String) Variable name
@@ -64,12 +64,12 @@ Read-Only:
 - `t1_linecode` (String) LineCode
 - `t1_linecode_variable` (String) Variable name
 
-<a id="nestedatt--entries--channel_group"></a>
-### Nested Schema for `entries.channel_group`
+<a id="nestedatt--entries--channel_groups"></a>
+### Nested Schema for `entries.channel_groups`
 
 Read-Only:
 
-- `number` (Number) Number
-- `number_variable` (String) Variable name
-- `timeslots` (String) Time slots
-- `timeslots_variable` (String) Variable name
+- `channel_group` (Number) Number
+- `channel_group_variable` (String) Variable name
+- `time_slot` (String) Time slots
+- `time_slot_variable` (String) Variable name

@@ -14,10 +14,10 @@ resource "sdwan_transport_t1_e1_controller_feature" "example" {
       clock_source   = "line"
       line_mode      = "primary"
       description    = "desc"
-      channel_group = [
+      channel_groups = [
         {
-          number    = 12
-          timeslots = "timeslots 15"
+          channel_group = 12
+          time_slot     = "timeslots 15"
         }
       ]
     }

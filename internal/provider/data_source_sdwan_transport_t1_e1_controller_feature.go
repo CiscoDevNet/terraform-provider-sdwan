@@ -175,24 +175,24 @@ func (d *TransportT1E1ControllerProfileParcelDataSource) Schema(ctx context.Cont
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Computed:            true,
 						},
-						"channel_group": schema.ListNestedAttribute{
+						"channel_groups": schema.ListNestedAttribute{
 							MarkdownDescription: "Channel Group List",
 							Computed:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"number": schema.Int64Attribute{
+									"channel_group": schema.Int64Attribute{
 										MarkdownDescription: "Number",
 										Computed:            true,
 									},
-									"number_variable": schema.StringAttribute{
+									"channel_group_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},
-									"timeslots": schema.StringAttribute{
+									"time_slot": schema.StringAttribute{
 										MarkdownDescription: "Time slots",
 										Computed:            true,
 									},
-									"timeslots_variable": schema.StringAttribute{
+									"time_slot_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Computed:            true,
 									},

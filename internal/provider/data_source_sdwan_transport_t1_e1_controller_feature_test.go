@@ -42,8 +42,8 @@ func TestAccDataSourceSdwanTransportT1E1ControllerProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_t1_e1_controller_feature.test", "entries.0.clock_source", "line"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_t1_e1_controller_feature.test", "entries.0.line_mode", "primary"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_t1_e1_controller_feature.test", "entries.0.description", "desc"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_t1_e1_controller_feature.test", "entries.0.channel_group.0.number", "12"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_t1_e1_controller_feature.test", "entries.0.channel_group.0.timeslots", "timeslots 15"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_t1_e1_controller_feature.test", "entries.0.channel_groups.0.channel_group", "12"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_t1_e1_controller_feature.test", "entries.0.channel_groups.0.time_slot", "timeslots 15"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -85,9 +85,9 @@ func testAccDataSourceSdwanTransportT1E1ControllerProfileParcelConfig() string {
 	config += `	  clock_source = "line"` + "\n"
 	config += `	  line_mode = "primary"` + "\n"
 	config += `	  description = "desc"` + "\n"
-	config += `	  channel_group = [{` + "\n"
-	config += `		number = 12` + "\n"
-	config += `		timeslots = "timeslots 15"` + "\n"
+	config += `	  channel_groups = [{` + "\n"
+	config += `		channel_group = 12` + "\n"
+	config += `		time_slot = "timeslots 15"` + "\n"
 	config += `	}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"

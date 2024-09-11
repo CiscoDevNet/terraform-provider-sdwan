@@ -224,30 +224,30 @@ func (r *TransportT1E1ControllerProfileParcelResource) Schema(ctx context.Contex
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
-						"channel_group": schema.ListNestedAttribute{
+						"channel_groups": schema.ListNestedAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Channel Group List").String,
 							Optional:            true,
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
-									"number": schema.Int64Attribute{
+									"channel_group": schema.Int64Attribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Number").AddIntegerRangeDescription(0, 23).String,
 										Optional:            true,
 										Validators: []validator.Int64{
 											int64validator.AtMost(23),
 										},
 									},
-									"number_variable": schema.StringAttribute{
+									"channel_group_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},
-									"timeslots": schema.StringAttribute{
+									"time_slot": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Time slots").String,
 										Optional:            true,
 										Validators: []validator.String{
 											stringvalidator.LengthBetween(1, 24),
 										},
 									},
-									"timeslots_variable": schema.StringAttribute{
+									"time_slot_variable": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 										Optional:            true,
 									},

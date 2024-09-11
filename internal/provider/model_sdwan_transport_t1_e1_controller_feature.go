@@ -45,34 +45,34 @@ type TransportT1E1Controller struct {
 }
 
 type TransportT1E1ControllerEntries struct {
-	T1Description       types.String                                 `tfsdk:"t1_description"`
-	T1Framing           types.String                                 `tfsdk:"t1_framing"`
-	T1FramingVariable   types.String                                 `tfsdk:"t1_framing_variable"`
-	T1Linecode          types.String                                 `tfsdk:"t1_linecode"`
-	T1LinecodeVariable  types.String                                 `tfsdk:"t1_linecode_variable"`
-	E1Description       types.String                                 `tfsdk:"e1_description"`
-	E1Framing           types.String                                 `tfsdk:"e1_framing"`
-	E1FramingVariable   types.String                                 `tfsdk:"e1_framing_variable"`
-	E1Linecode          types.String                                 `tfsdk:"e1_linecode"`
-	E1LinecodeVariable  types.String                                 `tfsdk:"e1_linecode_variable"`
-	CableLength         types.String                                 `tfsdk:"cable_length"`
-	LengthShort         types.String                                 `tfsdk:"length_short"`
-	LengthShortVariable types.String                                 `tfsdk:"length_short_variable"`
-	LengthLong          types.String                                 `tfsdk:"length_long"`
-	LengthLongVariable  types.String                                 `tfsdk:"length_long_variable"`
-	ClockSource         types.String                                 `tfsdk:"clock_source"`
-	LineMode            types.String                                 `tfsdk:"line_mode"`
-	LineModeVariable    types.String                                 `tfsdk:"line_mode_variable"`
-	Description         types.String                                 `tfsdk:"description"`
-	DescriptionVariable types.String                                 `tfsdk:"description_variable"`
-	ChannelGroup        []TransportT1E1ControllerEntriesChannelGroup `tfsdk:"channel_group"`
+	T1Description       types.String                                  `tfsdk:"t1_description"`
+	T1Framing           types.String                                  `tfsdk:"t1_framing"`
+	T1FramingVariable   types.String                                  `tfsdk:"t1_framing_variable"`
+	T1Linecode          types.String                                  `tfsdk:"t1_linecode"`
+	T1LinecodeVariable  types.String                                  `tfsdk:"t1_linecode_variable"`
+	E1Description       types.String                                  `tfsdk:"e1_description"`
+	E1Framing           types.String                                  `tfsdk:"e1_framing"`
+	E1FramingVariable   types.String                                  `tfsdk:"e1_framing_variable"`
+	E1Linecode          types.String                                  `tfsdk:"e1_linecode"`
+	E1LinecodeVariable  types.String                                  `tfsdk:"e1_linecode_variable"`
+	CableLength         types.String                                  `tfsdk:"cable_length"`
+	LengthShort         types.String                                  `tfsdk:"length_short"`
+	LengthShortVariable types.String                                  `tfsdk:"length_short_variable"`
+	LengthLong          types.String                                  `tfsdk:"length_long"`
+	LengthLongVariable  types.String                                  `tfsdk:"length_long_variable"`
+	ClockSource         types.String                                  `tfsdk:"clock_source"`
+	LineMode            types.String                                  `tfsdk:"line_mode"`
+	LineModeVariable    types.String                                  `tfsdk:"line_mode_variable"`
+	Description         types.String                                  `tfsdk:"description"`
+	DescriptionVariable types.String                                  `tfsdk:"description_variable"`
+	ChannelGroups       []TransportT1E1ControllerEntriesChannelGroups `tfsdk:"channel_groups"`
 }
 
-type TransportT1E1ControllerEntriesChannelGroup struct {
-	Number            types.Int64  `tfsdk:"number"`
-	NumberVariable    types.String `tfsdk:"number_variable"`
-	Timeslots         types.String `tfsdk:"timeslots"`
-	TimeslotsVariable types.String `tfsdk:"timeslots_variable"`
+type TransportT1E1ControllerEntriesChannelGroups struct {
+	ChannelGroup         types.Int64  `tfsdk:"channel_group"`
+	ChannelGroupVariable types.String `tfsdk:"channel_group_variable"`
+	TimeSlot             types.String `tfsdk:"time_slot"`
+	TimeSlotVariable     types.String `tfsdk:"time_slot_variable"`
 }
 
 // End of section. //template:end types
@@ -256,30 +256,30 @@ func (data TransportT1E1Controller) toBody(ctx context.Context) string {
 			}
 			if true {
 				itemBody, _ = sjson.Set(itemBody, "channelGroup", []interface{}{})
-				for _, childItem := range item.ChannelGroup {
+				for _, childItem := range item.ChannelGroups {
 					itemChildBody := ""
 
-					if !childItem.NumberVariable.IsNull() {
+					if !childItem.ChannelGroupVariable.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "number.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "number.value", childItem.NumberVariable.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "number.value", childItem.ChannelGroupVariable.ValueString())
 						}
-					} else if !childItem.Number.IsNull() {
+					} else if !childItem.ChannelGroup.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "number.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "number.value", childItem.Number.ValueInt64())
+							itemChildBody, _ = sjson.Set(itemChildBody, "number.value", childItem.ChannelGroup.ValueInt64())
 						}
 					}
 
-					if !childItem.TimeslotsVariable.IsNull() {
+					if !childItem.TimeSlotVariable.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "timeslots.optionType", "variable")
-							itemChildBody, _ = sjson.Set(itemChildBody, "timeslots.value", childItem.TimeslotsVariable.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "timeslots.value", childItem.TimeSlotVariable.ValueString())
 						}
-					} else if !childItem.Timeslots.IsNull() {
+					} else if !childItem.TimeSlot.IsNull() {
 						if true {
 							itemChildBody, _ = sjson.Set(itemChildBody, "timeslots.optionType", "global")
-							itemChildBody, _ = sjson.Set(itemChildBody, "timeslots.value", childItem.Timeslots.ValueString())
+							itemChildBody, _ = sjson.Set(itemChildBody, "timeslots.value", childItem.TimeSlot.ValueString())
 						}
 					}
 					itemBody, _ = sjson.SetRaw(itemBody, "channelGroup.-1", itemChildBody)
@@ -437,30 +437,30 @@ func (data *TransportT1E1Controller) fromBody(ctx context.Context, res gjson.Res
 				}
 			}
 			if cValue := v.Get("channelGroup"); cValue.Exists() {
-				item.ChannelGroup = make([]TransportT1E1ControllerEntriesChannelGroup, 0)
+				item.ChannelGroups = make([]TransportT1E1ControllerEntriesChannelGroups, 0)
 				cValue.ForEach(func(ck, cv gjson.Result) bool {
-					cItem := TransportT1E1ControllerEntriesChannelGroup{}
-					cItem.Number = types.Int64Null()
-					cItem.NumberVariable = types.StringNull()
+					cItem := TransportT1E1ControllerEntriesChannelGroups{}
+					cItem.ChannelGroup = types.Int64Null()
+					cItem.ChannelGroupVariable = types.StringNull()
 					if t := cv.Get("number.optionType"); t.Exists() {
 						va := cv.Get("number.value")
 						if t.String() == "variable" {
-							cItem.NumberVariable = types.StringValue(va.String())
+							cItem.ChannelGroupVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.Number = types.Int64Value(va.Int())
+							cItem.ChannelGroup = types.Int64Value(va.Int())
 						}
 					}
-					cItem.Timeslots = types.StringNull()
-					cItem.TimeslotsVariable = types.StringNull()
+					cItem.TimeSlot = types.StringNull()
+					cItem.TimeSlotVariable = types.StringNull()
 					if t := cv.Get("timeslots.optionType"); t.Exists() {
 						va := cv.Get("timeslots.value")
 						if t.String() == "variable" {
-							cItem.TimeslotsVariable = types.StringValue(va.String())
+							cItem.TimeSlotVariable = types.StringValue(va.String())
 						} else if t.String() == "global" {
-							cItem.Timeslots = types.StringValue(va.String())
+							cItem.TimeSlot = types.StringValue(va.String())
 						}
 					}
-					item.ChannelGroup = append(item.ChannelGroup, cItem)
+					item.ChannelGroups = append(item.ChannelGroups, cItem)
 					return true
 				})
 			}
@@ -640,10 +640,10 @@ func (data *TransportT1E1Controller) updateFromBody(ctx context.Context, res gjs
 				data.Entries[i].Description = types.StringValue(va.String())
 			}
 		}
-		for ci := range data.Entries[i].ChannelGroup {
+		for ci := range data.Entries[i].ChannelGroups {
 			keys := [...]string{"number", "timeslots"}
-			keyValues := [...]string{strconv.FormatInt(data.Entries[i].ChannelGroup[ci].Number.ValueInt64(), 10), data.Entries[i].ChannelGroup[ci].Timeslots.ValueString()}
-			keyValuesVariables := [...]string{data.Entries[i].ChannelGroup[ci].NumberVariable.ValueString(), data.Entries[i].ChannelGroup[ci].TimeslotsVariable.ValueString()}
+			keyValues := [...]string{strconv.FormatInt(data.Entries[i].ChannelGroups[ci].ChannelGroup.ValueInt64(), 10), data.Entries[i].ChannelGroups[ci].TimeSlot.ValueString()}
+			keyValuesVariables := [...]string{data.Entries[i].ChannelGroups[ci].ChannelGroupVariable.ValueString(), data.Entries[i].ChannelGroups[ci].TimeSlotVariable.ValueString()}
 
 			var cr gjson.Result
 			r.Get("channelGroup").ForEach(
@@ -669,24 +669,24 @@ func (data *TransportT1E1Controller) updateFromBody(ctx context.Context, res gjs
 					return true
 				},
 			)
-			data.Entries[i].ChannelGroup[ci].Number = types.Int64Null()
-			data.Entries[i].ChannelGroup[ci].NumberVariable = types.StringNull()
+			data.Entries[i].ChannelGroups[ci].ChannelGroup = types.Int64Null()
+			data.Entries[i].ChannelGroups[ci].ChannelGroupVariable = types.StringNull()
 			if t := cr.Get("number.optionType"); t.Exists() {
 				va := cr.Get("number.value")
 				if t.String() == "variable" {
-					data.Entries[i].ChannelGroup[ci].NumberVariable = types.StringValue(va.String())
+					data.Entries[i].ChannelGroups[ci].ChannelGroupVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Entries[i].ChannelGroup[ci].Number = types.Int64Value(va.Int())
+					data.Entries[i].ChannelGroups[ci].ChannelGroup = types.Int64Value(va.Int())
 				}
 			}
-			data.Entries[i].ChannelGroup[ci].Timeslots = types.StringNull()
-			data.Entries[i].ChannelGroup[ci].TimeslotsVariable = types.StringNull()
+			data.Entries[i].ChannelGroups[ci].TimeSlot = types.StringNull()
+			data.Entries[i].ChannelGroups[ci].TimeSlotVariable = types.StringNull()
 			if t := cr.Get("timeslots.optionType"); t.Exists() {
 				va := cr.Get("timeslots.value")
 				if t.String() == "variable" {
-					data.Entries[i].ChannelGroup[ci].TimeslotsVariable = types.StringValue(va.String())
+					data.Entries[i].ChannelGroups[ci].TimeSlotVariable = types.StringValue(va.String())
 				} else if t.String() == "global" {
-					data.Entries[i].ChannelGroup[ci].Timeslots = types.StringValue(va.String())
+					data.Entries[i].ChannelGroups[ci].TimeSlot = types.StringValue(va.String())
 				}
 			}
 		}
