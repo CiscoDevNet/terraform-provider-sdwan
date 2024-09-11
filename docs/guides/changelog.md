@@ -30,6 +30,9 @@ description: |-
 - Add `sdwan_sig_security_feature_profile` resource and data source
 - Add `sdwan_embedded_security_feature_profile` resource and data source
 - Enhance `sdwan_configuration_group` resource and data source to support device associations, variables and deployment
+- Add `sdwan_service_multicast_feature` resource and data source
+- Add `sdwan_service_routing_eigrp_feature` resource and data source
+- Add `sdwan_service_wireless_lan_feature` resource and data source
 
 ## 0.4.1
 
