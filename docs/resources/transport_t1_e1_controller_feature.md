@@ -70,6 +70,7 @@ resource "sdwan_transport_t1_e1_controller_feature" "example" {
 Optional:
 
 - `cable_length` (String) Cable Config
+  - Choices: `short`, `long`
 - `channel_groups` (Attributes List) Channel Group List (see [below for nested schema](#nestedatt--entries--channel_groups))
 - `clock_source` (String) Clock Source
   - Choices: `line`, `internal`, `loop-timed`, `network`

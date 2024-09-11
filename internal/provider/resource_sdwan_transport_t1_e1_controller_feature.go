@@ -170,8 +170,11 @@ func (r *TransportT1E1ControllerProfileParcelResource) Schema(ctx context.Contex
 							Optional:            true,
 						},
 						"cable_length": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Cable Config").String,
+							MarkdownDescription: helpers.NewAttributeDescription("Cable Config").AddStringEnumDescription("short", "long").String,
 							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("short", "long"),
+							},
 						},
 						"length_short": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("length").AddStringEnumDescription("110ft", "220ft", "330ft", "440ft", "550ft", "660ft").String,

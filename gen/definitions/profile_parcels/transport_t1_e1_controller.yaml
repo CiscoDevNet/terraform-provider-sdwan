@@ -56,7 +56,7 @@ attributes:
       example: ami
     - model_name: cableLength
       data_path: [cable]
-      enum: [short, long]
+      enum_values: [short, long]
       type: String
       example: "long"
     - model_name: lengthShort
