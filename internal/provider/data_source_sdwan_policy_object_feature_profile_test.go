@@ -52,6 +52,7 @@ func TestAccDataSourceSdwanPolicyObjectFeatureProfile(t *testing.T) {
 // Section below is generated&owned by "gen/generator.go". //template:begin testPrerequisites
 // End of section. //template:end testPrerequisites
 
+// Section below is generated&owned by "gen/generator.go". //template:begin testAccDataSourceConfig
 func testAccDataSourceSdwanPolicyObjectFeatureProfileConfig() string {
 	config := ""
 	config += `resource "sdwan_policy_object_feature_profile" "test" {` + "\n"
@@ -61,8 +62,10 @@ func testAccDataSourceSdwanPolicyObjectFeatureProfileConfig() string {
 
 	config += `
 		data "sdwan_policy_object_feature_profile" "test" {
-			depends_on = [sdwan_policy_object_feature_profile.test]
+			id = sdwan_policy_object_feature_profile.test.id
 		}
 	`
 	return config
 }
+
+// End of section. //template:end testAccDataSourceConfig
