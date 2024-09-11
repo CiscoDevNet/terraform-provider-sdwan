@@ -14,8 +14,9 @@ attributes:
     test_value: sdwan_service_feature_profile.test.id
   - model_name: asNum
     tf_name: autonomous_system_id
-    mandatory: true
     example: 111
+    test_value: '"111"'
+    minimum_test_value: '"111"'
   - model_name: redistribute
     tf_name: redistributes
     data_path: [addressFamily]
@@ -43,16 +44,19 @@ attributes:
       mandatory: true
       example: 255.255.255.0
   - model_name: helloInterval
-    mandatory: true
     example: 5
+    test_value: '5'
+    minimum_test_value: '5'
   - model_name: holdTime
-    mandatory: true
     example: 15
+    test_value: '15'
+    minimum_test_value: '15'
   - model_name: type
     tf_name: authentication_type
     data_path: [authentication]
-    mandatory: true
     example: md5
+    test_value: '"md5"'
+    minimum_test_value: '"md5"'
   - model_name: authKey
     tf_name: hmac_authentication_key
     data_path: [authentication]

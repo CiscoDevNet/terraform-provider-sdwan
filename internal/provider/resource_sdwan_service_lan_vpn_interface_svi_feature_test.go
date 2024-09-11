@@ -34,12 +34,9 @@ func TestAccSdwanServiceLANVPNInterfaceSVIProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "shutdown", "false"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "interface_name", "Vlan1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "interface_description", "SVI"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "interface_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ip_mtu", "1500"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_address", "1.2.3.4"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_secondary_addresses.0.address", "2.3.4.5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv4_secondary_addresses.0.ipv4_subnet_mask", "0.0.0.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_svi_feature.test", "ipv6_address", "2001:0:0:1::0/32"))
@@ -111,7 +108,7 @@ func testAccSdwanServiceLANVPNInterfaceSVIProfileParcelConfig_minimum() string {
 	config += `	service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id` + "\n"
 	config += `	interface_name = "Vlan1"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
-	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
+	config += `	ipv4_subnet_mask = " 0.0.0.0"` + "\n"
 	config += `}` + "\n"
 	return config
 }

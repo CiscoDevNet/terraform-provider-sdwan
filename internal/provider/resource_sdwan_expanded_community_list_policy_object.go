@@ -87,7 +87,7 @@ func (r *ExpandedCommunityListPolicyObjectResource) Schema(ctx context.Context, 
 					Attributes: map[string]schema.Attribute{
 						"community": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Expanded community value, e.g. `100:1000`").String,
-							Required:            true,
+							Optional:            true,
 						},
 					},
 				},

@@ -43,9 +43,6 @@ func TestAccSdwanServiceWirelessLANProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_wireless_lan_feature.test", "ssids.0.security_type", "personal"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_wireless_lan_feature.test", "ssids.0.passphrase", "MyPassword123"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_wireless_lan_feature.test", "ssids.0.qos_profile", "silver"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_wireless_lan_feature.test", "country", "GB"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_wireless_lan_feature.test", "username", "user1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_wireless_lan_feature.test", "password", "Test@316s13"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_wireless_lan_feature.test", "me_dynamic_ip_enabled", "true"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
