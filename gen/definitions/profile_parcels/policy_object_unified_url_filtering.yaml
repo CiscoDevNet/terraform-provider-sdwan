@@ -1,0 +1,70 @@
+---
+name: Policy Object Unified URL Filtering
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/unified/url-filtering
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+skip_minimum_test: true
+parcel_type: policy_object
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: webCategoriesAction
+    example: block
+  - model_name: webCategories
+    example: confirmed-spam-sources
+  - model_name: webReputation
+    example: suspicious
+  - model_name: refId
+    tf_name: url_allow_list_id
+    data_path: [urlAllowedList]
+    example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
+    test_value: sdwan_policy_object_security_url_allow_list.test.id
+  - model_name: refId
+    tf_name: url_block_list_id
+    data_path: [urlBlockedList]
+    example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
+    test_value: sdwan_policy_object_security_url_block_list.test.id
+  - model_name: blockPageAction
+    example: text
+  - model_name: blockPageContents
+    example: Access to the requested page has been denied. Please contact your Network Administrator
+  - model_name: redirectUrl
+    # exclude_test: true
+    example: www.example.com
+  - model_name: enableAlerts
+    example: true
+  - model_name: alerts
+    example: blacklist
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }
+
+  resource "sdwan_policy_object_security_url_block_list" "test" {
+    name               = "TF_TEST_ALLOW"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        pattern = "www.cisco.com"
+      }
+    ]
+  }
+
+  resource "sdwan_policy_object_security_url_allow_list" "test" {
+    name               = "TF_TEST_BLOCK"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        pattern = "www.cisco.com"
+      }
+    ]
+  }
