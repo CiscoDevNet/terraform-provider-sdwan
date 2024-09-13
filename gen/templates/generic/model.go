@@ -582,7 +582,7 @@ func (data *{{camelCase .Name}}) hasChanges(ctx context.Context, state *{{camelC
 func (data *{{camelCase .Name}}) updateVersions(ctx context.Context, state *{{camelCase .Name}}) {
 	{{- range .Attributes}}
 	{{- $name := toGoName .TfName}}
-	{{- if eq .Type "Version"}}
+	{{- if or (eq .Type "Version") (eq .Type "Versions")}}
 	data.{{toGoName .TfName}} = state.{{toGoName .TfName}}
 	{{- else if and (isNestedListSet .) (hasVersionAttribute .Attributes)}}
 	for i := range data.{{toGoName .TfName}} {
