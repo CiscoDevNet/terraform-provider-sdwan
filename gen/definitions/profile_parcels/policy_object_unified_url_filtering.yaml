@@ -34,7 +34,6 @@ attributes:
   - model_name: blockPageContents
     example: Access to the requested page has been denied. Please contact your Network Administrator
   - model_name: redirectUrl
-    # exclude_test: true
     example: www.example.com
   - model_name: enableAlerts
     example: true
