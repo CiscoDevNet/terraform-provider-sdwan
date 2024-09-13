@@ -187,24 +187,24 @@ func (data TransportT1E1Controller) toBody(ctx context.Context) string {
 			}
 
 			if !item.LengthShortVariable.IsNull() {
-				if true {
+				if true && item.CableLength.ValueString() == "short" {
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthShort.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthShort.value", item.LengthShortVariable.ValueString())
 				}
 			} else if !item.LengthShort.IsNull() {
-				if true {
+				if true && item.CableLength.ValueString() == "short" {
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthShort.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthShort.value", item.LengthShort.ValueString())
 				}
 			}
 
 			if !item.LengthLongVariable.IsNull() {
-				if true {
+				if true && item.CableLength.ValueString() == "long" {
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthLong.optionType", "variable")
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthLong.value", item.LengthLongVariable.ValueString())
 				}
 			} else if !item.LengthLong.IsNull() {
-				if true {
+				if true && item.CableLength.ValueString() == "long" {
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthLong.optionType", "global")
 					itemBody, _ = sjson.Set(itemBody, "cable.lengthLong.value", item.LengthLong.ValueString())
 				}

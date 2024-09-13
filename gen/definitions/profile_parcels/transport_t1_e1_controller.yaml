@@ -13,6 +13,7 @@ attributes:
     example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
     test_value: sdwan_transport_feature_profile.test.id
   - model_name: type
+    mandatory: true
     example: t1
   - model_name: slot
     example: 11
@@ -62,9 +63,15 @@ attributes:
     - model_name: lengthShort
       data_path: [cable]
       exclude_test: true
+      conditional_attribute:
+        name: cable_length
+        value: short
       example: 110ft
     - model_name: lengthLong
       data_path: [cable]
+      conditional_attribute:
+        name: cable_length
+        value: long
       example: -7.5db
     - model_name: clockSource
       example: line

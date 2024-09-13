@@ -177,7 +177,7 @@ func (r *TransportT1E1ControllerProfileParcelResource) Schema(ctx context.Contex
 							},
 						},
 						"length_short": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("length").AddStringEnumDescription("110ft", "220ft", "330ft", "440ft", "550ft", "660ft").String,
+							MarkdownDescription: helpers.NewAttributeDescription("length, Attribute conditional on `cable_length` being equal to `short`").AddStringEnumDescription("110ft", "220ft", "330ft", "440ft", "550ft", "660ft").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("110ft", "220ft", "330ft", "440ft", "550ft", "660ft"),
@@ -188,7 +188,7 @@ func (r *TransportT1E1ControllerProfileParcelResource) Schema(ctx context.Contex
 							Optional:            true,
 						},
 						"length_long": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("length").AddStringEnumDescription("-15db", "-22.5db", "-7.5db", "0db").String,
+							MarkdownDescription: helpers.NewAttributeDescription("length, Attribute conditional on `cable_length` being equal to `long`").AddStringEnumDescription("-15db", "-22.5db", "-7.5db", "0db").String,
 							Optional:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("-15db", "-22.5db", "-7.5db", "0db"),
