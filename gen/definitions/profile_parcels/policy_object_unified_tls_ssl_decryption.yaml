@@ -1,0 +1,64 @@
+---
+name: Policy Object Unified TLS SSL Decryption
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/unified/unified/ssl-decryption
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+skip_minimum_test: true
+parcel_type: policy_object
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: sslEnable
+    tf_name: enable_ssl
+    example: true
+  - model_name: expiredCertificate
+    example: drop
+  - model_name: untrustedCertificate
+    example: drop
+  - model_name: certificateRevocationStatus
+    example: ocsp
+  - model_name: unknownStatus
+    tf_name: unknown_revocation_status
+    example: decrypt
+  - model_name: unsupportedProtocolVersions
+    example: no-decrypt
+  - model_name: unsupportedCipherSuites
+    example: drop
+  - model_name: failureMode
+    example: close
+  - model_name: default
+    tf_name: default_ca_certificate_bundle
+    data_path: [caCertBundle]
+    example: true
+  - model_name: fileName
+    data_path: [caCertBundle]
+    exclude_test: true
+    example: dummy.pem
+  - model_name: bundleString
+    data_path: [caCertBundle]
+    exclude_test: true
+    example: testString
+  - model_name: keyModulus
+    tf_name: rsa_keypair_modules
+    example: 2048
+  - model_name: eckeyType
+    tf_name: ec_key_type
+    example: P384
+  - model_name: certificateLifetime
+    example: 1
+  - model_name: minTlsVer
+    tf_name: minimal_tls_ver
+    example: TLSv1.2
+  - model_name: caTpLabel
+    value: PROXY-SIGNING-CA
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }
