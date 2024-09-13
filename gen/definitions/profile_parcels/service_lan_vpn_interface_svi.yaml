@@ -44,7 +44,7 @@ attributes:
     tf_name: ipv4_subnet_mask
     example: 0.0.0.0
     test_value: '"0.0.0.0"'
-    minimum_test_value: '" 0.0.0.0"'
+    minimum_test_value: '"0.0.0.0"'
   - model_name: secondaryAddressV4
     tf_name: ipv4_secondary_addresses
     data_path: [ipv4]

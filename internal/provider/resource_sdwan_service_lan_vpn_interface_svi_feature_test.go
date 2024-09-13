@@ -108,7 +108,7 @@ func testAccSdwanServiceLANVPNInterfaceSVIProfileParcelConfig_minimum() string {
 	config += `	service_lan_vpn_feature_id = sdwan_service_lan_vpn_feature.test.id` + "\n"
 	config += `	interface_name = "Vlan1"` + "\n"
 	config += `	ipv4_address = "1.2.3.4"` + "\n"
-	config += `	ipv4_subnet_mask = " 0.0.0.0"` + "\n"
+	config += `	ipv4_subnet_mask = "0.0.0.0"` + "\n"
 	config += `}` + "\n"
 	return config
 }
