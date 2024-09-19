@@ -22,9 +22,11 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/netascode/go-sdwan"
 )
@@ -121,6 +123,43 @@ func (d *ConfigurationGroupDataSource) Schema(ctx context.Context, req datasourc
 				MarkdownDescription: "Number of devices per site",
 				Computed:            true,
 			},
+			"devices": schema.ListNestedAttribute{
+				MarkdownDescription: "List of devices",
+				Computed:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.StringAttribute{
+							MarkdownDescription: "Device ID",
+							Computed:            true,
+						},
+						"deploy": schema.BoolAttribute{
+							MarkdownDescription: "Deploy to device if enabled.",
+							Computed:            true,
+						},
+						"variables": schema.SetNestedAttribute{
+							MarkdownDescription: "List of variables",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"name": schema.StringAttribute{
+										MarkdownDescription: "Variable name",
+										Computed:            true,
+									},
+									"value": schema.StringAttribute{
+										MarkdownDescription: "Variable value",
+										Computed:            true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"feature_versions": schema.ListAttribute{
+				MarkdownDescription: "List of all associated feature versions",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
 		},
 	}
 }
@@ -135,7 +174,6 @@ func (d *ConfigurationGroupDataSource) Configure(_ context.Context, req datasour
 
 // End of section. //template:end model
 
-// Section below is generated&owned by "gen/generator.go". //template:begin read
 func (d *ConfigurationGroupDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var config ConfigurationGroup
 
@@ -148,18 +186,46 @@ func (d *ConfigurationGroupDataSource) Read(ctx context.Context, req datasource.
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Read", config.Id.String()))
 
+	// Read config group
 	res, err := d.client.Get(config.getPath() + url.QueryEscape(config.Id.ValueString()))
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
+	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
 		return
 	}
 
-	config.fromBody(ctx, res)
+	config.fromBodyConfigGroup(ctx, res)
+
+	// Read config group devices
+	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", config.Id.ValueString())
+	res, err = d.client.Get(path)
+	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	config.fromBodyConfigGroupDevices(ctx, res)
+
+	// Read config group devices
+	path = fmt.Sprintf("/v1/config-group/%v/device/variables/", config.Id.ValueString())
+	res, err = d.client.Get(path)
+	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	config.fromBodyConfigGroupDeviceVariables(ctx, res)
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Read finished successfully", config.Id.ValueString()))
 
 	diags = resp.State.Set(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 }
-
-// End of section. //template:end read

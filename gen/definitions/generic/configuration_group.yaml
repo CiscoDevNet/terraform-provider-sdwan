@@ -63,7 +63,19 @@ attributes:
           - model_name: parcelType
             type: String
             id: true
-            enum_values: [wan/vpn/interface/gre, wan/vpn/interface/ethernet, wan/vpn/interface/cellular, wan/vpn/interface/ipsec, wan/vpn/interface/serial, routing/ospf, lan/vpn/interface/ethernet, lan/vpn/interface/svi, lan/vpn/interface/ipsec, lan/vpn]
+            enum_values:
+              [
+                wan/vpn/interface/gre,
+                wan/vpn/interface/ethernet,
+                wan/vpn/interface/cellular,
+                wan/vpn/interface/ipsec,
+                wan/vpn/interface/serial,
+                routing/ospf,
+                lan/vpn/interface/ethernet,
+                lan/vpn/interface/svi,
+                lan/vpn/interface/ipsec,
+                lan/vpn,
+              ]
             description: Parcel type
             example: wan/vpn/interface/gre
           - model_name: parcelId
@@ -80,8 +92,129 @@ attributes:
     description: Number of devices per site
     example: 2
     exclude_test: true
+  - model_name: devices
+    type: List
+    description: List of devices
+    attributes:
+      - model_name: id
+        type: String
+        id: true
+        description: Device ID
+        example: C8K-40C0CCFD-9EA8-2B2E-E73B-32C5924EC79B
+      - tf_name: deploy
+        tf_only: true
+        type: Bool
+        description: Deploy to device if enabled.
+        default_value: false
+        example: true
+      - model_name: variables
+        type: Set
+        description: List of variables
+        attributes:
+          - model_name: name
+            type: String
+            id: true
+            description: Variable name
+            example: host_name
+          - model_name: value
+            type: String
+            mandatory: true
+            description: Variable value
+            example: edge1
+  - tf_name: feature_versions
+    tf_only: true
+    type: Versions
+    description: List of all associated feature versions
+    exclude_test: true
+  # - model_name: groups
+  #   tf_name: device_groups
+  #   type: List
+  #   description: List of device groups
+  #   exclude_test: true
+  #   attributes:
+  #     - model_name: name
+  #       type: String
+  #       id: true
+  #       description: Group name
+  #       example: name1
+  #     - model_name: group-variables
+  #       tf_name: variables
+  #       type: Set
+  #       description: List of variables
+  #       attributes:
+  #         - model_name: name
+  #           type: String
+  #           id: true
+  #           description: Variable name
+  #           example: var
+  #         - model_name: value
+  #           type: String
+  #           mandatory: true
+  #           description: Variable value
+  #           example: value1
 test_prerequisites: |
   resource "sdwan_system_feature_profile" "test" {
-    name = "TF_TEST"
+    name = "SYSTEM_TF"
     description = "Terraform test"
+  }
+
+  resource "sdwan_system_basic_feature" "test" {
+    name = "BASIC_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_aaa_feature" "test" {
+    name               = "AAA_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+    server_auth_order  = ["local"]
+    users = [{
+      name     = "admin"
+      password = "admin"
+    }]
+  }
+
+  resource "sdwan_system_bfd_feature" "test" {
+    name               = "BFD_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_global_feature" "test" {
+    name               = "GLOBAL_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_logging_feature" "test" {
+    name               = "LOGGING_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  }
+
+  resource "sdwan_system_omp_feature" "test" {
+    name               = "OMP_TF"
+    feature_profile_id = sdwan_system_feature_profile.test.id
+  } 
+
+  resource "sdwan_transport_feature_profile" "test" {
+    name        = "TRANSPORT_TF"
+    description = "My transport feature profile 1"
+  }
+
+  resource "sdwan_transport_wan_vpn_feature" "test" {
+    name               = "WAN_VPN_TF"
+    feature_profile_id = sdwan_transport_feature_profile.test.id
+    vpn                = 0
+  }
+
+  resource "sdwan_transport_wan_vpn_interface_ethernet_feature" "test" {
+    name                         = "WAN_VPN_INT_TF"
+    feature_profile_id           = sdwan_transport_feature_profile.test.id
+    transport_wan_vpn_feature_id = sdwan_transport_wan_vpn_feature.test.id
+    interface_name               = "GigabitEthernet1"
+    shutdown                     = false
+    ipv4_dhcp_distance           = 1
+    tunnel_interface             = true
+    tunnel_interface_encapsulations = [
+      {
+        encapsulation = "ipsec"
+      }
+    ]
   }

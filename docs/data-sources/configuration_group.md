@@ -28,11 +28,32 @@ data "sdwan_configuration_group" "example" {
 ### Read-Only
 
 - `description` (String) Description
+- `devices` (Attributes List) List of devices (see [below for nested schema](#nestedatt--devices))
 - `feature_profiles` (Attributes Set) List of feature profiles (see [below for nested schema](#nestedatt--feature_profiles))
+- `feature_versions` (List of String) List of all associated feature versions
 - `name` (String) The name of the configuration group
 - `solution` (String) Type of solution
 - `topology_devices` (Attributes List) List of topology device types (see [below for nested schema](#nestedatt--topology_devices))
 - `topology_site_devices` (Number) Number of devices per site
+
+<a id="nestedatt--devices"></a>
+### Nested Schema for `devices`
+
+Read-Only:
+
+- `deploy` (Boolean) Deploy to device if enabled.
+- `id` (String) Device ID
+- `variables` (Attributes Set) List of variables (see [below for nested schema](#nestedatt--devices--variables))
+
+<a id="nestedatt--devices--variables"></a>
+### Nested Schema for `devices.variables`
+
+Read-Only:
+
+- `name` (String) Variable name
+- `value` (String) Variable value
+
+
 
 <a id="nestedatt--feature_profiles"></a>
 ### Nested Schema for `feature_profiles`

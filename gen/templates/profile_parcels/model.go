@@ -158,6 +158,9 @@ func (data {{camelCase .Name}}) toBody(ctx context.Context) string {
 	body := ""
 	body, _ = sjson.Set(body, "name", data.Name.ValueString())
 	body, _ = sjson.Set(body, "description", data.Description.ValueString())
+	{{- if .TypeValue}}
+	body, _ = sjson.Set(body, "type", "{{.TypeValue}}")
+	{{- end}}
 	path := "data."
 	{{- range .Attributes}}
 	{{- if .Value}}
