@@ -1,0 +1,207 @@
+{
+    "request": {
+        "$schema": "http://json-schema.org/draft/2019-09/schema",
+        "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/unified/intrusion-prevention/post/request_schema.json",
+        "title": "Intrusion Prevention Parcel Schema",
+        "description": "Intrusion Prevention profile parcel schema for POST request",
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "pattern": "^[^&<>! \"]+$",
+                "minLength": 1,
+                "maxLength": 32
+            },
+            "description": {
+                "type": "string"
+            },
+            "data": {
+                "type": "object",
+                "minProperties": 1,
+                "properties": {
+                    "signatureSet": {
+                        "description": "Can be one of the enum value",
+                        "type": "object",
+                        "properties": {
+                            "optionType": {
+                                "type": "string",
+                                "enum": [
+                                    "global"
+                                ]
+                            },
+                            "value": {
+                                "enum": [
+                                    "balanced",
+                                    "connectivity",
+                                    "security"
+                                ],
+                                "type": "string",
+                                "default": "balanced"
+                            }
+                        },
+                        "required": [
+                            "optionType",
+                            "value"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "inspectionMode": {
+                        "description": "Can be one of the enum value",
+                        "type": "object",
+                        "properties": {
+                            "optionType": {
+                                "type": "string",
+                                "enum": [
+                                    "global"
+                                ]
+                            },
+                            "value": {
+                                "enum": [
+                                    "detection",
+                                    "protection"
+                                ],
+                                "type": "string",
+                                "default": "detection"
+                            }
+                        },
+                        "required": [
+                            "optionType",
+                            "value"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "signatureAllowedList": {
+                        "description": "Valid UUID",
+                        "type": "object",
+                        "properties": {
+                            "refId": {
+                                "type": "object",
+                                "properties": {
+                                    "optionType": {
+                                        "type": "string",
+                                        "enum": [
+                                            "global"
+                                        ]
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                    }
+                                },
+                                "required": [
+                                    "optionType",
+                                    "value"
+                                ],
+                                "additionalProperties": false
+                            }
+                        }
+                    },
+                    "logLevel": {
+                        "description": "Can be one of the enum value",
+                        "type": "object",
+                        "properties": {
+                            "optionType": {
+                                "type": "string",
+                                "enum": [
+                                    "global"
+                                ]
+                            },
+                            "value": {
+                                "enum": [
+                                    "emergency",
+                                    "alert",
+                                    "critical",
+                                    "error",
+                                    "warning",
+                                    "notice",
+                                    "info",
+                                    "debug"
+                                ],
+                                "type": "string",
+                                "default": "error"
+                            }
+                        },
+                        "required": [
+                            "optionType",
+                            "value"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "customSignature": {
+                        "description": "Can be one of the enum value",
+                        "type": "object",
+                        "properties": {
+                            "optionType": {
+                                "type": "string",
+                                "enum": [
+                                    "global"
+                                ]
+                            },
+                            "value": {
+                                "type": "boolean",
+                                "default": false
+                            }
+                        },
+                        "required": [
+                            "optionType",
+                            "value"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "required": [
+                    "signatureSet",
+                    "inspectionMode",
+                    "logLevel"
+                ],
+                "additionalProperties": false
+            },
+            "documentation": {
+                "description": "This is the documentation for POST request schema for Intrusion Prevention profile parcel",
+                "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+                "details-2": "variable name should not be present if optionType value is NOT variable",
+                "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+                "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+                "examples": [
+                    {
+                        "data": {
+                            "signatureSet": {
+                                "optionType": "global",
+                                "value": "balanced"
+                            },
+                            "inspectionMode": {
+                                "optionType": "global",
+                                "value": "detection"
+                            },
+                            "signatureAllowedList": {
+                                "refId": {
+                                    "optionType": "global",
+                                    "value": "f2add913-a9ed-4aef-a3b8-760d655ab029"
+                                }
+                            },
+                            "logLevel": {
+                                "optionType": "global",
+                                "value": "error"
+                            },
+                            "customSignature": {
+                                "optionType": "global",
+                                "value": false
+                            }
+                        },
+                        "name": "Intrusion Prevention Parcel"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "name",
+            "data"
+        ],
+        "not": {
+            "required": [
+                "documentation"
+            ]
+        },
+        "additionalProperties": false
+    }
+}

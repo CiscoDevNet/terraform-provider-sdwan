@@ -1,0 +1,326 @@
+{
+  "request": {
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/policy-object/unified/advanced-inspection-profile/post/request_schema.json",
+      "title": "advanced-malware-protection Parcel Schema",
+      "description": "advanced-malware-protection profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "minLength": 1,
+              "maxLength": 32,
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$"
+          },
+          "description": {
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "minProperties": 1,
+              "description": "requires tlsDecryptionAction and at least one of Intrusion Prevention or URL Filtering or Advanced Malware Protection policies",
+              "properties": {
+                  "tlsDecryptionAction": {
+                      "oneOf": [
+                          {
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "enum": [
+                                          "decrypt",
+                                          "neverDecrypt",
+                                          "skipDecrypt"
+                                      ],
+                                      "type": "string"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      ]
+                  },
+                  "intrusionPrevention": {
+                      "type": "object",
+                      "properties": {
+                          "refId": {
+                              "type": "object",
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      },
+                      "required": [
+                          "refId"
+                      ],
+                      "additionalProperties": false
+                  },
+                  "urlFiltering": {
+                      "type": "object",
+                      "properties": {
+                          "refId": {
+                              "type": "object",
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      },
+                      "required": [
+                          "refId"
+                      ],
+                      "additionalProperties": false
+                  },
+                  "advancedMalwareProtection": {
+                      "type": "object",
+                      "properties": {
+                          "refId": {
+                              "type": "object",
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      },
+                      "required": [
+                          "refId"
+                      ],
+                      "additionalProperties": false
+                  },
+                  "sslDecryptionProfile": {
+                      "description": "required if tlsDecryptionAction's value is decrypt",
+                      "type": "object",
+                      "properties": {
+                          "refId": {
+                              "type": "object",
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "global"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          }
+                      },
+                      "required": [
+                          "refId"
+                      ],
+                      "additionalProperties": false
+                  }
+              },
+              "anyOf": [
+                  {
+                      "required": [
+                          "intrusionPrevention"
+                      ]
+                  },
+                  {
+                      "required": [
+                          "urlFiltering"
+                      ]
+                  },
+                  {
+                      "required": [
+                          "advancedMalwareProtection"
+                      ]
+                  }
+              ],
+              "required": [
+                  "tlsDecryptionAction"
+              ],
+              "additionalProperties": false
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for advanced-malware-protection profile parcel",
+              "details-1": "variable name should be present with given format as specified in schema if optionType value is variable",
+              "details-2": "variable name should not be present if optionType value is NOT variable",
+              "details-3": "when option Type is global,  value should be present with given format/restrictions as specified in schema",
+              "details-4": "when option Type is default, value should be present with given default value as specified in schema",
+              "examples": [
+                  {
+                      "name": "AIP1",
+                      "description": "No Description",
+                      "data": {
+                          "tlsDecryptionAction": {
+                              "optionType": "global",
+                              "value": "decrypt"
+                          },
+                          "intrusionPrevention": {
+                              "refId": {
+                                  "optionType": "global",
+                                  "value": "153b8ad7-77b7-40bb-9ad7-3eb618ee3e58"
+                              }
+                          },
+                          "urlFiltering": {
+                              "refId": {
+                                  "optionType": "global",
+                                  "value": "8dc7ad7c-caee-4e9a-a04a-d57a5fe73bca"
+                              }
+                          },
+                          "advancedMalwareProtection": {
+                              "refId": {
+                                  "optionType": "global",
+                                  "value": "63633ffd-1f4c-4667-bad0-5cac9948cf87"
+                              }
+                          },
+                          "sslDecryptionProfile": {
+                              "refId": {
+                                  "optionType": "global",
+                                  "value": "65ea6eed-e500-473e-8b15-bfcd0cb6adb8"
+                              }
+                          }
+                      }
+                  }
+              ]
+          }
+      },
+      "required": [
+          "name",
+          "description",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "documentation"
+          ]
+      },
+      "allOf": [
+          {
+              "if": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "tlsDecryptionAction": {
+                                  "properties": {
+                                      "value": {
+                                          "enum": [
+                                              "decrypt"
+                                          ]
+                                      }
+                                  }
+                              }
+                          },
+                          "required": [
+                              "tlsDecryptionAction"
+                          ]
+                      }
+                  }
+              },
+              "then": {
+                  "properties": {
+                      "data": {
+                          "required": [
+                              "tlsDecryptionAction",
+                              "sslDecryptionProfile"
+                          ]
+                      }
+                  }
+              }
+          },
+          {
+              "if": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "sslDecryptionProfile": {
+                                  "properties": {
+                                      "refId": {
+                                          "properties": {
+                                              "optionType": {
+                                                  "enum": [
+                                                      "global"
+                                                  ]
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          },
+                          "required": [
+                              "sslDecryptionProfile"
+                          ]
+                      }
+                  }
+              },
+              "then": {
+                  "properties": {
+                      "data": {
+                          "properties": {
+                              "tlsDecryptionAction": {
+                                  "properties": {
+                                      "value": {
+                                          "enum": [
+                                              "decrypt"
+                                          ]
+                                      }
+                                  }
+                              }
+                          },
+                          "required": [
+                              "sslDecryptionProfile"
+                          ]
+                      }
+                  }
+              }
+          }
+      ],
+      "additionalProperties": false
+  }
+}

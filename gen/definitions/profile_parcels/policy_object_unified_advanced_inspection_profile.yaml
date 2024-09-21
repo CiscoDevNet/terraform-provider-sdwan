@@ -1,0 +1,133 @@
+---
+name: Policy Object Unified Advanced Inspection Profile
+rest_endpoint: /v1/feature-profile/sdwan/policy-object/%v/unified/advanced-inspection-profile
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+skip_minimum_test: true
+parcel_type: policy_object
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_policy_object_feature_profile.test.id
+  - model_name: tlsDecryptionAction
+    example: decrypt
+  - model_name: refId
+    tf_name: intrusion_prevention_list_id
+    data_path: [intrusionPrevention]
+    example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
+    test_value: sdwan_policy_object_unified_intrusion_prevention.test.id
+  - model_name: refId
+    tf_name: url_filtering_list_id
+    data_path: [urlFiltering]
+    example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
+    test_value: sdwan_policy_object_security_url_allow_list.test.id
+  - model_name: refId
+    tf_name: advanced_malware_protection_list_id
+    data_path: [advancedMalwareProtection]
+    example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
+    test_value: sdwan_policy_object_unified_advanced_malware_protection.test.id
+  - model_name: refId
+    tf_name: tls_ssl_profile_list_id
+    data_path: [sslDecryptionProfile]
+    example: 2ad58d78-59ee-46d3-86dd-7b6b7ca09f38
+    test_value: sdwan_policy_object_unified_tls_ssl_profile.test.id
+
+test_prerequisites: |
+  resource "sdwan_policy_object_feature_profile" "test" {
+    name = "POLICY_OBJECT_FP_1"
+    description = "My policy object feature profile 1"
+  }
+
+  resource "sdwan_policy_object_security_url_allow_list" "test" {
+    name               = "TF_TEST_ALLOW"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        pattern = "www.cisco.com"
+      }
+    ]
+  }
+
+  resource "sdwan_policy_object_security_url_block_list" "test" {
+    name               = "TF_TEST_BLOCK"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        pattern = "www.cisco.com"
+      }
+    ]
+  }
+
+  resource "sdwan_policy_object_unified_url_filtering" "test" {
+    name                  = "TF_TEST_URL_FILTERING"
+    description           = "My Example"
+    feature_profile_id    = sdwan_policy_object_feature_profile.test.id
+    web_categories_action = "block"
+    web_categories        = ["confirmed-spam-sources"]
+    web_reputation        = "suspicious"
+    url_allow_list_id     = sdwan_policy_object_security_url_allow_list.test.id
+    url_block_list_id     = sdwan_policy_object_security_url_block_list.test.id
+    block_page_action     = "text"
+    block_page_contents   = "Access to the requested page has been denied. Please contact your Network Administrator"
+    redirect_url          = "www.example.com"
+    enable_alerts         = true
+    alerts                = ["blacklist"]
+  }
+
+  resource "sdwan_policy_object_security_ips_signature" "test" {
+    name               = "Example"
+    description        = "My Example"
+    feature_profile_id = sdwan_policy_object_feature_profile.test.id
+    entries = [
+      {
+        generator_id = "1234"
+        signature_id = "5678"
+      }
+    ]
+  }
+
+  resource "sdwan_policy_object_unified_intrusion_prevention" "test" {
+    name                  = "TF_TEST_INTRUSION"
+    description           = "My Example"
+    feature_profile_id    = sdwan_policy_object_feature_profile.test.id
+    signature_set         = "balanced"
+    inspection_mode       = "detection"
+    ips_signature_list_id = sdwan_policy_object_security_ips_signature.test.id
+    log_level             = "error"
+    custom_signature      = false
+  }
+
+  resource "sdwan_policy_object_unified_advanced_malware_protection" "test" {
+    name                          = "TF_TEST_ADVANCED_MALWARE"
+    description                   = "My Example"
+    feature_profile_id            = sdwan_policy_object_feature_profile.test.id
+    match_all_vpn                 = true
+    amp_cloud_region              = "nam"
+    amp_cloud_region_est_server   = "nam"
+    alert_log_level               = "critical"
+    file_analysis                 = true
+    file_analysis_cloud_region    = "nam"
+    file_analysis_file_types      = ["pdf"]
+    file_analysis_alert_log_level = "critical"
+  }
+
+  resource "sdwan_policy_object_unified_tls_ssl_profile" "test" {
+    name                    = "TF_TEST_TLS_SSL_PROFILE"
+    description             = "My Example"
+    feature_profile_id      = sdwan_policy_object_feature_profile.test.id
+    decrypt_categories      = ["alcohol-and-tobacco"]
+    no_decrypt_categories   = ["abortion"]
+    pass_through_categories = ["auctions"]
+    reputation              = true
+    decrypt_threshold       = "moderate-risk"
+    threshold_categories    = "moderate-risk"
+    fail_decrypt            = true
+    url_allow_list_id       = sdwan_policy_object_security_url_allow_list.test.id
+    url_block_list_id       = sdwan_policy_object_security_url_block_list.test.id
+  }
