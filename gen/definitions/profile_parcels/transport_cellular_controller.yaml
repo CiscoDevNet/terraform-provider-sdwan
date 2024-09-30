@@ -1,0 +1,43 @@
+---
+name: Transport Cellular Controller
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/cellular-controller
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: configType
+    type: String
+    example: non-Esim
+  - model_name: id 
+    tf_name: cellular_id
+    data_path: [controllerConfig]
+    example: 1
+  - model_name: slot
+    tf_name: primary_sim_slot
+    data_path: [controllerConfig]
+    example: 0
+  - model_name: maxRetry
+    tf_name: sim_failover_retries
+    data_path: [controllerConfig]
+    example: 5
+  - model_name: failovertimer
+    tf_name: sim_failover_timeout
+    data_path: [controllerConfig]
+    example: 3
+  - model_name: autoSim
+    tf_name: firmware_auto_sim
+    data_path: [controllerConfig]
+    example: true
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

@@ -34,6 +34,7 @@ description: |-
 - Add `sdwan_service_multicast_feature` resource and data source
 - Add `sdwan_service_routing_eigrp_feature` resource and data source
 - Add `sdwan_service_wireless_lan_feature` resource and data source
+- Add `sdwan_transport_cellular_controller_feature` resource and data source
 
 ## 0.4.1
 
