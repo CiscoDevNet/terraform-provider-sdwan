@@ -33,8 +33,12 @@ func TestAccDataSourceSdwanServiceRoutingEIGRPProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "autonomous_system_id", "111"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "networks.0.ip_address", "100.2.2.3"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "networks.0.mask", "255.255.255.0"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "hello_interval", "5"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "hold_time", "15"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "authentication_type", "md5"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "md5_keys.0.key_id", "2"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "interfaces.0.name", "GigabitEthernet3"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_service_routing_eigrp_feature.test", "interfaces.0.shutdown", "false"))
@@ -72,7 +76,7 @@ func testAccDataSourceSdwanServiceRoutingEIGRPProfileParcelConfig() string {
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	autonomous_system_id = "111"` + "\n"
+	config += `	autonomous_system_id = 111` + "\n"
 	config += `	networks = [{` + "\n"
 	config += `	  ip_address = "100.2.2.3"` + "\n"
 	config += `	  mask = "255.255.255.0"` + "\n"

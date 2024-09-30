@@ -22,7 +22,6 @@ attributes:
     tf_name: interface_name
     data_path: [basic]
     example: gre1
-    test_value: '"gre1"'
     minimum_test_value: '"gre1"'
   - model_name: description
     tf_name: interface_description
@@ -32,13 +31,11 @@ attributes:
     tf_name: ipv4_address
     data_path: [basic, address]
     example: 70.1.1.1
-    test_value: '"70.1.1.1"'
     minimum_test_value: '"70.1.1.1"'
   - model_name: mask
     tf_name: ipv4_subnet_mask
     data_path: [basic, address]
     example: 255.255.255.0
-    test_value: '"255.255.255.0"'
     minimum_test_value: '"255.255.255.0"'
   - model_name: shutdown
     data_path: [basic]
@@ -66,7 +63,6 @@ attributes:
     tf_name: tunnel_destination_ipv4_address
     data_path: [basic]
     example: 79.1.1.1
-    test_value: '"79.1.1.1"'
     minimum_test_value: '"79.1.1.1"'
   - model_name: mtu
     tf_name: ip_mtu

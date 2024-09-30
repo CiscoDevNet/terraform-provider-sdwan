@@ -36,12 +36,10 @@ attributes:
     tf_name: ipv4_address
     data_path: [imc, ip]
     example: 2.2.2.2/24
-    test_value: '"2.2.2.2/24"'
     minimum_test_value: '"2.2.2.2/24"'
   - model_name: defaultGateway
     data_path: [imc, ip]
     example: 2.2.2.2
-    test_value: '"2.2.2.2"'
     minimum_test_value: '"2.2.2.2"'
   - model_name: vlanId
     data_path: [imc, vlan]

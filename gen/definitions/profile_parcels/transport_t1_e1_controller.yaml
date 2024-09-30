@@ -17,7 +17,6 @@ attributes:
     example: t1
   - model_name: slot
     example: 11
-    test_value: '11'
     minimum_test_value: '11'
   - model_name: controllerTxExList
     tf_name: entries

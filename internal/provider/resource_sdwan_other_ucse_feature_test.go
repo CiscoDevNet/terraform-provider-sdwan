@@ -38,6 +38,8 @@ func TestAccSdwanOtherUCSEProfileParcel(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "access_port_dedicated", "false"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "access_port_shared_type", "ge1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "access_port_shared_failover_type", "ge2"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "ipv4_address", "2.2.2.2/24"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "default_gateway", "2.2.2.2"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "vlan_id", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "assign_priority", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_other_ucse_feature.test", "interfaces.0.interface_name", "ucse2/0"))

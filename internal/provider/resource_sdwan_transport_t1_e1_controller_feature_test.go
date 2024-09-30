@@ -34,6 +34,7 @@ func TestAccSdwanTransportT1E1ControllerProfileParcel(t *testing.T) {
 	}
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_t1_e1_controller_feature.test", "type", "t1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_t1_e1_controller_feature.test", "slot", "11"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_t1_e1_controller_feature.test", "entries.0.t1_description", "T1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_t1_e1_controller_feature.test", "entries.0.t1_framing", "esf"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_t1_e1_controller_feature.test", "entries.0.t1_linecode", "ami"))
@@ -97,7 +98,7 @@ func testAccSdwanTransportT1E1ControllerProfileParcelConfig_all() string {
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	type = "t1"` + "\n"
-	config += `	slot = 11` + "\n"
+	config += `	slot = "11"` + "\n"
 	config += `	entries = [{` + "\n"
 	config += `	  t1_description = "T1"` + "\n"
 	config += `	  t1_framing = "esf"` + "\n"

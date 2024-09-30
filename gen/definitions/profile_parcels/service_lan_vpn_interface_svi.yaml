@@ -22,7 +22,6 @@ attributes:
     example: false
   - model_name: interfaceName
     example: Vlan1
-    test_value: '"Vlan1"'
     minimum_test_value: '"Vlan1"'
   - model_name: description
     tf_name: interface_description
@@ -37,13 +36,11 @@ attributes:
     tf_name: ipv4_address
     data_path: [ipv4, addressV4]
     example: 1.2.3.4
-    test_value: '"1.2.3.4"'
     minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     data_path: [ipv4, addressV4]
     tf_name: ipv4_subnet_mask
     example: 0.0.0.0
-    test_value: '"0.0.0.0"'
     minimum_test_value: '"0.0.0.0"'
   - model_name: secondaryAddressV4
     tf_name: ipv4_secondary_addresses

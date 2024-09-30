@@ -24,5 +24,4 @@ attributes:
         type: String
         description: Expanded community value, e.g. `100:1000`
         example: 100:1000
-        test_value: '"100:1000"'
         minimum_test_value: '"100:1000"'

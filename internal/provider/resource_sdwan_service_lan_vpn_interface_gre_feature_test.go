@@ -33,9 +33,13 @@ func TestAccSdwanServiceLANVPNInterfaceGREProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "interface_name", "gre1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "interface_description", "gre1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "ipv4_address", "70.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "ipv4_subnet_mask", "255.255.255.0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "shutdown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "tunnel_source_ipv4_address", "78.1.1.1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "tunnel_destination_ipv4_address", "79.1.1.1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "ip_mtu", "1500"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "tcp_mss", "1460"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_service_lan_vpn_interface_gre_feature.test", "clear_dont_fragment", "false"))
