@@ -57,13 +57,11 @@ attributes:
     - model_name: ompProtocol
       tf_name: protocol
       example: bgp
-    # ====== UX2.0 Route Policy Not Supported By Provider ======
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
     - model_name: prefixList
       tf_name: prefixes
       exclude_test: true
@@ -88,13 +86,11 @@ attributes:
     - model_name: ompProtocol
       tf_name: protocol
       example: OSPF
-    # ====== UX2.0 Route Policy Not Supported By Provider ======
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
     - model_name: protocolSubType
       example: External
     - model_name: prefixList
@@ -137,12 +133,10 @@ attributes:
       - model_name: distance
         tf_name: administrative_distance
         example: 1
-      # ====== UX2.0 Tracker and Trackerobject Not Supported By Provider ======
       - model_name: refId
         tf_name: tracker_id
         data_path: [tracker]
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-       # test_value: 
     - model_name: null0
       data_path: [oneOfIpRoute]
       exclude_test: true
@@ -250,13 +244,11 @@ attributes:
       example: true
     - model_name: direction
       example: inside
-      # ====== UX2.0 Tracker and Trackerobject Not Supported By Provider ======  
     - model_name: refId
       tf_name: tracker_object_id
       data_path: [trackingObject, trackerId]
       exclude_test: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
   - model_name: natPortForward
     tf_name: nat_port_forwards
     attributes:
@@ -285,13 +277,11 @@ attributes:
       example: 2.3.4.5
     - model_name: staticNatDirection
       example: inside
-      # ====== UX2.0 Tracker and Trackerobject Not Supported By Provider ======
     - model_name: refId
       tf_name: tracker_object_id
       data_path: [trackingObject, trackerId]
       exclude_test: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
   - model_name: nat64V4Pool
     tf_name: nat_64_v4_pools
     attributes:
@@ -314,52 +304,44 @@ attributes:
     attributes:
     - model_name: routeProtocol
       example: static
-      # ====== UX2.0 Route Policy Not Supported By Provider ======
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
     - model_name: redistributeToProtocol
       tf_name: redistributions
       exclude_test: true
       attributes:
       - model_name: protocol
         example: bgp
-        # ======  UX2.0 Route Policy Not Supported By Provider ======
       - model_name: refId
         data_path: [policy]
         tf_name: redistribution_policy_id
         id: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
   - model_name: routeLeakFromService
     tf_name: route_leak_to_global_vpns
     exclude_test: true
     attributes:
     - model_name: routeProtocol
       example: static
-      # ====== UX2.0 Route Policy Not Supported By Provider ======
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
     - model_name: redistributeToProtocol
       tf_name: redistributions
       attributes:
       - model_name: protocol
         example: bgp
-        # ====== UX2.0 Route Policy Not Supported By Provider ======
       - model_name: refId
         tf_name: redistribution_policy_id
         data_path: [policy]
         id: true
         exclude_test: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
   - model_name: routeLeakBetweenServices
     tf_name: route_leak_from_other_services 
     exclude_test: true
@@ -368,26 +350,22 @@ attributes:
       example: 1
     - model_name: routeProtocol
       example: static
-      # ====== UX2.0 Route Policy Not Supported By Provider ======
     - model_name: refId
       tf_name: route_policy_id
       data_path: [routePolicy]
       id: true
       example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
     - model_name: redistributeToProtocol
       tf_name: redistributions
       exclude_test: true
       attributes:
       - model_name: protocol
         example: bgp
-      # ====== UX2.0 Route Policy Not Supported By Provider ======
       - model_name: refId
         tf_name: redistribution_policy_id
         data_path: [policy]
         id: true
         example: 1b270f6d-479b-47e3-ab0b-51bc6811a303
-      # test_value: 
   - model_name: importRtList
     tf_name: ipv4_import_route_targets
     data_path: [mplsVpnIpv4RouteTarget]

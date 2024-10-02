@@ -2989,20 +2989,6 @@
                                               "oneOf": [
                                                   {
                                                       "properties": {
-                                                          "optionType": {
-                                                              "type": "string",
-                                                              "enum": [
-                                                                  "default"
-                                                              ]
-                                                          }
-                                                      },
-                                                      "required": [
-                                                          "optionType"
-                                                      ],
-                                                      "additionalProperties": false
-                                                  },
-                                                  {
-                                                      "properties": {
                                                           "refId": {
                                                               "properties": {
                                                                   "optionType": {
@@ -3027,7 +3013,21 @@
                                                           "refId"
                                                       ],
                                                       "additionalProperties": false
-                                                  }
+                                                  },
+                                                    {
+                                                        "properties": {
+                                                            "optionType": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "default"
+                                                                ]
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "optionType"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
                                               ]
                                           },
                                           "trackerAction": {
