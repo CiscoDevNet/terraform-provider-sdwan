@@ -96,7 +96,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 					stringvalidator.OneOf("drop", "accept"),
 				},
 			},
-			"vpn": schema.SetAttribute{
+			"vpns": schema.SetAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				ElementType:         types.StringType,
 				Required:            true,
@@ -194,7 +194,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										MarkdownDescription: helpers.NewAttributeDescription("Packet Length").String,
 										Optional:            true,
 									},
-									"protocol": schema.SetAttribute{
+									"protocols": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("protocol (0-255) range or individual number separated by space").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -223,15 +223,15 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
-									"source_ipv4": schema.StringAttribute{
+									"source_ipv4_prefix": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source Data IP Prefix").String,
 										Optional:            true,
 									},
-									"source_ipv6": schema.StringAttribute{
+									"source_ipv6_prefix": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source Data IP Prefix").String,
 										Optional:            true,
 									},
-									"source_port": schema.SetAttribute{
+									"source_ports": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Source Port (0-65535) range or individual number separated by space").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -250,15 +250,15 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
 										},
 									},
-									"destination_ipv4": schema.StringAttribute{
+									"destination_ipv4_prefix": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Data IP Prefix").String,
 										Optional:            true,
 									},
-									"destination_ipv6": schema.StringAttribute{
+									"destination_ipv6_prefix": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Data IP Prefix").String,
 										Optional:            true,
 									},
-									"destination_port": schema.SetAttribute{
+									"destination_ports": schema.SetAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Destination Port (0-65535) range or individual number separated by space").String,
 										ElementType:         types.StringType,
 										Optional:            true,
@@ -348,7 +348,7 @@ func (r *ApplicationPriorityTrafficPolicyProfileParcelResource) Schema(ctx conte
 										ElementType:         types.StringType,
 										Optional:            true,
 									},
-									"sets": schema.ListNestedAttribute{
+									"set_parameters": schema.ListNestedAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("").String,
 										Optional:            true,
 										NestedObject: schema.NestedAttributeObject{

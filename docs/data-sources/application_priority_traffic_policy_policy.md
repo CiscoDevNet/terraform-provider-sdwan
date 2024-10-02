@@ -35,7 +35,7 @@ data "sdwan_application_priority_traffic_policy_policy" "example" {
 - `name` (String) The name of the Policy
 - `sequences` (Attributes List) Traffic policy sequence list (see [below for nested schema](#nestedatt--sequences))
 - `version` (Number) The version of the Policy
-- `vpn` (Set of String)
+- `vpns` (Set of String)
 
 <a id="nestedatt--sequences"></a>
 ### Nested Schema for `sequences`
@@ -71,11 +71,11 @@ Read-Only:
 - `redirect_dns_field` (String)
 - `redirect_dns_value` (String)
 - `secure_internet_gateway` (Boolean)
-- `sets` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions--sets))
+- `set_parameters` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions--set_parameters))
 - `sla_classes` (Attributes List) slaClass (see [below for nested schema](#nestedatt--sequences--actions--sla_classes))
 
-<a id="nestedatt--sequences--actions--sets"></a>
-### Nested Schema for `sequences.actions.sets`
+<a id="nestedatt--sequences--actions--set_parameters"></a>
+### Nested Schema for `sequences.actions.set_parameters`
 
 Read-Only:
 
@@ -135,9 +135,9 @@ Read-Only:
 - `application_list_id` (String)
 - `destination_data_ipv4_prefix_list_id` (String)
 - `destination_data_ipv6_prefix_list_id` (String)
-- `destination_ipv4` (String) Destination Data IP Prefix
-- `destination_ipv6` (String) Destination Data IP Prefix
-- `destination_port` (Set of String) Destination Port (0-65535) range or individual number separated by space
+- `destination_ipv4_prefix` (String) Destination Data IP Prefix
+- `destination_ipv6_prefix` (String) Destination Data IP Prefix
+- `destination_ports` (Set of String) Destination Port (0-65535) range or individual number separated by space
 - `destination_region` (String) Destination Region
 - `dns` (String) Dns
 - `dns_application_list_id` (String)
@@ -145,14 +145,14 @@ Read-Only:
 - `icmp6_message` (Set of String) ICMP6 Message
 - `icmp_message` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length
-- `protocol` (Set of String) protocol (0-255) range or individual number separated by space
+- `protocols` (Set of String) protocol (0-255) range or individual number separated by space
 - `saas_application_list_id` (String)
 - `service_area` (Set of String) M365 Service Area
 - `source_data_ipv4_prefx_list_id` (String)
 - `source_data_ipv6_prefx_list_id` (String)
-- `source_ipv4` (String) Source Data IP Prefix
-- `source_ipv6` (String) Source Data IP Prefix
-- `source_port` (Set of String) Source Port (0-65535) range or individual number separated by space
+- `source_ipv4_prefix` (String) Source Data IP Prefix
+- `source_ipv6_prefix` (String) Source Data IP Prefix
+- `source_ports` (Set of String) Source Port (0-65535) range or individual number separated by space
 - `tcp` (String) TCP States
 - `traffic_category` (String) M365 Traffic Category
 - `traffic_class` (String) Traffic Class

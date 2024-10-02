@@ -20,7 +20,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
   description        = "My Example"
   feature_profile_id = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   default_action     = "accept"
-  vpn                = ["edge_basic_vpn1"]
+  vpns               = ["Local_Internet_for_Guests"]
   direction          = "all"
   sequences = [
     {
@@ -35,7 +35,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
       ]
       actions = [
         {
-          sets = [
+          set_parameters = [
             {
             }
           ]
@@ -55,7 +55,7 @@ resource "sdwan_application_priority_traffic_policy_policy" "example" {
 - `direction` (String) - Choices: `service`, `tunnel`, `all`
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Policy
-- `vpn` (Set of String)
+- `vpns` (Set of String)
 
 ### Optional
 
@@ -104,11 +104,11 @@ Optional:
 - `redirect_dns_field` (String) - Choices: `ipAddress`, `redirectDns`
 - `redirect_dns_value` (String)
 - `secure_internet_gateway` (Boolean)
-- `sets` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions--sets))
+- `set_parameters` (Attributes List) (see [below for nested schema](#nestedatt--sequences--actions--set_parameters))
 - `sla_classes` (Attributes List) slaClass (see [below for nested schema](#nestedatt--sequences--actions--sla_classes))
 
-<a id="nestedatt--sequences--actions--sets"></a>
-### Nested Schema for `sequences.actions.sets`
+<a id="nestedatt--sequences--actions--set_parameters"></a>
+### Nested Schema for `sequences.actions.set_parameters`
 
 Optional:
 
@@ -168,9 +168,9 @@ Optional:
 - `application_list_id` (String)
 - `destination_data_ipv4_prefix_list_id` (String)
 - `destination_data_ipv6_prefix_list_id` (String)
-- `destination_ipv4` (String) Destination Data IP Prefix
-- `destination_ipv6` (String) Destination Data IP Prefix
-- `destination_port` (Set of String) Destination Port (0-65535) range or individual number separated by space
+- `destination_ipv4_prefix` (String) Destination Data IP Prefix
+- `destination_ipv6_prefix` (String) Destination Data IP Prefix
+- `destination_ports` (Set of String) Destination Port (0-65535) range or individual number separated by space
 - `destination_region` (String) Destination Region
   - Choices: `primary-region`, `secondary-region`, `other-region`
 - `dns` (String) Dns
@@ -181,14 +181,14 @@ Optional:
 - `icmp6_message` (Set of String) ICMP6 Message
 - `icmp_message` (Set of String) ICMP Message
 - `packet_length` (String) Packet Length
-- `protocol` (Set of String) protocol (0-255) range or individual number separated by space
+- `protocols` (Set of String) protocol (0-255) range or individual number separated by space
 - `saas_application_list_id` (String)
 - `service_area` (Set of String) M365 Service Area
 - `source_data_ipv4_prefx_list_id` (String)
 - `source_data_ipv6_prefx_list_id` (String)
-- `source_ipv4` (String) Source Data IP Prefix
-- `source_ipv6` (String) Source Data IP Prefix
-- `source_port` (Set of String) Source Port (0-65535) range or individual number separated by space
+- `source_ipv4_prefix` (String) Source Data IP Prefix
+- `source_ipv6_prefix` (String) Source Data IP Prefix
+- `source_ports` (Set of String) Source Port (0-65535) range or individual number separated by space
 - `tcp` (String) TCP States
   - Choices: `syn`
 - `traffic_category` (String) M365 Traffic Category
