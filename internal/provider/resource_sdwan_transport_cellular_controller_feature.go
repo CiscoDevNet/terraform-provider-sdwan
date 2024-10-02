@@ -90,7 +90,7 @@ func (r *TransportCellularControllerProfileParcelResource) Schema(ctx context.Co
 			},
 			"cellular_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Cellular ID").String,
-				Optional:            true,
+				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 5),
 				},

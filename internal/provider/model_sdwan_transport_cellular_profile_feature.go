@@ -42,7 +42,12 @@ type TransportCellularProfile struct {
 	AccessPointName               types.String `tfsdk:"access_point_name"`
 	AccessPointNameVariable       types.String `tfsdk:"access_point_name_variable"`
 	NoAuthentication              types.String `tfsdk:"no_authentication"`
-	NeedAuthentication            types.String `tfsdk:"need_authentication"`
+	AuthenticationType            types.String `tfsdk:"authentication_type"`
+	AuthenticationTypeVariable    types.String `tfsdk:"authentication_type_variable"`
+	ProfileUsername               types.String `tfsdk:"profile_username"`
+	ProfileUsernameVariable       types.String `tfsdk:"profile_username_variable"`
+	ProfilePassword               types.String `tfsdk:"profile_password"`
+	ProfilePasswordVariable       types.String `tfsdk:"profile_password_variable"`
 	PacketDataNetworkType         types.String `tfsdk:"packet_data_network_type"`
 	PacketDataNetworkTypeVariable types.String `tfsdk:"packet_data_network_type_variable"`
 	NoOverwrite                   types.Bool   `tfsdk:"no_overwrite"`
@@ -60,7 +65,7 @@ func (data TransportCellularProfile) getModel() string {
 
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
 func (data TransportCellularProfile) getPath() string {
-	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/cellular", url.QueryEscape(data.FeatureProfileId.ValueString()))
+	return fmt.Sprintf("/v1/feature-profile/sdwan/transport/%v/cellular-profile", url.QueryEscape(data.FeatureProfileId.ValueString()))
 }
 
 // End of section. //template:end getPath
@@ -105,10 +110,40 @@ func (data TransportCellularProfile) toBody(ctx context.Context) string {
 			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.noAuthentication.value", data.NoAuthentication.ValueString())
 		}
 	}
-	if !data.NeedAuthentication.IsNull() {
+
+	if !data.AuthenticationTypeVariable.IsNull() {
 		if true {
-			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.optionType", "global")
-			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.value", data.NeedAuthentication.ValueString())
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.optionType", "variable")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.value", data.AuthenticationTypeVariable.ValueString())
+		}
+	} else if !data.AuthenticationType.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.optionType", "global")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.type.value", data.AuthenticationType.ValueString())
+		}
+	}
+
+	if !data.ProfileUsernameVariable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.optionType", "variable")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.value", data.ProfileUsernameVariable.ValueString())
+		}
+	} else if !data.ProfileUsername.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.optionType", "global")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.username.value", data.ProfileUsername.ValueString())
+		}
+	}
+
+	if !data.ProfilePasswordVariable.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.optionType", "variable")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.value", data.ProfilePasswordVariable.ValueString())
+		}
+	} else if !data.ProfilePassword.IsNull() {
+		if true {
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.optionType", "global")
+			body, _ = sjson.Set(body, path+"profileConfig.profileInfo.authentication.needAuthentication.password.value", data.ProfilePassword.ValueString())
 		}
 	}
 
@@ -187,12 +222,24 @@ func (data *TransportCellularProfile) fromBody(ctx context.Context, res gjson.Re
 			data.NoAuthentication = types.StringValue(va.String())
 		}
 	}
-	data.NeedAuthentication = types.StringNull()
-
-	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.value")
-		if t.String() == "global" {
-			data.NeedAuthentication = types.StringValue(va.String())
+	data.AuthenticationType = types.StringNull()
+	data.AuthenticationTypeVariable = types.StringNull()
+	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.type.optionType"); t.Exists() {
+		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.type.value")
+		if t.String() == "variable" {
+			data.AuthenticationTypeVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.AuthenticationType = types.StringValue(va.String())
+		}
+	}
+	data.ProfileUsername = types.StringNull()
+	data.ProfileUsernameVariable = types.StringNull()
+	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.username.optionType"); t.Exists() {
+		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.username.value")
+		if t.String() == "variable" {
+			data.ProfileUsernameVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.ProfileUsername = types.StringValue(va.String())
 		}
 	}
 	data.PacketDataNetworkType = types.StringNull()
@@ -256,12 +303,24 @@ func (data *TransportCellularProfile) updateFromBody(ctx context.Context, res gj
 			data.NoAuthentication = types.StringValue(va.String())
 		}
 	}
-	data.NeedAuthentication = types.StringNull()
-
-	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.optionType"); t.Exists() {
-		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.value")
-		if t.String() == "global" {
-			data.NeedAuthentication = types.StringValue(va.String())
+	data.AuthenticationType = types.StringNull()
+	data.AuthenticationTypeVariable = types.StringNull()
+	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.type.optionType"); t.Exists() {
+		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.type.value")
+		if t.String() == "variable" {
+			data.AuthenticationTypeVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.AuthenticationType = types.StringValue(va.String())
+		}
+	}
+	data.ProfileUsername = types.StringNull()
+	data.ProfileUsernameVariable = types.StringNull()
+	if t := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.username.optionType"); t.Exists() {
+		va := res.Get(path + "profileConfig.profileInfo.authentication.needAuthentication.username.value")
+		if t.String() == "variable" {
+			data.ProfileUsernameVariable = types.StringValue(va.String())
+		} else if t.String() == "global" {
+			data.ProfileUsername = types.StringValue(va.String())
 		}
 	}
 	data.PacketDataNetworkType = types.StringNull()
@@ -308,7 +367,22 @@ func (data *TransportCellularProfile) isNull(ctx context.Context, res gjson.Resu
 	if !data.NoAuthentication.IsNull() {
 		return false
 	}
-	if !data.NeedAuthentication.IsNull() {
+	if !data.AuthenticationType.IsNull() {
+		return false
+	}
+	if !data.AuthenticationTypeVariable.IsNull() {
+		return false
+	}
+	if !data.ProfileUsername.IsNull() {
+		return false
+	}
+	if !data.ProfileUsernameVariable.IsNull() {
+		return false
+	}
+	if !data.ProfilePassword.IsNull() {
+		return false
+	}
+	if !data.ProfilePasswordVariable.IsNull() {
 		return false
 	}
 	if !data.PacketDataNetworkType.IsNull() {

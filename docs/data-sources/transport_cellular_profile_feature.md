@@ -31,9 +31,10 @@ data "sdwan_transport_cellular_profile_feature" "example" {
 
 - `access_point_name` (String) Set access point name
 - `access_point_name_variable` (String) Variable name
+- `authentication_type` (String) Set authentication type
+- `authentication_type_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `name` (String) The name of the Feature
-- `need_authentication` (String)
 - `no_authentication` (String) No Authentication
 - `no_overwrite` (Boolean) No Overwrite
 - `no_overwrite_variable` (String) Variable name
@@ -41,4 +42,8 @@ data "sdwan_transport_cellular_profile_feature" "example" {
 - `packet_data_network_type_variable` (String) Variable name
 - `profile_id` (Number) Set Profile ID
 - `profile_id_variable` (String) Variable name
+- `profile_password` (String) Set the profile password
+- `profile_password_variable` (String) Variable name
+- `profile_username` (String) Set the profile username
+- `profile_username_variable` (String) Variable name
 - `version` (Number) The version of the Feature

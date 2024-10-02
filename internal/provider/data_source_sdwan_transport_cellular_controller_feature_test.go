@@ -33,7 +33,7 @@ func TestAccDataSourceSdwanTransportCellularControllerProfileParcel(t *testing.T
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_controller_feature.test", "cellular_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_controller_feature.test", "cellular_id", "0/3/0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_controller_feature.test", "primary_sim_slot", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_controller_feature.test", "sim_failover_retries", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_controller_feature.test", "sim_failover_timeout", "3"))
@@ -68,7 +68,7 @@ func testAccDataSourceSdwanTransportCellularControllerProfileParcelConfig() stri
 	config += ` name = "TF_TEST"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	cellular_id = "1"` + "\n"
+	config += `	cellular_id = "0/3/0"` + "\n"
 	config += `	primary_sim_slot = 0` + "\n"
 	config += `	sim_failover_retries = 5` + "\n"
 	config += `	sim_failover_timeout = 3` + "\n"

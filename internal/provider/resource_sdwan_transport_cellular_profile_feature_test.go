@@ -35,16 +35,15 @@ func TestAccSdwanTransportCellularProfileProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "profile_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "access_point_name", "apn1"))
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "need_authentication", "pap"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "authentication_type", "pap"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "profile_username", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "packet_data_network_type", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_profile_feature.test", "no_overwrite", "false"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanTransportCellularProfilePrerequisitesProfileParcelConfig + testAccSdwanTransportCellularProfileProfileParcelConfig_minimum(),
-			},
+
 			{
 				Config: testAccSdwanTransportCellularProfilePrerequisitesProfileParcelConfig + testAccSdwanTransportCellularProfileProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
@@ -66,14 +65,6 @@ resource "sdwan_transport_feature_profile" "test" {
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanTransportCellularProfileProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_transport_cellular_profile_feature" "test" {` + "\n"
-	config += ` name = "TF_TEST_MIN"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `}` + "\n"
-	return config
-}
 
 // End of section. //template:end testAccConfigMinimum
 
@@ -85,7 +76,9 @@ func testAccSdwanTransportCellularProfileProfileParcelConfig_all() string {
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	profile_id = 1` + "\n"
 	config += `	access_point_name = "apn1"` + "\n"
-	config += `	need_authentication = "pap"` + "\n"
+	config += `	authentication_type = "pap"` + "\n"
+	config += `	profile_username = "example"` + "\n"
+	config += `	profile_password = "example123!"` + "\n"
 	config += `	packet_data_network_type = "ipv4"` + "\n"
 	config += `	no_overwrite = false` + "\n"
 	config += `}` + "\n"

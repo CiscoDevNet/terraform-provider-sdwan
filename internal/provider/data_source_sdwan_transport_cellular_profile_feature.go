@@ -98,8 +98,28 @@ func (d *TransportCellularProfileProfileParcelDataSource) Schema(ctx context.Con
 				MarkdownDescription: "No Authentication",
 				Computed:            true,
 			},
-			"need_authentication": schema.StringAttribute{
-				MarkdownDescription: "",
+			"authentication_type": schema.StringAttribute{
+				MarkdownDescription: "Set authentication type",
+				Computed:            true,
+			},
+			"authentication_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"profile_username": schema.StringAttribute{
+				MarkdownDescription: "Set the profile username",
+				Computed:            true,
+			},
+			"profile_username_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Computed:            true,
+			},
+			"profile_password": schema.StringAttribute{
+				MarkdownDescription: "Set the profile password",
+				Computed:            true,
+			},
+			"profile_password_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Computed:            true,
 			},
 			"packet_data_network_type": schema.StringAttribute{

@@ -1,9 +1,10 @@
 ---
 name: Transport Cellular Profile
-rest_endpoint: /v1/feature-profile/sdwan/transport/%v/cellular
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/cellular-profile
 minimum_version: 20.12.0
 test_tags: [SDWAN_2012]
 parcel_type: feature
+skip_minimum_test: true
 attributes:
   - tf_name: feature_profile_id
     reference: true
@@ -18,20 +19,34 @@ attributes:
   - model_name: id
     tf_name: profile_id
     data_path: [profileConfig]
+    mandatory: true
     example: 1
   - model_name: apn
     tf_name: access_point_name
     data_path: [profileConfig, profileInfo]
+    mandatory: true
     example: apn1
   - model_name: noAuthentication
     data_path: [profileConfig, profileInfo, authentication]
     type: String
     exclude_test: true
     example: none
-  - model_name: needAuthentication
-    data_path: [profileConfig, profileInfo, authentication]
+  - model_name: type
+    tf_name: authentication_type
+    data_path: [profileConfig, profileInfo, authentication, needAuthentication]
     type: String
     example: pap
+  - model_name: username
+    tf_name: profile_username
+    data_path: [profileConfig, profileInfo, authentication, needAuthentication]
+    type: String
+    example: example
+  - model_name: password
+    tf_name: profile_password
+    data_path: [profileConfig, profileInfo, authentication, needAuthentication]
+    type: String
+    write_only: true
+    example: example123!
   - model_name: pdnType
     tf_name: packet_data_network_type
     data_path: [profileConfig, profileInfo]

@@ -21,7 +21,9 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   feature_profile_id       = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
   profile_id               = 1
   access_point_name        = "apn1"
-  need_authentication      = "pap"
+  authentication_type      = "pap"
+  profile_username         = "example"
+  profile_password         = "example123!"
   packet_data_network_type = "ipv4"
   no_overwrite             = false
 }
@@ -32,15 +34,19 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
 
 ### Required
 
+- `access_point_name` (String) Set access point name
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
+- `profile_id` (Number) Set Profile ID
+  - Range: `1`-`16`
 
 ### Optional
 
-- `access_point_name` (String) Set access point name
 - `access_point_name_variable` (String) Variable name
+- `authentication_type` (String) Set authentication type
+  - Choices: `pap`, `chap`, `pap_chap`
+- `authentication_type_variable` (String) Variable name
 - `description` (String) The description of the Feature
-- `need_authentication` (String)
 - `no_authentication` (String) No Authentication
 - `no_overwrite` (Boolean) No Overwrite
 - `no_overwrite_variable` (String) Variable name
@@ -48,9 +54,11 @@ resource "sdwan_transport_cellular_profile_feature" "example" {
   - Choices: `ipv4`, `ipv4v6`, `ipv6`
   - Default value: `ipv4`
 - `packet_data_network_type_variable` (String) Variable name
-- `profile_id` (Number) Set Profile ID
-  - Range: `1`-`16`
 - `profile_id_variable` (String) Variable name
+- `profile_password` (String) Set the profile password
+- `profile_password_variable` (String) Variable name
+- `profile_username` (String) Set the profile username
+- `profile_username_variable` (String) Variable name
 
 ### Read-Only
 

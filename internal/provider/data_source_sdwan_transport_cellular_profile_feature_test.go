@@ -35,7 +35,8 @@ func TestAccDataSourceSdwanTransportCellularProfileProfileParcel(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "profile_id", "1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "access_point_name", "apn1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "need_authentication", "pap"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "authentication_type", "pap"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "profile_username", "example"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "packet_data_network_type", "ipv4"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.sdwan_transport_cellular_profile_feature.test", "no_overwrite", "false"))
 	resource.Test(t, resource.TestCase{
@@ -70,7 +71,9 @@ func testAccDataSourceSdwanTransportCellularProfileProfileParcelConfig() string 
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
 	config += `	profile_id = 1` + "\n"
 	config += `	access_point_name = "apn1"` + "\n"
-	config += `	need_authentication = "pap"` + "\n"
+	config += `	authentication_type = "pap"` + "\n"
+	config += `	profile_username = "example"` + "\n"
+	config += `	profile_password = "example123!"` + "\n"
 	config += `	packet_data_network_type = "ipv4"` + "\n"
 	config += `	no_overwrite = false` + "\n"
 	config += `}` + "\n"

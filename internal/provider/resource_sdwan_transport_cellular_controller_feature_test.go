@@ -33,7 +33,7 @@ func TestAccSdwanTransportCellularControllerProfileParcel(t *testing.T) {
 		t.Skip("skipping test, set environment variable SDWAN_2012")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_controller_feature.test", "cellular_id", "1"))
+	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_controller_feature.test", "cellular_id", "0/3/0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_controller_feature.test", "primary_sim_slot", "0"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_controller_feature.test", "sim_failover_retries", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("sdwan_transport_cellular_controller_feature.test", "sim_failover_timeout", "3"))
@@ -42,9 +42,7 @@ func TestAccSdwanTransportCellularControllerProfileParcel(t *testing.T) {
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			{
-				Config: testAccSdwanTransportCellularControllerPrerequisitesProfileParcelConfig + testAccSdwanTransportCellularControllerProfileParcelConfig_minimum(),
-			},
+
 			{
 				Config: testAccSdwanTransportCellularControllerPrerequisitesProfileParcelConfig + testAccSdwanTransportCellularControllerProfileParcelConfig_all(),
 				Check:  resource.ComposeTestCheckFunc(checks...),
@@ -66,14 +64,6 @@ resource "sdwan_transport_feature_profile" "test" {
 // End of section. //template:end testPrerequisites
 
 // Section below is generated&owned by "gen/generator.go". //template:begin testAccConfigMinimum
-func testAccSdwanTransportCellularControllerProfileParcelConfig_minimum() string {
-	config := `resource "sdwan_transport_cellular_controller_feature" "test" {` + "\n"
-	config += ` name = "TF_TEST_MIN"` + "\n"
-	config += ` description = "Terraform integration test"` + "\n"
-	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `}` + "\n"
-	return config
-}
 
 // End of section. //template:end testAccConfigMinimum
 
@@ -83,7 +73,7 @@ func testAccSdwanTransportCellularControllerProfileParcelConfig_all() string {
 	config += ` name = "TF_TEST_ALL"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_transport_feature_profile.test.id` + "\n"
-	config += `	cellular_id = "1"` + "\n"
+	config += `	cellular_id = "0/3/0"` + "\n"
 	config += `	primary_sim_slot = 0` + "\n"
 	config += `	sim_failover_retries = 5` + "\n"
 	config += `	sim_failover_timeout = 3` + "\n"

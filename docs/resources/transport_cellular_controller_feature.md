@@ -19,7 +19,7 @@ resource "sdwan_transport_cellular_controller_feature" "example" {
   name                 = "Example"
   description          = "My Example"
   feature_profile_id   = "f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac"
-  cellular_id          = "1"
+  cellular_id          = "0/3/0"
   primary_sim_slot     = 0
   sim_failover_retries = 5
   sim_failover_timeout = 3
@@ -32,12 +32,12 @@ resource "sdwan_transport_cellular_controller_feature" "example" {
 
 ### Required
 
+- `cellular_id` (String) Cellular ID
 - `feature_profile_id` (String) Feature Profile ID
 - `name` (String) The name of the Feature
 
 ### Optional
 
-- `cellular_id` (String) Cellular ID
 - `cellular_id_variable` (String) Variable name
 - `description` (String) The description of the Feature
 - `firmware_auto_sim` (Boolean) Enable/Disable Firmware Auto Sim

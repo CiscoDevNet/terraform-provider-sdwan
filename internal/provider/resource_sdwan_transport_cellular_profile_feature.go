@@ -90,7 +90,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 			},
 			"profile_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set Profile ID").AddIntegerRangeDescription(1, 16).String,
-				Optional:            true,
+				Required:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 16),
 				},
@@ -101,7 +101,7 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 			},
 			"access_point_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set access point name").String,
-				Optional:            true,
+				Required:            true,
 			},
 			"access_point_name_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -111,8 +111,31 @@ func (r *TransportCellularProfileProfileParcelResource) Schema(ctx context.Conte
 				MarkdownDescription: helpers.NewAttributeDescription("No Authentication").String,
 				Optional:            true,
 			},
-			"need_authentication": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+			"authentication_type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set authentication type").AddStringEnumDescription("pap", "chap", "pap_chap").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("pap", "chap", "pap_chap"),
+				},
+			},
+			"authentication_type_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"profile_username": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile username").String,
+				Optional:            true,
+			},
+			"profile_username_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+				Optional:            true,
+			},
+			"profile_password": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Set the profile password").String,
+				Optional:            true,
+			},
+			"profile_password_variable": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 				Optional:            true,
 			},
 			"packet_data_network_type": schema.StringAttribute{
