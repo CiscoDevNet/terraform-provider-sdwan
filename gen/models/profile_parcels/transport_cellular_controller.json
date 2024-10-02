@@ -1,332 +1,424 @@
 {
   "request": {
-    "$schema": "http://json-schema.org/draft/2019-09/schema",
-    "$id": "https://cisco.com/schema/profileparcel/sdwan/transport/cellular-controller/post/request_schema.json",
-    "title": "CellularController",
-    "description": "CellularController profile parcel schema for POST request",
-    "type": "object",
-    "properties": {
-      "name": {
-        "description": "Set the parcel name",
-        "type": "string",
-        "pattern": "^[^&<>! \"]+$",
-        "minLength": 1,
-        "maxLength": 128
-      },
-      "description": {
-        "description": "Set the parcel description",
-        "type": "string"
-      },
-      "data": {
-        "type": "object",
-        "description": "Regular Cellular controller (non-eSim) config",
-        "properties": {
-          "configType": {
-            "type": "object",
-            "properties": {
-              "optionType": {
-                "type": "string",
-                "enum": ["default"]
-              },
-              "value": {
-                "type": "string",
-                "enum": ["non-eSim"]
-              }
-            },
-            "required": ["optionType", "value"],
-            "additionalProperties": false
+      "$schema": "http://json-schema.org/draft/2019-09/schema",
+      "$id": "https://cisco.com/schema/profileparcel/sdwan/transport/cellular-controller/post/request_schema.json",
+      "title": "CellularController",
+      "description": "CellularController profile parcel schema for POST request",
+      "type": "object",
+      "properties": {
+          "name": {
+              "description": "Set the parcel name",
+              "type": "string",
+              "pattern": "^[^&<>! \"]+$",
+              "minLength": 1,
+              "maxLength": 128
           },
-          "controllerConfig": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Cellular ID",
-                "type": "object",
-                "oneOf": [
+          "description": {
+              "description": "Set the parcel description",
+              "type": "string"
+          },
+          "data": {
+              "type": "object",
+              "oneOf": [
                   {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["global"]
+                      "type": "object",
+                      "description": "Regular Cellular controller (non-eSim) config",
+                      "properties": {
+                          "configType": {
+                              "type": "object",
+                              "properties": {
+                                  "optionType": {
+                                      "type": "string",
+                                      "enum": [
+                                          "default"
+                                      ]
+                                  },
+                                  "value": {
+                                      "type": "string",
+                                      "enum": [
+                                          "non-eSim"
+                                      ]
+                                  }
+                              },
+                              "required": [
+                                  "optionType",
+                                  "value"
+                              ],
+                              "additionalProperties": false
+                          },
+                          "controllerConfig": {
+                              "type": "object",
+                              "properties": {
+                                  "id": {
+                                      "description": "Cellular ID",
+                                      "type": "object",
+                                      "oneOf": [
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "global"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "minLength": 1,
+                                                      "type": "string",
+                                                      "maxLength": 5
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "variable"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "string",
+                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                      "minLength": 1,
+                                                      "maxLength": 64
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          }
+                                      ]
+                                  },
+                                  "slot": {
+                                      "description": "Set primary SIM slot",
+                                      "type": "object",
+                                      "oneOf": [
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "global"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "minimum": 0,
+                                                      "maximum": 1,
+                                                      "type": "integer"
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "variable"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "string",
+                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                      "minLength": 1,
+                                                      "maxLength": 64
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "default"
+                                                      ]
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType"
+                                              ],
+                                              "additionalProperties": false
+                                          }
+                                      ]
+                                  },
+                                  "maxRetry": {
+                                      "description": "Set SIM failover retries",
+                                      "type": "object",
+                                      "oneOf": [
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "global"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "minimum": 0,
+                                                      "maximum": 65535,
+                                                      "type": "integer"
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "variable"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "string",
+                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                      "minLength": 1,
+                                                      "maxLength": 64
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "default"
+                                                      ]
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType"
+                                              ],
+                                              "additionalProperties": false
+                                          }
+                                      ]
+                                  },
+                                  "failovertimer": {
+                                      "description": "Set SIM failover timeout in minutes",
+                                      "type": "object",
+                                      "oneOf": [
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "global"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "minimum": 3,
+                                                      "maximum": 7,
+                                                      "type": "integer"
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "variable"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "string",
+                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                      "minLength": 1,
+                                                      "maxLength": 64
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "default"
+                                                      ]
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType"
+                                              ],
+                                              "additionalProperties": false
+                                          }
+                                      ]
+                                  },
+                                  "autoSim": {
+                                      "description": "Enable/Disable Firmware Auto Sim",
+                                      "type": "object",
+                                      "oneOf": [
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "global"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "boolean"
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "variable"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "string",
+                                                      "pattern": "^\\{\\{[.\/\\[\\]a-zA-Z0-9_-]+\\}\\}$",
+                                                      "minLength": 1,
+                                                      "maxLength": 64
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          },
+                                          {
+                                              "properties": {
+                                                  "optionType": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                          "default"
+                                                      ]
+                                                  },
+                                                  "value": {
+                                                      "type": "boolean",
+                                                      "enum": [
+                                                          true
+                                                      ]
+                                                  }
+                                              },
+                                              "required": [
+                                                  "optionType",
+                                                  "value"
+                                              ],
+                                              "additionalProperties": false
+                                          }
+                                      ]
+                                  }
+                              },
+                              "required": [
+                                  "id"
+                              ],
+                              "additionalProperties": false
+                          }
                       },
-                      "value": {
-                        "minLength": 1,
-                        "type": "string",
-                        "maxLength": 5
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["variable"]
-                      },
-                      "value": {
-                        "type": "string",
-                        "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                        "minLength": 1,
-                        "maxLength": 64
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
+                      "required": [
+                          "configType",
+                          "controllerConfig"
+                      ],
+                      "additionalProperties": false
                   }
-                ]
-              },
-              "slot": {
-                "description": "Set primary SIM slot",
-                "type": "object",
-                "oneOf": [
+              ]
+          },
+          "metadata": {
+              "supportedDeviceTypes": [
+                  "c1100_lte",
+                  "c8000be",
+                  "ir8100",
+                  "ir8340",
+                  "isr",
+                  "ISRv",
+                  "ir1101"
+              ]
+          },
+          "documentation": {
+              "description": "This is the documentation for POST request schema for Transport CellularController profile parcel",
+              "examples": [
                   {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["global"]
+                      "name": "Cedge_CG1_Transport_CellularController_parcel1",
+                      "data": {
+                          "configType": {
+                              "optionType": "default",
+                              "value": "non-eSim"
+                          },
+                          "controllerConfig": {
+                              "id": {
+                                  "optionType": "global",
+                                  "value": "1"
+                              },
+                              "slot": {
+                                  "optionType": "global",
+                                  "value": 0
+                              },
+                              "maxRetry": {
+                                  "optionType": "global",
+                                  "value": 5
+                              },
+                              "failovertimer": {
+                                  "optionType": "global",
+                                  "value": 3
+                              },
+                              "autoSim": {
+                                  "optionType": "default",
+                                  "value": true
+                              }
+                          }
                       },
-                      "value": {
-                        "minimum": 0,
-                        "maximum": 1,
-                        "type": "integer"
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["variable"]
-                      },
-                      "value": {
-                        "type": "string",
-                        "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                        "minLength": 1,
-                        "maxLength": 64
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["default"]
-                      }
-                    },
-                    "required": ["optionType"],
-                    "additionalProperties": false
+                      "description": "Cedge Transport CellularController Parcel config"
                   }
-                ]
-              },
-              "maxRetry": {
-                "description": "Set SIM failover retries",
-                "type": "object",
-                "oneOf": [
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["global"]
-                      },
-                      "value": {
-                        "minimum": 0,
-                        "maximum": 65535,
-                        "type": "integer"
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["variable"]
-                      },
-                      "value": {
-                        "type": "string",
-                        "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                        "minLength": 1,
-                        "maxLength": 64
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["default"]
-                      }
-                    },
-                    "required": ["optionType"],
-                    "additionalProperties": false
-                  }
-                ]
-              },
-              "failovertimer": {
-                "description": "Set SIM failover timeout in minutes",
-                "type": "object",
-                "oneOf": [
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["global"]
-                      },
-                      "value": {
-                        "minimum": 3,
-                        "maximum": 7,
-                        "type": "integer"
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["variable"]
-                      },
-                      "value": {
-                        "type": "string",
-                        "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                        "minLength": 1,
-                        "maxLength": 64
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["default"]
-                      }
-                    },
-                    "required": ["optionType"],
-                    "additionalProperties": false
-                  }
-                ]
-              },
-              "autoSim": {
-                "description": "Enable/Disable Firmware Auto Sim",
-                "type": "object",
-                "oneOf": [
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["global"]
-                      },
-                      "value": {
-                        "type": "boolean"
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["variable"]
-                      },
-                      "value": {
-                        "type": "string",
-                        "pattern": "^\\{\\{[./\\[\\]a-zA-Z0-9_-]+\\}\\}$",
-                        "minLength": 1,
-                        "maxLength": 64
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  },
-                  {
-                    "properties": {
-                      "optionType": {
-                        "type": "string",
-                        "enum": ["default"]
-                      },
-                      "value": {
-                        "type": "boolean",
-                        "enum": [true]
-                      }
-                    },
-                    "required": ["optionType", "value"],
-                    "additionalProperties": false
-                  }
-                ]
-              }
-            },
-            "required": ["id"],
-            "additionalProperties": false
+              ]
           }
-        },
-        "required": ["configType", "controllerConfig"],
-        "additionalProperties": false
       },
-      "metadata": {
-        "supportedDeviceTypes": [
-          "c1100_lte",
-          "c8000be",
-          "ir8100",
-          "ir8340",
-          "isr",
-          "ISRv",
-          "ir1101"
-        ]
+      "required": [
+          "name",
+          "data"
+      ],
+      "not": {
+          "required": [
+              "metadata",
+              "documentation"
+          ]
       },
-      "documentation": {
-        "description": "This is the documentation for POST request schema for Transport CellularController profile parcel",
-        "examples": [
-          {
-            "name": "Cedge_CG1_Transport_CellularController_parcel1",
-            "data": {
-              "configType": {
-                "optionType": "default",
-                "value": "non-eSim"
-              },
-              "controllerConfig": {
-                "id": {
-                  "optionType": "global",
-                  "value": "1"
-                },
-                "slot": {
-                  "optionType": "global",
-                  "value": 0
-                },
-                "maxRetry": {
-                  "optionType": "global",
-                  "value": 5
-                },
-                "failovertimer": {
-                  "optionType": "global",
-                  "value": 3
-                },
-                "autoSim": {
-                  "optionType": "default",
-                  "value": true
-                }
-              }
-            },
-            "description": "Cedge Transport CellularController Parcel config"
-          }
-        ]
-      }
-    },
-    "required": ["name", "data"],
-    "not": {
-      "required": ["metadata", "documentation"]
-    },
-    "additionalProperties": false
+      "additionalProperties": false
   }
 }
