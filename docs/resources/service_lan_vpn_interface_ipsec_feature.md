@@ -57,22 +57,14 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 
 ### Required
 
-- `application_tunnel_type` (String) Enable Application Tunnel Type
-  - Choices: `none`, `sig`
 - `feature_profile_id` (String) Feature Profile ID
-- `ike_preshared_key` (String) Use preshared key to authenticate IKE peer
-- `interface_name` (String) Interface name: IPsec when present
-- `ipv4_address` (String)
-- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `name` (String) The name of the Feature
-- `tunnel_destination_ipv4_address` (String)
 - `tunnel_destination_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
-- `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
-- `tunnel_source_ipv4_address` (String)
-- `tunnel_source_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 
 ### Optional
 
+- `application_tunnel_type` (String) Enable Application Tunnel Type
+  - Choices: `none`, `sig`
 - `application_tunnel_type_variable` (String) Variable name
 - `clear_dont_fragment` (Boolean) Enable clear dont fragment (Currently Only SDWAN Tunnel Interface)
   - Default value: `false`
@@ -102,6 +94,7 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   - Choices: `main`, `aggressive`
   - Default value: `main`
 - `ike_integrity_protocol_variable` (String) Variable name
+- `ike_preshared_key` (String) Use preshared key to authenticate IKE peer
 - `ike_preshared_key_variable` (String) Variable name
 - `ike_rekey_interval` (Number) IKE rekey interval <60..86400> seconds
   - Range: `60`-`86400`
@@ -112,6 +105,7 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   - Default value: `1`
 - `interface_description` (String) Interface description
 - `interface_description_variable` (String) Variable name
+- `interface_name` (String) Interface name: IPsec when present
 - `interface_name_variable` (String) Variable name
 - `ip_mtu` (Number) Interface MTU <68..9216>, in bytes
   - Range: `68`-`9216`
@@ -129,7 +123,9 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
   - Range: `64`-`4096`
   - Default value: `512`
 - `ipsec_replay_window_variable` (String) Variable name
+- `ipv4_address` (String)
 - `ipv4_address_variable` (String) Variable name
+- `ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `perfect_forward_secrecy` (String) IPsec perfect forward secrecy settings
   - Choices: `group-1`, `group-2`, `group-5`, `group-14`, `group-15`, `group-16`, `group-19`, `group-20`, `group-21`, `group-24`, `none`
@@ -144,12 +140,16 @@ resource "sdwan_service_lan_vpn_interface_ipsec_feature" "example" {
 - `tcp_mss_variable` (String) Variable name
 - `tracker_id` (String) Enable tracker for this interface
 - `tracker_id_variable` (String) Variable name
+- `tunnel_destination_ipv4_address` (String)
 - `tunnel_destination_ipv4_address_variable` (String) Variable name
 - `tunnel_destination_ipv4_subnet_mask_variable` (String) Variable name
 - `tunnel_route_via` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_route_via_variable` (String) Variable name
+- `tunnel_source_interface` (String) <1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid
 - `tunnel_source_interface_variable` (String) Variable name
+- `tunnel_source_ipv4_address` (String)
 - `tunnel_source_ipv4_address_variable` (String) Variable name
+- `tunnel_source_ipv4_subnet_mask` (String) - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `tunnel_source_ipv4_subnet_mask_variable` (String) Variable name
 
 ### Read-Only

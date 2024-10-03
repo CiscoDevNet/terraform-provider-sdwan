@@ -21,8 +21,8 @@ attributes:
   - model_name: shutdown
     example: false
   - model_name: interfaceName
-    mandatory: true
     example: Vlan1
+    minimum_test_value: '"Vlan1"'
   - model_name: description
     tf_name: interface_description
     example: SVI
@@ -35,13 +35,13 @@ attributes:
   - model_name: ipAddress
     tf_name: ipv4_address
     data_path: [ipv4, addressV4]
-    mandatory: true
     example: 1.2.3.4
+    minimum_test_value: '"1.2.3.4"'
   - model_name: subnetMask
     data_path: [ipv4, addressV4]
     tf_name: ipv4_subnet_mask
-    mandatory: true
     example: 0.0.0.0
+    minimum_test_value: '"0.0.0.0"'
   - model_name: secondaryAddressV4
     tf_name: ipv4_secondary_addresses
     data_path: [ipv4]

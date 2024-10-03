@@ -79,7 +79,7 @@ func testAccSdwanServiceRoutingEIGRPProfileParcelConfig_minimum() string {
 	config += ` name = "TF_TEST_MIN"` + "\n"
 	config += ` description = "Terraform integration test"` + "\n"
 	config += `	feature_profile_id = sdwan_service_feature_profile.test.id` + "\n"
-	config += `	autonomous_system_id = 111` + "\n"
+	config += `	autonomous_system_id = "111"` + "\n"
 	config += `	networks = [{` + "\n"
 	config += `	  ip_address = "100.2.2.3"` + "\n"
 	config += `	  mask = "255.255.255.0"` + "\n"

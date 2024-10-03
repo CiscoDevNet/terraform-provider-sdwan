@@ -20,8 +20,8 @@ attributes:
     test_value: sdwan_service_lan_vpn_feature.test.id
   - model_name: ifName
     tf_name: interface_name
-    mandatory: true
     example: ipsec987
+    minimum_test_value: '"ipsec987"'
   - model_name: shutdown
     example: true
   - model_name: description
@@ -30,32 +30,32 @@ attributes:
   - model_name: address
     tf_name: ipv4_address
     data_path: [address]
-    mandatory: true
     example: 9.7.5.4
+    minimum_test_value: '"9.7.5.4"'
   - model_name: mask
     tf_name: ipv4_subnet_mask
     data_path: [address]
-    mandatory: true
     example: 255.255.255.0
+    minimum_test_value: '"255.255.255.0"'
   - model_name: address
     tf_name: tunnel_source_ipv4_address
     data_path: [tunnelSource]
-    mandatory: true
     example: 1.3.5.88
+    minimum_test_value: '"1.3.5.88"'
   - model_name: mask
     tf_name: tunnel_source_ipv4_subnet_mask
     data_path: [tunnelSource]
-    mandatory: true
-    example: 255.255.255.0  
+    example: 255.255.255.0
+    minimum_test_value: '"255.255.255.0"'
   - model_name: tunnelSourceInterface
     tf_name: tunnel_source_interface
-    mandatory: true
     example: GigabitEthernet8
+    minimum_test_value: '"GigabitEthernet8"'
   - model_name: address
     tf_name: tunnel_destination_ipv4_address
     data_path: [tunnelDestination]
-    mandatory: true
     example: 2.55.67.99
+    minimum_test_value: '"2.55.67.99"'
   - model_name: mask
     tf_name: tunnel_destination_ipv4_subnet_mask
     data_path: [tunnelDestination]
@@ -63,8 +63,8 @@ attributes:
     example: 255.255.255.0
   - model_name: application
     tf_name: application_tunnel_type
-    mandatory: true
     example: none
+    minimum_test_value: '"none"'
   - model_name: tcpMssAdjust
     tf_name: tcp_mss
     example: 1460
@@ -79,8 +79,8 @@ attributes:
     example: 3
   - model_name: preSharedSecret
     tf_name: ike_preshared_key
-    mandatory: true
     example: 123
+    minimum_test_value: '"123"'
   - model_name: ikeVersion
     example: 1
   - model_name: ikeMode
