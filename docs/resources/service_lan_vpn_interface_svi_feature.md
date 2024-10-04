@@ -67,6 +67,13 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
       ]
       tloc_prefix_change       = true
       tloc_prefix_change_value = 100
+      tracking_objects = [
+        {
+          tracker_id      = "1b270f6d-479b-47e3-ab0b-51bc6811a303"
+          track_action    = "decrement"
+          decrement_value = 100
+        }
+      ]
     }
   ]
   ipv6_vrrps = [
@@ -213,6 +220,7 @@ Optional:
 - `track_omp` (Boolean) Track OMP status
   - Default value: `false`
 - `track_omp_variable` (String) Variable name
+- `tracking_objects` (Attributes List) tracking object for VRRP configuration (see [below for nested schema](#nestedatt--ipv4_vrrps--tracking_objects))
 
 <a id="nestedatt--ipv4_vrrps--secondary_addresses"></a>
 ### Nested Schema for `ipv4_vrrps.secondary_addresses`
@@ -221,6 +229,20 @@ Optional:
 
 - `address` (String) VRRP Secondary IPV4 address
 - `address_variable` (String) Variable name
+
+
+<a id="nestedatt--ipv4_vrrps--tracking_objects"></a>
+### Nested Schema for `ipv4_vrrps.tracking_objects`
+
+Optional:
+
+- `decrement_value` (Number) Decrement Value for VRRP priority
+  - Range: `1`-`255`
+- `decrement_value_variable` (String) Variable name
+- `track_action` (String) Track Action
+  - Choices: `decrement`, `shutdown`
+- `track_action_variable` (String) Variable name
+- `tracker_id` (String)
 
 
 

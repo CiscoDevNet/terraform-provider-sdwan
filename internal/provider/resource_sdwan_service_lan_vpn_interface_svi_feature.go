@@ -379,6 +379,43 @@ func (r *ServiceLANVPNInterfaceSVIProfileParcelResource) Schema(ctx context.Cont
 							MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
 							Optional:            true,
 						},
+						"tracking_objects": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("tracking object for VRRP configuration").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"tracker_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+										},
+									},
+									"track_action": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Track Action").AddStringEnumDescription("decrement", "shutdown").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("decrement", "shutdown"),
+										},
+									},
+									"track_action_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"decrement_value": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Decrement Value for VRRP priority").AddIntegerRangeDescription(1, 255).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(1, 255),
+										},
+									},
+									"decrement_value_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},

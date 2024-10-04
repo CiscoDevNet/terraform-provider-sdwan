@@ -50,6 +50,13 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
       ]
       tloc_prefix_change       = true
       tloc_prefix_change_value = 100
+      tracking_objects = [
+        {
+          tracker_id      = "1b270f6d-479b-47e3-ab0b-51bc6811a303"
+          track_action    = "decrement"
+          decrement_value = 100
+        }
+      ]
     }
   ]
   ipv6_vrrps = [

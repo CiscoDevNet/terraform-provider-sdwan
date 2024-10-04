@@ -602,6 +602,43 @@ func (r *ServiceLANVPNInterfaceEthernetProfileParcelResource) Schema(ctx context
 								int64validator.Between(100, 4294967295),
 							},
 						},
+						"tracking_objects": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Tracking object for VRRP configuration").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"tracker_id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.RegexMatches(regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`), ""),
+										},
+									},
+									"tracker_action": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Track Action").AddStringEnumDescription("Decrement", "Shutdown").String,
+										Optional:            true,
+										Validators: []validator.String{
+											stringvalidator.OneOf("Decrement", "Shutdown"),
+										},
+									},
+									"tracker_action_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+									"decrement_value": schema.Int64Attribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Decrement Value for VRRP priority").AddIntegerRangeDescription(1, 255).String,
+										Optional:            true,
+										Validators: []validator.Int64{
+											int64validator.Between(1, 255),
+										},
+									},
+									"decrement_value_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Optional:            true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},

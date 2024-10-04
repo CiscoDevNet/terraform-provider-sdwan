@@ -501,6 +501,34 @@ func (d *ServiceLANVPNInterfaceEthernetProfileParcelDataSource) Schema(ctx conte
 							MarkdownDescription: "Timer interval for successive advertisements, in milliseconds",
 							Computed:            true,
 						},
+						"tracking_objects": schema.ListNestedAttribute{
+							MarkdownDescription: "Tracking object for VRRP configuration",
+							Computed:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"tracker_id": schema.StringAttribute{
+										MarkdownDescription: "",
+										Computed:            true,
+									},
+									"tracker_action": schema.StringAttribute{
+										MarkdownDescription: "Track Action",
+										Computed:            true,
+									},
+									"tracker_action_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+									"decrement_value": schema.Int64Attribute{
+										MarkdownDescription: "Decrement Value for VRRP priority",
+										Computed:            true,
+									},
+									"decrement_value_variable": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
+										Computed:            true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
