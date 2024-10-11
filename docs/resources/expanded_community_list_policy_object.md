@@ -39,7 +39,7 @@ resource "sdwan_expanded_community_list_policy_object" "example" {
 <a id="nestedatt--entries"></a>
 ### Nested Schema for `entries`
 
-Required:
+Optional:
 
 - `community` (String) Expanded community value, e.g. `100:1000`
 

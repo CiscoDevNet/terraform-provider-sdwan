@@ -1,0 +1,95 @@
+---
+name: Transport T1 E1 Controller
+rest_endpoint: /v1/feature-profile/sdwan/transport/%v/t1-e1-controller
+minimum_version: 20.12.0
+test_tags: [SDWAN_2012]
+parcel_type: feature
+attributes:
+  - tf_name: feature_profile_id
+    reference: true
+    type: String
+    mandatory: true
+    description: Feature Profile ID
+    example: f6dd22c8-0b4f-496c-9a0b-6813d1f8b8ac
+    test_value: sdwan_transport_feature_profile.test.id
+  - model_name: type
+    mandatory: true
+    example: t1
+  - model_name: slot
+    example: 11
+    minimum_test_value: '11'
+  - model_name: controllerTxExList
+    tf_name: entries
+    mandatory: true
+    attributes:
+    - model_name: name
+      tf_name: t1_description
+      data_path: [basic, T1]
+      id: true
+      example: T1
+      minimum_test_value: '"T1"'
+    - model_name: framing
+      tf_name: t1_framing
+      data_path: [basic, T1]
+      example: esf
+      minimum_test_value: '"esf"'
+    - model_name: linecode
+      tf_name: t1_linecode
+      data_path: [basic, T1]
+      example: ami
+      minimum_test_value: '"ami"'
+    - model_name: name
+      tf_name: e1_description
+      data_path: [basic, E1]
+      id: true
+      exclude_test: true
+      example: E1
+    - model_name: framing
+      tf_name: e1_framing
+      data_path: [basic, E1]
+      exclude_test: true
+      example: crc4
+    - model_name: linecode
+      tf_name: e1_linecode
+      data_path: [basic, E1]
+      exclude_test: true
+      example: ami
+    - model_name: cableLength
+      data_path: [cable]
+      enum_values: [short, long]
+      type: String
+      example: "long"
+    - model_name: lengthShort
+      data_path: [cable]
+      exclude_test: true
+      conditional_attribute:
+        name: cable_length
+        value: short
+      example: 110ft
+    - model_name: lengthLong
+      data_path: [cable]
+      conditional_attribute:
+        name: cable_length
+        value: long
+      example: -7.5db
+    - model_name: clockSource
+      example: line
+    - model_name: lineMode
+      example: primary
+    - model_name: description
+      example: desc
+    - model_name: channelGroup
+      tf_name: channel_groups
+      attributes:
+      - model_name: number
+        tf_name: channel_group
+        example: 12
+      - model_name: timeslots
+        tf_name: time_slot
+        example: "timeslots 15"
+
+test_prerequisites: |
+  resource "sdwan_transport_feature_profile" "test" {
+    name = "TF_TEST"
+    description = "Terraform test"
+  }

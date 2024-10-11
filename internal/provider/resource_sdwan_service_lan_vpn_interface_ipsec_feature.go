@@ -95,7 +95,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"interface_name": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Interface name: IPsec when present").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(6, 8),
 					stringvalidator.RegexMatches(regexp.MustCompile(`^ipsec\d{1,3}$`), ""),
@@ -126,7 +126,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -134,7 +134,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
@@ -145,7 +145,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"tunnel_source_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"tunnel_source_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -153,7 +153,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"tunnel_source_ipv4_subnet_mask": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("255.255.255.255", "255.255.255.254", "255.255.255.252", "255.255.255.248", "255.255.255.240", "255.255.255.224", "255.255.255.192", "255.255.255.128", "255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.248.0", "255.255.240.0", "255.255.224.0", "255.255.192.0", "255.255.128.0", "255.255.0.0", "255.254.0.0", "255.252.0.0", "255.240.0.0", "255.224.0.0", "255.192.0.0", "255.128.0.0", "255.0.0.0", "254.0.0.0", "252.0.0.0", "248.0.0.0", "240.0.0.0", "224.0.0.0", "192.0.0.0", "128.0.0.0", "0.0.0.0"),
 				},
@@ -164,7 +164,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"tunnel_source_interface": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("<1..32 characters> Interface name: ge0/<0-..> or ge0/<0-..>.vlanid").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(3, 32),
 					stringvalidator.RegexMatches(regexp.MustCompile(`(ATM|ATM-ACR|AppGigabitEthernet|AppNav-Compress|AppNav-UnCompress|Async|BD-VIF|BDI|CEM|CEM-ACR|Cellular|Dialer|Embedded-Service-Engine|Ethernet|Ethernet-Internal|FastEthernet|FiftyGigabitEthernet|FiveGigabitEthernet|FortyGigabitEthernet|FourHundredGigE|GMPLS|GigabitEthernet|Group-Async|HundredGigE|L2LISP|LISP|Loopback|MFR|Multilink|Port-channel|SM|Serial|Service-Engine|TenGigabitEthernet|Tunnel|TwentyFiveGigE|TwentyFiveGigabitEthernet|TwoGigabitEthernet|TwoHundredGigE|Vif|Virtual-PPP|Virtual-Template|VirtualPortGroup|Vlan|Wlan-GigabitEthernet|nat64|nat66|ntp|nve|ospfv3|overlay|pseudowire|ucse|vasileft|vasiright|vmi)([0-9]*(. ?[1-9][0-9]*)*|[0-9/]+|[0-9]+/[0-9]+/[0-9]+:[0-9]+|[0-9]+/[0-9]+/[0-9]+|[0-9]+/[0-9]+|[0-9]+)`), ""),
@@ -176,7 +176,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"tunnel_destination_ipv4_address": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"tunnel_destination_ipv4_address_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -195,7 +195,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"application_tunnel_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Enable Application Tunnel Type").AddStringEnumDescription("none", "sig").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "sig"),
 				},
@@ -258,7 +258,7 @@ func (r *ServiceLANVPNInterfaceIPSecProfileParcelResource) Schema(ctx context.Co
 			},
 			"ike_preshared_key": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Use preshared key to authenticate IKE peer").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 127),
 				},

@@ -103,10 +103,6 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
 ### Required
 
 - `feature_profile_id` (String) Feature Profile ID
-- `interface_name` (String) Interface name: VLAN 1 - VLAN 4094 when present
-- `ipv4_address` (String) IP Address
-- `ipv4_subnet_mask` (String) Subnet Mask
-  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `name` (String) The name of the Feature
 
 ### Optional
@@ -129,6 +125,7 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
   - Range: `1500`-`9216`
   - Default value: `1500`
 - `interface_mtu_variable` (String) Variable name
+- `interface_name` (String) Interface name: VLAN 1 - VLAN 4094 when present
 - `interface_name_variable` (String) Variable name
 - `ip_directed_broadcast` (Boolean) IP Directed-Broadcast
   - Default value: `false`
@@ -137,10 +134,13 @@ resource "sdwan_service_lan_vpn_interface_svi_feature" "example" {
   - Range: `576`-`9216`
   - Default value: `1500`
 - `ip_mtu_variable` (String) Variable name
+- `ipv4_address` (String) IP Address
 - `ipv4_address_variable` (String) Variable name
 - `ipv4_dhcp_helpers` (Set of String) List of DHCP helper addresses
 - `ipv4_dhcp_helpers_variable` (String) Variable name
 - `ipv4_secondary_addresses` (Attributes List) Assign secondary IP addresses (see [below for nested schema](#nestedatt--ipv4_secondary_addresses))
+- `ipv4_subnet_mask` (String) Subnet Mask
+  - Choices: `255.255.255.255`, `255.255.255.254`, `255.255.255.252`, `255.255.255.248`, `255.255.255.240`, `255.255.255.224`, `255.255.255.192`, `255.255.255.128`, `255.255.255.0`, `255.255.254.0`, `255.255.252.0`, `255.255.248.0`, `255.255.240.0`, `255.255.224.0`, `255.255.192.0`, `255.255.128.0`, `255.255.0.0`, `255.254.0.0`, `255.252.0.0`, `255.240.0.0`, `255.224.0.0`, `255.192.0.0`, `255.128.0.0`, `255.0.0.0`, `254.0.0.0`, `252.0.0.0`, `248.0.0.0`, `240.0.0.0`, `224.0.0.0`, `192.0.0.0`, `128.0.0.0`, `0.0.0.0`
 - `ipv4_subnet_mask_variable` (String) Variable name
 - `ipv4_vrrps` (Attributes List) Enable ipv4 VRRP (see [below for nested schema](#nestedatt--ipv4_vrrps))
 - `ipv6_address` (String) Assign IPv6 address

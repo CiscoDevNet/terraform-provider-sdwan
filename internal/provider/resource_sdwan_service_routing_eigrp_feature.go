@@ -91,7 +91,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"autonomous_system_id": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set autonomous system ID <1..65535>").AddIntegerRangeDescription(1, 65535).String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.Int64{
 					int64validator.Between(1, 65535),
 				},
@@ -155,7 +155,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"hello_interval": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP hello interval").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("5").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"hello_interval_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -163,7 +163,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"hold_time": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP hold time").AddIntegerRangeDescription(0, 65535).AddDefaultValueDescription("15").String,
-				Required:            true,
+				Optional:            true,
 			},
 			"hold_time_variable": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Variable name").String,
@@ -171,7 +171,7 @@ func (r *ServiceRoutingEIGRPProfileParcelResource) Schema(ctx context.Context, r
 			},
 			"authentication_type": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Set EIGRP router authentication type").AddStringEnumDescription("md5", "hmac-sha-256").String,
-				Required:            true,
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("md5", "hmac-sha-256"),
 				},
