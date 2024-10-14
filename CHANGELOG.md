@@ -26,6 +26,7 @@
 - Add `sdwan_service_routing_eigrp_feature` resource and data source
 - Add `sdwan_service_wireless_lan_feature` resource and data source
 - Add `sdwan_transport_t1_e1_controller_feature` resource and data source
+- Add import to `sdwan_attach_feature_device_template` and `sdwan_attach_feature_device_template` resources
 
 ## 0.4.1
 
