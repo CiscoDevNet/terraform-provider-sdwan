@@ -28,3 +28,11 @@ resource "sdwan_activate_centralized_policy" "example" {
 ### Optional
 
 - `version` (Number) The version of the centralized policy
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+terraform import sdwan_activate_centralized_policy.example "f6b2c44c-693c-4763-b010-895aa3d236bd"
+```
