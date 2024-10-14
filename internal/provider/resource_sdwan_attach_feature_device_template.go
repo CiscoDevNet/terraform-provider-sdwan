@@ -23,6 +23,7 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-sdwan/internal/provider/helpers"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -34,6 +35,7 @@ import (
 
 // Ensure provider defined types fully satisfy framework interfaces
 var _ resource.Resource = &AttachFeatureDeviceTemplateResource{}
+var _ resource.ResourceWithImportState = &AttachFeatureDeviceTemplateResource{}
 
 func NewAttachFeatureDeviceTemplateResource() resource.Resource {
 	return &AttachFeatureDeviceTemplateResource{}
@@ -238,4 +240,8 @@ func (r *AttachFeatureDeviceTemplateResource) Delete(ctx context.Context, req re
 	tflog.Debug(ctx, fmt.Sprintf("%s: Delete finished successfully", state.Id.ValueString()))
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *AttachFeatureDeviceTemplateResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
