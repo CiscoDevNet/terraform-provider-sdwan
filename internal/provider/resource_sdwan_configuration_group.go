@@ -330,30 +330,34 @@ func (r *ConfigurationGroupResource) Read(ctx context.Context, req resource.Read
 	state.fromBodyConfigGroup(ctx, res)
 
 	// Read config group devices
-	path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
-	res, err = r.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		path := fmt.Sprintf("/v1/config-group/%v/device/associate/", state.Id.ValueString())
+		res, err = r.client.Get(path)
+		if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+			resp.State.RemoveResource(ctx)
+			return
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+			return
+		}
 
-	state.fromBodyConfigGroupDevices(ctx, res)
+		state.fromBodyConfigGroupDevices(ctx, res)
+	}
 
 	// Read config group devices
-	path = fmt.Sprintf("/v1/config-group/%v/device/variables/", state.Id.ValueString())
-	res, err = r.client.Get(path)
-	if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
-		resp.State.RemoveResource(ctx)
-		return
-	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
-		return
-	}
+	if value := res.Get("devices"); value.Exists() && len(value.Array()) > 0 {
+		path := fmt.Sprintf("/v1/config-group/%v/device/variables/", state.Id.ValueString())
+		res, err = r.client.Get(path)
+		if strings.Contains(res.Get("error.message").String(), "Invalid config group passed") {
+			resp.State.RemoveResource(ctx)
+			return
+		} else if err != nil {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+			return
+		}
 
-	state.fromBodyConfigGroupDeviceVariables(ctx, res)
+		state.fromBodyConfigGroupDeviceVariables(ctx, res)
+	}
 
 	state.updateTfAttributes(ctx, &oldState)
 
