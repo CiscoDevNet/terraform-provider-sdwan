@@ -281,9 +281,7 @@ func (data *ConfigurationGroup) fromBodyConfigGroup(ctx context.Context, res gjs
 					return true
 				})
 			} else {
-				if len(item.UnsupportedFeatures) > 0 {
-					item.UnsupportedFeatures = []ConfigurationGroupTopologyDevicesUnsupportedFeatures{}
-				}
+				item.UnsupportedFeatures = []ConfigurationGroupTopologyDevicesUnsupportedFeatures{}
 			}
 			data.TopologyDevices = append(data.TopologyDevices, item)
 			return true
